@@ -3,6 +3,7 @@ Repository di Documentazione del gruppo di lavoro 11 7-ZPUs del Progetto Didatti
 
 ## Team
 | Cognome    Nome | Matricola |
+|-----------------|-----------|
 | Fattoni Antonio | 2008650 |
 | Georgescu Diana | 2075549 |
 | Gingilino Aaron| 2113182 |
@@ -10,6 +11,8 @@ Repository di Documentazione del gruppo di lavoro 11 7-ZPUs del Progetto Didatti
 | Rocco Matteo Alberto| 2042354 |
 | Soligo Lorenzo| 2101057 |
 | Vigolo Davide| 2101067 |
+
+Email: 7zpus.swe@gmail.com
 
 ## Struttura della repo
 La struttura della repository è la seguente
