@@ -1,0 +1,136 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian]{babel}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+
+\begin{document}
+
+
+\begin{center}
+    \Large \textbf{Verbale Riunione Gruppo di Progetto e ERGON}\\
+    \vspace{0.5cm}
+    \includegraphics[width=9.5cm]{../../../images/logo7ZPUs2.jpg}
+    \label{7zpus.swe@gmail.com}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com
+\end{center}
+
+
+\noindent
+\textbf{Data:} 20/10/2025 \\
+\textbf{Durata:}  30 minuti con l'azienda, 20 minuti di discussione interna \\
+\textbf{Luogo:} incontro online (Zoom)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+\section{Tabella di Versionamento}
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Descrizione} \\
+    \hline
+    1.0 & 20/10/2025 & Diana Georgescu & Creazione del verbale e stesura iniziale \\
+    \hline
+    1.1 & 20/10/2025 & Matteo Alberto Rocco & Revisione dello Standard \\
+    \hline
+    1.2 & 20/10/2025 & Lorenzo Soligo & Applicazione del Modello Standard \\
+    \hline
+\end{tabular}
+\end{center}
+
+\section{Partecipanti}
+{\small
+\begin{itemize}[noitemsep, topsep=0pt, parsep=0pt, partopsep=0pt, leftmargin=1.8em]
+    \item Fattoni Antonio
+    \item Georgescu Diana
+    \item Gingilino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+\end{itemize}
+}
+
+\section{Introduzione}
+Il presente documento riporta il verbale del colloquio tenutosi con l'azienda ERGON in merito al progetto SmartOrder.
+L’obiettivo dell’incontro era chiarire i requisiti tecnici, organizzativi e comunicativi relativi a tale progetto.
+
+\section{Domande e Risposte}
+
+\textbf{Domanda 1:} È corretto affermare che l’obiettivo del progetto è creare una piattaforma da utilizzare nei sistemi aziendali, basata sull’utilizzo di modelli di linguaggio di grandi dimensioni (LLM)?\\[0.5em]
+\textbf{Risposta:} Sì, è corretto. L’obiettivo è realizzare una piattaforma aziendale che integri LLM per l’automazione e l’assistenza nei processi interni.
+
+\vspace{2em}
+
+\textbf{Domanda 2:} In che modo verrà impiegata l’intelligenza artificiale nel progetto? È previsto l’utilizzo di chiamate API o di dati forniti direttamente?\\[0.5em]
+\textbf{Risposta:} Si partirà da modelli LLM pre-addestrati (come ChatGPT, Gemini, LLaMA, ecc.) sui quali verrà effettuato un \textit{fine-tuning} specifico per il contesto aziendale. Il modello sarà quindi adattato ai dati reali forniti dall’azienda, tramite un dataset realistico. Successivamente, le interazioni avverranno tramite chiamate API.
+
+\vspace{2em}
+
+\textbf{Domanda 3:} È prevista una fase di addestramento del modello?\\[0.5em]
+\textbf{Risposta:} Non è previsto un addestramento completo, bensì un adattamento (\textit{fine-tuning}) limitato al dominio aziendale, utilizzando un dataset reale fornito dall’azienda stessa.
+
+\vspace{2em}
+
+\textbf{Domanda 4:} Come avverrà la comunicazione con l’azienda e con quale frequenza?\\[0.5em]
+\textbf{Risposta:} La comunicazione potrà avvenire tramite call o mail. L’azienda è flessibile e si adatta ai vostri ritmi, garantendo risposte in tempi brevi.
+
+\vspace{2em}
+
+\textbf{Domanda 5:} Qual è il livello di flessibilità nell’utilizzo delle tecnologie?\\[0.5em]
+\textbf{Risposta:} L’azienda concede piena libertà nella scelta delle tecnologie, pur fornendo alcune linee guida e strumenti consigliati. Non è richiesto un ciclo Agile rigoroso, ma è possibile adottarlo se preferito. Potete operare in autonomia.
+
+\vspace{2em}
+
+\textbf{Domanda 6:} Per quanto riguarda il \textit{fine-tuning}, lavoreremo su modelli locali o solo tramite API?\\[0.5em]
+\textbf{Risposta:} È previsto che il \textit{fine-tuning} venga eseguito da voi, con il nostro supporto. Successivamente, si continuerà a interagire con il modello tramite chiamate API.
+
+\vspace{2em}
+
+\textbf{Domanda 7:} Il sistema finale dovrà essere una web app, un’applicazione desktop o un software locale?\\[0.5em]
+\textbf{Risposta:} Il progetto prevede la realizzazione di una web app responsive, accessibile da browser.
+
+\vspace{2em}
+
+\textbf{Domanda 8:} Saranno fornite risorse o supporto per l’apprendimento delle tecnologie necessarie?\\[0.5em]
+\textbf{Risposta:} Sì, l’azienda fornirà supporto tecnico e risorse di riferimento. Le principali tecnologie previste sono in linguaggio \texttt{Python}. La comunicazione di supporto avverrà via mail o call (1–2 giorni di risposta).
+
+\vspace{2em}
+
+\textbf{Domanda 9:} La web app dovrà accettare input multimodali (testo, audio, immagini) da trasformare in formati strutturati, ad esempio JSON?\\[0.5em]
+\textbf{Risposta:} Sì, è possibile integrare input multimodali. Tale aspetto potrà essere approfondito nel corso dello sviluppo.
+
+\vspace{2em}
+
+\textbf{Domanda 10:} In che modo avverrà la connessione al database aziendale?\\[0.5em]
+\textbf{Risposta:} La comunicazione con il database avverrà tramite connettori standard (ODBC) o specifici forniti dall’azienda, a seconda del tipo di database utilizzato. Sarà inoltre integrato un database vettoriale associato al modello LLM, utile per la ricerca semantica e la gestione dei dati testuali.
+
+\vspace{2em}
+
+\textbf{Domanda 11:} Verrà fornita una base di partenza per il database vettoriale?\\[0.5em]
+\textbf{Risposta:} Sì, verrà messa a disposizione una configurazione di riferimento basata sul database più comunemente utilizzato nel contesto aziendale.
+
+\section{Conclusione}
+Al termine della call con l’azienda, il gruppo si è riunito in una chiamata su Discord per confrontarsi sugli argomenti trattati e discutere i punti emersi durante l’incontro.  
+Durante tale confronto interno, sono stati approfonditi i chiarimenti ricevuti, rielaborate le informazioni acquisite e rivalutato il progetto alla luce delle specifiche tecniche e organizzative fornite dall’azienda.  
+Questa discussione ha permesso di allineare le idee, chiarire eventuali dubbi residui e definire una visione condivisa sugli sviluppi futuri del lavoro.
+\end{document}
