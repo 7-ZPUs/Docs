@@ -1,0 +1,79 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian]{babel}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../assets/logo7ZPUs.jpeg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \vspace{0.5cm}
+    \Large \textbf{Analisi dei Capitolati di Progetto 2025/2026}\\
+\end{center}
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+\section{Tabella di Versionamento}
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Descrizione}                       \\
+    \hline
+    1.0               & 17/10/2025    & Soligo Lorenzo  & Creazione del documento e stesura iniziale \\
+    \hline
+
+\end{tabular}
+
+\section{Introduzione}
+In questo documento sono analizzati i 9 Capitolati di Progetto proposti per
+l'anno accademico 2025/2026, con l'obiettivo di valutarne la complessità, i
+rischi associati e le potenzialità in termini di apprendimento e sviluppo delle
+competenze del gruppo di progetto 7-ZPUs. Con alcune di queste aziende sono già
+stati presi contatti preliminari (ERGON e Sanmarco Informatica). I verbali di
+tali incontri sono presenti nella sezione \textit{Verbali/Verbali Esterni}
+della repository di documentazione. \vspace{0.5cm}
+
+\section{Analisi dei Capitolati}
+I capitolati sono presentati in ordine di interesse decrescente, tenendo conto
+degli aspetti tecnici come della preferenza naturale del gruppo.
+
+\subsection{ Capitolato C3 - DIPReader}
+\textbf{Azienda Proponente:} Sanmarco Informatica S.p.A.\\
+\textbf{Committente:} Prof. Tullio Verdanega e Prof. Riccardo Cardin\\
+\textbf{Obiettivo:} Sviluppo di un software per la lettura e ricerca di documenti digitali in formato .ZIP, con funzionalità avanzate di ricerca e verifica dell'autenticità.
+L'azienda ha posto enfasi sul fatto che tale strumento risulterebbe molto utile in ambiti legali e giudiziari in cui vi è la necessità di cercare documenti specifici all'interno di una mole importante di dati, garantendone l'integrità, l'autenticità, la leggibilità  e la reperibilità.\\
+\textbf{Dominio Tecnico:}
+\begin{itemize}
+    \item Database: SQLite e/o FAISS. Il primo potrebbe essere scelto per rappresentare relazioni tra i documenti, mantenendo portabile la struttura del DIPReader. FAISS, invece, potrebbe essere utilizzato per implementare funzionalità di ricerca basate su similarità e campi semantici.
+    \item Framework Frontend: Angular o React, entrambi validi e sostanzialemnte equivalenti. Consigliato però l'uso di TypeScript per una maggiore robustezza del codice.
+    \item Strumenti di Versionamento: GitHub o BitBucket
+    \item Piattaforme: Windows, Linux, MacOS
+\end{itemize}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
