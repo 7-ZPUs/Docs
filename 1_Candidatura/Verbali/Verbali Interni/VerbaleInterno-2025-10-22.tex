@@ -1,0 +1,134 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian]{babel}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+    \small\hspace{10cm} 7zpus.swe@gmail.com
+\end{center}
+
+\noindent
+\textbf{Data:} 22/10/2025 \\
+\textbf{Durata:} 1 ora e 30 minuti \\
+\textbf{Luogo:} incontro online (Server Discord del gruppo)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+\section{Tabella di Versionamento}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Descrizione} \\
+        \hline
+        1.0.0 & 22/10/2025 & Vigolo Davide & Creazione del verbale e stesura iniziale \\
+
+        \hline
+    \end{tabular}
+
+
+\section{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Gingilino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+\end{itemize}
+
+\section{Ordine del Giorno}
+\begin{enumerate}
+    \item Discussione e standardizzazione del formato verbale
+    \item Organizzazione repository e automazioni
+    \item Gestione del versionamento dei documenti
+    \item Definizione linee generali Way of Working
+    \item Strategia alternativa per la scelta del capitolato
+\end{enumerate}
+\vspace{0.5cm}
+\section{Svolgimento e Discussione}
+Il gruppo ha dedicato la riunione alla standardizzazione del formato dei verbali e all'organizzazione della struttura del progetto. 
+
+\subsection{Formato del Verbale}
+Sono state discusse e implementate le seguenti modifiche al template dei verbali:
+\begin{itemize}
+    \item Standardizzazione del formato data
+    \item Riposizionamento del logo aziendale e rimozione del logo UniPD
+    \item Inversione dell'ordine della tabella di versionamento (dalla versione più recente alla meno recente)
+    \item Rimozione della sezione "Argomento all'ordine del giorno"
+    \item Modifiche strutturali al frontespizio
+\end{itemize}
+
+\subsection{Gestione Repository}
+È stata discussa l'organizzazione della repository riguardo le automazioni:
+\begin{itemize}
+    \item Decisione di caricare manualmente sia file .tex che .pdf dei verbali
+    \item Verrà verificata la fattibilità dell'instaurazione di una pipeline per l'aggiornamento automatico del sito del progetto ai verbali inseriti dopo un commit
+    \item Eliminazione della repository separata per GitHub Pages, spostando la funzionalità sulla repository "Docs"
+\end{itemize}
+
+\subsection{Sistema di Versionamento}
+È stato definito il sistema di versionamento per i documenti:
+\begin{itemize}
+    \item Incremento di un decimo per ogni aggiunta di contenuto sostanziale
+    \item Incremento di un centesimo per modifiche minori
+    \item Incremento di versione maggiore (es. 1.x.x → 2.x.x) riservato a documenti come il Way of Working in caso di cambiamenti importanti
+    \item Per i verbali questa situazione è considerata inverosimile, mantenendo sempre versione 1.x.x
+\end{itemize}
+
+\subsection{Pianificazione Attività Future}
+Sono state discusse le linee generali per:
+\begin{itemize}
+    \item La definizione del Way of Working del gruppo
+    \item La ricerca e valutazione di piattaforme condivise per la gestione del progetto
+    \item Strategia alternativa al capitolato di prima scelta
+\end{itemize}
+
+\vspace{0.5cm}
+\section{Decisioni e Conclusione}
+\begin{itemize}
+    \item Concordato il nuovo template standardizzato per tutti i verbali futuri
+    \item Ogni membro aggiornerà i propri verbali precedenti al nuovo template
+    \item Pianificato un merge sul main branch una volta completato l'allineamento del template
+    \item Spostamento di GitHub Pages sulla repository "Docs" principale
+    \item Ricerca individuale di proposte per piattaforme di gestione progetto da proporre al prossimo incontro
+    \item Sviluppo di una strategia alternativa per la selezione del capitolato
+\end{itemize}
+
+\subsection{Ordine del giorno Prossimo Incontro}
+\begin{enumerate}
+    \item Inizio discussione Preventivo dei Costi e Assunzione di Impegni
+    \item Valutazione piattaforme di gestione progetto
+\end{enumerate}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
