@@ -42,8 +42,9 @@
 \begin{tabular}{|c|c|c|c|}
     \hline
     \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Descrizione}                       \\
+    1.2               & 26/10/2025    & Matteo A. Rocco  & Aggiunta capitolato C5 \\
     \hline
-    1.1               & 26/10/2025    & Matteo A. Rocco  & Aggiunta capitolato C5 \\
+    1.1 & 25/10/2025 & Georgescu Diana & Approfondimento del Capitolato C4 \\
     \hline
     1.0               & 17/10/2025    & Soligo Lorenzo  & Creazione del documento e stesura iniziale \\
     \hline
@@ -104,16 +105,20 @@ L'azienda si è presentata come molto disponibile e aperta al dialogo, come dimo
 \vspace{2.0cm}
 
 \subsection{ Capitolato C8 - SmartOrder}
-\subsubsection*{Azienda Proponente:}
+\subsubsection*{Azienda Proponente:} ERGON Informatica S.R.L.
 \subsubsection*{Committente:} Prof. Tullio Verdanega e Prof. Riccardo Cardin.
-\subsubsection*{Obiettivo:} 
-\subsubsection*{Dominio Applicativo:} 
+\subsubsection*{Obiettivo:} Sviluppo di un sistema si analisi di contenuti multimodali per la generazione automatica di ordini grazie all'ausilio di LLM. Tale sistema riuscirebbe a garantire un'automatizzazione del sistema di ordine, facilitandone l'avanzamento di richieste lato cliente e delegando il compito di 
+\subsubsection*{Dominio Applicativo:} Servizi di assistenza alla vendita. Con un sistema come SmartOrder sarebbe possibile velocizzare la creazione di ordine, semplificando il processo di ordine lato utente in quanto si presuppone che il sistema conosca il contesto di vendita e sia in grado di interpretare richieste complesse.
 \subsubsection*{Dominio Tecnico:}
 \begin{itemize}
-    \item Database: 
-    \item Framework Frontend: Angular o React, entrambi validi e sostanzialemnte equivalenti. Consigliato però l'uso di TypeScript per una maggiore robustezza del codice.
-    \item Strumenti di Versionamento: GitHub o BitBucket
-    \item Piattaforme: Windows, Linux, MacOS
+    \item Database: A libera scelta, per esempio SQL Server Express, MySql o MariaDB
+    \item Framework Frontend: Angular, React o .NET Blazor, anche in questo caso la scelta è libera.
+    \item Strumenti AI: \begin{itemize}
+                            \item BERT, RoBERTa o GTP di OpenAi per NLP
+                            \item Tesseract OCR, EasyOCR, Reti Convoluzionari (CNN) o Vision Transformer per Riconoscimento Ottico dei Caratteri
+                            \item Whisper di OpenAi o Google Speech-to-Text per il riconoscimento vocale
+                        \end{itemize}
+    \item Comunicazione LLM UI: API REST
 \end{itemize}
 \subsubsection*{Aspetti Positivi:}
 \begin{itemize}
@@ -189,6 +194,62 @@ prevedendo perciò di integrare ed evolvere il prodotto con nuove funzionalità 
 . 
 
 
+
+\subsection{Analisi Capitolato C4 - L’app che Protegge e Trasforma}
+\subsubsection*{Azienda Proponente:} Miriade
+\subsubsection*{Committente:} Prof. Tullio Verdanega e Prof. Riccardo Cardin.
+\subsubsection*{Obiettivo}
+Realizzare un’app mobile multipiattaforma in grado di fornire strumenti di prevenzione, supporto e protezione per le vittime di violenza di genere.  
+L’app integra funzionalità di analisi comportamentale basate su intelligenza artificiale, sistemi di allerta discreti, accesso a risorse geo-localizzate e sezioni formative.  
+L’idea finale è quella di offrire un ambiente digitale sicuro, conforme al GDPR, che permetta all’utente di sentirsi tutelato e informato.
+
+\subsubsection*{Dominio Applicativo}
+L’app è pensata per persone a rischio o vittime di violenza di genere e per i centri che offrono supporto.  
+Mira a fornire strumenti concreti di prevenzione e sicurezza, come il rilevamento automatico di situazioni di pericolo, allarmi silenziosi e una modalità stealth per proteggere l’utente.  
+Include inoltre un diario criptato, l’accesso ai centri di assistenza, percorsi formativi e una community moderata per condividere esperienze in modo sicuro.
+
+
+\subsubsection*{Dominio Tecnico}
+\begin{itemize}[leftmargin=*]
+    \item Frontend: Flutter.
+    \item Backend: AWS Lambda, API Gateway, DynamoDB/RDS, S3, Cognito.
+    \item AI: AWS SageMaker o Bedrock per modelli NLP e classificazione del rischio.
+    \item Architettura: microservizi o approccio serverless per scalabilità e resilienza.
+    \item Sicurezza: crittografia AES-256, autenticazione a più fattori, audit trail, conformità GDPR e accessibilità WCAG 2.1.
+\end{itemize}
+
+\subsubsection*{Aspetti Positivi}
+\begin{itemize}[leftmargin=*]
+    \item Capitolo con forte impatto sociale e finalità etica rilevante.
+    \item Attenzione alla sicurezza e alla privacy dei dati sensibili.
+    \item Supporto diretto e affiancamento da parte dell’azienda.
+    \item Presenza di linee guida UX orientate all’accessibilità e alla serenità d’uso.
+\end{itemize}
+
+\subsubsection*{Aspetti Negativi}
+\begin{itemize}[leftmargin=*]
+    \item Numerose funzionalità opzionali che aumentano la complessità progettuale.
+    \item Rischi legati all’affidabilità e ai bias dei modelli AI.
+    \item Necessità di grande attenzione legale per conformità alle normative su privacy e geolocalizzazione.
+\end{itemize}
+
+\subsubsection*{Possibili Rischi}
+\begin{itemize}[leftmargin=*]
+    \item Fuga di dati sensibili con potenziale esposizione di informazioni o posizioni.
+    \item Errori di classificazione AI.
+    \item Abuso della community, come uso improprio o divulgazione di dati personali.
+    \item Dipendenza da servizi esterni.
+    \item Rischi legali a causa di registrazione audio/video e tracciamento GPS soggetti a diverse normative.
+\end{itemize}
+
+\subsubsection*{Conclusione}
+Il capitolato C4 proposto da Miriade è ambizioso e unisce aspetti tecnici avanzati a un obiettivo sociale significativo.  
+La realizzazione dell’app comporta sfide importanti, soprattutto in ambito di sicurezza, AI e conformità legale.
+Dopo un’attenta discussione, il gruppo ha concluso di non voler proseguire con il capitolato C4.  
+Pur riconoscendone il valore sociale e l’intento positivo, il progetto risulta estremamente vasto e complesso dal punto di vista tecnico e organizzativo.  
+La grande quantità di funzionalità previste, unite alla forte dipendenza dall'intelligenza artificiale e all’elevato livello di responsabilità legale e di sicurezza richiesti, rendono il capitolato poco adatto agli obiettivi e alle competenze che il gruppo intende sviluppare in questo percorso.
+
+\vspace{0.5cm}
 
 \vfill
 \begin{flushright}
