@@ -11,125 +11,143 @@
 </head>
 
 <body>
-    <header>
-        <div class="logo">
-            <img src="../assets/logo-transp-rev.png" alt="Logo ZPUs Engineering Team">
-            <span class="logo-text">7-ZPUs Engineering Team</span>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="#hero" class="logo">
+                <img src="../assets/logo-transp-rev.png" alt="Logo ZPUs Engineering Team">
+                <span class="logo-text">7-ZPUs Engineering Team</span>
+            </a>
+            <nav class="site-nav">
+                <a href="https://github.com/7-ZPUs">REPOSITORY</a>
+                <a href="#documentation">DOCUMENTAZIONE</a>
+                <a href="#team">TEAM</a>
+            </nav>
         </div>
-        <nav>
-            <a href="https://github.com/7-ZPUs">REPOSITORY</a>
-            <a href="#docs">DOCUMENTAZIONE</a>
-            <a href="#team">TEAM</a>
-        </nav>
     </header>
 
     <main>
-        <h1>7-ZPUs Engineering Team</h1>
-        <p class="subtitle">SWE Project 2025/2026</p>
-
-        <div class="grid">
-            <section id="repo">
-                <img src="assets/imgs/github-mark-white.png" alt="GitHub Logo" id="github-logo">
-                <h2 id="repo-title">REPOSITORY</h2>
-                <a href="https://github.com/7-ZPUs" target="_blank">GitHub — ZPUs Engineering</a>
-            </section>
-
-            <section id="docs">
-                <h2>📚 DOCUMENTAZIONE</h2>
-                <a href="#">RTB — Report Tecnico di Base</a>
-                <a href="#">PB — Progetto Base</a>
-                <a href="#">Candidatura — Presentazione Team</a>
-            </section>
-        </div>
-
-        <section id="documentation">
-            <header>
-                <nav>
-                    <h2 type="button" aria-controls="candidatura" class="content-selector">CANDIDATURA
-                    </h2>
-                    <h2 type="button" aria-controls="pb" class="content-selector">PB</h2>
-                    <h2 type="button" aria-controls="rtb" class="content-selector">RTB</h2>
-                </nav>
-            </header>
-            <article id="candidatura">
-                <details>
-                    <summary>Verbali interni</summary>
-                    <a href="#">Verbale interno 1</a>
-                    <a href="#">Verbale interno 2</a>
-                    <a href="#">Verbale interno 3</a>
-                </details>
-                <details>
-                    <summary>Verbali esterni</summary>
-                    <a href="#">Requisiti funzionali</a>
-                    <a href="#">Requisiti non funzionali</a>
-                    <a href="#">Casi d'uso</a>
-                </details>
-            </article>
-            <article id="pb">
-                <details>
-                    <summary>Verbali interni</summary>
-                    <a href="#">Verbale interno 1</a>
-                    <a href="#">Verbale interno 2</a>
-                    <a href="#">Verbale interno 3</a>
-                </details>
-                <details>
-                    <summary>Verbali esterni</summary>
-                    <a href="#">Requisiti funzionali</a>
-                    <a href="#">Requisiti non funzionali</a>
-                    <a href="#">Casi d'uso</a>
-                </details>
-            </article>
-            <article id="rtb">
-                <details>
-                    <summary>Verbali interni</summary>
-                    <a href="#">Verbale interno 1</a>
-                    <a href="#">Verbale interno 2</a>
-                    <a href="#">Verbale interno 3</a>
-                </details>
-                <details>
-                    <summary>Verbali esterni</summary>
-                    <a href="#">Requisiti funzionali</a>
-                    <a href="#">Requisiti non funzionali</a>
-                    <a href="#">Casi d'uso</a>
-                </details>
-            </article>
+        <section id="hero" class="hero">
+            <div class="hero-content">
+                <h1>7-ZPUs Engineering Team</h1>
+                <p class="subtitle">SWE Project 2025/2026</p>
+                <div class="hero-actions">
+                    <a class="button primary" href="https://github.com/7-ZPUs" target="_blank">GitHub — ZPUs Engineering</a>
+                    <a class="button ghost" href="#documentation">DOCUMENTAZIONE</a>
+                </div>
+            </div>
         </section>
-        <section id="team">
-            <h2>IL TEAM</h2>
-            <article class="member-card">
-                <img src="../assets/full-logo.jpg" alt="Foto di Fattoni Antonio">
-                <h3>Fattoni Antonio</h3>
-                </article>
 
-            <article class="member-card">
-                <img src="../assets/full-logo.jpg" alt="Foto di Georgescu Diana">
-                <h3>Georgescu Diana</h3>
-                </article>
+        <section class="content-area">
+            <article id="repo" class="resource-card">
+                <div class="resource-icon">
+                    <img src="assets/imgs/github-mark-white.png" alt="GitHub Logo" id="github-logo">
+                </div>
+                <div class="resource-content">
+                    <h3 id="repo-title">REPOSITORY</h3>
+                    <a href="https://github.com/7-ZPUs" target="_blank">GitHub — ZPUs Engineering</a>
+                </div>
+            </article>
+            <article id="docs" class="resource-card">
+                <div class="resource-icon">
+                    <span aria-hidden="true">📚</span>
+                </div>
+                <div class="resource-content">
+                    <h3>DOCUMENTAZIONE</h3>
+                    <a href="#documentation">RTB — Report Tecnico di Base</a>
+                    <a href="#documentation">PB — Progetto Base</a>
+                    <a href="#documentation">Candidatura — Presentazione Team</a>
+                </div>
+            </article>
+            <section id="documentation" class="documentation">
+                <div class="section-heading">
+                    <h2>DOCUMENTAZIONE</h2>
+                </div>
+                <div class="tablist" role="tablist" aria-label="Documentazione">
+                    <button type="button" role="tab" aria-controls="candidatura" class="content-selector">CANDIDATURA</button>
+                    <button type="button" role="tab" aria-controls="pb" class="content-selector">PB</button>
+                    <button type="button" role="tab" aria-controls="rtb" class="content-selector">RTB</button>
+                </div>
+                <div class="tab-panels">
+                    <article id="candidatura" role="tabpanel">
+                        <details>
+                            <summary>Verbali interni</summary>
+                            <a href="#">Verbale interno 1</a>
+                            <a href="#">Verbale interno 2</a>
+                            <a href="#">Verbale interno 3</a>
+                        </details>
+                        <details>
+                            <summary>Verbali esterni</summary>
+                            <a href="#">Requisiti funzionali</a>
+                            <a href="#">Requisiti non funzionali</a>
+                            <a href="#">Casi d'uso</a>
+                        </details>
+                    </article>
+                    <article id="pb" role="tabpanel">
+                        <details>
+                            <summary>Verbali interni</summary>
+                            <a href="#">Verbale interno 1</a>
+                            <a href="#">Verbale interno 2</a>
+                            <a href="#">Verbale interno 3</a>
+                        </details>
+                        <details>
+                            <summary>Verbali esterni</summary>
+                            <a href="#">Requisiti funzionali</a>
+                            <a href="#">Requisiti non funzionali</a>
+                            <a href="#">Casi d'uso</a>
+                        </details>
+                    </article>
+                    <article id="rtb" role="tabpanel">
+                        <details>
+                            <summary>Verbali interni</summary>
+                            <a href="#">Verbale interno 1</a>
+                            <a href="#">Verbale interno 2</a>
+                            <a href="#">Verbale interno 3</a>
+                        </details>
+                        <details>
+                            <summary>Verbali esterni</summary>
+                            <a href="#">Requisiti funzionali</a>
+                            <a href="#">Requisiti non funzionali</a>
+                            <a href="#">Casi d'uso</a>
+                        </details>
+                    </article>
+                </div>
+            </section>
+        </section>
 
-            <article class="member-card">
-                <img src="../assets/full-logo.jpg" alt="Foto di Gingilino Aaron">
-                <h3>Gingilino Aaron</h3>
+        <section id="team" class="team">
+            <div class="section-heading">
+                <h2>IL TEAM</h2>
+            </div>
+            <div class="team-grid">
+                <article class="member-card">
+                    <img src="../assets/full-logo.jpg" alt="Foto di Fattoni Antonio">
+                    <h3>Fattoni Antonio</h3>
                 </article>
-
-            <article class="member-card">
-                <img src="../assets/full-logo.jpg" alt="Foto di Laoud Zakaria">
-                <h3>Laoud Zakaria</h3>
+                <article class="member-card">
+                    <img src="../assets/full-logo.jpg" alt="Foto di Georgescu Diana">
+                    <h3>Georgescu Diana</h3>
                 </article>
-
-            <article class="member-card">
-                <img src="../assets/full-logo.jpg" alt="Foto di Rocco Matteo Alberto">
-                <h3>Rocco Matteo Alberto</h3>
+                <article class="member-card">
+                    <img src="../assets/full-logo.jpg" alt="Foto di Gingilino Aaron">
+                    <h3>Gingilino Aaron</h3>
                 </article>
-
-            <article class="member-card">
-                <img src="../assets/full-logo.jpg" alt="Foto di Soligo Lorenzo">
-                <h3>Soligo Lorenzo</h3>
+                <article class="member-card">
+                    <img src="../assets/full-logo.jpg" alt="Foto di Laoud Zakaria">
+                    <h3>Laoud Zakaria</h3>
                 </article>
-
-            <article class="member-card">
-                <img src="../assets/full-logo.jpg" alt="Foto di Vigolo Davide">
-                <h3>Vigolo Davide</h3>
-                </article></article>
+                <article class="member-card">
+                    <img src="../assets/full-logo.jpg" alt="Foto di Rocco Matteo Alberto">
+                    <h3>Rocco Matteo Alberto</h3>
+                </article>
+                <article class="member-card">
+                    <img src="../assets/full-logo.jpg" alt="Foto di Soligo Lorenzo">
+                    <h3>Soligo Lorenzo</h3>
+                </article>
+                <article class="member-card">
+                    <img src="../assets/full-logo.jpg" alt="Foto di Vigolo Davide">
+                    <h3>Vigolo Davide</h3>
+                </article>
+            </div>
         </section>
     </main>
 
