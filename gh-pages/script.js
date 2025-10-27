@@ -1,20 +1,42 @@
-document.querySelectorAll('.content-selector').forEach( el => {
-    el.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelectorAll('.content-selector').forEach( sel => sel.classList.remove('active'));
-        el.classList.add('active');
-    })
-});
+const tabButtons = document.querySelectorAll('#documentation .content-selector');
+const tabPanels = document.querySelectorAll('#documentation [role="tabpanel"]');
 
-document.querySelectorAll('#documentation .content-selector').forEach( el => {
-    el.addEventListener('click', (e) => {
-        const targetId = el.getAttribute('aria-controls');
-        document.querySelectorAll('#documentation article').forEach( a => a.style.display = 'none');
-        document.getElementById(targetId).style.display = 'block';
+if (tabButtons.length && tabPanels.length) {
+    tabButtons.forEach((button) => {
+        button.setAttribute('aria-selected', 'false');
+        button.setAttribute('tabindex', '-1');
+
+        button.addEventListener('click', () => {
+            tabButtons.forEach((btn) => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
+                btn.setAttribute('tabindex', '-1');
+            });
+
+            tabPanels.forEach((panel) => {
+                panel.style.display = 'none';
+                panel.setAttribute('hidden', 'true');
+            });
+
+            const targetId = button.getAttribute('aria-controls');
+            const targetPanel = document.getElementById(targetId);
+
+            if (targetPanel) {
+                button.classList.add('active');
+                button.setAttribute('aria-selected', 'true');
+                button.removeAttribute('tabindex');
+
+                targetPanel.style.display = 'block';
+                targetPanel.removeAttribute('hidden');
+            }
+        });
     });
-});
 
-document.querySelector('#documentation .content-selector:first-child').click();
+    const firstTab = tabButtons[0];
+    if (firstTab) {
+        firstTab.click();
+    }
+}
 
 document.addEventListener('scroll', () => {
     const header = document.querySelector('header');
