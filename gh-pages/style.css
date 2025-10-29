@@ -6,6 +6,13 @@
     font-display: swap;
 }
 
+.singles {
+    padding-left: 2em;
+    display: block;
+    line-height: 2.5em;
+    font-weight: bold;
+}
+
 :root {
     --font-body: "IBM", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --bg-base: #06140d;
@@ -17,6 +24,7 @@
     --text-secondary: #b7c7c1;
     --border: rgba(255, 255, 255, 0.12);
     --shadow: 0 18px 40px rgba(5, 12, 8, 0.7);
+    --layout-max-width: 1100px;
 }
 
 *,
@@ -41,7 +49,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 4rem;
-    padding: 6rem min(8vw, 6rem) 4rem;
+    padding: 4rem min(8vw, 6rem) 4rem;
 }
 
 a {
@@ -75,7 +83,7 @@ a:focus-visible {
 
 .header-inner {
     width: 100%;
-    max-width: 1100px;
+    max-width: var(--layout-max-width);
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -105,7 +113,7 @@ a:focus-visible {
 .site-nav {
     display: flex;
     align-items: center;
-    gap: 1.75rem;
+    gap: 1.50rem;
     font-size: 0.95rem;
     letter-spacing: 1px;
 }
@@ -123,21 +131,15 @@ a:focus-visible {
 }
 
 .hero {
-    position: relative;
     isolation: isolate;
     display: flex;
     justify-content: center;
     text-align: center;
-    padding: 6rem 1.5rem 4rem;
-}
-
-.hero::before {
-    content: "";
-    position: absolute;
-    inset: 2rem;
+    padding: 6rem clamp(1.5rem, 5vw, 3rem) 4rem;
+    width: min(100%, var(--layout-max-width));
+    align-self: center;
     border-radius: 36px;
     background: linear-gradient(135deg, rgba(46, 204, 113, 0.08), rgba(17, 45, 30, 0.35));
-    z-index: -1;
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -195,7 +197,6 @@ a:focus-visible {
 .button.primary {
     background: linear-gradient(135deg, var(--accent) 0%, #1fa75c 100%);
     color: #04110a;
-    box-shadow: 0 15px 35px rgba(46, 204, 113, 0.35);
 }
 
 .button.ghost {
@@ -207,21 +208,21 @@ a:focus-visible {
 .button:hover,
 .button:focus-visible {
     transform: translateY(-2px);
-    box-shadow: 0 18px 40px rgba(46, 204, 113, 0.4);
 }
 
 .content-area {
-    max-width: 1100px;
+    width: min(100%, var(--layout-max-width));
     margin: 0 auto;
     display: flex;
-    flex-wrap: wrap;
-    gap: 1.75rem;
-    align-items: stretch;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .section-heading {
     display: flex;
-    align-items: baseline;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
     gap: 1rem;
     width: 100%;
 }
@@ -234,23 +235,20 @@ a:focus-visible {
 }
 
 .resource-card {
-    flex: 1 1 320px;
     background: var(--bg-panel);
     border: 1px solid var(--border);
     border-radius: 22px;
-    padding: 1.75rem 2rem;
+    padding: 1.50rem 2rem;
     display: flex;
     align-items: center;
     gap: 1.5rem;
     text-align: left;
-    box-shadow: var(--shadow);
     transition: transform 0.2s ease, border 0.2s ease, box-shadow 0.2s ease;
 }
 
 .resource-card:hover {
     transform: translateY(-6px);
     border-color: rgba(46, 204, 113, 0.4);
-    box-shadow: 0 20px 50px rgba(12, 40, 24, 0.75);
 }
 
 .resource-icon {
@@ -265,9 +263,10 @@ a:focus-visible {
     font-size: 2rem;
 }
 
-#github-logo {
-    width: 36px;
-    height: auto;
+.resource-icon img {
+    width: var(--icon-size, 36px);
+    height: var(--icon-size, 36px);
+    display: block;
 }
 
 .resource-content {
@@ -311,7 +310,6 @@ a:focus-visible {
     border: 1px solid var(--border);
     border-radius: 28px;
     padding: 2.5rem clamp(1.5rem, 5vw, 3rem);
-    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -362,8 +360,7 @@ a:focus-visible {
     background: rgba(5, 15, 10, 0.6);
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 1.75rem clamp(1rem, 4vw, 2rem);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+    padding: 1.50rem clamp(1rem, 4vw, 2rem);
 }
 
 .tab-panels article:first-of-type {
@@ -388,7 +385,7 @@ details summary {
     cursor: pointer;
     list-style: none;
     position: relative;
-    padding: 0.5rem 0.5rem 0.5rem 1.75rem;
+    padding: 0.5rem 0.5rem 0.5rem 1.50rem;
     color: var(--text-primary);
     min-height: 44px;
     display: flex;
@@ -416,7 +413,7 @@ details[open] summary::before {
 
 details a {
     display: block;
-    padding: 0.75rem 0.5rem 0.75rem 1.75rem;
+    padding: 0.75rem 0.5rem 0.75rem 1.50rem;
     color: var(--text-secondary);
     font-size: 0.95rem;
     border-radius: 8px;
@@ -450,14 +447,13 @@ details a:focus-visible {
     background: rgba(6, 18, 12, 0.7);
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 1.75rem 1.25rem;
+    padding: 1.50rem 1.25rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
     text-align: center;
     transition: transform 0.2s ease, border 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: var(--shadow);
     flex: 0 0 220px;
     scroll-snap-align: start;
 }
