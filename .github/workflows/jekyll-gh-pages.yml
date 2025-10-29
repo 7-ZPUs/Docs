@@ -35,6 +35,10 @@ jobs:
         with:
           source: ./gh-pages
           destination: ./_site
+      - name: Include static PDF files
+        run: |
+          mkdir -p ./_site/1_Candidatura
+          cp -r ./1_Candidatura/* ./_site/1_Candidatura/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
