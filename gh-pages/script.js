@@ -46,3 +46,25 @@ document.addEventListener('scroll', () => {
         header.classList.remove('scrolled');
     }
 });
+
+const verbaliBaseUrls = {
+    interni: 'https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/1_Candidatura/Verbali/Verbali%20Interni/',
+    esterni: 'https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/1_Candidatura/Verbali/Verbali%20Esterni/',
+};
+
+document.querySelectorAll('a[data-base][data-file]').forEach((link) => {
+    const baseKey = link.dataset.base;
+    const fileName = link.dataset.file;
+    const baseUrl = verbaliBaseUrls[baseKey];
+
+    if (!baseUrl || !fileName) {
+        return;
+    }
+
+    const formattedFileName = fileName
+        .split('/')
+        .map((segment) => encodeURIComponent(segment))
+        .join('/');
+
+    link.href = `${baseUrl}${formattedFileName}`;
+});
