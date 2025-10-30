@@ -47,24 +47,30 @@ document.addEventListener('scroll', () => {
     }
 });
 
-const verbaliBaseUrls = {
-    interni: 'https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/1_Candidatura/Verbali/Verbali%20Interni/',
-    esterni: 'https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/1_Candidatura/Verbali/Verbali%20Esterni/',
-};
+const pdfLinks = document.querySelectorAll('.pdf-link');
+const pdfViewerWrapper = document.getElementById('pdf-viewer-wrapper');
+const pdfViewer = document.getElementById('pdf-viewer');
+const pdfDownloadLink = document.getElementById('pdf-download-link');
+const pdfTitle = document.getElementById('pdf-title');
+const pdfCloseButton = document.getElementById('pdf-close-button');
 
-document.querySelectorAll('a[data-base][data-file]').forEach((link) => {
-    const baseKey = link.dataset.base;
-    const fileName = link.dataset.file;
-    const baseUrl = verbaliBaseUrls[baseKey];
+if (pdfLinks.length && pdfViewerWrapper && pdfViewer && pdfTitle && pdfCloseButton) {
+    pdfLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const pdfPath = link.getAttribute('data-pdf');
+            const pdfName = link.textContent;
+            
+            pdfViewer.setAttribute('data', pdfPath);
+            pdfDownloadLink.setAttribute('href', pdfPath);
+            pdfTitle.textContent = pdfName;
+            
+            pdfViewerWrapper.style.display = 'block';
+            pdfViewerWrapper.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
 
-    if (!baseUrl || !fileName) {
-        return;
-    }
-
-    const formattedFileName = fileName
-        .split('/')
-        .map((segment) => encodeURIComponent(segment))
-        .join('/');
-
-    link.href = `${baseUrl}${formattedFileName}`;
-});
+    pdfCloseButton.addEventListener('click', () => {
+        pdfViewerWrapper.style.display = 'none';
+    });
+}
