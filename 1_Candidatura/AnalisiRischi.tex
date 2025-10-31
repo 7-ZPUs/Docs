@@ -1,0 +1,107 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{verbatim}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+
+\renewcommand{\rmdefault}{lmss}
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../assets/logo7ZPUS.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Documento di analisi dei rischi}\\
+    \vspace{0.5cm}
+\end{center}
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.3cm}
+
+\tableofcontents
+
+\newpage
+
+\section*{Tabella di Versionamento}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Descrizione} \\
+        \hline
+        1.1.1 & 30/10/2025 & Rocco Matteo A. & Correzione refusi \\
+        \hline
+        1.1 & 27/10/2025 & Gruppo al completo & Aggiunta rischi \\
+        \hline
+        1.0 & 24/10/2025 & Rocco Matteo A. & Creazione e stesura iniziale \\
+        \hline
+    \end{tabular}
+
+\section{Descrizione}
+Questo documento ha l'obiettivo di riportare le problematiche che potrebbero sorgere durante la realizzazione del capitolato di progetto di Ingegneria del Software, analizzando in modo preciso e realistico quanti più casi possibili, la loro probabilità di verificarsi e come porvi eventualmente rimedio.
+
+
+\vspace{0.5cm}
+\section{Rischi}
+Ad ogni rischio verranno assegnati i seguenti parametri:
+\begin{itemize}
+    \item Probabilità: espressa con scala da 1 a 4 (Improbabile, Poco probabile, Probabile, Altamente probabile)
+    \item Conseguenze: indica la gravità (Lieve, Medio, Grave, Gravissimo) e cosa comporta il verificarsi di tale evento
+    \item Rimedi: come risolvere o mitigare il più possibile eventuali conseguenze negative
+\end{itemize}
+
+\subsection{Rischio 1: Sforamento dei costi preventivati}
+\textbf{Probabilità:} 2 - Poco probabile\\
+\textbf{Conseguenze:} Il superamento del budget preventivato potrebbe compromettere la fattibilità del progetto, portando a ritardi nella consegna o alla necessità di ridurre alcune funzionalità previste. (Medio)\\
+\textbf{Rimedi:} Monitorare costantemente l'allocazione delle ore rispetto alla pianificazione iniziale, effettuare stand-up meetings periodici e prevedere margini temporali per imprevisti.
+
+\subsection{Rischio 2: Calo di produttività del team}
+\textbf{Probabilità:} 4 - Altamente probabile\\
+\textbf{Conseguenze:} Il gruppo prevede un calo dell'attività nel periodo natalizio, a causa di impegni personali e festività, che si sovrappone al periodo di sessione d'esame. (Lieve)
+\textbf{Rimedi:} Pianificare in anticipo le attività più critiche prima del periodo di calo, e le restanti tenendo conto del periodo di ridotta attività.  
+
+\subsection{Rischio 3: Mancata comunicazione e collaborazione tra i membri del team}
+\textbf{Probabilità:} 1 - Improbabile\\
+\textbf{Conseguenze:} La mancanza di comunicazione efficace può portare a incomprensioni, duplicazione degli sforzi e ritardi nel completamento delle attività. (Grave)\\
+\textbf{Rimedi:} Stabilire canali di comunicazione chiari e regolari e una routine di aggiornamenti pianificati per garantire che tutti i membri del team siano allineati sugli obiettivi e le responsabilità.
+
+\subsection{Rischio 4: Mancata comunicazione con l'azienda proponente}
+\textbf{Probabilità:} 2 - Poco probabile\\
+\textbf{Conseguenze:} La mancanza di feedback regolari dall'azienda proponente potrebbe portare a uno sviluppo rallentato e implementazione di funzionalità non allineate con le loro aspettative. (Grave)\\
+\textbf{Rimedi:} Stabilire un calendario di incontri regolari con l'azienda proponente per garantire un flusso costante di comunicazione e feedback.
+
+\subsection{Rischio 5: Problemi tecnici con gli strumenti di sviluppo}
+\textbf{Probabilità:} 3 - Probabile\\
+\textbf{Conseguenze:} L'inesperienza del gruppo con le tecnologie da utilizzare potrebbe portare a difficoltà tecniche e rallentamenti nello sviluppo. (Medio)\\
+\textbf{Rimedi:} Prevedere sessioni di formazione iniziali con il supporto occasionale dell'azienda proponente per familiarizzare con gli strumenti e le tecnologie.
+
+\subsection{Rischio 6: Mancato rispetto delle norme e documenti di progetto interni}
+\textbf{Probabilità:} 2 - Poco probabile\\
+\textbf{Conseguenze:} La mancata aderenza ai documenti di progetto potrebbe portare a discrepanze tra i lavori svolti dai componenti del gruppo. (Grave)\\
+\textbf{Rimedi:} Ruolo attivo di amministratori e tester per garantire il rispetto delle norme e dei documenti di progetto interni.
+
+
+\vspace{0.5cm}
+
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}

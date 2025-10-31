@@ -1,0 +1,148 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian]{babel}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Esterno Gruppo di Progetto e SanMarco Informatica}\\
+    \vspace{0.5cm}
+\end{center}
+
+
+\noindent
+\textbf{Data:} 20/10/2025 \\
+\textbf{Durata:} 30 Minuti con l'azienda, 15 minuti di discussione interna \\
+\textbf{Luogo:} Incontro online (Google Meet con azienda, Discord internamente)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+\section{Tabella di Versionamento}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Descrizione} \\
+        \hline
+        1.1 & 22/10/2025 & Matteo A. Rocco & Revisione struttura e Conclusioni \\
+        \hline
+        1.0 & 20/10/2025 & Zakaria Laoud & Creazione del verbale e stesura iniziale \\
+        \hline
+    \end{tabular}
+
+
+\section{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Gingilino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+\end{itemize}
+
+\section{Ordine del Giorno}
+\begin{enumerate}
+    \item Domande e chiarimenti con l'azienda  
+    \item Discussione delle informazioni ricevute 
+    \item Organizzazione dei prossimi incontri
+\end{enumerate}
+\vspace{0.5cm}
+\section{Svolgimento e Discussione}
+L’incontro ha avuto inizio alle ore 17:00, preceduto da circa dieci minuti di confronto interno finalizzato ad allinearci sulle domande da porre e a definire chi avrebbe preso la parola durante la riunione.
+
+Nel corso dell’incontro sono state rivolte ai referenti di SanMarco Informatica diverse domande di carattere tecnico e organizzativo.
+Successivamente, all’interno del gruppo, si è svolta una discussione volta ad analizzare e rielaborare le informazioni acquisite durante l’incontro.
+
+\vspace{0.5cm}
+
+\section{Domande e Risposte}
+
+\textbf{Domanda 1:} È corretto pensare a DIPReader come a un sistema di archiviazione documentale destinato a dipendenti o rappresentanti aziendali, che consente di gestire e scaricare specifici sottoinsiemi di file? \\[0.5em]
+\textbf{Risposta:} Sì, l’obiettivo è realizzare un sistema di archiviazione che consenta all’utente di selezionare un insieme di documenti, i quali costituiranno un pacchetto di distribuzione (DIP) avente valore legale.
+Il destinatario del DIP può essere, a seconda dei casi, un giudice, l’Agenzia delle Entrate o la Guardia di Finanza.
+Inoltre, DIPReader deve offrire la possibilità di filtrare i documenti presenti nel sistema, così da agevolare la ricerca e la selezione da parte dell’utente.
+
+\vspace{2em}
+
+\textbf{Domanda 2:} Qual è la differenza tra un'applicazione multi piattaforma e una soluzione direttamente nel browser?\\[0.5em]
+\textbf{Risposta:} L'idea sarebbe quella di creare un'applicazione che funzioni su tutte le piattaforme esistenti ( Windows, Linux, MacOS ), evitando di dover scaricare file o eseguibili su dispositivi che potrebbero non avere alcuni privilegi/diritti.
+
+\vspace{2em}
+
+\textbf{Domanda 3:} Per quanto riguarda FAISS (Facebook Artificial Intelligence Similarity Search), è lo strumento che introduce l’intelligenza artificiale all’interno del progetto?\\[0.5em]
+\textbf{Risposta:} Sì, si tratta di una libreria LLM molto semplice da implementare, anche grazie ai vari progetti interni all’azienda che già ne fanno uso. Però, se ci sono altre librerie con cui avete più dimestichezza, vanno bene comunque.
+
+\vspace{2em}
+
+\textbf{Domanda 4:} Quindi, FAISS è lo strumento che permette la ricerca semantica?\\[0.5em]
+\textbf{Risposta:} Sì, FAISS è lo strumento che consente di creare un database vettoriale su file system, evitando così dipendenze da engine esterni come nei database relazionali. Inoltre, permette di effettuare ricerche basate sul linguaggio naturale.
+
+\vspace{2em}
+
+\textbf{Domanda 5:} Per quanto riguarda il salvataggio, è necessario permettere la selezione del formato oppure è sufficiente far scaricare il file?\\[0.5em]
+\textbf{Risposta:} Data la complessità della struttura della cartella, sarebbe preferibile permettere il salvataggio del file stesso; pertanto, non è necessaria alcuna conversione di formato.
+
+\vspace{2em}
+
+\textbf{Domanda 6:} Con “processo di conservazione” si intende che dobbiamo tenere conto di tutti i passaggi o le fasi che un file ha attraversato?\\[0.5em]
+\textbf{Risposta:} Sostanzialmente, l'obiettivo è tracciare parte della storia del file e garantirne l'integrità nel tempo. Ciò può essere realizzato applicando una funzione di hash al file appena caricato; ogni volta che il file viene consultato, l'applicazione deve mostrare un indicatore che riporti il risultato del confronto tra l’hash originale e quello calcolato localmente sul momento, verificandone così l'integrità.
+
+\vspace{2em}
+
+\textbf{Domanda 7:} Quali sono le differenze tra React e Angular?\\[0.5em]
+\textbf{Risposta:} In realtà, sia React che Angular sono framework che, alla fine, generano codice JavaScript; di conseguenza, le differenze tra i due non sono così significative sul piano pratico.
+
+\vspace{2em}
+
+\textbf{Domanda 8:} In che modo potremmo organizzare la collaborazione in termini di cicli di lavoro?\\[0.5em]
+\textbf{Risposta:} Per quanto ci riguarda, potremmo organizzare un incontro di “kick-off” per illustrare nel dettaglio le specifiche del progetto. Successivamente, sarebbe opportuno programmare incontri bisettimanali per confrontarci sullo stato di avanzamento e per discutere eventuali dubbi emersi durante lo svolgimento del lavoro. Tali incontri possono essere organizzati in presenza oppure online.
+
+
+\vspace{0.5cm}
+\section{Decisioni e Conclusioni interne}
+Al termine della call con l’azienda, il gruppo si è riunito in una chiamata su Discord per confrontarsi sugli argomenti trattati e discutere i punti emersi durante l’incontro. Le informazioni condivise hanno permesso di comprendere appieno le esigenze e gli obiettivi del progetto, facilitando la pianificazione delle prossime fasi di sviluppo. 
+
+\vspace{15em}
+
+\begin{tabular}{@{}p{0.5in}p{2in}@{}}
+Data: & \hrulefill \\
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{@{}p{0.5in}p{2in}@{}}
+Firma: & \hrulefill \\
+& SanMarco Informatica SPA \\
+\end{tabular}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
