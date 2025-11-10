@@ -1,75 +1,378 @@
-\documentclass[a4paper,12pt]{article}
-
+\documentclass[12pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
 \usepackage[italian]{babel}
-\renewcommand{\rmdefault}{lmss}
-\usepackage{float}
-\usepackage{microtype}
 \usepackage{geometry}
-\usepackage{setspace}
-\usepackage{enumitem}
-\usepackage{titlesec}
-\usepackage{tocloft}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
 \usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{lastpage}
+\geometry{
+    top=2.5cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm
+}
+
+
+\pagestyle{fancy}
+\fancyhf{} 
+\fancyhead[L]{\small Analisi dei Requisiti}
+\fancyhead[R]{} 
+\fancyfoot[]{\small 7-ZPUs}
+\fancyfoot[C]{\small Pagina \thepage\ di \pageref{LastPage}}
+\fancyfoot[R]{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
-    filecolor=magenta,      
-    urlcolor=cyan,
+    filecolor=black,
+    urlcolor=black,
+    citecolor=black,
+    pdftitle={Analisi dei Requisiti},
+    pdfpagemode=FullScreen
 }
 
-\pagestyle{fancy}
-\setlength{\headwidth}{\textwidth}
-\fancyhfoffset[L,R]{0pt}
-\lhead{\rightmark}
-\rhead{7-ZPUs}
-\lfoot{Analisi dei Requisiti}
-\rfoot{\thepage}
-\cfoot{}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\footrulewidth}{0.8pt}
 
-\renewcommand{\contentsname}{Indice}
-
-\geometry{margin=2.5cm}
-\setstretch{1.2}
+\newcommand{\docDate}{\today}
+\newcommand{\projectName}{DIPReader}
+\newcommand{\groupName}{7-ZPUs Team}
+\newcommand{\companyName}{Sanmarco Informatica}
 
 
-\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
-\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+\definecolor{sectioncolor}{RGB}{0,0,0}
+\titleformat{\section}
+  {\color{sectioncolor}\normalfont\Large\bfseries}
+  {\thesection}{1em}{}
+\titleformat{\subsection}
+  {\color{sectioncolor}\normalfont\large\bfseries}
+  {\thesubsection}{1em}{}
 
 \begin{document}
 
 
-\begin{center}
-    \includegraphics[width=9.5cm]{../assets/logo7ZPUs.jpg}\\
-    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\Huge\bfseries Analisi dei Requisiti\par}
+    \vspace{1cm}
+    {\Large \projectName\par}
+    \vspace{2cm}   
+    \vfill
+    {\large \groupName\par}
     \vspace{0.5cm}
-    \Large \textbf{Analisi dei Requisiti}\\
-\end{center}
+    {\large Università degli Studi di Padova\par}
+    {\large Corso di Ingegneria del Software\par}
+    {\large A.A. 2025/2026\par}
+\end{titlepage}
 
-\vspace{0.3cm}
-\hrule
-\vspace{0.5cm}
-
-\tableofcontents
-
+% tabella versionamento
 \newpage
 
-\section*{Tabella di Versionamento}
-\begin{tabular}{|c|c|c|c|c|}
-    \hline
-    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
-    \hline
-    1.0 & 31/10/2025 & Autore & Verificatore & Descrizione \\
-    \hline
+\section*{Registro dei Cambiamenti}
+\begin{longtable}{|p{1.8cm}|p{2cm}|p{3cm}|p{3cm}|p{5cm}|}
+\hline
+\textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Dettaglio} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione della Modifica} \\
+\hline
+\endhead
 
+\hline
+\endfoot
+1.0.0 & 07/11/2025 & Georgescu Diana & Laoud Zakaria & Creazione del template e stesura iniziale. \\
+\hline
+\end{longtable}
+
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+
+% corpo documento
+\newpage
+\section{Introduzione}
+
+\subsection{Scopo del documento}
+Questo documento si pone l'obiettivo di delineare in modo chiaro le caratteristiche del software da realizzare, partendo dall'analisi dei bisogni e delle aspettative della proponente. L'elaborazione dei requisiti trae origine dallo studio preliminare del capitolato, al fine di individuare gli attori coinvolti e le funzionalità attese.\\
+ 
+Il presente documento sarà utilizzato come punto di riferimento per tutto l'arco dello sviluppo del prodotto, dalla progettazione alla validazione, e permetterà il tracciamento di ogni decisione progettuale, consentendoci di soddisfare le aspettative della proponente.\\
+
+Il documento di Analisi dei Requisiti è redatto dagli \textit{Analisti} del team di progetto ed è destinato principalmente a tre categorie di soggetti. In primo luogo, al \textbf{Committente}, che attraverso la sua consultazione può verificare che i requisiti siano stati correttamente compresi e formalizzati in linea con le proprie aspettative. In secondo luogo, al Team di \textbf{Progettisti e Programmatori}, per i quali il documento rappresenta una guida di riferimento essenziale durante la fase di sviluppo del Sistema software. Infine, al \textbf{Team di Verificatori}, che si baserà sulle informazioni contenute nel suddetto documento per definire i casi di test e verificare la conformità del prodotto alle specifiche.
+
+Questo documento sarà, inoltre, a disposizione degli Amministratori e dei Responsabili di Progetto, allo scopo di ottenere una visione chiara e completa delle caratteristiche e delle funzionalità previste per il Sistema.
+
+\subsection{Prospettiva del prodotto}
+DA DESCRIVERE
+
+\subsection{Funzioni del prodotto}
+Anche qua DA CAPIRE ( elenco delle funzionalità richieste, meglio se dopo l'incontro con la proponente )
+
+\subsection{Caratteristiche dell'utente}
+Descrizione caratteristiche utenti 
+
+
+\subsection{Riferimenti}
+
+\subsubsection{Riferimenti normativi}
+\begin{itemize}
+    \item Capitolato d'appalto: \textbf{C3 - DIPReader}\\
+    \url{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}
+
+    \item Norme di Progetto: \textbf{LINK DA INSERIRE}
+
+    \item Regolamento progetto didattico:\\
+    \url{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/PD1.pdf}
+\end{itemize}
+
+\subsubsection{Riferimenti informativi}
+\begin{itemize}
+    \item ISO/IEC/IEEE 29148:2018 - Systems and software engineering — Life cycle processes — Requirements engineering
+    \item Slide del corso - Analisi dei requisiti: \\
+    \url{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T05.pdf}
+    \item Diagrammi dei Casi d'Uso: \\
+    \url{https://www.math.unipd.it/~rcardin/swea/2023/Diagrammi\%20delle\%20Classi.pdf}
+\end{itemize}
+
+\newpage
+\section{Descrizione}
+
+\subsection{Obiettivi del prodotto}
+DA FARE
+
+\subsection{Vincoli generali}
+vincoli es: tecnologici, normativi, altro
+
+\newpage
+\section{Casi d'uso}
+
+\subsection{Introduzione}
+Per facilitare la comprensione dei casi d'uso, questi saranno descritti da un grafico UML e un testo per visualizzare gli obiettivi del prodotto.
+
+La descrizione testuale deve contenere le seguenti informazioni:
+\begin{itemize}
+    \item \textbf{Attori (principali o secondari)}: rappresentano un ruolo che un'entità esterna al sistema assume quando interagisce con esso per raggiungere un obiettivo.
+    \item \textbf{Precondizioni}: condizioni che devono essere vere nello stato del sistema prima che il caso d'uso inizi la sua esecuzione.
+    \item \textbf{Postcondizioni}: condizioni che devono essere vere nello stato del sistema dopo che il caso d'uso è terminato.
+    \item \textbf{Scenario principale}: interazioni tra attore e sistema che porta al raggiungimento dell'obiettivo del caso d'uso con successo
+    \item \textbf{Scenari alternativi}: variazione rispetto al flusso principale.
+\end{itemize}
+  DA VEDERE MEGLIO 
+  
+\subsection{Attori}
+Descrizione attori del sistema con relativo diagramma
+
+\begin{figure}[h]
+    \centering
+    \caption{Diagramma}
+    \label{fig:attori}
+\end{figure}
+
+\subsubsection{Attori principali}
+\begin{itemize}
+    \item \textbf{Attore a}: descrizione
+    \item \textbf{Attore b}: descrizione
+\end{itemize}
+
+\subsubsection{Attori secondari}
+\begin{itemize}
+    \item \textbf{Attore Secondario}: descrizione
+\end{itemize}
+
+\subsection{Lista casi d'uso}
+
+\subsubsection{UC1 - Nome Caso d'Uso}
+\begin{figure}[h]
+    \centering
+    \caption{UC1}
+    \label{fig:uc1}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Attore principale}: Nome attore
+    \item \textbf{Precondizioni}:
+        \begin{itemize}
+            \item Precondizione 1
+            \item Precondizione 2
+        \end{itemize}
+    \item \textbf{Postcondizioni}:
+        \begin{itemize}
+            \item Postcondizione 1
+            \item Postcondizione 2
+        \end{itemize}
+    \item \textbf{Scenario principale}:
+        \begin{enumerate}
+            \item ---
+            \item ---
+            \item ---
+        \end{enumerate}
+    \item \textbf{Scenari alternativi}:
+        \begin{itemize}
+            \item ---
+        \end{itemize}
+\end{itemize}
+
+\textit{da mantenere la medesima struttura per ogni UC}
+
+\newpage
+\section{Requisiti}
+
+\subsection{Introduzione}
+I requisiti vengono classificati secondo le seguenti categorie:
+\begin{itemize}
+    \item \textbf{Requisiti Funzionali (F)}: descrivono le funzionalità del sistema
+    \item \textbf{Requisiti di Qualità (Q)}: descrivono le caratteristiche qualitative del sistema
+    \item \textbf{Requisiti di Vincolo (V)}: descrivono i vincoli tecnologici e normativi
+\end{itemize}
+
+Ogni requisito è identificato da un codice univoco nella forma:
+\begin{center}
+\texttt{R-[ID]-[Tipo]-[Priorità]}
+\end{center}
+
+Dove:
+\begin{itemize}
+    \item \textbf{ID}: numero progressivo del requisito
+    \item \textbf{Tipo}: F (Funzionale), Q (Qualità), V (Vincolo)
+    \item \textbf{Priorità}: Ob (Obbligatorio), De (Desiderabile), Op (Opzionale)
+\end{itemize}
+
+\subsection{Requisiti Funzionali}
+
+\begin{longtable}{|p{2.5cm}|p{8cm}|p{3cm}|}
+\hline
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+\hline
+\caption{Requisiti Funzionali}
+\label{tab:req-funzionali}
+\end{longtable}
+
+\subsection{Requisiti di Qualità}
+
+\begin{longtable}{|p{2.5cm}|p{8cm}|p{3cm}|}
+\hline
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+\hline
+\caption{Requisiti di Qualità}
+\label{tab:req-qualita}
+\end{longtable}
+
+\subsection{Requisiti di Vincolo}
+
+\begin{longtable}{|p{2.5cm}|p{8cm}|p{3cm}|}
+\hline
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\caption{Requisiti di Vincolo}
+\label{tab:req-vincolo}
+\end{longtable}
+
+\subsection{Tracciamento}
+
+\subsubsection{Tracciamento Fonti - Requisiti}
+
+\begin{longtable}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Fonte} & \textbf{Requisiti} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Fonte} & \textbf{Requisiti} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\hline
+\caption{Tracciamento Fonti - Requisiti}
+\label{tab:trace-fonti-req}
+\end{longtable}
+
+\subsubsection{Tracciamento Requisiti - Fonti}
+
+\begin{longtable}{|p{3cm}|p{11cm}|}
+\hline
+\textbf{Requisito} & \textbf{Fonti} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Requisito} & \textbf{Fonti} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\caption{Tracciamento Requisiti - Fonti}
+\label{tab:trace-req-fonti}
+\end{longtable}
+
+\subsection{Riepilogo}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Tipologia} & \textbf{Obbligatori} & \textbf{Desiderabili} & \textbf{Opzionali} & \textbf{Totale} \\
+\hline
+Funzionali & X & Y & Z & N \\
+\hline
+Qualità & X & Y & Z & N \\
+\hline
+Vincolo & X & Y & Z & N \\
+\hline
+\textbf{Totale} & X & Y & Z & \textbf{N} \\
+\hline
 \end{tabular}
+\caption{Riepilogo dei Requisiti}
+\label{tab:riepilogo-requisiti}
+\end{table}
 
-
+\newpage
 
 \end{document}
