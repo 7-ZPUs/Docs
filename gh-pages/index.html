@@ -1,159 +1,352 @@
 <!DOCTYPE html>
 <html lang="it">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>7-ZPUs Engineering Team</title>
-    <link rel="icon" type="image/x-icon" href="assets/imgs/favicon.ico">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="assets/imgs/favicon.ico" />
+    <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <header class="site-header">
-        <div class="header-inner">
-            <a href="#hero" class="logo">
-                <img src="assets/imgs/logo-transp-rev.png" alt="Logo ZPUs Engineering Team">
-                <!-- <span class="logo-text">7-ZPUs Engineering Team</span> -->
-            </a>
-            <nav class="site-nav">
-                <a href="https://github.com/7-ZPUs">REPOSITORY</a>
-                <a href="#documentation">DOCUMENTAZIONE</a>
-                <a href="#team">TEAM</a>
-            </nav>
-        </div>
+      <div class="header-inner">
+        <a href="#hero" class="logo">
+          <img
+            src="assets/imgs/logo-transp-rev.png"
+            alt="Logo ZPUs Engineering Team"
+          />
+          <!-- <span class="logo-text">7-ZPUs Engineering Team</span> -->
+        </a>
+        <nav class="site-nav">
+          <a href="https://github.com/7-ZPUs">REPOSITORY</a>
+          <a href="#documentation">DOCUMENTAZIONE</a>
+          <a href="#team">TEAM</a>
+        </nav>
+      </div>
     </header>
 
     <main>
-        <section id="hero" class="hero">
-            <div class="hero-content">
-                <h1>7-ZPUs Engineering Team</h1>
-                <p class="subtitle">SWE Project 2025/2026</p>
-                <div class="hero-actions">
-                    <a class="button primary" href="https://github.com/7-ZPUs" target="_blank">GitHub — ZPUs Engineering</a>
-                    <a class="button ghost" href="#documentation">DOCUMENTAZIONE</a>
-                </div>
-            </div>
-        </section>
+      <section id="hero" class="hero">
+        <div class="hero-content">
+          <h1>7-ZPUs Engineering Team</h1>
+          <p class="subtitle">SWE Project 2025/2026</p>
+          <div class="hero-actions">
+            <a
+              class="button primary"
+              href="https://github.com/7-ZPUs"
+              target="_blank"
+              >GitHub — ZPUs Engineering</a
+            >
+            <a class="button ghost" href="#documentation">DOCUMENTAZIONE</a>
+          </div>
+        </div>
+      </section>
 
-        <section class="content-area">
-            <article id="repo" class="resource-card">
-                <div class="resource-icon">
-                    <picture>
-                        <source srcset="assets/imgs/github-mark-white.png" media="(prefers-color-scheme: dark)">
-                        <img src="assets/imgs/github-mark.png" alt="Logo GitHub" class="icon-github" width="36"
-                            height="36" loading="lazy">
-                    </picture>
+      <section class="content-area">
+        <article id="repo" class="resource-card">
+          <div class="resource-icon">
+            <picture>
+              <source
+                srcset="assets/imgs/github-mark-white.png"
+                media="(prefers-color-scheme: dark)"
+              />
+              <img
+                src="assets/imgs/github-mark.png"
+                alt="Logo GitHub"
+                class="icon-github"
+                width="36"
+                height="36"
+                loading="lazy"
+              />
+            </picture>
+          </div>
+          <div class="resource-content">
+            <h3 id="repo-title">REPOSITORY</h3>
+            <a href="https://github.com/7-ZPUs" target="_blank"
+              >GitHub — ZPUs Engineering</a
+            >
+          </div>
+        </article>
+        <section id="documentation" class="documentation">
+          <div class="section-heading">
+            <h2>DOCUMENTAZIONE</h2>
+          </div>
+
+          <!-- LetteraDiPresentazione -->
+          <div class="candidatura-letter">
+            <div class="pdf-item pdf-item--single">
+              <a
+                class="singles pdf-link"
+                href="#"
+                data-base="candidatura"
+                data-file="LetteraDiPresentazione.pdf"
+                >Lettera di presentazione</a
+              >
+            </div>
+            <div class="pdf-item pdf-item--single">
+              <a
+                class="singles pdf-link"
+                href="#"
+                data-base="candidatura"
+                data-file="PreventivoCostiEAssunzioneImpegni.pdf"
+                >Preventivo costi e assunzione impegni</a
+              >
+            </div>
+            <div class="pdf-item pdf-item--single">
+              <a
+                class="singles pdf-link"
+                href="#"
+                data-base="candidatura"
+                data-file="AnalisiCapitolati.pdf"
+                >Analisi Capitolati</a
+              >
+            </div>
+            <div class="pdf-item pdf-item--single">
+              <a
+                class="singles pdf-link"
+                href="#"
+                data-base="candidatura"
+                data-file="AnalisiRischi.pdf"
+                >Analisi dei rischi</a
+              >
+            </div>
+          </div>
+
+          <!-- nav documenti -->
+          <div class="tablist" role="tablist" aria-label="Documentazione">
+            <button
+              type="button"
+              role="tab"
+              aria-controls="candidatura"
+              class="content-selector"
+            >
+              CANDIDATURA
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-controls="RTB"
+              class="content-selector"
+            >
+              RTB
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-controls="PB"
+              class="content-selector"
+            >
+              PB
+            </button>
+          </div>
+
+          <!-- candidatura -->
+          <div class="tab-panels">
+            <article id="candidatura" role="tabpanel">
+              <details>
+                <summary>Verbali interni</summary>
+                <div class="pdf-item">
+                  <a
+                    href="#"
+                    class="pdf-link"
+                    data-base="verbali-interni"
+                    data-file="VerbaleInterno-2025-10-27.pdf"
+                    >Verbale interno 27/10/2025</a
+                  >
                 </div>
-                <div class="resource-content">
-                    <h3 id="repo-title">REPOSITORY</h3>
-                    <a href="https://github.com/7-ZPUs" target="_blank">GitHub — ZPUs Engineering</a>
+                <div class="pdf-item">
+                  <a
+                    href="#"
+                    class="pdf-link"
+                    data-base="verbali-interni"
+                    data-file="VerbaleInterno-2025-10-26.pdf"
+                    >Verbale interno 26/10/2025</a
+                  >
                 </div>
+                <div class="pdf-item">
+                  <a
+                    href="#"
+                    class="pdf-link"
+                    data-base="verbali-interni"
+                    data-file="VerbaleInterno-2025-10-24.pdf"
+                    >Verbale interno 24/10/2025</a
+                  >
+                </div>
+                <div class="pdf-item">
+                  <a
+                    href="#"
+                    class="pdf-link"
+                    data-base="verbali-interni"
+                    data-file="VerbaleInterno-2025-10-22.pdf"
+                    >Verbale interno 22/10/2025</a
+                  >
+                </div>
+                <div class="pdf-item">
+                  <a
+                    href="#"
+                    class="pdf-link"
+                    data-base="verbali-interni"
+                    data-file="VerbaleInterno-2025-10-17.pdf"
+                    >Verbale interno 17/10/2025</a
+                  >
+                </div>
+                <div class="pdf-item">
+                  <a
+                    href="#"
+                    class="pdf-link"
+                    data-base="verbali-interni"
+                    data-file="VerbaleInterno-2025-10-14.pdf"
+                    >Verbale interno 14/10/2025</a
+                  >
+                </div>
+              </details>
+              <details>
+                <summary>Verbali esterni</summary>
+                <div class="pdf-item">
+                  <a
+                    href="#"
+                    class="pdf-link"
+                    data-base="verbali-esterni"
+                    data-file="VerbaleEsterno-2025-10-20-1400.pdf"
+                    >Verbale esterno 20/10/2025 Ergon Informatica</a
+                  >
+                </div>
+                <div class="pdf-item">
+                  <a
+                    href="#"
+                    class="pdf-link"
+                    data-base="verbali-esterni"
+                    data-file="VerbaleEsterno-2025-10-20-1700.pdf"
+                    >Verbale esterno 20/10/2025 SanMarco Informatica</a
+                  >
+                </div>
+              </details>
             </article>
-            <!-- <article id="docs" class="resource-card">
-                <div class="resource-icon">
-                    <span aria-hidden="true">📚</span>
-                </div>
-                <div class="resource-content">
-                    <h3>DOCUMENTAZIONE</h3>
-                    <a href="#documentation">RTB — Report Tecnico di Base</a>
-                    <a href="#documentation">PB — Progetto Base</a>
-                    <a href="#documentation">Candidatura — Presentazione Team</a>
-                </div>
-            </article> -->
-            <section id="documentation" class="documentation">
-                <div class="section-heading">
-                    <h2>DOCUMENTAZIONE</h2>
-                </div>
-                <div class="tablist" role="tablist" aria-label="Documentazione">
-                    <button type="button" role="tab" aria-controls="candidatura" class="content-selector">CANDIDATURA</button>
-                    <button type="button" role="tab" aria-controls="RTB" class="content-selector">RTB</button>
-                    <button type="button" role="tab" aria-controls="PB" class="content-selector">PB</button>
-                </div>
-                <div class="tab-panels">
-                    <article id="candidatura" role="tabpanel">
-                        <details>
-                            <summary>Verbali interni</summary>
-                            <a href="#" class="pdf-link" data-pdf="assets/pdf/Verbali/Verbali Interni/VerbaleInterno-2025-10-14.pdf">Verbale interno 14/10/2025</a>
-                            <a href="#" class="pdf-link" data-pdf="assets/pdf/Verbali/Verbali Interni/VerbaleInterno-2025-10-17.pdf">Verbale interno 17/10/2025</a>
-                            <a href="#" class="pdf-link" data-pdf="assets/pdf/Verbali/Verbali Interni/VerbaleInterno-2025-10-22.pdf">Verbale interno 22/10/2025</a>
-                            <a href="#" class="pdf-link" data-pdf="assets/pdf/Verbali/Verbali Interni/VerbaleInterno-2025-10-24.pdf">Verbale interno 24/10/2025</a>
-                            <a href="#" class="pdf-link" data-pdf="assets/pdf/Verbali/Verbali Interni/VerbaleInterno-2025-10-26.pdf">Verbale interno 26/10/2025</a>
-                            <a href="#" class="pdf-link" data-pdf="assets/pdf/Verbali/Verbali Interni/VerbaleInterno-2025-10-27.pdf">Verbale interno 27/10/2025</a>
-                        </details>
-                        <details>
-                            <summary>Verbali esterni</summary>
-                            <a href="#" class="pdf-link" data-pdf="assets/pdf/Verbali/Verbali Esterni/VerbaleEsterno-2025-10-20-1400.pdf">Verbale esterno 20/10/2025 Ergon Informatica</a>
-                            <a href="#" class="pdf-link" data-pdf="assets/pdf/Verbali/Verbali Esterni/VerbaleEsterno-2025-10-20-1700.pdf">Verbale esterno 20/10/2025 SanMarco Informatica</a>
-                        </details>
-                        <a class="singles pdf-link" href="#" data-pdf="assets/pdf/AnalisiCapitolati.pdf">Analisi Capitolati</a>
-                        <a class="singles pdf-link" href="#" data-pdf="assets/pdf/AnalisiRischi.pdf">Analisi dei rischi</a>
-                        <a class="singles pdf-link" href="#" data-pdf="assets/pdf/PreventivoCostiEAssunzioneImpegni.pdf">Preventivo costi e assunzione impegni</a>
-                        <a class="singles pdf-link" href="#" data-pdf="assets/pdf/LetteraDiPresentazione.pdf">Lettera di presentazione</a>
-                    </article>
-                    <article id="RTB" role="tabpanel">
-                        <div>In definizione</div>
-        
-                    </article>
-                    <article id="PB" role="tabpanel">
-                        <div>In definizione</div>
-                    </article>
-                </div>
-                <div id="pdf-viewer-wrapper" style="display: none;">
-                    <div class="pdf-viewer-header">
-                        <h3 id="pdf-title"></h3>
-                        <button id="pdf-close-button" aria-label="Chiudi visualizzatore PDF">&times;</button>
-                    </div>
-                    <div id="pdf-viewer-container">
-                        <object id="pdf-viewer" data="" type="application/pdf" width="100%" height="800px">
-                            <p>Il tuo browser non supporta la visualizzazione dei PDF. Puoi scaricare il PDF da <a id="pdf-download-link" href="">qui</a>.</p>
-                        </object>
-                    </div>
-                </div>
-            </section>
-        </section>
 
-        <section id="team" class="team">
-            <div class="section-heading">
-                <h2>IL TEAM</h2>
+            <!-- rtb -->
+            <article id="RTB" role="tabpanel">
+              <div>In definizione</div>
+            </article>
+
+            <!-- pb -->
+            <article id="PB" role="tabpanel">
+              <div>In definizione</div>
+            </article>
+          </div>
+          <div id="pdf-viewer-wrapper" style="display: none">
+            <div class="pdf-viewer-header">
+              <h3 id="pdf-title"></h3>
+              <button
+                id="pdf-close-button"
+                aria-label="Chiudi visualizzatore PDF"
+              >
+                &times;
+              </button>
             </div>
-            <div class="team-grid">
-                <a class="member-card" href="https://github.com/gintoni" target="_blank" rel="noopener">
-                    <img src="assets/imgs/full-logo.jpg" alt="Foto di Fattoni Antonio">
-                    <h3>Fattoni Antonio</h3>
-                </a>
-                <a class="member-card" href="https://github.com/diana-georgescu" target="_blank" rel="noopener">
-                    <img src="assets/imgs/full-logo.jpg" alt="Foto di Georgescu Diana">
-                    <h3>Georgescu Diana</h3>
-                </a>
-                <a class="member-card" href="https://github.com/Obliteratore" target="_blank" rel="noopener">
-                    <img src="assets/imgs/full-logo.jpg" alt="Foto di Gingilino Aaron">
-                    <h3>Gingilino Aaron</h3>
-                </a>
-                <a class="member-card" href="https://github.com/zakka00" target="_blank" rel="noopener">
-                    <img src="assets/imgs/full-logo.jpg" alt="Foto di Laoud Zakaria">
-                    <h3>Laoud Zakaria</h3>
-                </a>
-                <a class="member-card" href="https://github.com/matteorocco27" target="_blank" rel="noopener">
-                    <img src="assets/imgs/full-logo.jpg" alt="Foto di Rocco Matteo Alberto">
-                    <h3>Rocco Matteo Alberto</h3>
-                </a>
-                <a class="member-card" href="https://github.com/Solgio" target="_blank" rel="noopener">
-                    <img src="assets/imgs/full-logo.jpg" alt="Foto di Soligo Lorenzo">
-                    <h3>Soligo Lorenzo</h3>
-                </a>
-                <a class="member-card" href="https://github.com/davidevigolo" target="_blank" rel="noopener">
-                    <img src="assets/imgs/full-logo.jpg" alt="Foto di Vigolo Davide">
-                    <h3>Vigolo Davide</h3>
-                </a>
+            <div id="pdf-viewer-container">
+              <object
+                id="pdf-viewer"
+                data=""
+                type="application/pdf"
+                width="100%"
+                height="800px"
+              >
+                <p>
+                  Il tuo browser non supporta la visualizzazione dei PDF. Puoi
+                  scaricare il PDF da <a id="pdf-download-link" href="">qui</a>.
+                </p>
+              </object>
             </div>
+          </div>
         </section>
+      </section>
+
+      <section id="team" class="team">
+        <div class="section-heading">
+          <h2>IL TEAM</h2>
+        </div>
+        <div class="team-grid">
+          <a
+            class="member-card"
+            href="https://github.com/gintoni"
+            target="_blank"
+            rel="noopener"
+          >
+            <img
+              src="https://avatars.githubusercontent.com/u/51779672?v=4"
+              alt="Foto di Fattoni Antonio"
+            />
+            <h3>Fattoni Antonio</h3>
+          </a>
+          <a
+            class="member-card"
+            href="https://github.com/diana-georgescu"
+            target="_blank"
+            rel="noopener"
+          >
+            <img
+              src="https://avatars.githubusercontent.com/u/224424684?v=4"
+              alt="Foto di Georgescu Diana"
+            />
+            <h3>Georgescu Diana</h3>
+          </a>
+          <a
+            class="member-card"
+            href="https://github.com/Obliteratore"
+            target="_blank"
+            rel="noopener"
+          >
+            <img
+              src="https://avatars.githubusercontent.com/u/202827687?v=4"
+              alt="Foto di Gingilino Aaron"
+            />
+            <h3>Gingilino Aaron</h3>
+          </a>
+          <a
+            class="member-card"
+            href="https://github.com/zakka00"
+            target="_blank"
+            rel="noopener"
+          >
+            <img src="https://avatars.githubusercontent.com/u/106381125?v=4" alt="Foto di Laoud Zakaria" />
+            <h3>Laoud Zakaria</h3>
+          </a>
+          <a
+            class="member-card"
+            href="https://github.com/matteorocco27"
+            target="_blank"
+            rel="noopener"
+          >
+            <img
+              src="https://avatars.githubusercontent.com/u/98394882?v=4"
+              alt="Foto di Rocco Matteo Alberto"
+            />
+            <h3>Rocco Matteo Alberto</h3>
+          </a>
+          <a
+            class="member-card"
+            href="https://github.com/Solgio"
+            target="_blank"
+            rel="noopener"
+          >
+            <img src="https://avatars.githubusercontent.com/u/91017732?v=4" alt="Foto di Soligo Lorenzo" />
+            <h3>Soligo Lorenzo</h3>
+          </a>
+          <a
+            class="member-card"
+            href="https://github.com/davidevigolo"
+            target="_blank"
+            rel="noopener"
+          >
+            <img src="https://avatars.githubusercontent.com/u/95879199?v=4" alt="Foto di Vigolo Davide" />
+            <h3>Vigolo Davide</h3>
+          </a>
+        </div>
+      </section>
     </main>
 
-    <footer>
-        © 2025 ZPUs Engineering Team — Tutti i diritti riservati
-    </footer>
-</body>
-
+    <footer>© 2025 ZPUs Engineering Team — Tutti i diritti riservati</footer>
+  </body>
 </html>
