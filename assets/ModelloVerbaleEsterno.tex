@@ -1,17 +1,99 @@
 \documentclass[a4paper,12pt]{article}
-
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
-\usepackage{lmodern}
 \usepackage[italian]{babel}
-\renewcommand{\rmdefault}{lmss}
+\usepackage{lmodern}
+\renewcommand*\familydefault{\sfdefault}
 \usepackage{float}
 \usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
 \usepackage{setspace}
+\usepackage{chngpage}
 \usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage{tocloft}
 \usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
 \renewcommand{\contentsname}{Indice}
 
 \geometry{margin=2.5cm}
@@ -23,11 +105,12 @@
 \begin{document}
 
 
+
 \begin{center}
     \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
-    \Large \textbf{Verbale Esterno Gruppo di Progetto e [Azienda Proponente]}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Esterno Gruppo di Progetto e Sanmarco Informatica}\\
     \vspace{0.5cm}
-    \small\hspace{10cm} 7zpus.swe@gmail.com
 \end{center}
 
 
@@ -44,18 +127,23 @@
 
 \newpage
 
-\section{Tabella di Versionamento}
-    \begin{tabular}{|c|c|c|c|}
-        \hline
-        \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Descrizione} \\
-        \hline
-        1.0 & 9/9/1999 & Scriba & Creazione del verbale e stesura iniziale \\
-
-        \hline
-    \end{tabular}
 
 
-\section{Partecipanti}
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    0.1 & 07/11/2025 & Autore & Verificatore & Creazione del verbale e stesura iniziale \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\section*{Partecipanti}
 \begin{itemize}[noitemsep]
     \item Fattoni Antonio 
     \item Georgescu Diana
@@ -64,39 +152,37 @@
     \item Rocco Matteo Alberto
     \item Soligo Lorenzo
     \item Vigolo Davide
+    \item Rossi Andrea
+    \item Sarra Luca % occhio a modificare in base a chi c'è
 \end{itemize}
 
+
 \section{Ordine del Giorno}
-\begin{enumerate}
+\begin{enumerate}[noitemsep]
     \item Lorem ipsum dolor sit amet
     \item Lorem ipsum dolor sit amet
 \end{enumerate}
+
 \vspace{0.5cm}
+
 \section{Svolgimento e Discussione}
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullamco laboriosam, nisi ut aliquid ex ea commodi consequatur. Duis aute irure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-\vspace{0.5cm}
 
 \section{Domande e Risposte}
+Non so se sia una sezione ricorrente e da mantenere, valuterei di incorporare tutto in Svolgimento e Discussione. \\
 
-\textbf{Domanda 1:} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullamco laboriosam, nisi ut aliquid ex ea commodi consequatur.\\[0.5em]
-\textbf{Risposta:} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullamco laboriosam, nisi ut aliquid ex ea commodi consequatur.
-
-\vspace{2em}
-
-\textbf{Domanda 1:} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullamco laboriosam, nisi ut aliquid ex ea commodi consequatur.\\[0.5em]
-\textbf{Risposta:} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullamco laboriosam, nisi ut aliquid ex ea commodi consequatur.
+\begin{infobox}
+Nota bene che infatti ora è ancora una sezione quindi la subsection qui sotto degli ordini del giorno andrebbe sotto svolgimento, non sotto domande e risposte.
+\end{infobox}
 
 
-\vspace{0.5cm}
+\subsection{Sottosezioni corrispondenti agli ordini del giorno}
+Creare una sottosezione per ogni punto da trattare.
 
+\section{Eventuali argomenti non affrontati}
+Possiamo inserirci o gli ordini del giorno che non si è riusciti a discutere completamente (e quindi la sezione degli ordini del giorno sono più una dichiarazione di intenti di cosa discutere più che un sommario degli argomenti trattati) oppure argomenti che sappiamo saranno prossimimente trattati.
 
-\section{Argomento all'Ordine del Giorno}
-
-\subsection{Eventuali sottosezioni}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullamco laboriosam, nisi ut aliquid ex ea commodi consequatur. Duis aute irure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-\vspace{0.5cm}
 \section{Decisioni e Conclusione}
 \begin{itemize}
     \item Elenco in riferimento all'ordine del giorno trattato con le relative decisioni.
@@ -108,6 +194,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
     \item Lorem ipsum dolor sit amet
 \end{enumerate}
 
+\vfill
+
+
+\begin{flushleft}
 \begin{tabular}{@{}p{0.5in}p{2in}@{}}
 Data: & \hrulefill \\
 \end{tabular}
@@ -116,10 +206,10 @@ Data: & \hrulefill \\
 
 \begin{tabular}{@{}p{0.5in}p{2in}@{}}
 Firma: & \hrulefill \\
-& [nome azienda] \\
+& [Sanmarco Informatica SPA] \\
 \end{tabular}
+\end{flushleft}
 
-\vfill
 \begin{flushright}
     \textit{7-ZPUs}
 \end{flushright}
