@@ -2,7 +2,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[italian]{babel}
+\usepackage[italian, provide=*]{babel}
 \usepackage{lmodern}
 \renewcommand*\familydefault{\sfdefault}
 \usepackage{float}
@@ -68,18 +68,17 @@
 
 \tableofcontents
 
-
 \section*{Tabella di Versionamento}
 \begin{table}[H]
     \begin{adjustwidth}{-4cm}{-4cm}
-    \centering
-    \begin{tabular}{|c|c|c|c|c|}
-        \hline
-        \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
-        \hline
-        0.1 & 16/11/2025 & Rocco Matteo A. & Soligo Lorenzo & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Introduzione e Processo di fornitura \end{tabular} \\
-        \hline
-    \end{tabular}
+        \centering
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione}                                                                                         \\
+            \hline
+            0.1               & 16/11/2025    & Rocco Matteo A. & Soligo Lorenzo        & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Introduzione e Processo di fornitura \end{tabular} \\
+            \hline
+        \end{tabular}
     \end{adjustwidth}
 \end{table}
 
@@ -88,14 +87,31 @@
 \section{Introduzione}
 
 \subsection{Scopo}
-Questo documento ha l'obiettivo di definire e normare il \glossario{Way of Working}, ovvero le regole di lavoro che ogni membro del gruppo deve rispettare durante lo svolgimento delle \glossario{attività di progetto} volte allo sviluppo dell'applicativo software \glossario{\textbf{DIPReader}}, proposto dall'azienda \glossario{Sanmarco Informatica}. A ciascun membro è richiesto di seguirle integralmente per poter lavorare in maniera quanto più efficace ed efficiente, oltre che omogenea.
-Data la natura incrementale di redazione del documento, il \glossario{responsabile di progetto} in carica ha il compito di mantenere aggiornate le presenti norme e eventuali riferimenti ad altri documenti contenuti al loro interno. 
+Questo documento ha l'obiettivo di definire e normare il \glossario{Way of
+    Working}, ovvero le regole di lavoro che ogni membro del gruppo deve rispettare
+durante lo svolgimento delle \glossario{attività di progetto} volte allo
+sviluppo dell'applicativo software \glossario{\textbf{DIPReader}}, proposto
+dall'azienda \glossario{Sanmarco Informatica}. A ciascun membro è richiesto di
+seguirle integralmente per poter lavorare in maniera quanto più efficace ed
+efficiente, oltre che omogenea. Data la natura incrementale di redazione del
+documento, il \glossario{responsabile di progetto} in carica ha il compito di
+mantenere aggiornate le presenti norme e eventuali riferimenti ad altri
+documenti contenuti al loro interno.
 
 \subsection{Glossario}
-Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{Ingegneria del Software} utilizzato nella documentazione di progetto viene definito nell'apposito documento \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@norme_in_lavorazione/2_RTB/Glossario.pdf}{\ul{Glossario 1.0}\setulcolor{black}}\ped{(ultimo accesso: 17/11/2025)}. 
+Ogni termine tecnico o con particolare significato nell'ambito
+dell'\glossario{Ingegneria del Software} utilizzato nella documentazione di
+progetto viene definito nell'apposito documento
+\href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@norme_in_lavorazione/2_RTB/Glossario.pdf}{\ul{Glossario
+        1.0}\setulcolor{black}}\ped{(ultimo accesso: 17/11/2025)}.
 
 \subsection{Riferimenti}
-Il gruppo ha deciso di redigere il presente documento in conformità con lo \glossario{standard} ISO/IEC 12207:1995, integrando occasionalmente con approfondimenti contenuti nella sua versione più attuale ISO/IEC/IEEE 12207:2017 per includere dettagli aggiuntivi relativi agli approcci \glossario{agili} e \glossario{iterativi} che contraddistinguono lo \glossario{sviluppo software} moderno. 
+Il gruppo ha deciso di redigere il presente documento in conformità con lo
+\glossario{standard} ISO/IEC 12207:1995, integrando occasionalmente con
+approfondimenti contenuti nella sua versione più attuale ISO/IEC/IEEE
+12207:2017 per includere dettagli aggiuntivi relativi agli approcci
+\glossario{agili} e \glossario{iterativi} che contraddistinguono lo
+\glossario{sviluppo software} moderno.
 
 \subsubsection{Riferimenti Normativi}
 \begin{itemize}
@@ -109,19 +125,19 @@ Il gruppo ha deciso di redigere il presente documento in conformità con lo \glo
 \subsubsection{Riferimenti Informativi}
 \begin{itemize}
     \item Dispense del corso di Ingegneria del Software 2025/2026:
-    \begin{itemize}
-        \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T01.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T01.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
-        \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T02.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T02.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
-        \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T03.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T03.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
-        \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T04.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T04.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
-        \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T05.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T05.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
-        \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T06.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T06.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
-        \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T07.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T07.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
-        \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T08.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T08.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
-        \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T09.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T09.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
-        \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T10.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T10.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
-        \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T11.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T11.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
-    \end{itemize}
+          \begin{itemize}
+              \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T01.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T01.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
+              \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T02.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T02.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
+              \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T03.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T03.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
+              \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T04.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T04.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
+              \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T05.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T05.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
+              \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T06.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T06.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
+              \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T07.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T07.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
+              \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T08.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T08.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
+              \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T09.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T09.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
+              \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T10.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T10.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
+              \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T11.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T11.pdf}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
+          \end{itemize}
     \item \href{https://www.agid.gov.it/it/sicurezza/cert-pa/linee-guida-sviluppo-del-software-sicuro}{\ul{Linee Guida Sviluppo Sicuro AGID (Agenzia per l'Italia Digitale)}\setulcolor{black}}
     \item  \href{https://www.agid.gov.it/it/linee-guida#index-3}{\ul{Linee Guida sulla formazione, gestione e conservazione dei documenti informatici AGID}\setulcolor{black}}
     \item \href{https://www.lorenzopantieri.net/LaTeX_files/LaTeXpedia.pdf}{\ul{Documentazione \LaTeX{} by Lorenzo Pantieri}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
@@ -130,41 +146,85 @@ Il gruppo ha deciso di redigere il presente documento in conformità con lo \glo
 
 \section{Processi Primari}
 
-
 \subsection{Processo di Fornitura}
-Il \glossario{processo} di fornitura contiene le attività e i compiti svolti dal \glossario{fornitore}. Per implementare correttamente il processo il gruppo si impegna a svolgere le seguenti attività.
+Il \glossario{processo} di fornitura contiene le attività e i compiti svolti
+dal \glossario{fornitore}. Per implementare correttamente il processo il gruppo
+si impegna a svolgere le seguenti attività.
 
 \subsubsection{Attività di processo}
 
 \subparagraph{Avvio}
-Il fornitore analizza i \glossario{requisiti} necessari alla proposta di fornitura, tenendo considerazione di eventuali vincoli organizzativi e normativi.
+Il fornitore analizza i \glossario{requisiti} necessari alla proposta di
+fornitura, tenendo considerazione di eventuali vincoli organizzativi e
+normativi.
 \subparagraph{Preparazione della proposta di fornitura}
-Il fornitore prepara la proposta di fornitura in risposta alle richieste del committente e definisce i termini in cui si articola la proposta.
+Il fornitore prepara la proposta di fornitura in risposta alle richieste del
+committente e definisce i termini in cui si articola la proposta.
 \subparagraph{Accordo}
-Proponente e fornitore entrano nella fase di definizione dell'accordo di fornitura del prodotto software, prevedendo possibilità di negoziazione della fornitura da parte del fornitore.
+Proponente e fornitore entrano nella fase di definizione dell'accordo di
+fornitura del prodotto software, prevedendo possibilità di negoziazione della
+fornitura da parte del fornitore.
 \subparagraph{Pianificazione}
-Il fornitore rielabora l'analisi dei requisiti fondamentali per definire il \glossario{framework} entro il quale il prodotto verrà sviluppato e gestito, in modo tale da garantire un processo di qualità durante lo sviluppo. Si impegna inoltre a definire il modello del ciclo di vita del prodotto adatto alla complessità del progetto e ai relativi rischi che potrebbero insorgere. Tutte queste decisioni convergono nel Piano di Progetto.
+Il fornitore rielabora l'analisi dei requisiti fondamentali per definire il
+\glossario{framework} entro il quale il prodotto verrà sviluppato e gestito, in
+modo tale da garantire un processo di qualità durante lo sviluppo. Si impegna
+inoltre a definire il modello del ciclo di vita del prodotto adatto alla
+complessità del progetto e ai relativi rischi che potrebbero insorgere. Tutte
+queste decisioni convergono nel Piano di Progetto.
 \subparagraph{Esecuzione e controllo}
-Il fornitore si impegna a sviluppare il prodotto secondo il Piano di Progetto, avendo cura di controllare che i processi siano stati eseguiti correttamente.
+Il fornitore si impegna a sviluppare il prodotto secondo il Piano di Progetto,
+avendo cura di controllare che i processi siano stati eseguiti correttamente.
 \subparagraph{Verifica e validazione}
-Il fornitore stabilisce con la proponente le modalità di rendicontazione dello stato di avanzamento del prodotto e rende disponibili i documenti che dimostrino la verifica e validazione dei processi secondo i requisiti precedentemente individuati.
+Il fornitore stabilisce con la proponente le modalità di rendicontazione dello
+stato di avanzamento del prodotto e rende disponibili i documenti che
+dimostrino la verifica e validazione dei processi secondo i requisiti
+precedentemente individuati.
 \subparagraph{Consegna e terminazione}
-Il fornitore consegna il prodotto finale al proponente e ne espone le funzionalità.
+Il fornitore consegna il prodotto finale al proponente e ne espone le
+funzionalità.
 
 \subsubsection{Accordi con l'azienda proponente}
-I capitolati presentati dalle proponenti vengono analizzati e viene redatto il documento di \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/1_Candidatura/AnalisiCapitolati.pdf}{\ul{Analisi dei capitolati}\setulcolor{black}}, nel quale sono delineati i bisogni e i principali vincoli a cui attenersi per la fornitura del prodotto finale.
-Il fornitore espone ai committenti di fornitura, ovvero i Professori Vardanega Tullio e Cardin Riccardo, la Lettera di Presentazione della proposta di fornitura che descrive il preventivo di costi, cronogramma di sviluppo, suddivisione del lavoro e i ruoli coinvolti.
+I capitolati presentati dalle proponenti vengono analizzati e viene redatto il
+documento di
+\href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/1_Candidatura/AnalisiCapitolati.pdf}{\ul{Analisi
+        dei capitolati}\setulcolor{black}}, nel quale sono delineati i bisogni e i
+principali vincoli a cui attenersi per la fornitura del prodotto finale. Il
+fornitore espone ai committenti di fornitura, ovvero i Professori Vardanega
+Tullio e Cardin Riccardo, la Lettera di Presentazione della proposta di
+fornitura che descrive il preventivo di costi, cronogramma di sviluppo,
+suddivisione del lavoro e i ruoli coinvolti.
 
-La \glossario{proponente}, in qualità di \glossario{stakeholder}, esercita il diritto di ricevere la rendicontazione professionale e approfondita del lavoro svolto dal gruppo fornitore, perciò si instaura un accordo per delineare le modalità di comunicazione e il contenuto di tale rendicontazione. 
-È previsto l'aggiornamento costante e tempestivo della proponente per quanto riguarda la pianificazione degli obiettivi e delle tempistiche di sviluppo individuate dal fornitore. Ogni qualvolta vi siano modifiche di notevole interesse esterno dal gruppo fornitore verranno comunicate all'azienda proponente attraverso appositi canali di comunicazione sincrona o asincrona.
+La \glossario{proponente}, in qualità di \glossario{stakeholder}, esercita il
+diritto di ricevere la rendicontazione professionale e approfondita del lavoro
+svolto dal gruppo fornitore, perciò si instaura un accordo per delineare le
+modalità di comunicazione e il contenuto di tale rendicontazione. È previsto
+l'aggiornamento costante e tempestivo della proponente per quanto riguarda la
+pianificazione degli obiettivi e delle tempistiche di sviluppo individuate dal
+fornitore. Ogni qualvolta vi siano modifiche di notevole interesse esterno dal
+gruppo fornitore verranno comunicate all'azienda proponente attraverso appositi
+canali di comunicazione sincrona o asincrona.
 
-Il fornitore e la proponente hanno accordato lo svolgimento di un incontro di verifica dello stato di avanzamento lavori (\glossario{SAL}) in modalità sincrona ogni due settimane, in cui discutere l'andamento del lavoro e chiarire eventuali dubbi da parte del fornitore o segnalazioni di difformità dai requisiti iniziali della proponente. È inoltre sempre disponibile la comunicazione via email per questioni minori e di facile risoluzione.
-La consegna del prodotto è suddivisa in due \glossario{milestone} principali: \glossario{RTB} (Requirements and Technology Baseline) e \glossario{PB} (Product Baseline).
+Il fornitore e la proponente hanno accordato lo svolgimento di un incontro di
+verifica dello stato di avanzamento lavori (\glossario{SAL}) in modalità
+sincrona ogni due settimane, in cui discutere l'andamento del lavoro e chiarire
+eventuali dubbi da parte del fornitore o segnalazioni di difformità dai
+requisiti iniziali della proponente. È inoltre sempre disponibile la
+comunicazione via email per questioni minori e di facile risoluzione. La
+consegna del prodotto è suddivisa in due \glossario{milestone} principali:
+\glossario{RTB} (Requirements and Technology Baseline) e \glossario{PB}
+(Product Baseline).
 
 \subsubsection{Documentazione fornita}
 
 \subparagraph{Analisi dei requisiti}
-Nel documento di \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/AnalisiDeiRequisiti.pdf}{\ul{Analisi dei requisiti}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)} sono riportati i bisogni e i vincoli a cui attenersi per la realizzazione del prodotto finale. L'obiettivo è definire in maniera non ambigua i \glossario{casi d'uso} (\textit{Use Cases}) e i requisiti (\textit{Requirements}) del software. Il documento è diviso nelle seguenti sezioni:
+Nel documento di
+\href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/AnalisiDeiRequisiti.pdf}{\ul{Analisi
+        dei requisiti}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)} sono
+riportati i bisogni e i vincoli a cui attenersi per la realizzazione del
+prodotto finale. L'obiettivo è definire in maniera non ambigua i
+\glossario{casi d'uso} (\textit{Use Cases}) e i requisiti
+(\textit{Requirements}) del software. Il documento è diviso nelle seguenti
+sezioni:
 \begin{enumerate}
     \item Introduzione
     \item Descrizione
@@ -173,10 +233,21 @@ Nel documento di \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Analis
 \end{enumerate}
 
 \subparagraph{Glossario}
-Il Glossario è il documento che raccoglie ogni termine di carattere tecnico, nomenclature e acronimi con particolare significato nell'ambito dell'Ingegneria del Software utilizzato nella documentazione di progetto. La definizione dei termini di glossario è coadiuvata dal contenuto dello standard ISO/IEC/IEEE 24765/2017.
+Il Glossario è il documento che raccoglie ogni termine di carattere tecnico,
+nomenclature e acronimi con particolare significato nell'ambito dell'Ingegneria
+del Software utilizzato nella documentazione di progetto. La definizione dei
+termini di glossario è coadiuvata dal contenuto dello standard ISO/IEC/IEEE
+24765/2017.
 
 \subparagraph{Piano di progetto}
-Il \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@norme_in_lavorazione/2_RTB/PianoDiProgetto.pdf}{\ul{Piano di progetto v1.0}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)} è il documento che espone all'esterno il lavoro di sviluppo svolto seguendo le procedure delineate all'interno di questo documento. Fornisce una guida dettagliata alla pianificazione, esecuzione e consuntivo delle attività completate in ciascuna \glossario{sprint}. Il documento è diviso nelle seguenti sezioni:
+Il
+\href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/PianoDiProgetto.pdf}{\ul{Piano
+        di progetto v1.0}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)} è il
+documento che espone all'esterno il lavoro di sviluppo svolto seguendo le
+procedure delineate all'interno di questo documento. Fornisce una guida
+dettagliata alla pianificazione, esecuzione e consuntivo delle attività
+completate in ciascuna \glossario{sprint}. Il documento è diviso nelle seguenti
+sezioni:
 \begin{enumerate}
     \item Introduzione
     \item Analisi dei rischi e mitigazione
@@ -188,9 +259,17 @@ Il \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@norme_in_lavorazione/2_RTB/Pian
 \end{enumerate}
 
 \subparagraph{Piano di qualifica}
-Il piano di qualifica descrive gli obiettivi di qualità dei processi che il fornitore si impegna a soddisfare per consegnare un prodotto finale di qualità. Le metriche di valutazione vengono determinate dall'analisi dei requisiti e dalle indicazioni date dalla proponente, suddivise in base all'applicazione sui processi o sul prodotto.
-Le metriche stabilite vengono poi misurate attraverso opportuni test e verifiche, di cui vengono riportate le specifiche.
-Il documento include una sezione di rendicontazione per la valutazione dei processi e la valutazione del prodotto, in cui riportare l'attinenza alle metriche ottenuta rispetto agli obiettivi e di conseguenza valutare azioni correttive in caso si verifichino eventuali problemi (\glossario{cruscotto di qualità}). Il documento è diviso nelle seguenti sezioni:
+Il piano di qualifica descrive gli obiettivi di qualità dei processi che il
+fornitore si impegna a soddisfare per consegnare un prodotto finale di qualità.
+Le metriche di valutazione vengono determinate dall'analisi dei requisiti e
+dalle indicazioni date dalla proponente, suddivise in base all'applicazione sui
+processi o sul prodotto. Le metriche stabilite vengono poi misurate attraverso
+opportuni test e verifiche, di cui vengono riportate le specifiche. Il
+documento include una sezione di rendicontazione per la valutazione dei
+processi e la valutazione del prodotto, in cui riportare l'attinenza alle
+metriche ottenuta rispetto agli obiettivi e di conseguenza valutare azioni
+correttive in caso si verifichino eventuali problemi (\glossario{cruscotto di
+    qualità}). Il documento è diviso nelle seguenti sezioni:
 \begin{enumerate}
     \item Qualità dei processi
     \item Qualità del prodotto
@@ -198,9 +277,12 @@ Il documento include una sezione di rendicontazione per la valutazione dei proce
     \item Cruscotto di qualità
 \end{enumerate}
 
-
 \subparagraph{Lettera di presentazione}
-La lettera di presentazione è il documento necessario alla candidatura per la milestone di revisione di avanzamento \glossario{RTB} (\textit{Requirements and Technology Baseline}). Essa contiene le informazioni sul repository di progetto, il puntatore al \glossario{Proof of Concept}, il consuntivo di spesa e preventivo a finire del progetto.
+La lettera di presentazione è il documento necessario alla candidatura per la
+milestone di revisione di avanzamento \glossario{RTB} (\textit{Requirements and
+    Technology Baseline}). Essa contiene le informazioni sul repository di
+progetto, il puntatore al \glossario{Proof of Concept}, il consuntivo di spesa
+e preventivo a finire del progetto.
 
 \subsubsection{Strumenti}
 \begin{itemize}
@@ -210,23 +292,60 @@ La lettera di presentazione è il documento necessario alla candidatura per la m
     \item Gmail per la comunicazione asincrona con l'azienda proponente
 \end{itemize}
 
-
 \subsection{Processo di sviluppo}
 
 \subsubsection{Attività di processo}
-
 
 \subsection{Processo operativo}
 
 \subsection{Processo di manutenzione}
 
-
 \section{Processi di Supporto}
+I processi di supporto sono volti a garantire l'efficacia e l'efficienza dei
+processi primari.
 
 \subsection{Processo di documentazione}
+Il processo di documentazione è parte integrante del Progetto in quanto permette il tracciamento delle decisioni prese, delle attività svolte e dei risultati ottenuti. Tutto ciò al fine di favorire il lavoro asincrono tra membri del gruppo e promuovere il principio \glossario{Agile} di continuo miglioramento e adattamento tramite \glossario{feedback}.
+\subsubsection{Strumenti a supporto}
+Per la gestione della documentazione di progetto il gruppo utilizza i seguenti strumenti:
+\begin{itemize}
+    \item \glossario{GitHub}: repository centrale per la gestione della documentazione. Permette il versionamento dei documenti e grazie alle \glossario{pull request} anche la gestione di \glossario{Verifica} e \glossario{Approvazione} finale dei documenti.
+    \item \glossario{\LaTeX}: linguaggio di markup utilizzato per la stesura dei documenti di progetto, in quanto permette di ottenere una formattazione professionale e uniforme tra i vari documenti. Per una stesura efficiente dei documenti il Team si è dotato di modelli predefiniti \ped{(Decisione del \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali\%20Interni/2025-11-07-VerbaleInterno.pdf}{2025-11-07})}.
+    \item \glossario{Jira}: strumento di gestione delle attività di progetto, utilizzato per tracciare le attività di documentazione e assegnarle ai membri del gruppo.
+\end{itemize}
 
-\subsection{Processo di gestione della configurazione}
-
+\subsubsection{Attività di processo}
+Le attività principali del processo di documentazione sono:
+\begin{itemize}
+    \item \textbf{Pianificazione della documentazione}: definizione delle linee guida per la stesura dei documenti, inclusi formati, modelli e standard di qualità e assegnazione di della redazione ai membri del gruppo. Più in \ref{pianificazioneDocs}
+    \item \textbf{Produzione della documentazione}: redazione dei documenti di progetto seguendo le linee guida stabilite, assicurando chiarezza, coerenza e completezza delle informazioni.Più in \ref{produzioneDocs}
+    \item \textbf{Revisione e approvazione}: ogni documento redatto viene sottoposto a un processo di revisione interna da parte di un membro del gruppo diverso dall'autore.
+   \end{itemize}
+e seguono il seguente flusso:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../assets/ProcessoDocumentazione.png}
+    \caption{Flusso del processo di documentazione}
+\end{figure}
+\subsubsection{Pianificazione della documentazione}\label{pianificazioneDocs}
+La pianificazione della documentazione avviene contestualmente alla pianificazione delle attività di progetto. \\Durante la pianificazione di ogni \glossario{sprint}, il \glossario{responsabile di progetto} assegna le attività di documentazione ai membri del gruppo, tenendo conto delle competenze e della disponibilità di ciascuno. Le scadenze per la consegna dei documenti sono stabilite in modo da garantire che la documentazione sia sempre aggiornata e disponibile per la consultazione da parte del gruppo e di eventuali attori esterni (Azienda \glossario{proponente}, \glossario{committente}).
+\\Per una più efficiente scrittura dei documenti, soprattutto di tutti quei documenti periodici (Verbali Interni, Verbali Esterni, Diario di Bordo) sono presenti modelli standard approvati in \href{https://github.com/7-ZPUs/Docs/tree/main/assets}{/assets}. L'aggiornamento di tali standard deve essere argomento di Verbali Interni e risultato di una discussione e succesiva decisione presa in tale sede.
+\subsubsection{Produzione della documentazione}\label{produzioneDocs}
+La produzione della documentazione, assegnata durante la pianificazione, è visibile all'assegnatario come \glossario{Work item} grazie all'estensione Jira di \ref*{fff}VSCode. Grazie a quest'ultima è possibile creare direttamente il Branch di lavoro che si baserà sulla feature branch principale. UNa volta completata la stesura, seguendo i modelli standard sopracitati, l'autore del documento crea una \glossario{(PR) Pull Request} verso la feature branch principale, assegnando come revisore il membro del gruppo designato, diverso da se. \\
+A questo punto:
+\begin{itemize}
+\item Se il revisore \textbf{approva la PR}, questa branch viene automaticamente eliminata, il work item viene marcato come completato in Jira e l'assegnatario può proseguire con gli altri compiti a lui assegnati.
+\item Se il revisore richiede modifiche \textbf{la PR viene bocciata} e l'assegnatario deve procedere con le modifiche richieste. Una volta completate, l'assegnatario notifica il revisore che procederà con una nuova revisione. Questo ciclo si ripete fino a quando la PR non viene approvata.
+\end{itemize}
+L'integrazione con Jira permette di controllare lo stato di avanzamento dei Work Item, la rendicontazione delle ore lavorate e la gestione delle scadenze.
+Risulta quindi \textbf{obbligatorio} l'utilizzo di Smart Commit per tutti i commit, compresi quelli di Pull Request. Più in \ref{Jira}.
+\subsubsection{Revisione e approvazione}
+Ogni documento redatto viene sottoposto a un processo di revisione interna che ne accerta la correttezza contenutistica, formale, e stilistica. La revisione viene effettuata da un membro del gruppo diverso dall'autore del documento che al termine del processo può:
+\begin{itemize}
+    \item \textbf{Approvare il documento.} Questo porta all'apertura di una Pull Request verso la branch principale revisionata dal \glossario{responsabile} che quindi confermerà l'integrazione ai documenti approvati in via definitiva.
+    \item \textbf{Richiedere modifiche.} In questo caso il \glossario{responsabile} fornisce un feedback dettagliato all'autore del documento, indicando le aree che necessitano di miglioramenti o correzioni. L'autore apporta le modifiche richieste e il documento viene nuovamente sottoposto a revisione.
+\end{itemize}
+A questo punto il responsabile effettua il merge della feature nel rame principale (verbali_in_lavorazione, norme_in_lavorazione, etc), base per la versione ufficiale di rilascio corrispondente alla \glossario{milestone}.
 \subsection{Processo di garanzia della qualità}
 
 \subsection{Processo di verifica}
@@ -250,8 +369,6 @@ La lettera di presentazione è il documento necessario alla candidatura per la m
 \subsection{Formazione}
 
 \section{Metriche della qualità}
-
-
 
 \vfill
 \begin{flushright}
