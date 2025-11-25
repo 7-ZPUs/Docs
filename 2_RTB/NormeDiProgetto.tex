@@ -492,9 +492,7 @@ Il processo si articola nelle seguenti attività principali:
 \subsubsection{Procedure di processo}
 Le seguenti procedure guidano il Team nell'utilizzo degli strumenti di
 infrastruttura, garantendo un uso coerente ed efficiente delle risorse
-disponibili. 
-\paragraph{Cose}
-\paragraph{Cose}
+disponibili.
 
 \subsubsection{Strumenti a supporto}
 \paragraph{GitHub} \label{GitHub}
@@ -512,7 +510,11 @@ le scadenze.\\
 Il Team ha deciso di adottare alcune automazioni per facilitare la gestione
 delle attività di progetto. Le automazioni attualmente implementate sono:
 \begin{itemize}
-    \item
+    \item Make child work items inherit labels from parent work items
+    \item When a commit is made → then move issue to in progress
+    \item When all child work items are completed → then close parent
+    \item When all sub-tasks are done → move parent to done
+	\item When Item In Progress -> Parent In Progress
 \end{itemize}
 \paragraph{VSCode}
 Ambiente di sviluppo integrato (IDE) utilizzato per la scrittura del codice e
@@ -532,7 +534,8 @@ adattino allo standard comune. Le estensioni attualmente utilizzate sono:
 Altre estensioni come GitHub Copilot possono essere utilizzate a discrezione del
 membro del gruppo, al fine di velocizzare, per esempio, il processo di Documentazione \ref{documentazione}.
 \subparagraph{Smart Commit}
-Gli Smart Commitsono una funzionalità di Jira che permette di collegare i commit di GitHub alle issue di Jira tramite messaggi speciali nei commit. Questo consente di automatizzare la gestione delle issue, come la chiusura automatica o l'aggiornamento dello stato, direttamente dal messaggio di commit. \\ Lo Smart Commit segue la seguente sintassi:
+La necessità di tracciamento delle attività di progetto richiede l'adozione capillare, costante e frequente degli Smart Commit, al fine di un aggiornamento tempestivo e che rispecchi il reale avanzamento delle task. \\
+Gli Smart Commit sono una funzionalità di Jira che permette di collegare i commit di GitHub alle issue di Jira tramite messaggi speciali nei commit. Questo consente di automatizzare la gestione delle issue, come la chiusura automatica o l'aggiornamento dello stato, direttamente dal messaggio di commit. \\ Lo Smart Commit segue la seguente sintassi:
 \begin{verbatim}
         DIPR-<numero issue> #comment <Commento descrittivo> 
         #time <ore lavorative consumate> #<transizione di stato>
