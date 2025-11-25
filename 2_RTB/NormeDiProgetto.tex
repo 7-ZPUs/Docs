@@ -20,6 +20,12 @@
 \usepackage[most]{tcolorbox}
 \usepackage[colorlinks=true]{hyperref}
 
+\usepackage{titlesec}
+
+\setcounter{tocdepth}{4} 
+\setcounter{tocdepth}{5}
+
+\setcounter{secnumdepth}{5}
 
 
 \hypersetup{
@@ -50,8 +56,12 @@
 \titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
 \titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
-\titleformat{\paragraph}{\large\bfseries}{\theparagraph}{1em}{}
+\titleformat{\paragraph}{\normalsize\bfseries}{\theparagraph}{1em}{}
 \titleformat{\subparagraph}{\normalsize\bfseries}{\thesubparagraph}{1em}{}
+
+
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 \begin{document}
 
@@ -74,9 +84,13 @@
         \centering
         \begin{tabular}{|c|c|c|c|c|}
             \hline
-            \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione}                                                                                         \\
+            \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione}                                                                                            \\
             \hline
-            0.1               & 16/11/2025    & Rocco Matteo A. & Soligo Lorenzo        & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Introduzione e Processo di fornitura \end{tabular} \\
+            0.3              & 25/11/2025    & Soligo Lorenzo & Soligo Lorenzo        & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Processi di Infrastruttura e sottosezioni 4.2.1-4.3 e\\ Nuova struttura Paragrafi e sottoParagrafi \end{tabular} \\
+            \hline
+            0.2               & 22/11/2025    & Soligo Lorenzo  & Soligo Lorenzo        & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Documentazione e sottosezioni 3.1-3.1.5 \end{tabular} \\
+            \hline
+            0.1               & 16/11/2025    & Rocco Matteo A. & Soligo Lorenzo        & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Introduzione e Processo di fornitura \end{tabular}    \\
             \hline
         \end{tabular}
     \end{adjustwidth}
@@ -153,37 +167,37 @@ si impegna a svolgere le seguenti attività.
 
 \subsubsection{Attività di processo}
 
-\subparagraph{Avvio}
+\paragraph{Avvio}
 Il fornitore analizza i \glossario{requisiti} necessari alla proposta di
 fornitura, tenendo considerazione di eventuali vincoli organizzativi e
 normativi.
-\subparagraph{Preparazione della proposta di fornitura}
+\paragraph{Preparazione della proposta di fornitura}
 Il fornitore prepara la proposta di fornitura in risposta alle richieste del
 committente e definisce i termini in cui si articola la proposta.
-\subparagraph{Accordo}
+\paragraph{Accordo}
 Proponente e fornitore entrano nella fase di definizione dell'accordo di
 fornitura del prodotto software, prevedendo possibilità di negoziazione della
 fornitura da parte del fornitore.
-\subparagraph{Pianificazione}
+\paragraph{Pianificazione}
 Il fornitore rielabora l'analisi dei requisiti fondamentali per definire il
 \glossario{framework} entro il quale il prodotto verrà sviluppato e gestito, in
 modo tale da garantire un processo di qualità durante lo sviluppo. Si impegna
 inoltre a definire il modello del ciclo di vita del prodotto adatto alla
 complessità del progetto e ai relativi rischi che potrebbero insorgere. Tutte
 queste decisioni convergono nel Piano di Progetto.
-\subparagraph{Esecuzione e controllo}
+\paragraph{Esecuzione e controllo}
 Il fornitore si impegna a sviluppare il prodotto secondo il Piano di Progetto,
 avendo cura di controllare che i processi siano stati eseguiti correttamente.
-\subparagraph{Verifica e validazione}
+\paragraph{Verifica e validazione}
 Il fornitore stabilisce con la proponente le modalità di rendicontazione dello
 stato di avanzamento del prodotto e rende disponibili i documenti che
 dimostrino la verifica e validazione dei processi secondo i requisiti
 precedentemente individuati.
-\subparagraph{Consegna e terminazione}
+\paragraph{Consegna e terminazione}
 Il fornitore consegna il prodotto finale al proponente e ne espone le
 funzionalità.
 
-\subsubsection{Accordi con l'azienda proponente}
+\paragraph{Accordi con l'azienda proponente}
 I capitolati presentati dalle proponenti vengono analizzati e viene redatto il
 documento di
 \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/1_Candidatura/AnalisiCapitolati.pdf}{\ul{Analisi
@@ -216,7 +230,7 @@ consegna del prodotto è suddivisa in due \glossario{milestone} principali:
 
 \subsubsection{Documentazione fornita}
 
-\subparagraph{Analisi dei requisiti}
+\paragraph{Analisi dei requisiti}
 Nel documento di
 \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/AnalisiDeiRequisiti.pdf}{\ul{Analisi
         dei requisiti}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)} sono
@@ -232,14 +246,14 @@ sezioni:
     \item Definizione dei requisiti
 \end{enumerate}
 
-\subparagraph{Glossario}
+\paragraph{Glossario}
 Il Glossario è il documento che raccoglie ogni termine di carattere tecnico,
 nomenclature e acronimi con particolare significato nell'ambito dell'Ingegneria
 del Software utilizzato nella documentazione di progetto. La definizione dei
 termini di glossario è coadiuvata dal contenuto dello standard ISO/IEC/IEEE
 24765/2017.
 
-\subparagraph{Piano di progetto}
+\paragraph{Piano di progetto}
 Il
 \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/PianoDiProgetto.pdf}{\ul{Piano
         di progetto v1.0}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)} è il
@@ -258,7 +272,7 @@ sezioni:
     \item Retrospettiva
 \end{enumerate}
 
-\subparagraph{Piano di qualifica}
+\paragraph{Piano di qualifica}
 Il piano di qualifica descrive gli obiettivi di qualità dei processi che il
 fornitore si impegna a soddisfare per consegnare un prodotto finale di qualità.
 Le metriche di valutazione vengono determinate dall'analisi dei requisiti e
@@ -277,7 +291,7 @@ correttive in caso si verifichino eventuali problemi (\glossario{cruscotto di
     \item Cruscotto di qualità
 \end{enumerate}
 
-\subparagraph{Lettera di presentazione}
+\paragraph{Lettera di presentazione}
 La lettera di presentazione è il documento necessario alla candidatura per la
 milestone di revisione di avanzamento \glossario{RTB} (\textit{Requirements and
     Technology Baseline}). Essa contiene le informazioni sul repository di
@@ -304,10 +318,15 @@ e preventivo a finire del progetto.
 I processi di supporto sono volti a garantire l'efficacia e l'efficienza dei
 processi primari.
 
-\subsection{Processo di documentazione}
-Il processo di documentazione è parte integrante del Progetto in quanto permette il tracciamento delle decisioni prese, delle attività svolte e dei risultati ottenuti. Tutto ciò al fine di favorire il lavoro asincrono tra membri del gruppo e promuovere il principio \glossario{Agile} di continuo miglioramento e adattamento tramite \glossario{feedback}.
+\subsection{Processo di documentazione} \label{documentazione}
+Il processo di documentazione è parte integrante del Progetto in quanto
+permette il tracciamento delle decisioni prese, delle attività svolte e dei
+risultati ottenuti. Tutto ciò al fine di favorire il lavoro asincrono tra
+membri del gruppo e promuovere il principio \glossario{Agile} di continuo
+miglioramento e adattamento tramite \glossario{feedback}.
 \subsubsection{Strumenti a supporto}
-Per la gestione della documentazione di progetto il gruppo utilizza i seguenti strumenti:
+Per la gestione della documentazione di progetto il gruppo utilizza i seguenti
+strumenti:
 \begin{itemize}
     \item \glossario{GitHub}: repository centrale per la gestione della documentazione. Permette il versionamento dei documenti e grazie alle \glossario{pull request} anche la gestione di \glossario{Verifica} e \glossario{Approvazione} finale dei documenti.
     \item \glossario{\LaTeX}: linguaggio di markup utilizzato per la stesura dei documenti di progetto, in quanto permette di ottenere una formattazione professionale e uniforme tra i vari documenti. Per una stesura efficiente dei documenti il Team si è dotato di modelli predefiniti \ped{(Decisione del \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali\%20Interni/2025-11-07-VerbaleInterno.pdf}{2025-11-07})}.
@@ -320,32 +339,129 @@ Le attività principali del processo di documentazione sono:
     \item \textbf{Pianificazione della documentazione}: definizione delle linee guida per la stesura dei documenti, inclusi formati, modelli e standard di qualità e assegnazione di della redazione ai membri del gruppo. Più in \ref{pianificazioneDocs}
     \item \textbf{Produzione della documentazione}: redazione dei documenti di progetto seguendo le linee guida stabilite, assicurando chiarezza, coerenza e completezza delle informazioni.Più in \ref{produzioneDocs}
     \item \textbf{Revisione e approvazione}: ogni documento redatto viene sottoposto a un processo di revisione interna da parte di un membro del gruppo diverso dall'autore.
-   \end{itemize}
+\end{itemize}
 e seguono il seguente flusso:
 \begin{figure}[H]
+    \label{fig:workflowDocs}
     \centering
-    \includegraphics[width=0.7\textwidth]{../assets/ProcessoDocumentazione.png}
+    \includegraphics[width=0.7\textwidth]{../assets/workflowWorkItem.png}
     \caption{Flusso del processo di documentazione}
 \end{figure}
 \subsubsection{Pianificazione della documentazione}\label{pianificazioneDocs}
-La pianificazione della documentazione avviene contestualmente alla pianificazione delle attività di progetto. \\Durante la pianificazione di ogni \glossario{sprint}, il \glossario{responsabile di progetto} assegna le attività di documentazione ai membri del gruppo, tenendo conto delle competenze e della disponibilità di ciascuno. Le scadenze per la consegna dei documenti sono stabilite in modo da garantire che la documentazione sia sempre aggiornata e disponibile per la consultazione da parte del gruppo e di eventuali attori esterni (Azienda \glossario{proponente}, \glossario{committente}).
-\\Per una più efficiente scrittura dei documenti, soprattutto di tutti quei documenti periodici (Verbali Interni, Verbali Esterni, Diario di Bordo) sono presenti modelli standard approvati in \href{https://github.com/7-ZPUs/Docs/tree/main/assets}{/assets}. L'aggiornamento di tali standard deve essere argomento di Verbali Interni e risultato di una discussione e succesiva decisione presa in tale sede.
+La pianificazione della documentazione avviene contestualmente alla
+pianificazione delle attività di progetto. \\Durante la pianificazione di ogni
+\glossario{sprint}, il \glossario{responsabile di progetto} assegna le attività
+di documentazione ai membri del gruppo, tenendo conto delle competenze e della
+disponibilità di ciascuno. Le scadenze per la consegna dei documenti sono
+stabilite in modo da garantire che la documentazione sia sempre aggiornata e
+disponibile per la consultazione da parte del gruppo e di eventuali attori
+esterni (Azienda \glossario{proponente}, \glossario{committente}). \\Per una
+più efficiente scrittura dei documenti, soprattutto di tutti quei documenti
+periodici (Verbali Interni, Verbali Esterni, Diario di Bordo) sono presenti
+modelli standard approvati in
+\href{https://github.com/7-ZPUs/Docs/tree/main/assets}{/assets}.
+L'aggiornamento di tali standard deve essere argomento di Verbali Interni e
+risultato di una discussione e succesiva decisione presa in tale sede.
+
 \subsubsection{Produzione della documentazione}\label{produzioneDocs}
-La produzione della documentazione, assegnata durante la pianificazione, è visibile all'assegnatario come \glossario{Work item} grazie all'estensione Jira di \ref*{fff}VSCode. Grazie a quest'ultima è possibile creare direttamente il Branch di lavoro che si baserà sulla feature branch principale. UNa volta completata la stesura, seguendo i modelli standard sopracitati, l'autore del documento crea una \glossario{(PR) Pull Request} verso la feature branch principale, assegnando come revisore il membro del gruppo designato, diverso da se. \\
-A questo punto:
+La produzione della documentazione, assegnata durante la pianificazione, è
+visibile all'assegnatario come \glossario{Work item} grazie all'estensione Jira
+di \ref*{fff}VSCode. Grazie a quest'ultima è possibile creare direttamente il
+Branch di lavoro che si baserà sulla feature branch principale. UNa volta
+completata la stesura, seguendo i modelli standard sopracitati, l'autore del
+documento crea una \glossario{(PR) Pull Request} verso la feature branch
+principale, assegnando come revisore il membro del gruppo designato, diverso da
+se. \\ A questo punto:
 \begin{itemize}
-\item Se il revisore \textbf{approva la PR}, questa branch viene automaticamente eliminata, il work item viene marcato come completato in Jira e l'assegnatario può proseguire con gli altri compiti a lui assegnati.
-\item Se il revisore richiede modifiche \textbf{la PR viene bocciata} e l'assegnatario deve procedere con le modifiche richieste. Una volta completate, l'assegnatario notifica il revisore che procederà con una nuova revisione. Questo ciclo si ripete fino a quando la PR non viene approvata.
+    \item Se il revisore \textbf{approva la PR}, questa branch viene automaticamente
+          eliminata, il work item viene marcato come completato in Jira e l'assegnatario
+          può proseguire con gli altri compiti a lui assegnati.
+    \item Se il revisore richiede modifiche \textbf{la PR viene bocciata} e
+          l'assegnatario deve procedere con le modifiche richieste. Una volta completate,
+          l'assegnatario notifica il revisore che procederà con una nuova revisione.
+          Questo ciclo si ripete fino a quando la PR non viene approvata.
 \end{itemize}
 L'integrazione con Jira permette di controllare lo stato di avanzamento dei Work Item, la rendicontazione delle ore lavorate e la gestione delle scadenze.
 Risulta quindi \textbf{obbligatorio} l'utilizzo di Smart Commit per tutti i commit, compresi quelli di Pull Request. Più in \ref{Jira}.
 \subsubsection{Revisione e approvazione}
-Ogni documento redatto viene sottoposto a un processo di revisione interna che ne accerta la correttezza contenutistica, formale, e stilistica. La revisione viene effettuata da un membro del gruppo diverso dall'autore del documento che al termine del processo può:
+Ogni documento redatto viene sottoposto a un processo di revisione interna che
+ne accerta la correttezza contenutistica, formale, e stilistica. La revisione
+viene effettuata da un membro del gruppo diverso dall'autore del documento che
+al termine del processo può:
 \begin{itemize}
     \item \textbf{Approvare il documento.} Questo porta all'apertura di una Pull Request verso la branch principale revisionata dal \glossario{responsabile} che quindi confermerà l'integrazione ai documenti approvati in via definitiva.
     \item \textbf{Richiedere modifiche.} In questo caso il \glossario{responsabile} fornisce un feedback dettagliato all'autore del documento, indicando le aree che necessitano di miglioramenti o correzioni. L'autore apporta le modifiche richieste e il documento viene nuovamente sottoposto a revisione.
 \end{itemize}
-A questo punto il responsabile effettua il merge della feature nel rame principale (verbali_in_lavorazione, norme_in_lavorazione, etc), base per la versione ufficiale di rilascio corrispondente alla \glossario{milestone}.
+A questo punto il responsabile effettua il merge della feature nel rame principale (\textit{verbali in lavorazione, norme in lavorazione, etc}), base per la versione ufficiale di rilascio corrispondente alla \glossario{milestone}.
+
+\subsubsection{Procedure di processo}
+Le seguenti procedure guidano il Team nella produzione di documenti, ricercando
+una produzione veloce, efficiente e di qualità, garantendo la tracciabilità e
+la divisione dei compiti. Tali procedure sono suddivise per esecutore:
+\begin{itemize}
+    \item \textbf{Autore del documento}
+    \item \textbf{Revisore del documento}
+    \item \textbf{Responsabile di progetto}
+\end{itemize}
+\paragraph{Autore del documento}
+\begin{enumerate}
+    \item Consultando l'estensione
+          \href{https://marketplace.visualstudio.com/items?itemName=Atlassian.atlascode}{"Atlassian:
+              Jira, Rovo Dev, Bitbucket"} il membro del gruppo potrà avere accesso al Work
+          Item assegnatogli e cliccando su "Start Work" potrà creare la branch di lavoro
+          secondo le convenzioni stabilite (\ref{convenzioni}). Nell'immagine sottostante
+          sono indicati visivamente i passi.
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=1\textwidth]{../assets/estensioneJira.png}
+              \caption{Estensione VSCode per Jira}
+          \end{figure}
+    \item Quando è necessario effettuare un commit è obbligatorio utilizzare lo Smart
+          Commit. Più in \ref{Jira}.
+    \item Una volta completata la task, è necessario creare la PR verso la branch della
+          issue mettendo come revisore il membro del gruppo designato. La PR viene chiusa
+          tramite commit e deve essere scritta anche in questo caso utilizzando lo Smart
+          Commit per chiudere la propria issue e una volta approvata anche la issue
+          principale usata come branch di controllo.
+          \begin{figure}[H]
+              \label{PR1}
+              \centering
+              \includegraphics[width=1\textwidth]{../assets/PRDocs1.png}
+              \caption{Creazione della PR verso la branch principale}
+          \end{figure}
+          \begin{figure}[H]
+              \label{PR2}
+              \centering
+              \includegraphics[width=1\textwidth]{../assets/PRDocs2.png}
+              \caption{Commit della PR con Smart Commit verso le due issue}
+          \end{figure}
+\end{enumerate}
+
+\paragraph{Revisore del documento}
+\begin{enumerate}
+    \item Una volta ricevuta la notifica della PR da revisionare, il revisore dovrà
+          controllare l'aderenza ai modelli approvati, la correttezza formale e
+          sostanziale del documento. Per velocizzare, oltre alla lettura attenta, si
+          consiglia l'uso di LLM, in particolare per l'analisi grammaticale e stilistica.
+    \item Completata la revisione, il revisore può:
+          \begin{itemize}
+              \item Approvare la PR, notificando all'autore l'approvazione. A sua volta l'autore
+                    procederà con il merge della PR verso la branch principale contenente i
+                    documenti pronti all'approvazione finale del responsabile. La prodecura per la
+                    PR mima quella dell'autore (\ref{PR1}, \ref{PR2}) e segue gli stessi crismi.
+              \item Richiedere modifiche, fornendo un feedback dettagliato all'autore, bloccando la
+                    PR.
+          \end{itemize}
+\end{enumerate}
+
+\paragraph{Responsabile di progetto}
+La funzione del responsabile di progetto è quella di approvazione finale dei
+documenti e dovrebbe risultare puramente formale. Non di meno è il garante
+delle qualità del documento quindi deve impiegare il proprio tempo, il minimo
+possibile, per rileggere e confermare i contenuti. \\ Una volta approvato il
+documento, il responsabile approva la PR del revisore verso il branch di
+raccolta dei documenti ufficiali in vista del merge con il branch \textit{main}
+in sede di \glossario{milestone}.
 \subsection{Processo di garanzia della qualità}
 
 \subsection{Processo di verifica}
@@ -359,10 +475,86 @@ A questo punto il responsabile effettua il merge della feature nel rame principa
 \subsection{Gestione della qualità}
 
 \section{Processi Organizzativi}
+\ref{convenzioni}
 
 \subsection{Gestione}
 
 \subsection{Infrastruttura}
+Il processo di Infrastruttura fornisce il supporto tecnico necessario per lo
+sviluppo e la gestione del progetto.
+\subsubsection{Attività di processo}
+Il processo si articola nelle seguenti attività principali:
+\begin{itemize}
+    \item \textbf{Implementazione:} scelta, configurazione e gestione degli strumenti e delle tecnologie necessarie per supportare le attività di progetto.
+    \item \textbf{Creazione:} sviluppo e manutenzione dell'infrastruttura tecnica, strumenti, procedure e ambienti di sviluppo.
+    \item \textbf{Manutenzione:} aggiornamento, monitoraggio e risoluzione di eventuali problemi legati all'infrastruttura esistente.
+\end{itemize}
+\subsubsection{Procedure di processo}
+Le seguenti procedure guidano il Team nell'utilizzo degli strumenti di
+infrastruttura, garantendo un uso coerente ed efficiente delle risorse
+disponibili. 
+\paragraph{Cose}
+\paragraph{Cose}
+
+\subsubsection{Strumenti a supporto}
+\paragraph{GitHub} \label{GitHub}
+Piattaforma di hosting per il versionamento e la gestione dei contenuti di
+progetto. Il Team deve sfruttare appieno le potenzialità di GitHub, in
+particolare per l'integrazione con Jira. Vengo quindi descritti gli Smart
+Commit, lo standard per la scrittura di commit e la gestione dello stato di
+vita degli work item
+\paragraph{Jira} \label{Jira}
+Strumento di gestione delle attività di progetto adottato per potenzialità e
+flessibilità del sistema. Permette di tracciare le attività di progetto,
+assegnarle ai membri del gruppo, monitorare lo stato di avanzamento e gestire
+le scadenze.\\
+\subparagraph{Automation}
+Il Team ha deciso di adottare alcune automazioni per facilitare la gestione
+delle attività di progetto. Le automazioni attualmente implementate sono:
+\begin{itemize}
+    \item
+\end{itemize}
+\paragraph{VSCode}
+Ambiente di sviluppo integrato (IDE) utilizzato per la scrittura del codice e
+la gestione della documentazione di progetto. Grazie all'estensione Atlassian
+per \textbf{Jira} e \textbf{GitHub}, il Team può integrare direttamente le
+funzionalità di gestione delle attività e del versionamento all'interno
+dell'IDE, migliorando l'efficienza del flusso di lavoro e uniformando le
+pratiche di sviluppo. \\ Si presuppone che tutti i membri del gruppo si
+adattino allo standard comune. Le estensioni attualmente utilizzate sono:
+\begin{itemize}
+    \item \textbf{Atlassian: Jira, Rovo Dev, Bitbucket}
+    \item \textbf{GitHub Pull Requests and Issues}
+    \item \textbf{GitHub Actions}
+    \item \textbf{GitHub Codespaces}
+    \item \textbf{LaTeX Workshop}
+\end{itemize}
+Altre estensioni come GitHub Copilot possono essere utilizzate a discrezione del
+membro del gruppo, al fine di velocizzare, per esempio, il processo di Documentazione \ref{documentazione}.
+\subparagraph{Smart Commit}
+Gli Smart Commitsono una funzionalità di Jira che permette di collegare i commit di GitHub alle issue di Jira tramite messaggi speciali nei commit. Questo consente di automatizzare la gestione delle issue, come la chiusura automatica o l'aggiornamento dello stato, direttamente dal messaggio di commit. \\ Lo Smart Commit segue la seguente sintassi:
+\begin{verbatim}
+        DIPR-<numero issue> #comment <Commento descrittivo> 
+        #time <ore lavorative consumate> #<transizione di stato>
+\end{verbatim}
+Dove l'inserimento di \textbf{<ore lavorative consumate>} segue il formato nd nh nm, dove \textbf{n} è un numero intero, \textbf{d} indica giorni, \textbf{h} ore e \textbf{m} minuti.\\
+Le transizioni di stato possibili sono:
+\begin{itemize}
+    \item \textbf{start-progress:} inizio del lavoro sull'issue
+    \item \textbf{start-review:} sposta in revisione l'issue
+    \item \textbf{complete:} risoluzione dell'issue
+    \item \textbf{refactoring:} necessità della issue di essere ritoccata
+\end{itemize}
+e fanno riferimento allo schema di flusso \ref{fig:workflowDocs}
+\\Si possono compiere azioni su multiple issue in un singolo commit, basta
+separarle con spazi. Questo è necessario per le Pull Request, in cui si
+devono chiudere sia l'issue della branch di lavoro che quella della branch di verifica.\\ Non devono però essere inseriti \glossario{Work Log} in questo caso, in quanto porterebbe ad una multipla contabilizzazione delle ore.
+\subparagraph{Standard per le Branch}
+Per garantire una gestione ordinata e coerente del codice e della documentazione di progetto, il Team adotta il seguente standard per la denominazione delle branch in GitHub:
+\begin{verbatim}
+    DIPR-<numero issue>-<descrizione-breve>
+\end{verbatim}
+Che segue ciò che viene \textbf{automaticamente} generato dall'estensione Jira per VSCode. Al momento della creazione della branch è quindi solo di scegliere \textbf{eventuali abbreviazioni} per la descrizione breve.
 
 \subsection{Miglioramento}
 
