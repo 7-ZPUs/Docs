@@ -336,7 +336,7 @@ strumenti:
 \subsubsection{Attività di processo}
 Le attività principali del processo di documentazione sono:
 \begin{itemize}
-    \item \textbf{Pianificazione della documentazione}: definizione delle linee guida per la stesura dei documenti, inclusi formati, modelli e standard di qualità e assegnazione di della redazione ai membri del gruppo. Più in \ref{pianificazioneDocs}
+    \item \textbf{Pianificazione della documentazione}: definizione delle linee guida per la stesura dei documenti, inclusi formati, modelli e standard di qualità e assegnazione della redazione ai membri del gruppo. Più in \ref{pianificazioneDocs}
     \item \textbf{Produzione della documentazione}: redazione dei documenti di progetto seguendo le linee guida stabilite, assicurando chiarezza, coerenza e completezza delle informazioni.Più in \ref{produzioneDocs}
     \item \textbf{Revisione e approvazione}: ogni documento redatto viene sottoposto a un processo di revisione interna da parte di un membro del gruppo diverso dall'autore.
 \end{itemize}
@@ -361,20 +361,20 @@ periodici (Verbali Interni, Verbali Esterni, Diario di Bordo) sono presenti
 modelli standard approvati in
 \href{https://github.com/7-ZPUs/Docs/tree/main/assets}{/assets}.
 L'aggiornamento di tali standard deve essere argomento di Verbali Interni e
-risultato di una discussione e succesiva decisione presa in tale sede.
+risultato di una discussione e successiva decisione presa in tale sede.
 
 \subsubsection{Produzione della documentazione}\label{produzioneDocs}
 La produzione della documentazione, assegnata durante la pianificazione, è
 visibile all'assegnatario come \glossario{Work item} grazie all'estensione Jira
-di \ref*{fff}VSCode. Grazie a quest'ultima è possibile creare direttamente il
-Branch di lavoro che si baserà sulla feature branch principale. UNa volta
+di VSCode \ref{vscode}. Grazie a quest'ultima è possibile creare direttamente il
+Branch di lavoro che si baserà sulla feature branch principale. Una volta
 completata la stesura, seguendo i modelli standard sopracitati, l'autore del
 documento crea una \glossario{(PR) Pull Request} verso la feature branch
 principale, assegnando come revisore il membro del gruppo designato, diverso da
 se. \\ A questo punto:
 \begin{itemize}
-    \item Se il revisore \textbf{approva la PR}, questa branch viene automaticamente
-          eliminata, il work item viene marcato come completato in Jira e l'assegnatario
+    \item Se il revisore \textbf{approva la PR}, questo branch viene automaticamente
+          eliminato, il work item viene marcato come completato in Jira e l'assegnatario
           può proseguire con gli altri compiti a lui assegnati.
     \item Se il revisore richiede modifiche \textbf{la PR viene bocciata} e
           l'assegnatario deve procedere con le modifiche richieste. Una volta completate,
@@ -392,12 +392,12 @@ al termine del processo può:
     \item \textbf{Approvare il documento.} Questo porta all'apertura di una Pull Request verso la branch principale revisionata dal \glossario{responsabile} che quindi confermerà l'integrazione ai documenti approvati in via definitiva.
     \item \textbf{Richiedere modifiche.} In questo caso il \glossario{responsabile} fornisce un feedback dettagliato all'autore del documento, indicando le aree che necessitano di miglioramenti o correzioni. L'autore apporta le modifiche richieste e il documento viene nuovamente sottoposto a revisione.
 \end{itemize}
-A questo punto il responsabile effettua il merge della feature nel rame principale (\textit{verbali in lavorazione, norme in lavorazione, etc}), base per la versione ufficiale di rilascio corrispondente alla \glossario{milestone}.
+A questo punto il responsabile effettua il merge della feature nel ramo principale (\textit{verbali in lavorazione, norme in lavorazione, etc}), base per la versione ufficiale di rilascio corrispondente alla \glossario{milestone}.
 
 \subsubsection{Procedure di processo}
 Le seguenti procedure guidano il Team nella produzione di documenti, ricercando
 una produzione veloce, efficiente e di qualità, garantendo la tracciabilità e
-la divisione dei compiti. Tali procedure sono suddivise per esecutore:
+la divisione dei compiti. Tali procedure sono suddivise per ruolo:
 \begin{itemize}
     \item \textbf{Autore del documento}
     \item \textbf{Revisore del documento}
@@ -447,7 +447,7 @@ la divisione dei compiti. Tali procedure sono suddivise per esecutore:
           \begin{itemize}
               \item Approvare la PR, notificando all'autore l'approvazione. A sua volta l'autore
                     procederà con il merge della PR verso la branch principale contenente i
-                    documenti pronti all'approvazione finale del responsabile. La prodecura per la
+                    documenti pronti all'approvazione finale del responsabile. La procedura per la
                     PR mima quella dell'autore (\ref{PR1}, \ref{PR2}) e segue gli stessi crismi.
               \item Richiedere modifiche, fornendo un feedback dettagliato all'autore, bloccando la
                     PR.
@@ -516,7 +516,7 @@ delle attività di progetto. Le automazioni attualmente implementate sono:
     \item When all sub-tasks are done → move parent to done
 	\item When Item In Progress -> Parent In Progress
 \end{itemize}
-\paragraph{VSCode}
+\paragraph{VSCode} \label{vscode}
 Ambiente di sviluppo integrato (IDE) utilizzato per la scrittura del codice e
 la gestione della documentazione di progetto. Grazie all'estensione Atlassian
 per \textbf{Jira} e \textbf{GitHub}, il Team può integrare direttamente le
