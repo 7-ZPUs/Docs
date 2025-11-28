@@ -93,12 +93,15 @@
 
             \\
             \hline
-            0.4               & 26/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Soligo Lorenzo        & \begin{tabular}[c]{@{}c@{}} Ristrutturazione completa Processi \\ (ISO 12207: Attività-Procedure-Strumenti) \end{tabular} \\
+            0.5               & 28/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Fattoni Antonio        & \begin{tabular}[c]{@{}c@{}} Correzione nella Procedura di Revisione \\ Paragrafo 3.1.3.1 e aggiornamento immagini \end{tabular} \\
+            
             \hline
-            0.3               & 25/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Soligo Lorenzo
+            0.4               & 26/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Fattoni Antonio         & \begin{tabular}[c]{@{}c@{}} Ristrutturazione completa Processi \\ (ISO 12207: Attività-Procedure-Strumenti) \end{tabular} \\
+            \hline
+            0.3               & 25/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Fattoni Antonio 
                               & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Processi di Infrastruttura e sottosezioni 4.2.1-4.3 e\\ Nuova struttura Paragrafi e sottoParagrafi \end{tabular}                                                                                                                                                                       \\
             \hline
-            0.2               & 22/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Soligo Lorenzo        & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Documentazione e sottosezioni 3.1-3.1.5 \end{tabular}
+            0.2               & 22/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Fattoni Antonio         & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Documentazione e sottosezioni 3.1-3.1.5 \end{tabular}
             \\
             \hline
             0.1               & 16/11/2025                                                                                                                                                                 & Rocco Matteo A. & Soligo Lorenzo
@@ -369,7 +372,7 @@ documentazione:
           acquisire esperienza in diverse aree.
     \item Vengono create le \glossario{issue} in Jira per ogni attività di
           documentazione, specificando i dettagli del compito, le scadenze e i
-          verificatori per ogni attività. Specifiche in \ref{creazioneIssueJira}.
+          verificatori per ogni attività. Specifiche in \ref{identificazioneSCIs}.
 \end{enumerate}
 \paragraph{Strumenti di Pianificazione}
 \begin{itemize}
@@ -429,16 +432,10 @@ I seguenti passaggi guidano il Team nella produzione di documenti:
           \begin{figure}[H]
               \label{PR1}
               \centering
-              \includegraphics[width=1\textwidth]{../assets/PRDocs1.png}
-              \caption{Creazione della PR verso la branch principale}
+              \includegraphics[width=1.1\textwidth]{../assets/PRDocs1.png}
+              \caption{Creazione della PR verso l'issue branch principale}
           \end{figure}
-          \begin{figure}[H]
-              \label{PR2}
-
-              \centering
-              \includegraphics[width=1\textwidth]{../assets/PRDocs2.png}
-              \caption{Commit della PR con Smart Commit verso le due issue}
-          \end{figure}
+         
 \end{enumerate}
 \paragraph{Strumenti di Produzione}
 \begin{itemize}
@@ -462,14 +459,22 @@ al termine del processo può:
           consiglia l'uso di LLM, in particolare per l'analisi grammaticale e stilistica.
     \item Completata la revisione, il revisore può:
           \begin{itemize}
-              \item Approvare la PR, notificando all'autore l'approvazione. A sua volta l'autore
-                    procederà con il merge della PR verso la branch principale contenente i
+              \item Approvare la PR, notificando all'autore l'approvazione. È necessario che nel testo del commit del merge siano chiuse tramite Smart Commit entrambe le issue correlate. 
+              \item A sua volta l'autore procederà con il merge della PR verso la branch principale contenente i
                     documenti pronti all'approvazione finale del responsabile. La procedura per la
-                    PR mima quella dell'autore (\ref{PR1}, \ref{PR2}) e segue gli stessi crismi.
-              \item Richiedere modifiche, fornendo un feedback dettagliato all'autore, bloccando la
-                    PR.
+                    PR mima quella dell'autore (\ref{PR1}) e segue gli stessi crismi.
+              \item Richiedere modifiche, fornendo un feedback dettagliato all'autore, chiudendo la
+                    PR che sarà riaperta dall'autore una volta implementate le modifiche.
           \end{itemize}
 \end{enumerate}
+ \begin{figure}[H]
+              \label{PR2}
+
+              \centering
+              \includegraphics[width=1\textwidth]{../assets/PRDocs2.png}
+              \caption{Commit della PR con Smart Commit verso le due issue}
+          \end{figure}
+
 Per quanto riguarda l'approvazione finale del documento, questa spetta al \glossario{responsabile}, il quale effettua il merge della feature nel ramo principale (\textit{verbali in lavorazione, norme in lavorazione, etc}), base per la versione ufficiale di rilascio corrispondente alla \glossario{milestone}.
 Questo passaggio dovrebbe risultare puramente formale. Non di meno è il garante
 delle qualità del documento quindi deve impiegare il proprio tempo, il minimo
