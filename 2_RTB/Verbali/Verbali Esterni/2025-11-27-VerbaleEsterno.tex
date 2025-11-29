@@ -1,0 +1,244 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian, provide=*]{babel}
+\usepackage{lmodern}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Esterno Gruppo di Progetto e Sanmarco Informatica}\\
+    \vspace{0.5cm}
+\end{center}
+
+
+\noindent
+\textbf{Data:} 2025/11/27 \\
+\textbf{Durata:}  45 minuti circa\\
+\textbf{Luogo:} Incontro online (Google Meet)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    0.1 & 2025/11/27 & Soligo Lorenzo & Laoud Zakaria & Creazione del verbale e stesura iniziale \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Gingilino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+    \item Rossi Andrea
+    \item Sarra Luca
+\end{itemize}
+
+
+\section{Ordine del Giorno} \label{ordineGiorno}
+\begin{enumerate}[noitemsep]
+    \item Esposizione da parte del Team degli Use Case individuati fino ad ora e discussione degli aspetti non chiari.
+    \item Esposizione della \href{https://dashboardhub-eu.appfire.app/jira/shared/dashboard?boardToken=VTJGc2RHVmtYMTlTQTJITnoxazdZc1hBRFdUWWRSZVIxK1NSR2x2QXprUGk0bXV6WXVka1JZRGFUL3lWeUFqVWZ3dXlmRGhPZ3FrS3ZkaXVyd1FiV3NZUmJxWVV5K2UzOUVPQlJhbVlCbllCeVJ3UEQzWSt1LzZvRmlXaTJ3SE0rbjZxZHFtNkY4QXRhYWRzRzhVYnpaL2llQzErWXBxN21NZFNxVmhQbEhEN0g1ZGJtbHVDY3hqZTlVMTJ0VnkwdE9GQXBsZFRmeWF3dHpLK0tudmg1a1BCcDhMRUhwZFRaZjhnZXpPYlJiNEFMZTJtbUFkZjlHS3gwell6TDY2cldXR3BFN2dlK0xXNDRURVlYUHpLdFE9PQ%3D%3D}{Dashboard} di amministrazione per automatizzare l'aggiornamento del progresso.
+    \item Ulteriori chiarimenti sul materiale tecnico fornito.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section{Svolgimento e Discussione}
+Il team si è alternato secondo la suddivisione dei compiti, in modo da garantire l'esposizione più puntuale possibile dei dubbi e del materiale prodotto.
+
+\subsection{Use Case}
+Il Team ha esposto gli Use Case individuati fino ad ora e ha posto diversi quesiti per chiarire alcuni aspetti non chiari. Le diverse domande sono state raccolte nella sezione Domande e Risposte \ref{qa}.
+
+\subsection{Dashboard di Amministrazione}
+Il Team ha esposto la bozza della Dashboard di Amministrazione, che permetterà di monitorare il progresso del progetto in modo automatico. Sono stati richiesti consigli su possibili metriche utili, ma la versione attuale è stata approvata a pieni voti allo stato attuale.
+\subsection{Chiarimenti sul materiale tecnico}
+Il Team ha chiesto ulteriori chiarimenti sul materiale tecnico fornito e sono stati discussi diversi aspetti. Le domande più rilevanti sono state raccolte nella sezione Domande e Risposte \ref{qa}.
+
+\section{Domande e Risposte} \label{qa}
+\begin{itemize}
+    \item \textbf{Domanda 1:} Tra i requisiti fondamentali del progetto c'è la gestione user-friendly della visualizzazione del DIP. La soluzione dell'albero delle directory, simile a un file system, è quindi una possibilità?\\
+    	extbf{Risposta:} Quella della visualizzazione ad albero è sicuramente la prima soluzione, ma sarebbe da considerare come fallback nel caso non si riesca a ideare un'alternativa. La libertà di esplorare alternative è lasciata al Team.
+    
+    \item \textbf{Domanda 2:} La ricerca è il secondo grande requisito individuato. Come è possibile gestire la moltitudine di metadati per la ricerca?
+    \\ \textbf{Risposta:} La ricerca deve permettere di cercare in base a tutti i metadati disponibili, ma è necessario che il sistema non richieda un manuale utente per essere utilizzato. Quindi l'interfaccia deve essere il più possibile intuitiva, sia per funzionamento che per possibilità offerte.
+
+    \item \textbf{Domanda 3:} Nel visionare gli esempi di DIP abbiamo notato che in diversi casi il metadato \textit{Identificativo del Documento Primario} non fosse presente, anche se definito come obbligatorio.
+    \\ \textbf{Risposta:} In questo caso, per Documento Primario non si intende il file digitale, bensì un riferimento ad un altro file. L'idea è che sia possibile collegare tra loro file diversi, in modo da creare una rete di documenti correlati. 
+    Quindi, in questo caso, il metadato non era presente perché il file in esame non era all'interno della rete di documenti correlati e quindi non aveva un Documento Primario di riferimento.
+    \\ Per il Team nasce quindi l'esigenza di gestire anche questo caso particolare di struttura di file-network.
+
+    \item \textbf{Domanda 4:} I metadati \textit{Archimemo} in cosa consistono? Sono da prendere in considerazione per la gestione del DIP?
+    \\ \textbf{Risposta:} Gli Archimemo sono metadati generati dal sistema di archiviazione che riguardano la storia del file e servono ad integrare informazioni tralasciate dall'utente, garantendo la risoluzione rapida in caso di contenziosi legali sulla gestione documentale. Il Team può quindi considerarli come opzionali per ora.
+
+    \item \textbf{Domanda 5:} Per la validazione dei file, è una buona idea dare la possibilità di verificare non solo l'integrità di un singolo file ma, su richiesta, anche intere directory del DIP?
+   \\ \textbf{Risposta:} Sì, è una buona idea. La validazione di intere directory può essere utile. Vi è però un accorgimento: nel caso in cui si validino più file, conviene partire dalla validazione del \textit{PIndex} e solo nel caso in cui questa vada a buon fine procedere con la validazione dei singoli file.
+
+    \item \textbf{Domanda 6:} Per quanto riguarda i dati sul processo di Conservazione, è opportuno includerli nel sistema?
+    \\ \textbf{Risposta:} Sì, è opportuno includerli. Non è necessario che siano sempre visibili all'utente, ma sono informazioni utili che è bene siano presenti.
+\end{itemize}
+
+
+\section{Decisioni e Conclusione}
+\begin{itemize}
+    \item In seguito alla discussione sugli Use Case, il Team ha deciso di rivedere alcuni aspetti e di continuare l'analisi per individuare eventuali altri casi d'uso.
+     In particolare, è emersa la necessità di:
+    \begin{itemize}
+        \item Gestire la possibilità di visualizzare il DIP in modi alternativi rispetto alla semplice struttura ad albero.
+        \item Gestire la ricerca in modo più approfondito, considerando tutti i metadati disponibili.
+        \item Gestire la possibilità di collegare tra loro file diversi tramite il metadato \textit{Identificativo del Documento Primario}.
+        \item Includere i metadati relativi al processo di Conservazione.
+    \end{itemize}
+    \item La Dashboard di Amministrazione è stata approvata e viene inserita come riferimento nel verbale \href{https://dashboardhub-eu.appfire.app/jira/shared/dashboard?boardToken=VTJGc2RHVmtYMTlTQTJITnoxazdZc1hBRFdUWWRSZVIxK1NSR2x2QXprUGk0bXV6WXVka1JZRGFUL3lWeUFqVWZ3dXlmRGhPZ3FrS3ZkaXVyd1FiV3NZUmJxWVV5K2UzOUVPQlJhbVlCbllCeVJ3UEQzWSt1LzZvRmlXaTJ3SE0rbjZxZHFtNkY4QXRhYWRzRzhVYnpaL2llQzErWXBxN21NZFNxVmhQbEhEN0g1ZGJtbHVDY3hqZTlVMTJ0VnkwdE9GQXBsZFRmeWF3dHpLK0tudmg1a1BCcDhMRUhwZFRaZjhnZXpPYlJiNEFMZTJtbUFkZjlHS3gwell6TDY2cldXR3BFN2dlK0xXNDRURVlYUHpLdFE9PQ%3D%3D}{qui} e nell'Ordine del Giorno \ref{ordineGiorno}.
+\end{itemize}
+
+\subsection{Ordine del giorno Prossimo Incontro}
+\begin{enumerate}
+    \item Discussione sugli aggiornamenti apportati agli Use Case.
+    \item Discussione sul Piano di Progetto, attualmente in fase di prima stesura.
+    \item Varie ed eventuali.
+\end{enumerate}
+
+\vfill
+
+
+\begin{flushleft}
+\begin{tabular}{@{}p{0.5in}p{2in}@{}}
+Data: & \hrulefill \\
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{@{}p{0.5in}p{2in}@{}}
+Firma: & \hrulefill \\
+& [Sanmarco Informatica SPA] \\
+\end{tabular}
+\end{flushleft}
+
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
