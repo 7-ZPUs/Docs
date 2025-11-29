@@ -1,0 +1,236 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:}  21/11/2025 \\
+\textbf{Durata:} 2 ore\\
+\textbf{Luogo:} Incontro online (Discord)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    0.1 & 21/11/2025& Antonio Fattoni & Vigolo Davide & Creazione del verbale e stesura iniziale\\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Gingilino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+\end{itemize}
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Definizione ruoli
+    \item Organizzazione branch
+    \item Suddivisione lavoro
+\end{enumerate}
+
+
+\section{Svolgimento e Discussione}
+
+\subsection{Definizione ruoli}
+I ruoli necessari in questa sprint sono:
+\begin{itemize}[noitemsep]
+    \item Amministratore
+    \item Responsabile
+    \item Analisti
+    \item Verificatori
+\end{itemize}
+
+I ruoli assegnati a ciascun membro per questo sprint sono i seguenti, e sono validi anche per il prossimo sprint. All'interno di questo sprint \textbf{ognuno} svolgerà anche il ruolo di \textbf{verificatore}.
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm}
+    \centering
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Membro} & \textbf{Ruolo} \\
+    \hline
+    Fattoni Antonio & Analista\\ 
+    \hline
+    Georgescu Diana & Analista\\
+    \hline
+    Gingillino Aaron& Responsabile\\
+    \hline
+    Laoud Zakaria & Analista\\
+    \hline
+    Rocco Matteo A. & Analista\\ 
+    \hline
+    Soligo Lorenzo & Amministratore, Analista\\
+    \hline
+    Vigolo Davide & Responsabile\\ 
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\subsection{Organizzazione branch}
+Il gruppo ha discusso approfonditamente riguardo il metodo da implementare per la gestione dei branch, in particolare si sono presi in considerazione due metodi di branching: feature-branch e issue-branch.
+Dopo un'attenta analisi il gruppo ha compreso l'implementazione del metodo issue-branch tramite le automazioni di jira.
+
+\subsection{Suddivisione del lavoro}
+Il gruppo si divide in due sottogruppi per iniziare la stesura del piano di progetto e dell'analisi dei requisiti.
+Il primo sottogruppo composto da Vigolo Davide e Gingillino Aaron si prende in carico la stesura del piano di progetto, i restanti membri andranno a formare il secondo sottogruppo per la stesura dell'analisi dei requisiti.
+
+\section{Decisioni}
+\begin{enumerate}[noitemsep]
+    \item Si è deciso di provare ad implementare il metodo issue-branch per il prossimo sprint per valutarne l'efficacia
+    \item Si procede alla creazione del diario di bordo del 24/11/2025
+    \item Si comincia la setessura dell'analisi dei requisiti e del piano di progetto
+\end{enumerate}
+
+
+\section*{Tabella delle decisioni}
+\begin{table}[H]
+    \begin{adjustwidth}{-6cm}{-6cm}% modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
+    \hline
+    \#0 & Redazione del verbale & \href{https://7zpus.atlassian.net/browse/DIPR-96}{DIPR-96}& Fattoni Antonio & Vigolo Davide \\
+     \#2 & \begin{tabular}[c]{@{}l@{}}Creazione slide diario\\di bordo 24/11/2025\end{tabular}  & \href{https://7zpus.atlassian.net/browse/DIPR-101}{DIPR-101}& Rocco Matteo A. & Vigolo Davide \\
+    \#3 & \begin{tabular}[c]{@{}l@{}}Stesura analisi dei requisiti\\e piano di progetto\end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-15}{DIPR-15} & \begin{tabular}[c]{@{}l@{}}Rocco Matteo A., Soligo Lorenzo,\\Georgescu Diana, Laoud Zakaria,\\Fattoni Antonio\end{tabular} & - \\
+    \#4 & Creazione Piano di Progetto & \href{https://7zpus.atlassian.net/browse/DIPR-98}{DIPR-98} & Vigolo Davide, Gingillino Aaron & - \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
