@@ -125,23 +125,22 @@ Questo documento ha l'obiettivo di definire e normare il \glossario{Way of
 durante lo svolgimento delle \glossario{attività di progetto} volte allo
 sviluppo dell'applicativo software \glossario{\textbf{DIPReader}}, proposto
 dall'azienda \glossario{Sanmarco Informatica}. A ciascun membro è richiesto di
-seguirle integralmente per poter lavorare in maniera quanto più efficace ed
-efficiente, oltre che omogenea. Data la natura incrementale di redazione del
-documento, il \glossario{responsabile di progetto} in carica ha il compito di
-mantenere aggiornate le presenti norme e eventuali riferimenti ad altri
-documenti contenuti al loro interno.
+seguirle integralmente per poter lavorare in maniera efficace, efficiente e omogenea. 
+Data la natura incrementale della redazione del documento, il \glossario{responsabile di progetto} ha il compito di
+mantenere aggiornate le presenti norme e gli eventuali riferimenti ad altri
+documenti in esse contenuti.
 \subsection{Glossario}
-Ogni termine tecnico o con particolare significato nell'ambito
-dell'\glossario{Ingegneria del Software} utilizzato nella documentazione di
-progetto viene definito nell'apposito documento
+Ogni termine tecnico o con un significato particolare nell'ambito
+dell'\glossario{Ingegneria del Software}, utilizzato nella documentazione di
+progetto, è definito nell'apposito documento
 \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@norme_in_lavorazione/2_RTB/Glossario.pdf}{\ul{Glossario
         1.0}\setulcolor{black}}\ped{(ultimo accesso: 17/11/2025)}.
 \subsection{Riferimenti}
-Il gruppo ha deciso di redigere il presente documento in conformità con lo
-\glossario{standard} ISO/IEC 12207:1995, integrando occasionalmente con
-approfondimenti contenuti nella sua versione più attuale ISO/IEC/IEEE
-12207:2017 per includere dettagli aggiuntivi relativi agli approcci
-\glossario{agili} e \glossario{iterativi} che contraddistinguono lo
+Il gruppo ha redatto il presente documento in conformità con lo
+\glossario{standard} ISO/IEC 12207:1995, integrandolo occasionalmente con
+approfondimenti tratti dalla sua versione più recente, ISO/IEC/IEEE
+12207:2017, per includere dettagli aggiuntivi sugli approcci
+\glossario{agili} e \glossario{iterativi} che caratterizzano lo
 \glossario{sviluppo software} moderno.
 \subsubsection{Riferimenti Normativi}
 \begin{itemize}
@@ -186,7 +185,7 @@ si impegna a svolgere le seguenti attività.
 
 \paragraph{Avvio}
 Il fornitore analizza i \glossario{requisiti} necessari alla proposta di
-fornitura, tenendo considerazione di eventuali vincoli organizzativi e
+fornitura, tenendo in considerazione eventuali vincoli organizzativi e
 normativi.
 
 \paragraph{Preparazione della proposta di fornitura}
@@ -396,7 +395,7 @@ se. \\ A questo punto:
     \item Se il revisore \textbf{approva la PR}, questo branch viene automaticamente
           eliminato, il work item viene marcato come completato in Jira e l'assegnatario
           può proseguire con gli altri compiti a lui assegnati.
-    \item Se il revisore richiede modifiche \textbf{la PR viene bocciata} e
+    \item Se il revisore richiede modifiche \textbf{la PR viene rifiutata} e
           l'assegnatario deve procedere con le modifiche richieste. Una volta completate,
           l'assegnatario notifica il revisore che procederà con una nuova revisione.
           Questo ciclo si ripete fino a quando la PR non viene approvata.
@@ -444,12 +443,12 @@ I seguenti passaggi guidano il Team nella produzione di documenti:
 Per una corretta archiviazione e reperibilità dei documenti, è necessario
 seguire le seguenti convenzioni per la datazione e denominazione.
 \begin{itemize}
-    \item Tutti i file dei documenti devono seguire la regola del \textbf{Camel Case}, ovvero
+    \item Tutti i file dei documenti devono seguire la regola del \textbf{Pascal Case}, ovvero
 devono essere scritti senza spazi e con la prima lettera di ogni parola in
 maiuscola.\\
-\item All'interno dei documenti, la data deve essere riportata nel formato \textbf{YYYY-MM-DD}, anno-mese-giorno.
+\item All'interno dei documenti, la data deve essere riportata nel formato \textbf{DD-MM-YYYY}, giorno-mese-anno.
 \end{itemize}
-Per quanto riguarda ciò che riguarda la denominazione dei file sul sito, si seguono le stesse regole, aggiungendo però il numero di versione alla fine del nome del file. Per le regole di versionamento si rimanda a \ref{versione}.
+La denominazione dei file sul sito necessita di seguire invece la datazione usata per il nome dei file su GitHub ovvero \textbf{YYYY-MM-DD}, con l'aggiunta del numero di versione alla fine del nome. Per le specifiche di versionamento, si rimanda alla sezione \ref{versione}.
 
 \paragraph{Strumenti di Produzione}
 \begin{itemize}
@@ -462,9 +461,7 @@ Per quanto riguarda ciò che riguarda la denominazione dei file sul sito, si seg
 
 \subsubsection{Attività: Revisione e Approvazione}
 Ogni documento redatto viene sottoposto a un processo di revisione interna che
-ne accerta la correttezza contenutistica, formale, e stilistica. La revisione
-viene effettuata da un membro del gruppo diverso dall'autore del documento che
-al termine del processo può:
+ne accerta la correttezza contenutistica, formale, e stilistica. La revisione viene effettuata da un membro del gruppo diverso dall'autore del documento seguendo la procedura definita a seguire
 \paragraph{Procedure di Revisione e Approvazione}\label{procedureRevisioneDocs}
 \begin{enumerate}
     \item Una volta ricevuta la notifica della PR da revisionare, il revisore dovrà
@@ -502,6 +499,7 @@ strumenti:
     \item \glossario{GitHub}, in particolare integrato in VSCode per la gestione delle versioni e delle pull request, comodamente nell'ambiente di sviluppo di VSCode \ref{vscode}.
           Per una stesura efficiente dei documenti il Team si è dotato di modelli predefiniti \ped{(Decisione del \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali\%20Interni/2025-11-07-VerbaleInterno.pdf}{2025-11-07})}.
     \item \glossario{Jira}: strumento di gestione delle attività di progetto, utilizzato per tracciare le attività di documentazione e assegnarle ai membri del gruppo.
+    \item \glossario{LLM} per il supporto alla revisione formale e stilistica dei documenti.
 \end{itemize}
 
 \subsection{Processo di Gestione della Configurazione} \label{configurazione}
@@ -564,10 +562,10 @@ artefatti e la gestione delle ramificazioni nel repository.
 
 \paragraph{Procedure: Standard per le Branch} \label{stdBranch}
 Per garantire una gestione ordinata e coerente del codice e della
-documentazione, il Team adotta il seguente standard per la denominazione delle
+documentazione, il Team adotta il seguente standard per la denominazione dei
 branch in GitHub:
 \begin{itemize}
-    \item La creazione della branch deve avvenire preferibilmente in modo automatico
+    \item La creazione del branch deve avvenire preferibilmente in modo automatico
           tramite l'integrazione Jira-VSCode \ref{vscode}.
     \item Il formato obbligatorio è:
     \begin{verbatim}
@@ -583,7 +581,7 @@ branch in GitHub:
 \end{itemize}
 
 \subsubsection{Attività: Controllo delle Configurazioni}
-Questa attività normativa il modo in cui le modifiche di avanzamento vengono registrate e
+Questa attività regolamenta il modo in cui le modifiche di avanzamento vengono registrate e
 tracciate rispetto ai task pianificati.
 
 \paragraph{Procedure: Smart Commit} \label{smartcommit}
