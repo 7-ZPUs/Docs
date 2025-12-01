@@ -20,9 +20,6 @@
 \usepackage[most]{tcolorbox}
 \usepackage[colorlinks=true]{hyperref}
 
-\usepackage{titlesec}
-
-\setcounter{tocdepth}{4} 
 \setcounter{tocdepth}{5}
 
 \setcounter{secnumdepth}{5}
@@ -128,7 +125,7 @@ dall'azienda \glossario{Sanmarco Informatica}. A ciascun membro è richiesto di
 seguirle integralmente per poter lavorare in maniera quanto più efficace ed
 efficiente, oltre che omogenea. Data la natura incrementale di redazione del
 documento, il \glossario{responsabile di progetto} in carica ha il compito di
-mantenere aggiornate le presenti norme e eventuali riferimenti ad altri
+mantenere aggiornate le presenti norme ed eventuali riferimenti ad altri
 documenti contenuti al loro interno.
 \subsection{Glossario}
 Ogni termine tecnico o con particolare significato nell'ambito
@@ -186,7 +183,7 @@ si impegna a svolgere le seguenti attività.
 
 \paragraph{Avvio}
 Il fornitore analizza i \glossario{requisiti} necessari alla proposta di
-fornitura, tenendo considerazione di eventuali vincoli organizzativi e
+fornitura, tenendo in considerazione eventuali vincoli organizzativi e
 normativi.
 
 \paragraph{Preparazione della proposta di fornitura}
@@ -320,11 +317,11 @@ e preventivo a finire del progetto.
 
 \subsubsection{Strumenti}
 \begin{itemize}
-    \item \glossario{GitHub} per la gestione della documentazione di progetto e mezzo comunicativo nella fase di fornitura
-    \item \glossario{Jira} per la suddivisione e il monitoraggio delle attività di progetto
-    \item Discord per la comunicazione sincrona tra i membri del gruppo
-    \item Gmail per la comunicazione asincrona con l'azienda proponente
-    \item VSCode con estensione con IDE di riferimento.
+    \item \glossario{GitHub} per la gestione della documentazione di progetto e mezzo comunicativo nella fase di fornitura.
+    \item \glossario{Jira} per la suddivisione e il monitoraggio delle attività di progetto.
+    \item Discord per la comunicazione sincrona tra i membri del gruppo.
+    \item Gmail per la comunicazione asincrona con l'azienda proponente.
+    \item VSCode come IDE di riferimento.
 \end{itemize}
 
 \subsection{Processo di sviluppo}
@@ -348,15 +345,16 @@ miglioramento e adattamento tramite \glossario{feedback}.
 
 \subsubsection{Attività: Pianificazione della documentazione} \label{pianificazioneDocs}
 La pianificazione della documentazione avviene contestualmente alla
-pianificazione delle attività di progetto. \\Durante la pianificazione di ogni
+pianificazione delle attività di progetto. Durante la pianificazione di ogni
 \glossario{sprint}, il \glossario{responsabile di progetto} assegna le attività
 di documentazione ai membri del gruppo, tenendo conto delle competenze e della
 disponibilità di ciascuno. Le scadenze per la consegna dei documenti sono
 stabilite in modo da garantire che la documentazione sia sempre aggiornata e
 disponibile per la consultazione da parte del gruppo e di eventuali attori
-esterni (Azienda \glossario{proponente}, \glossario{committente}). \\Per una
-più efficiente scrittura dei documenti, soprattutto di tutti quei documenti
-periodici (Verbali Interni, Verbali Esterni, Diario di Bordo) sono presenti
+esterni (Azienda \glossario{proponente}, \glossario{committente}).
+
+Per una più efficiente scrittura dei documenti, soprattutto di tutti quei documenti
+periodici (Verbali Interni, Verbali Esterni, Diario di Bordo), sono presenti
 modelli standard approvati in
 \href{https://github.com/7-ZPUs/Docs/tree/main/assets}{/assets}.
 L'aggiornamento di tali standard deve essere argomento di Verbali Interni e
@@ -370,7 +368,7 @@ documentazione:
           \glossario{responsabile} identifica le necessità di documentazione in base agli
           obiettivi dello sprint e alle attività previste.
     \item Il responsabile assegna le attività di documentazione ai membri del gruppo,
-          tenendo conto delle competenze e della disponibilità di ciascuno, nonchè della
+          tenendo conto delle competenze e della disponibilità di ciascuno, nonché della
           necessità di ruotare i ruoli, per dare la possibilità a tutti i membri di
           acquisire esperienza in diverse aree.
     \item Vengono create le \glossario{issue} in Jira per ogni attività di
@@ -391,7 +389,9 @@ il Branch di lavoro che si baserà sulla feature branch principale. Una volta
 completata la stesura, seguendo i modelli standard sopracitati, l'autore del
 documento crea una \glossario{(PR) Pull Request} verso la feature branch
 principale, assegnando come revisore il membro del gruppo designato, diverso da
-se. \\ A questo punto:
+sé.
+
+A questo punto:
 \begin{itemize}
     \item Se il revisore \textbf{approva la PR}, questo branch viene automaticamente
           eliminato, il work item viene marcato come completato in Jira e l'assegnatario
@@ -402,13 +402,13 @@ se. \\ A questo punto:
           Questo ciclo si ripete fino a quando la PR non viene approvata.
 \end{itemize}
 L'integrazione con Jira permette di controllare lo stato di avanzamento dei Work Item, la rendicontazione delle ore lavorate e la gestione delle scadenze.
-Risulta quindi \textbf{obbligatorio} l'utilizzo di Smart Commit per tutti i commit, compresi quelli di Pull Request. Più in \ref{smartcommit}.
+Risulta quindi \textbf{obbligatorio} l'utilizzo di Smart Commit per tutti i commit, compresi quelli di Pull Request. Maggiori dettagli in \ref{smartcommit}.
 
 \begin{figure}[H]
-    \label{fig:workflowDocs}
     \centering
     \includegraphics[width=0.7\textwidth]{../assets/workflowWorkItem.png}
     \caption{Flusso del processo di documentazione}
+    \label{fig:workflowDocs}
 \end{figure}
 
 \paragraph{Procedure di Produzione}\label{procedureProduzioneDocs}
@@ -426,30 +426,30 @@ I seguenti passaggi guidano il Team nella produzione di documenti:
               \caption{Creazione del branch di lavoro tramite estensione Jira in VSCode}
           \end{figure}
     \item Quando è necessario \textbf{effettuare un commit} è obbligatorio utilizzare lo
-          Smart Commit. Più in \ref{Jira}.
+          Smart Commit. Maggiori dettagli in \ref{Jira}.
     \item Una volta completata la task, è necessario \textbf{creare la PR} verso la
           branch \textit{"in\_lavorazione"} di riferimento mettendo come revisore il
-          membro del gruppo designato.\\ Per esempio, una volta completata la stesura di
+          membro del gruppo designato.
+          
+          Per esempio, una volta completata la stesura di
           un verbale viene creata una PR verso \textit{verbali\_in\_lavorazione} e se
           questa viene approvata, il documento sarà pronto per la revisione finale del
-          responsabile che si occuperà del merge al \textit{main} in sede di milestone.\\
+          responsabile che si occuperà del merge al \textit{main} in sede di milestone.
           \begin{figure}[H]
-              \label{PR1}
               \centering
               \includegraphics[width=1.1\textwidth]{../assets/PRDocs1.png}
               \caption{Creazione della PR verso l'issue branch \textit{in\_lavorazione}}
+              \label{fig:PR1}
           \end{figure}
 \end{enumerate}
 \subparagraph{Denominazione e datazione}\label{convenzioniNomiDate}
 Per una corretta archiviazione e reperibilità dei documenti, è necessario
-seguire le seguenti convenzioni per la datazione e denominazione.
+seguire le seguenti convenzioni per la datazione e denominazione:
 \begin{itemize}
-    \item Tutti i file dei documenti devono seguire la regola del \textbf{Camel Case}, ovvero
-devono essere scritti senza spazi e con la prima lettera di ogni parola in
-maiuscola.\\
-\item All'interno dei documenti, la data deve essere riportata nel formato \textbf{YYYY-MM-DD}, anno-mese-giorno.
+    \item Tutti i file dei documenti devono seguire la regola del \textbf{Camel Case}, ovvero devono essere scritti senza spazi e con la prima lettera di ogni parola in maiuscola.
+    \item All'interno dei documenti, la data deve essere riportata nel formato \textbf{YYYY-MM-DD} (anno-mese-giorno).
 \end{itemize}
-Per quanto riguarda ciò che riguarda la denominazione dei file sul sito, si seguono le stesse regole, aggiungendo però il numero di versione alla fine del nome del file. Per le regole di versionamento si rimanda a \ref{versione}.
+Per quanto riguarda la denominazione dei file sul sito, si seguono le stesse regole, aggiungendo però il numero di versione alla fine del nome del file. Per le regole di versionamento si rimanda a \ref{versione}.
 
 \paragraph{Strumenti di Produzione}
 \begin{itemize}
@@ -462,9 +462,9 @@ Per quanto riguarda ciò che riguarda la denominazione dei file sul sito, si seg
 
 \subsubsection{Attività: Revisione e Approvazione}
 Ogni documento redatto viene sottoposto a un processo di revisione interna che
-ne accerta la correttezza contenutistica, formale, e stilistica. La revisione
-viene effettuata da un membro del gruppo diverso dall'autore del documento che
-al termine del processo può:
+ne accerta la correttezza contenutistica, formale e stilistica. La revisione
+viene effettuata da un membro del gruppo diverso dall'autore del documento.
+
 \paragraph{Procedure di Revisione e Approvazione}\label{procedureRevisioneDocs}
 \begin{enumerate}
     \item Una volta ricevuta la notifica della PR da revisionare, il revisore dovrà
@@ -481,18 +481,17 @@ al termine del processo può:
           \end{itemize}
 \end{enumerate}
 \begin{figure}[H]
-    \label{PR2}
     \centering
     \includegraphics[width=1\textwidth]{../assets/PRDocs2.png}
     \caption{Commit della PR con Smart Commit verso le due issue}
+    \label{fig:PR2}
 \end{figure}
 
 Per quanto riguarda l'approvazione finale del documento, questa spetta al
-\glossario{responsabile}, il quale effettua il merge da "\textit{in\_lavorazione}" nel ramo
-principale \textit{main}, base
-per la versione ufficiale di rilascio corrispondente alla
+\glossario{responsabile}, il quale effettua il merge da \textit{in\_lavorazione} nel ramo
+principale \textit{main}, base per la versione ufficiale di rilascio corrispondente alla
 \glossario{milestone}. Questo passaggio dovrebbe risultare puramente formale.
-Non di meno è il garante delle qualità del documento quindi deve impiegare il
+Nondimeno è il garante della qualità del documento, quindi deve impiegare il
 proprio tempo, il minimo possibile, per rileggere e confermare i contenuti.
 
 \paragraph{Strumenti di Revisione e Approvazione}
@@ -534,8 +533,9 @@ creazione deve seguire i seguenti passaggi:
     \item Definizione delle scadenze e del \glossario{Time Estimate} per la gestione del
           carico di lavoro.
 \end{enumerate}
-È quindi necessaria una specificazione sulla struttura di un Work Item. Ogni Work Item deve contenere deve consistere in una fase produttiva e una fase di revisione, per garantire la qualità del prodotto finale.
-\\ A tal fine si adottano le seguenti convenzioni:
+È quindi necessaria una specificazione sulla struttura di un Work Item. Ogni Work Item deve consistere in una fase produttiva e una fase di revisione, per garantire la qualità del prodotto finale.
+
+A tal fine si adottano le seguenti convenzioni:
 \begin{itemize}
     \item Ogni Work Item deve presentare una sotto issue che rappresenta la fase di
           produzione.
@@ -545,8 +545,8 @@ creazione deve seguire i seguenti passaggi:
           responsabile della stesura o sviluppo dell'artefatto, mentre la issue
           principale deve essere assegnata al membro responsabile della supervisione.
 \end{itemize}
-Questo approccio divide chiaramente le responsabilità e le attività, mantenendo la correlazione tra produzione e supervisione e inoltre facilita il monitoraggio dello stato di avanzamento, la gestione delle revisioni e conteggio di \glossario{Ore produttive} consumate.
-Di più nello specifico in \ref{metrichediProgetto}.
+Questo approccio divide chiaramente le responsabilità e le attività, mantenendo la correlazione tra produzione e supervisione e inoltre facilita il monitoraggio dello stato di avanzamento, la gestione delle revisioni e il conteggio di \glossario{Ore produttive} consumate.
+Maggiori dettagli in \ref{metrichediProgetto}.
 \subparagraph{Issue e SubIssue}
 In generale, come già detto, ogni Work Item deve essere composto da una issue principale e una sotto issue di produzione. Nel caso però di Riunioni e Diari di Bordo, intesi come eventi ma anche come tipi di work item Jira, la struttura cambia:
 \begin{itemize}
@@ -583,7 +583,7 @@ branch in GitHub:
 \end{itemize}
 
 \subsubsection{Attività: Controllo delle Configurazioni}
-Questa attività normativa il modo in cui le modifiche di avanzamento vengono registrate e
+Questa attività norma il modo in cui le modifiche di avanzamento vengono registrate e
 tracciate rispetto ai task pianificati.
 
 \paragraph{Procedure: Smart Commit} \label{smartcommit}
@@ -601,7 +601,7 @@ DIPR-<numero issue> #time <nd nh nm> #<stato> #comment <Descrizione>
     \item \textbf{Time Tracking:} L'inserimento del tempo (\texttt{\#time}) deve seguire il formato \textit{nd nh nm} (giorni, ore, minuti).
     \item \textbf{Transizioni di Stato:} Utilizzare i tag \texttt{\#start-progress}, \texttt{\#start-review}, \texttt{\#complete} per avanzare il workflow su Jira.
     \item \textbf{Pull Request:} Nelle PR è vietato inserire il tag \texttt{\#time} per evitare la doppia contabilizzazione delle ore lavorative.
-    \item \textbf{Issue Multiple:} È possibile agire su più issue in un singolo commit separandole con spazi (utile per chiudere issue di sviluppo e verifica contemporaneamente)[cite: 97, 98].
+    \item \textbf{Issue Multiple:} È possibile agire su più issue in un singolo commit separandole con spazi (utile per chiudere issue di sviluppo e verifica contemporaneamente).
 \end{enumerate}
 
 \paragraph{Strumenti}
@@ -612,13 +612,15 @@ DIPR-<numero issue> #time <nd nh nm> #<stato> #comment <Descrizione>
 \subsubsection{Registrazione delle Configurazioni}
 Questa attività prevede la documentazione e la registrazione delle modifiche apportate agli SCIs.
 \paragraph{Procedure: Registrazione delle Modifiche}\label{versione}
-Per ogni modifica apportata a uno SCI, è necessario documentare le seguenti informazioni, all'interno della sezione denominata "Tabella di Versionamento", situata all'inizio di ogni documento.\\Al suo interno vi sono:
+Per ogni modifica apportata a uno SCI, è necessario documentare le seguenti informazioni, all'interno della sezione denominata "Tabella di Versionamento", situata all'inizio di ogni documento.
+
+Al suo interno vi sono:
 \begin{itemize}
-    \item Numero di versione
-    \item Data della modifica (Di più in \ref{convenzioniNomiDate})
-    \item Autore della modifica
-    \item Verificatore della modifica
-    \item Descrizione della modifica, con riferimento preciso, al paragrafo o sezione interessata.
+    \item Numero di versione.
+    \item Data della modifica (maggiori dettagli in \ref{convenzioniNomiDate}).
+    \item Autore della modifica.
+    \item Verificatore della modifica.
+    \item Descrizione della modifica, con riferimento preciso al paragrafo o sezione interessata.
 \end{itemize}
 Per la numerazione delle versioni si adotta lo standard di versionamento \textbf{MAJOR.MINOR.PATCH}, nel quale:
 \begin{itemize}
@@ -660,15 +662,15 @@ disponibili.
 \paragraph{GitHub} \label{GitHub}
 Piattaforma di hosting per il versionamento e la gestione dei contenuti di
 progetto. Il Team deve sfruttare appieno le potenzialità di GitHub, in
-particolare per l'integrazione con Jira. Vengo quindi descritti gli Smart
+particolare per l'integrazione con Jira. Vengono quindi descritti gli Smart
 Commit, lo standard per la scrittura di commit e la gestione dello stato di
-vita degli work item.
+vita dei work item.
 
 \paragraph{Jira} \label{Jira}
 Strumento di gestione delle attività di progetto adottato per potenzialità e
 flessibilità del sistema. Permette di tracciare le attività di progetto,
 assegnarle ai membri del gruppo, monitorare lo stato di avanzamento e gestire
-le scadenze.\\
+le scadenze.
 
 \subparagraph{Automation}\label{JiraAutomation}
 Il Team ha deciso di adottare alcune automazioni per facilitare la gestione
@@ -689,7 +691,7 @@ la gestione della documentazione di progetto. Grazie all'estensione Atlassian
 per \textbf{Jira} e \textbf{GitHub}, il Team può integrare direttamente le
 funzionalità di gestione delle attività e del versionamento all'interno
 dell'IDE, migliorando l'efficienza del flusso di lavoro e uniformando le
-pratiche di sviluppo. \\ Si presuppone che tutti i membri del gruppo si
+pratiche di sviluppo. Si presuppone che tutti i membri del gruppo si
 adattino allo standard comune. Le estensioni attualmente utilizzate sono:
 \begin{itemize}
     \item \textbf{Atlassian: Jira, Rovo Dev, Bitbucket}
