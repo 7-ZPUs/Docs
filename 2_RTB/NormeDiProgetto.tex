@@ -92,20 +92,23 @@
             \textbf{Versione} & \textbf{Data}                                                                                                                                                              & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione}
 
             \\
-            \hline
-            0.5               & 28/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Fattoni Antonio        & \begin{tabular}[c]{@{}c@{}} Correzione nella Procedura di Revisione \\ Paragrafo 3.1.3.1 e aggiornamento immagini \end{tabular} \\
+             \hline
+            0.5               & 1/12/2025                                                                                                                                                                 & Soligo Lorenzo  & Rocco Matteo A.       & \begin{tabular}[c]{@{}c@{}} Aggiornamento nuovo standard per gestione branch, \\ convenzioni sui nomi, date e versioni. \\ Sezioni 3.1.2, 3.1.3, 3.2.1.1.1, 3.2.4, 4.2.3.2.1,  \end{tabular}       \\
             
             \hline
-            0.4               & 26/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Fattoni Antonio         & \begin{tabular}[c]{@{}c@{}} Ristrutturazione completa Processi \\ (ISO 12207: Attività-Procedure-Strumenti) \end{tabular} \\
+            0.4.1               & 28/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Fattoni Antonio       & \begin{tabular}[c]{@{}c@{}} Correzione nella Procedura di Revisione \\ Paragrafo 3.1.3.1 e aggiornamento immagini \end{tabular} \\
+
             \hline
-            0.3               & 25/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Fattoni Antonio 
-                              & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Processi di Infrastruttura e sottosezioni 4.2.1-4.3 e\\ Nuova struttura Paragrafi e sottoParagrafi \end{tabular}                                                                                                                                                                       \\
+            0.4               & 26/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Fattoni Antonio       & \begin{tabular}[c]{@{}c@{}} Ristrutturazione completa Processi \\ (ISO 12207: Attività-Procedure-Strumenti) \end{tabular}       \\
             \hline
-            0.2               & 22/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Fattoni Antonio         & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Documentazione e sottosezioni 3.1-3.1.5 \end{tabular}
+            0.3               & 25/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Fattoni Antonio
+                              & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Processi di Infrastruttura e sottosezioni 4.2.1-4.3 e\\ Nuova struttura Paragrafi e sottoParagrafi \end{tabular}                                                                                                                                                                             \\
+            \hline
+            0.2               & 22/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Fattoni Antonio       & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Documentazione e sottosezioni 3.1-3.1.5 \end{tabular}
             \\
             \hline
             0.1               & 16/11/2025                                                                                                                                                                 & Rocco Matteo A. & Soligo Lorenzo
-                              & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Introduzione e Processo di fornitura \end{tabular}                                                                                                                                                                                                                                     \\
+                              & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Introduzione e Processo di fornitura \end{tabular}                                                                                                                                                                                                                                           \\
             \hline
 
         \end{tabular}
@@ -425,18 +428,29 @@ I seguenti passaggi guidano il Team nella produzione di documenti:
     \item Quando è necessario \textbf{effettuare un commit} è obbligatorio utilizzare lo
           Smart Commit. Più in \ref{Jira}.
     \item Una volta completata la task, è necessario \textbf{creare la PR} verso la
-          branch della issue mettendo come revisore il membro del gruppo designato. La PR
-          viene chiusa tramite commit e deve essere scritta anche in questo caso
-          utilizzando lo Smart Commit per chiudere la propria issue e una volta approvata
-          anche la issue principale usata come branch di controllo.
+          branch \textit{"in\_lavorazione"} di riferimento mettendo come revisore il
+          membro del gruppo designato.\\ Per esempio, una volta completata la stesura di
+          un verbale viene creata una PR verso \textit{verbali\_in\_lavorazione} e se
+          questa viene approvata, il documento sarà pronto per la revisione finale del
+          responsabile che si occuperà del merge al \textit{main} in sede di milestone.\\
           \begin{figure}[H]
               \label{PR1}
               \centering
               \includegraphics[width=1.1\textwidth]{../assets/PRDocs1.png}
-              \caption{Creazione della PR verso l'issue branch principale}
+              \caption{Creazione della PR verso l'issue branch \textit{in\_lavorazione}}
           \end{figure}
-         
 \end{enumerate}
+\subparagraph{Denominazione e datazione}\label{convenzioniNomiDate}
+Per una corretta archiviazione e reperibilità dei documenti, è necessario
+seguire le seguenti convenzioni per la datazione e denominazione.
+\begin{itemize}
+    \item Tutti i file dei documenti devono seguire la regola del \textbf{Camel Case}, ovvero
+devono essere scritti senza spazi e con la prima lettera di ogni parola in
+maiuscola.\\
+\item All'interno dei documenti, la data deve essere riportata nel formato \textbf{YYYY-MM-DD}, anno-mese-giorno.
+\end{itemize}
+Per quanto riguarda ciò che riguarda la denominazione dei file sul sito, si seguono le stesse regole, aggiungendo però il numero di versione alla fine del nome del file. Per le regole di versionamento si rimanda a \ref{versione}.
+
 \paragraph{Strumenti di Produzione}
 \begin{itemize}
     \item \glossario{VSCode} come IDE principale per la stesura dei documenti in
@@ -459,26 +473,27 @@ al termine del processo può:
           consiglia l'uso di LLM, in particolare per l'analisi grammaticale e stilistica.
     \item Completata la revisione, il revisore può:
           \begin{itemize}
-              \item Approvare la PR, notificando all'autore l'approvazione. È necessario che nel testo del commit del merge siano chiuse tramite Smart Commit entrambe le issue correlate. 
-              \item A sua volta l'autore procederà con il merge della PR verso la branch principale contenente i
-                    documenti pronti all'approvazione finale del responsabile. La procedura per la
-                    PR mima quella dell'autore (\ref{PR1}) e segue gli stessi crismi.
-              \item Richiedere modifiche, fornendo un feedback dettagliato all'autore, chiudendo la
+              \item \textbf{Approvare la PR}, notificando all'autore l'approvazione. È necessario che nel
+                    testo del commit del merge siano chiuse tramite Smart Commit entrambe le issue
+                    correlate.
+              \item \textbf{Richiedere modifiche}, fornendo un feedback dettagliato all'autore, chiudendo la
                     PR che sarà riaperta dall'autore una volta implementate le modifiche.
           \end{itemize}
 \end{enumerate}
- \begin{figure}[H]
-              \label{PR2}
+\begin{figure}[H]
+    \label{PR2}
+    \centering
+    \includegraphics[width=1\textwidth]{../assets/PRDocs2.png}
+    \caption{Commit della PR con Smart Commit verso le due issue}
+\end{figure}
 
-              \centering
-              \includegraphics[width=1\textwidth]{../assets/PRDocs2.png}
-              \caption{Commit della PR con Smart Commit verso le due issue}
-          \end{figure}
-
-Per quanto riguarda l'approvazione finale del documento, questa spetta al \glossario{responsabile}, il quale effettua il merge della feature nel ramo principale (\textit{verbali in lavorazione, norme in lavorazione, etc}), base per la versione ufficiale di rilascio corrispondente alla \glossario{milestone}.
-Questo passaggio dovrebbe risultare puramente formale. Non di meno è il garante
-delle qualità del documento quindi deve impiegare il proprio tempo, il minimo
-possibile, per rileggere e confermare i contenuti.
+Per quanto riguarda l'approvazione finale del documento, questa spetta al
+\glossario{responsabile}, il quale effettua il merge da "\textit{in\_lavorazione}" nel ramo
+principale \textit{main}, base
+per la versione ufficiale di rilascio corrispondente alla
+\glossario{milestone}. Questo passaggio dovrebbe risultare puramente formale.
+Non di meno è il garante delle qualità del documento quindi deve impiegare il
+proprio tempo, il minimo possibile, per rileggere e confermare i contenuti.
 
 \paragraph{Strumenti di Revisione e Approvazione}
 Per la gestione della documentazione di progetto il gruppo utilizza i seguenti
@@ -532,6 +547,13 @@ creazione deve seguire i seguenti passaggi:
 \end{itemize}
 Questo approccio divide chiaramente le responsabilità e le attività, mantenendo la correlazione tra produzione e supervisione e inoltre facilita il monitoraggio dello stato di avanzamento, la gestione delle revisioni e conteggio di \glossario{Ore produttive} consumate.
 Di più nello specifico in \ref{metrichediProgetto}.
+\subparagraph{Issue e SubIssue}
+In generale, come già detto, ogni Work Item deve essere composto da una issue principale e una sotto issue di produzione. Nel caso però di Riunioni e Diari di Bordo, intesi come eventi ma anche come tipi di work item Jira, la struttura cambia:
+\begin{itemize}
+    \item \textbf{Riunioni:} La Riunione rappresenta l'evento, simile al concetto di Epic o Feature, mentre le issue rappresentano i verbali interni ed esterni associati alla riunione stessa.
+    \item \textbf{Diari di Bordo:} Similarmente, il Diario di Bordo rappresenta l'evento periodico, mentre la issue associata riguarda la preparazione delle slide.
+\end{itemize}
+Per entrambi, la creazione della issue di produzione avviene automaticamente una volta che l'evento viene assegnato al membro del team che si occuperà della verifica del materiale prodotto.
 \paragraph{Strumenti di Identificazione}
 \begin{itemize}
     \item \textbf{Jira:} Strumento di gestione delle attività di progetto.
@@ -548,7 +570,7 @@ branch in GitHub:
     \item La creazione della branch deve avvenire preferibilmente in modo automatico
           tramite l'integrazione Jira-VSCode \ref{vscode}.
     \item Il formato obbligatorio è:
-          \begin{verbatim}
+    \begin{verbatim}
     DIPR-<numero issue>-<descrizione-breve>
     \end{verbatim}
     \item È necessario scegliere una descrizione breve che identifichi chiaramente il contenuto della modifica.
@@ -560,8 +582,8 @@ branch in GitHub:
     \item \textbf{VSCode (Estensione Jira):} Per l'automazione della nomenclatura delle branch.
 \end{itemize}
 
-\subsubsection{Attività: Controllo delle Modifiche}
-Questa attività normativa il modo in cui le modifiche vengono registrate e
+\subsubsection{Attività: Controllo delle Configurazioni}
+Questa attività normativa il modo in cui le modifiche di avanzamento vengono registrate e
 tracciate rispetto ai task pianificati.
 
 \paragraph{Procedure: Smart Commit} \label{smartcommit}
@@ -587,6 +609,25 @@ DIPR-<numero issue> #time <nd nh nm> #<stato> #comment <Descrizione>
     \item \textbf{Jira Automation:} Interpreta gli Smart Commit per aggiornare i Work Item.
     \item \textbf{Git/GitHub:} Motore di versionamento sottostante.
 \end{itemize}
+\subsubsection{Registrazione delle Configurazioni}
+Questa attività prevede la documentazione e la registrazione delle modifiche apportate agli SCIs.
+\paragraph{Procedure: Registrazione delle Modifiche}\label{versione}
+Per ogni modifica apportata a uno SCI, è necessario documentare le seguenti informazioni, all'interno della sezione denominata "Tabella di Versionamento", situata all'inizio di ogni documento.\\Al suo interno vi sono:
+\begin{itemize}
+    \item Numero di versione
+    \item Data della modifica (Di più in \ref{convenzioniNomiDate})
+    \item Autore della modifica
+    \item Verificatore della modifica
+    \item Descrizione della modifica, con riferimento preciso, al paragrafo o sezione interessata.
+\end{itemize}
+Per la numerazione delle versioni si adotta lo standard di versionamento \textbf{MAJOR.MINOR.PATCH}, nel quale:
+\begin{itemize}
+    \item \textbf{MAJOR} viene incrementato per modifiche sostanziali che introducono cambiamenti significativi o incompatibili con le versioni precedenti. Viene modificato in vista delle milestone.
+    \item \textbf{MINOR} viene incrementato per l'aggiunta di nuove funzionalità o miglioramenti che non compromettono la compatibilità con le versioni precedenti.
+    \item \textbf{PATCH} viene incrementato per correzioni di bug, miglioramenti minori o modifiche che non influenzano le funzionalità principali del documento.
+\end{itemize}
+
+
 \subsection{Processo di garanzia della qualità}
 \subsection{Processo di verifica}
 \subsection{Processo di validazione}
@@ -637,7 +678,9 @@ delle attività di progetto. Le automazioni attualmente implementate sono:
     \item When a commit is made → then move issue to in progress
     \item When all child work items are completed → then close parent
     \item When all sub-tasks are done → move parent to done
-    \item When Item In Progress -> Parent In Progress
+    \item When Item In Progress → Parent In Progress
+    \item Diario Assegnato → Creo Preparazione Slide
+    \item Riunione Assegnata → Creo Scrittura Verbale
 \end{itemize}
 
 \paragraph{VSCode} \label{vscode}
