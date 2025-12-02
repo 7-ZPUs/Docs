@@ -150,7 +150,7 @@ def generate_html(glossary):
     </main>
 
     <footer>
-        <p>&copy; 2024 Gruppo 7-ZPUs. Università degli Studi di Padova.</p>
+        <p>&copy; 2025-2026 Gruppo 7-ZPUs. Università degli Studi di Padova.</p>
         <p style="opacity: 0.6; font-size: 0.85rem; margin-top: 0.5rem;">Generato automaticamente da LaTeX</p>
     </footer>
 
