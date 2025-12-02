@@ -1,0 +1,374 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[italian]{babel}
+\renewcommand{\rmdefault}{lmss}
+\usepackage{float}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor,soul}
+\usepackage{fancyhdr}
+\usepackage{changepage}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{\rightmark}
+\rhead{7-ZPUs}
+\lfoot{Piano di Progetto}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setlength{\headheight}{14.49998pt}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../assets/logo7ZPUs.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \vspace{0.5cm}
+    \Large \textbf{Piano di Progetto}\\
+\end{center}
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    1.0 & 2025/11/23 & Vigolo Davide & Verificatore & Creazione e stesura sezioni \\
+    \hline
+
+\end{tabular}
+\caption{Tabella di versionamento del documento}
+\end{table}
+
+\newpage
+
+\section{Introduzione}
+\subsection{Scopo}
+
+\subsection{Glossario}
+\subsection{Riferimenti}
+\subsubsection{Riferimenti normativi}
+\begin{itemize}
+    \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/PD1.pdf}{\ul{Regolamento progetto didattico}}\setulcolor{black} \ped{(ultimo accesso: 2025/11/23)}
+\end{itemize}
+\subsubsection{Riferimenti informativi}
+\begin{itemize}
+    \item Ian Sommerville, \textit{Software Engineering}, 9ª Edizione, Pearson, 2011.
+\end{itemize}
+
+\section{Analisi dei rischi}
+\subsection{Introduzione}
+Ogni rischio presentato in questa sezione è caratterizzato da:
+\begin{itemize}
+    \item \textbf{Identificativo}
+    \item \textbf{Probabilità di occorrenza}: può assumere i valori \textbf{Molto bassa} ($<10\%$), \textbf{Bassa}($10-25\%$), \textbf{Moderata}($25-50\%$), \textbf{Alta}($50-75\%$), \textbf{Molto alta}($>75\%$)
+    \item \textbf{Effetti}: può assumere i valori: \textbf{Critico}, \textbf{Grave}, \textbf{Tollerabile}, \textbf{Irrilevante}
+    \item \textbf{Strategia}: Per strategia si intendono tutte quelle misure atte a:
+    \begin{itemize}
+        \item Evitare il rischio, nel caso fosse possibile
+        \item Mitigare il rischio, riducendone gli effetti sul progetto nel caso non fosse stato possibile evitarlo
+        \item Gestire il rischio, nel caso in cui si verifichi il \textit{Worst Case Scenario}\textsuperscript{G}
+    \end{itemize}
+    \item \textbf{Indicatori}
+\end{itemize}
+\subsection{Rischi Tecnologici}
+\subsubsection{Definizione}
+Il rischio tecnologico riguarda tutto ciò che concerne le tecnologie parte del prodotto software, possono includere database, framework, linguaggi di programmazione, ecc... Viene inclusi per convenienza anche gli strumenti di amministrazione del progetto (e.g. GitHub).
+
+\subsubsection{RT01 - Problemi tecnici con gli strumenti di sviluppo}
+\textbf{Probabilità di occorrenza}: Moderata (50\%)\\
+\textbf{Effetti}: Grave\\
+\textbf{Descrizione}: L'inesperienza del gruppo con le tecnologie da utilizzare potrebbe portare a difficoltà tecniche e rallentamenti nello sviluppo.\\
+\textbf{Strategia}: Prevedere sessioni di formazione iniziali con il supporto occasionale dell'azienda proponente per familiarizzare con gli strumenti e le tecnologie.\\
+\textbf{Indicatori}: Ritardi nell'implementazione, errori tecnici frequenti, richieste di aiuto ripetute.
+\subsection{Rischi Individuali}
+\subsubsection{Definizione}
+Il rischio individuale riguarda tutto ciò che concerne i membri del gruppo, come la loro disponibilità
+
+\subsubsection{RI01 - Calo di produttività del team}
+\textbf{Probabilità di occorrenza}: Molto alta (80\%)\\
+\textbf{Effetti}: Tollerabile\\
+\textbf{Descrizione}: Il gruppo prevede un calo dell'attività nel periodo natalizio, a causa di impegni personali e festività, che si sovrappone al periodo di sessione d'esame.\\
+\textbf{Strategia}: Pianificare in anticipo le attività più critiche prima del periodo di calo, e le restanti tenendo conto del periodo di ridotta attività.\\
+\textbf{Indicatori}: Diminuzione delle ore lavorate settimanali, ritardi nelle consegne pianificate.
+\subsection{Rischi Organizzativi}
+\subsubsection{Definizione}
+Il rischio organizzativo riguarda tutto ciò che concerne l'organizzazione del progetto e del lavoro.
+
+\subsubsection{RO01 - Sforamento dei costi preventivati}
+\textbf{Probabilità di occorrenza}: Bassa (20\%)\\
+\textbf{Effetti}: Grave\\
+\textbf{Descrizione}: Il superamento del budget preventivato potrebbe compromettere la fattibilità del progetto, portando a ritardi nella consegna o alla necessità di ridurre alcune funzionalità previste.\\
+\textbf{Strategia}: Monitorare costantemente l'allocazione delle ore rispetto alla pianificazione iniziale, effettuare stand-up meetings periodici e prevedere margini temporali per imprevisti.\\
+\textbf{Indicatori}: Superamento del 10\% delle ore preventivate per attività, ritardi accumulati nelle milestone.
+
+\subsubsection{RO02 - Mancata comunicazione e collaborazione tra i membri del team}
+\textbf{Probabilità di occorrenza}: Molto bassa (5\%)\\
+\textbf{Effetti}: Critico\\
+\textbf{Descrizione}: La mancanza di comunicazione efficace può portare a incomprensioni, duplicazione degli sforzi e ritardi nel completamento delle attività.\\
+\textbf{Strategia}: Stabilire canali di comunicazione chiari e regolari e una routine di aggiornamenti pianificati per garantire che tutti i membri del team siano allineati sugli obiettivi e le responsabilità.\\
+\textbf{Indicatori}: Mancata partecipazione ai meeting, conflitti tra membri, lavori duplicati.
+
+\subsubsection{RO03 - Mancata comunicazione con l'azienda proponente}
+\textbf{Probabilità di occorrenza}: Bassa (20\%)\\
+\textbf{Effetti}: Critico\\
+\textbf{Descrizione}: La mancanza di feedback regolari dall'azienda proponente potrebbe portare a uno sviluppo rallentato e implementazione di funzionalità non allineate con le loro aspettative.\\
+\textbf{Strategia}: Stabilire un calendario di incontri regolari con l'azienda proponente per garantire un flusso costante di comunicazione e feedback.\\
+\textbf{Indicatori}: Ritardo nelle risposte dell'azienda, mancanza di feedback sui deliverables.
+
+\subsubsection{RO04 - Mancato rispetto delle norme e documenti di progetto interni}
+\textbf{Probabilità di occorrenza}: Bassa (15\%)\\
+\textbf{Effetti}: Grave\\
+\textbf{Descrizione}: La mancata aderenza ai documenti di progetto potrebbe portare a discrepanze tra i lavori svolti dai componenti del gruppo.\\
+\textbf{Strategia}: Ruolo attivo di amministratori e verificatori per garantire il rispetto delle norme e dei documenti di progetto interni.\\
+\textbf{Indicatori}: Documenti non conformi alle norme, discrepanze negli stili di codifica, mancato utilizzo degli strumenti concordati.
+\subsection{Rischi legati ai requisiti}
+\subsubsection{Definizione}
+Il rischio che può derivare per esempio da una errata analisi di un requisito, o dal cambiamento di esso.
+
+\section{Modello di Sviluppo}
+\subsection{Scelta del modello di sviluppo}
+Il metodo di sviluppo che il gruppo ha ritenuto più adatto per il progetto, vista la sua natura, è il metodo Agile, nello specifico il framework Scrum.
+\subsection{Motivazioni}
+Le motivazioni che hanno portato alla scelta di questo modello sono:
+\begin{itemize}
+    \item Principio Fail Fast: il gruppo vuole essere in grado di ottenere feedback frequenti e rapidi in modo tale da identificare e correggere eventuali non conformità a ciò che la proponente si aspetta. Questo principio è generalizzabile a qualsiasi elemento del progetto (requisiti, Way of Working...).
+    \item Rotazione dei ruoli: con Agile i periodi sono divisi in Sprint, elemento che si integra in modo ottimale con la rotazione dei ruoli, che coinciderà naturalmente con l'inizio e la fine di uno sprint (non per forza lo stesso).
+    \item Retrospettive: a differenza di altri modelli, Agile dedica un momento specifico alla riflessione sul come si è lavorato, rendendo più strutturato e disciplinato il miglioramento continuo del Way of Working.
+    \item Pianificazione delle attività: con Agile le attività sono pianificate per periodi brevi, questo permette di adattarsi più facilmente a cambiamenti nei requisiti o nelle priorità del progetto.
+\end{itemize}
+\section{Pianificazione a lungo termine}
+\subsection{Preventivo complessivo}
+Viene di seguito riportata la tabella già esposta nel documento di \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/1_Candidatura/PreventivoCostiEAssunzioneImpegni.pdf}{Preventivo Costi e Assunzione Impegni} come riferimento.
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+        \hline
+        \textbf{Membro} & \textbf{Re} & \textbf{Am} & \textbf{An} & \textbf{Pg} & \textbf{Pr} & \textbf{Ve} & \textbf{Totale} \\
+        \hline
+        Fattoni Antonio & 10 & 8 & 13 & 17 & 24 & 23 & 95 \\
+        \hline
+        Georgescu Diana & 10 & 10 & 14 & 18 & 20 & 23 & 95 \\
+        \hline
+        Gingillino Aaron & 10 & 8 & 14 & 19 & 21 & 23 & 95 \\
+        \hline
+        Laoud Zakaria & 9 & 8 & 14 & 20 & 21 & 23 & 95 \\
+        \hline
+        Rocco Matteo Alberto & 12 & 9 & 12 & 17 & 22 & 23 & 95 \\
+        \hline
+        Soligo Lorenzo & 12 & 9 & 13 & 17 & 21 & 23 & 95 \\
+        \hline
+        Vigolo Davide & 9 & 10 & 13 & 17 & 24 & 22 & 95 \\
+        \hline
+    \end{tabular}
+    \caption{Distribuzione delle ore per membro e ruolo}
+    \end{adjustwidth}
+\end{table}
+\newpage
+Partendo da questa stima di ripartizione oraria, comprensiva sia delle ore relative alla RTB, che alla PB, si stimano i costi riportati di seguito.
+\begin{table}[H]
+    \label{tab:preventivo_complessivo}
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Ruolo} & \textbf{Ore totali} & \textbf{Costo totale ruolo (€)}  \\
+        \hline
+        Responsabile & 72 & 2160,00 \\
+        \hline
+        Amministratore & 62 & 1240,00 \\
+        \hline
+        Analista & 93 & 2325,00 \\
+        \hline
+        Progettista & 125 & 3125,00 \\
+        \hline
+        Programmatore & 153 & 2295,00 \\
+        \hline
+        Verificatore & 160 & 2400,00 \\
+        \hline
+        \textbf{Totale} & \textbf{665} & \textbf{13545,00} \\
+        \hline
+    \end{tabular}
+    \caption{Preventivo complessivo dei costi per ruolo}
+    \end{adjustwidth}
+\end{table}
+
+Al termine di ogni periodo di lavoro (sprint), sarà sottratto di volta in volta il monte ore svolto, partendo da questo preventivo. La data termine per la consegna del progetto è stata fissata al \textbf{10/04/2026}.
+\subsection{Attività previste per la RTB}
+\subsubsection{Milestone X}
+\subsubsection{Milestone X+1}
+\subsection{Attività previste per la PB}
+\subsubsection{Milestone X}
+\subsubsection{Milestone X+1}
+\section{Pianificazione a breve termine}
+\subsection{Sprint 1}
+Data inizio: ????/??/??\\
+Data fine attesa: ????/??/????\\
+Data fine effettiva: ????/??/????
+\subsubsection{Attività previste}
+Qui andranno elencate le attività per lo sprint compreso il gantt. Vengono indicati inoltre i ruoli assegnati per ogni attività.
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Attività} & \textbf{Data inizio} & \textbf{Data fine attesa} & \textbf{Ruoli assegnati} \\
+        \hline
+        Attività 1 & 2025/12/01 & 2025/12/07 & Analista (1h), Verificatore (1h)\\
+        \hline
+        Attività 2 & 2025/12/08 & 2025/12/14 & Progettista (2h), Verificatore (1h) \\
+        \hline
+        Attività 3 & 2025/12/15 & 2025/12/21 & Programmatore (3h), Verificatore (1h) \\
+        \hline
+        Attività 4 & 2025/12/22 & 2025/12/28 & Verificatore (2h) \\
+        \hline
+    \end{tabular}
+    \caption{Attività previste per lo Sprint 1}
+    \end{adjustwidth}
+\end{table}
+\subsubsection{Rischi attesi}
+Qui vengono indicati i rischi che si prevedono di incontrare durante lo sprint. Il rischio viene riportato tramite il suo identificativo
+\subsubsection{Preventivo di periodo}
+Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+        \hline
+        \textbf{Membro} & \textbf{Re} & \textbf{Am}  & \textbf{Pr} & \textbf{An} & \textbf{Pg} & \textbf{Ve} & \textbf{Totale} \\
+        \hline
+        Membro 1 & - & - & - & 1 & - & 1 & 2 \\
+        \hline
+        Membro 2 & - & - & 3 & - & - & 1 & 4 \\
+        \hline
+        Membro 3 & - & - & - & - & 2 & 1 & 3 \\
+        \hline
+        Membro 4 & - & - & - & - & - & 2 & 2 \\
+        \hline
+        \textbf{Totale} & \textbf{-} & \textbf{-} & \textbf{3} & \textbf{1} & \textbf{2} & \textbf{5} & \textbf{11} \\
+        \hline
+    \end{tabular}
+    \caption{Preventivo di periodo per lo Sprint 1}
+    \end{adjustwidth}
+\end{table}
+\subsubsection{Consuntivo di periodo}
+Breve descrizione dei risultati ottenuti, ed eventuali deviazioni dalle stime del preventivo. Questa tabella serve, sia alla proponente che al gruppo, per capire quali attività sono state rallentate o accelerate e prendere decisioni in base a ciò.
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Attività} & \textbf{Data inizio} & \textbf{Data fine effettiva} & \textbf{Ruoli assegnati} \\
+        \hline
+        Attività 1 & 2025/12/01 & 2025/12/08 \textcolor{red}{(+1g)} & Analista (2h)\textcolor{red}{(+1)}, Verificatore (1h)\\
+        \hline
+        Attività 2 & 2025/12/08 & 2025/12/13 \textcolor{green!50!black}{(-1g)} & Progettista (1h) \textcolor{green!50!black}{(-1)}, Verificatore (1h) \\
+        \hline
+        Attività 3 & 2025/12/15 & 2025/12/21 & Programmatore (3h), Verificatore (1h) \\
+        \hline
+        Attività 4 & 2025/12/22 & 2025/12/28 & Verificatore (2h) \\
+        \hline
+    \end{tabular}
+    \caption{Consuntivo delle attività dello Sprint 1}
+    \end{adjustwidth}
+\end{table}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+        \hline
+        \textbf{Membro} & \textbf{Re} & \textbf{Am}  & \textbf{Pr} & \textbf{An} & \textbf{Pg} & \textbf{Ve} & \textbf{Totale} \\
+        \hline
+        Membro 1 & - & - & - & 2 \textcolor{red}{(+1)} & - & 1 & 2 \\
+        \hline
+        Membro 2 & - & - & 3 & - & - & 1 & 4 \\
+        \hline
+        Membro 3 & - & - & - & - & 1 \textcolor{green!50!black}{(-1)} & 1 & 3 \\
+        \hline
+        Membro 4 & - & - & - & - & - & 2 & 2 \\
+        \hline
+        \textbf{Totale} & \textbf{-} & \textbf{-} & \textbf{3} & \textbf{2} & \textbf{1} & \textbf{5} & \textbf{11} [eventuale ($\pm \Delta$)] \\
+        \hline
+    \end{tabular}
+    \caption{Consuntivo delle ore per membro dello Sprint 1}
+    \end{adjustwidth}
+\end{table}
+\subsubsection{Rischi incontrati}
+
+Riferimento tramite identificativo dei rischi che sono stati incontrati, e quelli che non sono stati incontrati. Discussione breve su aggiustamenti che riguardano:
+\begin{itemize}
+    \item Se un rischio non è stato incontrato, perchè? Il rischio è stato definito correttamente?
+    \item Se un rischio è stato incontrato, come è stato gestito? Le misure di mitigazione sono state efficaci?
+    \item Se un rischio è stato incontrato, ma non era previsto, come è stato gestito? Come può essere evitato in futuro?
+    \item Valutazione degli indicatori per capire se la probabilità di un rischio, o i suoi effetti, sono cambiati.
+\end{itemize}
+
+\subsubsection{Aggiornamento del preventivo a finire e dei rischi}
+Aggiungere qui eventuali aggiornamenti al preventivo a finire e ai rischi in base a quanto emerso durante lo sprint.
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Ruolo} & \textbf{Ore / costo preventivati} & \textbf{Ore / costo consuntivo} & \textbf{Differenza} & \textbf{Preventivo a finire} \\
+        \hline
+        Responsabile & - & - & - & 72h / 2160€ \\
+        \hline
+        Amministratore & - & - & - & 62h / 1240€ \\
+        \hline
+        Analista & 1h / 25€ & 2h / 50€ & \textcolor{red}{+1h / +25€} & 91h / 2275€ \\
+        \hline
+        Progettista & 3h / 75€ & 3h / 75€ & - & 122h / 3050€ \\
+        \hline
+        Programmatore & 2h / 30€ & 1h / 15€ & \textcolor{green!50!black}{-1h / -15€} & 152h / 2280€ \\
+        \hline
+        Verificatore & 5h / 75€ & 5h / 75€ & - & 155h / 2325€ \\
+        \hline
+        \textbf{Totale} & \textbf{11h / 215€} & \textbf{11h / 215€} & \textbf{-} & \textbf{654h / 13330€} \\
+        \hline
+    \end{tabular}
+    \caption{Aggiornamento del preventivo a finire}
+    \end{adjustwidth}
+\end{table}
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
