@@ -1,0 +1,258 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 05/12/2025 \\
+\textbf{Durata:} 2 ore\\
+\textbf{Luogo:} Incontro online (Discord)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    0.1 & 07/11/2025 & Zakaria Laoud & Matteo Rocco A. & Creazione del verbale e stesura iniziale \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Gingilino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+\end{itemize}
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Decisione dei ruoli con relativa suddivisione dei compiti 
+    \item Retrospettiva settimanale
+    \item Resoconto sull'andamento della stesura dell'analisi dei requisiti
+\end{enumerate}
+
+
+\section{Svolgimento e Discussione}
+
+\subsection{Definizione ruoli}
+I ruoli necessari in questa sprint sono:
+\begin{itemize}[noitemsep]
+    \item Responsabile
+    \item Amministratore
+    \item Analista
+    \item Verificatore
+\end{itemize}
+
+I ruoli assegnati a ciascun membro per questo sprint sono i seguenti:
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm}
+    \centering
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Membro} & \textbf{Ruolo} \\
+    \hline
+    Fattoni Antonio & Analista \\
+    \hline
+    Georgescu Diana & Analista \\
+    \hline
+    Gingilino Aaron & Analista \\
+    \hline
+    Laoud Zakaria & Responsabile \\
+    \hline
+    Rocco Matteo A. & Responsabile \\
+    \hline
+    Soligo Lorenzo & Analista \\
+    \hline
+    Vigolo Davide & Amministratore \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+\textbf{Tutti} i membri avranno anche ruolo di \textbf{verificatore}.
+
+\subsection{Decisione ruoli}
+Sono stati suddivisi i ruoli necessari per lo svolgimento delle attività, lasciando la 
+prosecuzione dell’analisi dei requisiti agli Analisti, mentre l’aggiornamento del piano di progetto è stato affidato ai Responsabili.
+
+\subsection{Retrospettiva settimanale}
+È stata svolta la retrospettiva della seconda settimana dello sprint.
+
+\subsection{Aggiornamento analisi dei requisiti}
+Durante la riunione è stato realizzato un mockup dell’applicazione, con l’obiettivo di individuare eventuali use case mancanti nell’analisi dei requisiti. 
+Tale mockup sarà inoltre presentato e discusso con la proponente nell’incontro dell’11/12/2025 per raccogliere feedback e suggerimenti.
+
+\subsubsection{Analisi possibile implementazione di FAISS}
+Durante la riunione è stata discussa la possibile implementazione di FAISS ( Facebook AI Similarity Search ), per migliorare le capacità di ricerca e recupero delle informazioni all'interno del nostro sistema.
+A tale scopo il gruppo si è preposto di discuterne con la proponente all'incontro del 11/12/2025.
+
+\subsubsection{Ricevimento con il professor Cardin}Per chiarire alcuni dubbi emersi durante la stesura dell’analisi dei requisiti, si è deciso di inviare una mail 
+al professor Cardin per fissare un appuntamento in cui discutere tali punti e ottenere chiarimenti utili per il proseguimento del progetto.
+
+\section{Decisioni}
+\begin{enumerate}[noitemsep]
+    \item Si è deciso di continuare con la stesura dell'analisi dei requisiti.
+    \item Si è deciso di continuare la stesura del piano di progetto.
+    \item Si è deciso di segnare il tempo stimato per ogni attività dello sprint.
+    \item Si è deciso di procedere alla stesura del consuntivo e preventivo dello sprint 2.
+    \item Si è deciso di procedere alla stesura del preventivo dello sprint 3.
+    \item Si è deciso di approfondire alcune alternative alla classica visualizzazione ad albero per la navigazione tra le cartelle nel mockup.
+\end{enumerate}
+
+\section*{Tabella delle decisioni}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
+    \hline
+    \#0 & Redazione del verbale & \href{https://7zpus.atlassian.net/browse/DIPR-121}{DIPR-121} & Zakaria Laoud & Matteo Rocco A. \\
+    \hline
+    \#1 & Analisi dei requisiti & \href{https://7zpus.atlassian.net/browse/DIPR-131}{DIPR-131} & Analisti & Analisti \\
+    \hline
+    \#2 & Aggiornamento piano di progetto & \href{https://7zpus.atlassian.net/browse/DIPR-126}{DIPR-126} & Rocco Matteo A. &  Responsabili\\
+    \hline
+    \#3 & Stima tempo singole attività dello sprint &  & Analisti & Analisti \\
+    \hline
+    \#4 & Stesura preventivo e consuntivo sprint 2 & \href{https://7zpus.atlassian.net/browse/DIPR-130}{DIPR-130} & Davide Vigolo & Rocco Matteo A.\\
+    \hline
+    \#5 & Stesura preventivo sprint 3 & \href{https://7zpus.atlassian.net/browse/DIPR-129}{DIPR-129} & Rocco Matteo A. & Davide Vigolo\\
+    \hline
+    \#6 & \begin{tabular}[c]{@{}c@{}} Ricerca alternativa \\visualizzazione ad albero \end{tabular} &  & Analisti &  Analisti\\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
