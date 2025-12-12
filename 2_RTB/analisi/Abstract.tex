@@ -1,0 +1,142 @@
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../assets/logo7ZPUs.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \vspace{0.5cm}
+    \Large \textbf{Analisi dei Requisiti}\\
+\end{center}
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+        \hline
+        0.2.0 & 12/12/2025 & Soligo Lorenzo & Rocco Matteo A. & \begin{tabular}[c]{@{}c@{}} Integrazione dei contenuti \\dal file condiviso grazie LLM, \\divisione dei file per \\lavorazione asincrona. \end{tabular} \\
+        \hline
+        0.1.0 & 07/11/2025 & Georgescu Diana & Laoud Zakaria & \begin{tabular}[c]{@{}c@{}} Creazione del template\\ 
+ e stesura iniziale \end{tabular} \\
+        \hline
+    \end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\tableofcontents
+\newpage
+\listoftables
+\newpage
+\listoffigures
+\newpage
+
+\section{Introduzione}
+
+\subsection{Scopo}
+Questo documento si pone l'obiettivo di delineare in modo chiaro le caratteristiche del software da realizzare, partendo dall'analisi dei bisogni e delle aspettative della proponente.
+L'elaborazione dei requisiti trae origine dallo studio preliminare del capitolato, al fine di individuare gli attori coinvolti e le funzionalità attese.\\
+ 
+Il presente documento sarà utilizzato come punto di riferimento per tutto l'arco dello sviluppo del prodotto, dalla progettazione alla validazione, e permetterà il tracciamento di ogni decisione progettuale, consentendoci di soddisfare le aspettative della proponente.\\
+
+Il documento di Analisi dei Requisiti è redatto dagli \textit{Analisti} del team di progetto ed è destinato principalmente a tre categorie di soggetti.
+In primo luogo, al \textbf{Committente}, che attraverso la sua consultazione può verificare che i requisiti siano stati correttamente compresi e formalizzati in linea con le proprie aspettative.
+In secondo luogo, al Team di \textbf{Progettisti e Programmatori}, per i quali il documento rappresenta una guida di riferimento essenziale durante la fase di sviluppo del Sistema software.
+Infine, al \textbf{Team di Verificatori}, che si baserà sulle informazioni contenute nel suddetto documento per definire i casi di test e verificare la conformità del prodotto alle specifiche.
+Questo documento sarà, inoltre, a disposizione degli Amministratori e dei Responsabili di Progetto, allo scopo di ottenere una visione chiara e completa delle caratteristiche e delle funzionalità previste per il Sistema.
+Data la natura incrementale del processo di sviluppo, questo documento verrà aggiornato periodicamente per riflettere eventuali modifiche o integrazioni ai requisiti.
+
+\subsection{Glossario}
+Per una corretta comprensione del documento, si rimanda al documento di \textbf{Glossario} contenente la definizione dei termini contrassegnati dalla \textit{G} a pedice (\glossario{Glossario}).
+
+\subsection{Riferimenti}
+Il documento cerca di aderire il più possibile, seppur non in modo vincolante, alla struttura e ai contenuti previsti dallo standard IEEE 830:1998 per la specifica dei requisiti software e di rispettare le indicazioni fornite dalle dispense didattiche del corso di Ingegneria del Software dell'Università di Padova.
+
+\subsubsection{Riferimenti Normativi}
+\begin{itemize}
+    \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato C3: DIPReader}\setulcolor{black}} \ped{(ultimo accesso: 13/11/2025)}
+    \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/PD1.pdf}{\ul{Regolamento di Progetto Didattico a.a. 2025/2026}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
+\end{itemize}
+
+\subsubsection{Riferimenti Informativi}
+\begin{itemize}
+    \item \href{https://ieeexplore.ieee.org/document/720574}{\ul{Standard IEEE 830:1998}\setulcolor{black}} \ped{(ultimo accesso: 24/11/2025)}
+    \item Dispense del corso di Ingegneria del Software 2025/2026:
+    \begin{itemize}
+        \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T05.pdf}{\ul{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/T05.pdf}\setulcolor{black}} \ped{(ultimo accesso: 24/11/2025)}
+        \item \href{https://www.math.unipd.it/~rcardin/swea/2022/Diagrammi%20Use%20Case.pdf}{\ul{https://www.math.unipd.it/~rcardin/swea/2022/Diagrammi\%20Use\%20Case.pdf}\setulcolor{black}} \ped{(ultimo accesso: 24/11/2025)}
+        \item \href{https://www.math.unipd.it/~rcardin/swea/2023/Diagrammi%20delle%20Classi.pdf}{\ul{https://www.math.unipd.it/~rcardin/swea/2023/Diagrammi\%20delle\%20Classi.pdf}\setulcolor{black}} \ped{(ultimo accesso: 24/11/2025)}
+    \end{itemize}
+\end{itemize}
+
+\section{Descrizione del Prodotto}
+
+\subsection{Panoramica}
+Il software oggetto di sviluppo è \textbf{DIPReader}, un'applicazione per l'accesso e la visualizzazione di documenti informatici all'interno di un Distribution Information Package (DIP), ovvero un archivio compresso distribuito da un sistema di conservazione centralizzato. 
+
+Un DIP (Distribution Information Package) contiene un insieme di cartelle e documenti tecnici con valore legale, strutturati secondo specifiche normative che ne garantiscono autenticità, integrità, affidabilità e ottimizzazione dello spazio di archiviazione.
+I pacchetti DIP sono generalmente distribuiti come archivi compressi in formato .zip e possono includere una grande quantità di documenti eterogenei tra loro.
+La loro struttura interna può differire in modo significativo da quella comunemente utilizzata nei sistemi di memorizzazione personali; risulta pertanto complesso, per l'utente, consultarli tramite strumenti generici di decompressione e visualizzazione.
+DIPReader nasce per affrontare questa difficoltà, fornendo una soluzione dedicata che consenta di importare, esplorare, ricercare e validare in modo efficiente e intuitivo i contenuti dei pacchetti DIP, supportando al contempo le esigenze operative e normative del contesto in cui vengono utilizzati.
+
+\subsection{Funzionalità}
+Il prodotto da realizzare deve offrire le seguenti funzionalità fondamentali:
+\begin{itemize}
+    \item Possibilità di navigare in modo intuitivo all'interno di un DIP.
+    \item Possibilità di visualizzare i contenuti di ciascuna cartella.
+    \item Possibilità di visualizzare alcuni formati di documenti tramite anteprima.
+    \item Possibilità di ricercare i documenti sia per nome che per attributi significativi (metadata).
+    \item Possibilità di filtrare i documenti visualizzati per agevolare la ricerca attraverso i metadata
+    \item Possibilità di salvare uno o più documenti nel computer dell'utente.
+    \item Possibilità di verificare l'autenticità di un file attraverso il suo processo di conservazione.
+    \item Mantenere la portabilità del DIP senza necessitare installazioni su disco.
+\end{itemize}
+Il prodotto deve inoltre operare in modo fluido durante le attività di navigazione, ricerca e visualizzazione anche in presenza di grandi quantità di dati, scenario molto probabile per natura stessa del contesto in cui opera.
+È inoltre apprezzato lo sviluppo delle seguenti, e ulteriori se ritenute utili, funzionalità opzionali:
+\begin{itemize}
+    \item Possibilità di stampare i documenti selezionati.
+    \item Ricerca semantica dei documenti mediante strumenti di intelligenza artificiale.
+    \item Possibilità di accedere anche a pacchetti di distribuzione direttamente dal cloud.
+    \item Possibilità di verificare l'eventuale firma digitale associata al file.
+\end{itemize}
+
+\subsection{Utenti di destinazione}
+Il prodotto costituisce una soluzione essenziale per utenti operanti nei settori giudiziario e tecnico, quali l'Agenzia delle Entrate, la Guardia di Finanza e i magistrati che necessitano di consultare documenti digitali complessi presenti nei DIP.
+
+\section{User Stories}
+\begin{longtable}{|p{2cm}|p{12cm}|}
+\hline
+\textbf{ID} & \textbf{Descrizione} \\ \hline
+US01 & Come utente voglio accedere ai contenuti del Distribution Information Package così da consultare i documenti al suo interno. \\ \hline
+US02 & Come utente voglio vedere i contenuti del DIP in cartelle o file così da poterlo navigare in modo intuitivo. \\ \hline
+US03 & Come utente voglio poter selezionare una cartella così da visualizzare i suoi contenuti o dettagli rilevanti. \\ \hline
+US04 & Come utente voglio poter selezionare uno o più file per poterli stampare o salvare. \\ \hline
+US05 & Come utente voglio poter visualizzare una anteprima di un file selezionato. \\ \hline
+US06 & Come utente voglio poter verificare l'autenticità di un file. \\ \hline 
+US07 & Come utente voglio poter visualizzare il contenuto di un file. \\ \hline
+US08 & Come utente voglio poter ricercare un file. \\ \hline
+US09 & Come utente voglio poter salvare un file. \\ \hline
+US10 & Come utente voglio poter stampare un file. \\ \hline
+US11 & Come utente voglio poter ordinare gli elementi del DIP. \\ \hline
+US12 & Come utente voglio poter filtrare gli elementi del DIP per attributi. \\ \hline
+\end{longtable}
+
+\section{Casi d'Uso}
+
+\subsection{Introduzione}
+Per facilitare la comprensione dei casi d'uso, questi saranno descritti da un grafico UML e un testo per visualizzare gli obiettivi del prodotto.
+La descrizione testuale deve contenere le seguenti informazioni:
+\begin{itemize}
+    \item \textbf{Attori (principali o secondari)}: rappresentano un ruolo che un'entità esterna al sistema assume quando interagisce con esso per raggiungere un obiettivo.
+    \item \textbf{Precondizioni}: condizioni che devono essere vere nello stato del sistema prima che il caso d'uso inizi la sua esecuzione.
+    \item \textbf{Postcondizioni}: condizioni che devono essere vere nello stato del sistema dopo che il caso d'uso è terminato.
+    \item \textbf{Scenario principale}: interazioni tra attore e sistema che porta al raggiungimento dell'obiettivo del caso d'uso con successo
+    \item \textbf{Scenari alternativi}: variazione rispetto al flusso principale.
+\end{itemize}
+
+\subsection{Elenco Casi d'Uso}
