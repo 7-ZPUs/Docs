@@ -1,108 +1,100 @@
-
 \subsubsection{UC-2 - Ricerca Nel DIP}
 
 \subsubsection{UC-2.1 - Ricercare Classe Documentale con filtri}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: L'Utente sta visualizzando la lista delle Classi Documentali
-      \item \textbf{Postcondizioni}: Elenco delle Classi Documentali corrispondenti ai filtri applicati
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente sta visualizzando la lista delle Classi Documentali.
+      \item \textbf{Postcondizioni}: Viene visualizzato l'elenco delle Classi Documentali corrispondenti ai filtri applicati.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce i filtri per la ricerca secondo i metadati delle Classi
-                        Documentali
-                  \item L'Utente visualizza i risultati della ricerca
+                  \item L'utente inserisce i filtri per la ricerca secondo i metadati delle Classi
+                        Documentali.
+                  \item Il sistema mostra i risultati della ricerca (UC-2.4).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}: L'Utente visualizza un elenco vuoto/errore
+      \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati e l'utente visualizza un elenco vuoto.
 \end{itemize}
 
 \subsubsection{UC-2.2 - Ricercare Processo con filtri}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: L'Utente sta visualizzando la lista dei Processi
-      \item \textbf{Postcondizioni}: Elenco dei Processi corrispondenti ai filtri applicati
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente sta visualizzando la lista dei Processi.
+      \item \textbf{Postcondizioni}: Viene visualizzato l'elenco dei Processi corrispondenti ai filtri applicati.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce i filtri per la ricerca secondo i metadati di Processi
-                  \item L'Utente visualizza i risultati della ricerca
+                  \item L'utente inserisce i filtri per la ricerca secondo i metadati dei Processi.
+                  \item Il sistema mostra i risultati della ricerca (UC-2.4).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}: L'Utente visualizza un elenco vuoto/errore
+      \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati e l'utente visualizza un elenco vuoto.
 \end{itemize}
 
 \subsubsection{UC-2.3 - Ricercare Documento con filtri}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: L'utente ha accesso alla funzionalità di ricerca
-      \item \textbf{Postcondizioni}: Visualizzazione di un elenco di documenti che corrispondono ai criteri inseriti (UC-)
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha accesso alla funzionalità di ricerca documentale.
+      \item \textbf{Postcondizioni}: Visualizzazione di un elenco di documenti che corrispondono ai criteri inseriti.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente imposta dei filtri per la ricerca secondo i metadati dei Documenti
-                  \item L'Utente visualizza i risultati della ricerca
+                  \item L'utente imposta uno o più filtri per la ricerca, scegliendo tra campi comuni
+                        (UC-2.3.1) o campi specifici per tipo documentale (UC-2.3.2).
+                  \item L'utente avvia la ricerca.
+                  \item Il sistema mostra i risultati della ricerca (UC-2.4).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)
+      \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati e il sistema informa l'utente.
 \end{itemize}
 
 \subsubsection{UC-2.3.1 - Ricerca per Campi Comuni}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: L'Utente ha accesso alla funzionalità di ricerca
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente si trova nella schermata di ricerca documentale.
+      \item \textbf{Postcondizioni}: I risultati della ricerca vengono filtrati in base ai campi comuni specificati.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'utente seleziona il campo di ricerca.
-                  \item L'utente compila il campo di ricerca.
-                  \item Viene restituita la lista dei documenti contenenti quel campo (UC-)
+                  \item L'utente seleziona uno o più campi comuni su cui basare la ricerca (da
+                        UC-2.3.1.1 a UC-2.3.1.5).
+                  \item L'utente compila i valori per i campi selezionati.
+                  \item Il sistema utilizza questi parametri per la ricerca.
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)
+      \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati.
 \end{itemize}
 
-\subsubsection{UC-2.3.1.1 - Ricerca per Campo Comune: Chiave Descrittiva}
+\subsubsection{UC-2.3.1.1 - Ricerca per Chiave Descrittiva}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente decide di cercare il documento in base alla Chiave Descrittiva,
-                        Oggetto e Parole Chiave.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente sta effettuando una ricerca per campi comuni.
+      \item \textbf{Postcondizioni}: I risultati della ricerca vengono filtrati in base alla Chiave Descrittiva, Oggetto o Parole Chiave.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'utente digita nella casella di ricerca i campi, con la precisazione che le
-                        Parole Chiave, non sono obbligatorie e quindi il documento che si cerca
-                        potrebbe non essere tra i risultati.
-                  \item Viene restituita la lista dei documenti nei quali la Chiave Descrittiva
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item L'utente digita nella casella di ricerca i valori per:
+                        \begin{itemize}
+                              \item Chiave Descrittiva
+                              \item Oggetto
+                              \item Parole Chiave.
+                        \end{itemize}
+                  \item Il sistema restituisce la lista dei documenti che corrispondono ai parametri
+                        inseriti (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)
 \end{itemize}
 
-\subsubsection{UC-2.3.1.2 - Aggiunta Nuovo Soggetto per Ricerca}
+\subsubsection{UC-2.3.1.2 - Ricerca per Soggetti}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:\begin{enumerate}
-                  \item  L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente decide di cercare il documento in base ai Soggetti
-                  \item L'Utente decide di aggiungere un nuovo soggetto come campo di ricerca.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Viene aggiunta un nuovo soggetto per l'aggregazione, per poter in seguito inserire i parametri per il nuovo soggetto
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente sta effettuando una ricerca per campi comuni.
+      \item \textbf{Postcondizioni}: I risultati della ricerca vengono filtrati in base ai soggetti specificati.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'utente può aggiungere un numero da 0 a n di soggetti per un Aggregazione
-                  \item L'utente può inserire i parametri per la nuova soggetto creato (UC-2.3.1.2.2 -
-                        UC-2.3.1.2.7)
+                  \item L'utente decide di aggiungere uno o più soggetti come filtro di ricerca.
+                  \item Per ogni soggetto, l'utente ne specifica i dettagli (Ruolo e altri campi
+                        pertinenti, come descritto da UC-2.3.1.2.1 a UC-2.3.1.2.7).
+                  \item Il sistema restituisce la lista dei documenti che corrispondono ai parametri
+                        inseriti (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)
 \end{itemize}
 
-\subsubsection{UC-2.3.1.2.2 - Ricerca per Dettagli di un Soggetto: Ruolo = PAI}
+\subsubsection{UC-2.3.1.2.1 - Ricerca per Dettagli di un Soggetto: Ruolo = PAI}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente ha scelto un tipo di documento (UC-2.3.2)
-                  \item L'Utente ha scelto di cercare il documento in base ai Soggetti coinvolti
-                  \item L'Utente ha deciso di aggiungere dettagli al Soggetto PAI
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo PAI.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per i dettagli del soggetto PAI.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente inserisce i valori per i campi:
@@ -112,22 +104,15 @@
                               \item Denominazione Amministrazione UOR/ Codice IPA UOR
                               \item Indirizzi Digitali di Riferimento
                         \end{itemize}
-                  \item Viene restituita la lista dei documenti nei quali valori per i campi del PAI
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema usa questi valori per filtrare la ricerca.
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)
 \end{itemize}
 
-\subsubsection{UC-2.3.1.2.3 - Ricerca per Campo di Soggetto: Ruolo = PAE}
+\subsubsection{UC-2.3.1.2.2 - Ricerca per Dettagli di un Soggetto: Ruolo = PAE}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente ha scelto un tipo di documento (UC-2.3.2)
-                  \item L'Utente ha scelto di cercare il documento in base ai Soggetti coinvolti
-                  \item L'Utente ha deciso di aggiungere dettagli al Soggetto PAE.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo PAE.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per i dettagli del soggetto PAE.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente inserisce i valori per i campi:
@@ -136,22 +121,15 @@
                               \item Denominazione Ufficio
                               \item Indirizzi Digitali di Riferimento
                         \end{itemize}
-                  \item Viene restituita la lista dei documenti nei quali valori per i campi del PAE
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema usa questi valori per filtrare la ricerca.
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)
 \end{itemize}
 
-\subsubsection{UC-2.3.1.2.4 - Ricerca per Campo di Soggetto: Ruolo = AS}
+\subsubsection{UC-2.3.1.2.3 - Ricerca per Dettagli di un Soggetto: Ruolo = AS}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente ha scelto un tipo di documento (UC-2.3.2)
-                  \item L'Utente ha scelto di cercare il documento in base ai Soggetti coinvolti
-                  \item L'Utente ha deciso di aggiungere dettagli al Soggetto AS.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo AS.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per i dettagli del soggetto AS.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente inserisce i valori per i campi:
@@ -164,23 +142,15 @@
                               \item Denominazione Amministrazione UOR/ Codice IPA UOR
                               \item Indirizzi Digitali di Riferimento
                         \end{itemize}
-                  \item Viene restituita la lista dei documenti nei quali valori per i campi del AS
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema usa questi valori per filtrare la ricerca.
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)
 \end{itemize}
 
-\subsubsection{UC-2.3.1.2.5 - Ricerca per Campo di Soggetto: Ruolo = PG}
+\subsubsection{UC-2.3.1.2.4 - Ricerca per Dettagli di un Soggetto: Ruolo = PG}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente ha scelto un tipo di documento (UC-2.3.2)
-                  \item L'Utente ha scelto di cercare il documento in base ai Soggetti coinvolti
-                  \item L'Utente ha deciso di aggiungere dettagli al Soggetto PG.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo PG.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per i dettagli del soggetto PG.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente inserisce i valori per i campi:
@@ -190,22 +160,15 @@
                               \item Denominazione Ufficio
                               \item Indirizzi Digitali di Riferimento
                         \end{itemize}
-                  \item Viene restituita la lista dei documenti nei quali valori per i campi del PG
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema usa questi valori per filtrare la ricerca.
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
-\subsubsection{UC-2.3.1.2.6 - Ricerca per Campo di Soggetto: PF}
+\subsubsection{UC-2.3.1.2.5 - Ricerca per Dettagli di un Soggetto: Ruolo = PF}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente ha scelto un tipo di documento (UC-2.3.2)
-                  \item L'Utente ha scelto di cercare il documento in base ai Soggetti coinvolti
-                  \item L'Utente ha deciso di aggiungere dettagli al Soggetto PF.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo PF.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per i dettagli del soggetto PF.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item  L'utente inserisce i valori per i campi:
@@ -214,22 +177,15 @@
                               \item Nome
                               \item Indirizzi Digitali di Riferimento
                         \end{itemize}
-                  \item Viene restituita la lista dei documenti nei quali valori per i campi del PF
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema usa questi valori per filtrare la ricerca.
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
-\subsubsection{UC-2.3.1.2.7 - Ricerca per Campo di Soggetto: Ruolo = RUP}
+\subsubsection{UC-2.3.1.2.6 - Ricerca per Dettagli di un Soggetto: Ruolo = RUP}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente ha scelto un tipo di documento (UC-2.3.2)
-                  \item L'Utente ha scelto di cercare il documento in base ai Soggetti coinvolti
-                  \item L'Utente ha deciso di aggiungere dettagli al Soggetto RUP.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo RUP.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per i dettagli del soggetto RUP.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente inserisce i valori per i campi:
@@ -241,113 +197,93 @@
                               \item Denominazione Amministrazione UOR/ Codice IPA UOR
                               \item Indirizzi Digitali di Riferimento
                         \end{itemize}
-                  \item Viene restituita la lista dei documenti nei quali valori per i campi del RUP
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema usa questi valori per filtrare la ricerca.
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
-\subsubsection{UC-2.3.1.2.8 - Ricerca per Campo di Soggetto: Ruolo = SW}
+\subsubsection{UC-2.3.1.2.7 - Ricerca per Dettagli di un Soggetto: Ruolo = SW}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente ha scelto un tipo di documento (UC-2.3.2)
-                  \item L'Utente ha scelto di cercare il documento in base ai Soggetti coinvolti
-                  \item L'Utente ha deciso di aggiungere dettagli al Soggetto SW.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo SW.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per i dettagli del soggetto SW.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'utente inserisce i valori per i campi:
+                  \item L'utente inserisce la Denominazione Sistema
+                  \item Il sistema usa questi valori per filtrare la ricerca.
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-2.3.1.3 - Ricerca per Classificazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente sta effettuando una ricerca per campi comuni.
+      \item \textbf{Postcondizioni}: I risultati della ricerca vengono filtrati in base alla Classificazione.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'utente compila i parametri di Classificazione tra:
                         \begin{itemize}
-                              \item Denominazione Sistema
-                        \end{itemize}
-                  \item Viene restituita la lista dei documenti nei quali valori per i campi del SW
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
-            \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
-
-\subsubsection{UC-2.3.1.3 - Ricerca per Campo Comune: Classificazione}
-\begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente decide di cercare il documento in base alla Classificazione.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
-      \item \textbf{Flusso Principale}:
-            \begin{enumerate}
-                  \item L'utente digita nelle caselle di ricerca i campi.
+                              \item Indice di Classificazione
+                              \item Descrizione
+                              \item Piano di Fascicolo
+                        \end{itemize}.
                   \item Viene restituita la lista dei documenti nei quali la Classificazione, per
                         qualcuno dei parametri cercati, corrisponde al parametro ricercato
                         (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
-\subsubsection{UC-2.3.1.4 - Ricerca per Campo Comune: Tempo di Conservazione}
+\subsubsection{UC-2.3.1.4 - Ricerca per Tempo di Conservazione}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente decide di cercare il documento in base al Tempo di Conservazione.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente sta effettuando una ricerca per campi comuni.
+      \item \textbf{Postcondizioni}: I risultati della ricerca vengono filtrati in base al Tempo di Conservazione.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'utente digita nella casella di ricerca il campo o seleziona "Perenne", la
-                        scelta è mutuamente esclusiva.
-                  \item Viene restituita la lista dei documenti nei quali il Tempo di Conservazione,
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item L'utente digita nella casella di ricerca il tempo di conservazione o seleziona
+                        "Perenne".
+                  \item Il sistema restituisce la lista dei documenti che corrispondono al parametro
+                        inserito (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
-\subsubsection{UC-2.3.1.5 - Ricerca per Campo Comune: Note}
+\subsubsection{UC-2.3.1.5 - Ricerca per Note}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente decide di cercare il documento in base alle Note.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente sta effettuando una ricerca per campi comuni.
+      \item \textbf{Postcondizioni}: I risultati della ricerca vengono filtrati in base al contenuto delle Note.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'utente digita nella casella di ricerca il testo della Nota
-                  \item Viene restituita la lista dei documenti nei quali la Nota corrisponde al
-                        parametro ricercato (\nameref{risultatiRicerca}).
+                  \item L'utente digita nella casella di ricerca il testo della Nota.
+                  \item Il sistema restituisce la lista dei documenti che corrispondono al parametro
+                        inserito (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
 \subsubsection{UC-2.3.2 - Ricerca per Tipo Documentale}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente decide di cercare il documento in base al Tipo Documentale.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella corrispondenti al tipo inserito
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente si trova nella schermata di ricerca documentale.
+      \item \textbf{Postcondizioni}: Vengono mostrati campi di ricerca specifici per il tipo documentale scelto.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'utente imposta la ricerca per tipo e seleziona tra Aggregazioni Documentali
-                        Informatiche, Documento Informatico e Documento Amministrativo Informatico.
-                  \item Viene restituita la lista dei documenti del Tipo Documentale selezionato.
+                  \item L'utente imposta la ricerca per tipo e seleziona tra: Aggregazione Documentale,
+                        Documento Informatico, Documento Amministrativo Informatico.
+                  \item Il sistema presenta i filtri specifici per il tipo selezionato (descritto negli
+                        UC da 2.3.2.1 a 2.3.2.3).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}: Il tipo documentale cercato non è valido o non è presente all'interno del dip, si restituisce "La ricerca non ha prodotto alcun risultato, non vi sono \{Tipo Documentale\} nel DIP"
+      \item \textbf{Flusso Alternativo}: Il tipo documentale cercato non è valido o non è presente.
 \end{itemize}
 
-\subsubsection{UC-2.3.2.1.1 - Ricerca per Campo di un Documento Informatico e Amministrativo Informatico: Dati di Registrazione}
+\subsubsection{UC-2.3.2.1 - Ricerca per Campi di Documento Informatico e Amministrativo Informatico}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento il Documento Informatico o
-                        Amministrativo Informatico
-                  \item decide di cercare il documento in base ai Dati di Registrazione.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Descrizione}: Questo caso d'uso raggruppa i filtri applicabili sia al Documento Informatico sia al Documento Amministrativo Informatico.
+\end{itemize}
+
+\subsubsection{UC-2.3.2.1.1 - Ricerca per Dati di Registrazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha selezionato "Documento Informatico" o "Documento Amministrativo Informatico" come tipo documentale.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per Dati di Registrazione.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente sceglie la Tipologia di Flusso tra: Uscita, Entrata, Interno.
@@ -356,82 +292,70 @@
                   \item L'utente inserisce la Data/Ora di Registrazione (nel caso di un documento
                         protocollato tali parametri fanno riferimento alla protocollazione).
                   \item L'utente inserisce il codice identificativo del Registro.
-                  \item Viene restituita la lista dei documenti nei quali i Dati di Registrazione,
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema restituisce la lista dei documenti corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)
 \end{itemize}
 
-\subsubsection{UC-2.3.2.1.2 - Ricerca per Campo di un Documento Informatico e Amministrativo Informatico: Tipologia Documentale}
+\subsubsection{UC-2.3.2.1.2 - Ricerca per Tipologia Documentale}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento il Documento Informatico o
-                        Amministrativo Informatico
-                  \item L'Utente decide di cercare il documento in base alla Tipologia Documentale.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha selezionato "Documento Informatico" o "Documento Amministrativo Informatico".
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per Tipologia Documentale.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'utente inserisce la Tipologia Documentale (esempio: fatture, delibere,
-                        determine).
-                  \item Viene restituita la lista dei documenti nei quali la Tipologia Documentale,
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item L'utente inserisce la Tipologia Documentale (es. fatture, delibere, determine).
+                  \item Il sistema restituisce la lista dei documenti corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)
 \end{itemize}
 
-\subsubsection{UC-2.3.2.1.3 - Ricerca per Campo di un Documento Informatico e Amministrativo Informatico: Modalità di Formazione}
+\subsubsection{UC-2.3.2.1.3 - Ricerca per Modalità di Formazione}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento il Documento Informatico o
-                        Amministrativo Informatico
-                  \item L'Utente decide di cercare il documento in base alla Modalità di Formazione.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha selezionato "Documento Informatico" o "Documento Amministrativo Informatico".
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per Modalità di Formazione.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'utente sceglie la Modalità di Formazione tra le 4 previste (creazione tramite
-                        software, acquisizione telematica/copia, memorizzazione info da transazioni,
-                        generazione/raggruppamento automatico).
-                  \item Viene restituita la lista dei documenti nei quali la Modalità di Formazione
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}). (UC-).
+                  \item L'utente sceglie la Modalità di Formazione tra:
+                        \begin{itemize}
+                              \item creazione tramite l'utilizzo di strumenti software che assicurino la produzione
+                                    di documenti nei formati previsti nell’Allegato 2 delle Linee Guida
+                              \item acquisizione di un documento informatico per via telematica o su supporto
+                                    informatico, acquisizione della copia per immagine su supporto informatico di
+                                    un documento analogico, acquisizione della copia informatica di un documento
+                                    analogico
+                              \item memorizzazione su supporto informatico in formato digitale delle informazioni
+                                    risultanti da transazioni o processi informatici o dalla presentazione
+                                    telematica di dati attraverso moduli o formulari resi disponibili all’utente;
+                              \item generazione o raggruppamento anche in via automatica di un insieme di dati o
+                                    registrazioni, provenienti da una o più banche dati, anche appartenenti a più
+                                    soggetti interoperanti, secondo una struttura logica predeterminata e
+                                    memorizzata in forma statica.
+                        \end{itemize}
+                  \item Il sistema restituisce la lista dei documenti corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)
 \end{itemize}
 
-\subsubsection{UC-2.3.2.1.4 - Ricerca per Campo di un Documento Informatico e Amministrativo Informatico: Riservato}
+\subsubsection{UC-2.3.2.1.4 - Ricerca per campo Riservato}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento il Documento Informatico o
-                        Amministrativo Informatico
-                  \item L'Utente decide di cercare il documento in base al metadato Riservato.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha selezionato "Documento Informatico" o "Documento Amministrativo Informatico".
+      \item \textbf{Postcondizioni}: I risultati sono filtrati in base al metadato "Riservato".
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente sceglie se il file è Riservato o meno.
-                  \item Viene restituita la lista dei documenti nei quali il metadato Riservato
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema restituisce la lista dei documenti corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)
 \end{itemize}
 
-\subsubsection{UC-2.3.2.1.5 - Ricerca per Campo di un Documento Informatico e Amministrativo Informatico: Identificativo di Formato}
+\subsubsection{UC-2.3.2.1.5 - Ricerca per Identificativo di Formato}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento il Documento Informatico o
-                        Amministrativo Informatico
-                  \item L'Utente decide di cercare il documento in base al Identificativo del Formato
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha selezionato "Documento Informatico" o "Documento Amministrativo Informatico".
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per Identificativo di Formato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente sceglie la Tipologia di Formato all'interno di quelli Previsti dalle
@@ -442,21 +366,16 @@
                         Documento
                   \item L'utente inserisce il Produttore del Prodotto utilizzato per la creazione del
                         Documento.
-                  \item Viene restituita la lista dei documenti nei quali i Dati di Registrazione,
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema restituisce la lista dei documenti corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
-\subsubsection{UC-2.3.2.1.6 - Ricerca per Campo di un Documento Informatico e Amministrativo Informatico: Verifica}
+\subsubsection{UC-2.3.2.1.6 - Ricerca per Dati di Verifica}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca,
-                  \item L'Utente sceglie come tipo di documento il Documento Informatico o
-                        Amministrativo Informatico
-                  \item L'Utente decide di cercare il documento in base al Grado di Verifica del file.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha selezionato "Documento Informatico" o "Documento Amministrativo Informatico".
+      \item \textbf{Postcondizioni}: I risultati sono filtrati in base ai dati di verifica.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente sceglie se il file è Firmato Digitalmente o meno.
@@ -464,82 +383,55 @@
                   \item L'utente sceglie se il file ha una Marcatura Temporale o meno.
                   \item L'utente sceglie se vi è conformità copie immagine su supporto informatico o
                         meno.
-                  \item Viene restituita la lista dei documenti nei quali i parametri di Verifica
-                        corrispondono ai parametri ricercati (UC-).
+                  \item Il sistema restituisce la lista dei documenti corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
-\subsubsection{UC-2.3.2.1.7 - Ricerca per Campo di un Documento Informatico e Amministrativo Informatico: Nome del Documento}
+\subsubsection{UC-2.3.2.1.7 - Ricerca per Nome del Documento}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca (avanzata) CAPIAMO?
-                  \item L'Utente sceglie come tipo di documento il Documento Informatico o
-                        Amministrativo Informatico
-                  \item L'Utente decide di cercare il documento in base al Nome del Documento.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha selezionato "Documento Informatico" o "Documento Amministrativo Informatico".
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per Nome del Documento.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente inserisce il Nome del Documento.
-                  \item Viene restituita la lista dei documenti nei quali il Nome del Documento
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema restituisce la lista dei documenti corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)
 \end{itemize}
 
-\subsubsection{UC-2.3.2.1.8 - Ricerca per Campo di un Documento Informatico e Amministrativo Informatico: Versione del Documento}
+\subsubsection{UC-2.3.2.1.8 - Ricerca per Versione del Documento}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento il Documento Informatico o
-                        Amministrativo Informatico
-                  \item L'Utente decide di cercare il documento in base alla Versione del Documento.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha selezionato "Documento Informatico" o "Documento Amministrativo Informatico".
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per Versione del Documento.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente inserisce la Versione del Documento.
-                  \item  Viene restituita la lista dei documenti nei quali la Versione del Documento
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema restituisce la lista dei documenti corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
-\subsubsection{UC-2.3.2.1.9 - Ricerca per Campo di un Documento Informatico e Amministrativo Informatico: Identificativo del Documento Primario}
+\subsubsection{UC-2.3.2.1.9 - Ricerca per Identificativo del Documento Primario}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento il Documento Informatico o
-                        Amministrativo Informatico
-                  \item L'Utente decide di cercare il documento in base all'Identificativo del
-                        Documento Primario.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha selezionato "Documento Informatico" o "Documento Amministrativo Informatico".
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per Identificativo del Documento Primario.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente inserisce l'Identificativo del Documento Primario.
-                  \item Viene restituita la lista dei documenti nei quali l'Identificativo del
-                        Documento Primario corrisponde al parametro ricercato
+                  \item Il sistema restituisce la lista dei documenti corrispondenti
                         (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
-\subsubsection{UC-2.3.2.1.10 - Ricerca per Campo di un Documento Informatico e Amministrativo Informatico: Tracciature Modifiche di Documento}
+\subsubsection{UC-2.3.2.1.10 - Ricerca per Tracciature Modifiche di Documento}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento il Documento Informatico o
-                        Amministrativo Informatico
-                  \item L'Utente decide di cercare il documento in base alle Tracciature Modifiche di
-                        Documento.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha selezionato "Documento Informatico" o "Documento Amministrativo Informatico".
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per le tracciature di modifica.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente sceglie il Tipo di modifica tra:
@@ -552,21 +444,21 @@
                   \item L'Utente sceglie il Soggetto che ha effettuato la modifica.
                   \item L'Utente inserisce la Data/Ora della Modifica.
                   \item L'Utente inserisce l'identificativo documento versione precedente.
-                  \item Viene restituita la lista dei documenti nei quali le Tracciature Modifiche di
-                        Documento corrispondono al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema restituisce la lista dei documenti corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
-\subsubsection{UC-2.3.2.2.4 - Ricerca per Campo di Documento Informatico: Soggetti}
+\subsubsection{UC-2.3.2.2 - Ricerca per Campi di Documento Informatico}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento il Documento Informatico
-                  \item L'Utente decide di cercare il documento in base ai Soggetti coinvolti.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Descrizione}: Questo caso d'uso raggruppa i filtri applicabili esclusivamente al Documento Informatico.
+\end{itemize}
+
+\subsubsection{UC-2.3.2.2.1 - Ricerca per Soggetti del Documento Informatico}
+\begin{itemize}
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto come tipo di documento il Documento Informatico.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati in base ai soggetti specifici.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente sceglie il Ruolo e i sottocampi specifici tra:
@@ -588,132 +480,95 @@
                                     destinatario nei flussi in uscita, PAE valido solo come mittente nei flussi in
                                     entrata, come destinatario nei flussi in uscita)
                         \end{itemize}
-                  \item Viene restituita la lista dei documenti nei quali i Soggetti coinvolti
-                        corrispondono al parametri ricercati (\nameref{risultatiRicerca}).
+                  \item Per ogni ruolo, l'utente può specificare ulteriori dettagli (UC-2.3.1.2).
+                  \item Il sistema restituisce la lista dei documenti corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:\begin{itemize}
-                  \item L'Utente vuole specificare ulteriori dettagli sui Soggetti coinvolti (UC-)
-                  \item Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto
-                        alcun risultato.(UC-)
-            \end{itemize}
 \end{itemize}
 
-\subsubsection{UC-2.3.2.2.5 - Ricerca per Campo di Documento Amministrativo Informatico: Soggetti}
+\subsubsection{UC-2.3.2.3 - Ricerca per Campi di Documento Amministrativo Informatico}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento il Documento Informatico
-                  \item L'Utente decide di cercare il documento in base ai Soggetti coinvolti.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
-      \item \textbf{Flusso Principale}:
-            \begin{enumerate}
-                  \item L'Utente sceglie il Ruolo e i sottocampi specifici tra:
-                        \begin{itemize}
-                              \item Amministratore che effettua la registrazione (PAI)
-                              \item Assegnatario (AS)
-                              \item Autore (PF, PG valido solo nei flussi di entrata, PAI, PAE valido solo nei
-                                    flussi in entrata)
-                              \item Destinatario (PF, PG, PAI, PAE)
-                              \item Mittente (PF, PG, PAI, PAE)
-                              \item Operatore (PF)
-                              \item Produttore (SW)
-                              \item RGD (PF)
-                              \item RSP (PF)
-                              \item RUP (RUP)
-                        \end{itemize}
-                  \item Viene restituita la lista dei documenti nei quali i Soggetti coinvolti
-                        corrispondono al parametri ricercati (\nameref{risultatiRicerca}).
-            \end{enumerate}
-      \item \textbf{Flusso Alternativo}:
-            \begin{itemize}
-                  \item L'Utente vuole specificare ulteriori dettagli sui Soggetti coinvolti (UC-)
-                  \item Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto
-                        alcun risultato.(UC-)
-            \end{itemize}
+      \item \textbf{Descrizione}: Questo caso d'uso raggruppa i filtri applicabili esclusivamente al Documento Amministrativo Informatico.
 \end{itemize}
 
-\subsubsection{UC-2.3.2.2.1 - Ricerca per Campo di un'Aggregazione Documentale: Tipo di Aggregazione}
+\subsubsection{UC-2.3.2.3.1 - Ricerca per Soggetti del Documento Amministrativo Informatico}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento l'Aggregazione Documentale
-                  \item L'Utente decide di cercare il documento in base al Tipo di Aggregazione.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto come tipo di documento il Documento Amministrativo Informatico.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati in base ai soggetti specifici.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item  L'utente sceglie tra Fascicolo, Serie Documentale, Serie di Fascicoli.
-                  \item Viene restituita la lista dei documenti nei quali Tipo dell'Aggregazione
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item L'utente sceglie il Ruolo tra quelli previsti per il Documento Amministrativo
+                        Informatico (Amministratore, Assegnatario, etc.).
+                  \item Per ogni ruolo, l'utente può specificare ulteriori dettagli (UC-2.3.1.2).
+                  \item Il sistema restituisce la lista dei documenti corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
-\subsubsection{UC-2.3.2.2.2 - Ricerca per Campo di un'Aggregazione Documentale: Id dell'Aggregazione}
+\subsubsection{UC-2.3.2.4 - Ricerca per Campi di Aggregazione Documentale}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: L'Utente ha accesso alla funzionalità di ricerca, sceglie come tipo di documento l'Aggregazione Documentale e decide di cercare il documento in base al Id dell'Aggregazione.
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Descrizione}: Questo caso d'uso raggruppa i filtri applicabili esclusivamente all'Aggregazione Documentale.
+\end{itemize}
+
+\subsubsection{UC-2.3.2.4.1 - Ricerca per Tipo di Aggregazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto come tipo di documento l'Aggregazione Documentale.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per Tipo di Aggregazione.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'utente sceglie tra Fascicolo, Serie Documentale, Serie di Fascicoli.
+                  \item Il sistema restituisce la lista delle aggregazioni corrispondenti
+                        (\nameref{risultatiRicerca}).
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-2.3.2.4.2 - Ricerca per Id dell'Aggregazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto come tipo di documento l'Aggregazione Documentale.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per Id dell'Aggregazione.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente inserisce l'Id dell'Aggregazione.
-                  \item Viene restituita la lista dei documenti nei quali Id dell'Aggregazione
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema restituisce la lista delle aggregazioni corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
-\subsubsection{UC-2.3.2.2.3 - Ricerca per Campo di un'Aggregazione Documentale: Tipologia di Fascicolo}
+\subsubsection{UC-2.3.2.4.3 - Ricerca per Tipologia di Fascicolo}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento l'Aggregazione Documentale
-                  \item L'Utente sceglie come Tipo di Aggregazione il "Fascicolo"
-                  \item L'Utente decide di cercare il documento in base alla Tipologia di Fascicolo.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente sta cercando un'Aggregazione Documentale di tipo "Fascicolo".
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per Tipologia di Fascicolo.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente sceglie tra: Affare, Attività, Persona Fisica, Persona Giuridica,
-                        Procedimento Amministrativo. 7
-                  \item Viene restituita la lista dei documenti nei quali Tipologia di Fascicolo
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                        Procedimento Amministrativo.
+                  \item Il sistema restituisce la lista dei fascicoli corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
-\subsubsection{UC-2.3.2.2.4 - Ricerca per Campo di un'Aggregazione Documentale: Id Aggregazione Primario}
+\subsubsection{UC-2.3.2.4.4 - Ricerca per Id Aggregazione Primario}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento l'Aggregazione Documentale
-                  \item L'Utente decide di cercare il documento in base al IdAggPrimario.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto come tipo di documento l'Aggregazione Documentale.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per Id dell'Aggregazione Primaria.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente inserisce l'Id dell'Aggregazione "padre".
-                  \item Viene restituita la lista dei documenti nei quali Id dell'Aggregazione
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema restituisce la lista delle aggregazioni corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
-\subsubsection{UC-2.3.2.2.4 - Ricerca per Campo di un'Aggregazione Documentale: Soggetti}
+\subsubsection{UC-2.3.2.4.5 - Ricerca per Soggetti dell'Aggregazione Documentale}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento l'Aggregazione Documentale
-                  \item L'Utente decide di cercare il documento in base ai Soggetti coinvolti.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto come tipo di documento l'Aggregazione Documentale.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per Soggetti.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente sceglie il Ruolo e i sottocampi specifici tra:
@@ -725,203 +580,161 @@
                               \item Soggetto intestatario persona giuridica (PG, PAI o PAE)
                               \item RUP
                         \end{itemize}
-                  \item Viene restituita la lista dei documenti nei quali Id dell'Aggregazione
-                        corrisponde al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Per ogni ruolo, l'utente può specificare ulteriori dettagli (UC-2.3.1.2).
+                  \item Il sistema restituisce la lista delle aggregazioni corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}: \begin{itemize}
-                  \item L'Utente vuole specificare ulteriori dettagli sui Soggetti coinvolti (UC-)
-                  \item Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto
-                        alcun risultato.(UC-)
-            \end{itemize}
 \end{itemize}
 
-\subsubsection{UC-2.3.2.2.5 - Ricerca per Campo di un'Aggregazione Documentale: Data Apertura}
+\subsubsection{UC-2.3.2.4.6 - Ricerca per Data Apertura}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento l'Aggregazione Documentale
-                  \item L'Utente decide di cercare il documento in base alla Data di Apertura.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto come tipo di documento l'Aggregazione Documentale.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per Data di Apertura.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente inserisce la Data di Apertura.
-                  \item Viene restituita la lista dei documenti nei quali la Data Apertura corrisponde
-                        al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema restituisce la lista delle aggregazioni corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
-\subsubsection{UC-2.3.2.2.6 - Ricerca per Campo di un'Aggregazione Documentale: Data Chiusura}
+\subsubsection{UC-2.3.2.4.7 - Ricerca per Data Chiusura}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento l'Aggregazione Documentale
-                  \item L'Utente decide di cercare il documento in base alla Data di Chiusura.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto come tipo di documento l'Aggregazione Documentale.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per Data di Chiusura.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente inserisce la Data di Chiusura.
-                  \item Viene restituita la lista dei documenti nei quali Data di Chiusura corrisponde
-                        al parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema restituisce la lista delle aggregazioni corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
+\end{itemize}
 
-\subsubsection{UC-2.3.2.2.7 - Ricerca per Campo di un'Aggregazione Documentale: Procedimento Amministrativo}
+\subsubsection{UC-2.3.2.4.8 - Ricerca per Procedimento Amministrativo}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca avanzata
-                  \item L'Utente sceglie come tipo di documento l'Aggregazione Documentale
-                  \item L'Utente decide di cercare il documento in base al Procedimento Amministrativo.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto come tipo di documento l'Aggregazione Documentale.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per i dati del Procedimento Amministrativo.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente inserisce la Materia, Argomento e Struttura per i procedimenti.
                   \item L'utente inserisce il Procedimento come denominazione.
                   \item L'utente inserisce il Catalogo dei Procedimenti come URI di pubblicazione del
                         catalogo.
-                  \item L'utente può aggiungere una Fasi del Procedimento e inserirne i Dati.
-                  \item Viene restituita la lista dei documenti nei quali i parametri di un Procedimento
-                        amministrativo corrispondono ai parametri ricercati (\nameref{risultatiRicerca}).
+                  \item  L'utente può aggiungere una o più Fasi come filtro (UC-2.3.2.4.8.1).
+                  \item Viene restituita la lista dei documenti nei quali i parametri di un
+                        Procedimento amministrativo corrispondono ai parametri ricercati
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
-
-\subsubsection{UC-2.3.2.2.7.1 - Ricerca per Campo di un'Aggregazione Documentale: Fasi (Aggiunta nuova fase)}
-\begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente sceglie come tipo di documento l'Aggregazione Documentale
-                  \item L'Utente decide di cercare il documento in base al Procedimento Amministrativo
-                  \item L'Utentedecide di aggiungere una nuova fase come campo di ricerca.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Viene aggiunta una nuova fase per il procedimento amministrativo, per poter in seguito inserire i parametri per la nuova fase
-      \item \textbf{Flusso Principale}:
-            \begin{enumerate}
-                  \item L'utente può aggiungere un numero da 0 a 5 di fasi per un procedimento
-                        amministrativo
-                  \item L'utente può inserire i parametri per la nuova fase creata (UC-2.3.2.2.7.2)
-            \end{enumerate}
-      \item \textbf{Flusso Alternativo}: Non selezionando l'aggiunta di una nuova fase la ricerca può proseguire senza prendere in considerazione questo metadato.
 \end{itemize}
 
-\subsubsection{UC-2.3.2.2.7.2 - Ricerca per Campo di un'Aggregazione Documentale: Campi Fasi}
+\subsubsection{UC-2.3.2.4.8.1 - Ricerca per Fasi del Procedimento}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente sceglie come tipo di documento l'Aggregazione Documentale
-                  \item L'Utente decide di cercare il documento in base al Procedimento Amministrativo
-                  \item L'Utente inserisce i dati del parametro Fasi.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente sta cercando per Procedimento Amministrativo.
+      \item \textbf{Postcondizioni}: La ricerca viene filtrata per i dati di una o più fasi.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
+                  \item L'utente aggiunge un filtro per "Fase".
+                  \item L'utente inserisce i dati della fase:
+                        \begin{itemize}
+                              \item Tipo Fase (Preparatoria, Istruttoria, Consultiva, Decisoria o deliberativa,
+                                    Integrazione dell'efficacia)
+                              \item Data di inizio
+                              \item Data di fine
+                        \end{itemize}
+                  \item L'utente può aggiungere altre fasi.
+                  \item Il sistema usa questi parametri per la ricerca.
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-2.3.2.4.8.1 - Ricerca per Fasi del Procedimento}
+\begin{itemize}
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente sta cercando per Procedimento Amministrativo.
+      \item \textbf{Postcondizioni}: La ricerca viene filtrata per i dati di una o più fasi.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'utente aggiunge un filtro per "Fase".
                   \item L'utente sceglie il Tipo Fase tra: Preparatoria, Istruttoria, Consultiva,
                         Decisoria o deliberativa, Integrazione dell'efficacia.
                   \item L'utente inserisce la Data di inizio della fase.
                   \item L'utente inserisce la Data di fine della fase, se terminata.
+                  \item L'utente può aggiungere altre fasi.
+                  \item Il sistema usa questi parametri per la ricerca.
+
                   \item Viene restituita la lista dei documenti nei quali i parametri di Fase
                         corrispondono ai parametri ricercati (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)\end{itemize}
-
-\subsubsection{UC-2.3.2.2.8 - Ricerca per Campo di un'Aggregazione Documentale: Assegnazione (Aggiunta nuova Assegnazione)}
-\begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente sceglie come tipo di documento l'Aggregazione Documentale
-                  \item L'Utente decide di aggiungere una nuova Assegnazione come campo per la ricerca.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Viene aggiunta una nuova Assegnazione per l'aggregazione, per poter in seguito inserire i parametri per la nuova Assegnazione
-      \item \textbf{Flusso Principale}:
-            \begin{enumerate}
-                  \item L'utente può aggiungere un numero da 0 a n Assegnazioni per un Aggregazione
-                  \item L'utente può inserire i parametri per la nuova Aggregazione creata
-                        (UC-2.3.2.2.8.1)
-            \end{enumerate}
-      \item \textbf{Flusso Alternativo}: Non selezionando l'aggiunta di una nuova Assegnazione la ricerca può proseguire senza prendere in considerazione questo metadato.
 \end{itemize}
 
-\subsubsection{UC-2.3.2.2.8.1 - Ricerca per Campo di un'Aggregazione Documentale: Assegnazione}
+\subsubsection{UC-2.3.2.4.9 - Ricerca per Assegnazione}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente sceglie come tipo di documento l'Aggregazione Documentale
-                  \item L'Utente decide di aggiungere una nuova Assegnazione come campo per la ricerca.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Viene aggiunta una nuova Assegnazione per l'aggregazione, per poter in seguito inserire i parametri per la nuova Assegnazione
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto come tipo di documento l'Aggregazione Documentale.
+      \item \textbf{Postcondizioni}: La ricerca è filtrata per i dati di Assegnazione.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'utente sceglie il Tipo Assegnazione tra: Per competenza, Per conoscenza.
-                  \item L'utente inserisce il Soggetto Assegnatario come da UC-2.3.1.
-                  \item L'utente inserisce la Data di Inizio dell'Assegnazione.
-                  \item L'utente inserisce la Data di Fine dell'Assegnazione, se terminata.
-                  \item Viene restituita la lista dei documenti nei quali i parametri di Verifica
-                        corrispondono ai parametri ricercati (\nameref{risultatiRicerca}).
+                  \item L'utente aggiunge un filtro per "Assegnazione".
+                  \item L'utente inserisce i dati:
+                        \begin{itemize}
+                              \item Tipo Assegnazione
+                              \item Soggetto Assegnatario (UC-2.3.)
+                              \item Data di Inizio
+                              \item Data di Fine
+                        \end{itemize}
+                  \item L'utente può aggiungere altre assegnazioni.
+                  \item Il sistema restituisce la lista delle aggregazioni corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}: Non selezionando l'aggiunta di una nuova Assegnazione la ricerca può proseguire senza prendere in considerazione questo metadato.
 \end{itemize}
 
-\subsubsection{UC-2.3.2.2.9 - Ricerca per Campo di un'Aggregazione Documentale: Progressivo}
+\subsubsection{UC-2.3.2.4.10 - Ricerca per Progressivo}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-            \begin{enumerate}
-                  \item L'Utente ha accesso alla funzionalità di ricerca
-                  \item L'Utente sceglie come tipo di documento l'Aggregazione Documentale
-                  \item L'Utente decide di cercare l'aggregazione in base al campo Progressivo.
-            \end{enumerate}
-      \item \textbf{Postcondizioni}: Visualizzazione dei file all'interno della cartella DIP contenenti il campo ricercato
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha scelto come tipo di documento l'Aggregazione Documentale.
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per numero Progressivo.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'utente inserisce il numero Progressivo dell'Aggregazione.
-                  \item Viene restituita la lista dei documenti nei quali il Progressivo corrisponde al
-                        parametro ricercato (\nameref{risultatiRicerca}).
+                  \item Il sistema restituisce la lista delle aggregazioni corrispondenti
+                        (\nameref{risultatiRicerca}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}: Il campo cercato non è presente all'interno del DIP. La ricerca non ha prodotto alcun risultato.(UC-)
 \end{itemize}
 
 \subsubsection{UC-2.4 - Visualizzazione Risultati di Ricerca} \label{risultatiRicerca}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: L'utente ha compilato la ricerca
-      \item \textbf{Postcondizioni}: Visualizzazione di un elenco di documenti o insieme di documenti corrispondenti alla richiesta effettuata
-      \item \textbf{Flusso Principale}: L'Utente descrive in poche parole nell'apposita searchbar che tipo di documento o insieme di documenti vuole ricercare all'interno del DIP
-      \item \textbf{Flusso Alternativo}:
-            \begin{itemize}
-                  \item La ricerca non riporta alcun risultato, il documento o l'insieme di documenti
-                        richiesti non esistono all'interno del FAISS (e quindi del DIP)
-                  \item La connessione internet viene a mancare in fase di invio o ritorno della
-                        richiesta e quindi non è possibile portare a termine la richiesta
-            \end{itemize}
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha eseguito una ricerca (tramite UC-2.1, UC-2.2, UC-2.3 o UC-2.5).
+      \item \textbf{Postcondizioni}: I risultati della ricerca sono presentati all'utente.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item Il sistema visualizza un elenco di documenti o aggregazioni che corrispondono
+                        ai criteri di ricerca.
+                  \item Per ogni elemento, vengono mostrate le informazioni principali (Nome, Data,
+                        Tipo).
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo (Nessun risultato)}: Il sistema comunica che la ricerca non ha prodotto alcun risultato.
 \end{itemize}
 
 \subsubsection{UC-2.5 - Ricerca Semantica}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Attore Primario}: utente
       \item \textbf{Attore Secondario}: LLM in remoto
-      \item \textbf{Precondizioni}: L'utente ha accesso ad internet
-      \item \textbf{Postcondizioni}: Visualizzazione di un elenco di documenti o insieme di documenti corrispondenti alla richiesta effettuata
-      \item \textbf{Flusso Principale}: L'Utente descrive in poche parole nell'apposita searchbar che tipo di documento o insieme di documenti vuole ricercare all'interno del DIP
+      \item \textbf{Precondizioni}: L'utente ha accesso alla funzionalità di ricerca semantica e dispone di una connessione internet.
+      \item \textbf{Postcondizioni}: Visualizzazione di un elenco di documenti o aggregazioni pertinenti alla richiesta in linguaggio naturale.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'utente descrive in linguaggio naturale cosa sta cercando nell'apposita barra
+                        di ricerca.
+                  \item Il sistema invia la richiesta al servizio LLM.
+                  \item Il sistema riceve i risultati e li visualizza (UC-2.4).
+            \end{enumerate}
       \item \textbf{Flusso Alternativo}:
             \begin{itemize}
-                  \item La ricerca non riporta alcun risultato, il documento o l'insieme di documenti
-                        richiesti non esistono all'interno del FAISS (e quindi del DIP)
-                  \item La connessione internet viene a mancare in fase di invio o ritorno della
-                        richiesta e quindi non è possibile portare a termine la richiesta
+                  \item La ricerca non riporta alcun risultato pertinente.
+                  \item La connessione internet viene a mancare, impedendo di completare la richiesta.
             \end{itemize}
 \end{itemize}
