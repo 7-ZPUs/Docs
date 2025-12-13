@@ -82,7 +82,7 @@
       \item \textbf{Postcondizioni}: I risultati della ricerca vengono filtrati in base ai soggetti specificati.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'utente decide di aggiungere uno o più soggetti come filtro di ricerca.
+                  \item L'utente aggiunge uno o più soggetti come filtro di ricerca.
                   \item Per ogni soggetto, l'utente ne specifica i dettagli (Ruolo e altri campi
                         pertinenti, come descritto da UC-2.3.1.2.1 a UC-2.3.1.2.7).
                   \item Il sistema restituisce la lista dei documenti che corrispondono ai parametri
@@ -319,19 +319,11 @@
             \begin{enumerate}
                   \item L'utente sceglie la Modalità di Formazione tra:
                         \begin{itemize}
-                              \item creazione tramite l'utilizzo di strumenti software che assicurino la produzione
-                                    di documenti nei formati previsti nell’Allegato 2 delle Linee Guida
-                              \item acquisizione di un documento informatico per via telematica o su supporto
-                                    informatico, acquisizione della copia per immagine su supporto informatico di
-                                    un documento analogico, acquisizione della copia informatica di un documento
-                                    analogico
-                              \item memorizzazione su supporto informatico in formato digitale delle informazioni
-                                    risultanti da transazioni o processi informatici o dalla presentazione
-                                    telematica di dati attraverso moduli o formulari resi disponibili all’utente;
-                              \item generazione o raggruppamento anche in via automatica di un insieme di dati o
-                                    registrazioni, provenienti da una o più banche dati, anche appartenenti a più
-                                    soggetti interoperanti, secondo una struttura logica predeterminata e
-                                    memorizzata in forma statica.
+                              \item Creazione di un documento informatico ex novo
+                              \item Acquisizione di un documento informatico da altro documento
+                                    informatico o da supporto informatico
+                              \item Memorizzazione su supporto informatico in formato digitale
+                              \item Generazione o raggruppamento in forma statica
                         \end{itemize}
                   \item Il sistema restituisce la lista dei documenti corrispondenti
                         (\nameref{risultatiRicerca}).
@@ -441,9 +433,9 @@
                               \item Integrazione
                               \item Annotazione
                         \end{itemize}.
-                  \item L'Utente sceglie il Soggetto che ha effettuato la modifica.
-                  \item L'Utente inserisce la Data/Ora della Modifica.
-                  \item L'Utente inserisce l'identificativo documento versione precedente.
+                  \item L'utente sceglie il Soggetto che ha effettuato la modifica.
+                  \item L'utente inserisce la Data/Ora della Modifica.
+                  \item L'utente inserisce l'identificativo documento versione precedente.
                   \item Il sistema restituisce la lista dei documenti corrispondenti
                         (\nameref{risultatiRicerca}).
             \end{enumerate}
@@ -461,7 +453,7 @@
       \item \textbf{Postcondizioni}: I risultati sono filtrati in base ai soggetti specifici.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente sceglie il Ruolo e i sottocampi specifici tra:
+                  \item L'utente sceglie il Ruolo e i sottocampi specifici tra:
                         \begin{itemize}
                               \item Assegnatario (AS)
                               \item Autore (PF, PG, PAI valido solo nei flussi in entrata)
@@ -571,14 +563,14 @@
       \item \textbf{Postcondizioni}: I risultati sono filtrati per Soggetti.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente sceglie il Ruolo e i sottocampi specifici tra:
+                  \item L'utente sceglie il Ruolo e i sottocampi specifici tra:
                         \begin{itemize}
-                              \item Amministrazione titolare (PAI)
-                              \item Amministrazioni partecipanti (PAI o PAE)
-                              \item Assegnatario (AS)
-                              \item Soggetto intestatario persona fisica (PF)
-                              \item Soggetto intestatario persona giuridica (PG, PAI o PAE)
-                              \item RUP
+                              \item Amministrazione titolare (PAI).
+                              \item Amministrazioni partecipanti (PAI o PAE).
+                              \item Assegnatario (AS).
+                              \item Soggetto intestatario persona fisica (PF).
+                              \item Soggetto intestatario persona giuridica (PG, PAI o PAE).
+                              \item RUP.
                         \end{itemize}
                   \item Per ogni ruolo, l'utente può specificare ulteriori dettagli (UC-2.3.1.2).
                   \item Il sistema restituisce la lista delle aggregazioni corrispondenti
@@ -641,32 +633,12 @@
                   \item L'utente inserisce i dati della fase:
                         \begin{itemize}
                               \item Tipo Fase (Preparatoria, Istruttoria, Consultiva, Decisoria o deliberativa,
-                                    Integrazione dell'efficacia)
-                              \item Data di inizio
-                              \item Data di fine
+                                    Integrazione dell'efficacia).
+                              \item Data di inizio.
+                              \item Data di fine.
                         \end{itemize}
                   \item L'utente può aggiungere altre fasi.
                   \item Il sistema usa questi parametri per la ricerca.
-            \end{enumerate}
-\end{itemize}
-
-\paragraph{UC-2.3.2.4.8.1 - Ricerca per Fasi del Procedimento}
-\begin{itemize}
-      \item \textbf{Attore Primario}: utente
-      \item \textbf{Precondizioni}: L'utente sta cercando per Procedimento Amministrativo.
-      \item \textbf{Postcondizioni}: La ricerca viene filtrata per i dati di una o più fasi.
-      \item \textbf{Flusso Principale}:
-            \begin{enumerate}
-                  \item L'utente aggiunge un filtro per "Fase".
-                  \item L'utente sceglie il Tipo Fase tra: Preparatoria, Istruttoria, Consultiva,
-                        Decisoria o deliberativa, Integrazione dell'efficacia.
-                  \item L'utente inserisce la Data di inizio della fase.
-                  \item L'utente inserisce la Data di fine della fase, se terminata.
-                  \item L'utente può aggiungere altre fasi.
-                  \item Il sistema usa questi parametri per la ricerca.
-
-                  \item Viene restituita la lista dei documenti nei quali i parametri di Fase
-                        corrispondono ai parametri ricercati (\nameref{risultatiRicerca}).
             \end{enumerate}
 \end{itemize}
 
@@ -680,10 +652,10 @@
                   \item L'utente aggiunge un filtro per "Assegnazione".
                   \item L'utente inserisce i dati:
                         \begin{itemize}
-                              \item Tipo Assegnazione
-                              \item Soggetto Assegnatario (UC-2.3.)
-                              \item Data di Inizio
-                              \item Data di Fine
+                              \item Tipo Assegnazione.
+                              \item Soggetto Assegnatario (UC-2.3.1.2).
+                              \item Data di Inizio.
+                              \item Data di Fine.
                         \end{itemize}
                   \item L'utente può aggiungere altre assegnazioni.
                   \item Il sistema restituisce la lista delle aggregazioni corrispondenti
@@ -715,8 +687,24 @@
                         ai criteri di ricerca.
                   \item Per ogni elemento, vengono mostrate le informazioni principali (Nome, Data,
                         Tipo).
+                  \item L'utente può selezionare un elemento per visualizzare ulteriori dettagli o
+                        per aprirlo.
             \end{enumerate}
       \item \textbf{Flusso Alternativo (Nessun risultato)}: Il sistema comunica che la ricerca non ha prodotto alcun risultato.
+\end{itemize}
+
+\subsubsection{UC-2.4.1 - Nessun Risultato} \label{nessunRisultato}
+\begin{itemize}
+      \item \textbf{Attore Primario}: utente
+      \item \textbf{Precondizioni}: L'utente ha eseguito una ricerca (tramite UC-2.1, UC-2.2, UC-2.3 o UC-2.5).
+      \item \textbf{Postcondizioni}: Il sistema informa l'utente che non sono stati trovati risultati.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item Il sistema visualizza un messaggio che indica che la ricerca non ha prodotto
+                        alcun risultato.
+                  \item Viene mostrato l'insieme dei filtri che erano stati applicati, in modo da permettere all'utente di comprendere eventuali errori di inserimento o incoerenze.
+                  \item L'utente può scegliere di modificare i criteri di ricerca e riprovare.
+            \end{enumerate}
 \end{itemize}
 
 \subsubsection{UC-2.5 - Ricerca Semantica}
