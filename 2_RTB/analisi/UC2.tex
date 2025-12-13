@@ -76,14 +76,14 @@
 \subsubsection{UC-2.3.1.2.1 - Ricerca per Campo Comune: Soggetti (Aggiunta nuovo soggetto)}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha accesso alla funzionalità di ricerca e decide di cercare il documento in base ai Soggetti e decide di aggiungere un nuovo soggetto come campo di ricerca.
-    \item \textbf{Postcondizioni}: Viene aggiunta un nuovo soggetto per l'aggregazione, per poter in seguito inserire i parametri per il nuovo soggetto
+    \item \textbf{Precondizioni}: L'Utente ha accesso alla funzionalità di ricerca, decide di cercare il documento in base ai Soggetti e decide di aggiungere un nuovo soggetto come campo di ricerca
+    \item \textbf{Postcondizioni}: Viene aggiunto un nuovo soggetto per l'aggregazione, per poter in seguito inserire i parametri per il nuovo soggetto
     \item \textbf{Flusso Principale}: 
     \begin{enumerate}
-        \item L'utente può aggiungere un numero da 0 a n di soggetti per un Aggregazione
-        \item L'utente può inserire i parametri per la nuova soggetto creato
+        \item L'utente può aggiungere un numero da 0 a n di soggetti per un'Aggregazione
+        \item L'utente può inserire i parametri per il nuovo soggetto creato
     \end{enumerate}
-    \item \textbf{Flusso Alternativo}: Non selezionando l'aggiunta di una nuova fase la ricerca può proseguire senza prendere in considerazione questo metadato.
+    \item \textbf{Flusso Alternativo}: Non selezionando l'aggiunta di un nuovo soggetto la ricerca può proseguire senza prendere in considerazione questo metadato
 \end{itemize}
 
 \subsubsection{UC-2.3.1.2.2 - Ricerca per Campo di Soggetto: Ruolo = PAI}
@@ -132,7 +132,7 @@
         \item Denominazione Amministrazione UOR/ Codice IPA UOR
         \item Indirizzi Digitali di Riferimento
     \end{itemize}
-    Viene restituita la lista dei documenti nei quali valori per i campi del PAE corrisponde ai parametri ricercati.
+    Viene restituita la lista dei documenti nei quali valori per i campi dell'AS corrispondono ai parametri ricercati.
     \item \textbf{Flusso Alternativo}: Il campo cercato non è valido o non è presente all'interno del DIP, si restituisce "La ricerca non ha prodotto alcun risultato"
 \end{itemize}
 
@@ -163,7 +163,7 @@
         \item Nome
         \item Indirizzi Digitali di Riferimento
     \end{itemize}
-    Viene restituita la lista dei documenti nei quali valori per i campi del PG corrisponde ai parametri ricercati.
+    Viene restituita la lista dei documenti nei quali valori per i campi del PF corrispondono ai parametri ricercati.
     \item \textbf{Flusso Alternativo}: Il campo cercato non è valido o non è presente all'interno del DIP, si restituisce "La ricerca non ha prodotto alcun risultato"
 \end{itemize}
 
@@ -459,19 +459,6 @@
     \item \textbf{Flusso Alternativo}: Nessun risultato trovato o errore
 \end{itemize}
 
-\subsubsection{UC-2.4 - Visualizzazione Risultati di Ricerca}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'utente ha compilato la ricerca
-    \item \textbf{Postcondizioni}: Visualizzazione di un elenco di documenti o insieme di documenti corrispondenti alla richiesta effettuata
-    \item \textbf{Flusso Principale}: L'Utente descrive in poche parole nell'apposita searchbar che tipo di documento o insieme di documenti vuole ricercare all'interno del DIP
-    \item \textbf{Flusso Alternativo}:
-    \begin{itemize}
-        \item La ricerca non riporta alcun risultato, il documento o l'insieme di documenti richiesti non esistono all'interno del FAISS (e quindi del DIP)
-        \item La connessione internet viene a mancare in fase di invio o ritorno della richiesta e quindi non è possibile portare a termine la richiesta
-    \end{itemize}
-\end{itemize}
-
 \subsubsection{UC-2.5 - Ricerca Semantica}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -484,4 +471,13 @@
         \item La ricerca non riporta alcun risultato, il documento o l'insieme di documenti richiesti non esistono all'interno del FAISS (e quindi del DIP)
         \item La connessione internet viene a mancare in fase di invio o ritorno della richiesta e quindi non è possibile portare a termine la richiesta
     \end{itemize}
+\end{itemize}
+
+\subsubsection{UC-2.6 - Visualizzazione Risultati di Ricerca}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: L'utente ha eseguito una ricerca
+    \item \textbf{Postcondizioni}: Visualizzazione di un elenco di documenti o insieme di documenti corrispondenti alla richiesta effettuata
+    \item \textbf{Flusso Principale}: Il sistema restituisce la lista dei risultati corrispondenti ai criteri di ricerca impostati
+    \item \textbf{Flusso Alternativo}: Nessun risultato trovato o errore nella visualizzazione
 \end{itemize}
