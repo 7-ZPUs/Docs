@@ -1,0 +1,278 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage[sfdefault]{atkinson}
+\usepackage{float}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{chngpage}
+\usepackage{tocloft}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{color,soul}
+\usepackage[most]{tcolorbox}
+\usepackage[colorlinks=true]{hyperref}
+
+
+
+\hypersetup{
+    linkcolor=black,
+    urlcolor=blue
+}
+
+\definecolor{lightblack}{gray}{0.35}
+\newcommand{\glossario}[1]{\textit{#1}\textsubscript{\textbf{\textit{\textcolor{lightblack}{G}}}}}
+\newcommand{\ped}[1]{\textsubscript{#1}}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{\rightmark}
+\rhead{7-ZPUs}
+\lfoot{Piano di Qualifica}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.1}
+
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+\titleformat{\paragraph}{\large\bfseries}{\theparagraph}{1em}{}
+\titleformat{\subparagraph}{\normalsize\bfseries}{\thesubparagraph}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../assets/logo7ZPUs.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \vspace{0.5cm}
+    \Large \textbf{Piano di Qualifica}\\
+\end{center}
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+        \hline
+        0.1.0 & 07/11/2025 & Scrittore & Verificatore & \begin{tabular}[c]{@{}c@{}} Creazione del template\\ e stesura iniziale \end{tabular} \\
+        \hline
+    \end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\tableofcontents
+
+\newpage
+
+\section{Introduzione}
+
+\subsection{Scopo}
+Lo scopo di questo documento è definire le metriche di qualità a supporto della verifica e validazione del ciclo di vita del progetto necessarie per poter fornire un prodotto corrispondente ai requisiti della proponente e agli obiettivi del team fornitore mantenendo standard qualitativi elevati.
+La struttura è suddivisa in:
+\begin{itemize}
+    \item Obiettivi di qualità
+    \item Test di verifica
+    \item Cruscotto di valutazione e miglioramento
+\end{itemize}
+
+\subsection{Glossario}
+Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{Ingegneria del Software} utilizzato nella documentazione di progetto viene definito nell'apposito documento \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@norme_in_lavorazione/2_RTB/Glossario.pdf}{\ul{Glossario1.0}\setulcolor{blue}}\ped{(ultimo accesso: 17/11/2025)}.
+
+\subsection{Riferimenti}
+
+\subsubsection{Riferimenti Normativi}
+\begin{itemize}
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@norme_in_lavorazione/2_RTB/NormeDiProgetto.pdf}{\ul{NormeDiProgetto1.0}\setulcolor{blue}}\ped{(ultimo accesso: 3/12/2025)}
+    \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato C3: DIPReader}\setulcolor{blue}} \ped{(ultimo accesso: 01/12/2025)}
+    \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/PD1.pdf}{\ul{Regolamento di Progetto Didattico a.a. 2025/2026}\setulcolor{blue}} \ped{(ultimo accesso: 17/11/2025)}
+\end{itemize}
+\subsubsection{Riferimenti Informativi}
+\begin{itemize}
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@norme_in_lavorazione/2_RTB/Glossario.pdf}{\ul{Glossario1.0}\setulcolor{blue}}\ped{(ultimo accesso: 17/11/2025)}
+    \item \href{https://iso25000.com}{\ul{The ISO/IEC 25000 Series of Standards}\setulcolor{blue}}
+    \item \href{https://www.iso.org/standard/63712.html}{\ul{Standard ISO/IEC 9126-1:2001}\setulcolor{blue}}
+    \item \href{https://www.iso.org/standard/71952.html}{\ul{Standard ISO/IEC 145981-1:1999}\setulcolor{blue}}
+\end{itemize}
+
+\section{Obiettivi di qualità}
+
+\subsection{Metriche comuni}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \textbf{Valore accettabile} & \textbf{Valore desiderabile} \\
+        \hline
+        MC-1 & Metriche soddisfatte & & \\
+        \hline
+        MC-2 & Requisiti obbligatori soddisfatti & & \\
+        \hline
+        MC-3 & Requisiti opzionali soddisfatti & & \\
+        \hline
+        MC-4 & Requisiti desiderabili soddisfatti & & \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsection{Qualità di processo}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \textbf{Valore accettabile} & \textbf{Valore desiderabile} \\
+        \hline
+        MPC-1 & AC (Actual Cost) & & \\
+        \hline
+        MPC-2 & EA (Earned Value) & & \\
+        \hline
+        MPC-3 & PV (Planned Value) & & \\
+        \hline
+        MPC-4 & EAC (Estimate at Completion) & & \\
+        \hline
+        MPC-5 & ETC (Estimate to Complete) & & \\
+        \hline
+        MPC-6 & CPI (Cost Performance Index) & & \\
+        \hline
+        MPC-7 & BV (Budget Variance) & & \\
+        \hline
+        MPC-8 & SV (Schedule Variance) & & \\
+        \hline
+        MPC-9 & Rischi non previsti & & \\
+        \hline
+        MPC-10 & Efficacia contromisure rischi & & \\
+        \hline
+        MPC-11 & Stabilità dei requisiti & & \\
+        \hline
+        MPC-12 & Variazione dei requisiti & & \\
+        \hline
+        MPC-13 & Work in progress & & \\
+        \hline
+        MPC-14 & Code review turnaround time & & \\
+        \hline
+        MPC-15 & Deployment frequency & & \\
+        \hline
+        MPC-16 & Change failure rate & & \\
+        \hline
+        
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+
+\subsection{Qualità di prodotto}
+In seguito vengono elencate le metriche ritenute necessarie per fornire un prodotto di qualità. 
+
+\subsubsection{Funzionalità}
+
+\subsubsection{Affidabilità}
+
+\subsubsection{Usabilità}
+
+\subsubsection{Efficienza}
+
+\subsubsection{Manutenibilità}
+
+\subsubsection{Portabilità}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \textbf{Valore accettabile} & \textbf{Valore desiderabile} \\
+        \hline
+        MPD-1 & Tempo di risposta (Time To First Byte) & 1.5 s & 0.5 s \\
+        \hline
+        MPD-2 & Largest Contentful Paint & & \\
+        \hline
+        MPD-3 & Throughput & & \\
+        \hline
+        MPD-4 & Densità degli errori & & \\
+        \hline
+        MPD-5 & Statement coverage & & \\
+        \hline
+        MPD-6 & Branch coverage & & \\
+        \hline
+        MPD-7 & Complessità ciclomatica & & \\
+        \hline
+        MPD-8 & Accoppiamento tra classi & & \\
+        \hline
+        MPD-9 & Document Retrieval Time (DRT) & & \\
+        \hline
+        MPD-10 & Search Success Rate & & \\
+        \hline
+        MPD-11 & Profondità di navigazione & & \\
+        \hline
+        MPD-12 & Indice di Gulpease & & \\
+        \hline
+        MPD-13 & Browser supportati & & \\
+        \hline
+        MPD-14 & Tempo rendering prima pagina & & \\
+        \hline
+        MPD-15 & Code churn (\# righe aggiunte, modif. o canc.) & & \\
+        \hline
+        MPD-16 & Comment density & & \\
+        \hline
+        MPD-17 & Livello conformità WCAG & & \\
+        \hline
+        MPD-18 & Tasso errori HTTP & & \\
+        \hline
+        MPD-19 & Mean Reciprocal Rank (pos. risultato corr.) & & \\
+        \hline
+        MPD-20 & Average CPU usage & & \\
+        \hline
+        MPD-21 & Peak memory usage & & \\
+        \hline
+        MPD-22 & Densità commenti & & \\
+        \hline
+        
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\section{Test di verifica}
+
+
+
+
+minimo e desiderabile
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
