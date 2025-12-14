@@ -48,6 +48,38 @@
 \geometry{margin=2.5cm}
 \setstretch{1.1}
 
+\titleclass{\subsubsubsection}{straight}[\subsection]
+
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
+\renewcommand\theparagraph{\thesubsubsubsection.\arabic{paragraph}} % optional; useful if paragraphs are to be numbered
+
+\titleformat{\subsubsubsection}
+  {\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
+\titlespacing*{\subsubsubsection}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{5}{\z@}%
+  {3.25ex \@plus1ex \@minus.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{6}{\parindent}%
+  {3.25ex \@plus1ex \@minus .2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\def\toclevel@subsubsubsection{4}
+\def\toclevel@paragraph{5}
+%\def\toclevel@paragraph{6}
+\def\toclevel@subparagraph{6}
+\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
+\def\l@paragraph{\@dottedtocline{5}{10em}{5em}}
+\def\l@subparagraph{\@dottedtocline{6}{14em}{6em}}
+\makeatother
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
 \titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
 \titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
@@ -143,6 +175,55 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
 
 \subsection{Qualità di processo}
 
+\subsubsection{Processi primari}
+
+\subsubsubsection{Fornitura}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPC-1 & EA (Earned Value) & & \\
+        \hline
+        MPC-2 & PV (Planned Value) & & \\
+        \hline
+        MPC-3 & AC (Actual Cost) & & \\
+        \hline
+        MPC-4 & CPI (Cost Performance Index) & & \\
+        \hline
+        MPC-5 & SPI (Schedule Performance Index) & & \\
+        \hline
+        MPC-6 & TEAC (Time Estimate at Completion) & & \\
+        \hline
+        MPC-7 & ETC (Estimate to Complete) & & \\
+        \hline
+        MPC-8 & EAC (Estimate at Completion) & & \\
+        \hline
+        MPC-9 & BV (Budget Variance) & & \\
+        \hline
+        MPC-10 & SV (Schedule Variance) & & \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsubsection{Sviluppo}
+
+\subsubsubsection{Operativo}
+
+
+
+\subsubsection{Processi di supporto}
+
+\subsubsection{Processi organizzativi}
+
+
+
 \begin{table}[H]
     \begin{adjustwidth}{-4cm}{-4cm}
     \centering
@@ -150,22 +231,6 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
     \begin{tabular}{|c|c|c|c|}
         \hline
         \textbf{Codice} & \textbf{Nome metrica} & \textbf{Valore accettabile} & \textbf{Valore desiderabile} \\
-        \hline
-        MPC-1 & AC (Actual Cost) & & \\
-        \hline
-        MPC-2 & EA (Earned Value) & & \\
-        \hline
-        MPC-3 & PV (Planned Value) & & \\
-        \hline
-        MPC-4 & EAC (Estimate at Completion) & & \\
-        \hline
-        MPC-5 & ETC (Estimate to Complete) & & \\
-        \hline
-        MPC-6 & CPI (Cost Performance Index) & & \\
-        \hline
-        MPC-7 & BV (Budget Variance) & & \\
-        \hline
-        MPC-8 & SV (Schedule Variance) & & \\
         \hline
         MPC-9 & Rischi non previsti & & \\
         \hline
