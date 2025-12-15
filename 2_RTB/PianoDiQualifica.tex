@@ -80,9 +80,9 @@
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
 
-\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
-\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
-\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+\titleformat{\section}{\LARGE\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}
 \titleformat{\paragraph}{\large\bfseries}{\theparagraph}{1em}{}
 \titleformat{\subparagraph}{\normalsize\bfseries}{\thesubparagraph}{1em}{}
 
@@ -124,7 +124,7 @@
 Lo scopo di questo documento è definire le metriche di qualità a supporto della verifica e validazione del ciclo di vita del progetto necessarie per poter fornire un prodotto corrispondente ai requisiti della proponente e agli obiettivi del team fornitore mantenendo standard qualitativi elevati.
 La struttura è suddivisa in:
 \begin{itemize}
-    \item Obiettivi di qualità
+    \item Metriche di qualità
     \item Test di verifica
     \item Cruscotto di valutazione e miglioramento
 \end{itemize}
@@ -148,30 +148,7 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
     \item \href{https://www.iso.org/standard/71952.html}{\ul{Standard ISO/IEC 145981-1:1999}\setulcolor{blue}}
 \end{itemize}
 
-\section{Obiettivi di qualità}
-
-\subsection{Metriche comuni}
-
-\begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-    \centering
-    \begin{spacing}{1.5}
-    \begin{tabular}{|c|c|c|c|}
-        \hline
-        \textbf{Codice} & \textbf{Nome metrica} & \textbf{Valore accettabile} & \textbf{Valore desiderabile} \\
-        \hline
-        MC-1 & Metriche soddisfatte & & \\
-        \hline
-        MC-2 & Requisiti obbligatori soddisfatti & & \\
-        \hline
-        MC-3 & Requisiti opzionali soddisfatti & & \\
-        \hline
-        MC-4 & Requisiti desiderabili soddisfatti & & \\
-        \hline
-    \end{tabular}
-    \end{spacing}
-    \end{adjustwidth}
-\end{table}
+\section{Metriche di qualità}
 
 \subsection{Qualità di processo}
 
@@ -214,15 +191,28 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
 
 \subsubsubsection{Sviluppo}
 
-\subsubsubsection{Operativo}
-
-
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPC-11 & Work in progress & & \\
+        \hline
+        MPC-12 & Deployment frequency & & \\
+        \hline
+        MPC-13 & Change failure rate & & \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
 
 \subsubsection{Processi di supporto}
 
-\subsubsection{Processi organizzativi}
-
-
+\subsubsubsection{Documentazione}
 
 \begin{table}[H]
     \begin{adjustwidth}{-4cm}{-4cm}
@@ -230,29 +220,78 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
     \begin{spacing}{1.5}
     \begin{tabular}{|c|c|c|c|}
         \hline
-        \textbf{Codice} & \textbf{Nome metrica} & \textbf{Valore accettabile} & \textbf{Valore desiderabile} \\
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
-        MPC-9 & Rischi non previsti & & \\
+        MPC-14 & Indice di Gulpease & & \\
         \hline
-        MPC-10 & Efficacia contromisure rischi & & \\
+        MPC-15 & Correttezza ortografica & & \\
         \hline
-        MPC-11 & Stabilità dei requisiti & & \\
-        \hline
-        MPC-12 & Variazione dei requisiti & & \\
-        \hline
-        MPC-13 & Work in progress & & \\
-        \hline
-        MPC-14 & Code review turnaround time & & \\
-        \hline
-        MPC-15 & Deployment frequency & & \\
-        \hline
-        MPC-16 & Change failure rate & & \\
-        \hline
-        
     \end{tabular}
     \end{spacing}
     \end{adjustwidth}
 \end{table}
+
+\subsubsubsection{Configurazione}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPC-16 & Build success rate & & \\
+        \hline
+        MPC-17 & Average build time & & \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsubsection{Verifica}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPC-18 & Code review turnaround time & & \\
+        \hline
+        MPC-19 & Statement coverage & & \\
+        \hline
+        MPC-20 & Branch coverage & & \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsubsection{Risoluzione dei problemi}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPC-21 & Rischi non previsti & & \\
+        \hline
+        MPC-22 & Efficacia contromisure rischi & & \\
+        \hline
+        MPC-23 & Densità degli errori & & \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
 
 
 \subsection{Qualità di prodotto}
@@ -260,13 +299,122 @@ In seguito vengono elencate le metriche ritenute necessarie per fornire un prodo
 
 \subsubsection{Funzionalità}
 
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPD-1 & Stabilità dei requisiti & & \\
+        \hline
+        MPD-2 & Metriche soddisfatte & & \\
+        \hline
+        MPD-3 & Requisiti obbligatori soddisfatti & & \\
+        \hline
+        MPD-4 & Requisiti opzionali soddisfatti & & \\
+        \hline
+        MPD-5 & Requisiti desiderabili soddisfatti & & \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+
 \subsubsection{Affidabilità}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPD-6 & Tasso errori HTTP & & \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+
+
+
 
 \subsubsection{Usabilità}
 
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPD-7 & Indice di Gulpease & & \\
+        \hline
+        MPD-8 & Livello conformità WCAG & & \\
+        \hline
+        MPD-9 & Profondità di navigazione & & \\
+        \hline
+        MPD-10 & Search Success Rate & & \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+
 \subsubsection{Efficienza}
 
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPD-11 & Tempo di risposta (Time To First Byte) & 1.5 s & 0.5 s \\
+        \hline
+        MPD-12 & Document Retrieval Time (DRT) & & \\
+        \hline
+        MPD-13 & Tempo rendering prima pagina & & \\
+        \hline
+        MPD-14 & Average CPU usage & & \\
+        \hline
+        MPD-15 & Peak memory usage & & \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+
+
 \subsubsection{Manutenibilità}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+       \hline
+        MPD-16 & Complessità ciclomatica & & \\
+        \hline
+        MPD-17 & Comment ratio & & \\
+        \hline
+        MPD-18 & Accoppiamento tra classi & & \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
 
 \subsubsection{Portabilità}
 
@@ -276,53 +424,12 @@ In seguito vengono elencate le metriche ritenute necessarie per fornire un prodo
     \begin{spacing}{1.5}
     \begin{tabular}{|c|c|c|c|}
         \hline
-        \textbf{Codice} & \textbf{Nome metrica} & \textbf{Valore accettabile} & \textbf{Valore desiderabile} \\
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
-        MPD-1 & Tempo di risposta (Time To First Byte) & 1.5 s & 0.5 s \\
+        MPD-19 & Browser supportati & & \\
         \hline
-        MPD-2 & Largest Contentful Paint & & \\
+        MPD-20 & Sistemi operativi supportati & & \\
         \hline
-        MPD-3 & Throughput & & \\
-        \hline
-        MPD-4 & Densità degli errori & & \\
-        \hline
-        MPD-5 & Statement coverage & & \\
-        \hline
-        MPD-6 & Branch coverage & & \\
-        \hline
-        MPD-7 & Complessità ciclomatica & & \\
-        \hline
-        MPD-8 & Accoppiamento tra classi & & \\
-        \hline
-        MPD-9 & Document Retrieval Time (DRT) & & \\
-        \hline
-        MPD-10 & Search Success Rate & & \\
-        \hline
-        MPD-11 & Profondità di navigazione & & \\
-        \hline
-        MPD-12 & Indice di Gulpease & & \\
-        \hline
-        MPD-13 & Browser supportati & & \\
-        \hline
-        MPD-14 & Tempo rendering prima pagina & & \\
-        \hline
-        MPD-15 & Code churn (\# righe aggiunte, modif. o canc.) & & \\
-        \hline
-        MPD-16 & Comment density & & \\
-        \hline
-        MPD-17 & Livello conformità WCAG & & \\
-        \hline
-        MPD-18 & Tasso errori HTTP & & \\
-        \hline
-        MPD-19 & Mean Reciprocal Rank (pos. risultato corr.) & & \\
-        \hline
-        MPD-20 & Average CPU usage & & \\
-        \hline
-        MPD-21 & Peak memory usage & & \\
-        \hline
-        MPD-22 & Densità commenti & & \\
-        \hline
-        
     \end{tabular}
     \end{spacing}
     \end{adjustwidth}
