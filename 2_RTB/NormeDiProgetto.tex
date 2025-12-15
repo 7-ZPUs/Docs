@@ -3,8 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[italian, provide=*]{babel}
-\usepackage{lmodern}
-\renewcommand*\familydefault{\sfdefault}
+\usepackage[sfdefault]{atkinson}
 \usepackage{float}
 \usepackage{microtype}
 \usepackage{geometry}
@@ -52,6 +51,21 @@
 \renewcommand{\listfigurename}{Indice delle immagini}
 \renewcommand{\listtablename}{Indice delle tabelle}
 
+% Configurazione per rendere le metriche ben visibili
+\newcommand{\metricdef}[3]{
+    \subsubsection*{#1 - #2}
+    \textbf{Descrizione:} #3
+}
+
+\newcommand{\metricformula}[1]{
+    \\[0.5em]
+    \textbf{Formula di calcolo:}
+    \begin{equation*}
+        #1
+    \end{equation*}
+}
+
+
 \geometry{margin=2.5cm}
 \setstretch{1.1}
 
@@ -87,31 +101,28 @@
 \begin{table}[H]
     \begin{adjustwidth}{-4cm}{-4cm}
         \centering
+        \begin{spacing}{1.1}
         \begin{tabular}{|c|c|c|c|c|}
             \hline
-            \textbf{Versione} & \textbf{Data}                                                                                                                                                              & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione}
-
-            \\
-             \hline
-            0.5               & 1/12/2025                                                                                                                                                                 & Soligo Lorenzo  & Rocco Matteo A.       & \begin{tabular}[c]{@{}c@{}} Aggiornamento nuovo standard per gestione branch, \\ convenzioni sui nomi, date e versioni. \\ Sezioni 3.1.2, 3.1.3, 3.2.1.1.1, 3.2.4, 4.2.3.2.1,  \end{tabular}       \\
-            
+            \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione} \\
             \hline
-            0.4.1               & 28/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Fattoni Antonio       & \begin{tabular}[c]{@{}c@{}} Correzione nella Procedura di Revisione \\ Paragrafo 3.1.3.1 e aggiornamento immagini \end{tabular} \\
-
+            0.6 & 15/12/2025 & Rocco Matteo A. & Georgescu Diana & Stesura paragrafo 5 \\
             \hline
-            0.4               & 26/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Fattoni Antonio       & \begin{tabular}[c]{@{}c@{}} Ristrutturazione completa Processi \\ (ISO 12207: Attività-Procedure-Strumenti) \end{tabular}       \\
+            0.5 & 1/12/2025 & Soligo Lorenzo & Rocco Matteo A. & \begin{tabular}[c]{@{}c@{}} Aggiornamento nuovo standard per\\ gestione branch, convenzioni sui \\nomi, date e versioni. \\ Sezioni 3.1.2, 3.1.3, \\3.2.1.1.1, 3.2.4, 4.2.3.2.1 \end{tabular} \\
             \hline
-            0.3               & 25/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Fattoni Antonio
-                              & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Processi di Infrastruttura e sottosezioni 4.2.1-4.3 e\\ Nuova struttura Paragrafi e sottoParagrafi \end{tabular}                                                                                                                                                                             \\
+            0.4.1 & 28/11/2025 & Soligo Lorenzo & Fattoni Antonio & \begin{tabular}[c]{@{}c@{}} Correzione nella Procedura \\ di Revisione Paragrafo 3.1.3.1 e \\ aggiornamento immagini \end{tabular} \\
             \hline
-            0.2               & 22/11/2025                                                                                                                                                                 & Soligo Lorenzo  & Fattoni Antonio       & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Documentazione e sottosezioni 3.1-3.1.5 \end{tabular}
+            0.4 & 26/11/2025 & Soligo Lorenzo  & Fattoni Antonio & \begin{tabular}[c]{@{}c@{}} Ristrutturazione completa \\ Processi (ISO 12207: \\Attività-Procedure-Strumenti) \end{tabular} \\
+            \hline
+            0.3 & 25/11/2025 & Soligo Lorenzo  & Fattoni Antonio & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Processi di Infrastruttura e \\sottosezioni 4.2.1-4.3.\\ Nuova struttura Paragrafi \\e sottoParagrafi \end{tabular} \\
+            \hline
+            0.2 & 22/11/2025 & Soligo Lorenzo  & Fattoni Antonio & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Documentazione e sottosezioni 3.1-3.1.5 \end{tabular}
             \\
             \hline
-            0.1               & 16/11/2025                                                                                                                                                                 & Rocco Matteo A. & Soligo Lorenzo
-                              & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Introduzione e Processo di fornitura \end{tabular}                                                                                                                                                                                                                                           \\
+            0.1 & 16/11/2025 & Rocco Matteo A. & Soligo Lorenzo & \begin{tabular}[c]{@{}c@{}} Creazione e stesura sezioni \\Introduzione e Processo di fornitura \end{tabular} \\
             \hline
-
         \end{tabular}
+        \end{spacing}
     \end{adjustwidth}
 \end{table}
 
@@ -781,6 +792,115 @@ membro del gruppo, al fine di velocizzare, per esempio, il processo di Documenta
 \subsection{Formazione}
 
 \section{Metriche della qualità}
+
+
+
+\subsection{Qualità di Processo (MPC)}
+In questa sezione vengono definite le metriche utilizzate per valutare l'efficienza e l'efficacia dei processi del ciclo di vita del software, in conformità con lo standard ISO/IEC 12207.
+
+\subsubsection{Processi di Fornitura e Gestione (EVM)}
+
+\metricdef{MPC-1}{Earned Value (EV)}{Valore del lavoro effettivamente completato in un determinato momento, espresso in termini di budget approvato.}
+\metricformula{EV = \sum_{i} ( \% \text{Completamento}_i \times \text{Budget}_i )}
+
+\metricdef{MPC-2}{Planned Value (PV)}{Valore del lavoro che si era pianificato di completare entro una certa data.}
+\metricformula{PV = \sum_{i} (\% \text{Pianificato}_i \times \text{Budget}_i)}
+
+\metricdef{MPC-3}{Actual Cost (AC)}{Costo realmente sostenuto per il lavoro svolto fino alla data corrente.}
+\metricformula{AC = \sum \text{Costi Sostenuti}}
+
+\metricdef{MPC-4}{Cost Performance Index (CPI)}{Indice di efficienza dei costi. Un valore $< 1$ indica che il progetto è fuori budget.}
+\metricformula{CPI = \frac{EV}{AC}}
+
+\metricdef{MPC-5}{Schedule Performance Index (SPI)}{Indice di efficienza della schedulazione. Un valore $< 1$ indica che il progetto è in ritardo.}
+\metricformula{SPI = \frac{EV}{PV}}
+
+\subsubsection{Processo di Sviluppo}
+
+\metricdef{MPC-11}{Work in Progress (WIP)}{Numero di task o ticket su cui il team sta lavorando attivamente in contemporanea. Un valore alto indica colli di bottiglia.}
+\metricformula{WIP = \sum \text{Ticket in stato "In Progress"}}
+
+\metricdef{MPC-13}{Change Failure Rate (CFR)}{Percentuale di deployment o merge in produzione che causano un guasto richiedendo un hotfix.}
+\metricformula{CFR = \left( \frac{\text{Numero di deployment falliti}}{\text{Numero totale di deployment}} \right) \times 100}
+
+\subsubsection{Processo di Documentazione}
+
+\metricdef{MPC-14}{Indice di Gulpease}{Indice che valuta la leggibilità di un testo in lingua italiana. Valori bassi indicano bassa leggibilità.}
+\metricformula{G = 89 + \frac{300 \times (\text{numero frasi}) - 10 \times (\text{numero lettere})}{\text{numero parole}}}
+
+\metricdef{MPC-15}{Correttezza Ortografica}{Misura la densità di errori ortografici presenti nella documentazione.}
+\metricformula{C = 1 - \left( \frac{\text{Numero errori ortografici}}{\text{Numero parole totali}} \right)}
+
+\subsubsection{Processo di Configurazione}
+
+\metricdef{MPC-16}{Build Success Rate (BSR)}{Percentuale di build completate con successo dalla pipeline di CI/CD rispetto al totale delle build eseguite.}
+\metricformula{BSR = \left( \frac{\text{Builds con esito positivo}}{\text{Builds totali}} \right) \times 100}
+
+\metricdef{MPC-17}{Average Build Time}{Tempo medio impiegato dalla pipeline per completare il processo di build e test automatici.}
+\metricformula{T_{avg} = \frac{\sum_{i=1}^{n} T_{build\_i}}{n}}
+
+\subsubsection{Processo di Verifica}
+
+\metricdef{MPC-19}{Statement Coverage}{Percentuale di istruzioni (statements) del codice sorgente eseguite durante i test automatici.}
+\metricformula{SC = \left( \frac{\text{Linee di codice eseguite}}{\text{Linee di codice totali}} \right) \times 100}
+
+\metricdef{MPC-20}{Branch Coverage}{Percentuale di rami decisionali (if, switch, loop) percorsi durante i test.}
+\metricformula{BC = \left( \frac{\text{Rami percorsi}}{\text{Rami totali}} \right) \times 100}
+
+\subsubsection{Processi Organizzativi (Nuovi)}
+
+\metricdef{MPC-21}{Retrospective Effectiveness}{Misura la capacità del team di risolvere i problemi identificati durante le retrospettive.}
+\metricformula{E_{retro} = \left( \frac{\text{Action items risolti}}{\text{Action items identificati}} \right) \times 100}
+
+\metricdef{MPC-22}{Meeting Attendance}{Percentuale di presenza dei membri del team alle riunioni obbligatorie.}
+\metricformula{MA = \left( \frac{\text{Presenze effettive}}{\text{Presenze attese totali}} \right) \times 100}
+
+\subsection{Qualità di Prodotto (MPD)}
+In questa sezione vengono definite le metriche per valutare la qualità intrinseca del prodotto software, basandosi sul modello ISO/IEC 9126.
+
+\subsubsection{Funzionalità}
+
+\metricdef{MPD-2}{Completezza dell'implementazione}{Misura la percentuale di requisiti funzionali obbligatori implementati e testati.}
+\metricformula{CI = \left( \frac{\text{Requisiti funzionali implementati}}{\text{Requisiti funzionali totali}} \right) \times 100}
+
+\metricdef{MPD-3}{Accuratezza dei risultati}{Percentuale di test funzionali che producono il risultato atteso senza deviazioni.}
+\metricformula{Acc = \left( \frac{\text{Test funzionali passati}}{\text{Test funzionali eseguiti}} \right) \times 100}
+
+\subsubsection{Affidabilità}
+
+\metricdef{MPD-6}{Tasso Errori HTTP}{Percentuale di richieste al server che restituiscono codici di errore (4xx o 5xx) rispetto al totale delle richieste.}
+\metricformula{E_{http} = \left( \frac{\text{Richieste con status } \ge 400}{\text{Richieste totali}} \right) \times 100}
+
+\metricdef{MPD-NEW}{Availability (Disponibilità)}{Percentuale di tempo in cui il sistema è operativo e accessibile agli utenti.}
+\metricformula{A = \left( \frac{\text{Tempo totale} - \text{Tempo di disservizio}}{\text{Tempo totale}} \right) \times 100}
+
+\subsubsection{Usabilità}
+
+\metricdef{MPD-9}{Profondità di Navigazione}{Numero massimo di click necessari per raggiungere una qualsiasi pagina di contenuto partendo dalla Home Page.}
+\metricformula{Clicks \le 3}
+
+\metricdef{MPD-10}{Search Success Rate}{Percentuale di ricerche effettuate dagli utenti che portano al clic su un risultato utile.}
+\metricformula{SSR = \left( \frac{\text{Ricerche con clic}}{\text{Ricerche totali}} \right) \times 100}
+
+\subsubsection{Efficienza}
+
+\metricdef{MPD-11}{Time to First Byte (TTFB)}{Tempo che intercorre tra l'invio della richiesta HTTP dal client e la ricezione del primo byte di risposta dal server.}
+\metricformula{TTFB = T_{ricezione\_primo\_byte} - T_{invio\_richiesta}}
+
+\metricdef{MPD-13}{Tempo di Rendering}{Tempo necessario al browser per completare il rendering visivo della pagina (First Contentful Paint).}
+\metricformula{T_{render} \text{ (misurato tramite API del browser)}}
+
+\subsubsection{Manutenibilità}
+
+\metricdef{MPD-16}{Complessità Ciclomatica}{Misura la complessità del flusso di controllo del codice. Valori superiori a 15 indicano codice difficile da testare e manutenere.}
+\metricformula{M = E - N + 2P \quad (\text{dove } E=\text{archi}, N=\text{nodi}, P=\text{componenti connessi})}
+
+\metricdef{MPD-17}{Comment Ratio}{Rapporto tra le righe di commento e le righe di codice totali (LOC).}
+\metricformula{CR = \frac{\text{Linee di commento}}{\text{Linee di Codice (SLOC)}}}
+
+\metricdef{MPD-18}{Accoppiamento tra Classi (CBO)}{Numero di classi a cui una determinata classe è accoppiata (usa o è usata da). Un valore alto indica scarsa modularità.}
+\metricformula{CBO = \text{Conteggio dipendenze esterne per classe}}
+
 
 \vfill
 \begin{flushright}
