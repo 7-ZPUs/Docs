@@ -1,118 +1,102 @@
 \subsubsection{UC-1 - Visualizzazione Struttura DIP}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha avviato il sistema DIP-Reader.
-    \item \textbf{Postcondizioni}: Viene visualizzato la struttura organizzativa del DIP come un albero di \textit{folder}
+    \item \textbf{Precondizioni}: L'tente ha avviato il sistema DIP-Reader.
+    \item \textbf{Postcondizioni}: Il sistema visualizza la struttura organizzativa del DIP come un albero di \textit{cartelle}.
     \item \textbf{Flusso Principale}:
           \begin{enumerate}
-              \item L'Utente Avvia DIP-Reader e si trova in Home
-              \item Il sistema mostra la struttura organizzativa del DIP come un albero di \textit{folder}. L'albero è organizzato in:
+              \item L'Utente avvia DIP-Reader e visualizza la schermata principale (Home).
+              \item Il sistema mostra la struttura organizzativa del DIP come un albero navigabile di
+                     \textit{cartelle}. L'albero è organizzato gerarchicamente in:
                     \begin{itemize}
                         \item Classi Documentali (UC-1.1)
                         \item Processi (UC-1.2)
                         \item Documenti (UC-1.3)
                     \end{itemize}
           \end{enumerate}
-    \item \textbf{Flusso Alternativo}: L'Utente visualizza un elenco vuoto
+    \item \textbf{Flusso Alternativo}: Se il DIP è vuoto, il sistema visualizza una struttura vuota.
 \end{itemize}
 
-\subsubsection{UC-1.1 - Visualizzazione tutte le Classi Documentali}
+\subsubsection{UC-1.1 - Visualizzazione di tutte le classi documentali}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L'Utente ha avviato il sistema DIP-Reader.
-    \item \textbf{Postcondizioni}: Viene visualizzato l'elenco delle Classi Documentali, presentate come \textit{folder}
+    \item \textbf{Postcondizioni}: Il sistema visualizza l'elenco delle Classi Documentali come \textit{cartelle}.
     \item \textbf{Flusso Principale}:
           \begin{enumerate}
-              \item L'Utente Avvia DIP-Reader e si trova in Home
-              \item Il sistema mostra l'elenco delle Classi Documentali presenti nel DIP
+              \item L'Utente avvia DIP-Reader e visualizza la schermata principale (Home).
+              \item Il sistema mostra l'elenco di tutte le Classi Documentali presenti nel DIP.
           \end{enumerate}
-    \item \textbf{Flusso Alternativo}: L'Utente visualizza un elenco vuoto
+    \item \textbf{Flusso Alternativo}: Se non sono presenti Classi Documentali, il sistema mostra un elenco vuoto.
 \end{itemize}
 
-\subsubsection{UC-1.2 - Visualizzazione tutti i processi della classe documentale}
+\subsubsection{UC-1.2 - Visualizzazione di tutti i processi di una classe documentale}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: Utente vede la lista delle Classi Documentali.
-    \item \textbf{Postcondizioni}: Visualizzazione dei processi associati a quella classe, presentati come \textit{folder}
+    \item \textbf{Precondizioni}: L'Utente visualizza l'elenco delle Classi Documentali.
+    \item \textbf{Postcondizioni}: Il sistema visualizza i processi associati alla classe selezionata come \textit{cartelle}.
     \item \textbf{Flusso Principale}: \begin{enumerate}
-              \item Utente seleziona una classe dalla lista delle classi di cui vuole vedere i
-                    processi
-              \item Il sistema mostra l'elenco dei processi associati a quella classe
+              \item L'Utente seleziona una Classe Documentale dall'elenco.
+              \item Il sistema mostra l'elenco dei processi associati alla classe selezionata.
           \end{enumerate}
-    \item \textbf{Flusso Alternativo}: L'Utente visualizza un elenco vuoto
+    \item \textbf{Flusso Alternativo}: Se la classe documentale non contiene processi, il sistema mostra un elenco vuoto.
 \end{itemize}
 
-\subsubsection{UC-1.3 - Visualizzazione tutti i documenti del processo}
+\subsubsection{UC-1.3 - Visualizzazione di tutti i documenti di un processo}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente visualizza la lista dei processi
-    \item \textbf{Postcondizioni}: Viene visualizzato l'elenco dei documenti associati a quel processo
+    \item \textbf{Precondizioni}: L'Utente visualizza l'elenco dei processi.
+    \item \textbf{Postcondizioni}: Il sistema visualizza l'elenco dei documenti associati al processo selezionato.
     \item \textbf{Flusso Principale}:\begin{enumerate}
-              \item L'Utente seleziona un processo dalla lista dei processi
+              \item L'Utente seleziona un processo dall'elenco.
               \item Il sistema mostra l'elenco dei documenti associati a quel processo,
-                    differenziati tra documenti principali e allegati
+                    distinguendo tra documenti principali e allegati.
           \end{enumerate}
-    \item \textbf{Flusso Alternativo}: L'Utente visualizza un elenco vuoto
+    \item \textbf{Flusso Alternativo}: Se il processo non contiene documenti, il sistema mostra un elenco vuoto.
 \end{itemize}
 
-\subsubsection{UC-1.5 - Visualizzazione Informazioni Processo}
+\subsubsection{UC-1.4 - Visualizzazione Informazioni di un elemento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente visualizza la lista dei processi
-    \item \textbf{Postcondizioni}: Vengono visualizzati i dati del processo selezionato
-    \item \textbf{Flusso Principale}:
-          \begin{enumerate}
-              \item L'Utente seleziona un processo dalla lista
-              \item Il sistema mostra i dati del processo selezionato:
+    \item \textbf{Precondizioni}: L'Utente visualizza la struttura ad albero del DIP.
+    \item \textbf{Postcondizioni}: Il sistema visualizza i metadati e le azioni disponibili per l'elemento selezionato.
+    \item \textbf{Flusso Principale}:\begin{enumerate}
+              \item L'Utente seleziona una cartella (Classe Documentale o Processo) o un documento dalla struttura del DIP.
+              \item Il sistema mostra i metadati associati, tra cui:
                     \begin{itemize}
-                        \item Nome del processo
+                        \item Nome
                         \item Data di creazione
-                        \item Informazioni sulla Verifica del Processo (UC-)
-                        \item Informazioni sul AiP (UC-)
+                        \item Informazioni sulla Verifica (UC-5.4, UC-10)
+                        \item Informazioni sull'AIP (UC-12)
+                        \item Tipo di documento (se applicabile)
+                        \item Formato del documento (se applicabile)
+                        \item Dimensione del documento (se applicabile)
+                        \item Numero di allegati (se applicabile)
+                        \item Numero totale di documenti (per il DIP)
                     \end{itemize}
           \end{enumerate}
-    \item \textbf{Flusso Alternativo}: L'Utente visualizza dati vuoti
+    \item \textbf{Flussi Alternativi}: \begin{itemize}
+              \item Se l'Utente seleziona un elemento non valido, il sistema non mostra alcuna informazione.
+              \item L'Utente esegue un'azione sull'elemento selezionato:
+                \begin{itemize}
+                    \item Verifica l'integrità (UC-5)
+                    \item Stampa (UC-4)
+                    \item Salva in locale (UC-3)
+                    \item Visualizza l'anteprima (UC-1.5)
+                \end{itemize}
+          \end{itemize}
 \end{itemize}
 
-\subsubsection{UC-1.4 - Visualizzazione Informazioni Classe Documentale}
+\subsubsection{UC-1.5 - Visualizzazione Anteprima Documento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente visualizza la lista delle classi documentali
-    \item \textbf{Postcondizioni}: Vengono visualizzati i dati della classe documentale selezionata
+    \item \textbf{Precondizioni}: L'Utente ha selezionato un documento dalla struttura del DIP.
+    \item \textbf{Postcondizioni}: Il sistema visualizza un'anteprima del documento selezionato.
     \item \textbf{Flusso Principale}:
           \begin{enumerate}
-              \item L'Utente seleziona una classe documentale dalla lista
-              \item Il sistema mostra i dati della classe documentale selezionata:
-                    \begin{itemize}
-                        \item Nome della classe documentale
-                        \item Data di creazione
-                        \item Informazioni sulla Verifica del file (UC-)
-                        \item Informazioni sul AiP (UC-)
-                    \end{itemize}
+              \item L'Utente seleziona l'opzione per visualizzare l'anteprima del documento.
+              \item Il sistema apre una finestra di anteprima che mostra il contenuto del documento,
+                    supportando vari formati (testo, immagini, PDF, ecc.).
           \end{enumerate}
-    \item \textbf{Flusso Alternativo}: L'Utente visualizza dati vuoti
+    \item \textbf{Flusso Alternativo}: Se il formato del documento non è supportato per l'anteprima, il sistema mostra un messaggio che specifica perchè il tipo non è supportato.
 \end{itemize}
-
-
-\subsubsection{UC-1.6 - Visualizzazione Informazioni Documento}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente visualizza la lista dei documenti
-    \item \textbf{Postcondizioni}: Vengono visualizzati i dati del documento selezionato
-    \item \textbf{Flusso Principale}:
-          \begin{enumerate}
-              \item L'Utente seleziona un documento dalla lista
-              \item Il sistema mostra i dati del documento selezionato:
-                    \begin{itemize}
-                        \item Nome del documento
-                        \item Data di creazione
-                        \item Tipo di documento
-                        \item Formato del documento
-                        \item Dimensione del documento
-                        \item Informazioni sulla Verifica del file (UC-5.4, UC-)
-                        \item Informazioni sul AiP (UC-)
-                    \end{itemize}
-          \end{enumerate}
-    \item \textbf{Flusso Alternativo}: L'Utente visualizza dati vuoti
-\end{itemize}
-
