@@ -1,0 +1,196 @@
+UC-10 Visualizzazione informazioni AiP di provenienza documento (D.V.)
+	Attore Primario: Utente
+	Precondizioni: 
+L’utente ha avviato l’applicazione
+L’utente ha selezionato un documento
+Postcondizioni: 
+L’utente ha ottenuto le informazioni sull’AiP di provenienza relativo al documento: UUID e classe documentale.
+ 	Flusso principale:
+Il sistema mostra a video le informazioni sull’AiP:
+classe documentale AiP (UC10.1)
+UUID AiP (UC10.2)
+	Inclusioni:
+UC10.1
+UC10.2
+UC-10.1 Visualizza classe documentale di appartenenza AiP (D.V.)
+	Attore primario: Utente
+	Precondizioni: 
+L’utente ha avviato l’applicazione
+L’utente sta visualizzando le informazioni di un AiP
+	Postcondizioni: 
+L’utente visualizza la classe documentale dell’AiP relativo al documento selezionato
+	Flusso principale:
+Viene mostrata a video la classe documentale dell’AiP relativo al documento selezionato
+UC-10.2 Visualizza UUID AiP (D.V.)
+	Attore primario: Utente
+	Precondizioni: 
+L’utente ha avviato l’applicazione
+L’utente sta visualizzando le informazioni di un AiP
+	Postcondizioni: 
+L’utente visualizza lo UUID dell’AiP relativo al documento selezionato
+	Flusso principale:
+Viene mostrata a video lo UUID dell’AiP relativo al documento selezionato
+
+UC-11 Visualizza informazioni processo di conservazione AiP (D.V.)
+	Attore primario: Utente
+	Precondizioni:
+L’utente ha avviato il programma
+L’utente sta visualizzando le informazioni di un AiP
+	Postcondizioni:
+L’utente visualizza le informazioni del processo di conservazione, quali: data inizio, data fine, uuid utente responsabile, canale di attivazione, stato del processo, sessione di versamento, sessione di conservazione.
+Flusso principale:
+Vengono mostrati a video, in riferimento all’AiP selezionato:
+Data inizio (UC 11.1)
+Data fine (UC 11.2)
+UUID utente attivatore (UC 11.3)
+UUID utente terminatore (UC 11.4)
+Nome canale di attivazione (UC 11.5)
+Nome canale di terminazione (UC 11.6)
+Stato del processo (UC 11.7)
+Informazioni sulla sessione di versamento (UC 12)
+Informazioni sulla sessione di conservazione (UC 13)
+	Inclusioni:
+UC11.1
+UC11.2
+UC11.3
+UC11.4
+UC11.5
+UC11.6
+UC-11.1 Visualizza data inizio processo/sessione (D.V.)
+	Attore primario: Utente
+	Precondizioni: 
+L’utente ha avviato l’applicazione
+L’utente sta visualizzando le informazioni di un processo/sessione
+	Postcondizioni: 
+L’utente visualizza la data di inizio del/la processo/sessione
+	Flusso principale:
+Viene mostrata a video la data di inizio del/la processo/sessione
+	
+UC-11.2 Visualizza data fine processo/sessione (D.V.)
+	Attore primario: Utente
+	Precondizioni: 
+L’utente ha avviato l’applicazione
+L’utente sta visualizzando le informazioni di un processo/sessione
+	Postcondizioni: 
+L’utente visualizza la data di fine del/la processo/sessione
+	Flusso principale:
+Viene mostrata a video la data di fine del/la processo/sessione
+Flusso alternativo:
+La data di fine è assente in quanto il/la processo/sessione non è terminato/a
+UC-11.3 Visualizza UUID utente attivatore di un processo/sessione (D.V.)
+	Attore primario: Utente
+	Precondizioni: 
+L’utente ha avviato l’applicazione
+L’utente sta visualizzando le informazioni di un processo/sessione
+	Postcondizioni: 
+L’utente visualizza lo UUID dell’utente che è responsabile dell’attivazione del/la processo/sessione
+	Flusso principale:
+Viene mostrato a video lo UUID dell’utente attivatore del/la processo/sessione
+UC-11.4 Visualizza UUID utente terminatore di un processo/sessione (D.V.)
+	Attore primario: Utente
+	Precondizioni: 
+L’utente ha avviato l’applicazione
+L’utente sta visualizzando le informazioni di un processo/sessione
+	Postcondizioni: 
+L’utente visualizza lo UUID dell’utente che è responsabile della terminazione del/la processo/sessione
+	Flusso principale:
+Viene mostrato a video lo UUID dell’utente terminatore del/la processo/sessione
+Flusso alternativo:
+Non viene mostrato a video lo UUID dell’utente terminatore del/la processo/sessione è assente in quanto il/la processo/sessione non è ancora terminato/a.
+
+	
+UC-11.5 Visualizza nome canale di attivazione di un processo/sessione (D.V.)
+	Attore primario: Utente
+	Precondizioni: 
+L’utente ha avviato l’applicazione
+L’utente sta visualizzando le informazioni di un processo/sessione
+	Postcondizioni: 
+L’utente visualizza il nome del canale di attivazione del/la processo/sessione
+	Flusso principale:
+Viene mostrato a video il nome del canale di attivazione del/la processo/sessione
+UC-11.6 Visualizza nome canale di terminazione di un processo/sessione (D.V.)
+	Attore primario: Utente
+	Precondizioni: 
+L’utente ha avviato l’applicazione
+L’utente sta visualizzando le informazioni di un processo/sessione
+	Postcondizioni: 
+L’utente visualizza il nome del canale di terminazione del/la processo/sessione
+	Flusso principale:
+Viene mostrato a video il nome del canale di terminazione del/la processo/sessione
+Flusso alternativo:
+Non viene mostrato a video il nome del canale di terminazione del/la processo/sessione in quanto il/la processo/sessione non è ancora terminato/a.
+UC-11.7 Visualizza stato di un processo/sessione (D.V.)
+	Attore primario: Utente
+	Precondizioni: 
+L’utente ha avviato l’applicazione
+L’utente sta visualizzando le informazioni di un processo/sessione
+	Postcondizioni: 
+L’utente visualizza lo stato del/la processo/sessione
+	Flusso principale:
+Viene mostrato a video lo stato del/la processo/sessione
+
+
+
+UC-12 Visualizza Informazioni sulla Sessione di Versamento
+	Attore primario: Utente
+	Precondizioni:
+L’utente ha avviato il programma
+L’utente sta visualizzando i dettagli di un processo di conservazione
+	Postcondizioni:
+L’utente visualizza i dettagli della sessione di versamento, quali:
+Data inizio (UC 11.1)
+Data fine (UC 11.2)
+UUID utente attivatore (UC 11.3)
+UUID utente terminatore (UC 11.4)
+Nome canale di attivazione (UC 11.5)
+Nome canale di terminazione (UC 11.6)
+Stato del processo (UC 11.7)
+Flusso principale:
+Vengono mostrati a video, relativamente alla sessione di versamento del processo selezionato:
+Data inizio (UC 11.1)
+Data fine (UC 11.2)
+UUID utente attivatore (UC 11.3)
+UUID utente terminatore (UC 11.4)
+Nome canale di attivazione (UC 11.5)
+Nome canale di terminazione (UC 11.6)
+Stato del processo (UC 11.7)
+	Inclusioni:
+UC11.1
+UC11.2
+UC11.3
+UC11.4
+UC11.5
+UC11.6
+UC11.7
+
+UC-13 Visualizza Informazioni sulla Sessione di Conservazione
+		Attore primario: Utente
+	Precondizioni:
+L’utente ha avviato il programma
+L’utente sta visualizzando i dettagli di un processo di conservazione
+	Postcondizioni:
+L’utente visualizza i dettagli della sessione di conservazione, quali:
+Data inizio (UC 11.1)
+Data fine (UC 11.2)
+UUID utente attivatore (UC 11.3)
+UUID utente terminatore (UC 11.4)
+Nome canale di attivazione (UC 11.5)
+Nome canale di terminazione (UC 11.6)
+Stato del processo (UC 11.7)
+Flusso principale:
+Vengono mostrati a video, relativamente alla sessione di versamento del processo selezionato:
+Data inizio (UC 11.1)
+Data fine (UC 11.2)
+UUID utente attivatore (UC 11.3)
+UUID utente terminatore (UC 11.4)
+Nome canale di attivazione (UC 11.5)
+Nome canale di terminazione (UC 11.6)
+Stato del processo (UC 11.7)
+	Inclusioni:
+UC11.1
+UC11.2
+UC11.3
+UC11.4
+UC11.5
+UC11.6
+UC11.7
