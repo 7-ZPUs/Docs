@@ -34,4 +34,4 @@ jobs:
       - name: Run Validation Script
         if: steps.changed-files.outputs.any_changed == 'true'
         # Lo script analizzerà solo i file .tex modificati
-        run: python3 scripts/check_docs.py ${{ steps.changed-files.outputs.all_changed_files }}
+        run: python3 scripts/check_docs.py "${{ steps.changed-files.outputs.all_changed_files }}"
