@@ -1,0 +1,196 @@
+
+\subsubsection{UC-10 - Visualizzazione informazioni AiP di provenienza documento (D.V.)}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente ha ottenuto le informazioni sull'AiP di provenienza relativo al documento: UUID e classe documentale.
+    \item \textbf{Flusso Principale}: Il sistema mostra a video le informazioni sull'AiP:
+    \begin{itemize}
+        \item classe documentale AiP (UC10.1)
+        \item UUID AiP (UC10.2)
+    \end{itemize}
+    \item \textbf{Inclusioni}: UC10.1, UC10.2
+\end{itemize}
+
+\subsubsection{UC-10.1 - Visualizza classe documentale di appartenenza AiP (D.V.)}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un AiP
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la classe documentale dell'AiP relativo al documento selezionato
+    \item \textbf{Flusso Principale}: Viene mostrata a video la classe documentale dell'AiP relativo al documento selezionato
+\end{itemize}
+
+\subsubsection{UC-10.2 - Visualizza UUID AiP (D.V.)}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un AiP
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza lo UUID dell'AiP relativo al documento selezionato
+    \item \textbf{Flusso Principale}: Viene mostrata a video lo UUID dell'AiP relativo al documento selezionato
+\end{itemize}
+
+\subsubsection{UC-11 - Visualizza informazioni processo di conservazione AiP (D.V.)}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato il programma
+        \item L'utente sta visualizzando le informazioni di un AiP
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza le informazioni del processo di conservazione, quali: data inizio, data fine, uuid utente responsabile, canale di attivazione, stato del processo, sessione di versamento, sessione di conservazione.
+    \item \textbf{Flusso Principale}: Vengono mostrati a video, in riferimento all'AiP selezionato:
+    \begin{itemize}
+        \item Data inizio (UC11.1)
+        \item Data fine (UC11.2)
+        \item UUID utente attivatore (UC11.3)
+        \item UUID utente terminatore (UC11.4)
+        \item Nome canale di attivazione (UC11.5)
+        \item Nome canale di terminazione (UC11.6)
+        \item Stato del processo (UC11.7)
+        \item Informazioni sulla sessione di versamento (UC12)
+        \item Informazioni sulla sessione di conservazione (UC13)
+    \end{itemize}
+    \item \textbf{Inclusioni}: UC11.1, UC11.2, UC11.3, UC11.4, UC11.5, UC11.6, UC11.7, UC12, UC13
+\end{itemize}
+
+\subsubsection{UC-11.1 - Visualizza data inizio processo/sessione (D.V.)}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la data di inizio del/la processo/sessione
+    \item \textbf{Flusso Principale}: Viene mostrata a video la data di inizio del/la processo/sessione
+\end{itemize}
+
+\subsubsection{UC-11.2 - Visualizza data fine processo/sessione (D.V.)}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la data di fine del/la processo/sessione
+    \item \textbf{Flusso Principale}: Viene mostrata a video la data di fine del/la processo/sessione
+    \item \textbf{Flusso Alternativo}: La data di fine è assente in quanto il/la processo/sessione non è terminato/a
+\end{itemize}
+
+\subsubsection{UC-11.3 - Visualizza UUID utente attivatore di un processo/sessione (D.V.)}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza lo UUID dell'utente che è responsabile dell'attivazione del/la processo/sessione
+    \item \textbf{Flusso Principale}: Viene mostrato a video lo UUID dell'utente attivatore del/la processo/sessione
+\end{itemize}
+
+\subsubsection{UC-11.4 - Visualizza UUID utente terminatore di un processo/sessione (D.V.)}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza lo UUID dell'utente che è responsabile della terminazione del/la processo/sessione
+    \item \textbf{Flusso Principale}: Viene mostrato a video lo UUID dell'utente terminatore del/la processo/sessione
+    \item \textbf{Flusso Alternativo}: Non viene mostrato a video lo UUID dell'utente terminatore del/la processo/sessione è assente in quanto il/la processo/sessione non è ancora terminato/a.
+\end{itemize}
+
+\subsubsection{UC-11.5 - Visualizza nome canale di attivazione di un processo/sessione (D.V.)}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza il nome del canale di attivazione del/la processo/sessione
+    \item \textbf{Flusso Principale}: Viene mostrato a video il nome del canale di attivazione del/la processo/sessione
+\end{itemize}
+
+\subsubsection{UC-11.6 - Visualizza nome canale di terminazione di un processo/sessione (D.V.)}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza il nome del canale di terminazione del/la processo/sessione
+    \item \textbf{Flusso Principale}: Viene mostrato a video il nome del canale di terminazione del/la processo/sessione
+    \item \textbf{Flusso Alternativo}: Non viene mostrato a video il nome del canale di terminazione del/la processo/sessione in quanto il/la processo/sessione non è ancora terminato/a.
+\end{itemize}
+
+\subsubsection{UC-11.7 - Visualizza stato di un processo/sessione (D.V.)}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza lo stato del/la processo/sessione
+    \item \textbf{Flusso Principale}: Viene mostrato a video lo stato del/la processo/sessione
+\end{itemize}
+
+\subsubsection{UC-12 - Visualizza Informazioni sulla Sessione di Versamento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato il programma
+        \item L'utente sta visualizzando i dettagli di un processo di conservazione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza i dettagli della sessione di versamento, quali: data inizio, data fine, UUID utente attivatore, UUID utente terminatore, nome canale di attivazione, nome canale di terminazione, stato del processo
+    \item \textbf{Flusso Principale}: Vengono mostrati a video, relativamente alla sessione di versamento del processo selezionato:
+    \begin{itemize}
+        \item Data inizio (UC11.1)
+        \item Data fine (UC11.2)
+        \item UUID utente attivatore (UC11.3)
+        \item UUID utente terminatore (UC11.4)
+        \item Nome canale di attivazione (UC11.5)
+        \item Nome canale di terminazione (UC11.6)
+        \item Stato del processo (UC11.7)
+    \end{itemize}
+    \item \textbf{Inclusioni}: UC11.1, UC11.2, UC11.3, UC11.4, UC11.5, UC11.6, UC11.7
+\end{itemize}
+
+\subsubsection{UC-13 - Visualizza Informazioni sulla Sessione di Conservazione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato il programma
+        \item L'utente sta visualizzando i dettagli di un processo di conservazione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza i dettagli della sessione di conservazione, quali: data inizio, data fine, UUID utente attivatore, UUID utente terminatore, nome canale di attivazione, nome canale di terminazione, stato del processo
+    \item \textbf{Flusso Principale}: Vengono mostrati a video, relativamente alla sessione di conservazione del processo selezionato:
+    \begin{itemize}
+        \item Data inizio (UC11.1)
+        \item Data fine (UC11.2)
+        \item UUID utente attivatore (UC11.3)
+        \item UUID utente terminatore (UC11.4)
+        \item Nome canale di attivazione (UC11.5)
+        \item Nome canale di terminazione (UC11.6)
+        \item Stato del processo (UC11.7)
+    \end{itemize}
+    \item \textbf{Inclusioni}: UC11.1, UC11.2, UC11.3, UC11.4, UC11.5, UC11.6, UC11.7
+\end{itemize}
