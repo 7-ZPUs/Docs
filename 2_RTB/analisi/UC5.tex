@@ -1,0 +1,376 @@
+
+\subsubsection{UC-5 - Verifica Integrità DIP Completo}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: L’Utente si trova nella vista principale del DIP.
+    \item \textbf{Postcondizioni}: 
+        \begin{enumerate}
+            \item Il sistema compone il report di integrità dell'intero DIP
+            \item Stato di verifica DIP aggiornato (Non Verificato / Valido / Non Valido).
+        \end{enumerate}      
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item L’utente selezione “Verifica Integrità dell’intero DIP”
+            \item Il sistema verifica il DIP completo
+            \item Il sistema aggiorna lo stato della verifica del DIP.
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-5.1 - Verifica Integrità Classe Documentale}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: L’Utente ha selezionato una classe documentale.
+    \item \textbf{Postcondizioni}: 
+        \begin{enumerate}
+            \item Il sistema compone il Report di integrità classe documentale
+            \item Stato di verifica classe aggiornato (Non Verificato / Valido / Non Valido).
+        \end{enumerate}      
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item L’utente seleziona “Verifica Integrità” sulla classe documentale
+            \item Il sistema verifica la classe documentale
+            \item Il sistema aggiorna lo stato della verifica della classe documentale.
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-5.2 - Verifica Integrità Processo}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: L’Utente ha selezionato un processo.
+    \item \textbf{Postcondizioni}: 
+        \begin{enumerate}
+            \item Il sistema compone il report di integrità processo
+            \item Stato di verifica processo aggiornato (Non Verificato / Valido / Non Valido).
+        \end{enumerate}      
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item L’utente selezione “Verifica Integrità” sul processo
+            \item Il sistema verifica il processo
+            \item Il sistema aggiorna lo stato della verifica del processo.
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-5.3 - Verifica Integrità Documento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: L’Utente ha selezionato un documento.
+    \item \textbf{Postcondizioni}: 
+        \begin{enumerate}
+            \item Il sistema compone il report di integrità documento
+            \item Stato di verifica documento aggiornato (Non Verificato / Valido / Non Valido).
+        \end{enumerate}      
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item L’utente selezione “Verifica Integrità” sul documento
+            \item Il sistema esegue la verifica del documento
+            \item Il sistema aggiorna lo stato della verifica del documento.
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6 - Visualizzazione Report Integrità DIP Completo}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: È stata completata una verifica di integrità del DIP completo.
+    \item \textbf{Postcondizioni}: Il report dettagliato del DIP viene visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item L'utente visualizza il report della verifica del DIP completo
+            \item L'utente visualizza un pannello con le informazioni aggregate del DIP.
+        \end{enumerate}
+    \item \textbf{Inclusioni}: 
+        \begin{itemize}
+            \item UC-6.0.1 - Visualizzazione Numero Classi Verificate
+            \item UC-6.0.2 - Visualizzazione Numero Classi Integre
+            \item UC-6.0.3 - Visualizzazione Numero Classi Corrotte
+            \item UC-6.0.4 - Visualizzazione Lista Classi Corrotte
+            \item UC-6.0.5 - Visualizzazione Data e Ora Verifica DIP.
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{UC-6.0.1 - Visualizzazione Numero Classi Verificate}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: È stato generato un report di verifica del DIP completo.
+    \item \textbf{Postcondizioni}: Numero totale di classi verificate visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema conta tutte le classi documentali sottoposte a verifica
+            \item Il sistema mostra il conteggio con l'etichetta "Classi verificate: [N]".
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.0.2 - Visualizzazione Numero Classi Integre}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: È stato generato un report di verifica del DIP completo.
+    \item \textbf{Postcondizioni}: Numero di classi integre visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema conta le classi con stato "Valido"
+            \item Il sistema mostra il conteggio con l'etichetta "Classi integre: [N]" in colore verde.
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.0.3 - Visualizzazione Numero Classi Corrotte}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: È stato generato un report di verifica del DIP completo.
+    \item \textbf{Postcondizioni}: Numero di classi corrotte visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema conta le classi con stato "Non Valido"
+            \item Il sistema mostra il conteggio con l'etichetta "Classi corrotte: [N]" in colore rosso.
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.0.4 - Visualizzazione Lista Classi Corrotte}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: 
+        \begin{enumerate}
+            \item È stato generato un report di verifica del DIP
+            \item Esistono classi corrotte (numero classi corrotte > 0).
+        \end{enumerate}
+    \item \textbf{Postcondizioni}: Lista completa delle classi corrotte visualizzata.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema recupera l'elenco di tutte le classi con stato "Non Valido"
+            \item Per ogni classe corrotta il sistema mostra il nome della classe e il numero di processi corrotti nella classe.
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.0.5 - Visualizzazione Data e Ora Verifica DIP}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: È stato generato un report di verifica del DIP.
+    \item \textbf{Postcondizioni}: Timestamp della verifica visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema recupera la data e ora di inizio della verifica del DIP
+            \item Il sistema mostra il timestamp nel formato "GG/MM/AAAA HH:MM:SS".
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.1.1 - Visualizzazione Numero Processi Verificati}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: È stato generato un report di verifica della classe.
+    \item \textbf{Postcondizioni}: Numero totale di processi verificati visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema conta tutti i processi della classe sottoposti a verifica
+            \item Il sistema mostra il conteggio con l'etichetta "Processi verificati: [N]".
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.1.2 - Visualizzazione Numero Processi Integri}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: È stato generato un report di verifica della classe.
+    \item \textbf{Postcondizioni}: Numero di processi integri visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema conta i processi con stato "Valido"
+            \item Il sistema mostra il conteggio con l'etichetta "Processi integri: [N]" in colore verde.
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.1.3 - Visualizzazione Numero Processi Corrotti}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: È stato generato un report di verifica della classe.
+    \item \textbf{Postcondizioni}: Numero di processi corrotti visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema conta i processi con stato "Non Valido"
+            \item Il sistema mostra il conteggio con l'etichetta "Processi corrotti: [N]" in colore rosso.
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.1.4 - Visualizzazione Lista Processi Corrotti}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: 
+        \begin{enumerate}
+            \item È stato generato un report di verifica della classe
+            \item Esistono processi corrotti (numero processi corrotti > 0).
+        \end{enumerate}    
+    \item \textbf{Postcondizioni}: Lista completa dei processi corrotti visualizzata.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema recupera l'elenco di tutti i processi con stato "Non Valido"
+            \item Per ogni processo corrotto, il sistema mostra il nome del processo e il numero dei documenti corrotti.
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.1.5 - Visualizzazione Data e Ora Verifica Classe}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: È stato generato un report di verifica della classe.  
+    \item \textbf{Postcondizioni}: Timestamp della verifica visualizzato.
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema recupera la data e ora di inizio della verifica della classe
+            \item Il sistema mostra il timestamp nel formato "GG/MM/AAAA HH:MM:SS".
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.2.1 - Visualizzazione Numero Documenti Verificati}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: È stato generato un report di verifica del processo.
+    \item \textbf{Postcondizioni}: Numero totale di documenti verificati visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema conta tutti i documenti del processo sottoposti a verifica
+            \item Il sistema mostra il conteggio con l'etichetta "Documenti verificati: [N]".
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.2.2 - Visualizzazione Numero Documenti Integri}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: È stato generato un report di verifica del processo.
+    \item \textbf{Postcondizioni}: Numero di documenti integri visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema conta i documenti con stato "Valido"
+            \item Il sistema mostra il conteggio con l'etichetta "Documenti integri: [N]" in colore verde.
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.2.3 - Visualizzazione Numero Documenti Corrotti}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: È stato generato un report di verifica del processo.
+    \item \textbf{Postcondizioni}: Numero di documenti corrotti visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema conta i documenti con stato "Non Valido"
+            \item Il sistema mostra il conteggio con l'etichetta "Documenti corrotti: [N]" in colore rosso.
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.2.4 - Visualizzazione Lista Documenti Corrotti}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: 
+        \begin{enumerate}
+            \item È stato generato un report di verifica del processo
+            \item Esistono documenti corrotti (numero documenti corrotti > 0).
+        \end{enumerate}    
+    \item \textbf{Postcondizioni}: Lista completa dei documenti corrotti visualizzata.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema recupera l'elenco di tutti i documenti con stato "Non Valido"
+            \item Per ogni documento corrotto, il sistema mostra il nome del documento e l'errore specifico.
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.2.5 - Visualizzazione Data e Ora Verifica Processo}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: È stato generato un report di verifica del processo.  
+    \item \textbf{Postcondizioni}: Timestamp della verifica visualizzato.
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema recupera la data e ora di inizio della verifica del processo
+            \item Il sistema mostra il timestamp nel formato "GG/MM/AAAA HH:MM:SS".
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.3.1 - Visualizzazione Nome Documento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: È stato generato un report di verifica del documento.
+    \item \textbf{Postcondizioni}: Nome documento visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra il nome del documento verificato.
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.3.2 - Visualizzazione Stato Verifica Documento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: È stato generato un report di verifica del documento.
+    \item \textbf{Postcondizioni}: Stato della verifica visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra lo stato della verifica.
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.3.3 - Visualizzazione Data e Ora Verifica Documento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: È stato generato un report di verifica del documento.
+    \item \textbf{Postcondizioni}: Timestamp della verifica visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema recupera la data e ora di inizio della verifica del documento
+            \item Il sistema mostra il timestamp nel formato "GG/MM/AAAA HH:MM:SS".
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-6.3.4 - Visualizzazione Dettagli Errore Documento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: 
+        \begin{enumerate}
+            \item È stato generato un report di verifica del documento
+            \item Il documento ha stato "Non Valido".
+        \end{enumerate}
+    \item \textbf{Postcondizioni}: Dettagli dell'errore visualizzati.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra la descrizione dell'errore (ad esempio: hash calcolato non coincide con hash associato al documento, firma digitale non valida o scaduta).
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-7 - Converti Report Verifica in PDF}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: Esiste un Report di verifica.
+    \item \textbf{Postcondizioni}: Il report visualizzato viene convertito in PDF.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item L'utente seleziona "Salva Report"
+            \item Il sistema converte il report corrente in formato PDF.
+        \end{enumerate}
+    \item \textbf{Flusso Alternativo}: La conversione non va a buon fine: viene visualizzato un messaggio di errore "Impossibile generare il PDF. Riprovare.".
+    \item \textbf{Inclusioni}: UC-8 - Scarica File
+    \item \textbf{Estensioni}: UC-7.1 - Errore generazione PDF
+\end{itemize}
+
+\subsubsection{UC-7.1 - Errore generazione PDF}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Precondizioni}: Una conversione PDF non è andata a buon fine.
+    \item \textbf{Postcondizioni}: L'utente visualizza un messaggio d’errore.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item L’utente ha provato a convertire un Report come PDF
+            \item La conversione non va a buon fine
+            \item L’utente visualizza un messaggio d’errore.
+        \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-8 - Scarica File}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: L’utente ha selezionato un file (documento o report).
+    \item \textbf{Postcondizioni}: L'utente ha scaricato il File nella cartella selezionata.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema apre un dialogo di selezione cartella
+            \item L'utente seleziona la cartella di destinazione
+            \item Il sistema salva il File nella cartella selezionata
+            \item Il sistema conferma il salvataggio con un messaggio "File salvato con successo in [percorso]".
+        \end{enumerate}
+    \item \textbf{Flusso Alternativo}: 
+        \begin{enumerate}
+            \item L'utente tenta di salvare il documento nella cartella del DIP: il sistema blocca l'operazione e mostra il messaggio "Impossibile salvare nel DIP. Selezionare un'altra cartella per preservare l'integrità del DIP.".
+            \item L'utente annulla l'operazione: il sistema chiude il dialogo senza salvare.
+        \end{enumerate}
+\end{itemize}
