@@ -1,0 +1,910 @@
+\subsubsection{UC-2 Ricerca nel DIP}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}:
+            \begin{itemize}
+                  \item L'utente ha avviato l'applicazione
+            \end{itemize}
+      \item \textbf{Postcondizioni}:
+            \begin{itemize}
+                  \item Vengono prodotti i risultati di ricerca
+            \end{itemize}
+\end{itemize}
+
+\subsubsection{UC-2a Ricerca nel DIP con filtri}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}:
+            \begin{itemize}
+                  \item L'utente ha avviato l'applicazione
+            \end{itemize}
+      \item \textbf{Postcondizioni}:
+            \begin{itemize}
+                  \item Vengono prodotti i risultati di ricerca
+            \end{itemize}
+      \item \textbf{Flusso Principale}:
+            \begin{itemize}
+                  \item L'utente aggiunge filtri come parametri per la ricerca([UC-3])
+                  \item Validazione dei campi (UC-??)
+            \end{itemize}
+      \item \textbf{Flusso alternativo}:
+\end{itemize}
+
+\subsubsection{UC-2b Ricerca nel DIP semantica}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{itemize}
+        \item L'utente ha avviato l'applicazione
+    \end{itemize}
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Vengono prodotti i risultati di ricerca per la stringa di query specificata
+    \end{itemize}
+    \item \textbf{Flusso principale}:
+    \begin{itemize}
+        \item L'utente specifica la query di ricerca (UC-?)
+        \item Il sistema produce i risultati di ricerca per la query specificata
+    \end{itemize}
+    \item \textbf{Flusso alternativo}:
+    \begin{itemize}
+        \item I documenti non sono stati indicizzati dall'engine semantico
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{UC-* Imposta precisione di ricerca semantica}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{itemize}
+        \item L'utente ha avviato l'applicazione
+    \end{itemize}
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Viene impostato il valore di precisione per la ricerca semantica
+    \end{itemize}
+    \item \textbf{Flusso principale}:
+    \begin{itemize}
+        \item L'utente specifica il valore di precisione per la ricerca semantica tra:
+        \begin{itemize}
+            \item Basso
+            \item Medio
+            \item Alto
+        \end{itemize}
+        \item Il sistema applica il livello di precisione alla ricerca semantica.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{UC-2.1 - Ricercare Classe Documentale con filtri}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta visualizzando la lista delle Classi Documentali.
+      \item \textbf{Postcondizioni}: Viene visualizzato l'elenco delle Classi Documentali corrispondenti ai filtri applicati.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce i filtri per la ricerca secondo i metadati delle Classi
+                        Documentali.
+                  \item Il sistema mostra i risultati della ricerca (UC-2.4).
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati e il sistema informa l'Utente (UC-2.4.1).
+\end{itemize}
+
+\subsubsection{UC-2.2 - Ricercare Processo con filtri}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta visualizzando la lista dei Processi.
+      \item \textbf{Postcondizioni}: Viene visualizzato l'elenco dei Processi corrispondenti ai filtri applicati.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce i filtri per la ricerca secondo i metadati dei Processi.
+                  \item Il sistema mostra i risultati della ricerca (UC-2.4).
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati e il sistema informa l'Utente (UC-2.4.1).
+\end{itemize}
+
+\subsubsection{UC-3 Aggiunta filtri per Ricerca Documento}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente imposta uno o più filtri per la ricerca tra campi comuni (UC-3.1)
+                  \item L'Utente imposta uno o più filtri per la ricerca tra campi specifici per tipo
+                        documentale (UC-3.2).
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-3.1 - Aggiunta filtri Comuni}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente seleziona uno o più campi comuni su cui basare la ricerca (da UC-3.1.1
+                        a UC-3.1.5).
+                  \item L'Utente compila i valori per i campi selezionati.
+                  \item Validazione del formato per i campi che lo richiedano ()
+                  \item Il sistema utilizza questi parametri per la ricerca.
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-3.1.1 - Aggiunta filtro Chiave Descrittiva}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente compila i valori per:
+                        \begin{itemize}
+                              \item Chiave Descrittiva
+                              \item Oggetto
+                              \item Parole Chiave.
+                        \end{itemize}
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-3.1.2 - Aggiunta filtro Classificazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente compila i parametri di Classificazione tra:
+                        \begin{itemize}
+                              \item Indice di Classificazione
+                              \item Descrizione
+                              \item Piano di Fascicolo
+                        \end{itemize}
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-3.1.3 - Aggiunta filtro Tempo di Conservazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il valore numerico del il tempo di conservazione o seleziona
+                        "Perenne".
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-3.1.4 - Aggiunta filtro Note}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il testo della Nota.
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-3.1.5 - Aggiunta filtro tipo documento}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \item L'Utente ha avviato l'applicazione.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                    \item L'Utente sceglie il tipo di documento per l'aggiunta del filtro di soggetti tra: \begin{itemize}
+                        \item Documento Informatico
+                        \item Documento Amministrativo Informatico
+                        \item Aggregazione Documentale
+                    \end{itemize}.
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-3.1.6 - Aggiunta filtro soggetti}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha scelto un tipo di documento.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente sceglie uno o più tipi di soggetti in base al tipo di documento e ne specifica i campi.
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-3.1.6.1 - Aggiunta filtro soggetti per Documento Informatico}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha scelto come tipo di documento il Documento Informatico.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente sceglie il Ruolo e i sottocampi specifici tra:
+                        \begin{itemize}
+                              \item Assegnatario (AS)
+                              \item Autore (PF, PG, PAI valido solo nei flussi in entrata)
+                              \item Destinatario (PF, PG, PAI valido solo come mittente nei flussi in entrata, come
+                                    destinatario nei flussi in uscita, PAE valido solo come mittente nei flussi in
+                                    entrata, come destinatario nei flussi in uscita)
+                              \item Mittente (PF, PG, PAI valido solo come mittente nei flussi in entrata, come
+                                    destinatario nei flussi in uscita, PAE valido solo come mittente nei flussi in
+                                    entrata, come destinatario nei flussi in uscita)
+                              \item Operatore (PF)
+                              \item Produttore (SW)
+                              \item RGD (PF)
+                              \item RSP (PF)
+                              \item Soggetto che effettua la registrazione (PF, PG)
+                              \item Altro(PF, PG, PAI valido solo come mittente nei flussi in entrata, come
+                                    destinatario nei flussi in uscita, PAE valido solo come mittente nei flussi in
+                                    entrata, come destinatario nei flussi in uscita)
+                        \end{itemize}
+                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli (UC-3.3).
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-3.1.6.2 - Aggiunta filtro soggetti per Documento Amministrativo informatico}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha scelto come tipo di documento il Documento Amministrativo Informatico.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente sceglie il Ruolo e i sottocampi specifici tra:
+                        \begin{itemize}
+                              \item Amministrazione che effettua la registrazione (PAI)
+                              \item Assegnatario (AS)
+                              \item Autore (PF, PG valido nei flussi di entrata, PAI, PAE valido nel flussi in entrata)
+                              \item Destinatario (PF, PG, PAI, PAE)
+                              \item Mittente (PF, PG, PAI, PAE)
+                              \item Operatore (PF)
+                              \item Produttore (SW)
+                              \item RGD (PF)
+                              \item RSP (PF)
+                              \item RUP (RUP)
+                        \end{itemize}
+                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli (UC-3.3).
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-3.1.6.3 - Aggiunta filtro soggetti per Aggregazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha scelto come tipo di documento l'Aggregazione Documentale.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente sceglie il Ruolo e i sottocampi specifici tra:
+                        \begin{itemize}
+                              \item Amministrazione titolare (PAI).
+                              \item Amministrazioni partecipanti (PAI o PAE).
+                              \item Assegnatario (AS).
+                              \item Soggetto intestatario persona fisica (PF).
+                              \item Soggetto intestatario persona giuridica (PG, PAI o PAE).
+                              \item RUP.
+                        \end{itemize}
+                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli (UC-3.3).
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-3.2 - Aggiunta filtri per Tipo Documentale}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha scelto un tipo di documento.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente può aggiungere i filtri specifici per il tipo selezionato (descritto
+                        negli UC da 3.2.1 a 3.2.3).
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-3.2.1 - Aggiunta filtri per Documento Informatico e Amministrativo Informatico}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente può aggiungere i filtri specifici per il tipo Documento Informatico e
+                        Amministrativo Informatico (descritto negli UC da 3.2.1.1 a 3.2.1.10).
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.1.1 - Aggiunta filtro Dati di Registrazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente sceglie la Tipologia di Flusso tra: \begin{itemize}
+                              \item Uscita
+                              \item Entrata
+                              \item Interno.
+                        \end{itemize}
+                  \item L'Utente sceglie il Tipo di Registro tra: \begin{itemize}
+                              \item Nessuno,
+                              \item Protocollo Ordinario/Protocollo di Emergenza
+                              \item Repertorio/Registro.
+                        \end{itemize}
+                  \item L'Utente inserisce la Data/Ora di Registrazione (nel caso di un documento
+                        protocollato tali parametri fanno riferimento alla protocollazione).
+                  \item L'Utente inserisce il codice identificativo del Registro.
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.1.2 - Aggiunta filtro Tipologia Documentale}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il nome della Tipologia Documentale (fatture, delibere,
+                        determine).
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.1.3 - Aggiunta filtro Modalità di Formazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente sceglie la Modalità di Formazione tra:
+                        \begin{itemize}
+                              \item Creazione di un documento informatico ex novo
+                              \item Acquisizione di un documento informatico da altro documento informatico o da
+                                    supporto informatico
+                              \item Memorizzazione su supporto informatico in formato digitale
+                              \item Generazione o raggruppamento in forma statica
+                        \end{itemize}
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.1.4 - Aggiunta filtro campo Riservato}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente sceglie se il file è Riservato o meno.
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.1.5 - Aggiunta filtro Identificativo di Formato}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente sceglie la Tipologia di Formato all'interno di quelli Previsti dalle
+                        linee Guida (.pdf, .xml, .docx, ecc.).
+                  \item L'Utente inserisce il Nome del Prodotto utilizzato per la creazione del
+                        Documento.
+                  \item L'Utente inserisce il numero della Versione del Prodotto utilizzato per la
+                        creazione del Documento
+                  \item L'Utente inserisce il nome il Produttore del Prodotto utilizzato per la
+                        creazione del Documento.
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.1.6 - Aggiunta filtro Dati di Verifica}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente sceglie se il file è Firmato Digitalmente o meno.
+                  \item L'Utente sceglie se il file è Sigillato Elettronicamente o meno.
+                  \item L'Utente sceglie se il file ha una Marcatura Temporale o meno.
+                  \item L'Utente sceglie se vi è conformità copie immagine su supporto informatico o
+                        meno.
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.1.7 - Aggiunta filtro Nome del Documento}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il Nome del Documento.
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.1.8 - Aggiunta filtro Versione del Documento}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha selezionato "Documento Informatico" o "Documento Amministrativo Informatico".
+      \item \textbf{Postcondizioni}: I risultati sono filtrati per Versione del Documento.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il numero la Versione del Documento.
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.1.9 - Aggiunta filtro Identificativo del Documento Primario}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce l'Identificativo del Documento Primario.
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.1.10 - Aggiunta filtro Tracciature Modifiche di Documento}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente sceglie il Tipo di modifica tra:
+                        \begin{itemize}
+                              \item Annullamento
+                              \item Registrazione
+                              \item Integrazione
+                              \item Annotazione
+                        \end{itemize}.
+                  \item L'Utente sceglie il Soggetto che ha effettuato la modifica.
+                  \item L'Utente inserisce la Data/Ora della Modifica.
+                  \item L'Utente inserisce l'identificativo documento versione precedente.
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-3.2.2 - Aggiunta filtri per Aggregazione Documentale Informatica}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente può aggiungere i filtri specifici per il tipo Aggregazione (descritto negli UC da 3.2.2.1 a 3.2.2.10).
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.2.1 - Aggiunta filtro Tipo di Aggregazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente sceglie tra:\begin{itemize}
+                              \item Fascicolo,
+                              \item Serie Documentale,
+                              \item Serie di Fascicoli.
+                        \end{itemize}
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.2.2 - Aggiunta filtro Id dell'Aggregazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce l'Id dell'Aggregazione.
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.2.3 - Aggiunta filtro Tipologia di Fascicolo}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente sceglie tra: \begin{itemize}
+                              \item Affare,
+                              \item Attività,
+                              \item Persona Fisica,
+                              \item Persona Giuridica,
+                              \item  Procedimento Amministrativo.
+                        \end{itemize}
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.2.4 - Aggiunta filtro Id Aggregazione Primario}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce l'Id dell'Aggregazione "padre".
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.2.5 - Aggiunta filtro Data Apertura}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce la Data di Apertura.
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.2.6 - Aggiunta filtro Data Chiusura}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce la Data di Chiusura.
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.2.7 - Aggiunta filtro Procedimento Amministrativo}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce la Materia, Argomento e Struttura per i procedimenti.
+                  \item L'Utente inserisce il Procedimento come denominazione.
+                  \item L'Utente inserisce il Catalogo dei Procedimenti come URI di pubblicazione del
+                        catalogo.
+                  \item  L'Utente può aggiungere una o più Fasi come filtro (UC-2.3.2.4.8.1).
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.2.7.1 - Aggiunta filtro Fasi del Procedimento Amministrativo}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{enumerate}
+                  \item L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
+                  \item L'Utente ha aggiunto un Procedimento come parametro per la ricerca.
+            \end{enumerate}
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente aggiunge un filtro per "Fase".
+                  \item L'Utente inserisce i dati della fase:
+                        \begin{itemize}
+                              \item Tipo Fase (Preparatoria, Istruttoria, Consultiva, Decisoria o deliberativa,
+                                    Integrazione dell'efficacia).
+                              \item Data di inizio.
+                              \item Data di fine.
+                        \end{itemize}
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.2.8 - Aggiunta filtro Assegnazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha scelto come tipo di documento l'Aggregazione Documentale.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente aggiunge uno o più filtri per "Assegnazione".
+                  \item L'Utente inserisce i dati:
+                        \begin{itemize}
+                              \item Tipo Assegnazione.
+                              \item Soggetto Assegnatario (UC-2.3.1.2).
+                              \item Data di Inizio.
+                              \item Data di Fine.
+                        \end{itemize}
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.2.2.9 - Aggiunta filtro Progressivo}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha scelto come tipo di documento l'Aggregazione Documentale.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il numero Progressivo dell'Aggregazione.
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.3 - Aggiunta dettagli per il ruolo di un soggetto}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha scelto un ruolo come campo di ricerca.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce i dettagli del ruolo.
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.3.1 - Ricerca per Dettagli Ruolo= PAI}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo PAI.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce i valori per i campi:
+                        \begin{itemize}
+                              \item Denominazione Amministrazione/ Codice IPA
+                              \item Denominazione Amministrazione AOO/ Codice IPA AOO
+                              \item Denominazione Amministrazione UOR/ Codice IPA UOR
+                              \item Indirizzi Digitali di Riferimento
+                        \end{itemize}
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.3.2 - Ricerca per Dettagli Ruolo= PAE}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo PAE.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce i valori per i campi:
+                        \begin{itemize}
+                              \item Denominazione Amministrazione
+                              \item Denominazione Ufficio
+                              \item Indirizzi Digitali di Riferimento
+                        \end{itemize}
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.3.3 - Ricerca per Dettagli Ruolo= AS}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo AS.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce i valori per i campi:
+                        \begin{itemize}
+                              \item Cognome
+                              \item Nome
+                              \item Codice Fiscale
+                              \item Denominazione Amministrazione/ Codice IPA
+                              \item Denominazione Amministrazione AOO/ Codice IPA AOO
+                              \item Denominazione Amministrazione UOR/ Codice IPA UOR
+                              \item Indirizzi Digitali di Riferimento
+                        \end{itemize}
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.3.4 - Ricerca per Dettagli Ruolo= PG}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo PG.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce i valori per i campi:
+                        \begin{itemize}
+                              \item Denominazione Organizzazione
+                              \item Codice fiscale / Partita Iva
+                              \item Denominazione Ufficio
+                              \item Indirizzi Digitali di Riferimento
+                        \end{itemize}
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.3.5 - Ricerca per Dettagli Ruolo= PF}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo PF.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item  L'Utente inserisce i valori per i campi:
+                        \begin{itemize}
+                              \item Cognome
+                              \item Nome
+                              \item Indirizzi Digitali di Riferimento
+                        \end{itemize}
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.3.6 - Ricerca per Dettagli Ruolo= RUP}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo RUP.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce i valori per i campi:
+                        \begin{itemize}
+                              \item Cognome
+                              \item Nome
+                              \item Denominazione Amministrazione/ Codice IPA
+                              \item Denominazione Amministrazione AOO/Denominazione Amministrazione UOR
+                              \item  Codice IPA AOO/Codice IPA UOR
+                              \item Indirizzi Digitali di Riferimento
+                        \end{itemize}
+            \end{enumerate}
+\end{itemize}
+
+\paragraph{UC-3.3.7 - Ricerca per Dettagli Ruolo= SW}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo SW.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce la Denominazione Sistema
+                  \item Il sistema usa questi valori per filtrare la ricerca.
+            \end{enumerate}
+\end{itemize}
+
+\subsubsection{UC-3.4 - Ricerca per Campi custom}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize} \item L'Utente ha avviato l'applicazione.
+      \item Sono presenti custom metadata descritti nei file schemas.
+      \end{itemize}
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente per ogni metadato custom, inserisce il valore per cui ricerca.
+                  \item Il sistema usa questi valori per filtrare la ricerca.
+            \end{enumerate}
+      \item \textbf{Nota}: Per costruzione aziendale i custom metadata sono tutti stringhe e quindi l'inserimento e la validazione seguono le regole dei campi di testo liberi.
+\end{itemize}
+
+\subsubsection{UC-4 - Visualizzazione Risultati di Ricerca} \label{risultatiRicerca}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha eseguito una ricerca (tramite UC-2a, UC-2b).
+      \item \textbf{Postcondizioni}: I risultati della ricerca sono presentati all'Utente come lista di elementi.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente visualizza un elenco di documenti o aggregazioni che corrispondono
+                        ai criteri di ricerca.
+                  \item Per ogni elemento, vengono mostrate le informazioni principali (Nome, Data,
+                        Tipo).
+                  \item L'Utente può visualizzare ulteriori informazioni e funzioni selezionando uno dei documenti (UC-1.4)
+            \end{enumerate}
+      \item \textbf{Flussi Alternativi}:
+            \begin{itemize}
+                  \item Il sistema comunica che la ricerca non ha prodotto alcun risultato
+                        (\ref{nessunRisultato})
+            \end{itemize}
+\end{itemize}
+
+\subsubsection{UC-4.1 - Nessun Risultato} \label{nessunRisultato}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: L'Utente ha eseguito una ricerca (tramite UC-2).
+      \item \textbf{Postcondizioni}: Il sistema informa l'Utente che non sono stati trovati risultati.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item Il sistema visualizza un messaggio che indica che la ricerca non ha prodotto
+                        alcun risultato.
+                  \item Viene mostrato l'insieme dei filtri che erano stati applicati, in modo da
+                        permettere all'Utente di comprendere eventuali errori di inserimento o
+                        incoerenze.
+                  \item L'Utente può scegliere di modificare i criteri di ricerca e riprovare.
+            \end{enumerate}
+\end{itemize}
+
+
+
+
+
+\subsubsection{UC- - Validazione campi}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Sistema
+      \item \textbf{Precondizioni}: L'Utente ha compilato dei campi che richiedono un controllo di validità.
+      \item \textbf{Postcondizioni}: Il campo considerato valido viene aggiunto ai parametri di ricerca.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item Il sistema valida i campi che necessitano di controlli (UC-)
+                  \item Se rispettano le convenzioni il filtro viene aggiunto ai parametri di ricerca.
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item Il sistema identifica dei problemi con i valori inseriti per i campi.
+                  \item Il sistema segnala il problema e richiede la correzione da parte dell'Utente, non inserendo il campo considerato tra i parametri di ricerca (UC-)
+            \end{itemize}
+\end{itemize}
+
+\subsubsection{UC- - Validazione campi di testo libero}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Sistema
+      \item \textbf{Precondizioni}: L'Utente ha compilato dei campi di testo libero che richiedono un controllo di validità.
+      \item \textbf{Postcondizioni}: Il campo considerato valido viene aggiunto ai parametri di ricerca.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item Il sistema controlla la presenza di tentativi di Code Injection e Sql Injection.
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item Il sistema identifica dei problemi con i valori inseriti per i campi.
+                  \item Il sistema segnala il problema e richiede la correzione da parte dell'Utente, non inserendo il campo considerato tra i parametri di ricerca (UC-)
+            \end{itemize}
+\end{itemize}
+
+
+\subsubsection{UC- - Validazione campi di identificativi IPA}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Sistema
+      \item \textbf{Precondizioni}: L'Utente ha compilato dei campi di codici identificativi che richiedono un controllo di validità.
+      \item \textbf{Postcondizioni}: Il campo considerato valido viene aggiunto ai parametri di ricerca.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item Il sistema controlla che il codice rispetti il formato standard di 6 Cifre per Codici IPA
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item Il sistema identifica dei problemi con i valori inseriti per i campi.
+                  \item Il sistema segnala il problema e richiede la correzione da parte dell'Utente, non inserendo il campo considerato tra i parametri di ricerca (UC-)
+            \end{itemize}
+\end{itemize}
+
+\subsubsection{UC- - Validazione campi di codici fiscali}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Sistema
+      \item \textbf{Precondizioni}: L'Utente ha compilato dei campi di codici identificativi che richiedono un controllo di validità.
+      \item \textbf{Postcondizioni}: Il campo considerato valido viene aggiunto ai parametri di ricerca.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item Il sistema controlla che il codice rispetti il formato standard per il tipo di codice fiscale:
+                        \begin{verbatim}^[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z]$\end{verbatim}
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item Il sistema identifica dei problemi con i valori inseriti per i campi.
+                  \item Il sistema segnala il problema e richiede la correzione da parte dell'Utente, non inserendo il campo considerato tra i parametri di ricerca (UC-)
+            \end{itemize}
+\end{itemize}
+
+\subsubsection{UC- - Validazione campi di soggetti}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Sistema
+      \item \textbf{Precondizioni}: L'Utente ha compilato dei campi di testo libero che richiedono un controllo di validità.
+      \item \textbf{Postcondizioni}: Il campo considerato valido viene aggiunto ai parametri di ricerca.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item Il sistema controlla che non vengano inseriti più soggetti con lo stesso ruolo (da chiedere a sm)
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item Il sistema identifica dei problemi con i valori inseriti per i campi.
+                  \item Il sistema segnala il problema e richiede la correzione da parte dell'Utente, non inserendo il campo considerato tra i parametri di ricerca (UC-)
+            \end{itemize}
+\end{itemize}
+
+\subsubsection{UC- - Validazione campi di email}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Sistema
+      \item \textbf{Precondizioni}: L'Utente ha compilato dei campi di testo libero che richiedono un controllo di validità.
+      \item \textbf{Postcondizioni}: Il campo considerato valido viene aggiunto ai parametri di ricerca.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item Il sistema controlla che il formato mail sia valido \begin{verbatim} /^[\w\-\.]*[\w\.]\@[\w\.]*[\w\-\.]+[\w\-]+[\w]\.+[\w]+[\w $]/ \end{verbatim}
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item Il sistema identifica dei problemi con i valori inseriti per i campi.
+                  \item Il sistema segnala il problema e richiede la correzione da parte dell'Utente, non inserendo il campo considerato tra i parametri di ricerca (UC-)
+            \end{itemize}
+\end{itemize}
+
+\subsubsection{UC- - Validazione campi di partita IVA}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Sistema
+      \item \textbf{Precondizioni}: L'Utente ha compilato dei campi di testo libero che richiedono un controllo di validità.
+      \item \textbf{Postcondizioni}: Il campo considerato valido viene aggiunto ai parametri di ricerca.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item Il sistema controlla che il formato delle partite IVA sia valido (\begin{verbatim}/^([1-7]\d{10})$/\end{verbatim})
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item Il sistema identifica dei problemi con i valori inseriti per i campi.
+                  \item Il sistema segnala il problema e richiede la correzione da parte dell'Utente, non inserendo il campo considerato tra i parametri di ricerca (UC-)
+            \end{itemize}
+\end{itemize}
