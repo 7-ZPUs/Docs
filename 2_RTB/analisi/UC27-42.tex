@@ -1,0 +1,498 @@
+\usecase{visualizzaInformazioniIdentificativoFormato}{Visualizza informazioni del identificativo di formato}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento di tipo: "informatico" o "amministrativo informatico"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza i dati sul formato e il software che ha generato il documento
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza il tipo di formato del documento tra quelli indicati nelle Linee guida AGID
+        \item Il sistema visualizza le informazioni identificative del prodotto software, quali:
+        \begin{itemize}
+            \item Nome del prodotto
+            \item Versione del prodottotem
+            \item Produttore
+        \end{itemize}
+    \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaInformazioniVerifica}{Visualizza informazioni di verifica}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento di tipo: "informatico" o "amministrativo informatico"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza le caratteristiche della verifica del documento
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza se è Firmato Digitalmente o meno
+        \item Il sistema visualizza se è Sigillato Elettronicamente o meno
+        \item Il sistema visualizza se è dotato di Marcatura Temporale o meno
+        \item Il sistema visualizza se vi è conformità alle copie immagine su supporto informatico
+    \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaVersioneDocumento}{Visualizza la versione del documento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento di tipo: "informatico" o "amministrativo informatico"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza la versione del documento
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza la versione del documento
+    \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaNomeDocumento}{Visualizza nome del documento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento di tipo: "informatico" o "amministrativo informatico"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza il nome del documento
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza il nome completo del documento
+    \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaInformazioniAllegati}{Visualizza informazioni sugli allegati}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento di tipo: "informatico" o "amministrativo informatico"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza le informazioni sugli allegati del documento
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza il numero di allegati
+        \item Il sistema visualizza le informazioni identificative degli allegati, se presenti, quali:
+        \begin{itemize}
+            \item Identificativo dell'allegato
+            \item Descrizione dell'allegato
+        \end{itemize}    \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaInformazioniModificheDocumento}{Visualizza informazioni sulle modifiche di un documento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento di tipo: "informatico" o "amministrativo informatico"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza le informazioni sulle modifiche del documento
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza per ogni modifica del documento:
+        \begin{itemize}
+                \item Tipo di modifica tra Annullamento, Rettifica, Integrgazione, Annotazione
+                \item Soggetto autore della modifica come definito UC-16
+                \item Data Ora della modifica
+                \item Identificativo del documento alla versione precedente alla modifica
+        \end{itemize} 
+           \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaTipoAggregazione}{Visualizza tipo di aggregazione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento, di tipo: "aggregazione documentale"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza il tipo di aggregazione dell'aggregazione selezionata
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza il tipo di aggregazione tra:
+        \begin{itemize}
+                \item Fascicolo
+                \item Serie Documentale
+                \item Serie di Fascicoli
+        \end{itemize} 
+           \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaIdentificativoAggregazione}{Visualizza identificativo di aggregazione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento, di tipo: "aggregazione documentale"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza l'identificativo di aggregazione dell'aggregazione selezionata
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza l'identificativo di aggregazione dell'aggregazione selezionata
+           \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaTipologiaFascicolo}{Visualizza tipologia di fascicolo}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento, di tipo: "aggregazione documentale di tipo fascicolo"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza il tipo di di fascicolo dell'aggregazione selezionata
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza il tipo di di fascicolo tra:
+        \begin{itemize}
+                \item affare
+                \item attività
+                \item persona fisica
+                \item presona giuridica
+                \item procedimento amministrativo
+        \end{itemize} 
+           \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaAssegnazioneAggregazione}{Visualizza assegnazione di aggregazione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento, di tipo: "aggregazione documentale informatica"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza le informazioni di assegnazione dell'aggregazione selezionata
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza le informazioni di assegnazione, quali:
+        \begin{itemize}
+            \item Tipo di assegnazione tra: Per competenza e Per conoscenza
+            \item Soggetto assegnatario come definito UC-16
+            \item Data Ora di inizio assegnazione
+            \item Data Ora di fine assegnazione
+        \end{itemize}
+           \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaDataAperturaAggregazione}{Visualizza data di apertura di aggregazione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento, di tipo: "aggregazione documentale informatica"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza la data di apertura dell'aggregazione selezionata
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza la data di apertura dell'aggregazione selezionata
+           \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaDataChiusuraAggregazione}{Visualizza data di chiusura di aggregazione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento, di tipo: "aggregazione documentale informatica"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza la data di chiusura dell'aggregazione selezionata
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza la data di chiusura dell'aggregazione selezionata
+           \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaProgressivoAggregazione}{Visualizza progressivo di aggregazione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento, di tipo: "aggregazione documentale informatica"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza il progressivo dell'aggregazione selezionata
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza il progressivo dell'aggregazione selezionata
+           \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaProcedimentoAmministrativoAggregazione}{Visualizza procedimento amministrativo di aggregazione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento, di tipo: "aggregazione documentale informatica"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza le informazioni del procedimento amministrativo dell'aggregazione selezionata
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza le informazioni del procedimento amministrativo, quali:
+        \begin{itemize}
+            \item Materia/Argomento/Struttura per la quale sono catalogati i procedimenti
+            \item Denominazione del procedimento
+            \item Catalogo dei procedimenti come URI di pubblicazione
+            \item Fasi del procedimento amministrativo
+        \end{itemize}
+           \end{enumerate}
+\end{itemize}
+
+\subusecase{visualizzaFasiProcedimentoAmministrativo}{Visualizza fasi di un procedimento amministrativo}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento, di tipo: "aggregazione documentale informatica"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza le informazioni delle fasi di un procedimento amministrativo dell'aggregazione selezionata
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza le informazioni delle fasi di un procedimento, quali:
+        \begin{itemize}
+            \item Tipo di fase tra:
+            \begin{itemize}
+                \item Preparatoria
+                \item Istruttoria
+                \item Consultiva
+                \item  Decisoria o deliberativa
+                \item Integrazione dell'efficacia
+            \end{itemize}
+            \item Data Ora della fase
+            \item Data Ora della fase
+        \end{itemize}
+           \end{enumerate}
+\end{itemize}
+
+
+\usecase{visualizzaProgressivoAggregazione}{Visualizza progressivo di aggregazione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento, di tipo: "aggregazione documentale informatica"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza il progressivo dell'aggregazione selezionata
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza il progressivo dell'aggregazione selezionata
+           \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaIndiceDocumentiAggregazione}{Visualizza indice dei documenti di aggregazione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento, di tipo: "aggregazione documentale informatica"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza l'indice dei documenti dell'aggregazione selezionata
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza il tipo dei documenti contenuti dall'aggregazione selezionata
+        \item Il sistema visualizza l'identificativo dei documenti contenuti dall'aggregazione selezionata
+           \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaPosizioneFisicaAggregazione}{Visualizza posizione fisica di aggregazione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento, di tipo: "aggregazione documentale informatica"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza la posizione fisica dell'aggregazione selezionata
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza la posizione fisica dell'aggregazione selezionata
+           \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaIdentificativoAggregazionePrimaria}{Visualizza identificativo dell'aggregazione primaria di aggregazione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento, di tipo: "aggregazione documentale informatica"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza l'identificativo dell'aggregazione primaria dell'aggregazione selezionata
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza l'identificativo dell'aggregazione primaria dell'aggregazione selezionata
+           \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaTempoConservazioneAggregazione}{Visualizza tempo conservazione di aggregazione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento, di tipo: "aggregazione documentale informatica"
+    \end{enumerate}
+
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema visualizza il tempo di conservazione dell'aggregazione selezionata
+    \end{itemize}
+
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema visualizza il tempo di conservazione dell'aggregazione selezionata
+    \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaMetadatiCustomDocumento}{Visualizza metadati custom documento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento
+    \end{enumerate}
+    \item \textbf{Postcondizioni}:
+        \begin{itemize}
+            \item L'utente visualizza per ogni metadato custom relativo al documento selezionato, il nome e il valore del metadato custom
+        \end{itemize}
+    \item \textbf{Flusso principale}:
+        \begin{itemize}
+            \item Il sistema visualizza per ogni metadato custom, il suo valore come stringa (UC 42.1)
+        \end{itemize}
+    \item \textbf{Flusso alternativo}:
+        \begin{itemize}
+            \item Il documento selezionato non dispone di metadati custom
+        \end{itemize}
+\end{itemize}

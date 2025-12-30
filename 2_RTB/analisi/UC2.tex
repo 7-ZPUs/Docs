@@ -1,4 +1,4 @@
-\subsubsection{UC-2 Ricerca nel DIP}
+\usecase{ricercaDIP}{Ricerca nel DIP}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}:
@@ -11,7 +11,7 @@
             \end{itemize}
 \end{itemize}
 
-\subsubsection{UC-2a Ricerca nel DIP con filtri}
+\varusecase{ricercaDIPConFiltri}{Ricerca nel DIP con filtri}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}:
@@ -24,13 +24,13 @@
             \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{itemize}
-                  \item L'utente aggiunge filtri come parametri per la ricerca([UC-3])
-                  \item Validazione dei campi (UC-??)
+                  \item L'utente aggiunge filtri come parametri per la ricerca(UC-\ref{aggiuntaFiltriRicercaDocumento})
+                  \item Validazione dei campi (UC-\ref{validazioneCampi})
             \end{itemize}
       \item \textbf{Flusso alternativo}:
 \end{itemize}
 
-\subsubsection{UC-2b Ricerca nel DIP semantica}
+\varusecase{ricercaDIPSemantica}{Ricerca nel DIP semantica}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -52,7 +52,7 @@
     \end{itemize}
 \end{itemize}
 
-\subsubsection{UC-* Imposta precisione di ricerca semantica}
+\subusecase{PrecisioneSemantica}{Imposta precisione di ricerca semantica}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -84,9 +84,9 @@
             \begin{enumerate}
                   \item L'Utente inserisce i filtri per la ricerca secondo i metadati delle Classi
                         Documentali.
-                  \item Il sistema mostra i risultati della ricerca (UC-2.4).
+                  \item Il sistema mostra i risultati della ricerca (UC-\ref{visualizzaRisultati}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati e il sistema informa l'Utente (UC-2.4.1).
+      \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati e il sistema informa l'Utente (UC-\ref{nessunRisultato}).
 \end{itemize}
 
 \subsubsection{UC-2.2 - Ricercare Processo con filtri}
@@ -97,40 +97,41 @@
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce i filtri per la ricerca secondo i metadati dei Processi.
-                  \item Il sistema mostra i risultati della ricerca (UC-2.4).
+                  \item Il sistema mostra i risultati della ricerca (UC-\ref{visualizzaRisultati}).
             \end{enumerate}
-      \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati e il sistema informa l'Utente (UC-2.4.1).
+      \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati e il sistema informa l'Utente (UC-\ref{nessunRisultato}).
 \end{itemize}
 
-\subsubsection{UC-3 Aggiunta filtri per Ricerca Documento}
+\usecase{aggiuntaFiltriRicercaDocumento}{Aggiunta filtri per Ricerca Documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente imposta uno o più filtri per la ricerca tra campi comuni (UC-3.1)
+                  \item L'Utente imposta uno o più filtri per la ricerca tra campi comuni (UC-\ref{aggiuntaFiltriComuni})
                   \item L'Utente imposta uno o più filtri per la ricerca tra campi specifici per tipo
-                        documentale (UC-3.2).
+                        documentale (UC-\ref{addFiltriTipoDocumento}).
+                  \item L'Utente imposta uno o più filtri Custom (UC-\ref{addCustomMetadata}).
             \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-3.1 - Aggiunta filtri Comuni}
+\subusecase{aggiuntaFiltriComuni}{Aggiunta filtri Comuni}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente seleziona uno o più campi comuni su cui basare la ricerca (da UC-3.1.1
-                        a UC-3.1.5).
+                  \item L'Utente seleziona uno o più campi comuni su cui basare la ricerca (da UC-\ref{addChiaveDescrittiva}
+                        a UC-\ref{addSoggetti}).
                   \item L'Utente compila i valori per i campi selezionati.
-                  \item Validazione del formato per i campi che lo richiedano ()
+                  \item Validazione del formato per i campi che lo richiedano (UC-\ref{validazioneCampi}).
                   \item Il sistema utilizza questi parametri per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-3.1.1 - Aggiunta filtro Chiave Descrittiva}
+\subsubusecase{addChiaveDescrittiva}{Aggiunta filtro Chiave Descrittiva}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
@@ -146,7 +147,7 @@
             \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-3.1.2 - Aggiunta filtro Classificazione}
+\subsubusecase{addClassificazione}{Aggiunta filtro Classificazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
@@ -162,7 +163,7 @@
             \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-3.1.3 - Aggiunta filtro Tempo di Conservazione}
+\subsubusecase{addTempoConserva}{Aggiunta filtro Tempo di Conservazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
@@ -174,7 +175,7 @@
             \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-3.1.4 - Aggiunta filtro Note}
+\subsubusecase{addNote}{Aggiunta filtro Note}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
@@ -185,10 +186,10 @@
             \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-3.1.5 - Aggiunta filtro tipo documento}
+\subsubusecase{addTipoDocumento}{Aggiunta filtro tipo documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \item L'Utente ha avviato l'applicazione.
+      \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
@@ -200,7 +201,7 @@
             \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-3.1.6 - Aggiunta filtro soggetti}
+\subsubusecase{addSoggetti}{Aggiunta filtro soggetti}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto un tipo di documento.
@@ -211,7 +212,7 @@
             \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-3.1.6.1 - Aggiunta filtro soggetti per Documento Informatico}
+\deepusecase{addSoggettiDI}{Aggiunta filtro soggetti per Documento Informatico}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto come tipo di documento il Documento Informatico.
@@ -237,11 +238,11 @@
                                     destinatario nei flussi in uscita, PAE valido solo come mittente nei flussi in
                                     entrata, come destinatario nei flussi in uscita)
                         \end{itemize}
-                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli (UC-3.3).
+                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli (UC-\ref{addDettagliSoggetto}).
             \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-3.1.6.2 - Aggiunta filtro soggetti per Documento Amministrativo informatico}
+\deepusecase{addSoggettiDAI}{Aggiunta filtro soggetti per Documento Amministrativo informatico}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto come tipo di documento il Documento Amministrativo Informatico.
@@ -261,11 +262,11 @@
                               \item RSP (PF)
                               \item RUP (RUP)
                         \end{itemize}
-                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli (UC-3.3).
+                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli (UC-\ref{addDettagliSoggetto}).
             \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-3.1.6.3 - Aggiunta filtro soggetti per Aggregazione}
+\deepusecase{addSoggettiAgg}{Aggiunta filtro soggetti per Aggregazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto come tipo di documento l'Aggregazione Documentale.
@@ -281,11 +282,11 @@
                               \item Soggetto intestatario persona giuridica (PG, PAI o PAE).
                               \item RUP.
                         \end{itemize}
-                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli (UC-3.3).
+                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli (UC-\ref{addDettagliSoggetto}).
             \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-3.2 - Aggiunta filtri per Tipo Documentale}
+\subusecase{addFiltriTipoDocumento}{Aggiunta filtri per Tipo Documentale}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto un tipo di documento.
@@ -293,11 +294,11 @@
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente può aggiungere i filtri specifici per il tipo selezionato (descritto
-                        negli UC da 3.2.1 a 3.2.3).
+                        negli UC da \ref{aggiuntaFiltriDI-DAI} a \ref{aggiuntaFiltriAggregazione}).
             \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-3.2.1 - Aggiunta filtri per Documento Informatico e Amministrativo Informatico}
+\subsubusecase{aggiuntaFiltriDI-DAI}{Aggiunta filtri per Documento Informatico e Amministrativo Informatico}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
@@ -305,11 +306,11 @@
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente può aggiungere i filtri specifici per il tipo Documento Informatico e
-                        Amministrativo Informatico (descritto negli UC da 3.2.1.1 a 3.2.1.10).
+                        Amministrativo Informatico (descritto negli UC da \ref{addDatiRegistrazione} a \ref{addTracciatureModificheDocumento}).
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.1.1 - Aggiunta filtro Dati di Registrazione}
+\deepusecase{addDatiRegistrazione}{Aggiunta filtro Dati di Registrazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
@@ -332,7 +333,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.1.2 - Aggiunta filtro Tipologia Documentale}
+\deepusecase{addTipologiaDocumentale}{Aggiunta filtro Tipologia Documentale}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
@@ -344,7 +345,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.1.3 - Aggiunta filtro Modalità di Formazione}
+\deepusecase{addModalitaFormazione}{Aggiunta filtro Modalità di Formazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
@@ -362,7 +363,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.1.4 - Aggiunta filtro campo Riservato}
+\deepusecase{addRiservato}{Aggiunta filtro campo Riservato}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
@@ -373,7 +374,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.1.5 - Aggiunta filtro Identificativo di Formato}
+\deepusecase{addIdentificativoFormato}{Aggiunta filtro Identificativo di Formato}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
@@ -391,7 +392,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.1.6 - Aggiunta filtro Dati di Verifica}
+\deepusecase{addDatiVerifica}{Aggiunta filtro Dati di Verifica}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
@@ -406,7 +407,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.1.7 - Aggiunta filtro Nome del Documento}
+\deepusecase{addNomeDocumento}{Aggiunta filtro Nome del Documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
@@ -417,7 +418,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.1.8 - Aggiunta filtro Versione del Documento}
+\deepusecase{addVersioneDocumento}{Aggiunta filtro Versione del Documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha selezionato "Documento Informatico" o "Documento Amministrativo Informatico".
@@ -428,7 +429,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.1.9 - Aggiunta filtro Identificativo del Documento Primario}
+\deepusecase{addIdentificativoDocumentoPrimario}{Aggiunta filtro Identificativo del Documento Primario}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
@@ -439,7 +440,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.1.10 - Aggiunta filtro Tracciature Modifiche di Documento}
+\deepusecase{addTracciatureModificheDocumento}{Aggiunta filtro Tracciature Modifiche di Documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
@@ -452,25 +453,25 @@
                               \item Registrazione
                               \item Integrazione
                               \item Annotazione
-                        \end{itemize}.
+                        \end{itemize}
                   \item L'Utente sceglie il Soggetto che ha effettuato la modifica.
                   \item L'Utente inserisce la Data/Ora della Modifica.
                   \item L'Utente inserisce l'identificativo documento versione precedente.
             \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-3.2.2 - Aggiunta filtri per Aggregazione Documentale Informatica}
+\subsubusecase{aggiuntaFiltriAggregazione}{Aggiunta filtri per Aggregazione Documentale Informatica}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente può aggiungere i filtri specifici per il tipo Aggregazione (descritto negli UC da 3.2.2.1 a 3.2.2.10).
+                  \item L'Utente può aggiungere i filtri specifici per il tipo Aggregazione (descritto negli UC da \ref{addTipoAggregazione} a \ref{addProgressivo}).
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.2.1 - Aggiunta filtro Tipo di Aggregazione}
+\deepusecase{addTipoAggregazione}{Aggiunta filtro Tipo di Aggregazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
@@ -485,7 +486,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.2.2 - Aggiunta filtro Id dell'Aggregazione}
+\deepusecase{addIdAggregazione}{Aggiunta filtro Id dell'Aggregazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
@@ -496,7 +497,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.2.3 - Aggiunta filtro Tipologia di Fascicolo}
+\deepusecase{addTipologiaFascicolo}{Aggiunta filtro Tipologia di Fascicolo}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
@@ -513,7 +514,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.2.4 - Aggiunta filtro Id Aggregazione Primario}
+\deepusecase{addIdAggregazionePrimario}{Aggiunta filtro Id Aggregazione Primario}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
@@ -524,7 +525,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.2.5 - Aggiunta filtro Data Apertura}
+\deepusecase{addDataApertura}{Aggiunta filtro Data Apertura}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
@@ -535,7 +536,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.2.6 - Aggiunta filtro Data Chiusura}
+\deepusecase{addDataChiusura}{Aggiunta filtro Data Chiusura}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
@@ -546,7 +547,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.2.7 - Aggiunta filtro Procedimento Amministrativo}
+\deepusecase{addProcedimentoAmministrativo}{Aggiunta filtro Procedimento Amministrativo}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
@@ -557,11 +558,11 @@
                   \item L'Utente inserisce il Procedimento come denominazione.
                   \item L'Utente inserisce il Catalogo dei Procedimenti come URI di pubblicazione del
                         catalogo.
-                  \item  L'Utente può aggiungere una o più Fasi come filtro (UC-2.3.2.4.8.1).
+                  \item  L'Utente può aggiungere una o più Fasi come filtro (UC-\ref{addFasiProcedimentoAmministrativo}).
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.2.7.1 - Aggiunta filtro Fasi del Procedimento Amministrativo}
+\subdeepusecase{addFasiProcedimentoAmministrativo}{Aggiunta filtro Fasi del Procedimento Amministrativo}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{enumerate}
@@ -582,7 +583,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.2.8 - Aggiunta filtro Assegnazione}
+\deepusecase{addAssegnazione}{Aggiunta filtro Assegnazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto come tipo di documento l'Aggregazione Documentale.
@@ -593,14 +594,14 @@
                   \item L'Utente inserisce i dati:
                         \begin{itemize}
                               \item Tipo Assegnazione.
-                              \item Soggetto Assegnatario (UC-2.3.1.2).
+                              \item Soggetto Assegnatario (UC-\ref{addSoggetti}).
                               \item Data di Inizio.
                               \item Data di Fine.
                         \end{itemize}
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.2.2.9 - Aggiunta filtro Progressivo}
+\deepusecase{addProgressivo}{UC-3.2.2.9 - Aggiunta filtro Progressivo}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto come tipo di documento l'Aggregazione Documentale.
@@ -611,7 +612,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.3 - Aggiunta dettagli per il ruolo di un soggetto}
+\subusecase{addDettagliSoggetto}{Aggiunta dettagli per il ruolo di un soggetto}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto un ruolo come campo di ricerca.
@@ -622,7 +623,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.3.1 - Ricerca per Dettagli Ruolo= PAI}
+\subsubusecase{addDettagliPAI}{Aggiunta dettagli Ruolo= PAI}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo PAI.
@@ -639,7 +640,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.3.2 - Ricerca per Dettagli Ruolo= PAE}
+\subsubusecase{addDettagliPAE}{Aggiunta dettagli Ruolo= PAE}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo PAE.
@@ -655,7 +656,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.3.3 - Ricerca per Dettagli Ruolo= AS}
+\subsubusecase{addDettagliAS}{Aggiunta dettagli Ruolo= AS}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo AS.
@@ -675,7 +676,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.3.4 - Ricerca per Dettagli Ruolo= PG}
+\subsubusecase{addDettagliPG}{Aggiunta dettagli Ruolo= PG}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo PG.
@@ -692,7 +693,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.3.5 - Ricerca per Dettagli Ruolo= PF}
+\subsubusecase{addDettagliPF}{Aggiunta dettagli Ruolo= PF}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo PF.
@@ -708,7 +709,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.3.6 - Ricerca per Dettagli Ruolo= RUP}
+\subsubusecase{addDettagliRUP}{Aggiunta dettagli Ruolo= RUP}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo RUP.
@@ -727,7 +728,7 @@
             \end{enumerate}
 \end{itemize}
 
-\paragraph{UC-3.3.7 - Ricerca per Dettagli Ruolo= SW}
+\subsubusecase{addDettagliSW}{Aggiunta dettagli Ruolo= SW}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo SW.
@@ -739,7 +740,7 @@
             \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-3.4 - Ricerca per Campi custom}
+\subusecase{addCustomMetadata}{Aggiunta filtri per Custom Metadata}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize} \item L'Utente ha avviato l'applicazione.
@@ -754,10 +755,10 @@
       \item \textbf{Nota}: Per costruzione aziendale i custom metadata sono tutti stringhe e quindi l'inserimento e la validazione seguono le regole dei campi di testo liberi.
 \end{itemize}
 
-\subsubsection{UC-4 - Visualizzazione Risultati di Ricerca} \label{risultatiRicerca}
+\usecase{visualizzaRisultati}{Visualizzazione Risultati di Ricerca} \label{risultatiRicerca}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: L'Utente ha eseguito una ricerca (tramite UC-2a, UC-2b).
+      \item \textbf{Precondizioni}: L'Utente ha eseguito una ricerca (tramite UC-\ref{ricercaDIPConFiltri}, UC-\ref{ricercaDIPSemantica}).
       \item \textbf{Postcondizioni}: I risultati della ricerca sono presentati all'Utente come lista di elementi.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
@@ -765,7 +766,7 @@
                         ai criteri di ricerca.
                   \item Per ogni elemento, vengono mostrate le informazioni principali (Nome, Data,
                         Tipo).
-                  \item L'Utente può visualizzare ulteriori informazioni e funzioni selezionando uno dei documenti (UC-1.4)
+                  \item L'Utente può visualizzare ulteriori informazioni e funzioni selezionando uno dei documenti (UC-\ref{informazioniElemento})
             \end{enumerate}
       \item \textbf{Flussi Alternativi}:
             \begin{itemize}
@@ -774,7 +775,7 @@
             \end{itemize}
 \end{itemize}
 
-\subsubsection{UC-4.1 - Nessun Risultato} \label{nessunRisultato}
+\usecase{nessunRisultato}{Nessun Risultato}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha eseguito una ricerca (tramite UC-2).
@@ -794,7 +795,7 @@
 
 
 
-\subsubsection{UC- - Validazione campi}
+\usecase{validazioneCampi}{Validazione campi}
 \begin{itemize}
       \item \textbf{Attore Primario}: Sistema
       \item \textbf{Precondizioni}: L'Utente ha compilato dei campi che richiedono un controllo di validità.
@@ -811,7 +812,7 @@
             \end{itemize}
 \end{itemize}
 
-\subsubsection{UC- - Validazione campi di testo libero}
+\subusecase{validazioneTestoLibero}{Validazione campi di testo libero}
 \begin{itemize}
       \item \textbf{Attore Primario}: Sistema
       \item \textbf{Precondizioni}: L'Utente ha compilato dei campi di testo libero che richiedono un controllo di validità.
@@ -828,7 +829,7 @@
 \end{itemize}
 
 
-\subsubsection{UC- - Validazione campi di identificativi IPA}
+\subusecase{validazioneIdentificativiIPA}{Validazione campi di identificativi IPA}
 \begin{itemize}
       \item \textbf{Attore Primario}: Sistema
       \item \textbf{Precondizioni}: L'Utente ha compilato dei campi di codici identificativi che richiedono un controllo di validità.
@@ -844,7 +845,7 @@
             \end{itemize}
 \end{itemize}
 
-\subsubsection{UC- - Validazione campi di codici fiscali}
+\subusecase{validazioneCodiciFiscali}{Validazione campi di codici fiscali}
 \begin{itemize}
       \item \textbf{Attore Primario}: Sistema
       \item \textbf{Precondizioni}: L'Utente ha compilato dei campi di codici identificativi che richiedono un controllo di validità.
@@ -861,7 +862,7 @@
             \end{itemize}
 \end{itemize}
 
-\subsubsection{UC- - Validazione campi di soggetti}
+\subusecase{validazioneSoggetti}{Validazione campi di soggetti}
 \begin{itemize}
       \item \textbf{Attore Primario}: Sistema
       \item \textbf{Precondizioni}: L'Utente ha compilato dei campi di testo libero che richiedono un controllo di validità.
@@ -877,7 +878,7 @@
             \end{itemize}
 \end{itemize}
 
-\subsubsection{UC- - Validazione campi di email}
+\subusecase{validazioneEmail}{Validazione campi di email}
 \begin{itemize}
       \item \textbf{Attore Primario}: Sistema
       \item \textbf{Precondizioni}: L'Utente ha compilato dei campi di testo libero che richiedono un controllo di validità.
@@ -893,7 +894,7 @@
             \end{itemize}
 \end{itemize}
 
-\subsubsection{UC- - Validazione campi di partita IVA}
+\subusecase{validazionePartitaIVA}{Validazione campi di partita IVA}
 \begin{itemize}
       \item \textbf{Attore Primario}: Sistema
       \item \textbf{Precondizioni}: L'Utente ha compilato dei campi di testo libero che richiedono un controllo di validità.

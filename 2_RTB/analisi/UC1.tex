@@ -1,4 +1,4 @@
-\subsubsection{UC-1 - Visualizzazione Struttura DIP}
+\usecase{strutturaDIP}{Visualizzazione Struttura DIP}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L'Utente ha avviato il sistema DIP-Reader.
@@ -9,15 +9,15 @@
               \item L'Utente visualizza con la struttura organizzativa del DIP come un albero navigabile di
                      \textit{cartelle}. L'albero è organizzato gerarchicamente in:
                     \begin{itemize}
-                        \item Classi Documentali (UC-1.1)
-                        \item Processi (UC-1.2)
-                        \item Documenti (UC-1.3)
+                        \item Classi Documentali (UC-\ref{ classiDocumentali})
+                        \item Processi (UC-\ref{ processiClasseDocumentale})
+                        \item Documenti (UC-\ref{ documentiProcesso})
                     \end{itemize}
           \end{enumerate}
     \item \textbf{Flusso Alternativo}: Se il DIP è vuoto, il sistema visualizza una struttura vuota.
 \end{itemize}
 
-\subsubsection{UC-1.1 - Visualizzazione di tutte le classi documentali}
+\subusecase{classiDocumentali}{Visualizzazione di tutte le classi documentali}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L'Utente ha avviato il sistema DIP-Reader.
@@ -30,7 +30,7 @@
     \item \textbf{Flusso Alternativo}: Se non sono presenti Classi Documentali, il sistema mostra un elenco vuoto.
 \end{itemize}
 
-\subsubsection{UC-1.2 - Visualizzazione di tutti i processi di una classe documentale}
+\subusecase{processiClasseDocumentale}{Visualizzazione di tutti i processi di una classe documentale}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L'Utente ha selezionato una delle Classi Documentali del DIP.
@@ -41,7 +41,7 @@
     \item \textbf{Flusso Alternativo}: Se la classe documentale non contiene processi, il sistema mostra un elenco vuoto.
 \end{itemize}
 
-\subsubsection{UC-1.3 - Visualizzazione di tutti i documenti di un processo}
+\subusecase{documentiProcesso}{Visualizzazione di tutti i documenti di un processo}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L'Utente ha selezionato uno dei processi di una Classe Documentale.
@@ -54,13 +54,13 @@
     \item \textbf{Flusso Alternativo}: Se il processo non contiene documenti, il sistema mostra un elenco vuoto.
 \end{itemize}
 
-\subsubsection{UC-1.4 - Visualizzazione Informazioni di un elemento}
+\subusecase{informazioniElemento}{Visualizzazione Informazioni di un elemento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento del DIP.
     \item \textbf{Postcondizioni}: L'Utente visualizza i metadati e le azioni disponibili per l'elemento selezionato tra Documento, Processo, Classe Documentale e DIP.
     \item \textbf{Flusso Principale}:\begin{enumerate}
-              \item L'Utente seleziona una cartella (Classe Documentale o Processo) o un documento dalla struttura del DIP (UC-??!??)
+              \item L'Utente seleziona una cartella (Classe Documentale o Processo) o un documento dalla struttura del DIP (UC-\ref{ strutturaDIP}).
               \item Il sistema mostra i metadati associati, tra cui:
                     \begin{itemize}
                         \item Nome
@@ -77,16 +77,16 @@
               \item Se l'Utente seleziona un elemento non valido, il sistema non mostra alcuna informazione.
               \item L'Utente esegue un'azione sull'elemento selezionato:
                 \begin{itemize}
-                    \item Verifica l'integrità (UC-5)
-                    \item Stampa (UC-??)
-                    \item Salva in locale (UC-8)
-                    \item Visualizza l'anteprima (UC-1.5)
-                    \item Visualizza Informazioni sull'AIP (UC-12)
+                    \item Verifica l'integrità (UC-\ref{ verificaIntegritaDIPCompleto}, UC-\ref{ verificaIntegritaProcesso}, UC-\ref{ verificaIntegritaClasseDocumentale})
+                    \item Stampa (UC-\ref{ stampaSingoloDoc} e UC-\ref{ stampaInsiemeDoc})
+                    \item Salva in locale (UC-\ref{ scaricaFile} e UC-\ref{ salvaPiuDOcs})
+                    \item Visualizza l'anteprima (UC-\ref{ anteprimaDocumento})
+                    \item Visualizza Informazioni sull'AIP (UC-\ref{ visualizzaInfoAiP})
                 \end{itemize}
           \end{itemize}
 \end{itemize}
 
-\subsubsection{UC-1.5 - Visualizzazione Anteprima Documento}
+\subusecase{anteprimaDocumento}{Visualizzazione Anteprima Documento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L'Utente ha selezionato un documento dalla struttura del DIP.

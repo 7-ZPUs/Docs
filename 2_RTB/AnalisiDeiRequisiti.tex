@@ -59,6 +59,75 @@
 \titleformat{\paragraph}{\large\bfseries}{}{1em}{}
 \titleformat{\subparagraph}{\normalsize\bfseries}{}{1em}{}
 
+% --- INIZIO DEFINIZIONE CONTATORI UC ---
+
+% 1. Contatore Principale (es. UC-1)
+\newcounter{ucMain}
+\newcommand{\usecase}[2]{% #1=Label (opzionale), #2=Titolo
+    \refstepcounter{ucMain}%
+    \setcounter{ucSub}{0}% Reset sotto-contatori
+    \setcounter{ucVar}{0}%
+    \subsubsection*{UC-\theucMain\ - #2}%
+    \addcontentsline{toc}{subsubsection}{UC-\theucMain\ - #2}%
+    \ifx&#1&%
+    \else\label{#1}\fi%
+}
+
+% 2. Contatore Varianti (es. UC-2a, UC-2b)
+\newcounter{ucVar}[ucMain]
+\renewcommand{\theucVar}{\alph{ucVar}} % Usa lettere a, b, c...
+\newcommand{\varusecase}[2]{%
+    \refstepcounter{ucVar}%
+    \subsubsection*{UC-\theucMain\theucVar\ - #2}%
+    \addcontentsline{toc}{subsubsection}{UC-\theucMain\theucVar\ - #2}%
+    \ifx&#1&%
+    \else\label{#1}\fi%
+}
+
+% 3. Contatore Secondario (es. UC-1.1)
+\newcounter{ucSub}[ucMain]
+\newcommand{\subusecase}[2]{%
+    \refstepcounter{ucSub}%
+    \setcounter{ucSubSub}{0}%
+    \subsubsection*{UC-\theucMain.\theucSub\ - #2}%
+    \addcontentsline{toc}{subsubsection}{UC-\theucMain.\theucSub\ - #2}%
+    \ifx&#1&%
+    \else\label{#1}\fi%
+}
+
+% 4. Contatore Terziario (es. UC-3.1.1)
+\newcounter{ucSubSub}[ucSub]
+\newcommand{\subsubusecase}[2]{%
+    \refstepcounter{ucSubSub}%
+    \setcounter{ucDeep}{0}%
+    \paragraph*{UC-\theucMain.\theucSub.\theucSubSub\ - #2}%
+    \addcontentsline{toc}{paragraph}{UC-\theucMain.\theucSub.\theucSubSub\ - #2}%
+    \ifx&#1&%
+    \else\label{#1}\fi%
+}
+
+% 5. Contatore Quaternario (es. UC-3.2.1.1)
+\newcounter{ucDeep}[ucSubSub]
+\newcommand{\deepusecase}[2]{%
+    \refstepcounter{ucDeep}%
+    \paragraph*{UC-\theucMain.\theucSub.\theucSubSub.\theucDeep\ - #2}%
+    \addcontentsline{toc}{paragraph}{UC-\theucMain.\theucSub.\theucSubSub.\theucDeep\ - #2}%
+    \ifx&#1&%
+    \else\label{#1}\fi%
+}
+
+% 6. Contatore 5 (es. UC-3.2.1.1.5)
+\newcounter{ucSubDeep}[ucSubSub]
+\newcommand{\subdeepusecase}[2]{%
+    \refstepcounter{ucSubDeep}%
+    \paragraph*{UC-\theucMain.\theucSub.\theucSubSub.\theucDeep.\theucSubDeep\ - #2}%
+    \addcontentsline{toc}{paragraph}{UC-\theucMain.\theucSub.\theucSubSub.\theucDeep.\theucSubDeep\ - #2}%
+    \ifx&#1&%
+    \else\label{#1}\fi%
+}
+% --- FINE DEFINIZIONE CONTATORI UC ---
+
+
 \begin{document}
 \pagenumbering{roman}
 
@@ -74,5 +143,6 @@
 \input{analisi/UC5-8.tex}
 \input{analisi/UC10-13.tex}
 \input{analisi/UC14-26.tex}
+\input{analisi/UC27-42.tex}
 \input{analisi/Requisiti.tex}
 \end{document}

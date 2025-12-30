@@ -1,5 +1,5 @@
 
-\subsubsection{UC-5 - Verifica Integrità DIP Completo}
+\usecase{verificaIntegritaDIPCompleto}{Verifica Integrità DIP Completo}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L’Utente si trova nella vista principale del DIP.
@@ -16,7 +16,7 @@
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-5.1 - Verifica Integrità Classe Documentale}
+\subusecase{verificaIntegritaClasseDocumentale}{Verifica Integrità Classe Documentale}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L’Utente ha selezionato una classe documentale.
@@ -33,7 +33,7 @@
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-5.2 - Verifica Integrità Processo}
+\subusecase{verificaIntegritaProcesso}{Verifica Integrità Processo}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L’Utente ha selezionato un processo.
@@ -50,7 +50,7 @@
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-5.3 - Verifica Integrità Documento}
+\subusecase{verificaIntegritaDocumento}{Verifica Integrità Documento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L’Utente ha selezionato un documento.
@@ -67,7 +67,7 @@
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6 - Visualizzazione Report Integrità DIP Completo}
+\usecase{visualizzazioneReportIntegritaDIPCompleto}{Visualizzazione Report Integrità DIP Completo}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: È stata completata una verifica di integrità del DIP completo.
@@ -328,7 +328,7 @@
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-7 - Converti Report Verifica in PDF}
+\usecase{convertiReportVerificaPDF}{Converti Report Verifica in PDF}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: Esiste un Report di verifica.
@@ -343,34 +343,15 @@
     \item \textbf{Estensioni}: UC-7.1 - Errore generazione PDF
 \end{itemize}
 
-\subsubsection{UC-7.1 - Errore generazione PDF}
+\subusecase{erroreGenerazionePDF}{Errore generazione PDF}
 \begin{itemize}
     \item \textbf{Attore Primario}: Sistema
     \item \textbf{Precondizioni}: Una conversione PDF non è andata a buon fine.
-    \item \textbf{Postcondizioni}: L'utente visualizza un messaggio d’errore.     
+    \item \textbf{Postcondizioni}: L'utente visualizza un messaggio d'errore.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item L’utente ha provato a convertire un Report come PDF
             \item La conversione non va a buon fine
-            \item L’utente visualizza un messaggio d’errore.
-        \end{enumerate}
-\end{itemize}
-
-\subsubsection{UC-8 - Scarica File}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L’utente ha selezionato un file (documento o report).
-    \item \textbf{Postcondizioni}: L'utente ha scaricato il File nella cartella selezionata.     
-    \item \textbf{Flusso Principale}:
-        \begin{enumerate}
-            \item Il sistema apre un dialogo di selezione cartella
-            \item L'utente seleziona la cartella di destinazione
-            \item Il sistema salva il File nella cartella selezionata
-            \item Il sistema conferma il salvataggio con un messaggio "File salvato con successo in [percorso]".
-        \end{enumerate}
-    \item \textbf{Flusso Alternativo}: 
-        \begin{enumerate}
-            \item L'utente tenta di salvare il documento nella cartella del DIP: il sistema blocca l'operazione e mostra il messaggio "Impossibile salvare nel DIP. Selezionare un'altra cartella per preservare l'integrità del DIP.".
-            \item L'utente annulla l'operazione: il sistema chiude il dialogo senza salvare.
+            \item L’utente visualizza un messaggio d'errore.
         \end{enumerate}
 \end{itemize}
