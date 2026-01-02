@@ -1,27 +1,11 @@
 
-\usecase{scaricaFile}{Scarica File}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L’utente ha selezionato un file (documento o report).
-    \item \textbf{Postcondizioni}: L'utente ha scaricato il File nella cartella selezionata.     
-    \item \textbf{Flusso Principale}:
-        \begin{enumerate}
-            \item Il sistema apre un dialogo di selezione cartella
-            \item L'utente seleziona la cartella di destinazione
-            \item Il sistema salva il File nella cartella selezionata
-            \item Il sistema conferma il salvataggio con un messaggio "File salvato con successo in [percorso]".
-        \end{enumerate}
-    \item \textbf{Flusso Alternativo}: 
-        \begin{enumerate}
-            \item L'utente tenta di salvare il documento nella cartella del DIP: il sistema blocca l'operazione e mostra il messaggio "Impossibile salvare nel DIP. Selezionare un'altra cartella per preservare l'integrità del DIP.".
-            \item L'utente annulla l'operazione: il sistema chiude il dialogo senza salvare.
-        \end{enumerate}
-\end{itemize}
-
 \usecase{salvaPiuDOcs}{Salvataggio di più Documenti}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente sta visualizzando un folder con più documenti o ha selezionato più documenti
+    \item \textbf{Precondizioni}: 
+    \begin{itemize}
+        \item L'Utente ha avviato l'applicazione
+        \item L'Utente sta visualizzando un folder con più documenti o ha selezionato più documenti
     \item \textbf{Postcondizioni}: L'Utente ha salvato i documenti in locale in una cartella selezionata
     \item \textbf{Flusso Principale}:\begin{enumerate}
             \item Il sistema apre un dialogo di selezione cartella

@@ -169,17 +169,24 @@
         \end{itemize}
 \end{itemize}
 
-\usecase{formatoDocumentoNonSupportato}{Formato Documento non Supportato dal Sistema}
+\usecase{formatoDocumentoNonSupportato}{Formato Documento non Supportato dal Sistema per l'anteprima}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: \begin{itemize}
+    \item \textbf{Precondizioni}: 
+    \begin{itemize}
         \item L'utente ha avviato l'applicazione
         \item L'Utente ha selezionato un documento
         \item L'Utente ha selezionato l'opzione di visualizzazione anteprima per il documento selezionato.
+        \item Il formato del documento selezionato non è supportato per l'anteprima.
     \end{itemize}
-    \item \textbf{Postcondizioni}: L'utente viene notificato che il formato del documento non è supportato per l'anteprima.
+    \item \textbf{Postcondizioni}: 
+    \begin{itemize}
+        \item Non viene mostrata l'anteprima del documento.
+        \item Viene mostrato un messaggio di errore che indica che il formato del documento non è supportato per l'anteprima.
+    \end{itemize}
     \item \textbf{Flusso Principale}:
           \begin{enumerate}
+              \item Il sistema chiude annulla l'operazione di anteprima.
               \item Il sistema mostra a video un messaggio di errore che indica che il formato del documento non è supportato per l'anteprima.
           \end{enumerate}
 \end{itemize}

@@ -2,75 +2,98 @@
 \usecase{verificaIntegritaDIPCompleto}{Verifica Integrità DIP Completo}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L’Utente si trova nella vista principale del DIP.
+    \item \textbf{Precondizioni}:
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item L’Utente si trova nella vista principale del DIP.
+        \end{itemize}    
     \item \textbf{Postcondizioni}: 
         \begin{enumerate}
             \item Il sistema compone il report di integrità dell'intero DIP
             \item Stato di verifica DIP aggiornato (Non Verificato / Valido / Non Valido).
         \end{enumerate}      
     \item \textbf{Flusso Principale}:
-        \begin{enumerate}
+        \begin{itemize}
             \item L’utente selezione “Verifica Integrità dell’intero DIP”
             \item Il sistema verifica il DIP completo
             \item Il sistema aggiorna lo stato della verifica del DIP.
-        \end{enumerate}
+        \end{itemize}
 \end{itemize}
 
 \subusecase{verificaIntegritaClasseDocumentale}{Verifica Integrità Classe Documentale}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L’Utente ha selezionato una classe documentale.
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item L’Utente si trova nella vista principale del DIP
+            \item L’Utente ha selezionato una classe documentale.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: 
         \begin{enumerate}
             \item Il sistema compone il Report di integrità classe documentale
             \item Stato di verifica classe aggiornato (Non Verificato / Valido / Non Valido).
         \end{enumerate}      
     \item \textbf{Flusso Principale}:
-        \begin{enumerate}
+        \begin{itemize}
             \item L’utente seleziona “Verifica Integrità” sulla classe documentale
             \item Il sistema verifica la classe documentale
             \item Il sistema aggiorna lo stato della verifica della classe documentale.
-        \end{enumerate}
+        \end{itemize}
 \end{itemize}
 
 \subusecase{verificaIntegritaProcesso}{Verifica Integrità Processo}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L’Utente ha selezionato un processo.
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item L’Utente si trova nella vista principale del DIP
+            \item L’Utente ha selezionato un processo.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: 
         \begin{enumerate}
             \item Il sistema compone il report di integrità processo
             \item Stato di verifica processo aggiornato (Non Verificato / Valido / Non Valido).
         \end{enumerate}      
     \item \textbf{Flusso Principale}:
-        \begin{enumerate}
+        \begin{itemize}
             \item L’utente selezione “Verifica Integrità” sul processo
             \item Il sistema verifica il processo
             \item Il sistema aggiorna lo stato della verifica del processo.
-        \end{enumerate}
+        \end{itemize}
 \end{itemize}
 
 \subusecase{verificaIntegritaDocumento}{Verifica Integrità Documento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L’Utente ha selezionato un documento.
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item L’Utente si trova nella vista principale del DIP
+            \item L’Utente ha selezionato un documento.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: 
         \begin{enumerate}
             \item Il sistema compone il report di integrità documento
             \item Stato di verifica documento aggiornato (Non Verificato / Valido / Non Valido).
         \end{enumerate}      
     \item \textbf{Flusso Principale}:
-        \begin{enumerate}
+        \begin{itemize}
             \item L’utente selezione “Verifica Integrità” sul documento
             \item Il sistema esegue la verifica del documento
             \item Il sistema aggiorna lo stato della verifica del documento.
-        \end{enumerate}
+        \end{itemize}
 \end{itemize}
 
-\usecase{visualizzazioneReportIntegritaDIPCompleto}{Visualizzazione Report Integrità DIP Completo}
+\subusecase{visualizzazioneReportIntegritaDIPCompleto}{Visualizzazione Report Integrità DIP Completo}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: È stata completata una verifica di integrità del DIP completo.
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità del DIP completo.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: Il report dettagliato del DIP viene visualizzato.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
@@ -79,274 +102,467 @@
         \end{enumerate}
     \item \textbf{Inclusioni}: 
         \begin{itemize}
-            \item UC-6.0.1 - Visualizzazione Numero Classi Verificate
-            \item UC-6.0.2 - Visualizzazione Numero Classi Integre
-            \item UC-6.0.3 - Visualizzazione Numero Classi Corrotte
-            \item UC-6.0.4 - Visualizzazione Lista Classi Corrotte
-            \item UC-6.0.5 - Visualizzazione Data e Ora Verifica DIP.
+            \item UC-\ref{visualizzazioneNumeroClassiVerificate} Visualizzazione Numero Classi Verificate
+            \item UC-\ref{visualizzazioneNumeroClassiIntegre} Visualizzazione Numero Classi Integre
+            \item UC-\ref{visualizzazioneNumeroClassiCorrotte} Visualizzazione Numero Classi Corrotte
+            \item UC-\ref{visualizzazioneListaClassiCorrotte} Visualizzazione Lista Classi Corrotte
+            \item UC-\ref{visualizzazioneDataEOraVerificaDIP} Visualizzazione Data e Ora Verifica DIP.
         \end{itemize}
 \end{itemize}
 
-\subsubsection{UC-6.0.1 - Visualizzazione Numero Classi Verificate}
+\subsubusecase{visualizzazioneNumeroClassiVerificate}{Visualizzazione Numero Classi Verificate}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
-    \item \textbf{Precondizioni}: È stato generato un report di verifica del DIP completo.
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità del DIP completo
+            \item È stato generato un report di verifica del DIP completo.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: Numero totale di classi verificate visualizzato.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema conta tutte le classi documentali sottoposte a verifica
-            \item Il sistema mostra a video il conteggio con l'etichetta "Classi verificate: [N]".
+            \item Il sistema mostra il conteggio con l'etichetta "Classi verificate: [N]".
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.0.2 - Visualizzazione Numero Classi Integre}
+\subsubusecase{visualizzazioneNumeroClassiIntegre}{Visualizzazione Numero Classi Integre}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
-    \item \textbf{Precondizioni}: È stato generato un report di verifica del DIP completo.
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità del DIP completo
+            \item È stato generato un report di verifica del DIP completo.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: Numero di classi integre visualizzato.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema conta le classi con stato "Valido"
-            \item Il sistema mostra a video il conteggio con l'etichetta "Classi integre: [N]" in colore verde.
+            \item Il sistema mostra il conteggio con l'etichetta "Classi integre: [N]" in colore verde.
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.0.3 - Visualizzazione Numero Classi Corrotte}
+\subsubusecase{visualizzazioneNumeroClassiCorrotte}{Visualizzazione Numero Classi Corrotte}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
-    \item \textbf{Precondizioni}: È stato generato un report di verifica del DIP completo.
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità del DIP completo
+            \item È stato generato un report di verifica del DIP completo.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: Numero di classi corrotte visualizzato.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema conta le classi con stato "Non Valido"
-            \item Il sistema mostra a video il conteggio con l'etichetta "Classi corrotte: [N]" in colore rosso.
+            \item Il sistema mostra il conteggio con l'etichetta "Classi corrotte: [N]" in colore rosso.
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.0.4 - Visualizzazione Lista Classi Corrotte}
+\subsubusecase{visualizzazioneListaClassiCorrotte}{Visualizzazione Lista Classi Corrotte}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: 
-        \begin{enumerate}
-            \item È stato generato un report di verifica del DIP
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità del DIP completo
+            \item È stato generato un report di verifica del DIP completo
             \item Esistono classi corrotte (numero classi corrotte > 0).
-        \end{enumerate}
+        \end{itemize} 
     \item \textbf{Postcondizioni}: Lista completa delle classi corrotte visualizzata.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema recupera l'elenco di tutte le classi con stato "Non Valido"
-            \item Per ogni classe corrotta il sistema mostra a video il nome della classe e il numero di processi corrotti nella classe.
+            \item Per ogni classe corrotta il sistema mostra il nome della classe e il numero di processi corrotti nella classe.
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.0.5 - Visualizzazione Data e Ora Verifica DIP}
+\subsubusecase{visualizzazioneDataEOraVerificaDIP}{Visualizzazione Data e Ora Verifica DIP}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
-    \item \textbf{Precondizioni}: È stato generato un report di verifica del DIP.
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità del DIP completo
+            \item È stato generato un report di verifica del DIP completo.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: Timestamp della verifica visualizzato.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema recupera la data e ora di inizio della verifica del DIP
-            \item Il sistema mostra a video il timestamp nel formato "GG/MM/AAAA HH:MM:SS".
+            \item Il sistema mostra il timestamp nel formato "GG/MM/AAAA HH:MM:SS".
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.1.1 - Visualizzazione Numero Processi Verificati}
+\subusecase{visualizzazioneReportIntegritaClasseDocumentale}{Visualizzazione Report Integrità Classe Documentale}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
-    \item \textbf{Precondizioni}: È stato generato un report di verifica della classe.
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità della classe documentale.
+        \end{itemize} 
+    \item \textbf{Postcondizioni}: Report dettagliato della classe visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra il report aggregando i dati di tutti i processi della classe
+            \item Il sistema mostra un pannello con le informazioni aggregate della classe.
+        \end{enumerate}
+    \item \textbf{Inclusioni}: 
+        \begin{itemize}
+            \item UC-\ref{visualizzazioneNumeroProcessiVerificati} Visualizzazione Numero Processi Verificati
+            \item UC-\ref{visualizzazioneNumeroProcessiIntegri} Visualizzazione Numero Processi Integri
+            \item UC-\ref{visualizzazioneNumeroProcessiCorrotti} Visualizzazione Numero Processi Corrotti
+            \item UC-\ref{visualizzazioneListaProcessiCorrotti} Visualizzazione Lista Processi Corrotti
+            \item UC-\ref{visualizzazioneDataEOraVerificaClasse} Visualizzazione Data e Ora Verifica Classe.
+        \end{itemize}
+\end{itemize}
+
+\subsubusecase{visualizzazioneNumeroProcessiVerificati}{Visualizzazione Numero Processi Verificati}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità della classe documentale
+            \item È stato generato un report di verifica della classe.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: Numero totale di processi verificati visualizzato.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema conta tutti i processi della classe sottoposti a verifica
-            \item Il sistema mostra a video il conteggio con l'etichetta "Processi verificati: [N]".
+            \item Il sistema mostra il conteggio con l'etichetta "Processi verificati: [N]".
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.1.2 - Visualizzazione Numero Processi Integri}
+\subsubusecase{visualizzazioneNumeroProcessiIntegri}{Visualizzazione Numero Processi Integri}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
-    \item \textbf{Precondizioni}: È stato generato un report di verifica della classe.
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità della classe documentale
+            \item È stato generato un report di verifica della classe.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: Numero di processi integri visualizzato.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema conta i processi con stato "Valido"
-            \item Il sistema mostra a video il conteggio con l'etichetta "Processi integri: [N]" in colore verde.
+            \item Il sistema mostra il conteggio con l'etichetta "Processi integri: [N]" in colore verde.
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.1.3 - Visualizzazione Numero Processi Corrotti}
+\subsubusecase{visualizzazioneNumeroProcessiCorrotti}{Visualizzazione Numero Processi Corrotti}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
-    \item \textbf{Precondizioni}: È stato generato un report di verifica della classe.
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità della classe documentale
+            \item È stato generato un report di verifica della classe.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: Numero di processi corrotti visualizzato.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema conta i processi con stato "Non Valido"
-            \item Il sistema mostra a video il conteggio con l'etichetta "Processi corrotti: [N]" in colore rosso.
+            \item Il sistema mostra il conteggio con l'etichetta "Processi corrotti: [N]" in colore rosso.
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.1.4 - Visualizzazione Lista Processi Corrotti}
+\subsubusecase{visualizzazioneListaProcessiCorrotti}{Visualizzazione Lista Processi Corrotti}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: 
-        \begin{enumerate}
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità della classe documentale
             \item È stato generato un report di verifica della classe
             \item Esistono processi corrotti (numero processi corrotti > 0).
-        \end{enumerate}    
+        \end{itemize}      
     \item \textbf{Postcondizioni}: Lista completa dei processi corrotti visualizzata.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema recupera l'elenco di tutti i processi con stato "Non Valido"
-            \item Per ogni processo corrotto, il sistema mostra a video il nome del processo e il numero dei documenti corrotti.
+            \item Per ogni processo corrotto, il sistema mostra il nome del processo e il numero dei documenti corrotti.
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.1.5 - Visualizzazione Data e Ora Verifica Classe}
+\subsubusecase{visualizzazioneDataEOraVerificaClasse}{Visualizzazione Data e Ora Verifica Classe}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
-    \item \textbf{Precondizioni}: È stato generato un report di verifica della classe.  
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità della classe documentale
+            \item È stato generato un report di verifica della classe.
+        \end{itemize}  
     \item \textbf{Postcondizioni}: Timestamp della verifica visualizzato.
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema recupera la data e ora di inizio della verifica della classe
-            \item Il sistema mostra a video il timestamp nel formato "GG/MM/AAAA HH:MM:SS".
+            \item Il sistema mostra il timestamp nel formato "GG/MM/AAAA HH:MM:SS".
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.2.1 - Visualizzazione Numero Documenti Verificati}
+\subusecase{visualizzazioneReportIntegritaProcesso}{Visualizzazione Report Integrità Processo}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
-    \item \textbf{Precondizioni}: È stato generato un report di verifica del processo.
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità di un processo.
+        \end{itemize} 
+    \item \textbf{Postcondizioni}: Report dettagliato del processo visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra il report aggregando i dati di tutti i documenti del processo
+            \item Il sistema mostra un pannello con le informazioni aggregate del processo.
+        \end{enumerate}
+    \item \textbf{Inclusioni}: 
+        \begin{itemize}
+            \item UC-\ref{visualizzazioneNumeroDocumentiVerificati} Visualizzazione Numero Documenti Verificati
+            \item UC-\ref{visualizzazioneNumeroDocumentiIntegri} Visualizzazione Numero Documenti Integri
+            \item UC-\ref{visualizzazioneNumeroDocumentiCorrotti} Visualizzazione Numero Documenti Corrotti
+            \item UC-\ref{visualizzazioneListaDocumentiCorrotti} Visualizzazione Lista Documenti Corrotti
+            \item UC-\ref{visualizzazioneDataEOraVerificaProcesso} Visualizzazione Data e Ora Verifica Processo
+        \end{itemize}
+\end{itemize}
+
+\subsubusecase{visualizzazioneNumeroDocumentiVerificati}{Visualizzazione Numero Documenti Verificati}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità di un processo
+            \item È stato generato un report di verifica del processo.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: Numero totale di documenti verificati visualizzato.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema conta tutti i documenti del processo sottoposti a verifica
-            \item Il sistema mostra a video il conteggio con l'etichetta "Documenti verificati: [N]".
+            \item Il sistema mostra il conteggio con l'etichetta "Documenti verificati: [N]".
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.2.2 - Visualizzazione Numero Documenti Integri}
+\subsubusecase{visualizzazioneNumeroDocumentiIntegri}{Visualizzazione Numero Documenti Integri}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
-    \item \textbf{Precondizioni}: È stato generato un report di verifica del processo.
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità di un processo
+            \item È stato generato un report di verifica del processo.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: Numero di documenti integri visualizzato.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema conta i documenti con stato "Valido"
-            \item Il sistema mostra a video il conteggio con l'etichetta "Documenti integri: [N]" in colore verde.
+            \item Il sistema mostra il conteggio con l'etichetta "Documenti integri: [N]" in colore verde.
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.2.3 - Visualizzazione Numero Documenti Corrotti}
+\subsubusecase{visualizzazioneNumeroDocumentiCorrotti}{Visualizzazione Numero Documenti Corrotti}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
-    \item \textbf{Precondizioni}: È stato generato un report di verifica del processo.
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità di un processo
+            \item È stato generato un report di verifica del processo.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: Numero di documenti corrotti visualizzato.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema conta i documenti con stato "Non Valido"
-            \item Il sistema mostra a video il conteggio con l'etichetta "Documenti corrotti: [N]" in colore rosso.
+            \item Il sistema mostra il conteggio con l'etichetta "Documenti corrotti: [N]" in colore rosso.
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.2.4 - Visualizzazione Lista Documenti Corrotti}
+\subsubusecase{visualizzazioneListaDocumentiCorrotti}{Visualizzazione Lista Documenti Corrotti}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: 
-        \begin{enumerate}
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità di un processo
             \item È stato generato un report di verifica del processo
             \item Esistono documenti corrotti (numero documenti corrotti > 0).
-        \end{enumerate}    
+        \end{itemize}    
     \item \textbf{Postcondizioni}: Lista completa dei documenti corrotti visualizzata.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema recupera l'elenco di tutti i documenti con stato "Non Valido"
-            \item Per ogni documento corrotto, il sistema mostra a video il nome del documento e l'errore specifico.
+            \item Per ogni documento corrotto, il sistema mostra il nome del documento e l'errore specifico.
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.2.5 - Visualizzazione Data e Ora Verifica Processo}
+\subsubusecase{visualizzazioneDataEOraVerificaProcesso}{Visualizzazione Data e Ora Verifica Processo}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
-    \item \textbf{Precondizioni}: È stato generato un report di verifica del processo.  
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità di un processo
+            \item È stato generato un report di verifica del processo.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: Timestamp della verifica visualizzato.
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema recupera la data e ora di inizio della verifica del processo
-            \item Il sistema mostra a video il timestamp nel formato "GG/MM/AAAA HH:MM:SS".
+            \item Il sistema mostra il timestamp nel formato "GG/MM/AAAA HH:MM:SS".
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.3.1 - Visualizzazione Nome Documento}
+\subusecase{visualizzazioneReportIntegritaDocumento}{Visualizzazione Report Integrità Documento}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
-    \item \textbf{Precondizioni}: È stato generato un report di verifica del documento.
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità di un documento.
+        \end{itemize} 
+    \item \textbf{Postcondizioni}: Report dettagliato del documento visualizzato.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra:
+                \begin{itemize}
+                    \item Nome del documento
+                    \item Stato della verifica (Valido / Non Valido)
+                    \item Data e ora della verifica
+                    \item Dettagli dell'errore (se presenti)
+                \end{itemize}
+        \end{enumerate}
+    \item \textbf{Inclusioni}: 
+        \begin{itemize}
+            \item \ref{visualizzazioneNomeDocumento} Visualizzazione Nome Documento
+            \item \ref{visualizzazioneStatoVerificaDocumento} Visualizzazione Stato Verifica Documento
+            \item \ref{visualizzazioneDataEOraVerificaDocumento} Visualizzazione Data e Ora Verifica Documento
+            \item \ref{visualizzazioneDettagliErroreDocumento} Visualizzazione Dettaglio Errore Documento (se presente)
+        \end{itemize}
+\end{itemize}
+
+\subsubusecase{visualizzazioneNomeDocumento}{Visualizzazione Nome Documento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità di un documento
+            \item È stato generato un report di verifica del documento.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: Nome documento visualizzato.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video il nome del documento verificato.
+            \item Il sistema mostra il nome del documento verificato.
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.3.2 - Visualizzazione Stato Verifica Elemento}
+\subsubusecase{visualizzazioneStatoVerificaDocumento}{Visualizzazione Stato Verifica Documento}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
-    \item \textbf{Precondizioni}: È stato generato un report di verifica dell'elemento.
-    \item \textbf{Postcondizioni}: L'utente visualizza lo stato di verifica dell'elemento selezionato.     
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità di un documento
+            \item È stato generato un report di verifica del documento.
+        \end{itemize} 
+    \item \textbf{Postcondizioni}: Stato della verifica visualizzato.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video lo stato della verifica.
+            \item Il sistema mostra lo stato della verifica.
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.3.3 - Visualizzazione Data e Ora Verifica Documento}
+\subsubusecase{visualizzazioneDataEOraVerificaDocumento}{Visualizzazione Data e Ora Verifica Documento}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
-    \item \textbf{Precondizioni}: È stato generato un report di verifica del documento.
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità di un documento
+            \item È stato generato un report di verifica del documento.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: Timestamp della verifica visualizzato.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema recupera la data e ora di inizio della verifica del documento
-            \item Il sistema mostra a video il timestamp nel formato "GG/MM/AAAA HH:MM:SS".
+            \item Il sistema mostra il timestamp nel formato "GG/MM/AAAA HH:MM:SS".
         \end{enumerate}
 \end{itemize}
 
-\subsubsection{UC-6.3.4 - Visualizzazione Dettagli Errore Documento}
+\subsubusecase{visualizzazioneDettagliErroreDocumento}{Visualizzazione Dettagli Errore Documento}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
+    \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: 
-        \begin{enumerate}
-            \item È stato generato un report di verifica del documento
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità di un documento
+            \item È stato generato un report di verifica del documento.
             \item Il documento ha stato "Non Valido".
-        \end{enumerate}
+        \end{itemize} 
     \item \textbf{Postcondizioni}: Dettagli dell'errore visualizzati.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video la descrizione dell'errore (ad esempio: hash calcolato non coincide con hash associato al documento, firma digitale non valida o scaduta).
+            \item Il sistema mostra la descrizione dell'errore (ad esempio: hash calcolato non coincide con hash associato al documento, firma digitale non valida o scaduta).
         \end{enumerate}
 \end{itemize}
 
 \usecase{convertiReportVerificaPDF}{Converti Report Verifica in PDF}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: Esiste un Report di verifica.
-    \item \textbf{Postcondizioni}: L'Utente ha convertito e scaricato il report in PDF.     
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità (DIP completo / Classe Documentale / Processo / Documento)
+            \item È stato generato un report di verifica (DIP completo / Classe Documentale / Processo / Documento).
+        \end{itemize} 
+    \item \textbf{Postcondizioni}: Il report visualizzato viene convertito in PDF.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item L'utente seleziona "Salva Report"
-            \item Il sistema converte il report corrente in formato PDF (UC-\ref{scaricaFile}).
+            \item Il sistema converte il report corrente in formato PDF.
         \end{enumerate}
     \item \textbf{Flusso Alternativo}: La conversione non va a buon fine: viene visualizzato un messaggio di errore "Impossibile generare il PDF. Riprovare.".
-    \item \textbf{Inclusioni}: UC-\ref{scaricaFile}
-    \item \textbf{Estensioni}: UC-7.1 - Errore generazione PDF
+    \item \textbf{Estensioni}: UC-\ref{erroreGenerazionePDF} Errore generazione PDF
+\end{itemize}
+
+\usecase{scaricaFile}{Scarica File}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item L’Utente ha selezionato un file da scaricare (Documento o Report).
+        \end{itemize} 
+    \item \textbf{Postcondizioni}: L'utente ha scaricato il File nella cartella selezionata.     
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema apre un dialogo di selezione cartella
+            \item L'utente seleziona la cartella di destinazione
+            \item Il sistema salva il File nella cartella selezionata
+            \item Il sistema conferma il salvataggio con un messaggio "File salvato con successo in [percorso]".
+        \end{enumerate}
+    \item \textbf{Flusso Alternativo}:
+        \begin{itemize}
+            \item L'utente tenta di salvare il documento nella cartella del DIP: il sistema blocca l'operazione e mostra il messaggio "Impossibile salvare nel DIP. Selezionare un'altra cartella per preservare l'integrità del DIP."
+            \item L'utente annulla l'operazione: il sistema chiude il dialogo senza salvare.
+        \end{itemize}
 \end{itemize}
 
 \subusecase{erroreGenerazionePDF}{Errore generazione PDF}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Sistema
-    \item \textbf{Precondizioni}: Una conversione PDF non è andata a buon fine.
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L’Utente ha avviato l'applicazione
+            \item È stata completata una verifica di integrità (DIP completo / Classe Documentale / Processo / Documento)
+            \item È stato generato un report di verifica (DIP completo / Classe Documentale / Processo / Documento)
+            \item È stata effettuata una conversione del report in PDF
+            \item Una conversione PDF non è andata a buon fine.
+        \end{itemize} 
     \item \textbf{Postcondizioni}: L'utente visualizza un messaggio d'errore.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
