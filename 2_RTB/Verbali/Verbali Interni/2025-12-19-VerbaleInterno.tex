@@ -1,0 +1,267 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setlength{\headheight}{14.49998pt}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 19/12/2025 \\
+\textbf{Durata:} 1 ora\\
+\textbf{Luogo:} Incontro online (Discord)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    0.1 & 2025/12/19 & Vigolo Davide & Fattoni Antonio & Creazione del verbale e stesura iniziale \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+
+\tableofcontents
+
+\newpage
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Gingillino Aaron
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+\end{itemize}
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Retrospettiva dello sprint
+    \item Pianificazione delle attività
+    \item Decisioni e prossimi passi
+\end{enumerate}
+
+
+\section{Svolgimento e Discussione}
+\subsection{Definizione ruoli}
+I ruoli necessari in questa sprint sono:
+\begin{itemize}[noitemsep]
+    \item Responsabile
+    \item Amministratore
+    \item Analista
+    \item Verificatore
+\end{itemize}
+
+I ruoli assegnati a ciascun membro per questo sprint sono i seguenti:
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm}
+    \centering
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Membro} & \textbf{Ruolo} \\
+    \hline
+    Fattoni Antonio & Analista \\
+    \hline
+    Georgescu Diana & Programmatore \\
+    \hline
+    Gingillino Aaron & Responsabile \\
+    \hline
+    Laoud Zakaria & Programmatore \\
+    \hline
+    Rocco Matteo A. & Analista \\
+    \hline
+    Soligo Lorenzo & Analista \\
+    \hline
+    Vigolo Davide & Analista \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\subsection{Retrospettiva}
+\begin{itemize}[noitemsep]
+    \item È stato rilevato un momento di stallo dovuto alla necessità di allineamento sul metodo di redazione degli Use Case.
+    \item Si evidenzia la necessità di considerare eventuali indisponibilità dei membri del gruppo (ad es. per motivi di salute).
+    \item La sessione congiunta di sviluppo degli Use Case si è rivelata particolarmente efficace per allineare le conoscenze e convergere su un'impostazione condivisa per la redazione degli UC.
+    \item Non sono state individuate tempestivamente alcune dipendenze tra attività; il tema verrà analizzato con maggiore attenzione durante la pianificazione.
+    \item È risultata efficace la pianificazione redatta dal Responsabile e successivamente trasferita all'Amministratore per la creazione delle attività su Jira.
+    \item Il piano di progetto va automatizzato il più possibile, poiché richiede ancora un impegno eccessivo.
+    \item Si segnala la necessità di rivedere le norme di branching.
+\end{itemize}
+
+\subsection{Attività}
+\begin{itemize}[noitemsep]
+    \item Attivare la branch protection su \textit{main} e sulle \textit{dev-branches}.
+    \item Predisporre GitHub Actions per il calcolo dell'Indice di Gulpease.
+    \item Proseguire la redazione delle AdR:
+    \begin{itemize}[noitemsep]
+        \item Use Case di visualizzazione della struttura DIP.
+        \item Use Case di visualizzazione dei metadati del documento.
+        \item Use Case di importazione del DIP.
+        \item Use case di ricerca semantica
+        \item Diagrammi Use Case per ciascun membro, a valle della finalizzazione degli Use Case.
+        \item Definizione del contenuto del PoC.
+        \item Revisione degli UC5 $\rightarrow$UC8 e UC2.
+        \item \textit{Allineamento con la proponente: definizione della vista di default avvisi nella sezione di verifica.}
+        \item \textit{Allineamento con la proponente: aspetti relativi al cloud.}
+    \end{itemize}
+    \item Riunione per S.A.L. 2025/12/27.
+\end{itemize}
+
+\section{Decisioni}
+\begin{enumerate}[noitemsep]
+    \item Nomina del responsabile per la SPRINT 4: Aaron Gingillino.
+    \item Si decide di attivare la branch protection sul repository, integrando controlli automatici di qualità sui documenti.
+    \item Si pianifica un incontro dedicato alla discussione e all'allineamento sugli Use Case.
+    \item Si pianifica un incontro per redarre la mail da inviare al prof. Vardanega per aggiornamenti sullo Stato di Avanzamento dei Lavori (SAL).
+    \item Le attività sui paragrafi 3.x degli Use Case vengono rimandate allo sprint 4 per mancata analisi delle dipendenze.
+\end{enumerate}
+
+
+\section*{Tabella delle decisioni}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \small
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
+    \hline
+    \#0 & Redazione del verbale & \href{https://7zpus.atlassian.net/browse/DIPR-152}{DIPR-152} & Vigolo Davide & Fattoni Antonio \\
+    \hline
+    \#2 & \begin{tabular}[c]{@{}c@{}} Attivazione branch protection con \\ controlli automatici di qualità \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-163}{DIPR-163} & Vigolo Davide & N/D \\
+    \hline
+    \#3 & \begin{tabular}[c]{@{}c@{}} Continuazione e verifica finale \\ congiunta degli Use Case \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-131}{DIPR-131} & \begin{tabular}[c]{@{}c@{}} Vigolo Davide, \\ Fattoni Antonio, \\ Soligo Lorenzo \end{tabular} & \begin{tabular}[c]{@{}c@{}} Vigolo Davide, \\ Fattoni Antonio, \\ Soligo Lorenzo \end{tabular} \\
+    \hline
+    \#4 & Incontro per redazione email SAL & \href{https://7zpus.atlassian.net/browse/DIPR-158}{DIPR-158} & Tutti & N/D \\
+    \hline
+    \#5 & \begin{tabular}[c]{@{}c@{}} Redazione paragrafi 3.x \\ degli Use Case allo sprint 4 \end{tabular} & \begin{tabular}[c]{@{}c@{}} \href{https://7zpus.atlassian.net/browse/DIPR-141}{DIPR-141} \\ \href{https://7zpus.atlassian.net/browse/DIPR-142}{DIPR-142} \end{tabular} & \begin{tabular}[c]{@{}c@{}} Gingillino Aaron \\ Laoud Zakaria \end{tabular} & \begin{tabular}[c]{@{}c@{}} Soligo Lorenzo \\ Fattoni Antonio \end{tabular}\\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
