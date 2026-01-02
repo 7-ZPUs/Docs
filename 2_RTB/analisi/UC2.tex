@@ -3,11 +3,11 @@
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}:
             \begin{itemize}
-                  \item L'utente ha avviato l'applicazione
+                  \item L'Utente ha avviato l'applicazione
             \end{itemize}
       \item \textbf{Postcondizioni}:
             \begin{itemize}
-                  \item Vengono prodotti i risultati di ricerca
+                  \item L'Utente visualizza i risultati di ricerca
             \end{itemize}
 \end{itemize}
 
@@ -16,18 +16,19 @@
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}:
             \begin{itemize}
-                  \item L'utente ha avviato l'applicazione
+                  \item L'Utente ha avviato l'applicazione
             \end{itemize}
       \item \textbf{Postcondizioni}:
             \begin{itemize}
-                  \item Vengono prodotti i risultati di ricerca
+                  \item L'Utente visualizza i risultati di ricerca
             \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{itemize}
-                  \item L'utente aggiunge filtri come parametri per la ricerca(UC-\ref{aggiuntaFiltriRicercaDocumento})
-                  \item Validazione dei campi (UC-\ref{validazioneCampi})
+                  \item L'Utente aggiunge filtri come parametri per la ricerca(UC-\ref{aggiuntaFiltriRicercaDocumento})
+                  \item Il sistema valida i campi (UC-\ref{validazioneCampi})
             \end{itemize}
       \item \textbf{Flusso alternativo}:
+      \item \textbf{Inclusioni}: UC-\ref{aggiuntaFiltriRicercaDocumento}, UC-\ref{validazioneCampi}
 \end{itemize}
 
 \varusecase{ricercaDIPSemantica}{Ricerca nel DIP semantica}
@@ -35,15 +36,16 @@
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{itemize}
-        \item L'utente ha avviato l'applicazione
+        \item L'Utente ha avviato l'applicazione
+        \item Il sistema ha una connesione attiva
     \end{itemize}
     \item \textbf{Postcondizioni}:
     \begin{itemize}
-        \item Vengono prodotti i risultati di ricerca per la stringa di query specificata
+        \item L'Utente visualizza i risultati di ricerca per la stringa di query specificata
     \end{itemize}
     \item \textbf{Flusso principale}:
     \begin{itemize}
-        \item L'utente specifica la query di ricerca (UC-?)
+        \item L'Utente specifica la query di ricerca
         \item Il sistema produce i risultati di ricerca per la query specificata
     \end{itemize}
     \item \textbf{Flusso alternativo}:
@@ -57,15 +59,15 @@
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{itemize}
-        \item L'utente ha avviato l'applicazione
+        \item L'Utente ha avviato l'applicazione
     \end{itemize}
     \item \textbf{Postcondizioni}:
     \begin{itemize}
-        \item Viene impostato il valore di precisione per la ricerca semantica
+        \item L'Utente ha impostato il valore di precisione per la ricerca semantica
     \end{itemize}
     \item \textbf{Flusso principale}:
     \begin{itemize}
-        \item L'utente specifica il valore di precisione per la ricerca semantica tra:
+        \item L'Utente specifica il valore di precisione per la ricerca semantica tra:
         \begin{itemize}
             \item Basso
             \item Medio
@@ -78,8 +80,11 @@
 \subsubsection{UC-2.1 - Ricercare Classe Documentale con filtri}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: L'Utente sta visualizzando la lista delle Classi Documentali.
-      \item \textbf{Postcondizioni}: Viene visualizzato l'elenco delle Classi Documentali corrispondenti ai filtri applicati.
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta visualizzando la lista delle Classi Documentali.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: L'Utente visualizza l'elenco delle Classi Documentali corrispondenti ai filtri applicati.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce i filtri per la ricerca secondo i metadati delle Classi
@@ -87,26 +92,33 @@
                   \item Il sistema mostra i risultati della ricerca (UC-\ref{visualizzaRisultati}).
             \end{enumerate}
       \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati e il sistema informa l'Utente (UC-\ref{nessunRisultato}).
+      \item \textbf{Inclusioni}: UC-\ref{visualizzaRisultati}
+      \item \textbf{Estensioni}: UC-\ref{nessunRisultato}
 \end{itemize}
 
 \subsubsection{UC-2.2 - Ricercare Processo con filtri}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: L'Utente sta visualizzando la lista dei Processi.
-      \item \textbf{Postcondizioni}: Viene visualizzato l'elenco dei Processi corrispondenti ai filtri applicati.
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta visualizzando la lista dei Processi.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: L'Utente visualizza l'elenco dei Processi corrispondenti ai filtri applicati.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce i filtri per la ricerca secondo i metadati dei Processi.
                   \item Il sistema mostra i risultati della ricerca (UC-\ref{visualizzaRisultati}).
             \end{enumerate}
       \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati e il sistema informa l'Utente (UC-\ref{nessunRisultato}).
+      \item \textbf{Inclusioni}: UC-\ref{visualizzaRisultati}
+      \item \textbf{Estensioni}: UC-\ref{nessunRisultato}
 \end{itemize}
 
 \usecase{aggiuntaFiltriRicercaDocumento}{Aggiunta filtri per Ricerca Documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente imposta uno o più filtri per la ricerca tra campi comuni (UC-\ref{aggiuntaFiltriComuni})
@@ -119,8 +131,11 @@
 \subusecase{aggiuntaFiltriComuni}{Aggiunta filtri Comuni}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato
+      \item \textbf{Precondizioni}:\begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente ha 
+      \end{itemize}
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente seleziona uno o più campi comuni su cui basare la ricerca (da UC-\ref{addChiaveDescrittiva}
@@ -135,7 +150,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente compila i valori per:
@@ -151,7 +166,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente compila i parametri di Classificazione tra:
@@ -167,7 +182,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce il valore numerico del il tempo di conservazione o seleziona
@@ -179,7 +194,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce il testo della Nota.
@@ -190,7 +205,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                     \item L'Utente sceglie il tipo di documento per l'aggiunta del filtro di soggetti tra: \begin{itemize}
@@ -205,7 +220,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto un tipo di documento.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente sceglie uno o più tipi di soggetti in base al tipo di documento e ne specifica i campi.
@@ -216,7 +231,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto come tipo di documento il Documento Informatico.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente sceglie il Ruolo e i sottocampi specifici tra:
@@ -246,7 +261,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto come tipo di documento il Documento Amministrativo Informatico.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente sceglie il Ruolo e i sottocampi specifici tra:
@@ -270,7 +285,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto come tipo di documento l'Aggregazione Documentale.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente sceglie il Ruolo e i sottocampi specifici tra:
@@ -290,7 +305,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto un tipo di documento.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente può aggiungere i filtri specifici per il tipo selezionato (descritto
@@ -302,7 +317,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente può aggiungere i filtri specifici per il tipo Documento Informatico e
@@ -314,7 +329,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente sceglie la Tipologia di Flusso tra: \begin{itemize}
@@ -337,7 +352,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce il nome della Tipologia Documentale (fatture, delibere,
@@ -349,7 +364,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente sceglie la Modalità di Formazione tra:
@@ -367,7 +382,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente sceglie se il file è Riservato o meno.
@@ -378,7 +393,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente sceglie la Tipologia di Formato all'interno di quelli Previsti dalle
@@ -396,7 +411,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente sceglie se il file è Firmato Digitalmente o meno.
@@ -411,7 +426,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce il Nome del Documento.
@@ -433,7 +448,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce l'Identificativo del Documento Primario.
@@ -444,7 +459,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Documento Informatico o Amministrativo Informatico.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente sceglie il Tipo di modifica tra:
@@ -464,7 +479,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente può aggiungere i filtri specifici per il tipo Aggregazione (descritto negli UC da \ref{addTipoAggregazione} a \ref{addProgressivo}).
@@ -475,7 +490,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente sceglie tra:\begin{itemize}
@@ -490,7 +505,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce l'Id dell'Aggregazione.
@@ -501,7 +516,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente sceglie tra: \begin{itemize}
@@ -518,7 +533,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce l'Id dell'Aggregazione "padre".
@@ -529,7 +544,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce la Data di Apertura.
@@ -540,7 +555,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce la Data di Chiusura.
@@ -551,7 +566,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce la Materia, Argomento e Struttura per i procedimenti.
@@ -569,7 +584,7 @@
                   \item L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione.
                   \item L'Utente ha aggiunto un Procedimento come parametro per la ricerca.
             \end{enumerate}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente aggiunge un filtro per "Fase".
@@ -587,7 +602,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto come tipo di documento l'Aggregazione Documentale.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente aggiunge uno o più filtri per "Assegnazione".
@@ -605,7 +620,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto come tipo di documento l'Aggregazione Documentale.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce il numero Progressivo dell'Aggregazione.
@@ -616,7 +631,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto un ruolo come campo di ricerca.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce i dettagli del ruolo.
@@ -627,7 +642,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo PAI.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
@@ -644,7 +659,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo PAE.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
@@ -660,7 +675,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo AS.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
@@ -680,7 +695,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo PG.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
@@ -697,7 +712,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo PF.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item  L'Utente inserisce i valori per i campi:
@@ -713,7 +728,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo RUP.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
@@ -732,7 +747,7 @@
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: L'Utente ha scelto di filtrare la ricerca per Soggetto e ha selezionato il ruolo SW.
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce la Denominazione Sistema
@@ -746,7 +761,7 @@
       \item \textbf{Precondizioni}: \begin{itemize} \item L'Utente ha avviato l'applicazione.
       \item Sono presenti custom metadata descritti nei file schemas.
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente per ogni metadato custom, inserisce il valore per cui ricerca.
