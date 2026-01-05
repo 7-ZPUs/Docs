@@ -19,8 +19,13 @@
         \item L'utente ha selezionato un documento
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza la lista dei soggetti coinvolti nel documento selezionato
-    \item \textbf{Flusso Principale}: Per ogni soggetto coinvolto nel documento selezionato, il sistema mostra a video le informazioni del soggetto coinvolto nel documento (UC-16)
-    \item \textbf{Inclusioni}: UC-16 - Visualizza informazioni del soggetto coinvolto in un documento (0..n)
+\item \textbf{Flusso Principale}: Per ogni soggetto coinvolto nel documento selezionato, il sistema mostra a video le informazioni del soggetto $\rightarrow$ Vedi \hyperref[convertiReportVerificaPDF]{[UC-\ref{convertiReportVerificaPDF}]}
+
+\item \textbf{Inclusioni}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[convertiReportVerificaPDF]{[UC-\ref{convertiReportVerificaPDF}]} - Visualizza informazioni del soggetto coinvolto in un documento (0..n)
+    \end{itemize}
+
 \end{itemize}
 
 \usecase{visualizzaInfoSoggettoCoinvolto}{Visualizza informazioni del soggetto coinvolto in un documento}
@@ -41,15 +46,17 @@
     \item \textbf{Flusso Principale}:
     \begin{enumerate}
         \item Il sistema visualizza le informazioni comuni del soggetto, quali:
-        \begin{itemize}
-            \item Ruolo del soggetto nel documento (UC-16.1)
-            \item Tipo di soggetto (UC-16.2)
+        \begin{itemize}[label=$\rhd$]
+            \item Ruolo del soggetto nel documento $\rightarrow$ Vedi \hyperref[-]{[UC-16.\ref{-}]}
+            \item Tipo di soggetto $\rightarrow$ Vedi \hyperref[-]{[UC-16.\ref{-}]}
         \end{itemize}
         \item Informazioni identificative del soggetto
     \end{enumerate}
     \item \textbf{Inclusioni}:
-    \item UC-16.1 - Visualizza ruolo soggetto nel documento
-    \item UC-16.2 - Visualizza tipo di soggetto
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[-]{[UC-16.\ref{-}]} - Visualizza ruolo soggetto nel documento
+        \item \hyperref[-]{[UC-16.\ref{-}]} - Visualizza tipo di soggetto
+        \end{itemize}
 \end{itemize}
 
 \varusecase{visualizzaInfoPF}{Visualizza informazioni del soggetto Persona Fisica}
@@ -58,7 +65,7 @@
 
     \item \textbf{Precondizioni}:
     \begin{enumerate}
-        \item Sono soddisfatte le precondizioni di UC-16
+        \item Sono soddisfatte le precondizioni di \hyperref[convertiReportVerificaPDF]{[UC-\ref{convertiReportVerificaPDF}]}
         \item Il soggetto è di tipo Persona Fisica
     \end{enumerate}
 
@@ -79,7 +86,10 @@
         \end{itemize}
     \end{enumerate}
 
-    \item \textbf{Specializza}: UC-16
+    \item \textbf{Specializza}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[convertiReportVerificaPDF]{[UC-\ref{convertiReportVerificaPDF}]}
+    \end{itemize}
 \end{itemize}
 
 \varusecase{visualizzaInfoPG}{Visualizza informazioni del soggetto Persona Giuridica}
@@ -88,7 +98,7 @@
 
     \item \textbf{Precondizioni}:
     \begin{enumerate}
-        \item Sono soddisfatte le precondizioni di UC-16
+         \item Sono soddisfatte le precondizioni di \hyperref[convertiReportVerificaPDF]{[UC-\ref{convertiReportVerificaPDF}]}
         \item Il soggetto è di tipo Persona Giuridica
     \end{enumerate}
 
@@ -109,7 +119,10 @@
         \end{itemize}
     \end{enumerate}
 
-    \item \textbf{Specializza}: UC-16
+    \item \textbf{Specializza}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[convertiReportVerificaPDF]{[UC-\ref{convertiReportVerificaPDF}]}
+    \end{itemize}
 \end{itemize}
 
 \varusecase{visualizzaInfoAS}{Visualizza informazioni del soggetto AS}
@@ -118,7 +131,7 @@
 
     \item \textbf{Precondizioni}:
     \begin{enumerate}
-        \item Sono soddisfatte le precondizioni di UC-16
+        \item Sono soddisfatte le precondizioni di \hyperref[convertiReportVerificaPDF]{[UC-\ref{convertiReportVerificaPDF}]}
         \item Il soggetto è di tipo AS
     \end{enumerate}
 
@@ -131,18 +144,30 @@
     \begin{enumerate}
         \item Il sistema visualizza le informazioni comuni del soggetto
         \item Il sistema visualizza le informazioni identificative del soggetto, quali:
-        \begin{itemize}
-            \item Cognome (UC-16.4)
-            \item Nome (UC-16.3)
-            \item Codice Fiscale (UC-16.5)
-            \item Denominazione dell'organizzazione (UC-16.7)
-            \item Denominazione dell'ufficio (UC-16.9)
-            \item Indirizzi digitali di riferimento (UC-16.6)
-        \end{itemize}
-    \end{enumerate}
+      \begin{itemize}[label=$\rhd$]
+        \item Cognome $\rightarrow$ Vedi \hyperref[-]{[UC-16.\ref{-}]}
+        \item Nome $\rightarrow$ Vedi \hyperref[-]{[UC-16.\ref{-}]}
+        \item Codice Fiscale $\rightarrow$ Vedi \hyperref[-]{[UC-16.\ref{-}]}
+        \item Denominazione dell'organizzazione $\rightarrow$ Vedi \hyperref[-]{[UC-16.\ref{-}]}
+        \item Denominazione dell'ufficio $\rightarrow$ Vedi \hyperref[-]{[UC-16.\ref{-}]}
+        \item Indirizzi digitali di riferimento $\rightarrow$ Vedi \hyperref[-]{[UC-16.\ref{-}]}
+    \end{itemize}
+\end{enumerate}
 
-    \item \textbf{Specializza}: UC-16
-    \item \textbf{Inclusioni}: UC-16.3, UC-16.4, UC-16.5, UC-16.6, UC-16.7, UC-16.9
+\item \textbf{Specializza}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[visualizzaInfoSoggetto]{[UC-16.\ref{visualizzaInfoSoggetto}]}
+    \end{itemize}
+
+\item \textbf{Inclusioni}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[-]{[UC-16.\ref{-}]}, 
+        \item \hyperref[-]{[UC-16.\ref{-}]}, 
+        \item \hyperref[-]{[UC-16.\ref{-}]}, 
+        \item \hyperref[-]{[UC-16.\ref{-}]}, 
+        \item \hyperref[-]{[UC-16.\ref{-}]}, 
+        \item \hyperref[-]{[UC-16.\ref{-}]}
+    \end{itemize}
 \end{itemize}
 
 \varusecase{visualizzaInfoPAI}{Visualizza informazioni del soggetto PAI}
@@ -151,7 +176,7 @@
 
     \item \textbf{Precondizioni}:
     \begin{enumerate}
-        \item Sono soddisfatte le precondizioni di UC-16
+        \item Sono soddisfatte le precondizioni di \hyperref[convertiReportVerificaPDF]{[UC-\ref{convertiReportVerificaPDF}]}
         \item Il soggetto è di tipo PAI
     \end{enumerate}
 
@@ -164,16 +189,27 @@
     \begin{enumerate}
         \item Il sistema visualizza le informazioni comuni del soggetto
         \item Il sistema visualizza le informazioni identificative del soggetto, quali:
-        \begin{itemize}
-            \item Denominazione Amministrazione / Codice IPA (UC-16.10)
-            \item Denominazione Amministrazione AOO / Codice IPA AOO (UC-16.11)
-            \item Denominazione Amministrazione UOR / Codice IPA UOR (UC-16.12)
-            \item Indirizzi digitali di riferimento (UC-16.6)
-        \end{itemize}
+       \item Il sistema visualizza le informazioni identificative del soggetto, quali:
+    \begin{itemize}[label=$\rhd$]
+        \item Denominazione Amministrazione / Codice IPA $\rightarrow$ Vedi \hyperref[-]{[UC-16.\ref{-}]}
+        \item Denominazione Amministrazione AOO / Codice IPA AOO $\rightarrow$ Vedi \hyperref[-]{[UC-16.\ref{-}]}
+        \item Denominazione Amministrazione UOR / Codice IPA UOR $\rightarrow$ Vedi \hyperref[-]{[UC-16.\ref{-}]}
+        \item Indirizzi digitali di riferimento $\rightarrow$ Vedi \hyperref[indirizziDigitali]{[UC-16.\ref{indirizziDigitali}]}
+    \end{itemize}
     \end{enumerate}
 
-    \item \textbf{Specializza}: UC-16
-    \item \textbf{Inclusioni}: UC-16.6, UC-16.10, UC-16.11, UC-16.12
+   \item \textbf{Specializza}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[visualizzaInfoSoggetto]{[UC-16.\ref{visualizzaInfoSoggetto}]}
+    \end{itemize}
+    
+    \item \textbf{Inclusioni}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[-]{[UC-16.\ref{-}]}, 
+        \item \hyperref[-]{[UC-16.\ref{-}]}, 
+        \item \hyperref[-]{[UC-16.\ref{-}]}, 
+        \item \hyperref[-]{[UC-16.\ref{-}]}
+    \end{itemize}
 \end{itemize}
 
 \varusecase{visualizzaInfoPAE}{Visualizza informazioni del soggetto PAE}
@@ -182,7 +218,7 @@
 
     \item \textbf{Precondizioni}:
     \begin{enumerate}
-        \item Sono soddisfatte le precondizioni di UC-16
+        \item Sono soddisfatte le precondizioni di \hyperref[convertiReportVerificaPDF]{[UC-\ref{convertiReportVerificaPDF}]}
         \item Il soggetto è di tipo PAE
     \end{enumerate}
 
@@ -195,15 +231,24 @@
     \begin{enumerate}
         \item Il sistema visualizza le informazioni comuni del soggetto
         \item Il sistema visualizza le informazioni identificative del soggetto, quali:
-        \begin{itemize}
-            \item Denominazione Amministrazione (UC-16.13)
-            \item Denominazione Ufficio (UC-16.9)
-            \item Indirizzi Digitali Di Riferimento (UC-16.6)
-        \end{itemize}
+        
+            \begin{itemize}[label=$\rhd$]
+                \item Denominazione Amministrazione $\rightarrow$ Vedi \hyperref[-]{[UC-16.\ref{-}]}
+                \item Denominazione Ufficio $\rightarrow$ Vedi \hyperref[visualizzaUfficio]{[UC-16.\ref{visualizzaUfficio}]}
+                \item Indirizzi Digitali Di Riferimento $\rightarrow$ Vedi \hyperref[indirizziDigitali]{[UC-16.\ref{indirizziDigitali}]}
+            \end{itemize}
     \end{enumerate}
 
-    \item \textbf{Specializza}: UC-16
-    \item \textbf{Inclusioni}: UC-16.6, UC-16.9, UC-16.13
+    \item \textbf{Specializza}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[visualizzaInfoSoggetto]{[UC-16.\ref{visualizzaInfoSoggetto}]}
+    \end{itemize}
+     \item \textbf{Inclusioni}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[-]{[UC-16.\ref{-}]}, 
+        \item \hyperref[-]{[UC-16.\ref{-}]}, 
+        \item \hyperref[-]{[UC-16.\ref{-}]}, 
+    \end{itemize}
 \end{itemize}
 
 \varusecase{visualizzaInfoSW}{Visualizza informazioni del soggetto SW}
@@ -212,7 +257,7 @@
 
     \item \textbf{Precondizioni}:
     \begin{enumerate}
-        \item Sono soddisfatte le precondizioni di UC-16
+        \item Sono soddisfatte le precondizioni di \hyperref[convertiReportVerificaPDF]{[UC-\ref{convertiReportVerificaPDF}]}
         \item Il soggetto è di tipo SW
     \end{enumerate}
 
@@ -226,14 +271,19 @@
         \item Il sistema visualizza le informazioni comuni del soggetto
         \item Il sistema visualizza le informazioni identificative del soggetto, quali:
         \begin{itemize}
-            \item Denominazione Sistema (UC-16.14)
+            \item Denominazione Sistema $\rightarrow$ Vedi \hyperref[-]{[UC-16.\ref{-}]}
         \end{itemize}
     \end{enumerate}
 
-    \item \textbf{Specializza}: UC-16
-    \item \textbf{Inclusioni}: UC-16.14
+    \item \textbf{Specializza}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[visualizzaInfoSoggetto]{[UC-16.\ref{visualizzaInfoSoggetto}]}
+    \end{itemize}
+    \item \textbf{Inclusioni}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[-]{[UC-16.\ref{-}]}, 
+    \end{itemize}
 \end{itemize}
-
 
 
 
@@ -414,13 +464,19 @@
         \item L'utente ha selezionato un documento
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza le informazioni di classificazione del documento selezionato
-    \item \textbf{Flusso Principale}: Il sistema mostra a video le informazioni di classificazione, quali:
-    \begin{itemize}
-        \item Indice di classificazione (UC-17.1)
-        \item Descrizione (UC-17.2)
-        \item Piano di classificazione (UC-17.3)
+    \item \textbf{Flusso Principale}: Il sistema mostra a video le informazioni sulla classificazione:
+    \begin{itemize}[label=$\rhd$]
+        \item Indice di classificazione $\rightarrow$ Vedi \hyperref[erroreGenerazionePDF]{[UC-17.\ref{erroreGenerazionePDF}]}
+        \item Descrizione $\rightarrow$ Vedi \hyperref[-]{[UC-17.\ref{-}]}
+        \item Piano di classificazione $\rightarrow$ Vedi \hyperref[-]{[UC-17.\ref{-}]}
     \end{itemize}
-    \item \textbf{Inclusioni}: UC-17.1, UC-17.2, UC-17.3
+
+\item \textbf{Inclusioni}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[-]{[UC-17.\ref{-}]}, 
+        \item \hyperref[-]{[UC-17.\ref{-}]}, 
+        \item \hyperref[-]{[UC-17.\ref{-}]}
+    \end{itemize}
 \end{itemize}
 
 \subusecase{visualizzaIndiceClassificazioneDocumento}{Visualizza Indice di classificazione documento}
@@ -496,14 +552,21 @@
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza i dati di registrazione del documento selezionato
     \item \textbf{Flusso Principale}: Il sistema mostra a video i dati di registrazione del documento, quali:
-    \begin{itemize}
-        \item Tipologia di flusso (UC-20.1)
-        \item Tipo registro (UC-20.2)
-        \item Data registrazione (UC-20.3)
-        \item Numero documento (UC-20.4)
-        \item Codice registro (UC-20.5)
+  \begin{itemize}[label=$\rhd$]
+    \item Tipologia di flusso $\rightarrow$ Vedi \hyperref[-]{[UC-20.\ref{-}]}
+    \item Tipo registro $\rightarrow$ Vedi \hyperref[-]{[UC-20.\ref{-}]}
+    \item Data registrazione $\rightarrow$ Vedi \hyperref[-]{[UC-20.\ref{-}]}
+    \item Numero documento $\rightarrow$ Vedi \hyperref[-]{[UC-20.\ref{-}]}
+    \item Codice registro $\rightarrow$ Vedi \hyperref[-]{[UC-20.\ref{-}]}
+\end{itemize}
+    \item \textbf{Inclusioni}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[-]{[UC-20.\ref{-}]}
+        \item \hyperref[-]{[UC-20.\ref{-}]}
+        \item \hyperref[-]{[UC-20.\ref{-}]}
+        \item \hyperref[-]{[UC-20.\ref{-}]}
+        \item \hyperref[-]{[UC-20.\ref{-}]}
     \end{itemize}
-    \item \textbf{Inclusioni}: UC-20.1, UC-20.2, UC-20.3, UC-20.4, UC-20.5
 \end{itemize}
 
 \subusecase{visualizzaTipologiaFlussoDocumento}{Visualizza Tipologia di Flusso documento}

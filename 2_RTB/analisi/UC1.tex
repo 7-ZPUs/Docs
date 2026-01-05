@@ -7,9 +7,9 @@
           \begin{enumerate}
               \item L'Utente visualizza l'albero del DIP. L'albero è organizzato gerarchicamente in:
                     \begin{itemize}
-                        \item Classi Documentali (UC-\ref{classiDocumentali})
-                        \item Processi (UC-\ref{processiClasseDocumentale})
-                        \item Documenti (UC-\ref{documentiProcesso})
+                        \item Classi Documentali $\rightarrow$ Vedi \hyperref[classiDocumentali]{[UC-1.\ref{classiDocumentali}]}
+                        \item Processi $\rightarrow$ Vedi \hyperref[processiClasseDocumentale]{[UC-1.\ref{processiClasseDocumentale}]}
+                        \item Documenti $\rightarrow$ Vedi \hyperref[documentiProcesso]{[UC-1.\ref{documentiProcesso}]}
                     \end{itemize}
           \end{enumerate}
 \end{itemize}
@@ -70,7 +70,8 @@
     \item \textbf{Postcondizioni}: Viene selezionato l'elemento scelto dall'utente.
     \item \textbf{Flusso Principale}:\begin{enumerate}
               \item Il sistema seleziona l'elemento scelto dall'utente.
-
+            \end{enumerate}
+\end{itemize}
 \subusecase{informazioniElemento}{Visualizza Informazioni Elemento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -84,7 +85,12 @@
                         \item Marcatura temporale (Presente o Meno)
                     \end{itemize}
           \end{enumerate}
-    \item \textbf{Inclusioni}: UC-\ref{nomeElemento}, UC-\ref{statoVerificaElemento}, UC-\ref{marcaturaTemporaleElemento}
+    \item \textbf{Inclusioni}: 
+        \begin{itemize}[label=$\rhd$]
+            \item \hyperref[nomeElemento]{[UC-1.\ref{nomeElemento}]}
+            \item \hyperref[statoVerificaElemento]{[UC-1.\ref{statoVerificaElemento}]}
+            \item \hyperref[marcaturaTemporaleElemento]{[UC-1.\ref{marcaturaTemporaleElemento}]}
+        \end{itemize}
 \end{itemize}
 
 \subusecase{nomeElemento}{Visualizzazione Nome Elemento}
@@ -164,9 +170,9 @@
           \end{enumerate}
     \item \textbf{Flusso Alternativo}: Se il formato del documento non è supportato per l'anteprima, il sistema mostra un messaggio che specifica perché il tipo non è supportato.
     \item \textbf{Estensioni}:
-        \begin{itemize}
-            \item UC-\ref{formatoDocumentoNonSupportato}: Formato Documento non Supportato dal Sistema
-        \end{itemize}
+        \begin{itemize}[label=$\rhd$]
+    \item \hyperref[formatoDocumentoNonSupportato]{[UC-\ref{formatoDocumentoNonSupportato}]} - Formato Documento non Supportato dal Sistema
+\end{itemize}
 \end{itemize}
 
 \usecase{formatoDocumentoNonSupportato}{Formato Documento non Supportato dal Sistema per l'anteprima}

@@ -30,17 +30,20 @@
             \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente aggiunge filtri come parametri per la ricerca(UC-\ref{aggiuntaFiltriRicercaDocumento})
+                  \item L'Utente aggiunge filtri come parametri per la ricerca $\rightarrow$ Vedi \hyperref[aggiuntaFiltriRicercaDocumento]{[UC-\ref{aggiuntaFiltriRicercaDocumento}]}
                   \item Vengono controllati i valori dei filtri di ricerca
                   \item Il sistema produce i risultati di ricerca in base ai filtri specificati
             \end{enumerate}
       \item \textbf{Flusso alternativo}: 
             \begin{itemize}
-                  \item Uno o più campi non rispettano i formati previsti (UC-\ref{campoNonValido})
+                  \item Uno o più campi non rispettano i formati previsti $\rightarrow$ Vedi \hyperref[campoNonValido]{[UC-\ref{campoNonValido}]}
             \end{itemize}
-      \item \textbf{Inclusioni}: UC-\ref{aggiuntaFiltriRicercaDocumento}, UC-\ref{validazioneCampi}
+      \item \textbf{Inclusioni}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[aggiuntaFiltriRicercaDocumento]{[UC-\ref{aggiuntaFiltriRicercaDocumento}]}
+        \item \hyperref[validazioneCampi]{[UC-\ref{validazioneCampi}]}
+    \end{itemize}
 \end{itemize}
-
 \usecase{campoNonValido}{Uno o più valori dei filtri di ricerca non validi}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -110,14 +113,9 @@
     \end{itemize}
     \item \textbf{Flusso principale}:
     \begin{itemize}
-        \item L'Utente specifica il valore di precisione per la ricerca semantica tra:
-        \begin{itemize}
-            \item Basso
-            \item Medio
-            \item Alto
-        \end{itemize}
-        \item Il sistema applica il livello di precisione alla ricerca semantica.
-    \end{itemize}
+    \item L'Utente specifica il valore di precisione per la ricerca semantica scegliendo tra: \textbf{Basso}, \textbf{Medio} o \textbf{Alto}.
+    \item Il sistema applica il livello di precisione alla ricerca semantica.
+\end{itemize}
 \end{itemize}
 
 \varusecase{ricercaClasse}{Ricercare Classe Documentale per Nome}
@@ -138,9 +136,17 @@
                   \item Il sistema valida il formato del Nome
                   \item Il sistema produce i risultati di ricerca in base al Nome inserito
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}: La ricerca non produce risultati e il sistema informa l'Utente (UC-\ref{nessunRisultato}).
-      \item \textbf{Estensioni}: UC-\ref{nessunRisultato}
-      \item \textbf{Specializza}: UC-\ref{ricercaDIP}
+     \item \textbf{Flusso Alternativo}: La ricerca non produce risultati e il sistema informa l'Utente $\rightarrow$ Vedi \hyperref[nessunRisultato]{[UC-\ref{nessunRisultato}]}
+
+\item \textbf{Estensioni}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[nessunRisultato]{[UC-\ref{nessunRisultato}]}
+    \end{itemize}
+
+\item \textbf{Specializza}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[ricercaDIP]{[UC-\ref{ricercaDIP}]}
+    \end{itemize}
 \end{itemize}
 
 % continuare verifica da qui.
@@ -155,14 +161,26 @@
       \item \textbf{Postcondizioni}: Il sistema usa il filtro per la ricerca del Processo
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce l'Id del Processo.
-                  \item Il sistema valida il formato del Nome (UC-\ref{validazioneTestoLibero}).
-                  \item Il sistema mostra i risultati della ricerca (UC-\ref{visualizzaRisultati}).
-            \end{enumerate}
-      \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati e il sistema informa l'Utente (UC-\ref{nessunRisultato}).
-      \item \textbf{Inclusioni}: UC-\ref{visualizzaRisultati}
-      \item \textbf{Estensioni}: UC-\ref{nessunRisultato}
-      \item \textbf{Specializza}: UC-\ref{ricerca}
+    \item L'Utente inserisce l'Id del Processo.
+    \item Il sistema valida il formato del Nome $\rightarrow$ Vedi \hyperref[validazioneTestoLibero]{[UC-10.\ref{validazioneTestoLibero}]}
+    \item Il sistema mostra i risultati della ricerca $\rightarrow$ Vedi \hyperref[visualizzaRisultati]{[UC-\ref{visualizzaRisultati}]}
+\end{enumerate}
+      \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati e il sistema informa l'Utente $\rightarrow$ Vedi \hyperref[nessunRisultato]{[UC-\ref{nessunRisultato}]}
+
+\item \textbf{Inclusioni}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[visualizzaRisultati]{[UC-\ref{visualizzaRisultati}]}
+    \end{itemize}
+
+\item \textbf{Estensioni}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[nessunRisultato]{[UC-\ref{nessunRisultato}]}
+    \end{itemize}
+
+\item \textbf{Specializza}: 
+    \begin{itemize}[label=$\rhd$]
+        \item \hyperref[ricerca]{[UC-\ref{ricerca}]}
+    \end{itemize}
 \end{itemize}
 
 \usecase{aggiuntaFiltriRicercaDocumento}{Aggiunta filtri per Ricerca Documento}
@@ -175,12 +193,11 @@
       \end{itemize}
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato
       \item \textbf{Flusso Principale}:
-            \begin{enumerate}
-                  \item L'Utente imposta uno o più filtri per la ricerca tra campi comuni (UC-\ref{aggiuntaFiltriComuni})
-                  \item L'Utente imposta uno o più filtri per la ricerca tra campi specifici per tipo
-                        documentale (UC-\ref{addFiltriTipoDocumento}).
-                  \item L'Utente imposta uno o più filtri Custom (UC-\ref{addCustomMetadata}).
-            \end{enumerate}
+        \begin{enumerate}
+            \item L'Utente imposta uno o più filtri per la ricerca tra campi comuni $\rightarrow$ Vedi \hyperref[aggiuntaFiltriComuni]{[UC-7.\ref{aggiuntaFiltriComuni}]}
+            \item L'Utente imposta uno o più filtri per la ricerca tra campi specifici per tipo documentale $\rightarrow$ Vedi \hyperref[addFiltriTipoDocumento]{[UC-7.\ref{addFiltriTipoDocumento}]}
+            \item L'Utente imposta uno o più filtri Custom $\rightarrow$ Vedi \hyperref[addCustomMetadata]{[UC-7.\ref{addCustomMetadata}]}
+    \end{enumerate}
 \end{itemize}
 
 \subusecase{aggiuntaFiltriComuni}{Aggiunta filtri Comuni}
@@ -193,12 +210,11 @@
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente seleziona uno o più campi comuni su cui basare la ricerca (da UC-\ref{addChiaveDescrittiva}
-                        a UC-\ref{addSoggetti}).
-                  \item L'Utente compila i valori per i campi selezionati.
-                  \item Validazione del formato per i campi che lo richiedano (UC-\ref{validazioneCampi}).
-                  \item Il sistema utilizza questi parametri per la ricerca.
-            \end{enumerate}
+                \item L'Utente seleziona uno o più campi comuni su cui basare la ricerca $\rightarrow$ Vedi da \hyperref[addChiaveDescrittiva]{[UC-7.1.\ref{addChiaveDescrittiva}]} a \hyperref[addSoggetti]{[UC-7.1.\ref{addSoggetti}]}
+                \item L'Utente compila i valori per i campi selezionati.
+                \item Validazione del formato per i campi che lo richiedano $\rightarrow$ Vedi \hyperref[validazioneCampi]{[UC-\ref{validazioneCampi}]}
+                \item Il sistema utilizza questi parametri per la ricerca.
+        \end{enumerate}
 \end{itemize}
 
 \subsubusecase{addChiaveDescrittiva}{Aggiunta filtro Chiave Descrittiva}
@@ -302,7 +318,7 @@
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente sceglie il Tipo di Documento. (UC-\ref{addTipoDocumento})
+                  \item L'Utente sceglie il Tipo di Documento $\rightarrow$ Vedi \hyperref[addTipoDocumento]{[UC-7.1.\ref{addTipoDocumento}]}
                   \item L'Utente sceglie uno o più tipi di soggetti in base al tipo di documento e ne specifica i campi.
             \end{enumerate}
 \end{itemize}
@@ -339,7 +355,7 @@
                                     destinatario nei flussi in uscita, PAE valido solo come mittente nei flussi in
                                     entrata, come destinatario nei flussi in uscita)
                         \end{itemize}
-                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli (UC-\ref{addDettagliSoggetto}).
+                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli $\rightarrow$ Vedi \hyperref[addDettagliSoggetto]{[UC-7.\ref{addDettagliSoggetto}]}
             \end{enumerate}
 \end{itemize}
 
@@ -369,7 +385,7 @@
                               \item RSP (PF)
                               \item RUP (RUP)
                         \end{itemize}
-                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli (UC-\ref{addDettagliSoggetto}).
+                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli $\rightarrow$ Vedi \hyperref[addDettagliSoggetto]{[UC-7.\ref{addDettagliSoggetto}]}
             \end{enumerate}
 \end{itemize}
 
@@ -395,7 +411,7 @@
                               \item Soggetto intestatario persona giuridica (PG, PAI o PAE).
                               \item RUP.
                         \end{itemize}
-                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli (UC-\ref{addDettagliSoggetto}).
+                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli $\rightarrow$ Vedi \hyperref[addDettagliSoggetto]{[UC-7.\ref{addDettagliSoggetto}]}
             \end{enumerate}
 \end{itemize}
 
@@ -411,8 +427,7 @@
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente può aggiungere i filtri specifici per il tipo selezionato (descritto
-                        negli UC da \ref{aggiuntaFiltriDI-DAI} a \ref{aggiuntaFiltriAggregazione}).
+                  \item L'Utente può aggiungere i filtri specifici per il tipo selezionato $\rightarrow$ Vedi negli UC da \hyperref[aggiuntaFiltriDI-DAI]{[UC-7.2.\ref{aggiuntaFiltriDI-DAI}]} a \hyperref[aggiuntaFiltriAggregazione]{[UC-7.2.\ref{aggiuntaFiltriAggregazione}]}
             \end{enumerate}
 \end{itemize}
 
@@ -428,8 +443,7 @@
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente può aggiungere i filtri specifici per il tipo Documento Informatico e
-                        Amministrativo Informatico (descritto negli UC da \ref{addDatiRegistrazione} a \ref{addTracciatureModificheDocumento}).
+                  \item L'Utente può aggiungere i filtri specifici per il tipo Documento Informatico e Amministrativo Informatico $\rightarrow$ Vedi negli UC da \hyperref[addDatiRegistrazione]{[UC-7.2.1.\ref{addDatiRegistrazione}]} a \hyperref[addTracciatureModificheDocumento]{[UC-7.2.1.\ref{addTracciatureModificheDocumento}]}
             \end{enumerate}
 \end{itemize}
 
@@ -645,7 +659,7 @@
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente può aggiungere i filtri specifici per il tipo Aggregazione (descritto negli UC da \ref{addTipoAggregazione} a \ref{addProgressivo}).
+                  \item L'Utente può aggiungere i filtri specifici per il tipo Aggregazione $\rightarrow$ Vedi negli UC da \hyperref[addTipoAggregazione]{[UC-7.2.2.\ref{addTipoAggregazione}]} a \hyperref[addProgressivo]{[UC-7.2.2.\ref{addProgressivo}]}
             \end{enumerate}
 \end{itemize}
 
@@ -771,8 +785,7 @@
                   \item L'Utente inserisce il Procedimento come denominazione.
                   \item L'Utente inserisce il Catalogo dei Procedimenti come URI di pubblicazione del
                         catalogo.
-                  \item  L'Utente può aggiungere una o più Fasi come filtro (UC-\ref{addFasiProcedimentoAmministrativo}).
-            \end{enumerate}
+                  \item L'Utente può aggiungere una o più Fasi come filtro $\rightarrow$ Vedi \hyperref[addFasiProcedimentoAmministrativo]{[UC-7.2.2.7.\ref{addFasiProcedimentoAmministrativo}]}\end{enumerate}
 \end{itemize}
 
 \subdeepusecase{addFasiProcedimentoAmministrativo}{Aggiunta filtro Fasi del Procedimento Amministrativo}
@@ -815,7 +828,7 @@
                   \item L'Utente inserisce i dati:
                         \begin{itemize}
                               \item Tipo Assegnazione.
-                              \item Soggetto Assegnatario (UC-\ref{addSoggetti}).
+                              \item Soggetto Assegnatario $\rightarrow$ Vedi \hyperref[addSoggetti]{[UC-7.1.\ref{addSoggetti}]}
                               \item Data di Inizio.
                               \item Data di Fine.
                         \end{itemize}
@@ -847,7 +860,7 @@
             \item Il sistema ha indicizzato i documenti presenti nel DIP
             \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
             \item L'Utente ha scelto tipo di documento
-            \item L'Utente ha scelto un ruolo come campo di ricerca secondo le modalità descritte negli UC-\ref{addSoggettiDocInfo}-\ref{addSoggettiAgg}
+            \item L'Utente ha scelto un ruolo come campo di ricerca $\rightarrow$ Vedi negli UC da \hyperref[addSoggettiDocInfo]{[UC-\ref{addSoggettiDocInfo}]} a \hyperref[addSoggettiAgg]{[UC-7.1.6.\ref{addSoggettiAgg}]}
       \end{itemize}
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
@@ -865,7 +878,7 @@
             \item Il sistema ha indicizzato i documenti presenti nel DIP
             \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
             \item L'Utente ha scelto tipo di documento
-            \item L'Utente ha scelto un ruolo come campo di ricerca secondo le modalità descritte negli UC-\ref{addSoggettiDocInfo}-\ref{addSoggettiAgg}
+            \item L'Utente ha scelto un ruolo come campo di ricerca $\rightarrow$ Vedi negli UC da \hyperref[addSoggettiDocInfo]{[UC-\ref{addSoggettiDocInfo}]} a \hyperref[addSoggettiAgg]{[UC-7.1.6.\ref{addSoggettiAgg}]}
             \item L'Utente ha selezionato il ruolo PAI
       \end{itemize}
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
@@ -889,7 +902,7 @@
             \item Il sistema ha indicizzato i documenti presenti nel DIP
             \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
             \item L'Utente ha scelto tipo di documento
-            \item L'Utente ha scelto un ruolo come campo di ricerca secondo le modalità descritte negli UC-\ref{addSoggettiDocInfo}-\ref{addSoggettiAgg}
+            \item L'Utente ha scelto un ruolo come campo di ricerca $\rightarrow$ Vedi negli UC da \hyperref[addSoggettiDocInfo]{[UC-\ref{addSoggettiDocInfo}]} a \hyperref[addSoggettiAgg]{[UC-7.1.6.\ref{addSoggettiAgg}]}
             \item L'Utente ha selezionato il ruolo PAE
       \end{itemize}
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
@@ -912,7 +925,7 @@
             \item Il sistema ha indicizzato i documenti presenti nel DIP
             \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
             \item L'Utente ha scelto tipo di documento
-            \item L'Utente ha scelto un ruolo come campo di ricerca secondo le modalità descritte negli UC-\ref{addSoggettiDocInfo}-\ref{addSoggettiAgg}
+            \item L'Utente ha scelto un ruolo come campo di ricerca $\rightarrow$ Vedi negli UC da \hyperref[addSoggettiDocInfo]{[UC-\ref{addSoggettiDocInfo}]} a \hyperref[addSoggettiAgg]{[UC-7.1.6.\ref{addSoggettiAgg}]}
             \item L'Utente ha selezionato il ruolo AS
       \end{itemize}
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
@@ -939,7 +952,7 @@
             \item Il sistema ha indicizzato i documenti presenti nel DIP
             \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
             \item L'Utente ha scelto tipo di documento
-            \item L'Utente ha scelto un ruolo come campo di ricerca secondo le modalità descritte negli UC-\ref{addSoggettiDocInfo}-\ref{addSoggettiAgg}
+            \item L'Utente ha scelto un ruolo come campo di ricerca $\rightarrow$ Vedi negli UC da \hyperref[addSoggettiDocInfo]{[UC-\ref{addSoggettiDocInfo}]} a \hyperref[addSoggettiAgg]{[UC-7.1.6.\ref{addSoggettiAgg}]}
             \item L'Utente ha selezionato il ruolo PG
       \end{itemize}
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
@@ -963,7 +976,7 @@
             \item Il sistema ha indicizzato i documenti presenti nel DIP
             \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
             \item L'Utente ha scelto tipo di documento
-            \item L'Utente ha scelto un ruolo come campo di ricerca secondo le modalità descritte negli UC-\ref{addSoggettiDocInfo}-\ref{addSoggettiAgg}
+            \item L'Utente ha scelto un ruolo come campo di ricerca $\rightarrow$ Vedi negli UC da \hyperref[addSoggettiDocInfo]{[UC-\ref{addSoggettiDocInfo}]} a \hyperref[addSoggettiAgg]{[UC-7.1.6.\ref{addSoggettiAgg}]}
             \item L'Utente ha selezionato il ruolo PF
       \end{itemize}
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
@@ -986,7 +999,7 @@
             \item Il sistema ha indicizzato i documenti presenti nel DIP
             \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
             \item L'Utente ha scelto tipo di documento
-            \item L'Utente ha scelto un ruolo come campo di ricerca secondo le modalità descritte negli UC-\ref{addSoggettiDocInfo}-\ref{addSoggettiAgg}
+            \item L'Utente ha scelto un ruolo come campo di ricerca $\rightarrow$ Vedi negli UC da \hyperref[addSoggettiDocInfo]{[UC-\ref{addSoggettiDocInfo}]} a \hyperref[addSoggettiAgg]{[UC-7.1.6.\ref{addSoggettiAgg}]}
             \item L'Utente ha selezionato il ruolo RUP
       \end{itemize}
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
@@ -1012,7 +1025,7 @@
             \item Il sistema ha indicizzato i documenti presenti nel DIP
             \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
             \item L'Utente ha scelto tipo di documento
-            \item L'Utente ha scelto un ruolo come campo di ricerca secondo le modalità descritte negli UC-\ref{addSoggettiDocInfo}-\ref{addSoggettiAgg}
+            \item L'Utente ha scelto un ruolo come campo di ricerca $\rightarrow$ Vedi negli UC da \hyperref[addSoggettiDocInfo]{[UC-\ref{addSoggettiDocInfo}]} a \hyperref[addSoggettiAgg]{[UC-7.1.6.\ref{addSoggettiAgg}]}
             \item L'Utente ha selezionato il ruolo SW
       \end{itemize}
       \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
@@ -1045,7 +1058,7 @@
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
             \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha eseguito una ricerca (tramite UC-\ref{ricercaDIP} e sue generalizzazioni).
+            \item L'Utente ha eseguito una ricerca $\rightarrow$ Vedi \hyperref[ricercaDIP]{[UC-\ref{ricercaDIP}]} e sue generalizzazioni
       \end{itemize}
       \item \textbf{Postcondizioni}: I risultati della ricerca sono presentati all'Utente come lista di elementi.
       \item \textbf{Flusso Principale}:
@@ -1054,12 +1067,11 @@
                         ai criteri di ricerca.
                   \item Per ogni elemento, vengono mostrate le informazioni principali (Nome, Data,
                         Tipo).
-                  \item L'Utente può visualizzare ulteriori informazioni e funzioni selezionando uno dei documenti (UC-\ref{informazioniElemento})
+                  \item L'Utente può visualizzare ulteriori informazioni e funzioni selezionando uno dei documenti $\rightarrow$ Vedi \hyperref[informazioniElemento]{[UC-1.\ref{informazioniElemento}]}
             \end{enumerate}
       \item \textbf{Flussi Alternativi}:
             \begin{itemize}
-                  \item Il sistema comunica che la ricerca non ha prodotto alcun risultato
-                        (\ref{nessunRisultato})
+                  \item Il sistema comunica che la ricerca non ha prodotto alcun risultato $\rightarrow$ Vedi \hyperref[nessunRisultato]{[UC-\ref{nessunRisultato}]}
             \end{itemize}
 \end{itemize}
 
@@ -1069,7 +1081,7 @@
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
             \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha eseguito una ricerca (tramite UC-\ref{ricercaDIP} e sue specializzazioni).
+            \item L'Utente ha eseguito una ricerca $\rightarrow$ Vedi \hyperref[ricercaDIP]{[UC-\ref{ricercaDIP}]} e sue specializzazioni
       \end{itemize}
       \item \textbf{Postcondizioni}: Il sistema informa l'Utente che non sono stati trovati risultati.
       \item \textbf{Flusso Principale}:
