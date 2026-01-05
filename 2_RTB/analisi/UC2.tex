@@ -39,10 +39,10 @@
                   \item Uno o più campi non rispettano i formati previsti $\rightarrow$ Vedi \hyperref[campoNonValido]{[UC-\ref{campoNonValido}]}
             \end{itemize}
       \item \textbf{Inclusioni}: 
-    \begin{itemize}[label=$\rhd$]
-        \item \hyperref[aggiuntaFiltriRicercaDocumento]{[UC-\ref{aggiuntaFiltriRicercaDocumento}]}
-        \item \hyperref[validazioneCampi]{[UC-\ref{validazioneCampi}]}
-    \end{itemize}
+            \begin{itemize}[label=$\rhd$]
+                  \item \hyperref[aggiuntaFiltriRicercaDocumento]{[UC-\ref{aggiuntaFiltriRicercaDocumento}]}
+                  \item \hyperref[validazioneCampi]{[UC-\ref{validazioneCampi}]}
+            \end{itemize}
 \end{itemize}
 \usecase{campoNonValido}{Uno o più valori dei filtri di ricerca non validi}
 \begin{itemize}
@@ -101,21 +101,21 @@
 
 \subusecase{PrecisioneSemantica}{Imposta precisione di ricerca semantica}
 \begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{itemize}
-      \item L'Utente ha avviato l'applicazione
-      \item Il sistema ha indicizzato i documenti presenti nel DIP
-    \end{itemize}
-    \item \textbf{Postcondizioni}:
-    \begin{itemize}
-        \item L'Utente ha impostato il valore di precisione per la ricerca semantica
-    \end{itemize}
-    \item \textbf{Flusso principale}:
-    \begin{itemize}
-    \item L'Utente specifica il valore di precisione per la ricerca semantica scegliendo tra: \textbf{Basso}, \textbf{Medio} o \textbf{Alto}.
-    \item Il sistema applica il livello di precisione alla ricerca semantica.
-\end{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}:
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item Il sistema ha indicizzato i documenti presenti nel DIP
+      \end{itemize}
+      \item \textbf{Postcondizioni}:
+      \begin{itemize}
+            \item L'Utente ha impostato il valore di precisione per la ricerca semantica
+      \end{itemize}
+      \item \textbf{Flusso principale}:
+      \begin{itemize}
+            \item L'Utente specifica il valore di precisione per la ricerca semantica scegliendo tra: \textbf{Basso}, \textbf{Medio} o \textbf{Alto}.
+            \item Il sistema applica il livello di precisione alla ricerca semantica.
+      \end{itemize}
 \end{itemize}
 
 \varusecase{ricercaClasse}{Ricercare Classe Documentale per Nome}
@@ -137,16 +137,15 @@
                   \item Il sistema produce i risultati di ricerca in base al Nome inserito
             \end{enumerate}
      \item \textbf{Flusso Alternativo}: La ricerca non produce risultati e il sistema informa l'Utente $\rightarrow$ Vedi \hyperref[nessunRisultato]{[UC-\ref{nessunRisultato}]}
+      \item \textbf{Estensioni}: 
+      \begin{itemize}[label=$\rhd$]
+            \item \hyperref[nessunRisultato]{[UC-\ref{nessunRisultato}]}
+      \end{itemize}
 
-\item \textbf{Estensioni}: 
-    \begin{itemize}[label=$\rhd$]
-        \item \hyperref[nessunRisultato]{[UC-\ref{nessunRisultato}]}
-    \end{itemize}
-
-\item \textbf{Specializza}: 
-    \begin{itemize}[label=$\rhd$]
-        \item \hyperref[ricercaDIP]{[UC-\ref{ricercaDIP}]}
-    \end{itemize}
+      \item \textbf{Specializza}: 
+      \begin{itemize}[label=$\rhd$]
+            \item \hyperref[ricercaDIP]{[UC-\ref{ricercaDIP}]}
+      \end{itemize}
 \end{itemize}
 
 % continuare verifica da qui.
@@ -164,7 +163,7 @@
     \item L'Utente inserisce l'Id del Processo.
     \item Il sistema valida il formato del Nome $\rightarrow$ Vedi \hyperref[validazioneTestoLibero]{[UC-10.\ref{validazioneTestoLibero}]}
     \item Il sistema mostra i risultati della ricerca $\rightarrow$ Vedi \hyperref[visualizzaRisultati]{[UC-\ref{visualizzaRisultati}]}
-\end{enumerate}
+      \end{enumerate}
       \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati e il sistema informa l'Utente $\rightarrow$ Vedi \hyperref[nessunRisultato]{[UC-\ref{nessunRisultato}]}
 
 \item \textbf{Inclusioni}: 
@@ -179,7 +178,7 @@
 
 \item \textbf{Specializza}: 
     \begin{itemize}[label=$\rhd$]
-        \item \hyperref[ricerca]{[UC-\ref{ricerca}]}
+        \item \hyperref[ricercaDIP]{[UC-\ref{ricercaDIP}]}
     \end{itemize}
 \end{itemize}
 
