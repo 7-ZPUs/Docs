@@ -1,4 +1,4 @@
-\usecase{ricercaDIP}{Ricerca nel DIP}
+\usecase{ricercaDIP}{ (A) Ricerca nel DIP}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -8,12 +8,17 @@
       \end{itemize}
       \item \textbf{Postcondizioni}:
             \begin{itemize}
-                  \item Il sistema produce i risultati di ricerca
+                  \item Il sistema produce i risultati di ricerca in base ai criteri specificati
             \end{itemize}
       \item \textbf{Flusso Principale}
       \begin{enumerate}
-            \item 
+            \item L'utente specifica i criteri di ricerca
+            \item Il sistema produce i risultati di ricerca in base ai criteri specificati
       \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \item \begin{itemize}
+            \item La ricerca non produce risultati e il sistema informa l'Utente (UC-\ref{nessunRisultato})
+      \end{itemize}
 \end{itemize}
 
 \varusecase{ricercaDIPConFiltri}{Ricerca nel DIP con filtri}
@@ -30,15 +35,113 @@
             \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente aggiunge filtri come parametri per la ricerca(UC-\ref{aggiuntaFiltriRicercaDocumento})
+                  \item L'Utente aggiunge filtri come parametri per la ricerca(UC-\ref{specificaFiltriRicercaDocumento})
                   \item Vengono controllati i valori dei filtri di ricerca
                   \item Il sistema produce i risultati di ricerca in base ai filtri specificati
             \end{enumerate}
       \item \textbf{Flusso alternativo}: 
             \begin{itemize}
                   \item Uno o più campi non rispettano i formati previsti (UC-\ref{campoNonValido})
+                  \item La ricerca non produce risultati e il sistema informa l'Utente (UC-\ref{nessunRisultato})
             \end{itemize}
-      \item \textbf{Inclusioni}: UC-\ref{aggiuntaFiltriRicercaDocumento}, UC-\ref{validazioneCampi}
+      \item \textbf{Inclusioni}: UC-\ref{specificaFiltriRicercaDocumento}
+\end{itemize}
+
+\varusecase{ricercaDIPSemantica}{Ricerca nel DIP semantica}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{itemize}
+      \item L'Utente ha avviato l'applicazione
+      \item Il sistema ha indicizzato i documenti presenti nel DIP con l'engine semantico
+    \end{itemize}
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Il sistema produce i risultati di ricerca semantica per la query specificata.
+    \end{itemize}
+    \item \textbf{Flusso principale}:
+    \begin{itemize}
+        \item L'Utente specifica la query di ricerca
+        \item Il sistema produce i risultati di ricerca per la query specificata
+    \end{itemize}
+    \item \textbf{Flusso alternativo}:
+    \begin{itemize}
+        \item La ricerca non produce risultati e il sistema informa l'Utente (UC-\ref{nessunRisultato})
+    \end{itemize}
+\end{itemize}
+
+\varusecase{ricercaClasse}{Ricerca Classe Documentale per Nome}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize} 
+            \item L'Utente ha avviato l'applicazione
+            \item Il sistema ha indicizzato i documenti presenti nel DIP
+      \end{itemize}
+      \item \textbf{Postcondizioni}:
+            \begin{itemize}
+                  \item Il sistema produce i risultati di ricerca in base al Nome inserito
+            \end{itemize}
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il Nome della Classe Documentale da ricercare (UC-\ref{inserimentoNomeClasseDocumentale}).
+                  \item Il sistema produce i risultati di ricerca in base al Nome inserito
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}: La ricerca non produce risultati e il sistema informa l'Utente (UC-\ref{nessunRisultato}).
+      \item \textbf{Estensioni}: UC-\ref{nessunRisultato}
+      \item \textbf{Specializza}: UC-\ref{ricercaDIP}
+\end{itemize}
+
+\subusecase{inserimentoNomeClasseDocumentale}{Inserimento Nome Classe Documentale}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}:
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP per Classe Documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il Nome della Classe Documentale che l'Utente vuole ricercare.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il Nome della Classe Documentale da ricercare. (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema riceve il Nome della Classe Documentale.
+            \end{enumerate}
+\end{itemize}
+
+\varusecase{ricercaProcesso}{Ricerca Processo per Id}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item Il sistema ha indicizzato i documenti presenti nel DIP
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema produce i risultati di ricerca in base all'Id inserito
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce l'Id del Processo (UC-\ref{inserimentoIdProcesso}).
+                  \item Il sistema produce i risultati di ricerca in base all'Id inserito
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati e il sistema informa l'Utente (UC-\ref{nessunRisultato}).
+      \item \textbf{Estensioni}: UC-\ref{nessunRisultato}
+      \item \textbf{Specializza}: UC-\ref{ricercaDIP}
+\end{itemize}
+
+\subusecase{inserimentoIdProcesso}{Inserimento Id Processo}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}:
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP per Processo
+      \end{itemize}
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item Il sistema riceve l'Id del Processo che l'Utente vuole ricercare.
+      \end{itemize}
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce l'Id del Processo da ricercare. (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema riceve l'Id del Processo.
+            \end{enumerate}
 \end{itemize}
 
 \usecase{campoNonValido}{Uno o più valori dei filtri di ricerca non validi}
@@ -57,46 +160,48 @@
           \end{enumerate}
 \end{itemize}
 
-\varusecase{ricercaDIPSemantica}{Ricerca nel DIP semantica}
+\usecase{indicizzazioneSemantica}{Indicizza DIP con engine semantico}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{itemize}
       \item L'Utente ha avviato l'applicazione
-      \item Il sistema ha indicizzato i documenti presenti nel DIP
     \end{itemize}
     \item \textbf{Postcondizioni}:
     \begin{itemize}
-        \item Il sistema produce i risultati di ricerca semantica
+        \item Il sistema ha indicizzato i documenti presenti nel DIP con l'engine semantico
     \end{itemize}
     \item \textbf{Flusso principale}:
     \begin{itemize}
-        \item L'Utente specifica la query di ricerca
-        \item Il sistema produce i risultati di ricerca per la query specificata
+        \item L'Utente seleziona l'opzione di indicizzazione semantica
+        \item Il sistema indicizza i documenti presenti nel DIP con l'engine semantico
     \end{itemize}
     \item \textbf{Flusso alternativo}:
     \begin{itemize}
-        \item I documenti non sono stati indicizzati dall'engine semantico
+        \item La ricerca non produce risultati e il sistema informa l'Utente (UC-\ref{nessunRisultato})
     \end{itemize}
 \end{itemize}
 
-\usecase{documentiNonIndicizzati}{Documenti non indicizzati dall'engine semantico}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: 
-    \begin{itemize}
-        \item L'utente ha avviato l'applicazione
-        \item L'Utente sta effettuando una ricerca nel DIP semantica
-    \end{itemize}
-    \item \textbf{Postcondizioni}: Il sistema annulla la ricerca mostrando un messaggio di errore che dice all'Utente che i documenti non sono stati indicizzati dall'engine semantico.
-    \item \textbf{Flusso Principale}:
-          \begin{enumerate}
-      \item Il sistema annulla l'operazione di ricerca.
-              \item Il sistema mostra a video un messaggio di errore che indica che i documenti non sono stati indicizzati dall'engine semantico.
-          \end{enumerate}
-\end{itemize}
+\usecase{erroreIndicizzazioneSemantica}{Indicizzazione semantica fallita}
+\begin{abstract}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}:
+      \item \begin{itemize}
+        \item L'Utente ha avviato l'applicazione
+        \item L'Utente ha selezionato l'opzione di indicizzazione semantica
+      \end{itemize}
+      \item \textbf{Postcondizioni}:
+      \item \begin{itemize}
+          \item Il sistema annulla l'indicizzazione semantica del DIP, mostrando un messaggio di errore.
+      \end{itemize}
+      \item \textbf{Flusso Principale}:
+      \item \begin{enumerate}
+          \item Il sistema annulla l'operazione di indicizzazione semantica.
+          \item Il sistema mostra a video un messaggio di errore che indica il motivo del fallimento.
+      \end{enumerate}
+\end{abstract}
 
-\subusecase{PrecisioneSemantica}{Imposta precisione di ricerca semantica}
+\usecase{PrecisioneSemantica}{Imposta precisione di ricerca semantica}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -120,377 +225,398 @@
     \end{itemize}
 \end{itemize}
 
-\varusecase{ricercaClasse}{Ricercare Classe Documentale per Nome}
-\begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: 
-      \begin{itemize} 
-            \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-      \end{itemize}
-      \item \textbf{Postcondizioni}:
-            \begin{itemize}
-                  \item Il sistema produce i risultati di ricerca in base al Nome inserito
-            \end{itemize}
-      \item \textbf{Flusso Principale}:
-            \begin{enumerate}
-                  \item L'Utente inserisce il Nome della Classe Documentale
-                  \item Il sistema valida il formato del Nome
-                  \item Il sistema produce i risultati di ricerca in base al Nome inserito
-            \end{enumerate}
-      \item \textbf{Flusso Alternativo}: La ricerca non produce risultati e il sistema informa l'Utente (UC-\ref{nessunRisultato}).
-      \item \textbf{Estensioni}: UC-\ref{nessunRisultato}
-      \item \textbf{Specializza}: UC-\ref{ricercaDIP}
-\end{itemize}
-
-% continuare verifica da qui.
-
-\varusecase{ricecrcaProcesso}{Ricercare Processo per Id}
-\begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \begin{itemize}
-            \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-      \end{itemize}
-      \item \textbf{Postcondizioni}: Il sistema usa il filtro per la ricerca del Processo
-      \item \textbf{Flusso Principale}:
-            \begin{enumerate}
-                  \item L'Utente inserisce l'Id del Processo.
-                  \item Il sistema valida il formato del Nome (UC-\ref{validazioneTestoLibero}).
-                  \item Il sistema mostra i risultati della ricerca (UC-\ref{visualizzaRisultati}).
-            \end{enumerate}
-      \item \textbf{Flusso Alternativo (Nessun risultato)}: La ricerca non produce risultati e il sistema informa l'Utente (UC-\ref{nessunRisultato}).
-      \item \textbf{Inclusioni}: UC-\ref{visualizzaRisultati}
-      \item \textbf{Estensioni}: UC-\ref{nessunRisultato}
-      \item \textbf{Specializza}: UC-\ref{ricerca}
-\end{itemize}
-
-\usecase{aggiuntaFiltriRicercaDocumento}{Aggiunta filtri per Ricerca Documento}
+\usecase{specificaFiltriRicercaDocumento}{Specifica filtri per Ricerca Documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato
+      \item \textbf{Postcondizioni}: Vengono specificati i filtri per la ricerca dei documenti.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente imposta uno o più filtri per la ricerca tra campi comuni (UC-\ref{aggiuntaFiltriComuni})
-                  \item L'Utente imposta uno o più filtri per la ricerca tra campi specifici per tipo
+                  \item L'Utente specifica i filtri per la ricerca tra campi comuni (UC-\ref{specificaFiltriComuni})
+                  \item L'Utente specifica i filtri per la ricerca tra campi specifici per tipo
                         documentale (UC-\ref{addFiltriTipoDocumento}).
-                  \item L'Utente imposta uno o più filtri Custom (UC-\ref{addCustomMetadata}).
+                  \item L'Utente specifica i filtri Custom (UC-\ref{addCustomMetadata}).
             \end{enumerate}
 \end{itemize}
 
-\subusecase{aggiuntaFiltriComuni}{Aggiunta filtri Comuni}
+\subusecase{specificaFiltriComuni}{Specifica filtri per Campi Comuni}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}:\begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato
+      \item \textbf{Postcondizioni}: Vengono specificati i filtri per i campi comuni per la ricerca dei documenti e utilizzati per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente seleziona uno o più campi comuni su cui basare la ricerca (da UC-\ref{addChiaveDescrittiva}
+                  \item L'Utente seleziona i campi comuni su cui basare la ricerca. (UC-\ref{selezionaCampiRicercaComuni})
+                  \item L'Utente specifica i filtri per i campi selezionati (da UC-\ref{addChiaveDescrittiva}
                         a UC-\ref{addSoggetti}).
-                  \item L'Utente compila i valori per i campi selezionati.
-                  \item Validazione del formato per i campi che lo richiedano (UC-\ref{validazioneCampi}).
-                  \item Il sistema utilizza questi parametri per la ricerca.
+                  % \item Validazione del formato per i campi che lo richiedano (UC-\ref{validazioneCampi}).
             \end{enumerate}
 \end{itemize}
 
-\subsubusecase{addChiaveDescrittiva}{Aggiunta filtro Chiave Descrittiva}
+\subsubusecase{addChiaveDescrittiva}{Specifica filtro Chiave Descrittiva}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
             \item L'Utente ha selezionato il filtro Chiave Descrittiva tra i campi comuni
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Chiave Descrittiva
+            \item Il filtro Chiave Descrittiva è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente compila i valori per:
+                  \item L'Utente compila i valori di Chiave Descrittiva quali:
                         \begin{itemize}
-                              \item Chiave Descrittiva
-                              \item Oggetto
-                              \item Parole Chiave.
+                              \item Chiave Descrittiva (UC-\ref{compilaValoreFiltro})
+                              \item Oggetto (UC-\ref{compilaValoreFiltro})
+                              \item Parole Chiave (UC-\ref{compilaValoreFiltro})
                         \end{itemize}
+                  \item Il sistema imposta i valori del filtro come parametri di ricerca.
             \end{enumerate}
 \end{itemize}
 
-\subsubusecase{addClassificazione}{Aggiunta filtro Classificazione}
+\subsubusecase{addClassificazione}{Specifica filtro Classificazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}:  \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
             \item L'Utente ha selezionato il filtro Classificazione tra i campi comuni
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Classificazione
+            \item Il filtro Classificazione è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente compila i parametri di Classificazione tra:
+                  \item L'Utente compila i valori di Classificazione tra:
                         \begin{itemize}
-                              \item Indice di Classificazione
-                              \item Descrizione
-                              \item Piano di Fascicolo
+                              \item Indice di Classificazione (UC-\ref{compilaValoreFiltro})
+                              \item Descrizione (UC-\ref{compilaValoreFiltro})
+                              \item Piano di Fascicolo (UC-\ref{compilaValoreFiltro})
                         \end{itemize}
+                  \item Il sistema imposta i valori del filtro come parametri di ricerca.
             \end{enumerate}
 \end{itemize}
 
-\subsubusecase{addTempoConserva}{Aggiunta filtro Tempo di Conservazione}
+\subsubusecase{addTempoConserva}{Specifica filtro Tempo di Conservazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
             \item L'Utente ha selezionato il filtro Tempo di Conservazione tra i campi comuni
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Tempo di Conservazione
+            \item Il filtro Tempo di Conservazione è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce il valore numerico del il tempo di conservazione o seleziona
-                        "Perenne".
+                  \item L'Utente inserisce il valore numerico del tempo di conservazione o seleziona
+                        "Perenne". (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema imposta il valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\subsubusecase{addNote}{Aggiunta filtro Note}
+\subsubusecase{addNote}{Specifica filtro Note}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
             \item L'Utente ha selezionato il filtro Note tra i campi comuni
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Note.
+            \item Il filtro Note è parametro per la ricerca con filtri e per la generazione del risultato.
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce il testo della Nota.
+                  \item L'Utente inserisce il testo della Nota. (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema imposta il valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\subsubusecase{addTipoDocumento}{Aggiunta filtro Tipo documento}
+\subsubusecase{addTipoDocumento}{Specifica filtro Tipo documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
             \item L'Utente ha selezionato il filtro Tipo documento tra i campi comuni
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Tipo documento
+            \item Il filtro Tipo documento è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                    \item L'Utente sceglie il tipo di documento per l'aggiunta del filtro di soggetti tra: \begin{itemize}
+                    \item L'Utente sceglie il tipo di documento tra: \begin{itemize}
                         \item Documento Informatico
                         \item Documento Amministrativo Informatico
                         \item Aggregazione Documentale
-                    \end{itemize}.
+                    \end{itemize}. (UC-\ref{compilaValoreFiltro})
+                    \item Il sistema imposta il valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\subsubusecase{addSoggetti}{Aggiunta filtro Soggetti}
+\subsubusecase{addSoggetti}{Specifica filtro soggetti}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
+            \item L'Utente ha specificato il filtro Tipo di Documento
+      \end{itemize}
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha aggiunto uno o più soggetti al filtro Soggetti
+            \item I valori dei soggetti aggiunti sono parametri per la ricerca
+      \end{itemize}
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'utente aggiunge uno o più soggetti al filtro Soggetti (UC-\ref{addSoggetto})(0...n).
+                  \item Il sistema imposta i valori dei soggetti aggiunti come parametri per la ricerca.
+            \end{enumerate}
+\end{itemize}
+
+\usecase{addSoggetto}{Aggiunta Soggetto ad un filtro}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando un filtro che prevede l'aggiunta di soggetti
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: Viene specificato un soggetto e aggiunto al filtro che l'Utente sta specificando.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente sceglie il Tipo di Documento. (UC-\ref{addTipoDocumento})
-                  \item L'Utente sceglie uno o più tipi di soggetti in base al tipo di documento e ne specifica i campi.
+                  \item L'utente specifica il ruolo del soggetto tra quelli disponibili per il tipo di documento scelto. (UC-\ref{specificaRuoloSoggetto}).
+                  \item L'utente specifica il tipo di soggetto tra quelli disponibili per il ruolo selezionato. (UC-\ref{specificaTipoSoggetto}).
+                  \item L'utente specifica i valori dei campi per cui ricercare, relativi al tipo di soggetto selezionato (UC-\ref{addDettagliSoggetto}).
+                  \item Viene aggiunto un soggetto con le specifiche indicate al filtro che l'Utente sta specificando.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addSoggettiDI}{Aggiunta filtro soggetti per Documento Informatico}
+\subusecase{specificaRuoloSoggetto}{Specifica ruolo del soggetto}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
-            \item L'Utente ha scelto come tipo di documento il Documento Informatico
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato il filtro Tipo di Documento
+            \item L'Utente sta aggiungendo un soggetto ad un filtro
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: Viene specificato il ruolo del soggetto che l'utente sta aggiungendo, in base alla specifica del filtro Tipo di Documento.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente sceglie il Ruolo e i sottocampi specifici tra:
+                  \item L'Utente visualizza i ruoli disponibili in base alla specifica del filtro Tipo di Documento. (UC-\ref{visualizzaRuoliPerTipoDocumento}).
+                  \item L'Utente seleziona il Ruolo tra quelli disponibili per il tipo di documento selezionato.
+                  \item Il sistema salva il ruolo selezionato per il soggetto che l'Utente sta aggiungendo.
+            \end{enumerate}
+\end{itemize}
+
+\subsubusecase{visualizzaRuoliPerTipoDocumento}{Visualizza ruoli disponibili per tipo di documento}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente ha specificato il filtro Tipo di Documento
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Vengono mostrati i ruoli disponibili in base alla specifica del filtro Tipo di Documento.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item Il sistema mostra per ogni ruolo disponibile in base alla specifica del filtro Tipo di Documento:
                         \begin{itemize}
-                              \item Assegnatario (AS)
-                              \item Autore (PF, PG, PAI valido solo nei flussi in entrata)
-                              \item Destinatario (PF, PG, PAI valido solo come mittente nei flussi in entrata, come
-                                    destinatario nei flussi in uscita, PAE valido solo come mittente nei flussi in
-                                    entrata, come destinatario nei flussi in uscita)
-                              \item Mittente (PF, PG, PAI valido solo come mittente nei flussi in entrata, come
-                                    destinatario nei flussi in uscita, PAE valido solo come mittente nei flussi in
-                                    entrata, come destinatario nei flussi in uscita)
-                              \item Operatore (PF)
-                              \item Produttore (SW)
-                              \item RGD (PF)
-                              \item RSP (PF)
-                              \item Soggetto che effettua la registrazione (PF, PG)
-                              \item Altro(PF, PG, PAI valido solo come mittente nei flussi in entrata, come
-                                    destinatario nei flussi in uscita, PAE valido solo come mittente nei flussi in
-                                    entrata, come destinatario nei flussi in uscita)
+                              \item Nome del Ruolo (UC-\ref{visualizzaNomeRuolo})
                         \end{itemize}
-                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli (UC-\ref{addDettagliSoggetto}).
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addSoggettiDAI}{Aggiunta filtro soggetti per Documento Amministrativo informatico}
+\deepusecase{visualizzaNomeRuolo}{Visualizza nome del ruolo}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}:
+      \item \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta visualizzando una lista di ruoli.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: L'Utente visualizza il nome del ruolo.
+      \item \textbf{Flusso Principale}:
+      \item \begin{enumerate}
+            \item Il sistema mostra a video il nome del ruolo.
+      \end{enumerate}
+\end{itemize}
+
+\subusecase{specificaTipoSoggetto}{Specifica tipo di soggetto}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
-            \item L'Utente ha scelto come tipo di documento il Documento Amministrativo Informatico
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta aggiungendo un soggetto ad un filtro
+            \item L'Utente ha specificato il ruolo del soggetto
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: Viene specificato il tipo del soggetto che l'utente sta aggiungendo, in base al ruolo selezionato per il soggetto che l'Utente sta aggiungendo.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente sceglie il Ruolo e i sottocampi specifici tra:
-                        \begin{itemize}
-                              \item Amministrazione che effettua la registrazione (PAI)
-                              \item Assegnatario (AS)
-                              \item Autore (PF, PG valido nei flussi di entrata, PAI, PAE valido nel flussi in entrata)
-                              \item Destinatario (PF, PG, PAI, PAE)
-                              \item Mittente (PF, PG, PAI, PAE)
-                              \item Operatore (PF)
-                              \item Produttore (SW)
-                              \item RGD (PF)
-                              \item RSP (PF)
-                              \item RUP (RUP)
-                        \end{itemize}
-                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli (UC-\ref{addDettagliSoggetto}).
+                  \item L'Utente visualizza i tipi di soggetto disponibili in base al ruolo selezionato per il soggetto che l'Utente sta aggiungendo (UC-\ref{visualizzaTipiSoggettoPerRuolo}).
+                  \item L'Utente seleziona il Tipo di Soggetto tra quelli disponibili per il ruolo selezionato (per il soggetto che l'Utente sta aggiungendo).
+                  \item Il sistema salva il tipo di soggetto selezionato per il soggetto che l'Utente sta aggiungendo.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addSoggettiAgg}{Aggiunta filtro soggetti per Aggregazione}
+\subsubusecase{visualizzaTipiSoggettoPerRuolo}{Visualizza tipi di soggetto disponibili per ruolo}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
-            \item L'Utente ha scelto come tipo di documento l'Aggregazione Documentale
+            \item L'Utente sta aggiungendo un soggetto ad un filtro, di cui ne ha specificato il ruolo (UC-\ref{specificaRuoloSoggetto})
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: Vengono mostrati i tipi di soggetto disponibili per il ruolo selezionato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente sceglie il Ruolo e i sottocampi specifici tra:
-                        \begin{itemize}
-                              \item Amministrazione titolare (PAI).
-                              \item Amministrazioni partecipanti (PAI o PAE).
-                              \item Assegnatario (AS).
-                              \item Soggetto intestatario persona fisica (PF).
-                              \item Soggetto intestatario persona giuridica (PG, PAI o PAE).
-                              \item RUP.
-                        \end{itemize}
-                  \item Per ogni ruolo, l'Utente può specificare ulteriori dettagli (UC-\ref{addDettagliSoggetto}).
+                  \item Il sistema mostra, per ogni tipo di soggetto disponibile per il ruolo selezionato, il Nome del Tipo di Soggetto.
             \end{enumerate}
 \end{itemize}
 
-\subusecase{addFiltriTipoDocumento}{Aggiunta filtri per Tipo Documentale}
+\deepusecase{visualizzaNomeTipoSoggetto}{Visualizza nome del tipo di soggetto}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}:
+      \item \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta visualizzando una lista di tipi di soggetto.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: L'Utente visualizza il nome del tipo di soggetto.
+      \item \textbf{Flusso Principale}:
+      \item \begin{enumerate}
+            \item Il sistema mostra a video il nome del tipo di soggetto.
+      \end{enumerate}
+\end{itemize}
+
+\usecase{addFiltriTipoDocumento}{(A)Specifica filtri per Tipo di Documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha selezionato il filtro il filtro Tipo documentale
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato il filtro Tipo di Documento
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: Vengono specificati i filtri per il tipo di documento selezionato e utilizzati per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente può aggiungere i filtri specifici per il tipo selezionato (descritto
-                        negli UC da \ref{aggiuntaFiltriDI-DAI} a \ref{aggiuntaFiltriAggregazione}).
+                  \item L'utente aggiunge i filtri specifici per il tipo di documento selezionato (descritti
+                        negli UC \ref{specificaFiltriDI-DAI} e \ref{specificaFiltriAggregazione}).
             \end{enumerate}
 \end{itemize}
 
-\subsubusecase{aggiuntaFiltriDI-DAI}{Aggiunta filtri per Documento Informatico e Amministrativo Informatico}
+\varusecase{specificaFiltriDI-DAI}{Specifica filtri per Documento Informatico e Amministrativo Informatico}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha scelto come tipo Documento Informatico o Amministrativo Informatico
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come Tipo di Documento: Documento Informatico o Documento Amministrativo Informatico
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: Vengono specificati i filtri per i campi del Documento Informatico e Amministrativo Informatico e utilizzati per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente può aggiungere i filtri specifici per il tipo Documento Informatico e
-                        Amministrativo Informatico (descritto negli UC da \ref{addDatiRegistrazione} a \ref{addTracciatureModificheDocumento}).
+                  \item L'Utente aggiunge i filtri specifici per il tipo Documento Informatico e
+                        Amministrativo Informatico (descritti negli UC da \ref{addDatiRegistrazione} a \ref{addTracciatureModificheDocumento}).
             \end{enumerate}
+      \item \textbf{Specializza}: UC-\ref{specificaFiltriTipoDocumento}
 \end{itemize}
 
-\deepusecase{addDatiRegistrazione}{Aggiunta filtro Dati di Registrazione}
+\subusecase{addDatiRegistrazione}{Specifica filtro Dati di Registrazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
            \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha scelto come tipo Documento Informatico o Amministrativo Informatico
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come Tipo di Documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'Utente ha selezionato il filtro Dati di Registrazione tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Dati di Registrazione
+            \item Il filtro Dati di Registrazione è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente sceglie la Tipologia di Flusso tra: \begin{itemize}
+                  \item L'Utente specifica la Tipologia di Flusso (UC-\ref{compilaValoreFiltro}) tra: \begin{itemize}
                               \item Uscita
                               \item Entrata
                               \item Interno.
                         \end{itemize}
-                  \item L'Utente sceglie il Tipo di Registro tra: \begin{itemize}
+                  \item L'Utente specifica il Tipo di Registro (UC-\ref{compilaValoreFiltro}) tra: \begin{itemize}
                               \item Nessuno,
                               \item Protocollo Ordinario/Protocollo di Emergenza
                               \item Repertorio/Registro.
                         \end{itemize}
-                  \item L'Utente inserisce la Data/Ora di Registrazione (nel caso di un documento
-                        protocollato tali parametri fanno riferimento alla protocollazione).
-                  \item L'Utente inserisce il codice identificativo del Registro.
+                  \item L'Utente specifica la Data/Ora di Registrazione (nel caso di un documento
+                        protocollato tali parametri fanno riferimento alla protocollazione). (UC-\ref{compilaValoreFiltro})
+                  \item L'Utente specifica il codice identificativo del Registro (UC-\ref{compilaValoreFiltro}).
+                  \item Il sistema imposta i valori del filtro come parametri per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addTipologiaDocumentale}{Aggiunta filtro Tipologia Documentale}
+\subusecase{addTipologiaDocumentale}{Specifica filtro Tipologia Documentale}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha scelto come tipo Documento Informatico o Amministrativo Informatico
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Tipologia Documentale tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Tipologia Documentale
+            \item Il filtro Tipologia Documentale è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce il nome della Tipologia Documentale (fatture, delibere,
-                        determine).
+                  \item L'Utente specifica il nome della Tipologia Documentale (fatture, delibere,
+                        determine). (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addModalitaFormazione}{Aggiunta filtro Modalità di Formazione}
+\subusecase{addModalitaFormazione}{Specifica filtro Modalità di Formazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha scelto come tipo Documento Informatico o Amministrativo Informatico
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Modalità di Formazione tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Modalità di Formazione
+            \item Il filtro Modalità di Formazione è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente sceglie la Modalità di Formazione tra:
+                  \item L'Utente specifica la Modalità di Formazione (UC-\ref{compilaValoreFiltro}) tra:
                         \begin{itemize}
                               \item Creazione di un documento informatico ex novo
                               \item Acquisizione di un documento informatico da altro documento informatico o da
@@ -498,545 +624,668 @@
                               \item Memorizzazione su supporto informatico in formato digitale
                               \item Generazione o raggruppamento in forma statica
                         \end{itemize}
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addRiservato}{Aggiunta filtro campo Riservato}
+\subusecase{addRiservato}{Specifica filtro campo Riservato}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha scelto come tipo Documento Informatico o Amministrativo Informatico
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Riservato tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Riservato
+            \item Il filtro Riservato è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente sceglie se il file è Riservato o meno.
+                  \item L'Utente specifica se il file è Riservato o meno. (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addIdentificativoFormato}{Aggiunta filtro Identificativo di Formato}
+\subusecase{addIdentificativoFormato}{Specifica filtro Identificativo di Formato}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha scelto come tipo Documento Informatico o Amministrativo Informatico
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Identificativo di Formato tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Identificativo di Formato
+            \item Il filtro Identificativo di Formato è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente sceglie la Tipologia di Formato all'interno di quelli Previsti dalle
-                        linee Guida (.pdf, .xml, .docx, ecc.).
-                  \item L'Utente inserisce il Nome del Prodotto utilizzato per la creazione del
-                        Documento.
-                  \item L'Utente inserisce il numero della Versione del Prodotto utilizzato per la
-                        creazione del Documento
-                  \item L'Utente inserisce il nome il Produttore del Prodotto utilizzato per la
-                        creazione del Documento.
+                  \item L'Utente specifica la Tipologia di Formato all'interno di quelli Previsti dalle
+                        linee Guida (.pdf, .xml, .docx, ecc.). (UC-\ref{compilaValoreFiltro})
+                  \item L'Utente specifica il Nome del Prodotto utilizzato per la creazione del
+                        Documento. (UC-\ref{compilaValoreFiltro})
+                  \item L'Utente specifica il numero della Versione del Prodotto utilizzato per la
+                        creazione del Documento. (UC-\ref{compilaValoreFiltro})
+                  \item L'Utente specifica il nome il Produttore del Prodotto utilizzato per la
+                        creazione del Documento. (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema imposta i valori del filtro come parametri di ricerca.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addDatiVerifica}{Aggiunta filtro Dati di Verifica}
+\subusecase{addDatiVerifica}{Specifica filtro Dati di Verifica}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha scelto come tipo Documento Informatico o Amministrativo Informatico
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Dati di Verifica tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Dati di Verifica
+            \item Il filtro Dati di Verifica è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente sceglie se il file è Firmato Digitalmente o meno.
-                  \item L'Utente sceglie se il file è Sigillato Elettronicamente o meno.
-                  \item L'Utente sceglie se il file ha una Marcatura Temporale o meno.
-                  \item L'Utente sceglie se vi è conformità copie immagine su supporto informatico o
-                        meno.
+                  \item L'Utente specifica se il file è Firmato Digitalmente o meno. (UC-\ref{compilaValoreFiltro})
+                  \item L'Utente specifica se il file è Sigillato Elettronicamente o meno. (UC-\ref{compilaValoreFiltro})
+                  \item L'Utente specifica se il file ha una Marcatura Temporale o meno. (UC-\ref{compilaValoreFiltro})
+                  \item L'Utente specifica se vi è conformità copie immagine su supporto informatico o
+                        meno. (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema imposta i valori del filtro come parametri di ricerca.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addNomeDocumento}{Aggiunta filtro Nome del Documento}
+\subusecase{addNomeDocumento}{Specifica filtro Nome del Documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha scelto come tipo Documento Informatico o Amministrativo Informatico
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Nome del Documento tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Nome del Documento
+            \item Il filtro Nome del Documento è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce il Nome del Documento.
+                  \item L'Utente specifica il Nome del Documento. (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addVersioneDocumento}{Aggiunta filtro Versione del Documento}
+\subusecase{addVersioneDocumento}{Specifica filtro Versione del Documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha scelto come tipo Documento Informatico o Amministrativo Informatico
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Versione del Documento tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}: I risultati sono filtrati per Versione del Documento.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Versione del Documento
+            \item Il filtro Versione del Documento è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce il numero la Versione del Documento.
+                  \item L'Utente specifica il numero che rappresenta la Versione del Documento. (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addIdentificativoDocumentoPrimario}{Aggiunta filtro Identificativo del Documento Primario}
+\subusecase{addIdentificativoDocumentoPrimario}{Specifica filtro Identificativo del Documento Primario}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}:
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha scelto come tipo Documento Informatico o Amministrativo Informatico
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Identificativo del Documento Primario tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Identificativo del Documento Primario
+            \item Il filtro Identificativo del Documento Primario è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce l'Identificativo del Documento Primario.
+                  \item L'Utente specifica l'Identificativo del Documento Primario. (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addTracciatureModificheDocumento}{Aggiunta filtro Tracciature Modifiche di Documento}
+\subusecase{addTracciatureModificheDocumento}{Specifica filtro Tracciature Modifiche di Documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha scelto come tipo Documento Informatico o Amministrativo Informatico
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Tracciature Modifiche di Documento tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Tracciature Modifiche di Documento
+            \item Il filtro Tracciature Modifiche di Documento è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente sceglie il Tipo di modifica tra:
+                  \item L'Utente sceglie il Tipo di modifica (UC-\ref{compilaValoreFiltro}) tra:
                         \begin{itemize}
                               \item Annullamento
                               \item Registrazione
                               \item Integrazione
                               \item Annotazione
                         \end{itemize}
-                  \item L'Utente sceglie il Soggetto che ha effettuato la modifica.
-                  \item L'Utente inserisce la Data/Ora della Modifica.
-                  \item L'Utente inserisce l'identificativo documento versione precedente.
+                  \item L'Utente specifica il Soggetto che ha effettuato la modifica. (UC-\ref{compilaValoreFiltro})
+                  \item L'Utente specifica la Data/Ora della Modifica. (UC-\ref{compilaValoreFiltro})
+                  \item L'Utente specifica l'identificativo documento versione precedente. (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema imposta i valori del filtro come parametri di ricerca.
             \end{enumerate}
 \end{itemize}
 
-\subsubusecase{aggiuntaFiltriAggregazione}{Aggiunta filtri per Aggregazione Documentale Informatica}
+\varusecase{specificaFiltriAggregazione}{Specifica filtri per Aggregazione Documentale Informatica}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: Vengono specificati i filtri per i campi dell'Aggregazione Documentale e utilizzati per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente può aggiungere i filtri specifici per il tipo Aggregazione (descritto negli UC da \ref{addTipoAggregazione} a \ref{addProgressivo}).
+                  \item L'Utente aggiunge i filtri specifici per il tipo Aggregazione (descritto negli UC da \ref{addTipoAggregazione} a \ref{addProgressivoAggregazione}).
             \end{enumerate}
+      \item \textbf{Specializza}: UC-\ref{specificaFiltriTipoDocumento}
 \end{itemize}
 
-\deepusecase{addTipoAggregazione}{Aggiunta filtro Tipo di Aggregazione}
+\subusecase{addTipoAggregazione}{Specifica filtro Tipo di Aggregazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Tipo di Aggregazione tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Tipo di Aggregazione
+            \item Il filtro Tipo di Aggregazione è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente sceglie tra:\begin{itemize}
+                  \item L'Utente specifica il tipo di aggregazione (UC-\ref{compilaValoreFiltro}) tra:\begin{itemize}
                               \item Fascicolo,
                               \item Serie Documentale,
                               \item Serie di Fascicoli.
                         \end{itemize}
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addIdAggregazione}{Aggiunta filtro Id dell'Aggregazione}
+\subusecase{addIdAggregazione}{Specifica filtro Id dell'Aggregazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Id dell'Aggregazione tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Id dell'Aggregazione
+            \item Il filtro Id dell'Aggregazione è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce l'Id dell'Aggregazione.
+                  \item L'Utente specifica l'Id dell'Aggregazione. (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addTipologiaFascicolo}{Aggiunta filtro Tipologia di Fascicolo}
+\subusecase{addTipologiaFascicolo}{Specifica filtro Tipologia di Fascicolo}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Tipologia di Fascicolo tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Tipologia di Fascicolo
+            \item Il filtro Tipologia di Fascicolo è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente sceglie tra: \begin{itemize}
+                  \item L'Utente specifica il tipo di fascicolo (UC-\ref{compilaValoreFiltro}) tra: \begin{itemize}
                               \item Affare,
                               \item Attività,
                               \item Persona Fisica,
                               \item Persona Giuridica,
-                              \item  Procedimento Amministrativo.
+                              \item Procedimento Amministrativo.
                         \end{itemize}
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addIdAggregazionePrimario}{Aggiunta filtro Id Aggregazione Primario}
+\subusecase{addIdAggregazionePrimario}{Specifica filtro Id Aggregazione Primario}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Id dell'Aggregazione Primario tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Id dell'Aggregazione Primario
+            \item Il filtro Id dell'Aggregazione Primario è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce l'Id dell'Aggregazione Primario.
+                  \item L'Utente specifica l'Id Primario dell'Aggregazione. (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addDataApertura}{Aggiunta filtro Data Apertura}
+\subusecase{addDataApertura}{Specifica filtro Data Apertura}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Data di Apertura tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Data di Apertura
+            \item Il filtro Data di Apertura è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce la Data di Apertura.
+                  \item L'Utente specifica la Data di Apertura. (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addDataChiusura}{Aggiunta filtro Data Chiusura}
+\subusecase{addDataChiusura}{Specifica filtro Data Chiusura}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Data di Chiusura tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Data di Chiusura
+            \item Il filtro Data di Chiusura è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce la Data di Chiusura.
+                  \item L'Utente specifica la Data di Chiusura. (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addProcedimentoAmministrativo}{Aggiunta filtro Procedimento Amministrativo}
+\subusecase{addProcedimentoAmministrativo}{Specifica filtro Procedimento Amministrativo}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Procedimento Amministrativo tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Procedimento Amministrativo
+            \item Il filtro Procedimento Amministrativo è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce la Materia, Argomento e Struttura per i procedimenti.
-                  \item L'Utente inserisce il Procedimento come denominazione.
-                  \item L'Utente inserisce il Catalogo dei Procedimenti come URI di pubblicazione del
-                        catalogo.
-                  \item  L'Utente può aggiungere una o più Fasi come filtro (UC-\ref{addFasiProcedimentoAmministrativo}).
+                  \item L'Utente specifica la Materia, Argomento e Struttura per i procedimenti. (UC-\ref{compilaValoreFiltro})
+                  \item L'Utente specifica il Procedimento come denominazione. (UC-\ref{compilaValoreFiltro})
+                  \item L'Utente specifica il Catalogo dei Procedimenti come URI di pubblicazione del
+                        catalogo. (UC-\ref{compilaValoreFiltro})
+                  \item L'Utente aggiunge una o più Fasi (UC-\ref{addFasiProcedimentoAmministrativo})(0...n).
+                  \item Il sistema imposta i valori del filtro come parametri di ricerca.
             \end{enumerate}
 \end{itemize}
 
-\subdeepusecase{addFasiProcedimentoAmministrativo}{Aggiunta filtro Fasi del Procedimento Amministrativo}
+\subsubusecase{addFasiProcedimentoAmministrativo}{Aggiunta Fase del Procedimento Amministrativo}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione
-            \item L'Utente ha aggiunto un Procedimento come parametro per la ricerca
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'Utente sta specificando il filtro Procedimento Amministrativo
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: Viene specificata una fase e aggiunta al filtro Procedimento Amministrativo.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente aggiunge un filtro per "Fase".
-                  \item L'Utente inserisce i dati della fase:
-                        \begin{itemize}
-                              \item Tipo Fase (Preparatoria, Istruttoria, Consultiva, Decisoria o deliberativa,
-                                    Integrazione dell'efficacia).
-                              \item Data di inizio.
-                              \item Data di fine.
-                        \end{itemize}
+                  \item L'utente specifica, per ogni fase da aggiungere, i dati specifici (UC-\ref{addFasiProcedimentoAmministrativo}):
+                  \begin{itemize}
+                        \item Tipo Fase (Preparatoria, Istruttoria, Consultiva, Decisoria o deliberativa,
+                              Integrazione dell'efficacia). (UC-\ref{compilaValoreFiltro})
+                        \item Data di inizio. (UC-\ref{compilaValoreFiltro})
+                        \item Data di fine. (UC-\ref{compilaValoreFiltro})
+                  \end{itemize}
+                  \item Il sistema salva la fase come parte del filtro Procedimento Amministrativo.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addAssegnazione}{Aggiunta filtro Assegnazione}
+\subusecase{addAssegnazione}{Specifica filtro Assegnazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Assegnazione tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Assegnazione
+            \item Il filtro Assegnazione è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente aggiunge uno o più filtri per "Assegnazione".
-                  \item L'Utente inserisce i dati:
-                        \begin{itemize}
-                              \item Tipo Assegnazione.
-                              \item Soggetto Assegnatario (UC-\ref{addSoggetti}).
-                              \item Data di Inizio.
-                              \item Data di Fine.
-                        \end{itemize}
+                  \item L'Utente aggiunge uno o più valori per "Assegnazione". (UC-\ref{addAssegnazione})(0...n).
+                  \item Il sistema imposta i valori del filtro come parametri per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\deepusecase{addProgressivo}{Aggiunta filtro Progressivo}
+\subsubusecase{addAssegnazione}{Aggiunta Valore Assegnazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente sta effettuando una ricerca per campi specifici al tipo Aggregazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'Utente sta specificando un filtro che richiede un valore di Assegnazione
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: Viene specificato un valore di Assegnazione e aggiunto al filtro che l'Utente sta specificando.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce il numero Progressivo dell'Aggregazione.
+                  \item L'utente specifica:
+                  \begin{itemize}
+                        \item Tipo Assegnazione. (UC-\ref{compilaValoreFiltro})
+                        \item Soggetto Assegnatario. (UC-\ref{compilaValoreFiltro})
+                        \item Data di Inizio. (UC-\ref{compilaValoreFiltro})
+                        \item Data di Fine. (UC-\ref{compilaValoreFiltro})
+                  \end{itemize}
+                  \item Il sistema salva il valore di assegnazione come parte del filtro Assegnazione.
             \end{enumerate}
 \end{itemize}
 
-\subusecase{addDettagliSoggetto}{Aggiunta dettagli per il ruolo di un soggetto}
+\subusecase{addProgressivoAggregazione}{Specifica filtro Progressivo Aggregazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
-            \item L'Utente ha scelto tipo di documento
-            \item L'Utente ha scelto un ruolo come campo di ricerca secondo le modalità descritte negli UC-\ref{addSoggettiDocInfo}-\ref{addSoggettiAgg}
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Progressivo dell'Aggregazione tra i campi specifici per tipo documentale
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Progressivo dell'Aggregazione
+            \item Il filtro Progressivo dell'Aggregazione è parametro per la ricerca con filtri e per la generazione del risultato
+      \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce i dettagli del ruolo.
+                  \item L'Utente specifica il numero Progressivo dell'Aggregazione.
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\subsubusecase{addDettagliPAI}{Aggiunta dettagli Ruolo= PAI}
+\usecase{addDettagliSoggetto}{ (A) Specifica dettagli soggetto}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
-            \item L'Utente ha scelto tipo di documento
-            \item L'Utente ha scelto un ruolo come campo di ricerca secondo le modalità descritte negli UC-\ref{addSoggettiDocInfo}-\ref{addSoggettiAgg}
-            \item L'Utente ha selezionato il ruolo PAI
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta aggiungendo un soggetto, di cui ha specificato il tipo, ad un filtro. (UC-\ref{specificaTipoSoggetto})
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: Le specifiche aggiunte dall'Utente sono salvate per il soggetto che sta aggiungendo.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce i dettagli del tipo di soggetto specificato. (UC-\ref{addDettagliPAI}-\ref{addDettagliSW})
+                  \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
+            \end{enumerate}
+\end{itemize}
+
+\varusecase{addDettagliPAI}{Specifica dettagli soggetto tipo: PAI}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta aggiungendo un soggetto di tipo: PAI ad un filtro.
+      \end{itemize}
+      \item \textbf{Postcondizioni}:  Le specifiche aggiunte dall'Utente sono salvate per il soggetto che sta aggiungendo.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Denominazione Amministrazione/ Codice IPA
-                              \item Denominazione Amministrazione AOO/ Codice IPA AOO
-                              \item Denominazione Amministrazione UOR/ Codice IPA UOR
-                              \item Indirizzi Digitali di Riferimento
+                              \item Denominazione Amministrazione/ Codice IPA (UC-\ref{compilaValoreFiltro})
+                              \item Denominazione Amministrazione AOO/ Codice IPA AOO (UC-\ref{compilaValoreFiltro})
+                              \item Denominazione Amministrazione UOR/ Codice IPA UOR (UC-\ref{compilaValoreFiltro})
+                              \item Indirizzi Digitali di Riferimento (UC-\ref{compilaValoreFiltro})
                         \end{itemize}
+                  \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
+      \item \textbf{Specializza}: UC-\ref{aggDettagliSoggetto}
 \end{itemize}
 
-\subsubusecase{addDettagliPAE}{Aggiunta dettagli Ruolo= PAE}
+\varusecase{addDettagliPAE}{Specifica dettagli soggetto tipo: PAE}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
-            \item L'Utente ha scelto tipo di documento
-            \item L'Utente ha scelto un ruolo come campo di ricerca secondo le modalità descritte negli UC-\ref{addSoggettiDocInfo}-\ref{addSoggettiAgg}
-            \item L'Utente ha selezionato il ruolo PAE
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta aggiungendo un soggetto di tipo: PAE ad un filtro.
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Le specifiche aggiunte dall'Utente sono salvate per il soggetto che sta aggiungendo.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Denominazione Amministrazione
-                              \item Denominazione Ufficio
-                              \item Indirizzi Digitali di Riferimento
+                              \item Denominazione Amministrazione (UC-\ref{compilaValoreFiltro})
+                              \item Denominazione Ufficio (UC-\ref{compilaValoreFiltro})
+                              \item Indirizzi Digitali di Riferimento (UC-\ref{compilaValoreFiltro})
                         \end{itemize}
+                  \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
+      \item \textbf{Specializza}: UC-\ref{aggDettagliSoggetto}
 \end{itemize}
 
-\subsubusecase{addDettagliAS}{Aggiunta dettagli Ruolo= AS}
+\varusecase{addDettagliAS}{Specifica dettagli soggetto tipo: AS}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \begin{itemize}
+      \item \textbf{Precondizioni}:\begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
-            \item L'Utente ha scelto tipo di documento
-            \item L'Utente ha scelto un ruolo come campo di ricerca secondo le modalità descritte negli UC-\ref{addSoggettiDocInfo}-\ref{addSoggettiAgg}
-            \item L'Utente ha selezionato il ruolo AS
-      \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta aggiungendo un soggetto di tipo: AS ad un filtro.
+            \end{itemize}
+      \item \textbf{Postcondizioni}:  Le specifiche aggiunte dall'Utente sono salvate per il soggetto che sta aggiungendo.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Cognome
-                              \item Nome
-                              \item Codice Fiscale
-                              \item Denominazione Amministrazione/ Codice IPA
-                              \item Denominazione Amministrazione AOO/ Codice IPA AOO
-                              \item Denominazione Amministrazione UOR/ Codice IPA UOR
-                              \item Indirizzi Digitali di Riferimento
+                              \item Cognome (UC-\ref{compilaValoreFiltro})
+                              \item Nome (UC-\ref{compilaValoreFiltro})
+                              \item Codice Fiscale (UC-\ref{compilaValoreFiltro})
+                              \item Denominazione Amministrazione/ Codice IPA (UC-\ref{compilaValoreFiltro})
+                              \item Denominazione Amministrazione AOO/ Codice IPA AOO (UC-\ref{compilaValoreFiltro})
+                              \item Denominazione Amministrazione UOR/ Codice IPA UOR (UC-\ref{compilaValoreFiltro})
+                              \item Indirizzi Digitali di Riferimento (UC-\ref{compilaValoreFiltro})
                         \end{itemize}
+                  \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
+      \item \textbf{Specializza}: UC-\ref{aggDettagliSoggetto}
 \end{itemize}
 
-\subsubusecase{addDettagliPG}{Aggiunta dettagli Ruolo= PG}
+\varusecase{addDettagliPG}{Specifica dettagli soggetto tipo: PG}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
-            \item L'Utente ha scelto tipo di documento
-            \item L'Utente ha scelto un ruolo come campo di ricerca secondo le modalità descritte negli UC-\ref{addSoggettiDocInfo}-\ref{addSoggettiAgg}
-            \item L'Utente ha selezionato il ruolo PG
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta aggiungendo un soggetto di tipo: PG ad un filtro.
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Le specifiche aggiunte dall'Utente sono salvate per il soggetto che sta aggiungendo.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Denominazione Organizzazione
-                              \item Codice fiscale / Partita Iva
-                              \item Denominazione Ufficio
-                              \item Indirizzi Digitali di Riferimento
+                              \item Denominazione Organizzazione (UC-\ref{compilaValoreFiltro})
+                              \item Codice fiscale / Partita Iva (UC-\ref{compilaValoreFiltro})
+                              \item Denominazione Ufficio (UC-\ref{compilaValoreFiltro})
+                              \item Indirizzi Digitali di Riferimento (UC-\ref{compilaValoreFiltro})
                         \end{itemize}
+                  \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
+      \item \textbf{Specializza}: UC-\ref{aggDettagliSoggetto}
 \end{itemize}
 
-\subsubusecase{addDettagliPF}{Aggiunta dettagli Ruolo= PF}
+\varusecase{addDettagliPF}{Specifica dettagli soggetto tipo: PF}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
-            \item L'Utente ha scelto tipo di documento
-            \item L'Utente ha scelto un ruolo come campo di ricerca secondo le modalità descritte negli UC-\ref{addSoggettiDocInfo}-\ref{addSoggettiAgg}
-            \item L'Utente ha selezionato il ruolo PF
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta aggiungendo un soggetto di tipo: PF ad un filtro.
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Le specifiche aggiunte dall'Utente sono salvate per il soggetto che sta aggiungendo.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item  L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Cognome
-                              \item Nome
-                              \item Indirizzi Digitali di Riferimento
+                              \item Cognome (UC-\ref{compilaValoreFiltro})
+                              \item Nome (UC-\ref{compilaValoreFiltro})
+                              \item Indirizzi Digitali di Riferimento (UC-\ref{compilaValoreFiltro})
                         \end{itemize}
+                  \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
+      \item \textbf{Specializza}: UC-\ref{aggDettagliSoggetto}
 \end{itemize}
 
-\subsubusecase{addDettagliRUP}{Aggiunta dettagli Ruolo= RUP}
+\varusecase{addDettagliRUP}{Specifica dettagli soggetto tipo: RUP}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
-            \item L'Utente ha scelto tipo di documento
-            \item L'Utente ha scelto un ruolo come campo di ricerca secondo le modalità descritte negli UC-\ref{addSoggettiDocInfo}-\ref{addSoggettiAgg}
-            \item L'Utente ha selezionato il ruolo RUP
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta aggiungendo un soggetto di tipo: RUP ad un filtro.
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Le specifiche aggiunte dall'Utente sono salvate per il soggetto che sta aggiungendo.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Cognome
-                              \item Nome
-                              \item Denominazione Amministrazione/ Codice IPA
-                              \item Denominazione Amministrazione AOO/Denominazione Amministrazione UOR
-                              \item  Codice IPA AOO/Codice IPA UOR
-                              \item Indirizzi Digitali di Riferimento
+                              \item Cognome (UC-\ref{compilaValoreFiltro})
+                              \item Nome (UC-\ref{compilaValoreFiltro})
+                              \item Denominazione Amministrazione/ Codice IPA (UC-\ref{compilaValoreFiltro})
+                              \item Denominazione Amministrazione AOO/Denominazione Amministrazione UOR (UC-\ref{compilaValoreFiltro})
+                              \item  Codice IPA AOO/Codice IPA UOR (UC-\ref{compilaValoreFiltro})
+                              \item Indirizzi Digitali di Riferimento (UC-\ref{compilaValoreFiltro})
                         \end{itemize}
+                  \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
+      \item \textbf{Specializza}: UC-\ref{aggDettagliSoggetto}
 \end{itemize}
 
-\subsubusecase{addDettagliSW}{Aggiunta dettagli Ruolo= SW}
+\varusecase{addDettagliSW}{Specifica dettagli soggetto tipo: SW}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
-            \item L'Utente ha scelto tipo di documento
-            \item L'Utente ha scelto un ruolo come campo di ricerca secondo le modalità descritte negli UC-\ref{addSoggettiDocInfo}-\ref{addSoggettiAgg}
-            \item L'Utente ha selezionato il ruolo SW
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta aggiungendo un soggetto di tipo: SW ad un filtro.
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}:  Le specifiche aggiunte dall'Utente sono salvate per il soggetto che sta aggiungendo.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce la Denominazione Sistema
-                  \item Il sistema usa questi valori per filtrare la ricerca.
+                  \item L'Utente inserisce la Denominazione Sistema. (UC-\ref{compilaValoreFiltro})
+                  \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
+            \end{enumerate}
+      \item \textbf{Specializza}: UC-\ref{aggDettagliSoggetto}
+\end{itemize}
+
+\usecase{addCustomMetadata}{Specifica filtri per Custom Metadata}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item Sono presenti custom metadata descritti nei file schemas
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Vengono specificati i filtri per i custom metadata e utilizzati per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente, per ogni metadato custom, specifica il valore per cui ricercare (UC-\ref{addFiltroMetadatoCustom}).
+                  \item Il sistema utilizza questi parametri per la ricerca.
+            \end{enumerate}
+      \item \textbf{Nota}: Per costruzione aziendale i custom metadata sono tutti stringhe e quindi l'inserimento e la validazione seguono le regole dei campi di testo liberi.
+\end{itemize}
+
+\subusecase{addFiltroMetadatoCustom}{Specifica filtro Metadato Custom}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \end{itemize}
+      \item \textbf{Postcondizioni}: Il filtro aggiunto dall'Utente è parametro per la ricerca con filtri e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente visualizza il nome del metadato custom. (UC-\ref{visualizzaNomeMetadatoCustom}).
+                  \item L'Utente specifica il valore del metadato custom per cui ricercare. (UC-\ref{compilaValoreFiltro}).
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 
-\subusecase{addCustomMetadata}{Aggiunta filtri per Custom Metadata}
+\subsubusecase{visualizzaNomeMetadatoCustom}{Visualizza Nome Metadato Custom}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \begin{itemize} \item L'Utente ha avviato l'applicazione
-      \item Il sistema ha indicizzato i documenti presenti nel DIP
+      \item \textbf{Precondizioni}: \begin{itemize}
+      \item L'Utente ha avviato l'applicazione
+      \item L'Utente sta effettuando una ricerca nel DIP con filtri
       \item Sono presenti custom metadata descritti nei file schemas
       \end{itemize}
-      \item \textbf{Postcondizioni}:  Il filtro aggiunto dall'Utente è parametro per la ricerca e per la generazione del risultato.
+      \item \textbf{Postcondizioni}: Il nome del metadato custom è visualizzato all'Utente.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente per ogni metadato custom, inserisce il valore per cui ricerca.
-                  \item Il sistema usa questi valori per filtrare la ricerca.
+                  \item Il sistema recupera il nome del metadato custom dagli schemi.
+                  \item Il sistema mostra a video il nome del metadato custom.
             \end{enumerate}
-      \item \textbf{Nota}: Per costruzione aziendale i custom metadata sono tutti stringhe e quindi l'inserimento e la validazione seguono le regole dei campi di testo liberi.
 \end{itemize}
 
 \usecase{visualizzaRisultati}{Visualizzazione Risultati di Ricerca} \label{risultatiRicerca}
@@ -1076,158 +1325,154 @@
             \begin{enumerate}
                   \item Il sistema visualizza un messaggio che indica che la ricerca non ha prodotto
                         alcun risultato.
-                  \item Viene mostrato l'insieme dei filtri che erano stati applicati, in modo da
-                        permettere all'Utente di comprendere eventuali errori di inserimento o
-                        incoerenze.
             \end{enumerate}
 \end{itemize}
 
-\usecase{validazioneCampi}{Validazione campi}
+\usecase{compilaValoreFiltro}{Compila Valore Filtro}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Sistema
-      \item \textbf{Precondizioni}: 
-      \begin{itemize}
-            \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha compilato dei campi di ricerca che richiedono un controllo di validità.
-      \end{itemize}
-      \item \textbf{Postcondizioni}: Il campo considerato valido viene aggiunto ai parametri di ricerca.
-      \item \textbf{Flusso Principale}:
-            \begin{enumerate}
-                  \item Il sistema valida i campi che necessitano di controlli (UC-)
-                  \item Se rispettano le convenzioni il filtro viene aggiunto ai parametri di ricerca.
-            \end{enumerate}
-      \item \textbf{Flusso Alternativo}:
-            \begin{itemize}
-                  \item Il sistema identifica dei problemi con i valori inseriti per i campi.
-                  \item Il sistema segnala il problema e richiede la correzione da parte dell'Utente, non inserendo il campo considerato tra i parametri di ricerca (UC-)
-            \end{itemize}
-\end{itemize}
-
-\subusecase{validazioneTestoLibero}{Validazione campi di testo libero}
-\begin{itemize}
-      \item \textbf{Attore Primario}: Sistema
+      \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha compilato dei campi di ricerca testuale.
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato un filtro da compilare tra quelli disponibili.
+            \item L'Utente sta specificando il valore per un metadato del filtro selezionato.
       \end{itemize}
-      \item \textbf{Postcondizioni}: Il campo considerato valido viene aggiunto ai parametri di ricerca.
+      \item \textbf{Postcondizioni}: Il valore inserito dall'Utente viene salvato come parte del filtro selezionato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item Il sistema controlla la presenza di tentativi di Code Injection e Sql Injection.
+                  \item L'Utente inserisce il valore per il metadato di cui vuole specificare il valore.
+                  \item Il sistema salva il valore inserito come parte del filtro selezionato.
             \end{enumerate}
       \item \textbf{Flusso Alternativo}:
             \begin{itemize}
-                  \item Il sistema identifica dei problemi con i valori inseriti per i campi.
-                  \item Il sistema segnala il problema e richiede la correzione da parte dell'Utente, non inserendo il campo considerato tra i parametri di ricerca (UC-)
+                  \item Il valore non rispetta il formato corretto (UC-\ref{formatoNonCorretto}).
             \end{itemize}
 \end{itemize}
 
-
-\subusecase{validazioneIdentificativiIPA}{Validazione campi di identificativi IPA}
+\usecase{selezionaCampiRicercaComuni}{Selezione campi di ricerca comuni}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Sistema
-      \item \textbf{Precondizioni}: 
-      \begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha compilato dei campi di codici identificativi IPA che richiedono un controllo di validità.
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
       \end{itemize}
-      \item \textbf{Postcondizioni}: Il campo considerato valido viene aggiunto ai parametri di ricerca.
+      \item \textbf{Postcondizioni}:  I campi selezionati dall'Utente sono aggiunti ai campi selezionati per la ricerca.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item Il sistema controlla che il codice rispetti il formato standard di 6 Cifre per Codici IPA
+                  \item L'Utente visualizza l'elenco dei campi comuni disponibili per la ricerca. (UC-\ref{visualizzaListaCampiComuni})
+                  \item L'Utente sceglie uno o più campi tra quelli disponibili.
+                  \item Il sistema aggiunge gli elementi selezionati ai campi selezionati per la ricerca.
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:
-            \begin{itemize}
-                  \item Il sistema identifica dei problemi con i valori inseriti per i campi.
-                  \item Il sistema segnala il problema e richiede la correzione da parte dell'Utente, non inserendo il campo considerato tra i parametri di ricerca (UC-)
-            \end{itemize}
 \end{itemize}
 
-\subusecase{validazioneCodiciFiscali}{Validazione campi di codici fiscali}
+\subusecase{visualizzaListaCampiComuni}{Visualizza lista campi comuni}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Sistema
-      \item \textbf{Precondizioni}: 
-      \begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha compilato dei campi di codici fiscali che richiedono un controllo di validità.
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
       \end{itemize}
-      \item \textbf{Postcondizioni}: Il campo considerato valido viene aggiunto ai parametri di ricerca.
+      \item \textbf{Postcondizioni}:  L'Utente visualizza l'elenco dei campi comuni disponibili per la ricerca
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item Il sistema controlla che il codice rispetti il formato standard per il tipo di codice fiscale:
-                        \begin{verbatim}^[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z]$\end{verbatim}
+                  \item Il sistema mostra a video l'elenco dei campi comuni disponibili per la ricerca e il nome corrispondente. (UC-\ref{visualizzaNomeCampo})
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:
-            \begin{itemize}
-                  \item Il sistema identifica dei problemi con i valori inseriti per i campi.
-                  \item Il sistema segnala il problema e richiede la correzione da parte dell'Utente, non inserendo il campo considerato tra i parametri di ricerca (UC-)
-            \end{itemize}
 \end{itemize}
 
-\subusecase{validazioneSoggetti}{Validazione campi di soggetti}
+\usecase{visualizzaNomeCampo}{Visualizza nome del campo}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Sistema
-      \item \textbf{Precondizioni}: 
-      \begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha selezionato il filtro Soggetti tra i campi comuni
-            \item L'Utente ha compilato i campi di Soggetti che richiedono un controllo di validità
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'utente sta visualizzando una lista di campi
       \end{itemize}
-      \item \textbf{Postcondizioni}: Il campo considerato valido viene aggiunto ai parametri di ricerca.
+      \item \textbf{Postcondizioni}:  L'Utente visualizza il nome del campo
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item Il sistema controlla che non vengano inseriti più soggetti con lo stesso ruolo (da chiedere a sm)
+                  \item Il sistema mostra a video il nome del campo.
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:
-            \begin{itemize}
-                  \item Il sistema identifica dei problemi con i valori inseriti per i campi.
-                  \item Il sistema segnala il problema e richiede la correzione da parte dell'Utente, non inserendo il campo considerato tra i parametri di ricerca (UC-)
-            \end{itemize}
 \end{itemize}
 
-\subusecase{validazioneEmail}{Validazione campi di email}
+\usecase{selezionaCampiTipoDocumento}{(A) Selezione campi di ricerca per Tipo di Documento}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Sistema
-      \item \textbf{Precondizioni}: 
-       \begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha compilato dei campi di indirizzi elettronici che richiedono un controllo di validità
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato un filtro per il Tipo di Documento
       \end{itemize}
-      \item \textbf{Postcondizioni}: Il campo considerato valido viene aggiunto ai parametri di ricerca.
+      \item \textbf{Postcondizioni}:  I campi selezionati dall'Utente sono aggiunti ai campi selezionati per la ricerca.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item Il sistema controlla che il formato mail sia valido \begin{verbatim} /^[\w\-\.]*[\w\.]\@[\w\.]*[\w\-\.]+[\w\-]+[\w]\.+[\w]+[\w $]/ \end{verbatim}
+                  \item L'Utente visualizza l'elenco dei campi specifici, per il valore della specifica del filtro Tipo di Documento, disponibili per la ricerca.
+                  \item L'Utente sceglie uno o più campi tra quelli disponibili.
+                  \item Il sistema aggiunge gli elementi selezionati ai campi selezionati per la ricerca.
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:
-            \begin{itemize}
-                  \item Il sistema identifica dei problemi con i valori inseriti per i campi.
-                  \item Il sistema segnala il problema e richiede la correzione da parte dell'Utente, non inserendo il campo considerato tra i parametri di ricerca (UC-)
-            \end{itemize}
 \end{itemize}
 
-\subusecase{validazionePartitaIVA}{Validazione campi di partita IVA}
+\varusecase{selezionaCampiDI-DAI}{Selezione campi di ricerca per DI/DAI}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Sistema
-      \item \textbf{Precondizioni}: 
-      \begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
-            \item L'Utente ha compilato dei campi di partita IVA che richiedono un controllo di validità
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro per il Tipo di Documento come DI o DAI
       \end{itemize}
-      \item \textbf{Postcondizioni}: Il campo considerato valido viene aggiunto ai parametri di ricerca.
+      \item \textbf{Postcondizioni}:  I campi selezionati dall'Utente sono aggiunti ai campi selezionati per la ricerca.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item Il sistema controlla che il formato delle partite IVA sia valido \begin{verbatim}/^([1-7]\d{10})$/\end{verbatim}
+                  \item L'Utente visualizza l'elenco dei campi specifici per DI/DAI disponibili per la ricerca. (UC-\ref{visualizzaNomeCampo})
+                  \item L'Utente sceglie uno o più campi tra quelli disponibili.
+                  \item Il sistema aggiunge gli elementi selezionati ai campi selezionati per la ricerca.
             \end{enumerate}
-      \item \textbf{Flusso Alternativo}:
-            \begin{itemize}
-                  \item Il sistema identifica dei problemi con i valori inseriti per i campi.
-                  \item Il sistema segnala il problema e richiede la correzione da parte dell'Utente, non inserendo il campo considerato tra i parametri di ricerca (UC-)
-            \end{itemize}
+      \item \textbf{Specializza}: UC-\ref{selezionaCampiTipoDocumento}
+\end{itemize}
+
+\subusecase{visualizzaListaCampiDIDAI}{Visualizza lista campi DI/DAI}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro per il Tipo di Documento come DI o DAI
+      \end{itemize}
+      \item \textbf{Postcondizioni}:  L'Utente visualizza l'elenco dei campi specifici per DI/DAI disponibili per la ricerca.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item Il sistema mostra a video l'elenco dei campi specifici per DI/DAI disponibili per la ricerca e il nome corrispondente. (UC-\ref{visualizzaNomeCampo})
+            \end{enumerate}
+\end{itemize}
+
+\varusecase{selezionaCampiAggregazioneDocumentale}{Selezione campi di ricerca per Aggregazione Documentale}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro per il Tipo di Documento come Aggregazione Documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}:  I campi selezionati dall'Utente sono aggiunti ai campi selezionati per la ricerca.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente visualizza l'elenco dei campi specifici per Aggregazione Documentale disponibili per la ricerca. (UC-\ref{visualizzaListaCampiAggregazioneDocumentale})
+                  \item L'Utente sceglie uno o più campi tra quelli disponibili.
+                  \item Il sistema aggiunge gli elementi selezionati ai campi selezionati per la ricerca.
+            \end{enumerate}
+      \item \textbf{Specializza}: UC-\ref{selezionaCampiTipoDocumento}
+\end{itemize}
+
+\subusecase{visualizzaListaCampiAggregazioneDocumentale}{Visualizza lista campi Aggregazione Documentale}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro per il Tipo di Documento come Aggregazione Documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}:  L'Utente visualizza l'elenco dei campi specifici per Aggregazione Documentale disponibili per la ricerca.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item Il sistema mostra a video l'elenco dei campi specifici per Aggregazione Documentale disponibili per la ricerca e il nome corrispondente. (UC-\ref{visualizzaNomeCampo})
+            \end{enumerate}
 \end{itemize}
