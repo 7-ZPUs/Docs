@@ -83,6 +83,48 @@
     \ifx&#1&%
     \else\label{#1}\fi%
 }
+% 1. Contatore Figlio di Variante (es. UC-3c.1)
+\newcounter{varSub}[ucVar]
+\newcommand{\varsubusecase}[2]{%
+    \refstepcounter{varSub}%
+    \setcounter{varSubSub}{0}% Reset del livello successivo
+    \subsubsection*{UC-\theucMain\theucVar.\thevarSub\ - #2}%
+    \addcontentsline{toc}{subsubsection}{UC-\theucMain\theucVar.\thevarSub\ - #2}%
+    \ifx&#1&%
+    \else\label{#1}\fi%
+}
+
+% 2. Contatore Nipote di Variante (es. UC-3c.1.3)
+% Si resetta ogni volta che cambia il sotto-livello variante (varSub)
+\newcounter{varSubSub}[varSub]
+\newcommand{\varsubsubusecase}[2]{%
+    \refstepcounter{varSubSub}%
+    \paragraph*{UC-\theucMain\theucVar.\thevarSub.\thevarSubSub\ - #2}%
+    \addcontentsline{toc}{paragraph}{UC-\theucMain\theucVar.\thevarSub.\thevarSubSub\ - #2}%
+    \ifx&#1&%
+    \else\label{#1}\fi%
+}
+
+% 3. Livello di profondità variante (es. UC-3c.1.1.1)
+\newcounter{varDeep}[varSubSub]
+\newcommand{\vardeepusecase}[2]{%
+    \refstepcounter{varDeep}%
+    \paragraph*{UC-\theucMain\theucVar.\thevarSub.\thevarSubSub\.\thevarDeep - #2}%
+    \addcontentsline{toc}{paragraph}{UC-\theucMain\theucVar.\thevarSub.\thevarSubSub\.\thevarDeep - #2}%
+    \ifx&#1&%
+    \else\label{#1}\fi%
+}
+
+% 4. Livello massimo di profondità variante (es. UC-3c.1.1.1.1)
+% Reset su varDeep
+\newcounter{varSubDeep}[varDeep]
+\newcommand{\varsubdeepusecase}[2]{%
+    \refstepcounter{varSubDeep}%
+    \paragraph*{UC-\theucMain\theucVar.\thevarSub.\thevarSubSub.\thevarDeep.\thevarSubDeep\ - #2}%
+    \addcontentsline{toc}{paragraph}{UC-\theucMain\theucVar.\thevarSub.\thevarSubSub.\thevarDeep.\thevarSubDeep\ - #2}%
+    \ifx&#1&%
+    \else\label{#1}\fi%
+}
 
 % 3. Contatore Secondario (es. UC-1.1)
 \newcounter{ucSub}[ucMain]
