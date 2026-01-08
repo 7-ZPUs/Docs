@@ -1245,13 +1245,11 @@
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
             \item L'Utente sta effettuando una ricerca nel DIP con filtri
-            \item Sono presenti custom metadata descritti nei file schemas
       \end{itemize}
       \item \textbf{Postcondizioni}: Vengono specificati i filtri per i custom metadata e utilizzati per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente, per ogni metadato custom, specifica il valore per cui ricercare (UC-\ref{addFiltroMetadatoCustom}).
-                  \item Il sistema utilizza questi parametri per la ricerca.
+                  \item L'Utente, specifica uno o più filtri per i metadati custom (UC-\ref{addFiltroMetadatoCustom}).
             \end{enumerate}
       \item \textbf{Nota}: Per costruzione aziendale i custom metadata sono tutti stringhe e quindi l'inserimento e la validazione seguono le regole dei campi di testo liberi.
 \end{itemize}
@@ -1266,25 +1264,9 @@
       \item \textbf{Postcondizioni}: Il filtro aggiunto dall'Utente è parametro per la ricerca con filtri e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente visualizza il nome del metadato custom. (UC-\ref{visualizzaNomeMetadatoCustom}).
+                  \item L'Utente specifica il nome del metadato custom. (UC-\ref{compilaValoreFiltro}).
                   \item L'Utente specifica il valore del metadato custom per cui ricercare. (UC-\ref{compilaValoreFiltro}).
-                  \item Il sistema imposta questo valore come parametro per la ricerca.
-            \end{enumerate}
-\end{itemize}
-
-\subsubusecase{visualizzaNomeMetadatoCustom}{Visualizza Nome Metadato Custom}
-\begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: \begin{itemize}
-      \item L'Utente ha avviato l'applicazione
-      \item L'Utente sta effettuando una ricerca nel DIP con filtri
-      \item Sono presenti custom metadata descritti nei file schemas
-      \end{itemize}
-      \item \textbf{Postcondizioni}: Il nome del metadato custom è visualizzato all'Utente.
-      \item \textbf{Flusso Principale}:
-            \begin{enumerate}
-                  \item Il sistema recupera il nome del metadato custom dagli schemi.
-                  \item Il sistema mostra a video il nome del metadato custom.
+                  \item Il sistema imposta questi valori come parametro per la ricerca.
             \end{enumerate}
 \end{itemize}
 

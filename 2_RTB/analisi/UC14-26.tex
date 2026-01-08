@@ -19,8 +19,11 @@
         \item L'utente ha selezionato un documento
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza la lista dei soggetti coinvolti nel documento selezionato
-    \item \textbf{Flusso Principale}: L'utente visualizza la lista dei soggetti coinvolti nel documento selezionato (UC-16)
-    \item \textbf{Inclusioni}: UC-16 - Visualizza informazioni soggetto coinvolto in un documento (0..n)
+    \item \textbf{Flusso Principale}: L'utente visualizza la lista dei soggetti coinvolti nel documento selezionato, per ognuno mostra:
+    \begin{itemize}
+        \item Informazioni del soggetto coinvolto (UC-\ref{visualizzaInfoSoggettoCoinvolto})
+    \end{itemize} 
+    \item \textbf{Inclusioni}: \ref{visualizzaInfoSoggettoCoinvolto}
 \end{itemize}
 
 \usecase{visualizzaInfoSoggettoCoinvolto}{Visualizza informazioni soggetto coinvolto in un documento}
@@ -30,7 +33,7 @@
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando una lista di soggetti coinvolti in un documento o un singolo soggetto
+        \item L'utente sta visualizzando una lista di soggetti o un singolo soggetto coinvolto in un documento
     \end{enumerate}
 
     \item \textbf{Postcondizioni}:
@@ -42,14 +45,13 @@
     \begin{enumerate}
         \item Il sistema visualizza le informazioni comuni del soggetto, quali:
         \begin{itemize}
-            \item Ruolo del soggetto nel documento (UC-16.1)
-            \item Tipo di soggetto (UC-16.2)
+            \item Ruolo del soggetto nel documento (UC-\ref{visualizzaRuoloSoggetto})
+            \item Tipo di soggetto (UC-\ref{visualizzaTipoSoggetto})
         \end{itemize}
-        \item Informazioni identificative del soggetto
     \end{enumerate}
     \item \textbf{Inclusioni}:
-    \item UC-16.1 - Visualizza ruolo soggetto nel documento
-    \item UC-16.2 - Visualizza tipo di soggetto
+    \item UC-\ref{visualizzaRuoloSoggetto} - Visualizza ruolo soggetto nel documento
+    \item UC-\ref{visualizzaTipoSoggetto} - Visualizza tipo di soggetto
 \end{itemize}
 
 \varusecase{visualizzaInfoPF}{Visualizza informazioni del soggetto Persona Fisica}
@@ -58,13 +60,13 @@
 
     \item \textbf{Precondizioni}:
     \begin{enumerate}
-        \item Sono soddisfatte le precondizioni di UC-16
+        \item Sono soddisfatte le precondizioni di UC-\ref{visualizzaInfoSoggettoCoinvolto}
         \item Il soggetto è di tipo Persona Fisica
     \end{enumerate}
 
     \item \textbf{Postcondizioni}:
     \begin{itemize}
-        \item L'utente visualizza i dati anagrafici della Persona Fisica \textcolor{red}{(posso lasciare le Postcondizioni generiche come in UC-16?)}
+        \item L'utente visualizza i dati anagrafici della Persona Fisica
     \end{itemize}
 
     \item \textbf{Flusso Principale}:
@@ -72,14 +74,15 @@
         \item Il sistema visualizza le informazioni comuni del soggetto
         \item Il sistema visualizza le informazioni identificative del soggetto, quali:
         \begin{itemize}
-            \item Nome
-            \item Cognome
-            \item Codice Fiscale
-            \item Indirizzi digitali di riferimento
+            \item Nome UC-\ref{visualizzaNomeSoggetto}
+            \item Cognome UC-\ref{visualizzaCognomeSoggetto}
+            \item Codice Fiscale UC-\ref{visualizzaCodiceFiscaleSoggetto}
+            \item Indirizzi digitali di riferimento UC-\ref{visualizzaIndirizziDigitaliSoggetto}
         \end{itemize}
     \end{enumerate}
 
-    \item \textbf{Specializza}: UC-16
+    \item \textbf{Specializza}: UC-\ref{visualizzaInfoSoggettoCoinvolto}
+    \item \textbf{Inclusioni}: (UC-\ref{visualizzaNomeSoggetto}), (UC-\ref{visualizzaCognomeSoggetto}), (UC-\ref{visualizzaCodiceFiscaleSoggetto}), (UC-\ref{visualizzaIndirizziDigitaliSoggetto})
 \end{itemize}
 
 \varusecase{visualizzaInfoPG}{Visualizza informazioni del soggetto Persona Giuridica}
@@ -88,7 +91,7 @@
 
     \item \textbf{Precondizioni}:
     \begin{enumerate}
-        \item Sono soddisfatte le precondizioni di UC-16
+        \item Sono soddisfatte le precondizioni di UC-\ref{visualizzaInfoSoggettoCoinvolto}
         \item Il soggetto è di tipo Persona Giuridica
     \end{enumerate}
 
@@ -102,14 +105,15 @@
         \item Il sistema visualizza le informazioni comuni del soggetto
         \item Il sistema visualizza le informazioni identificative del soggetto, quali:
         \begin{itemize}
-            \item Denominazione dell'organizzazione
-            \item Codice Fiscale / Partita IVA
-            \item Denominazione dell'ufficio
-            \item Indirizzi digitali di riferimento
+            \item Denominazione dell'organizzazione UC-\ref{visualizzaDenominazioneOrganizzazioneSoggetto}
+            \item Codice Fiscale / Partita IVA UC-\ref{visualizzaCodiceFiscaleSoggetto} / UC-\ref{visualizzaPartitaIVA}
+            \item Denominazione dell'ufficio UC-\ref{visualizzaDenominazioneUfficioSoggetto}
+            \item Indirizzi digitali di riferimento UC-\ref{visualizzaIndirizziDigitaliSoggetto}
         \end{itemize}
     \end{enumerate}
 
-    \item \textbf{Specializza}: UC-16
+    \item \textbf{Specializza}: UC-\ref{visualizzaInfoSoggettoCoinvolto}
+    \item \textbf{Inclusioni}: (UC-\ref{visualizzaDenominazioneOrganizzazioneSoggetto}), (UC-\ref{visualizzaCodiceFiscaleSoggetto}), (UC-\ref{visualizzaPartitaIVA}), (UC-\ref{visualizzaDenominazioneUfficioSoggetto}), (UC-\ref{visualizzaIndirizziDigitaliSoggetto})
 \end{itemize}
 
 \varusecase{visualizzaInfoAS}{Visualizza informazioni del soggetto AS}
@@ -118,7 +122,7 @@
 
     \item \textbf{Precondizioni}:
     \begin{enumerate}
-        \item Sono soddisfatte le precondizioni di UC-16
+        \item Sono soddisfatte le precondizioni di UC-\ref{visualizzaInfoSoggettoCoinvolto}
         \item Il soggetto è di tipo AS
     \end{enumerate}
 
@@ -132,17 +136,17 @@
         \item Il sistema visualizza le informazioni comuni del soggetto
         \item Il sistema visualizza le informazioni identificative del soggetto, quali:
         \begin{itemize}
-            \item Cognome (UC-16.4)
-            \item Nome (UC-16.3)
-            \item Codice Fiscale (UC-16.5)
-            \item Denominazione dell'organizzazione (UC-16.7)
-            \item Denominazione dell'ufficio (UC-16.9)
-            \item Indirizzi digitali di riferimento (UC-16.6)
+            \item Cognome (UC-\ref{visualizzaCognomeSoggetto})
+            \item Nome (UC-\ref{visualizzaNomeSoggetto})
+            \item Codice Fiscale (UC-\ref{visualizzaCodiceFiscaleSoggetto})
+            \item Denominazione dell'organizzazione (UC-\ref{visualizzaDenominazioneOrganizzazioneSoggetto})
+            \item Denominazione dell'ufficio (UC-\ref{visualizzaDenominazioneUfficioSoggetto})
+            \item Indirizzi digitali di riferimento (UC-\ref{visualizzaIndirizziDigitaliSoggetto})
         \end{itemize}
     \end{enumerate}
 
-    \item \textbf{Specializza}: UC-16
-    \item \textbf{Inclusioni}: UC-16.3, UC-16.4, UC-16.5, UC-16.6, UC-16.7, UC-16.9
+    \item \textbf{Specializza}: UC-\ref{visualizzaInfoSoggettoCoinvolto}
+    \item \textbf{Inclusioni}: (UC-\ref{visualizzaNomeSoggetto}), (UC-\ref{visualizzaCognomeSoggetto}), (UC-\ref{visualizzaCodiceFiscaleSoggetto}), (UC-\ref{visualizzaDenominazioneOrganizzazioneSoggetto}), (UC-\ref{visualizzaDenominazioneUfficioSoggetto}), (UC-\ref{visualizzaIndirizziDigitaliSoggetto})
 \end{itemize}
 
 \varusecase{visualizzaInfoPAI}{Visualizza informazioni del soggetto PAI}
@@ -151,7 +155,7 @@
 
     \item \textbf{Precondizioni}:
     \begin{enumerate}
-        \item Sono soddisfatte le precondizioni di UC-16
+        \item Sono soddisfatte le precondizioni di UC-\ref{visualizzaInfoSoggettoCoinvolto}
         \item Il soggetto è di tipo PAI
     \end{enumerate}
 
@@ -165,15 +169,15 @@
         \item Il sistema visualizza le informazioni comuni del soggetto
         \item Il sistema visualizza le informazioni identificative del soggetto, quali:
         \begin{itemize}
-            \item Denominazione Amministrazione / Codice IPA (UC-16.10)
-            \item Denominazione Amministrazione AOO / Codice IPA AOO (UC-16.11)
-            \item Denominazione Amministrazione UOR / Codice IPA UOR (UC-16.12)
-            \item Indirizzi digitali di riferimento (UC-16.6)
+            \item Denominazione Amministrazione / Codice IPA (UC-\ref{visualizzaDenominazioneAmministrazioneCodiceIPA})
+            \item Denominazione Amministrazione AOO / Codice IPA AOO (UC-\ref{visualizzaDenominazioneAmministrazioneAooCodiceIpaAoo})
+            \item Denominazione Amministrazione UOR / Codice IPA UOR (UC-\ref{visualizzaDenominazioneAmministrazioneUorCodiceIpaUor})
+            \item Indirizzi digitali di riferimento (UC-\ref{visualizzaIndirizziDigitaliSoggetto})
         \end{itemize}
     \end{enumerate}
 
-    \item \textbf{Specializza}: UC-16
-    \item \textbf{Inclusioni}: UC-16.6, UC-16.10, UC-16.11, UC-16.12
+    \item \textbf{Specializza}: UC-\ref{visualizzaInfoSoggettoCoinvolto}
+    \item \textbf{Inclusioni}: UC-\ref{visualizzaDenominazioneAmministrazioneCodiceIPA}, UC-\ref{visualizzaDenominazioneAmministrazioneAooCodiceIpaAoo}, UC-\ref{visualizzaDenominazioneAmministrazioneUorCodiceIpaUor}, UC-\ref{visualizzaIndirizziDigitaliSoggetto}
 \end{itemize}
 
 \varusecase{visualizzaInfoPAE}{Visualizza informazioni del soggetto PAE}
@@ -182,7 +186,7 @@
 
     \item \textbf{Precondizioni}:
     \begin{enumerate}
-        \item Sono soddisfatte le precondizioni di UC-16
+        \item Sono soddisfatte le precondizioni di UC-\ref{visualizzaInfoSoggettoCoinvolto}
         \item Il soggetto è di tipo PAE
     \end{enumerate}
 
@@ -196,14 +200,14 @@
         \item Il sistema visualizza le informazioni comuni del soggetto
         \item Il sistema visualizza le informazioni identificative del soggetto, quali:
         \begin{itemize}
-            \item Denominazione Amministrazione (UC-16.13)
-            \item Denominazione Ufficio (UC-16.9)
-            \item Indirizzi Digitali Di Riferimento (UC-16.6)
+            \item Denominazione Amministrazione (UC-\ref{visualizzaDenominazioneAmministrazioneSoggetto})
+            \item Denominazione Ufficio (UC-\ref{visualizzaDenominazioneUfficioSoggetto})
+            \item Indirizzi Digitali Di Riferimento (UC-\ref{visualizzaIndirizziDigitaliSoggetto})
         \end{itemize}
     \end{enumerate}
 
-    \item \textbf{Specializza}: UC-16
-    \item \textbf{Inclusioni}: UC-16.6, UC-16.9, UC-16.13
+    \item \textbf{Specializza}: UC-\ref{visualizzaInfoSoggettoCoinvolto}
+    \item \textbf{Inclusioni}: UC-\ref{visualizzaIndirizziDigitaliSoggetto}, UC-\ref{visualizzaDenominazioneUfficioSoggetto}, UC-\ref{visualizzaDenominazioneAmministrazioneSoggetto}
 \end{itemize}
 
 \varusecase{visualizzaInfoSW}{Visualizza informazioni del soggetto SW}
@@ -212,7 +216,7 @@
 
     \item \textbf{Precondizioni}:
     \begin{enumerate}
-        \item Sono soddisfatte le precondizioni di UC-16
+        \item Sono soddisfatte le precondizioni di UC-\ref{visualizzaInfoSoggettoCoinvolto}
         \item Il soggetto è di tipo SW
     \end{enumerate}
 
@@ -226,16 +230,13 @@
         \item Il sistema visualizza le informazioni comuni del soggetto
         \item Il sistema visualizza le informazioni identificative del soggetto, quali:
         \begin{itemize}
-            \item Denominazione Sistema (UC-16.14)
+            \item Denominazione Sistema UC-\ref{visualizzaDenominazioneSistemaSoggetto}
         \end{itemize}
     \end{enumerate}
 
-    \item \textbf{Specializza}: UC-16
-    \item \textbf{Inclusioni}: UC-16.14
+    \item \textbf{Specializza}: UC-\ref{visualizzaInfoSoggettoCoinvolto}
+    \item \textbf{Inclusioni}: UC-\ref{visualizzaDenominazioneSistemaSoggetto}
 \end{itemize}
-
-
-
 
 \subusecase{visualizzaRuoloSoggetto}{Visualizza ruolo soggetto nel documento}
 \begin{itemize}
@@ -416,11 +417,11 @@
     \item \textbf{Postcondizioni}: L'utente visualizza le informazioni di classificazione del documento selezionato
     \item \textbf{Flusso Principale}: Il sistema mostra a video le informazioni di classificazione, quali:
     \begin{itemize}
-        \item Indice di classificazione (UC-17.1)
-        \item Descrizione (UC-17.2)
-        \item Piano di classificazione (UC-17.3)
+        \item Indice di classificazione UC-\ref{visualizzaIndiceClassificazioneDocumento}
+        \item Descrizione (UC-\ref{visualizzaDescrizioneIndiceClassificazioneDocumento})
+        \item Piano di classificazione (UC-\ref{visualizzaURIPianoClassificazioneDocumento})
     \end{itemize}
-    \item \textbf{Inclusioni}: UC-17.1, UC-17.2, UC-17.3
+    \item \textbf{Inclusioni}: UC-\ref{visualizzaIndiceClassificazioneDocumento}, UC-\ref{visualizzaDescrizioneIndiceClassificazioneDocumento}, UC-\ref{visualizzaURIPianoClassificazioneDocumento}
 \end{itemize}
 
 \subusecase{visualizzaIndiceClassificazioneDocumento}{Visualizza Indice di classificazione documento}
@@ -497,13 +498,13 @@
     \item \textbf{Postcondizioni}: L'utente visualizza i dati di registrazione del documento selezionato
     \item \textbf{Flusso Principale}: Il sistema mostra a video i dati di registrazione del documento, quali:
     \begin{itemize}
-        \item Tipologia di flusso (UC-20.1)
-        \item Tipo registro (UC-20.2)
-        \item Data registrazione (UC-20.3)
-        \item Numero documento (UC-20.4)
-        \item Codice registro (UC-20.5)
+        \item Tipologia di flusso UC-\ref{visualizzaTipologiaFlussoDocumento}
+        \item Tipo registro UC-\ref{visualizzaTipoRegistroDocumento}
+        \item Data registrazione UC-\ref{visualizzaDataRegistrazioneDocumento}
+        \item Numero documento UC-\ref{visualizzaNumeroDocumento}
+        \item Codice registro UC-\ref{visualizzaCodiceIdentificativoRegistroAppartenenzaDocumento}
     \end{itemize}
-    \item \textbf{Inclusioni}: UC-20.1, UC-20.2, UC-20.3, UC-20.4, UC-20.5
+    \item \textbf{Inclusioni}: UC-\ref{visualizzaTipologiaFlussoDocumento}, UC-\ref{visualizzaTipoRegistroDocumento}, UC-\ref{visualizzaDataRegistrazioneDocumento}, UC-\ref{visualizzaNumeroDocumento}, UC-\ref{visualizzaCodiceIdentificativoRegistroAppartenenzaDocumento}
 \end{itemize}
 
 \subusecase{visualizzaTipologiaFlussoDocumento}{Visualizza Tipologia di Flusso documento}
@@ -513,7 +514,7 @@
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando i Dati di Registrazione di un documento
+        \item L'utente ha selezionato un documento
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza la tipologia di flusso del documento selezionato
     \item \textbf{Flusso Principale}: Il sistema mostra a video la tipologia del flusso del documento selezionato
@@ -526,7 +527,7 @@
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando i Dati di Registrazione di un documento
+        \item L'utente ha selezionato un documento
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza il Tipo di Registro del documento selezionato
     \item \textbf{Flusso Principale}: Il sistema mostra a video il Tipo di Registro 
@@ -547,7 +548,7 @@
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando i Dati di Registrazione di un documento
+        \item L'utente ha selezionato un documento
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza la Data di Registrazione del documento selezionato
     \item \textbf{Flusso Principale}: Il sistema mostra a video la Data di Registrazione
@@ -568,7 +569,7 @@
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando i Dati di Registrazione di un documento
+        \item L'utente ha selezionato un documento
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza il Numero del documento selezionato
     \item \textbf{Flusso Principale}: Il sistema mostra a video il Numero del documento selezionato
@@ -581,7 +582,7 @@
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando i Dati di Registrazione di un documento
+        \item L'utente ha selezionato un documento
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza il Codice identificativo del Registro in cui è stato registrato il documento selezionato
     \item \textbf{Flusso Principale}: Il sistema mostra a video il Codice identificativo del Registro in cui è stato registrato il documento selezionato
@@ -642,7 +643,7 @@
     \end{itemize}
 \end{itemize}
 
-\usecase{selezionaPiuDocumento}{Seleziona più documento}
+\usecase{selezionaPiuDocumenti}{Seleziona più documenti}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
