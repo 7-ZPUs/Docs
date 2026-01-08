@@ -1,20 +1,4 @@
-\usecase{strutturaDIP}{Visualizza Albero DIP}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
-    \item \textbf{Postcondizioni}: L'Utente visualizza l'albero del DIP.
-    \item \textbf{Flusso Principale}:
-          \begin{enumerate}
-              \item L'Utente visualizza l'albero del DIP. L'albero è organizzato gerarchicamente in:
-                    \begin{itemize}
-                        \item Classi Documentali (UC-\ref{classiDocumentali})
-                        \item Processi (UC-\ref{processiClasseDocumentale})
-                        \item Documenti (UC-\ref{documentiProcesso})
-                    \end{itemize}
-          \end{enumerate}
-\end{itemize}
-
-\subusecase{classiDocumentali}{Visualizza elenco classi documentali}
+\usecase{classiDocumentali}{Visualizza elenco classi documentali}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
@@ -30,7 +14,10 @@
     \item \textbf{Estensioni}: UC-\ref{elencoVuoto}
 \end{itemize}
 
-\subsubusecase{nomeClasseDocumentale}{Visualizza Nome Classe Documentale}
+% inclusioni: nomeClasseDocumentale
+
+
+\subusecase{nomeClasseDocumentale}{Visualizza Nome Classe Documentale}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
@@ -41,22 +28,22 @@
           \end{enumerate}
 \end{itemize}
 
-\subusecase{processiClasseDocumentale}{Visualizza elenco dei processi di una classe documentale}
+\usecase{processiClasseDocumentale}{Visualizza elenco dei processi di una classe documentale}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L'Utente ha selezionato una delle Classi Documentali del DIP.
     \item \textbf{Postcondizioni}: L'Utente visualizza i processi associati alla classe selezionata come \textit{cartelle}.
     \item \textbf{Flusso Principale}:          
           \begin{enumerate}
-              \item Per ogni classe processo presente nell'elenco della classe documentale selezionata viene mostrato:
+              \item Il sistema mostra a video l'elenco dei processi della classe documentale selezionata e per ciascuna viene mostrato:
                     \begin{itemize}
-                        \item Id del processo
+                        \item Id del processo 
                     \end{itemize}
           \end{enumerate}
     \item \textbf{Flusso Alternativo}: Se la classe documentale non contiene processi, il sistema mostra un elenco vuoto.
 \end{itemize}
 
-\subusecase{documentiProcesso}{Visualizza elenco dei documenti di un processo}
+\usecase{documentiProcesso}{Visualizza elenco dei documenti di un processo}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L'Utente ha selezionato uno dei processi di una Classe Documentale.
@@ -65,13 +52,25 @@
             \begin{enumerate}
               \item Per ogni documento presente nell'elenco del processo selezionato viene mostrato:
                     \begin{itemize}
-                        \item Nome del documento
+                        \item Nome del documento (UC-\ref{nomeDocumentiProcesso})
                     \end{itemize}
             \end{enumerate}
     \item \textbf{Flusso Alternativo}: Se il processo non contiene documenti, il sistema mostra un elenco vuoto.
 \end{itemize}
 
-\subusecase{selezioneElemento}{Selezione Elemento del DIP}
+\subusecase{nomeDocumentiProcesso}{Visualizza Nome Processo}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
+    \item \textbf{Postcondizioni}: L'Utente visualizza il nome del processo.
+    \item \textbf{Flusso Principale}:
+          \begin{enumerate}
+              \item Il sistema mostra a video il nome del processo.
+          \end{enumerate}
+\end{itemize}
+
+
+\usecase{selezioneElemento}{Selezione Elemento del DIP}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: 
@@ -112,6 +111,7 @@
               \item Il sistema mostra a video il nome dell' elemento selezionato
     \end{itemize}
 \end{itemize}
+
 
 \subusecase{statoVerificaElemento}{Visualizza Stato di Verifica Elemento}
 \begin{itemize}
