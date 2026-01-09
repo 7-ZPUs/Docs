@@ -5,17 +5,28 @@
     \item \textbf{Postcondizioni}: L'Utente visualizza l'elenco delle classi documentali.
     \item \textbf{Flusso Principale}:
           \begin{enumerate}
-              \item Per ogni classe documentale presente nell'elenco viene mostrato:
-                    \begin{itemize}
-                        \item Nome della classe documentale (UC-\ref{nomeClasseDocumentale})
-                    \end{itemize}
+              \item Il sistema mostra a video l'elenco delle classi documentali presenti nel DIP.
           \end{enumerate}
-    \item \textbf{Flusso Alternativo}: Se non sono presenti classi documentali, il sistema mostra un elenco vuoto. (UC-\ref{elencoVuoto})
-    \item \textbf{Estensioni}: UC-\ref{elencoVuoto}
+    \item \textbf{Flusso Alternativo}: Se non sono presenti classi documentali, il sistema mostra un elenco vuoto. (\ref{elencoVuoto})
+    \item \textbf{Estensioni}: \ref{elencoVuoto}
 \end{itemize}
 
 % inclusioni: nomeClasseDocumentale
-
+\usecase{classeDocumentale}{Visualizza classe documentale in elenco}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
+    \item \textbf{Postcondizioni}: L'Utente visualizza l'elenco delle classi documentali.
+    \item \textbf{Flusso Principale}:
+          \begin{enumerate}
+              \item Per ogni singola classe documentale presente nell'elenco viene mostrato:
+                    \begin{itemize}
+                        \item Nome della classe documentale (\ref{nomeClasseDocumentale})
+                        \item Stato di verifica della classe documentale (\ref{statoVerificaElemento})
+                        \item Marcatura temporale della classe documentale (\ref{marcaturaTemporaleElemento})
+                    \end{itemize}
+          \end{enumerate}
+\end{itemize}
 
 \subusecase{nomeClasseDocumentale}{Visualizza Nome Classe Documentale}
 \begin{itemize}
@@ -31,37 +42,45 @@
 \usecase{processiClasseDocumentale}{Visualizza elenco dei processi di una classe documentale}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha selezionato una delle Classi Documentali del DIP.
-    \item \textbf{Postcondizioni}: L'Utente visualizza i processi associati alla classe selezionata come \textit{cartelle}.
-    \item \textbf{Flusso Principale}:          
+    \item \textbf{Precondizioni}: \begin{itemize}
+        \item L'utente ha avviato l'applicazione
+        \item L'Utente ha selezionato una delle Classi Documentali del DIP
+    \end{itemize}
+    \item \textbf{Postcondizioni}: L'Utente visualizza i processi associati alla classe selezionata.
+    \item \textbf{Flusso Principale}: 
           \begin{enumerate}
-              \item Il sistema mostra a video l'elenco dei processi della classe documentale selezionata e per ciascuna viene mostrato:
-                    \begin{itemize}
-                        \item Id del processo 
-                    \end{itemize}
+              \item Il sistema mostra a video l'elenco dei processi della classe documentale selezionata.
           \end{enumerate}
     \item \textbf{Flusso Alternativo}: Se la classe documentale non contiene processi, il sistema mostra un elenco vuoto.
+    \item \textbf{Estensioni}: \ref{elencoVuoto}
 \end{itemize}
 
-\usecase{documentiProcesso}{Visualizza elenco dei documenti di un processo}
+\usecase{processoClasse}{Visualizza processi in elenco}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha selezionato uno dei processi di una Classe Documentale.
-    \item \textbf{Postcondizioni}: L'Utente visualizza l'elenco dei documenti associati al processo selezionato.
+    \item \textbf{Precondizioni}:\begin{itemize}
+        \item L'utente ha avviato l'applicazione
+        \item L'Utente ha selezionato una delle Classi Documentali del DIP
+    \end{itemize}
+    \item \textbf{Postcondizioni}: L'Utente visualizza l'elenco dei processi .
     \item \textbf{Flusso Principale}:
-            \begin{enumerate}
-              \item Per ogni documento presente nell'elenco del processo selezionato viene mostrato:
+          \begin{enumerate}
+              \item Per ogni singolo processo presente nell'elenco viene mostrato:
                     \begin{itemize}
-                        \item Nome del documento (UC-\ref{nomeDocumentiProcesso})
+                        \item Id del processo (\ref{idProcessoClasse})
+                        \item Stato di verifica del processo (\ref{statoVerificaElemento})
+                        \item Marcatura temporale del processo (\ref{marcaturaTemporaleElemento})
                     \end{itemize}
-            \end{enumerate}
-    \item \textbf{Flusso Alternativo}: Se il processo non contiene documenti, il sistema mostra un elenco vuoto.
+          \end{enumerate}
 \end{itemize}
 
-\subusecase{nomeDocumentiProcesso}{Visualizza Nome Processo}
+\subusecase{idProcessoClasse}{Visualizza Id Processo}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
+    \item \textbf{Precondizioni}: \begin{itemize}
+        \item L'utente ha avviato l'applicazione
+        \item L'Utente ha selezionato una delle Classi Documentali del DIP
+    \end{itemize}
     \item \textbf{Postcondizioni}: L'Utente visualizza il nome del processo.
     \item \textbf{Flusso Principale}:
           \begin{enumerate}
@@ -69,6 +88,77 @@
           \end{enumerate}
 \end{itemize}
 
+
+\usecase{documentiProcesso}{Visualizza elenco dei documenti di un processo}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: \begin{itemize}
+        \item L'utente ha avviato l'applicazione
+        \item L'Utente ha selezionato una delle Classi Documentali del DIP
+        \item L'Utente ha selezionato un processo associato alla classe documentale selezionata
+    \end{itemize}
+    \item \textbf{Postcondizioni}: L'Utente visualizza l'elenco dei documenti associati al processo selezionato.
+    \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+              \item Il sistema mostra a video l'elenco dei documenti della classe documentale selezionata.
+            \end{enumerate}
+    \item \textbf{Flusso Alternativo}: Se il processo non contiene documenti, il sistema mostra un elenco vuoto.
+    \item \textbf{Estensioni}: \ref{elencoVuoto}
+\end{itemize}
+
+\usecase{documentoProcesso}{Visualizza documento in elenco}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: \begin{itemize}
+        \item L'utente ha avviato l'applicazione
+        \item L'Utente ha selezionato una delle Classi Documentali del DIP
+        \item L'Utente ha selezionato un processo associato alla classe documentale selezionata
+    \end{itemize}
+    \item \textbf{Postcondizioni}: L'Utente visualizza l'elenco delle classi documentali.
+    \item \textbf{Flusso Principale}:
+          \begin{enumerate}
+              \item Per ogni documento presente nell'elenco viene mostrato:
+                    \begin{itemize}
+                        \item Nome del documento (\ref{nomeDocumentiProcesso})
+                        \item Stato di verifica del documento (\ref{statoVerificaElemento})
+                        \item Marcatura temporale del documento (\ref{marcaturaTemporaleElemento})
+                    \end{itemize}
+          \end{enumerate}
+\end{itemize}
+
+\subusecase{nomeDocumentiProcesso}{Visualizza Nome Documento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
+    \item \textbf{Postcondizioni}: L'Utente visualizza il nome del documento.
+    \item \textbf{Flusso Principale}:
+          \begin{enumerate}
+              \item Il sistema mostra a video il nome del documento.
+          \end{enumerate}
+\end{itemize}
+
+
+\usecase{statoVerificaElemento}{Visualizza Stato di Verifica Elemento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento.
+    \item \textbf{Postcondizioni}: L'utente visualizza lo stato di verifica dell' elemento selezionato.
+    \item \textbf{Flusso Principale}:
+    \begin{itemize}
+              \item Il sistema mostra a video lo stato di verifica dell'elemento selezionato
+    \end{itemize}
+\end{itemize}
+
+\subusecase{marcaturaTemporaleElemento}{Visualizza Marcatura Temporale Elemento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento.
+    \item \textbf{Postcondizioni}: L'utente visualizza la marcatura temporale dell' elemento selezionato.
+    \item \textbf{Flusso Principale}:
+    \begin{itemize}
+              \item Il sistema mostra a video la marcatura temporale dell' elemento selezionato
+    \end{itemize}
+\end{itemize}
 
 \usecase{selezioneElemento}{Selezione Elemento del DIP}
 \begin{itemize}
@@ -85,55 +175,79 @@
     \end{enumerate}
 \end{itemize}
 
-\subusecase{informazioniElemento}{Visualizza Informazioni Elemento}
+\usecase{selezionaClasseDocumentale}{Seleziona classe documentale}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento del DIP.
-    \item \textbf{Postcondizioni}: L'Utente visualizza il nome, stato di verifica e marcatura temporale dell'elemento selezionato.
-    \item \textbf{Flusso Principale}:\begin{enumerate}
-              \item Il sistema mostra i metadati associati, tra cui:
-                    \begin{itemize}
-                        \item Nome
-                        \item Stato di Verifica (Non Verificato, Verificato, Non Integro)
-                        \item Marcatura temporale (Presente o Meno)
-                    \end{itemize}
-          \end{enumerate}
-    \item \textbf{Inclusioni}: UC-\ref{nomeElemento}, UC-\ref{statoVerificaElemento}, UC-\ref{marcaturaTemporaleElemento}
+    \item \textbf{Precondizioni}:
+    \begin{itemize}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando una lista di classe documentale
+    \end{itemize}
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Viene selezionata una classe documentale sulla quale effettuare un operazione
+    \end{itemize}
+    \item \textbf{Flusso principale}:
+    \begin{itemize}
+        \item L'utente seleziona una classe documentale dalla lista
+    \end{itemize}
 \end{itemize}
 
-\subusecase{nomeElemento}{Visualizza Nome Elemento}
+\usecase{selezionaProcesso}{Seleziona processo}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento.
-    \item \textbf{Postcondizioni}: L'utente visualizza il nome dell' elemento selezionato.
-    \item \textbf{Flusso Principale}: 
+    \item \textbf{Precondizioni}:
     \begin{itemize}
-              \item Il sistema mostra a video il nome dell' elemento selezionato
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando una lista di processi
+    \end{itemize}
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Viene selezionato un processo sul quale effettuare un operazione
+    \end{itemize}
+    \item \textbf{Flusso principale}:
+    \begin{itemize}
+        \item L'utente seleziona un processo dalla lista
+    \end{itemize}
+\end{itemize}
+
+\usecase{selezionaDocumento}{Seleziona documento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{itemize}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando una lista di documenti
+    \end{itemize}
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Viene selezionato un documento sul quale effettuare un operazione
+    \end{itemize}
+    \item \textbf{Flusso principale}:
+    \begin{itemize}
+        \item L'utente seleziona un documento dalla lista
+    \end{itemize}
+\end{itemize}
+
+\usecase{selezionaPiuDocumenti}{Seleziona più documenti}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{itemize}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando una lista di documenti
+    \end{itemize}
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item Viene selezionati più documenti sul quale effettuare un operazione
+    \end{itemize}
+    \item \textbf{Flusso principale}:
+    \begin{itemize}
+        \item L'utente seleziona un insieme di documenti dalla lista
     \end{itemize}
 \end{itemize}
 
 
-\subusecase{statoVerificaElemento}{Visualizza Stato di Verifica Elemento}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento.
-    \item \textbf{Postcondizioni}: L'utente visualizza lo stato di verifica dell' elemento selezionato.
-    \item \textbf{Flusso Principale}:
-    \begin{itemize}
-              \item Il sistema mostra a video lo stato di verifica dell' elemento selezionato
-    \end{itemize}
-\end{itemize}
-
-\subusecase{marcaturaTemporaleElemento}{Visualizza Marcatura Temporale Elemento}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento.
-    \item \textbf{Postcondizioni}: L'utente visualizza la marcatura temporale dell' elemento selezionato.
-    \item \textbf{Flusso Principale}:
-    \begin{itemize}
-              \item Il sistema mostra a video la marcatura temporale dell' elemento selezionato
-    \end{itemize}
-\end{itemize}
 
 % \subusecase{informazioniElemento}{Visualizza Informazioni di un elemento}
 % \begin{itemize}
@@ -141,33 +255,26 @@
 %     \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento del DIP.
 %     \item \textbf{Postcondizioni}: L'Utente visualizza i metadati e le azioni disponibili per l'elemento selezionato tra Documento, Processo, Classe Documentale e DIP.
 %     \item \textbf{Flusso Principale}:\begin{enumerate}
-%               \item L'Utente seleziona una cartella (Classe Documentale o Processo) o un documento dalla struttura del DIP (UC-\ref{strutturaDIP}).
+%               \item L'Utente seleziona una cartella (Classe Documentale o Processo) o un documento dalla struttura del DIP (\ref{strutturaDIP}).
 %               \item Il sistema mostra i metadati associati, tra cui:
 %                     \begin{itemize}
-%                         \item Nome
-%                         \item Data di creazione
-%                         \item Stato di Verifica (Non Verificato, Verificato, Non Integro)
-%                         \item Tipo di documento (se applicabile)
-%                         \item Formato del documento (se applicabile)
-%                         \item Dimensione del documento (se applicabile)
-%                         \item Numero di allegati (se applicabile)
-%                         \item Numero totale di documenti (per il DIP)
+%                       \item Verifica l'integrità (\ref{verificaIntegritaDIPCompleto}, \ref{verificaIntegritaProcesso}, \ref{verificaIntegritaClasseDocumentale})
+%                       \item Stampa (\ref{stampaSingoloDoc} e \ref{stampaInsiemeDoc})
+%                       \item Salva in locale (\ref{scaricaFile} e \ref{salvaPiuDOcs})
+%                       \item Visualizza l'anteprima (\ref{anteprimaDocumento})
+%                       \item Visualizza Informazioni sull'AIP (\ref{visualizzaInfoAiP})
+%                       \item Visualizza tutti i metadati associati (\ref{ })
 %                     \end{itemize}
 %           \end{enumerate}
 %     \item \textbf{Flussi Alternativi}: \begin{itemize}
 %               \item Se l'Utente seleziona un elemento non valido, il sistema non mostra alcuna informazione.
 %               \item L'Utente esegue un'azione sull'elemento selezionato:
 %                 \begin{itemize}
-%                     \item Verifica l'integrità (UC-\ref{verificaIntegritaDIPCompleto}, UC-\ref{verificaIntegritaProcesso}, UC-\ref{verificaIntegritaClasseDocumentale})
-%                     \item Stampa (UC-\ref{stampaSingoloDoc} e UC-\ref{stampaInsiemeDoc})
-%                     \item Salva in locale (UC-\ref{scaricaFile} e UC-\ref{salvaPiuDOcs})
-%                     \item Visualizza l'anteprima (UC-\ref{anteprimaDocumento})
-%                     \item Visualizza Informazioni sull'AIP (UC-\ref{visualizzaInfoAiP})
-%                     \item Visualizza tutti i metadati associati (UC-\ref{ })
+%           
 %                 \end{itemize}
 %           \end{itemize}
-%     \item \textbf{Inclusioni}: UC-\ref{nomeElemento}, UC-\ref{statoVerificaElemento}, 
-%     \item \textbf{Estensioni}: UC-\ref{verificaIntegritaDIPCompleto}, UC-\ref{verificaIntegritaProcesso}, UC-\ref{verificaIntegritaClasseDocumentale}, UC-\ref{stampaSingoloDoc}, UC-\ref{stampaInsiemeDoc}, UC-\ref{scaricaFile}, UC-\ref{salvaPiuDOcs}, UC-\ref{anteprimaDocumento}, UC-\ref{visualizzaInfoAiP}
+%     \item \textbf{Inclusioni}: \ref{nomeElemento}, \ref{statoVerificaElemento}, 
+%     \item \textbf{Estensioni}: \ref{verificaIntegritaDIPCompleto}, \ref{verificaIntegritaProcesso}, \ref{verificaIntegritaClasseDocumentale}, \ref{stampaSingoloDoc}, \ref{stampaInsiemeDoc}, \ref{scaricaFile}, \ref{salvaPiuDOcs}, \ref{anteprimaDocumento}, \ref{visualizzaInfoAiP}
 % \end{itemize}
 
 \subusecase{anteprimaDocumento}{Visualizza Anteprima Documento}
@@ -186,7 +293,7 @@
     \item \textbf{Flusso Alternativo}: Se il formato del documento non è supportato per l'anteprima, il sistema mostra un messaggio che specifica perché il tipo non è supportato.
     \item \textbf{Estensioni}:
         \begin{itemize}
-            \item UC-\ref{formatoDocumentoNonSupportato}: Formato Documento non Supportato dal Sistema
+            \item \ref{formatoDocumentoNonSupportato}: Formato Documento non Supportato dal Sistema
         \end{itemize}
 \end{itemize}
 

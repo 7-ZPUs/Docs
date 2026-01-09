@@ -59,114 +59,131 @@
 \titleformat{\paragraph}{\large\bfseries}{}{1em}{}
 \titleformat{\subparagraph}{\normalsize\bfseries}{}{1em}{}
 
-% --- INIZIO DEFINIZIONE CONTATORI UC ---
+% --- INIZIO DEFINIZIONE CONTATORI UC (METODO EREDITARIETÀ) ---
 
 % 1. Contatore Principale (es. UC-1)
 \newcounter{ucMain}
+% Qui definiamo che la rappresentazione del contatore include già il prefisso "UC-"
+\renewcommand{\theucMain}{UC-\arabic{ucMain}}
+
 \newcommand{\usecase}[2]{% #1=Label (opzionale), #2=Titolo
     \refstepcounter{ucMain}%
     \setcounter{ucSub}{0}% Reset sotto-contatori
     \setcounter{ucVar}{0}%
-    \subsubsection*{UC-\theucMain\ - #2}%
-    \addcontentsline{toc}{subsubsection}{UC-\theucMain\ - #2}%
-    \ifx&#1&%
-    \else\label{#1}\fi%
+    % Nota: Ora usiamo solo \theucMain perché include già "UC-"
+    \subsubsection*{\theucMain\ - #2}%
+    \addcontentsline{toc}{subsubsection}{\theucMain\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
 }
 
-% 2. Contatore Varianti (es. UC-2a, UC-2b)
+% 2. Contatore Varianti (es. UC-2a)
 \newcounter{ucVar}[ucMain]
-\renewcommand{\theucVar}{\alph{ucVar}} % Usa lettere a, b, c...
+% Definiamo che la variante è: NomePadre (UC-2) + Lettera (a) -> UC-2a
+\renewcommand{\theucVar}{\theucMain\alph{ucVar}}
+
 \newcommand{\varusecase}[2]{%
-    \refstepcounter{ucVar}%
-    \subsubsection*{UC-\theucMain\theucVar\ - #2}%
-    \addcontentsline{toc}{subsubsection}{UC-\theucMain\theucVar\ - #2}%
-    \ifx&#1&%
-    \else\label{#1}\fi%
+    \stepcounter{ucMain}% Incrementa il padre (senza ref)
+    \refstepcounter{ucVar}% Incrementa la variante (ref punta qui)
+    \subsubsection*{\theucVar\ - #2}%
+    \addcontentsline{toc}{subsubsection}{\theucVar\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
 }
-% 1. Contatore Figlio di Variante (es. UC-3c.1)
+
+% --- RAMO VARIANTI (Figli di UC-2a) ---
+
+% 3. Contatore Figlio di Variante (es. UC-3c.1)
 \newcounter{varSub}[ucVar]
+% Ereditarietà: NomePadre (UC-3c) + Punto + Numero
+\renewcommand{\thevarSub}{\theucVar.\arabic{varSub}}
+
 \newcommand{\varsubusecase}[2]{%
     \refstepcounter{varSub}%
-    \setcounter{varSubSub}{0}% Reset del livello successivo
-    \subsubsection*{UC-\theucMain\theucVar.\thevarSub\ - #2}%
-    \addcontentsline{toc}{subsubsection}{UC-\theucMain\theucVar.\thevarSub\ - #2}%
-    \ifx&#1&%
-    \else\label{#1}\fi%
+    \subsubsection*{\thevarSub\ - #2}%
+    \addcontentsline{toc}{subsubsection}{\thevarSub\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
 }
 
-% 2. Contatore Nipote di Variante (es. UC-3c.1.3)
-% Si resetta ogni volta che cambia il sotto-livello variante (varSub)
+% 4. Contatore Nipote di Variante (es. UC-3c.1.3)
 \newcounter{varSubSub}[varSub]
+\renewcommand{\thevarSubSub}{\thevarSub.\arabic{varSubSub}}
+
 \newcommand{\varsubsubusecase}[2]{%
     \refstepcounter{varSubSub}%
-    \paragraph*{UC-\theucMain\theucVar.\thevarSub.\thevarSubSub\ - #2}%
-    \addcontentsline{toc}{paragraph}{UC-\theucMain\theucVar.\thevarSub.\thevarSubSub\ - #2}%
-    \ifx&#1&%
-    \else\label{#1}\fi%
+    \paragraph*{\thevarSubSub\ - #2}%
+    \addcontentsline{toc}{paragraph}{\thevarSubSub\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
 }
 
-% 3. Livello di profondità variante (es. UC-3c.1.1.1)
+% 5. Livello profondo variante (es. UC-3c.1.1.1)
 \newcounter{varDeep}[varSubSub]
+\renewcommand{\thevarDeep}{\thevarSubSub.\arabic{varDeep}}
+
 \newcommand{\vardeepusecase}[2]{%
     \refstepcounter{varDeep}%
-    \paragraph*{UC-\theucMain\theucVar.\thevarSub.\thevarSubSub\.\thevarDeep - #2}%
-    \addcontentsline{toc}{paragraph}{UC-\theucMain\theucVar.\thevarSub.\thevarSubSub\.\thevarDeep - #2}%
-    \ifx&#1&%
-    \else\label{#1}\fi%
+    \paragraph*{\thevarDeep\ - #2}%
+    \addcontentsline{toc}{paragraph}{\thevarDeep\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
 }
 
-% 4. Livello massimo di profondità variante (es. UC-3c.1.1.1.1)
-% Reset su varDeep
+% 6. Livello massimo variante (es. UC-3c.1.1.1.1)
 \newcounter{varSubDeep}[varDeep]
+\renewcommand{\thevarSubDeep}{\thevarDeep.\arabic{varSubDeep}}
+
 \newcommand{\varsubdeepusecase}[2]{%
     \refstepcounter{varSubDeep}%
-    \paragraph*{UC-\theucMain\theucVar.\thevarSub.\thevarSubSub.\thevarDeep.\thevarSubDeep\ - #2}%
-    \addcontentsline{toc}{paragraph}{UC-\theucMain\theucVar.\thevarSub.\thevarSubSub.\thevarDeep.\thevarSubDeep\ - #2}%
-    \ifx&#1&%
-    \else\label{#1}\fi%
+    \paragraph*{\thevarSubDeep\ - #2}%
+    \addcontentsline{toc}{paragraph}{\thevarSubDeep\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
 }
+
+% --- RAMO STANDARD (Figli di UC-1) ---
 
 % 3. Contatore Secondario (es. UC-1.1)
 \newcounter{ucSub}[ucMain]
+% Ereditarietà: NomePadre (UC-1) + Punto + Numero
+\renewcommand{\theucSub}{\theucMain.\arabic{ucSub}}
+
 \newcommand{\subusecase}[2]{%
     \refstepcounter{ucSub}%
-    \setcounter{ucSubSub}{0}%
-    \subsubsection*{UC-\theucMain.\theucSub\ - #2}%
-    \addcontentsline{toc}{subsubsection}{UC-\theucMain.\theucSub\ - #2}%
-    \ifx&#1&%
-    \else\label{#1}\fi%
+    \subsubsection*{\theucSub\ - #2}%
+    \addcontentsline{toc}{subsubsection}{\theucSub\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
 }
 
 % 4. Contatore Terziario (es. UC-3.1.1)
 \newcounter{ucSubSub}[ucSub]
+\renewcommand{\theucSubSub}{\theucSub.\arabic{ucSubSub}}
+
 \newcommand{\subsubusecase}[2]{%
     \refstepcounter{ucSubSub}%
-    \setcounter{ucDeep}{0}%
-    \paragraph*{UC-\theucMain.\theucSub.\theucSubSub\ - #2}%
-    \addcontentsline{toc}{paragraph}{UC-\theucMain.\theucSub.\theucSubSub\ - #2}%
-    \ifx&#1&%
-    \else\label{#1}\fi%
+    \paragraph*{\theucSubSub\ - #2}%
+    \addcontentsline{toc}{paragraph}{\theucSubSub\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
 }
 
 % 5. Contatore Quaternario (es. UC-3.2.1.1)
 \newcounter{ucDeep}[ucSubSub]
+\renewcommand{\theucDeep}{\theucSubSub.\arabic{ucDeep}}
+
 \newcommand{\deepusecase}[2]{%
     \refstepcounter{ucDeep}%
-    \paragraph*{UC-\theucMain.\theucSub.\theucSubSub.\theucDeep\ - #2}%
-    \addcontentsline{toc}{paragraph}{UC-\theucMain.\theucSub.\theucSubSub.\theucDeep\ - #2}%
-    \ifx&#1&%
-    \else\label{#1}\fi%
+    \paragraph*{\theucDeep\ - #2}%
+    \addcontentsline{toc}{paragraph}{\theucDeep\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
 }
 
 % 6. Contatore 5 (es. UC-3.2.1.1.5)
-\newcounter{ucSubDeep}[ucSubSub]
+\newcounter{ucSubDeep}[ucSubSub] % NOTA: Nel tuo originale era su ucSubSub, forse intendevi su ucDeep?
+% Ho corretto ipotizzando erediti da ucDeep per coerenza
+\renewcommand{\theucSubDeep}{\theucDeep.\arabic{ucSubDeep}}
+
 \newcommand{\subdeepusecase}[2]{%
     \refstepcounter{ucSubDeep}%
-    \paragraph*{UC-\theucMain.\theucSub.\theucSubSub.\theucDeep.\theucSubDeep\ - #2}%
-    \addcontentsline{toc}{paragraph}{UC-\theucMain.\theucSub.\theucSubSub.\theucDeep.\theucSubDeep\ - #2}%
-    \ifx&#1&%
-    \else\label{#1}\fi%
+    \paragraph*{\theucSubDeep\ - #2}%
+    \addcontentsline{toc}{paragraph}{\theucSubDeep\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
 }
+
 % --- FINE DEFINIZIONE CONTATORI UC ---
 
 

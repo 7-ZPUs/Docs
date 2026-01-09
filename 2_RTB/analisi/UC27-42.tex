@@ -12,7 +12,7 @@
 
     \item \textbf{Flusso Principale}: Il sistema mostra a video le informazioni sul formato del documento e sul prodotto software che lo ha generato
 
-    \item \textbf{Inclusioni}: UC-\ref{visualizzaTipoFormatoDocumento}, UC-\ref{visualizzaNomeProdottoSoftware}, UC-\ref{visualizzaVersioneProdottoSoftware}, UC-\ref{visualizzaProduttoreSoftware}
+    \item \textbf{Inclusioni}: \ref{visualizzaTipoFormatoDocumento}, \ref{visualizzaNomeProdottoSoftware}, \ref{visualizzaVersioneProdottoSoftware}, \ref{visualizzaProduttoreSoftware}
 \end{itemize}
 
 \subusecase{visualizzaTipoFormatoDocumento}{Visualizza tipo di formato documento}
@@ -76,13 +76,13 @@
     \item \textbf{Postcondizioni}: L'utente visualizza le caratteristiche della verifica del documento
 
     \item \textbf{Flusso Principale}: \begin{enumerate}
-        \item Il sistema visualizza se è Firmato Digitalmente o meno UC-\ref{visualizzaFirmaDigitaleDocumento}
-        \item Il sistema visualizza se è Sigillato Elettronicamente o meno UC-\ref{visualizzaSigilloElettronicoDocumento}
-        \item Il sistema visualizza se è dotato di Marcatura Temporale o meno UC-\ref{visualizzaMarcaturaTemporaleDocumento}
-        \item Il sistema visualizza se vi è conformità alle copie immagine su supporto informatico o meno UC-\ref{visualizzaConformitaCopieImmagineDocumento}
+        \item Il sistema visualizza se è Firmato Digitalmente o meno \ref{visualizzaFirmaDigitaleDocumento}
+        \item Il sistema visualizza se è Sigillato Elettronicamente o meno \ref{visualizzaSigilloElettronicoDocumento}
+        \item Il sistema visualizza se è dotato di Marcatura Temporale o meno \ref{visualizzaMarcaturaTemporaleDocumento}
+        \item Il sistema visualizza se vi è conformità alle copie immagine su supporto informatico o meno \ref{visualizzaConformitaCopieImmagineDocumento}
     \end{enumerate}
 
-    \item \textbf{Inclusioni}: UC-\ref{visualizzaFirmaDigitaleDocumento}, UC-\ref{visualizzaSigilloElettronicoDocumento}, UC-\ref{visualizzaMarcaturaTemporaleDocumento}, UC-\ref{visualizzaConformitaCopieImmagineDocumento}
+    \item \textbf{Inclusioni}: \ref{visualizzaFirmaDigitaleDocumento}, \ref{visualizzaSigilloElettronicoDocumento}, \ref{visualizzaMarcaturaTemporaleDocumento}, \ref{visualizzaConformitaCopieImmagineDocumento}
 \end{itemize}
 
 \subusecase{visualizzaFirmaDigitaleDocumento}{Visualizza firma digitale documento}
@@ -176,17 +176,17 @@
     \item \textbf{Postcondizioni}: L'utente visualizza le informazioni sugli allegati del documento
 
     \item \textbf{Flusso Principale}: \begin{enumerate}
-        \item Il sistema visualizza il numero di allegati (UC-\ref{visualizzaNumeroAllegatiDocumento})
+        \item Il sistema visualizza il numero di allegati (\ref{visualizzaNumeroAllegatiDocumento})
         \item Il sistema visualizza le informazioni identificative degli allegati, se presenti, quali:
             \begin{itemize}
-                \item Identificativo dell'allegato (UC-\ref{visualizzaIdentificativoAllegato})
-                \item Descrizione dell'allegato (UC-\ref{visualizzaDescrizioneAllegato})
+                \item Identificativo dell'allegato (\ref{visualizzaIdentificativoAllegato})
+                \item Descrizione dell'allegato (\ref{visualizzaDescrizioneAllegato})
             \end{itemize}    
         \end{enumerate}
-    \item \textbf{Flusso Alternativo}: Gli allegati non sono presenti UC-\ref{allegatiNonPresenti}
+    \item \textbf{Flusso Alternativo}: Gli allegati non sono presenti \ref{allegatiNonPresenti}
 
-    \item \textbf{Inclusioni}: UC-\ref{visualizzaNumeroAllegatiDocumento}, UC-\ref{visualizzaIdentificativoAllegato}, UC-\ref{visualizzaDescrizioneAllegato}
-    \item \textbf{Estensioni}: UC-\ref{allegatiNonPresenti}
+    \item \textbf{Inclusioni}: \ref{visualizzaNumeroAllegatiDocumento}, \ref{visualizzaIdentificativoAllegato}, \ref{visualizzaDescrizioneAllegato}
+    \item \textbf{Estensioni}: \ref{allegatiNonPresenti}
 \end{itemize}
 
 \subusecase{allegatiNonPresenti}{Allegati non presenti}
@@ -239,7 +239,7 @@
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza la descrizione dell'allegato
     \item \textbf{Flusso Principale}: Il sistema mostra a video la descrizione dell'allegato
-    \item \textbf{Flusso Alternativo}: L'informazione sul numero di allegati del documento non è disponibile (UC-\ref{informazioneNonPresente})
+    \item \textbf{Flusso Alternativo}: L'informazione sul numero di allegati del documento non è disponibile (\ref{informazioneNonPresente})
 \end{itemize}
 
 \usecase{visualizzaInformazioniModificheDocumento}{Visualizza informazioni sulle modifiche di un documento}
@@ -257,13 +257,13 @@
     \item \textbf{Flusso Principale}: \begin{enumerate}
         \item Il sistema visualizza per ogni modifica del documento:
         \begin{itemize}
-                \item Tipo di modifica tra Annullamento, Rettifica, Integrazione, Annotazione (UC-\ref{visualizzaTipoModificaDocumento})
-                \item Soggetto autore della modifica come definito UC-16 (UC-\ref{visualizzaSoggettoAutoreModifica})
-                \item Data Ora della modifica (UC-\ref{visualizzaDataOraModifica})
-                \item Identificativo del documento alla versione precedente alla modifica (UC-\ref{visualizzaIdentificativoVersionePrecedenteDocumento})
+                \item Tipo di modifica tra Annullamento, Rettifica, Integrazione, Annotazione (\ref{visualizzaTipoModificaDocumento})
+                \item Soggetto autore della modifica come definito UC-16 (\ref{visualizzaSoggettoAutoreModifica})
+                \item Data Ora della modifica (\ref{visualizzaDataOraModifica})
+                \item Identificativo del documento alla versione precedente alla modifica (\ref{visualizzaIdentificativoVersionePrecedenteDocumento})
         \end{itemize} 
            \end{enumerate}
-    \item \textbf{Inclusioni}: UC-\ref{visualizzaTipoModificaDocumento}, UC-\ref{visualizzaSoggettoAutoreModifica}, UC-\ref{visualizzaDataOraModifica}, UC-\ref{visualizzaIdentificativoVersionePrecedenteDocumento}
+    \item \textbf{Inclusioni}: \ref{visualizzaTipoModificaDocumento}, \ref{visualizzaSoggettoAutoreModifica}, \ref{visualizzaDataOraModifica}, \ref{visualizzaIdentificativoVersionePrecedenteDocumento}
 \end{itemize}
 
 \subusecase{visualizzaTipoModificaDocumento}{Visualizza tipo modifica documento}
@@ -286,8 +286,8 @@
         \item L'utente ha avviato l'applicazione
         \item L'utente ha selezionato un documento di tipo: "informatico" o "amministrativo informatico"
     \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza le informazioni del soggetto autore della modifica (UC-\ref{visualizzaInfoSoggettoCoinvolto})
-    \item \textbf{Flusso Principale}: Il sistema mostra a video le informazioni del soggetto autore della modifica come definito in UC-\ref{visualizzaInfoSoggettoCoinvolto}
+    \item \textbf{Postcondizioni}: L'utente visualizza le informazioni del soggetto autore della modifica (\ref{visualizzaInfoSoggettoCoinvolto})
+    \item \textbf{Flusso Principale}: Il sistema mostra a video le informazioni del soggetto autore della modifica come definito in \ref{visualizzaInfoSoggettoCoinvolto}
 \end{itemize}
 
 \subusecase{visualizzaDataOraModifica}{Visualizza data e ora modifica}
@@ -390,14 +390,14 @@
         \begin{enumerate}
         \item Il sistema visualizza le informazioni di assegnazione, quali:
             \begin{itemize}
-                \item Tipo di assegnazione tra: Per competenza e Per conoscenza (UC-\ref{visualizzaTipoAssegnazioneAggregazione})
-                \item Soggetto assegnatario (UC-\ref{visualizzaInfoSoggettoCoinvolto})
-                \item Data Ora di inizio assegnazione (UC-\ref{visualizzaDataOraInizioAssegnazioneAggregazione})
-                \item Data Ora di fine assegnazione (UC-\ref{visualizzaDataOraFineAssegnazioneAggregazione})
+                \item Tipo di assegnazione tra: Per competenza e Per conoscenza (\ref{visualizzaTipoAssegnazioneAggregazione})
+                \item Soggetto assegnatario (\ref{visualizzaInfoSoggettoCoinvolto})
+                \item Data Ora di inizio assegnazione (\ref{visualizzaDataOraInizioAssegnazioneAggregazione})
+                \item Data Ora di fine assegnazione (\ref{visualizzaDataOraFineAssegnazioneAggregazione})
             \end{itemize}
         \end{enumerate}
 
-    \item \textbf{Inclusioni}: UC-\ref{visualizzaTipoAssegnazioneAggregazione}, UC-\ref{visualizzaInfoSoggettoCoinvolto}, UC-\ref{visualizzaDataOraInizioAssegnazioneAggregazione}, UC-\ref{visualizzaDataOraFineAssegnazioneAggregazione}
+    \item \textbf{Inclusioni}: \ref{visualizzaTipoAssegnazioneAggregazione}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaDataOraInizioAssegnazioneAggregazione}, \ref{visualizzaDataOraFineAssegnazioneAggregazione}
 \end{itemize}
 
 \subusecase{visualizzaTipoAssegnazioneAggregazione}{Visualizza tipo assegnazione aggregazione}
@@ -496,14 +496,14 @@
     \item \textbf{Flusso Principale}: \begin{enumerate}
         \item Il sistema visualizza le informazioni del procedimento amministrativo, quali:
         \begin{itemize}
-            \item Indice per la quale sono catalogati i procedimenti (UC-\ref{visualizzaIndiceProcedimentoAmministrativo})
-            \item Denominazione del procedimento amministrativo (UC-\ref{visualizzaDenominazioneProcedimentoAmministrativo})
-            \item Catalogo dei procedimenti (UC-\ref{visualizzaCatalogoProcedimentiAmministrativi})
-            \item Lista delle fasi del procedimento amministrativo (UC-\ref{visualizzaFasiProcedimentoAmministrativo})
+            \item Indice per la quale sono catalogati i procedimenti (\ref{visualizzaIndiceProcedimentoAmministrativo})
+            \item Denominazione del procedimento amministrativo (\ref{visualizzaDenominazioneProcedimentoAmministrativo})
+            \item Catalogo dei procedimenti (\ref{visualizzaCatalogoProcedimentiAmministrativi})
+            \item Lista delle fasi del procedimento amministrativo (\ref{visualizzaFasiProcedimentoAmministrativo})
         \end{itemize}
            \end{enumerate}
 
-    \item \textbf{Inclusioni}: UC-\ref{visualizzaIndiceProcedimentoAmministrativo}, UC-\ref{visualizzaDenominazioneProcedimentoAmministrativo}, UC-\ref{visualizzaCatalogoProcedimentiAmministrativi}, UC-\ref{visualizzaFasiProcedimentoAmministrativo}
+    \item \textbf{Inclusioni}: \ref{visualizzaIndiceProcedimentoAmministrativo}, \ref{visualizzaDenominazioneProcedimentoAmministrativo}, \ref{visualizzaCatalogoProcedimentiAmministrativi}, \ref{visualizzaFasiProcedimentoAmministrativo}
 \end{itemize}
 
 \subusecase{visualizzaIndiceProcedimentoAmministrativo}{Visualizza indice procedimento amministrativo}
@@ -554,7 +554,7 @@
 
     \item \textbf{Postcondizioni}: Il sistema visualizza la lista delle fasi di un procedimento amministrativo dell'aggregazione selezionata.
 
-    \item \textbf{Flusso Principale}: Il sistema mostra a video la lista delle fasi del procedimento amministrativo, per ognuna mostra le sue informazioni (UC-\ref{visualizzaFaseProcedimentoAmministrativo}).
+    \item \textbf{Flusso Principale}: Il sistema mostra a video la lista delle fasi del procedimento amministrativo, per ognuna mostra le sue informazioni (\ref{visualizzaFaseProcedimentoAmministrativo}).
 
     \item \textbf{Inclusioni}: 
 \end{itemize}
@@ -569,11 +569,11 @@
     \item \textbf{Postcondizioni}: L'utente visualizza le informazioni della fase del procedimento amministrativo.
     \item \textbf{Flusso Principale}: Il sistema mostra a video le informazioni della fase, quali:
         \begin{itemize}
-            \item Tipo di fase (UC-\ref{visualizzaTipoFaseProcedimentoAmministrativo})
-            \item Data Ora di inizio della fase (UC-\ref{visualizzaDataOraInizioFase})
-            \item Data Ora di fine della fase (UC-\ref{visualizzaDataOraFineFase})
+            \item Tipo di fase (\ref{visualizzaTipoFaseProcedimentoAmministrativo})
+            \item Data Ora di inizio della fase (\ref{visualizzaDataOraInizioFase})
+            \item Data Ora di fine della fase (\ref{visualizzaDataOraFineFase})
         \end{itemize}
-    \item \textbf{Inclusioni}: UC-\ref{visualizzaTipoFaseProcedimentoAmministrativo}, UC-\ref{visualizzaDataOraInizioFase}
+    \item \textbf{Inclusioni}: \ref{visualizzaTipoFaseProcedimentoAmministrativo}, \ref{visualizzaDataOraInizioFase}
 \end{itemize}
 
 \subsubusecase{visualizzaTipoFaseProcedimentoAmministrativo}{Visualizza tipo fase procedimento amministrativo}
@@ -625,11 +625,11 @@
     \item \textbf{Postcondizioni}: Il sistema visualizza l'indice dei documenti dell'aggregazione selezionata
 
     \item \textbf{Flusso Principale}: \begin{enumerate}
-        \item Il sistema visualizza il tipo dei documenti contenuti dall'aggregazione selezionata (UC-\ref{visualizzaTipoDocumentiAggregazione})
-        \item Il sistema visualizza l'identificativo dei documenti contenuti dall'aggregazione selezionata (UC-\ref{visualizzaIdentificativoDocumentoAggregazione})
+        \item Il sistema visualizza il tipo dei documenti contenuti dall'aggregazione selezionata (\ref{visualizzaTipoDocumentiAggregazione})
+        \item Il sistema visualizza l'identificativo dei documenti contenuti dall'aggregazione selezionata (\ref{visualizzaIdentificativoDocumentoAggregazione})
     \end{enumerate}
 
-    \item \textbf{Inclusioni}: UC-\ref{visualizzaTipoDocumentiAggregazione}, UC-\ref{visualizzaIdentificativoDocumentoAggregazione}
+    \item \textbf{Inclusioni}: \ref{visualizzaTipoDocumentiAggregazione}, \ref{visualizzaIdentificativoDocumentoAggregazione}
 \end{itemize}
 
 \subusecase{visualizzaTipoDocumentiAggregazione}{Visualizza tipo documenti contenuti dall'aggregazione}
@@ -712,12 +712,12 @@
     \item \textbf{Postcondizioni}: L'utente visualizza per ogni metadato custom relativo al documento selezionato, il nome e il valore del metadato custom
     \item \textbf{Flusso Principale}: Il sistema mostra a video per ogni metadato custom: 
         \begin{itemize}
-            \item Il nome del metadato custom (UC-\ref{visualizzaNomeMetadatoCustom})
-            \item Il valore del metadato custom come stringa (UC-\ref{visualizzaValoreMetadatoCustom})
+            \item Il nome del metadato custom (\ref{visualizzaNomeMetadatoCustom})
+            \item Il valore del metadato custom come stringa (\ref{visualizzaValoreMetadatoCustom})
         \end{itemize}
-    \item \textbf{Inclusioni}: UC-\ref{visualizzaNomeMetadatoCustom}, UC-\ref{visualizzaValoreMetadatoCustom}
-    \item \textbf{Estensioni}: UC-\ref{metadatiCustomAssenti}
-    \item \textbf{Flusso Alternativo}: Il documento selezionato non dispone di metadati custom (UC-\ref{metadatiCustomAssenti})
+    \item \textbf{Inclusioni}: \ref{visualizzaNomeMetadatoCustom}, \ref{visualizzaValoreMetadatoCustom}
+    \item \textbf{Estensioni}: \ref{metadatiCustomAssenti}
+    \item \textbf{Flusso Alternativo}: Il documento selezionato non dispone di metadati custom (\ref{metadatiCustomAssenti})
 \end{itemize}
 
 \subusecase{visualizzaNomeMetadatoCustom}{Visualizza Nome Metadato Custom}
