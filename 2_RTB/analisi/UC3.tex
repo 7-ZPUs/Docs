@@ -1,26 +1,27 @@
-\usecase{salvaPiuDocs}{Salvataggio di più Documenti}
+\usecase{salvaDocumento}{Salvataggio di un documento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: 
     \begin{itemize}
         \item L'Utente ha avviato l'applicazione
-        \item L'Utente sta visualizzando un folder con più documenti o ha selezionato più documenti
+        \item L'Utente ha selezionato un elemento
     \end{itemize}
-    \item \textbf{Postcondizioni}: L'Utente ha salvato i documenti in locale in una cartella selezionata
+    \item \textbf{Postcondizioni}: L'Utente ha salvato il documento in locale in una cartella selezionata
     \item \textbf{Flusso Principale}:\begin{enumerate}
             \item Il sistema apre un dialogo di selezione cartella
             \item L'utente seleziona la cartella di destinazione 
-            \item Il sistema salva i File nella cartella selezionata
-            \item Il sistema conferma il salvataggio con un messaggio "File salvati con successo in [percorso]".
+            \item Il sistema salva il File nella cartella selezionata
+            \item Il sistema conferma il salvataggio con un messaggio "File salvato con successo in [percorso]".
         \end{enumerate}
     \item \textbf{Flusso Alternativo}:\begin{enumerate}
-            \item L'utente tenta di salvare il documento nella cartella del DIP: il sistema blocca l'operazione e mostra il messaggio "Impossibile salvare nel DIP. Selezionare un'altra cartella per preservare l'integrità del DIP.".
+            \item L'utente tenta di salvare il documento in una cartella: il sistema blocca l'operazione e mostra il messaggio "Impossibile salvare il documento.".
             \item L'utente annulla l'operazione: il sistema chiude il dialogo senza salvare.
         \end{enumerate}
+    \item \textbf{Estensioni}: \ref{salvataggioFallito} Salvataggio fallito
 \end{itemize}
 
 
-\usecase{salvaPiuDocs}{Salvataggio di più Documenti}
+\usecase{salvaPiuDocumenti}{Salvataggio di più Documenti}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: 
@@ -36,7 +37,24 @@
             \item Il sistema conferma il salvataggio con un messaggio "File salvati con successo in [percorso]".
         \end{enumerate}
     \item \textbf{Flusso Alternativo}:\begin{enumerate}
-            \item L'utente tenta di salvare il documento nella cartella del DIP: il sistema blocca l'operazione e mostra il messaggio "Impossibile salvare nel DIP. Selezionare un'altra cartella per preservare l'integrità del DIP.".
+            \item L'utente tenta di salvare i documenti nella cartella: il sistema blocca l'operazione e mostra il messaggio "Impossibile salvare i documenti. Selezionare un'altra cartella.".
             \item L'utente annulla l'operazione: il sistema chiude il dialogo senza salvare.
+        \end{enumerate}
+    \item \textbf{Estensioni}: \ref{salvataggioFallito} Salvataggio fallito
+\end{itemize}
+
+\usecase{salvataggioFallito}{Salvataggio fallito}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+    \begin{itemize}
+        \item L'Utente ha avviato l'applicazione
+        \item L'Utente ha selezionato un elemento
+        \item L'utente tenta di salvare uno o più documenti nel proprio computer
+    \end{itemize}
+    \item \textbf{Postcondizioni}: Il sistema annulla l'operazione di salvataggio e mostra un messaggio di errore.
+    \item \textbf{Flusso Principale}:\begin{enumerate}
+            \item Il sistema annulla l'operazione di salvataggio.
+            \item Il sistema mostra a video un messaggio di errore che indica il motivo del fallimento.
         \end{enumerate}
 \end{itemize}
