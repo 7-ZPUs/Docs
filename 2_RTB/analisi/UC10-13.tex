@@ -9,10 +9,14 @@
     \item \textbf{Postcondizioni}: L'utente ha ottenuto le informazioni sull'AiP di provenienza relativo al documento: UUID e classe documentale.
     \item \textbf{Flusso Principale}: Il sistema mostra a video le informazioni sull'AiP:
     \begin{itemize}
-        \item classe documentale AiP (UC10.1)
-        \item UUID AiP (UC10.2)
+        \item Classe documentale AiP (\ref{visualizzaClasseDocumentaleAiP})
+        \item UUID AiP (\ref{visualizzaUUIDAiP})
     \end{itemize}
-    \item \textbf{Inclusioni}: UC10.1, UC10.2
+    \item \textbf{Inclusioni}:
+    \begin{itemize}
+        \item \ref{visualizzaClasseDocumentaleAiP} Visualizzazione Classe Documentale di appartenenza AiP
+        \item \ref{visualizzaUUIDAiP} Visualizza UUID AiP
+    \end{itemize}
 \end{itemize}
 
 \subusecase{visualizzaClasseDocumentaleAiP}{Visualizza classe documentale di appartenenza AiP  }
@@ -50,20 +54,31 @@
     \item \textbf{Postcondizioni}: L'utente visualizza le informazioni del processo di conservazione, quali: data inizio, data fine, uuid utente responsabile, canale di attivazione, stato del processo, sessione di versamento, sessione di conservazione.
     \item \textbf{Flusso Principale}: Vengono mostrati a video, in riferimento all'AiP selezionato:
     \begin{itemize}
-        \item Data inizio (UC11.1)
-        \item Data fine (UC11.2)
-        \item UUID utente attivatore (UC11.3)
-        \item UUID utente terminatore (UC11.4)
-        \item Nome canale di attivazione (UC11.5)
-        \item Nome canale di terminazione (UC11.6)
-        \item Stato del processo (UC11.7)
-        \item Informazioni sulla sessione di versamento (UC12)
-        \item Informazioni sulla sessione di conservazione (UC13)
+        \item Data inizio (\ref{visualizzaDataInizioProcessoSessione})
+        \item Data fine (\ref{visualizzaDataFineProcessoSessione})
+        \item UUID utente attivatore (\ref{visualizzaUUIDUtenteAttivatore})
+        \item UUID utente terminatore (\ref{visualizzaUUIDUtenteTerminatore})
+        \item Nome canale di attivazione (\ref{visualizzaNomeCanaleAttivazione})
+        \item Nome canale di terminazione (\ref{visualizzaNomeCanaleTerminazione})
+        \item Stato del processo (\ref{visualizzaStatoProcessoSessione})
+        \item Informazioni sulla sessione di versamento (\ref{visualizzaInfoSessioneVersamento})
+        \item Informazioni sulla sessione di conservazione (\ref{visualizzaInfoSessioneConservazione})
     \end{itemize}
-    \item \textbf{Inclusioni}: UC11.1, UC11.2, UC11.3, UC11.4, UC11.5, UC11.6, UC11.7, UC12, UC13
+    \item \textbf{Inclusioni}:
+    \begin{itemize}
+        \item \ref{visualizzaDataInizioProcessoSessione} Visualizza data inizio processo/sessione
+        \item \ref{visualizzaDataFineProcessoSessione} Visualizza data fine processo/sessione
+        \item \ref{visualizzaUUIDUtenteAttivatore} Visualizza UUID utente attivatore di un processo/sessione
+        \item \ref{visualizzaUUIDUtenteTerminatore} Visualizza UUID utente terminatore di un processo/sessione
+        \item \ref{visualizzaNomeCanaleAttivazione} Visualizza nome canale di attivazione di un processo/sessione
+        \item \ref{visualizzaNomeCanaleTerminazione} Visualizza nome canale di terminazione di un processo/sessione
+        \item \ref{visualizzaStatoProcessoSessione} Visualizza stato di un processo/sessione
+        \item \ref{visualizzaInfoSessioneVersamento} Visualizza Informazioni sulla Sessione di Versamento
+        \item \ref{visualizzaInfoSessioneConservazione} Visualizza Informazioni sulla Sessione di Conservazione
+    \end{itemize}
 \end{itemize}
 
-\subusecase{visualizzaDataInizioProcessoSessione}{Visualizza data inizio processo/sessione  }
+\subusecase{visualizzaDataInizioProcessoSessione}{Visualizza data inizio processo/sessione}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -75,7 +90,7 @@
     \item \textbf{Flusso Principale}: Il sistema mostra a video la data di inizio del/la processo/sessione
 \end{itemize}
 
-\subusecase{visualizzaDataFineProcessoSessione}{Visualizza data fine processo/sessione  }
+\subusecase{visualizzaDataFineProcessoSessione}{Visualizza data fine processo/sessione}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -161,15 +176,28 @@
     \item \textbf{Postcondizioni}: L'utente visualizza i dettagli della sessione di versamento, quali: data inizio, data fine, UUID utente attivatore, UUID utente terminatore, nome canale di attivazione, nome canale di terminazione, stato del processo
     \item \textbf{Flusso Principale}: Vengono mostrati a video, relativamente alla sessione di versamento del processo selezionato:
     \begin{itemize}
-        \item Data inizio (UC11.1)
-        \item Data fine (UC11.2)
-        \item UUID utente attivatore (UC11.3)
-        \item UUID utente terminatore (UC11.4)
-        \item Nome canale di attivazione (UC11.5)
-        \item Nome canale di terminazione (UC11.6)
-        \item Stato del processo (UC11.7)
+        \item Data inizio (\ref{visualizzaDataInizioProcessoSessione})
+        \item Data fine (\ref{visualizzaDataFineProcessoSessione})
+        \item UUID utente attivatore (\ref{visualizzaUUIDUtenteAttivatore})
+        \item UUID utente terminatore (\ref{visualizzaUUIDUtenteTerminatore})
+        \item Nome canale di attivazione (\ref{visualizzaNomeCanaleAttivazione})
+        \item Nome canale di terminazione (\ref{visualizzaNomeCanaleTerminazione})
+        \item Stato del processo (\ref{visualizzaStatoProcessoSessione})
+        \item Informazioni sulla sessione di versamento (\ref{visualizzaInfoSessioneVersamento})
+        \item Informazioni sulla sessione di conservazione (\ref{visualizzaInfoSessioneConservazione})
     \end{itemize}
-    \item \textbf{Inclusioni}: UC11.1, UC11.2, UC11.3, UC11.4, UC11.5, UC11.6, UC11.7
+    \item \textbf{Inclusioni}:
+    \begin{itemize}
+        \item \ref{visualizzaDataInizioProcessoSessione} Visualizza data inizio processo/sessione
+        \item \ref{visualizzaDataFineProcessoSessione} Visualizza data fine processo/sessione
+        \item \ref{visualizzaUUIDUtenteAttivatore} Visualizza UUID utente attivatore di un processo/sessione
+        \item \ref{visualizzaUUIDUtenteTerminatore} Visualizza UUID utente terminatore di un processo/sessione
+        \item \ref{visualizzaNomeCanaleAttivazione} Visualizza nome canale di attivazione di un processo/sessione
+        \item \ref{visualizzaNomeCanaleTerminazione} Visualizza nome canale di terminazione di un processo/sessione
+        \item \ref{visualizzaStatoProcessoSessione} Visualizza stato di un processo/sessione
+        \item \ref{visualizzaInfoSessioneVersamento} Visualizza Informazioni sulla Sessione di Versamento
+        \item \ref{visualizzaInfoSessioneConservazione} Visualizza Informazioni sulla Sessione di Conservazione
+    \end{itemize}
 \end{itemize}
 
 \usecase{visualizzaInfoSessioneConservazione}{Visualizza Informazioni sulla Sessione di Conservazione}
@@ -183,13 +211,26 @@
     \item \textbf{Postcondizioni}: L'utente visualizza i dettagli della sessione di conservazione, quali: data inizio, data fine, UUID utente attivatore, UUID utente terminatore, nome canale di attivazione, nome canale di terminazione, stato del processo
     \item \textbf{Flusso Principale}: Vengono mostrati a video, relativamente alla sessione di conservazione del processo selezionato:
     \begin{itemize}
-        \item Data inizio (UC11.1)
-        \item Data fine (UC11.2)
-        \item UUID utente attivatore (UC11.3)
-        \item UUID utente terminatore (UC11.4)
-        \item Nome canale di attivazione (UC11.5)
-        \item Nome canale di terminazione (UC11.6)
-        \item Stato del processo (UC11.7)
+        \item Data inizio (\ref{visualizzaDataInizioProcessoSessione})
+        \item Data fine (\ref{visualizzaDataFineProcessoSessione})
+        \item UUID utente attivatore (\ref{visualizzaUUIDUtenteAttivatore})
+        \item UUID utente terminatore (\ref{visualizzaUUIDUtenteTerminatore})
+        \item Nome canale di attivazione (\ref{visualizzaNomeCanaleAttivazione})
+        \item Nome canale di terminazione (\ref{visualizzaNomeCanaleTerminazione})
+        \item Stato del processo (\ref{visualizzaStatoProcessoSessione})
+        \item Informazioni sulla sessione di versamento (\ref{visualizzaInfoSessioneVersamento})
+        \item Informazioni sulla sessione di conservazione (\ref{visualizzaInfoSessioneConservazione})
     \end{itemize}
-    \item \textbf{Inclusioni}: UC11.1, UC11.2, UC11.3, UC11.4, UC11.5, UC11.6, UC11.7
+    \item \textbf{Inclusioni}:
+    \begin{itemize}
+        \item \ref{visualizzaDataInizioProcessoSessione} Visualizza data inizio processo/sessione
+        \item \ref{visualizzaDataFineProcessoSessione} Visualizza data fine processo/sessione
+        \item \ref{visualizzaUUIDUtenteAttivatore} Visualizza UUID utente attivatore di un processo/sessione
+        \item \ref{visualizzaUUIDUtenteTerminatore} Visualizza UUID utente terminatore di un processo/sessione
+        \item \ref{visualizzaNomeCanaleAttivazione} Visualizza nome canale di attivazione di un processo/sessione
+        \item \ref{visualizzaNomeCanaleTerminazione} Visualizza nome canale di terminazione di un processo/sessione
+        \item \ref{visualizzaStatoProcessoSessione} Visualizza stato di un processo/sessione
+        \item \ref{visualizzaInfoSessioneVersamento} Visualizza Informazioni sulla Sessione di Versamento
+        \item \ref{visualizzaInfoSessioneConservazione} Visualizza Informazioni sulla Sessione di Conservazione
+    \end{itemize}
 \end{itemize}

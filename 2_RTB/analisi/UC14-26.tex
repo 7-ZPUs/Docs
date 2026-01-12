@@ -23,13 +23,12 @@
     \begin{itemize}
         \item Informazioni del soggetto coinvolto (\ref{visualizzaInfoSoggettoCoinvolto})
     \end{itemize} 
-    \item \textbf{Inclusioni}: \ref{visualizzaInfoSoggettoCoinvolto}
+    \item \textbf{Inclusioni}: \ref{visualizzaInfoSoggettoCoinvolto} Visualizza informazioni del soggetto coinvolto in un documento
 \end{itemize}
 
-\usecase{visualizzaInfoSoggettoCoinvolto}{Visualizza informazioni soggetto coinvolto in un documento}
+\subusecase{visualizzaInfoSoggettoCoinvolto}{Visualizza informazioni soggetto coinvolto in un documento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
@@ -50,11 +49,13 @@
         \end{itemize}
     \end{enumerate}
     \item \textbf{Inclusioni}:
-    \item \ref{visualizzaRuoloSoggetto} - Visualizza ruolo soggetto nel documento
-    \item \ref{visualizzaTipoSoggetto} - Visualizza tipo di soggetto
+    \begin{itemize}
+        \item \ref{visualizzaRuoloSoggetto} Visualizza ruolo soggetto nel documento
+        \item \ref{visualizzaTipoSoggetto} Visualizza tipo di soggetto
+    \end{itemize}
 \end{itemize}
 
-\varusecase{visualizzaInfoPF}{Visualizza informazioni del soggetto Persona Fisica}
+\subsubusecase{visualizzaInfoPF}{Visualizza informazioni del soggetto Persona Fisica}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
 
@@ -80,12 +81,65 @@
             \item Indirizzi digitali di riferimento \ref{visualizzaIndirizziDigitaliSoggetto}
         \end{itemize}
     \end{enumerate}
-
-    \item \textbf{Specializza}: \ref{visualizzaInfoSoggettoCoinvolto}
-    \item \textbf{Inclusioni}: (\ref{visualizzaNomeSoggetto}), (\ref{visualizzaCognomeSoggetto}), (\ref{visualizzaCodiceFiscaleSoggetto}), (\ref{visualizzaIndirizziDigitaliSoggetto})
+    \item \textbf{Inclusioni}:
+    \begin{itemize}
+        \item \ref{visualizzaNomeSoggetto} Visualizza nome soggetto
+        \item \ref{visualizzaCognomeSoggetto} Visualizza cognome soggetto
+        \item \ref{visualizzaCodiceFiscaleSoggetto} Visualizza codice fiscale soggetto
+        \item \ref{visualizzaIndirizziDigitaliSoggetto} Visualizza indirizzi digitali di riferimento soggetto
+    \end{itemize}
+    \item \textbf{Specializza}: \ref{visualizzaInfoSoggettoCoinvolto} Visualizza informazioni del soggetto coinvolto in un documento
 \end{itemize}
 
-\varusecase{visualizzaInfoPG}{Visualizza informazioni del soggetto Persona Giuridica}
+\deepusecase{visualizzaNomeSoggetto}{Visualizza nome soggetto}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di una Persona Fisica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto AS coinvolto in un documento
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza il nome del soggetto coinvolto nel documento selezionato
+    \item \textbf{Flusso Principale}: Il sistema mostra a video il nome del soggetto coinvolto nel documento selezionato
+\end{itemize}
+
+\deepusecase{visualizzaCognomeSoggetto}{Visualizza cognome soggetto}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di una Persona Fisica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto AS coinvolto in un documento
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza il cognome del soggetto coinvolto nel documento selezionato
+    \item \textbf{Flusso Principale}: Il sistema mostra a video il cognome del soggetto coinvolto nel documento selezionato
+\end{itemize}
+
+\deepusecase{visualizzaCodiceFiscaleSoggetto}{Visualizza codice fiscale soggetto}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di una Persona Fisica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto AS coinvolto in un documento
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza il codice fiscale del soggetto coinvolto nel documento selezionato
+    \item \textbf{Flusso Principale}: Il sistema mostra a video il codice fiscale del soggetto coinvolto nel documento selezionato
+\end{itemize}
+
+\deepusecase{visualizzaIndirizziDigitaliSoggetto}{Visualizza indirizzi digitali di riferimento soggetto}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di una Persona Fisica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto AS coinvolto in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto PAE coinvolto in un documento
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza gli indirizzi digitali di riferimento del soggetto coinvolto nel documento selezionato
+    \item \textbf{Flusso Principale}: Il sistema mostra a video gli indirizzi digitali di riferimento del soggetto coinvolto nel documento selezionato
+\end{itemize}
+
+\subsubusecase{visualizzaInfoPG}{Visualizza informazioni del soggetto Persona Giuridica}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
 
@@ -111,12 +165,54 @@
             \item Indirizzi digitali di riferimento \ref{visualizzaIndirizziDigitaliSoggetto}
         \end{itemize}
     \end{enumerate}
-
-    \item \textbf{Specializza}: \ref{visualizzaInfoSoggettoCoinvolto}
-    \item \textbf{Inclusioni}: (\ref{visualizzaDenominazioneOrganizzazioneSoggetto}), (\ref{visualizzaCodiceFiscaleSoggetto}), (\ref{visualizzaPartitaIVA}), (\ref{visualizzaDenominazioneUfficioSoggetto}), (\ref{visualizzaIndirizziDigitaliSoggetto})
+    \item \textbf{Inclusioni}: 
+    \begin{itemize}
+        \item \ref{visualizzaDenominazioneOrganizzazioneSoggetto} Visualizza denominazione organizzazione soggetto
+        \item \ref{visualizzaCodiceFiscaleSoggetto} Visualizza codice fiscale soggetto
+        \item \ref{visualizzaPartitaIVA} Visualizza partita IVA soggetto
+        \item \ref{visualizzaDenominazioneUfficioSoggetto} Visualizza denominazione ufficio soggetto
+        \item \ref{visualizzaIndirizziDigitaliSoggetto} Visualizza indirizzi digitali di riferimento soggetto
+    \end{itemize}
+    \item \textbf{Specializza}: \ref{visualizzaInfoSoggettoCoinvolto} Visualizza informazioni del soggetto coinvolto in un documento
 \end{itemize}
 
-\varusecase{visualizzaInfoAS}{Visualizza informazioni del soggetto AS}
+\deepusecase{visualizzaDenominazioneOrganizzazioneSoggetto}{Visualizza denominazione organizzazione soggetto}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di una Persona Giuridica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto AS coinvolto in un documento
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la denominazione dell'organizzazione del soggetto coinvolto nel documento selezionato
+    \item \textbf{Flusso Principale}: Il sistema mostra a video la denominazione dell'organizzazione del soggetto coinvolto nel documento selezionato
+\end{itemize}
+
+\deepusecase{visualizzaPartitaIVA}{Visualizza partita IVA soggetto}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di una Persona Giuridica coinvolta in un documento
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la partita IVA della Persona Giuridica coinvolta nel documento selezionato
+    \item \textbf{Flusso Principale}: Il sistema mostra a video la partita IVA della Persona Giuridica coinvolta nel documento selezionato
+\end{itemize}
+
+\deepusecase{visualizzaDenominazioneUfficioSoggetto}{Visualizza denominazione ufficio soggetto}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di una Persona Giuridica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto AS coinvolto in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto PAE coinvolto in un documento
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la denominazione dell'ufficio del soggetto coinvolto nel documento selezionato
+    \item \textbf{Flusso Principale}: Il sistema mostra a video la denominazione dell'ufficio del soggetto coinvolto nel documento selezionato
+\end{itemize}
+
+\subsubusecase{visualizzaInfoAS}{Visualizza informazioni del soggetto AS}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
 
@@ -144,12 +240,19 @@
             \item Indirizzi digitali di riferimento (\ref{visualizzaIndirizziDigitaliSoggetto})
         \end{itemize}
     \end{enumerate}
-
-    \item \textbf{Specializza}: \ref{visualizzaInfoSoggettoCoinvolto}
-    \item \textbf{Inclusioni}: (\ref{visualizzaNomeSoggetto}), (\ref{visualizzaCognomeSoggetto}), (\ref{visualizzaCodiceFiscaleSoggetto}), (\ref{visualizzaDenominazioneOrganizzazioneSoggetto}), (\ref{visualizzaDenominazioneUfficioSoggetto}), (\ref{visualizzaIndirizziDigitaliSoggetto})
+    \item \textbf{Inclusioni}: 
+    \begin{itemize}
+        \item \ref{visualizzaNomeSoggetto} Visualizza nome soggetto
+        \item \ref{visualizzaCognomeSoggetto} Visualizza cognome soggetto
+        \item \ref{visualizzaCodiceFiscaleSoggetto} Visualizza codice fiscale soggetto
+        \item \ref{visualizzaDenominazioneOrganizzazioneSoggetto} Visualizza denominazione organizzazione soggetto
+        \item \ref{visualizzaDenominazioneUfficioSoggetto} Visualizza denominazione ufficio soggetto
+        \item \ref{visualizzaIndirizziDigitaliSoggetto} Visualizza indirizzi digitali di riferimento soggetto
+    \end{itemize}
+    \item \textbf{Specializza}: \ref{visualizzaInfoSoggettoCoinvolto} Visualizza informazioni del soggetto coinvolto in un documento
 \end{itemize}
 
-\varusecase{visualizzaInfoPAI}{Visualizza informazioni del soggetto PAI}
+\subsubusecase{visualizzaInfoPAI}{Visualizza informazioni del soggetto PAI}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
 
@@ -175,12 +278,53 @@
             \item Indirizzi digitali di riferimento (\ref{visualizzaIndirizziDigitaliSoggetto})
         \end{itemize}
     \end{enumerate}
-
-    \item \textbf{Specializza}: \ref{visualizzaInfoSoggettoCoinvolto}
-    \item \textbf{Inclusioni}: \ref{visualizzaDenominazioneAmministrazioneCodiceIPA}, \ref{visualizzaDenominazioneAmministrazioneAooCodiceIpaAoo}, \ref{visualizzaDenominazioneAmministrazioneUorCodiceIpaUor}, \ref{visualizzaIndirizziDigitaliSoggetto}
+    \item \textbf{Inclusioni}: 
+    \begin{itemize}
+        \item \ref{visualizzaDenominazioneAmministrazioneCodiceIPA} Visualizza denominazione amministrazione / codice IPA soggetto
+        \item \ref{visualizzaDenominazioneAmministrazioneAooCodiceIpaAoo} Visualizza denominazione amministrazione AOO / codice IPA AOO soggetto
+        \item \ref{visualizzaDenominazioneAmministrazioneUorCodiceIpaUor} Visualizza denominazione amministrazione UOR / codice IPA UOR soggetto
+        \item \ref{visualizzaIndirizziDigitaliSoggetto} Visualizza indirizzi digitali di riferimento soggetto
+    \end{itemize}
+    \item \textbf{Specializza}: \ref{visualizzaInfoSoggettoCoinvolto} Visualizza informazioni del soggetto coinvolto in un documento
 \end{itemize}
 
-\varusecase{visualizzaInfoPAE}{Visualizza informazioni del soggetto PAE}
+\deepusecase{visualizzaDenominazioneAmministrazioneCodiceIPA}{Visualizza Denominazione Amministrazione / Codice IPA soggetto}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un soggetto PAI coinvolto in un documento
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la denominazione dell'amministrazione e il codice IPA del soggetto PAI coinvolto nel documento selezionato
+    \item \textbf{Flusso Principale}: Il sistema mostra a video la denominazione dell'amministrazione e il codice IPA del soggetto PAI coinvolto nel documento selezionato
+\end{itemize}
+
+\deepusecase{visualizzaDenominazioneAmministrazioneAOOCodiceIPAOOO}{Visualizza Denominazione Amministrazione AOO / Codice IPA AOO soggetto}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un soggetto PAI coinvolto in un documento
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la denominazione dell'amministrazione AOO e il codice IPA AOO del soggetto PAI coinvolto nel documento selezionato
+    \item \textbf{Flusso Principale}: Il sistema mostra a video la denominazione dell'amministrazione AOO e il codice IPA AOO del soggetto PAI coinvolto nel documento selezionato
+\end{itemize}
+
+\deepusecase{visualizzaDenominazioneAmministrazioneUORCodiceIPAUOR}{Visualizza Denominazione Amministrazione UOR / Codice IPA UOR soggetto}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un soggetto PAI coinvolto in un documento
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la denominazione dell'amministrazione UOR e il codice IPA UOR del soggetto PAI coinvolto nel documento selezionato
+    \item \textbf{Flusso Principale}: Il sistema mostra a video la denominazione dell'amministrazione UOR e il codice IPA UOR del soggetto PAI coinvolto nel documento selezionato
+\end{itemize}
+
+\subsubusecase{visualizzaInfoPAE}{Visualizza informazioni del soggetto PAE}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
 
@@ -205,12 +349,28 @@
             \item Indirizzi Digitali Di Riferimento (\ref{visualizzaIndirizziDigitaliSoggetto})
         \end{itemize}
     \end{enumerate}
-
-    \item \textbf{Specializza}: \ref{visualizzaInfoSoggettoCoinvolto}
-    \item \textbf{Inclusioni}: \ref{visualizzaIndirizziDigitaliSoggetto}, \ref{visualizzaDenominazioneUfficioSoggetto}, \ref{visualizzaDenominazioneAmministrazioneSoggetto}
+    \item \textbf{Inclusioni}: 
+    \begin{itemize}
+        \item \ref{visualizzaIndirizziDigitaliSoggetto} Visualizza indirizzi digitali di riferimento soggetto
+        \item \ref{visualizzaDenominazioneUfficioSoggetto} Visualizza denominazione ufficio soggetto
+        \item \ref{visualizzaDenominazioneAmministrazioneSoggetto} Visualizza denominazione organizzazione soggetto
+    \end{itemize}
+    \item \textbf{Specializza}: \ref{visualizzaInfoSoggettoCoinvolto} Visualizza informazioni del soggetto coinvolto in un documento
 \end{itemize}
 
-\varusecase{visualizzaInfoSW}{Visualizza informazioni del soggetto SW}
+\deepusecase{visualizzaDenominazioneAmministrazioneSoggetto}{Visualizza Denominazione Amministrazione soggetto}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un soggetto PAE coinvolto in un documento
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la denominazione dell'amministrazione del soggetto PAE coinvolto nel documento selezionato
+    \item \textbf{Flusso Principale}: Il sistema mostra a video la denominazione dell'amministrazione del soggetto PAE coinvolto nel documento selezionato
+\end{itemize}
+
+\subsubusecase{visualizzaInfoSW}{Visualizza informazioni del soggetto SW}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
 
@@ -234,8 +394,20 @@
         \end{itemize}
     \end{enumerate}
 
-    \item \textbf{Specializza}: \ref{visualizzaInfoSoggettoCoinvolto}
-    \item \textbf{Inclusioni}: \ref{visualizzaDenominazioneSistemaSoggetto}
+    \item \textbf{Specializza}: \ref{visualizzaInfoSoggettoCoinvolto} Visualizza informazioni del soggetto coinvolto in un documento
+    \item \textbf{Inclusioni}: \ref{visualizzaDenominazioneSistemaSoggetto} Visualizza Denominazione Sistema soggetto
+\end{itemize}
+
+\deepusecase{visualizzaDenominazioneSistemaSoggetto}{Visualizza Denominazione Sistema soggetto}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un soggetto SW coinvolto in un documento
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la denominazione del sistema del soggetto SW coinvolto nel documento selezionato
+    \item \textbf{Flusso Principale}: Il sistema mostra a video la denominazione del sistema del soggetto SW coinvolto nel documento selezionato
 \end{itemize}
 
 \subusecase{visualizzaRuoloSoggetto}{Visualizza ruolo soggetto nel documento}
@@ -262,149 +434,6 @@
     \item \textbf{Flusso Principale}: Il sistema mostra a video il tipo del soggetto coinvolto nel documento selezionato
 \end{itemize}
 
-\subusecase{visualizzaNomeSoggetto}{Visualizza nome soggetto}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{enumerate}
-        \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando le informazioni di una Persona Fisica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto AS coinvolto in un documento
-    \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza il nome del soggetto coinvolto nel documento selezionato
-    \item \textbf{Flusso Principale}: Il sistema mostra a video il nome del soggetto coinvolto nel documento selezionato
-\end{itemize}
-
-\subusecase{visualizzaCognomeSoggetto}{Visualizza cognome soggetto}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{enumerate}
-        \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando le informazioni di una Persona Fisica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto AS coinvolto in un documento
-    \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza il cognome del soggetto coinvolto nel documento selezionato
-    \item \textbf{Flusso Principale}: Il sistema mostra a video il cognome del soggetto coinvolto nel documento selezionato
-\end{itemize}
-
-\subusecase{visualizzaCodiceFiscaleSoggetto}{Visualizza codice fiscale soggetto}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{enumerate}
-        \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando le informazioni di una Persona Fisica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto AS coinvolto in un documento
-    \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza il codice fiscale del soggetto coinvolto nel documento selezionato
-    \item \textbf{Flusso Principale}: Il sistema mostra a video il codice fiscale del soggetto coinvolto nel documento selezionato
-\end{itemize}
-
-\subusecase{visualizzaIndirizziDigitaliSoggetto}{Visualizza indirizzi digitali di riferimento soggetto}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{enumerate}
-        \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando le informazioni di una Persona Fisica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto AS coinvolto in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto PAE coinvolto in un documento
-    \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza gli indirizzi digitali di riferimento del soggetto coinvolto nel documento selezionato
-    \item \textbf{Flusso Principale}: Il sistema mostra a video gli indirizzi digitali di riferimento del soggetto coinvolto nel documento selezionato
-\end{itemize}
-
-\subusecase{visualizzaDenominazioneOrganizzazioneSoggetto}{Visualizza denominazione organizzazione soggetto}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{enumerate}
-        \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando le informazioni di una Persona Giuridica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto AS coinvolto in un documento
-    \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza la denominazione dell'organizzazione del soggetto coinvolto nel documento selezionato
-    \item \textbf{Flusso Principale}: Il sistema mostra a video la denominazione dell'organizzazione del soggetto coinvolto nel documento selezionato
-\end{itemize}
-
-\subusecase{visualizzaPartitaIVA}{Visualizza partita IVA soggetto}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{enumerate}
-        \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando le informazioni di una Persona Giuridica coinvolta in un documento
-    \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza la partita IVA della Persona Giuridica coinvolta nel documento selezionato
-    \item \textbf{Flusso Principale}: Il sistema mostra a video la partita IVA della Persona Giuridica coinvolta nel documento selezionato
-\end{itemize}
-
-\subusecase{visualizzaDenominazioneUfficioSoggetto}{Visualizza denominazione ufficio soggetto}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{enumerate}
-        \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando le informazioni di una Persona Giuridica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto AS coinvolto in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto PAE coinvolto in un documento
-    \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza la denominazione dell'ufficio del soggetto coinvolto nel documento selezionato
-    \item \textbf{Flusso Principale}: Il sistema mostra a video la denominazione dell'ufficio del soggetto coinvolto nel documento selezionato
-\end{itemize}
-
-\subusecase{visualizzaDenominazioneAmministrazioneCodiceIPA}{Visualizza Denominazione Amministrazione / Codice IPA soggetto}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{enumerate}
-        \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando le informazioni di un soggetto PAI coinvolto in un documento
-    \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza la denominazione dell'amministrazione e il codice IPA del soggetto PAI coinvolto nel documento selezionato
-    \item \textbf{Flusso Principale}: Il sistema mostra a video la denominazione dell'amministrazione e il codice IPA del soggetto PAI coinvolto nel documento selezionato
-\end{itemize}
-
-\subusecase{visualizzaDenominazioneAmministrazioneAOOCodiceIPAOOO}{Visualizza Denominazione Amministrazione AOO / Codice IPA AOO soggetto}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{enumerate}
-        \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando le informazioni di un soggetto PAI coinvolto in un documento
-    \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza la denominazione dell'amministrazione AOO e il codice IPA AOO del soggetto PAI coinvolto nel documento selezionato
-    \item \textbf{Flusso Principale}: Il sistema mostra a video la denominazione dell'amministrazione AOO e il codice IPA AOO del soggetto PAI coinvolto nel documento selezionato
-\end{itemize}
-
-\subusecase{visualizzaDenominazioneAmministrazioneUORCodiceIPAUOR}{Visualizza Denominazione Amministrazione UOR / Codice IPA UOR soggetto}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{enumerate}
-        \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando le informazioni di un soggetto PAI coinvolto in un documento
-    \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza la denominazione dell'amministrazione UOR e il codice IPA UOR del soggetto PAI coinvolto nel documento selezionato
-    \item \textbf{Flusso Principale}: Il sistema mostra a video la denominazione dell'amministrazione UOR e il codice IPA UOR del soggetto PAI coinvolto nel documento selezionato
-\end{itemize}
-
-\subusecase{visualizzaDenominazioneAmministrazioneSoggetto}{Visualizza Denominazione Amministrazione soggetto}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{enumerate}
-        \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando le informazioni di un soggetto PAE coinvolto in un documento
-    \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza la denominazione dell'amministrazione del soggetto PAE coinvolto nel documento selezionato
-    \item \textbf{Flusso Principale}: Il sistema mostra a video la denominazione dell'amministrazione del soggetto PAE coinvolto nel documento selezionato
-\end{itemize}
-
-\subusecase{visualizzaDenominazioneSistemaSoggetto}{Visualizza Denominazione Sistema soggetto}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{enumerate}
-        \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando le informazioni di un soggetto SW coinvolto in un documento
-    \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza la denominazione del sistema del soggetto SW coinvolto nel documento selezionato
-    \item \textbf{Flusso Principale}: Il sistema mostra a video la denominazione del sistema del soggetto SW coinvolto nel documento selezionato
-\end{itemize}
 
 \usecase{visualizzaInfoClassificazioneDocumento}{Visualizza Informazioni di Classificazione del Documento}
 \begin{itemize}
@@ -421,7 +450,12 @@
         \item Descrizione (\ref{visualizzaDescrizioneIndiceClassificazioneDocumento})
         \item Piano di classificazione (\ref{visualizzaURIPianoClassificazioneDocumento})
     \end{itemize}
-    \item \textbf{Inclusioni}: \ref{visualizzaIndiceClassificazioneDocumento}, \ref{visualizzaDescrizioneIndiceClassificazioneDocumento}, \ref{visualizzaURIPianoClassificazioneDocumento}
+    \item \textbf{Inclusioni}:
+    \begin{itemize}
+        \item \ref{visualizzaIndiceClassificazioneDocumento} Visualizza Indice di classificazione documento
+        \item \ref{visualizzaDescrizioneIndiceClassificazioneDocumento} Visualizza Descrizione dell'Indice di classificazione documento
+        \item \ref{visualizzaURIPianoClassificazioneDocumento} Visualizza URI Piano di Classificazione documento
+    \end{itemize}
 \end{itemize}
 
 \subusecase{visualizzaIndiceClassificazioneDocumento}{Visualizza Indice di classificazione documento}
@@ -498,13 +532,20 @@
     \item \textbf{Postcondizioni}: L'utente visualizza i dati di registrazione del documento selezionato
     \item \textbf{Flusso Principale}: Il sistema mostra a video i dati di registrazione del documento, quali:
     \begin{itemize}
-        \item Tipologia di flusso \ref{visualizzaTipologiaFlussoDocumento}
-        \item Tipo registro \ref{visualizzaTipoRegistroDocumento}
-        \item Data registrazione \ref{visualizzaDataRegistrazioneDocumento}
-        \item Numero documento \ref{visualizzaNumeroDocumento}
-        \item Codice registro \ref{visualizzaCodiceIdentificativoRegistroAppartenenzaDocumento}
+        \item Tipologia di flusso (\ref{visualizzaTipologiaFlussoDocumento})
+        \item Tipo registro (\ref{visualizzaTipoRegistroDocumento})
+        \item Data registrazione (\ref{visualizzaDataRegistrazioneDocumento})
+        \item Numero documento (\ref{visualizzaNumeroDocumento})
+        \item Codice registro (\ref{visualizzaCodiceIdentificativoRegistroAppartenenzaDocumento})
     \end{itemize}
-    \item \textbf{Inclusioni}: \ref{visualizzaTipologiaFlussoDocumento}, \ref{visualizzaTipoRegistroDocumento}, \ref{visualizzaDataRegistrazioneDocumento}, \ref{visualizzaNumeroDocumento}, \ref{visualizzaCodiceIdentificativoRegistroAppartenenzaDocumento}
+    \item \textbf{Inclusioni}:
+    \begin{itemize}
+        \item \ref{visualizzaTipologiaFlussoDocumento} Visualizza tipologia di flusso documento
+        \item \ref{visualizzaTipoRegistroDocumento} Visualizza tipo di registro documento
+        \item \ref{visualizzaDataRegistrazioneDocumento} Visualizza data di registrazione documento
+        \item \ref{visualizzaNumeroDocumento} Visualizza numero documento
+        \item \ref{visualizzaCodiceIdentificativoRegistroAppartenenzaDocumento} Visualizza codice identificativo del registro di appartenenza documento
+    \end{itemize}
 \end{itemize}
 
 \subusecase{visualizzaTipologiaFlussoDocumento}{Visualizza Tipologia di Flusso documento}
