@@ -146,7 +146,7 @@
 \newcommand{\subusecase}[2]{%
     \refstepcounter{ucSub}%
     \subsubsection*{\theucSub\ - #2}%
-    \addcontentsline{toc}{subsubsection}{\theucSub\ - #2}%
+    \addcontentsline{toc}{paragraph}{\theucSub\ - #2}%
     \ifx&#1&\else\label{#1}\fi%
 }
 
@@ -157,7 +157,7 @@
 \newcommand{\subsubusecase}[2]{%
     \refstepcounter{ucSubSub}%
     \paragraph*{\theucSubSub\ - #2}%
-    \addcontentsline{toc}{paragraph}{\theucSubSub\ - #2}%
+    \addcontentsline{toc}{subparagraph}{\theucSubSub\ - #2}%
     \ifx&#1&\else\label{#1}\fi%
 }
 
@@ -168,7 +168,7 @@
 \newcommand{\deepusecase}[2]{%
     \refstepcounter{ucDeep}%
     \paragraph*{\theucDeep\ - #2}%
-    \addcontentsline{toc}{paragraph}{\theucDeep\ - #2}%
+    \addcontentsline{toc}{subparagraph}{\protect\hspace{3em}\theucDeep\ - #2}%
     \ifx&#1&\else\label{#1}\fi%
 }
 
@@ -180,12 +180,28 @@
 \newcommand{\subdeepusecase}[2]{%
     \refstepcounter{ucSubDeep}%
     \paragraph*{\theucSubDeep\ - #2}%
-    \addcontentsline{toc}{paragraph}{\theucSubDeep\ - #2}%
+    \addcontentsline{toc}{subparagraph}{\protect\hspace{6em}\theucSubDeep\ - #2}%
     \ifx&#1&\else\label{#1}\fi%
 }
 
 % --- FINE DEFINIZIONE CONTATORI UC ---
 
+% --- Configurazione Indentazione Indice (TOC) ---
+
+% 1. Livello Padre (Use Case principale) -> Mappato su subsubsection
+% Lo teniamo allineato a sinistra (o con un rientro minimo)
+\setlength{\cftsubsubsecindent}{0pt} 
+\setlength{\cftsubsubsecnumwidth}{3em} % Spazio per il numero (es. UC-1)
+
+% 2. Livello Figlio (Sub Use Case) -> Mappato su paragraph
+% Rientro ridotto (es. 1.5em invece del default che è molto largo)
+\setlength{\cftparaindent}{1.5em} 
+\setlength{\cftparanumwidth}{3.5em} 
+
+% 3. Livello Nipote (Sub Sub Use Case) -> Mappato su subparagraph
+% Rientro progressivo ridotto (es. 3em)
+\setlength{\cftsubparaindent}{3em} 
+\setlength{\cftsubparanumwidth}{4em}
 
 \begin{document}
 \pagenumbering{roman}
