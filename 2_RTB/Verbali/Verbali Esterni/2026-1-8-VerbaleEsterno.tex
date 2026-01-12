@@ -1,0 +1,221 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian, provide=*]{babel}
+\usepackage[sfdefault]{atkinson}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Esterno Gruppo di Progetto e Sanmarco Informatica}\\
+    \vspace{0.5cm}
+\end{center}
+
+
+\noindent
+\textbf{Data:} 8/1/2026 \\
+\textbf{Durata:} 25 minuti circa\\
+\textbf{Luogo:} incontro online ( Meet )
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    0.1 & 12/01/206 & Zakaria Laoud & Davide Vigolo & Creazione del verbale e stesura iniziale \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\tableofcontents
+
+\newpage
+
+
+
+
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Gingilino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+    \item Rossi Andrea
+\end{itemize}
+
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Esposizione dello stato di avanzamento dei lavori.
+    \item Presentazione di una prima versione di Poc.
+    \item Risoluzione di dubbi riguardanti le funzionalità del Proof of Concept.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section{Svolgimento e Discussione}
+Durante l’incontro è stato discusso l’andamento generale del progetto, evidenziando una riduzione delle attività in concomitanza con il periodo d’esami e sottolineando come
+ il lavoro si sia concentrato principalmente sulla terminazione dell’analisi dei requisiti e sullo sviluppo di un PoC.
+  
+ Successivamente è stato presentato il PoC, ponendo l’attenzione sulle sue funzionalità di base.
+
+\subsection{Sottosezioni corrispondenti agli ordini del giorno}
+Nel corso della presentazione del PoC sono state illustrate tutte le funzionalità attualmente implementate, tra cui il caricamento e la visualizzazione del DIP. A seguito
+ della presentazione, sono emerse alcune criticità relative alla verifica della funzione di hash. In particolare, è stato chiesto alla proponente se, nel DIP di esempio, 
+ i codici hash fossero generati casualmente o meno.
+
+Dal confronto con la proponente è emerso che nei DIP i codici hash sono codificati in Base64. Di conseguenza, qualsiasi funzione di verifica deve necessariamente applicare
+ tale codifica per poter distinguere correttamente i file corrotti da quelli integri.
+
+\section{Domande e Risposte}
+
+\textbf{Domanda:} È necessario implementare la ricerca semantica anche nel PoC, nonostante sia un requisito opzionale?
+
+\textbf{Risposta:} Sì. Poiché il PoC dovrebbe rappresentare nel modo più fedele possibile il prodotto finale, è preferibile trascurare gli aspetti secondari, come l'interfaccia
+ grafica, e concentrarsi invece sulle funzionalità, implementandone il maggior numero possibile. 
+\vspace{0.5cm}
+
+\textbf{Domanda:} È possibile lasciare all'utente la scelta del livello di precisione della ricerca semantica (ad esempio alto, medio o basso)?
+
+\textbf{Risposta:} No, poiché ciò rischierebbe di generare confusione nell'utente. È preferibile individuare un livello di precisione che risulti adeguato nella maggior parte
+ dei casi. 
+
+\section{Decisioni e Conclusione}
+\begin{itemize}
+    \item Il Team ha deciso di procedere alla conclusione dell'analisi dei requisiti 
+    \item Il Team ha inoltre deciso di continuare con lo sviluppo del PoC 
+\end{itemize}
+
+\vfill
+
+
+\begin{flushleft}
+\begin{tabular}{@{}p{0.5in}p{2in}@{}}
+Data: & \hrulefill \\
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{@{}p{0.5in}p{2in}@{}}
+Firma: & \hrulefill \\
+& [Sanmarco Informatica SPA] \\
+\end{tabular}
+\end{flushleft}
+
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
