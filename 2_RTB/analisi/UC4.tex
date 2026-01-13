@@ -1,3 +1,5 @@
+% DA UC-33
+
 \usecase{stampaSingoloDoc}{Stampa di un singolo documento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -9,7 +11,10 @@
         \item L'Utente sta visualizzando il documento
     \end{itemize}
     \item \textbf{Postcondizioni}: L'Utente ha stampato il documento
-    \item \textbf{Flusso Principale}: L'Utente cliccando sull'apposita icona può selezionare la stampa del documento.
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item L'Utente cliccando sull'apposita icona può selezionare la stampa del documento.
+        \end{enumerate}
     \item \textbf{Flusso Alternativo}:
     \begin{itemize}
         \item L'Utente cerca di stampare un documento ma un errore esterno al programma e legato alla stampante interrompe l'azione (\ref{stampaFallita})
@@ -29,10 +34,13 @@
     \item \textbf{Precondizioni}: 
     \begin{itemize}
         \item L'Utente ha avviato l'applicazione
-        \item L'Utente sta visualizzando un folder con più documenti o ha selezionato più documenti (\ref{selezionaClasseDocumentale}, \ref{selezionaProcesso}, \ref{selezionaPiuDocumenti})
+        \item L'Utente sta visualizzando un folder con più documenti o ha selezionato più documenti (\ref{selezionaClasseDocumentale}, \ref{selezionaProcesso})
     \end{itemize}
     \item \textbf{Postcondizioni}: L'Utente ha stampato tutti i documenti selezionati uno dopo l'altro 
-    \item \textbf{Flusso Principale}: L'Utente cliccando può selezionare tutti i documenti e quindi stamparli uno dopo l'altro.
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item L'Utente cliccando può selezionare tutti i documenti e quindi stamparli uno dopo l'altro.
+        \end{enumerate}
     \item \textbf{Flusso Alternativo}:
     \begin{itemize}
         \item L'Utente cliccando può selezionare tutti i documenti ma un errore esterno al programma e legato alla stampante interrompe l'azione (\ref{stampaFallita})

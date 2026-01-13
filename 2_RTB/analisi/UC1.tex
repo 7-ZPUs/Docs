@@ -7,7 +7,10 @@
     \begin{enumerate}
         \item Il sistema mostra a video l'elenco delle classi documentali presenti nel DIP.
     \end{enumerate}
-    \item \textbf{Flusso Alternativo}: Se non sono presenti classi documentali, il sistema mostra un elenco vuoto. (\ref{elencoVuoto})
+    \item \textbf{Flusso Alternativo}:
+    \begin{itemize}
+        \item Se non sono presenti classi documentali, il sistema mostra un elenco vuoto. (\ref{elencoVuoto})
+    \end{itemize}
     \item \textbf{Estensioni}: \ref{elencoVuoto} Visualizza elenco vuoto
 \end{itemize}
 
@@ -51,9 +54,9 @@
     \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento.
     \item \textbf{Postcondizioni}: L'utente visualizza lo stato di verifica dell' elemento selezionato.
     \item \textbf{Flusso Principale}:
-    \begin{itemize}
+    \begin{enumerate}
               \item Il sistema mostra a video lo stato di verifica dell'elemento selezionato
-    \end{itemize}
+    \end{enumerate}
 \end{itemize}
 
 \subusecase{marcaturaTemporaleElemento}{Visualizza Marcatura Temporale Elemento}
@@ -62,9 +65,9 @@
     \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento.
     \item \textbf{Postcondizioni}: L'utente visualizza la marcatura temporale dell' elemento selezionato.
     \item \textbf{Flusso Principale}:
-    \begin{itemize}
+    \begin{enumerate}
               \item Il sistema mostra a video la marcatura temporale dell' elemento selezionato
-    \end{itemize}
+    \end{enumerate}
 \end{itemize}
 
 \usecase{processiClasseDocumentale}{Visualizza elenco dei processi di una classe documentale}
@@ -79,11 +82,11 @@
           \begin{enumerate}
               \item Il sistema mostra a video l'elenco dei processi della classe documentale selezionata.
           \end{enumerate}
-    \item \textbf{Flusso Alternativo}: Se la classe documentale non contiene processi, il sistema mostra un elenco vuoto.
-    \item \textbf{Estensioni}: 
+    \item \textbf{Flusso Alternativo}:
     \begin{itemize}
-        \item ref{elencoVuoto}{Visualizza elenco vuoto}
+        \item Se la classe documentale non contiene processi, il sistema mostra un elenco vuoto.
     \end{itemize}
+    \item \textbf{Estensioni}: \ref{elencoVuoto} Visualizza elenco vuoto
 \end{itemize}
 
 \usecase{processoClassedDocumentale}{Visualizza processi in elenco}
@@ -141,11 +144,11 @@
     \begin{enumerate}
         \item Il sistema mostra a video l'elenco dei documenti della classe documentale selezionata.
     \end{enumerate}
-    \item \textbf{Flusso Alternativo}: Se il processo non contiene documenti, il sistema mostra un elenco vuoto.
-    \item \textbf{Estensioni}: 
+    \item \textbf{Flusso Alternativo}:
     \begin{itemize}
-        \item \ref{elencoVuoto} Visualizza elenco vuoto
+        \item Se il processo non contiene documenti, il sistema mostra un elenco vuoto.
     \end{itemize}
+    \item \textbf{Estensioni}: \ref{elencoVuoto} Visualizza elenco vuoto
 \end{itemize}
 
 \usecase{documentoProcesso}{Visualizza documento in elenco}
@@ -226,9 +229,9 @@
         \item Viene selezionata una classe documentale sulla quale effettuare un operazione
     \end{itemize}
     \item \textbf{Flusso principale}:
-    \begin{itemize}
+    \begin{enumerate}
         \item L'utente seleziona una classe documentale dalla lista
-    \end{itemize}
+    \end{enumerate}
 \end{itemize}
 
 \usecase{selezionaProcesso}{Seleziona processo}
@@ -244,9 +247,9 @@
         \item Viene selezionato un processo sul quale effettuare un operazione
     \end{itemize}
     \item \textbf{Flusso principale}:
-    \begin{itemize}
+    \begin{enumerate}
         \item L'utente seleziona un processo dalla lista
-    \end{itemize}
+    \end{enumerate}
 \end{itemize}
 
 \usecase{selezionaDocumento}{Seleziona documento}
@@ -262,9 +265,9 @@
         \item Viene selezionato un documento sul quale effettuare un operazione
     \end{itemize}
     \item \textbf{Flusso principale}:
-    \begin{itemize}
+    \begin{enumerate}
         \item L'utente seleziona un documento dalla lista
-    \end{itemize}
+    \end{enumerate}
 \end{itemize}
 
 % questo non serve più per quello che ha detto cardin il 9/01,che non c'è use case selezione multipla ma direttamente "download file multipli" o "stampa file multipli"
@@ -330,11 +333,11 @@
         \item L'Utente seleziona l'opzione per visualizzare l'anteprima del documento.
         \item Il sistema apre una finestra di anteprima che mostra il contenuto del documento.
     \end{enumerate}
-    \item \textbf{Flusso Alternativo}: Se il formato del documento non è supportato per l'anteprima, il sistema mostra un messaggio che specifica perché il tipo non è supportato.
-    \item \textbf{Estensioni}:
+    \item \textbf{Flusso Alternativo}:
     \begin{itemize}
-        \item \ref{formatoDocumentoNonSupportato} Formato Documento non Supportato dal Sistema per l'anteprima
+        \item Se il formato del documento non è supportato per l'anteprima, il sistema mostra un messaggio che specifica perché il tipo non è supportato.
     \end{itemize}
+    \item \textbf{Estensioni}: \ref{formatoDocumentoNonSupportato} Formato Documento non Supportato dal Sistema per l'anteprima
 \end{itemize}
 
 \usecase{formatoDocumentoNonSupportato}{Formato Documento non Supportato dal Sistema per l'anteprima}

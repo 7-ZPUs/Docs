@@ -14,13 +14,13 @@
       \begin{enumerate}
             \item L'utente specifica i criteri di ricerca
             \item Il sistema produce i risultati di ricerca in base ai criteri specificati
-            \item L'Utente visualizza i risultati di ricerca (\ref{visualizzazioneRisultatiRicerca})
+            \item L'Utente visualizza i risultati di ricerca (\ref{visualizzaRisultati})
       \end{enumerate}
       \item \textbf{Flusso Alternativo}:
       \begin{itemize}
             \item La ricerca non produce risultati e il sistema informa l'Utente (\ref{nessunRisultato})
       \end{itemize}
-      \item \textbf{Inclusioni}: \ref{visualizzazioneRisultatiRicerca} Visualizzazione Risultati di Ricerca
+      \item \textbf{Inclusioni}: \ref{visualizzaRisultati} Visualizzazione Risultati di Ricerca
       \item \textbf{Estensioni}: \ref{nessunRisultato} Nessun risultato
 \end{itemize}
 
@@ -64,10 +64,10 @@
         \item Il sistema produce i risultati di ricerca semantica per la query specificata.
     \end{itemize}
     \item \textbf{Flusso principale}:
-    \begin{itemize}
+    \begin{enumerate}
         \item L'Utente specifica la query di ricerca
         \item Il sistema produce i risultati di ricerca per la query specificata
-    \end{itemize}
+    \end{enumerate}
     \item \textbf{Specializza}: \ref{ricercaDIP} Ricerca nel DIP
     
 \end{itemize}
@@ -176,10 +176,10 @@
         \item Il sistema ha indicizzato i documenti presenti nel DIP con l'engine semantico
     \end{itemize}
     \item \textbf{Flusso principale}:
-    \begin{itemize}
+    \begin{enumerate}
         \item L'Utente seleziona l'opzione di indicizzazione semantica
         \item Il sistema indicizza i documenti presenti nel DIP con l'engine semantico
-    \end{itemize}
+    \end{enumerate}
     \item \textbf{Flusso alternativo}:
     \begin{itemize}
         \item L'Utente tenta di indicizzare il DIP con l'engine semantico
@@ -201,7 +201,7 @@
           \item Il sistema annulla l'indicizzazione semantica del DIP, mostrando un messaggio di errore.
       \end{itemize}
       \item \textbf{Flusso Principale}:
-      \item \begin{enumerate}
+      \begin{enumerate}
           \item Il sistema annulla l'operazione di indicizzazione semantica.
           \item Il sistema mostra a video un messaggio di errore che indica il motivo del fallimento.
       \end{enumerate}
@@ -220,7 +220,7 @@
         \item L'Utente ha impostato il valore di precisione per la ricerca semantica
     \end{itemize}
     \item \textbf{Flusso principale}:
-    \begin{itemize}
+    \begin{enumerate}
         \item L'Utente specifica il valore di precisione per la ricerca semantica tra:
         \begin{itemize}
             \item Basso
@@ -228,7 +228,7 @@
             \item Alto
         \end{itemize}
         \item Il sistema applica il livello di precisione alla ricerca semantica.
-    \end{itemize}
+    \end{enumerate}
 \end{itemize}
 
 \usecase{specificaFiltriRicercaDocumento}{Specifica filtri per Ricerca Documento}
@@ -497,7 +497,7 @@
             \item \ref{addIdentificativoDocumentoPrimario} Specifica filtr Identificativo del Documento Primario
             \item \ref{addTracciatureModificheDocumento} Specifica filtro Tracciature di Modifiche del Documento
       \end{itemize}
-      \item \textbf{Specializza}: \ref{specificaFiltriTipoDocumento} Specifica filtri per Tipo di Documento
+      \item \textbf{Specializza}: \ref{addFiltriTipoDocumento} Specifica filtri per Tipo di Documento
 \end{itemize}
 
 \subsubusecase{selezionaCampiDI-DAI}{Selezione campi di ricerca per DI/DAI}
@@ -815,7 +815,7 @@
             \item \ref{addAssegnazione} Specifica filtro Assegnazione
             \item \ref{addProgressivoAggregazione} Specifica filtro Progressivo di Aggregazione
       \end{itemize}
-      \item \textbf{Specializza}: \ref{specificaFiltriTipoDocumento} Specifiche filtri per Tipo di Documento
+      \item \textbf{Specializza}: \ref{addFiltriTipoDocumento} Specifiche filtri per Tipo di Documento
 \end{itemize}
 
 \subsubusecase{selezionaCampiAggregazioneDocumentale}{Selezione campi di ricerca per Aggregazione Documentale}
@@ -834,7 +834,6 @@
             \item Il sistema aggiunge gli elementi selezionati ai campi selezionati per la ricerca.
       \end{enumerate}
       \item \textbf{Inclusioni}: \ref{visualizzaListaCampiAggregazioneDocumentale} Visualizza lista campi Aggregazione Documentale
-      \item \textbf{Specializza}: \ref{selezionaCampiTipoDocumento}
 \end{itemize}
 
 \deepusecase{visualizzaListaCampiAggregazioneDocumentale}{Visualizza lista campi Aggregazione Documentale}
@@ -1508,10 +1507,7 @@
 %            \item Il sistema comunica che la ricerca non ha prodotto alcun %risultato (\ref{nessunRisultato})
 %      \end{itemize}
 
-\item \textbf{Inclusioni}:
-      \begin{itemize}
-            \item \ref{infoRisultatiRicerca} Informazioni Elenco Elementi
-      \end{itemize}
+\item \textbf{Inclusioni}: \ref{infoRisultatiRicerca} Informazioni Elenco Elementi
 \end{itemize}
 
 \subusecase{infoRisultatiRicerca}{Informazioni Elenco Elementi}
@@ -1575,3 +1571,18 @@
       \end{itemize}
 \end{itemize}
 
+\usecase{formatoNonCorretto}{Formato Non Corretto}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato un filtro da compilare tra quelli disponibili.
+            \item L'Utente sta specificando il valore per un metadato del filtro selezionato.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema informa l'Utente che il valore inserito non rispetta il formato corretto.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item Il sistema ritorna un messaggio che indica che il valore inserito non rispetta il formato corretto.
+      \end{enumerate}
+\end{itemize}

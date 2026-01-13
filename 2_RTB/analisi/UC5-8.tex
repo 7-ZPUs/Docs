@@ -1,3 +1,4 @@
+% DA UC-37
 
 \usecase{verificaIntegritaDIPCompleto}{Verifica Integrità DIP Completo}
 \begin{itemize}
@@ -13,11 +14,11 @@
             \item Stato di verifica DIP aggiornato (Non Verificato / Valido / Non Valido).
         \end{enumerate}      
     \item \textbf{Flusso Principale}:
-        \begin{itemize}
-            \item L'utente selezione “Verifica Integrità dell'intero DIP”
+        \begin{enumerate}
+            \item L'utente selezione "Verifica Integrità dell'intero DIP"
             \item Il sistema verifica il DIP completo
             \item Il sistema aggiorna lo stato della verifica del DIP.
-        \end{itemize}
+        \end{enumerate}
 \end{itemize}
 
 \subusecase{verificaIntegritaClasseDocumentale}{Verifica Integrità Classe Documentale}
@@ -35,11 +36,11 @@
             \item Stato di verifica classe aggiornato (Non Verificato / Valido / Non Valido).
         \end{enumerate}      
     \item \textbf{Flusso Principale}:
-        \begin{itemize}
-            \item L'utente seleziona “Verifica Integrità” sulla classe documentale
+        \begin{enumerate}
+            \item L'utente seleziona "Verifica Integrità" sulla classe documentale
             \item Il sistema verifica la classe documentale
             \item Il sistema aggiorna lo stato della verifica della classe documentale.
-        \end{itemize}
+        \end{enumerate}
 \end{itemize}
 
 \subusecase{verificaIntegritaProcesso}{Verifica Integrità Processo}
@@ -57,11 +58,11 @@
             \item Stato di verifica processo aggiornato (Non Verificato / Valido / Non Valido).
         \end{enumerate}      
     \item \textbf{Flusso Principale}:
-        \begin{itemize}
-            \item L'utente selezione “Verifica Integrità” sul processo
+        \begin{enumerate}
+            \item L'utente selezione "Verifica Integrità" sul processo
             \item Il sistema verifica il processo
             \item Il sistema aggiorna lo stato della verifica del processo.
-        \end{itemize}
+        \end{enumerate}
 \end{itemize}
 
 \subusecase{verificaIntegritaDocumento}{Verifica Integrità Documento}
@@ -79,11 +80,11 @@
             \item Stato di verifica documento aggiornato (Non Verificato / Valido / Non Valido).
         \end{enumerate}      
     \item \textbf{Flusso Principale}:
-        \begin{itemize}
-            \item L'utente selezione “Verifica Integrità” sul documento
+        \begin{enumerate}
+            \item L'utente selezione "Verifica Integrità" sul documento
             \item Il sistema esegue la verifica del documento
             \item Il sistema aggiorna lo stato della verifica del documento.
-        \end{itemize}
+        \end{enumerate}
 \end{itemize}
 
 \subusecase{visualizzazioneReportIntegritaDIPCompleto}{Visualizzazione Report Integrità DIP Completo}
@@ -525,7 +526,10 @@
             \item L'utente seleziona "Salva Report"
             \item Il sistema converte il report corrente in formato PDF.
         \end{enumerate}
-    \item \textbf{Flusso Alternativo}: La conversione non va a buon fine: viene visualizzato un messaggio di errore "Impossibile generare il PDF. Riprovare.".
+    \item \textbf{Flusso Alternativo}:
+    \begin{itemize}
+        \item La conversione non va a buon fine: viene visualizzato un messaggio di errore "Impossibile generare il PDF. Riprovare.".
+    \end{itemize}
     \item \textbf{Estensioni}: \ref{erroreGenerazionePDF} Errore generazione PDF
 \end{itemize}
 

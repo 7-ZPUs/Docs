@@ -1,3 +1,5 @@
+% DA UC-41
+
 \usecase{visualizzaInfoAiP}{Visualizzazione informazioni AiP di provenienza documento  }
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -7,11 +9,14 @@
         \item L'utente ha selezionato un documento
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente ha ottenuto le informazioni sull'AiP di provenienza relativo al documento: UUID e classe documentale.
-    \item \textbf{Flusso Principale}: Il sistema mostra a video le informazioni sull'AiP:
-    \begin{itemize}
-        \item Classe documentale AiP (\ref{visualizzaClasseDocumentaleAiP})
-        \item UUID AiP (\ref{visualizzaUUIDAiP})
-    \end{itemize}
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video le informazioni sull'AiP:
+            \begin{itemize}
+                \item Classe documentale AiP (\ref{visualizzaClasseDocumentaleAiP})
+                \item UUID AiP (\ref{visualizzaUUIDAiP})
+            \end{itemize}
+        \end{enumerate}
     \item \textbf{Inclusioni}:
     \begin{itemize}
         \item \ref{visualizzaClasseDocumentaleAiP} Visualizzazione Classe Documentale di appartenenza AiP
@@ -28,7 +33,10 @@
         \item L'utente sta visualizzando le informazioni di un AiP
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza la classe documentale dell'AiP relativo al documento selezionato
-    \item \textbf{Flusso Principale}: Il sistema mostra a video la classe documentale dell'AiP relativo al documento selezionato
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video la classe documentale dell'AiP relativo al documento selezionato
+        \end{enumerate}
 \end{itemize}
 
 \subusecase{visualizzaUUIDAiP}{Visualizza UUID AiP  }
@@ -40,7 +48,10 @@
         \item L'utente sta visualizzando le informazioni di un AiP
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza lo UUID dell'AiP relativo al documento selezionato
-    \item \textbf{Flusso Principale}: Il sistema mostra a video lo UUID dell'AiP relativo al documento selezionato
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video lo UUID dell'AiP relativo al documento selezionato
+        \end{enumerate}
 \end{itemize}
 
 \usecase{visualizzaInfoProcessoConservazioneAiP}{Visualizza informazioni processo di conservazione AiP  }
@@ -52,18 +63,21 @@
         \item L'utente sta visualizzando le informazioni di un AiP
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza le informazioni del processo di conservazione, quali: data inizio, data fine, uuid utente responsabile, canale di attivazione, stato del processo, sessione di versamento, sessione di conservazione.
-    \item \textbf{Flusso Principale}: Vengono mostrati a video, in riferimento all'AiP selezionato:
-    \begin{itemize}
-        \item Data inizio (\ref{visualizzaDataInizioProcessoSessione})
-        \item Data fine (\ref{visualizzaDataFineProcessoSessione})
-        \item UUID utente attivatore (\ref{visualizzaUUIDUtenteAttivatore})
-        \item UUID utente terminatore (\ref{visualizzaUUIDUtenteTerminatore})
-        \item Nome canale di attivazione (\ref{visualizzaNomeCanaleAttivazione})
-        \item Nome canale di terminazione (\ref{visualizzaNomeCanaleTerminazione})
-        \item Stato del processo (\ref{visualizzaStatoProcessoSessione})
-        \item Informazioni sulla sessione di versamento (\ref{visualizzaInfoSessioneVersamento})
-        \item Informazioni sulla sessione di conservazione (\ref{visualizzaInfoSessioneConservazione})
-    \end{itemize}
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Vengono mostrati a video, in riferimento all'AiP selezionato:
+            \begin{itemize}
+                \item Data inizio (\ref{visualizzaDataInizioProcessoSessione})
+                \item Data fine (\ref{visualizzaDataFineProcessoSessione})
+                \item UUID utente attivatore (\ref{visualizzaUUIDUtenteAttivatore})
+                \item UUID utente terminatore (\ref{visualizzaUUIDUtenteTerminatore})
+                \item Nome canale di attivazione (\ref{visualizzaNomeCanaleAttivazione})
+                \item Nome canale di terminazione (\ref{visualizzaNomeCanaleTerminazione})
+                \item Stato del processo (\ref{visualizzaStatoProcessoSessione})
+                \item Informazioni sulla sessione di versamento (\ref{visualizzaInfoSessioneVersamento})
+                \item Informazioni sulla sessione di conservazione (\ref{visualizzaInfoSessioneConservazione})
+            \end{itemize}
+        \end{enumerate}
     \item \textbf{Inclusioni}:
     \begin{itemize}
         \item \ref{visualizzaDataInizioProcessoSessione} Visualizza data inizio processo/sessione
@@ -87,7 +101,10 @@
         \item L'utente sta visualizzando le informazioni di un processo/sessione
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza la data di inizio del/la processo/sessione
-    \item \textbf{Flusso Principale}: Il sistema mostra a video la data di inizio del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video la data di inizio del/la processo/sessione
+        \end{enumerate}
 \end{itemize}
 
 \subusecase{visualizzaDataFineProcessoSessione}{Visualizza data fine processo/sessione}
@@ -99,8 +116,14 @@
         \item L'utente sta visualizzando le informazioni di un processo/sessione
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza la data di fine del/la processo/sessione
-    \item \textbf{Flusso Principale}: Il sistema mostra a video la data di fine del/la processo/sessione
-    \item \textbf{Flusso Alternativo}: La data di fine è assente in quanto il/la processo/sessione non è terminato/a
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video la data di fine del/la processo/sessione
+        \end{enumerate}
+    \item \textbf{Flusso Alternativo}:
+    \begin{itemize}
+        \item La data di fine è assente in quanto il/la processo/sessione non è terminato/a
+    \end{itemize}
 \end{itemize}
 
 \subusecase{visualizzaUUIDUtenteAttivatore}{Visualizza UUID utente attivatore di un processo/sessione  }
@@ -112,7 +135,10 @@
         \item L'utente sta visualizzando le informazioni di un processo/sessione
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza lo UUID dell'utente che è responsabile dell'attivazione del/la processo/sessione
-    \item \textbf{Flusso Principale}: Il sistema mostra a video lo UUID dell'utente attivatore del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video lo UUID dell'utente attivatore del/la processo/sessione
+        \end{enumerate}
 \end{itemize}
 
 \subusecase{visualizzaUUIDUtenteTerminatore}{Visualizza UUID utente terminatore di un processo/sessione  }
@@ -124,8 +150,14 @@
         \item L'utente sta visualizzando le informazioni di un processo/sessione
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza lo UUID dell'utente che è responsabile della terminazione del/la processo/sessione
-    \item \textbf{Flusso Principale}: Il sistema mostra a video lo UUID dell'utente terminatore del/la processo/sessione
-    \item \textbf{Flusso Alternativo}: Non viene mostrato a video lo UUID dell'utente terminatore del/la processo/sessione è assente in quanto il/la processo/sessione non è ancora terminato/a.
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video lo UUID dell'utente terminatore del/la processo/sessione
+        \end{enumerate}
+    \item \textbf{Flusso Alternativo}:
+    \begin{itemize}
+        \item Non viene mostrato a video lo UUID dell'utente terminatore del/la processo/sessione è assente in quanto il/la processo/sessione non è ancora terminato/a.
+    \end{itemize}
 \end{itemize}
 
 \subusecase{visualizzaNomeCanaleAttivazione}{Visualizza nome canale di attivazione di un processo/sessione  }
@@ -137,7 +169,10 @@
         \item L'utente sta visualizzando le informazioni di un processo/sessione
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza il nome del canale di attivazione del/la processo/sessione
-    \item \textbf{Flusso Principale}: Il sistema mostra a video il nome del canale di attivazione del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video il nome del canale di attivazione del/la processo/sessione
+        \end{enumerate}
 \end{itemize}
 
 \subusecase{visualizzaNomeCanaleTerminazione}{Visualizza nome canale di terminazione di un processo/sessione  }
@@ -149,8 +184,14 @@
         \item L'utente sta visualizzando le informazioni di un processo/sessione
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza il nome del canale di terminazione del/la processo/sessione
-    \item \textbf{Flusso Principale}: Il sistema mostra a video il nome del canale di terminazione del/la processo/sessione
-    \item \textbf{Flusso Alternativo}: Non viene mostrato a video il nome del canale di terminazione del/la processo/sessione in quanto il/la processo/sessione non è ancora terminato/a.
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video il nome del canale di terminazione del/la processo/sessione
+        \end{enumerate}
+    \item \textbf{Flusso Alternativo}:
+    \begin{itemize}
+        \item Non viene mostrato a video il nome del canale di terminazione del/la processo/sessione in quanto il/la processo/sessione non è ancora terminato/a.
+    \end{itemize}
 \end{itemize}
 
 \subusecase{visualizzaStatoProcessoSessione}{Visualizza stato di un processo/sessione  }
@@ -162,7 +203,10 @@
         \item L'utente sta visualizzando le informazioni di un processo/sessione
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza lo stato del/la processo/sessione
-    \item \textbf{Flusso Principale}: Il sistema mostra a video lo stato del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video lo stato del/la processo/sessione
+        \end{enumerate}
 \end{itemize}
 
 \usecase{visualizzaInfoSessioneVersamento}{Visualizza Informazioni sulla Sessione di Versamento}
@@ -174,18 +218,21 @@
         \item L'utente sta visualizzando i dettagli di un processo di conservazione
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza i dettagli della sessione di versamento, quali: data inizio, data fine, UUID utente attivatore, UUID utente terminatore, nome canale di attivazione, nome canale di terminazione, stato del processo
-    \item \textbf{Flusso Principale}: Vengono mostrati a video, relativamente alla sessione di versamento del processo selezionato:
-    \begin{itemize}
-        \item Data inizio (\ref{visualizzaDataInizioProcessoSessione})
-        \item Data fine (\ref{visualizzaDataFineProcessoSessione})
-        \item UUID utente attivatore (\ref{visualizzaUUIDUtenteAttivatore})
-        \item UUID utente terminatore (\ref{visualizzaUUIDUtenteTerminatore})
-        \item Nome canale di attivazione (\ref{visualizzaNomeCanaleAttivazione})
-        \item Nome canale di terminazione (\ref{visualizzaNomeCanaleTerminazione})
-        \item Stato del processo (\ref{visualizzaStatoProcessoSessione})
-        \item Informazioni sulla sessione di versamento (\ref{visualizzaInfoSessioneVersamento})
-        \item Informazioni sulla sessione di conservazione (\ref{visualizzaInfoSessioneConservazione})
-    \end{itemize}
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Vengono mostrati a video, relativamente alla sessione di versamento del processo selezionato:
+            \begin{itemize}
+                \item Data inizio (\ref{visualizzaDataInizioProcessoSessione})
+                \item Data fine (\ref{visualizzaDataFineProcessoSessione})
+                \item UUID utente attivatore (\ref{visualizzaUUIDUtenteAttivatore})
+                \item UUID utente terminatore (\ref{visualizzaUUIDUtenteTerminatore})
+                \item Nome canale di attivazione (\ref{visualizzaNomeCanaleAttivazione})
+                \item Nome canale di terminazione (\ref{visualizzaNomeCanaleTerminazione})
+                \item Stato del processo (\ref{visualizzaStatoProcessoSessione})
+                \item Informazioni sulla sessione di versamento (\ref{visualizzaInfoSessioneVersamento})
+                \item Informazioni sulla sessione di conservazione (\ref{visualizzaInfoSessioneConservazione})
+            \end{itemize}
+        \end{enumerate}
     \item \textbf{Inclusioni}:
     \begin{itemize}
         \item \ref{visualizzaDataInizioProcessoSessione} Visualizza data inizio processo/sessione
@@ -209,18 +256,21 @@
         \item L'utente sta visualizzando i dettagli di un processo di conservazione
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza i dettagli della sessione di conservazione, quali: data inizio, data fine, UUID utente attivatore, UUID utente terminatore, nome canale di attivazione, nome canale di terminazione, stato del processo
-    \item \textbf{Flusso Principale}: Vengono mostrati a video, relativamente alla sessione di conservazione del processo selezionato:
-    \begin{itemize}
-        \item Data inizio (\ref{visualizzaDataInizioProcessoSessione})
-        \item Data fine (\ref{visualizzaDataFineProcessoSessione})
-        \item UUID utente attivatore (\ref{visualizzaUUIDUtenteAttivatore})
-        \item UUID utente terminatore (\ref{visualizzaUUIDUtenteTerminatore})
-        \item Nome canale di attivazione (\ref{visualizzaNomeCanaleAttivazione})
-        \item Nome canale di terminazione (\ref{visualizzaNomeCanaleTerminazione})
-        \item Stato del processo (\ref{visualizzaStatoProcessoSessione})
-        \item Informazioni sulla sessione di versamento (\ref{visualizzaInfoSessioneVersamento})
-        \item Informazioni sulla sessione di conservazione (\ref{visualizzaInfoSessioneConservazione})
-    \end{itemize}
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Vengono mostrati a video, relativamente alla sessione di conservazione del processo selezionato:
+            \begin{itemize}
+                \item Data inizio (\ref{visualizzaDataInizioProcessoSessione})
+                \item Data fine (\ref{visualizzaDataFineProcessoSessione})
+                \item UUID utente attivatore (\ref{visualizzaUUIDUtenteAttivatore})
+                \item UUID utente terminatore (\ref{visualizzaUUIDUtenteTerminatore})
+                \item Nome canale di attivazione (\ref{visualizzaNomeCanaleAttivazione})
+                \item Nome canale di terminazione (\ref{visualizzaNomeCanaleTerminazione})
+                \item Stato del processo (\ref{visualizzaStatoProcessoSessione})
+                \item Informazioni sulla sessione di versamento (\ref{visualizzaInfoSessioneVersamento})
+                \item Informazioni sulla sessione di conservazione (\ref{visualizzaInfoSessioneConservazione})
+            \end{itemize}
+        \end{enumerate}
     \item \textbf{Inclusioni}:
     \begin{itemize}
         \item \ref{visualizzaDataInizioProcessoSessione} Visualizza data inizio processo/sessione
