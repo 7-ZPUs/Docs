@@ -100,10 +100,10 @@
 
     \item \textbf{Flusso Principale}:
     \begin{enumerate}
-        \item Il sistema visualizza se è Firmato Digitalmente o meno (\ref{visualizzaFirmaDigitaleDocumento})
-        \item Il sistema visualizza se è Sigillato Elettronicamente o meno (\ref{visualizzaSigilloElettronicoDocumento})
-        \item Il sistema visualizza se è dotato di Marcatura Temporale o meno (\ref{visualizzaMarcaturaTemporaleDocumento})
-        \item Il sistema visualizza se vi è conformità alle copie immagine su supporto informatico o meno (\ref{visualizzaConformitaCopieImmagineDocumento})
+        \item L'utente visualizza se è Firmato Digitalmente o meno (\ref{visualizzaFirmaDigitaleDocumento})
+        \item L'utente visualizza se è Sigillato Elettronicamente o meno (\ref{visualizzaSigilloElettronicoDocumento})
+        \item L'utente visualizza se è dotato di Marcatura Temporale o meno (\ref{visualizzaMarcaturaTemporaleDocumento})
+        \item L'utente visualizza se vi è conformità alle copie immagine su supporto informatico o meno (\ref{visualizzaConformitaCopieImmagineDocumento})
     \end{enumerate}
 
     \item \textbf{Inclusioni}:
@@ -222,8 +222,8 @@
     \item \textbf{Postcondizioni}: L'utente visualizza le informazioni sugli allegati del documento
     \item \textbf{Flusso Principale}: 
     \begin{enumerate}
-        \item Il sistema visualizza il numero di allegati (\ref{visualizzaNumeroAllegatiDocumento})
-        \item Il sistema visualizza le informazioni identificative degli allegati, se presenti, quali:
+        \item L'utente visualizza il numero di allegati (\ref{visualizzaNumeroAllegatiDocumento})
+        \item L'utente visualizza le informazioni identificative degli allegati, se presenti, quali:
         \begin{itemize}
             \item Identificativo dell'allegato (\ref{visualizzaIdentificativoAllegato})
             \item Descrizione dell'allegato (\ref{visualizzaDescrizioneAllegato})
@@ -273,7 +273,7 @@
     \end{enumerate}
     \item \textbf{Flusso Alternativo}:
     \begin{itemize}
-        \item L'informazione sull'identificativo dell'allegato non è disponibile
+        \item L'informazione sull'identificativo dell'allegato non è disponibile (\ref{erroreIdentificativoAllegato})
     \end{itemize}
     \item \textbf{Estensioni}: \ref{erroreIdentificativoAllegato} Errore Visualizzazione identificativo allegato
 \end{itemize}
@@ -310,7 +310,7 @@
     \end{enumerate}
     \item \textbf{Flusso Alternativo}:
     \begin{itemize}
-        \item L'informazione sulla descrizione dell'allegato non è disponibile
+        \item L'informazione sulla descrizione dell'allegato non è disponibile (\ref{erroreDescrizioneAllegato})
     \end{itemize}
     \item \textbf{Estensioni}: \ref{erroreDescrizioneAllegato} Errore Visualizzazione descrizione allegato
 \end{itemize}
@@ -410,7 +410,7 @@
     \item \textbf{Postcondizioni}: L'utente visualizza le informazioni del soggetto autore della modifica
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-        \item Il sistema mostra a video le informazioni del soggetto autore della modifica come definito in \ref{visualizzaInfoSoggettoCoinvolto}
+        \item Il sistema mostra a video le informazioni del soggetto autore della modifica (\ref{visualizzaInfoSoggettoCoinvolto})
     \end{enumerate}
     \item \textbf{Inclusioni}: \ref{visualizzaInfoSoggettoCoinvolto} Visualizza informazioni del soggetto coinvolto in un documento
 \end{itemize}
@@ -734,10 +734,9 @@
 
     \item \textbf{Flusso Principale}:
     \begin{enumerate}
-        \item Il sistema mostra a video la lista delle fasi del procedimento amministrativo, per ognuna mostra le sue informazioni (\ref{visualizzaFaseProcedimentoAmministrativo}).
+        \item Il sistema mostra a video la lista delle fasi del procedimento amministrativo, per ognuna mostra le sue informazioni (\ref{visualizzaFaseProcedimentoAmministrativo})
     \end{enumerate}
-
-    \item \textbf{Inclusioni}: 
+    \item \textbf{Inclusioni}: \ref{visualizzaFaseProcedimentoAmministrativo} Visualizza fase procedimento amministrativo
 \end{itemize}
 
 \subsubusecase{visualizzaFaseProcedimentoAmministrativo}{Visualizza fase procedimento amministrativo}
@@ -824,7 +823,7 @@
 
     \item \textbf{Flusso Principale}: 
     \begin{enumerate}
-        \item Il sistema visualizza l'indice dei documenti dell'aggregazione selezionata
+        \item Il sistema visualizza l'indice dei documenti dell'aggregazione selezionata (\ref{visualizzaVoceIndiceDocumentiAggregazione})
     \end{enumerate}
 
     \item \textbf{Inclusioni}: 
@@ -1017,5 +1016,3 @@
         \item Il sistema informa l'utente che il documento non dispone di metadati custom
     \end{enumerate}
 \end{itemize}
-
-%TODO: Rendere i flussi principali con un solo step comunque degli enumerate.
