@@ -38,16 +38,16 @@
             \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente aggiunge filtri come parametri per la ricerca(\ref{specificaFiltriRicercaDocumento})
+                  \item L'Utente aggiunge filtri come parametri per la ricerca (\ref{specificaFiltriRicercaDocumento})
                   \item Vengono controllati i valori dei filtri di ricerca
                   \item Il sistema produce i risultati di ricerca in base ai filtri specificati
             \end{enumerate}
       \item \textbf{Flusso alternativo}: 
-            \begin{itemize}
-
+            \begin{enumerate}
                   \item Uno o più campi non rispettano i formati previsti (\ref{campoNonValido})
-            \end{itemize}
+            \end{enumerate}
       \item \textbf{Inclusioni}: \ref{specificaFiltriRicercaDocumento} Specifica filtri per Ricerca Documento 
+      \item \textbf{Estensioni}: \ref{campoNonValido} Campo non valido
       \item \textbf{Specializza}: \ref{ricercaDIP} Ricerca nel DIP
 \end{itemize}
 
@@ -417,14 +417,14 @@
             \item Il filtro Tipo documento è parametro per la ricerca con filtri e per la generazione del risultato
       \end{itemize}
       \item \textbf{Flusso Principale}:
-            \begin{enumerate}
-                    \item L'Utente sceglie il tipo di documento tra: \begin{itemize}
-                        \item Documento Informatico
-                        \item Documento Amministrativo Informatico
-                        \item Aggregazione Documentale
-                    \end{itemize}. (\ref{compilaValoreFiltro})
-                    \item Il sistema imposta il valore come parametro per la ricerca.
-            \end{enumerate}
+      \begin{enumerate}
+            \item L'Utente sceglie il tipo di documento tra: \begin{itemize}
+                \item Documento Informatico
+                \item Documento Amministrativo Informatico
+                \item Aggregazione Documentale
+            \end{itemize}
+            \item Il sistema imposta il valore come parametro per la ricerca (\ref{compilaValoreFiltro}).
+      \end{enumerate}
       \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compilazione Valore Filtro
 \end{itemize}
 
@@ -1052,7 +1052,7 @@
       \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
 \end{itemize}
 
-\deepusecase{addAssegnazione}{Specifica filtro Assegnazione}
+\subdeepusecase{addAssegnazione}{Specifica filtro Assegnazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
