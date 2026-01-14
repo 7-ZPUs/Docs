@@ -124,6 +124,22 @@
     \begin{itemize}
         \item La data di fine è assente in quanto il/la processo/sessione non è terminato/a
     \end{itemize}
+    \item \textbf{Estensioni}: \ref{erroreDataFineProcessoSessione} Errore visualizzazione data fine processo/sessione
+\end{itemize}
+
+\subusecase{erroreDataFineProcessoSessione}{Errore visualizzazione data fine processo/sessione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza un messaggio di errore in merito alla data di fine del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video il messaggio: La data di fine è assente in quanto il/la processo/sessione non è terminato/a
+        \end{enumerate}
 \end{itemize}
 
 \subusecase{visualizzaUUIDUtenteAttivatore}{Visualizza UUID utente attivatore di un processo/sessione  }
@@ -158,6 +174,22 @@
     \begin{itemize}
         \item Non viene mostrato a video lo UUID dell'utente terminatore del/la processo/sessione è assente in quanto il/la processo/sessione non è ancora terminato/a.
     \end{itemize}
+    \item \textbf{Estensioni}: \ref{erroreUUIDUtenteTerminatore} Errore visualizzazione UUID utente terminatore di un processo/sessione
+\end{itemize}
+
+\subusecase{erroreUUIDUtenteTerminatore}{Errore visualizzazione UUID utente terminatore di un processo/sessione  }
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza un messaggio di errore in merito allo UUID dell'utente terminatore del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video il messaggio: Lo UUID dell'utente terminatore del/la processo/sessione è assente in quanto il/la processo/sessione non è ancora terminato/a.
+        \end{enumerate}
 \end{itemize}
 
 \subusecase{visualizzaNomeCanaleAttivazione}{Visualizza nome canale di attivazione di un processo/sessione  }
@@ -192,6 +224,22 @@
     \begin{itemize}
         \item Non viene mostrato a video il nome del canale di terminazione del/la processo/sessione in quanto il/la processo/sessione non è ancora terminato/a.
     \end{itemize}
+    \item \textbf{Estensioni}: \ref{erroreNomeCanaleTerminazione} Errore visualizzazione nome canale di terminazione di un processo/sessione
+\end{itemize}
+
+\subusecase{erroreNomeCanaleTerminazione}{Errore visualizzazione nome canale di terminazione di un processo/sessione  }
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza un messaggio di errore in merito al nome del canale di terminazione del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video il messaggio: Il nome del canale di terminazione del/la processo/sessione è assente in quanto il/la processo/sessione non è ancora terminato/a.
+        \end{enumerate}
 \end{itemize}
 
 \subusecase{visualizzaStatoProcessoSessione}{Visualizza stato di un processo/sessione  }

@@ -135,7 +135,7 @@
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando le informazioni di una Persona Fisica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto AS coinvolto in un documento
+        \item L'utente sta visualizzando le informazioni di una Persona Fisica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di una Persona Giuridica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto AS coinvolto in un documento
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza il codice fiscale del soggetto coinvolto nel documento selezionato
     \item \textbf{Flusso Principale}:
@@ -150,7 +150,7 @@
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando le informazioni di una Persona Fisica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto AS coinvolto in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto PAE coinvolto in un documento
+        \item L'utente sta visualizzando le informazioni di una Persona Fisica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di una Persona Giuridica coinvolta in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto AS coinvolto in un documento, oppure\\L'utente sta visualizzando le informazioni di un soggetto PAE coinvolto in un documento
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza gli indirizzi digitali di riferimento del soggetto coinvolto nel documento selezionato
     \item \textbf{Flusso Principale}:
@@ -574,6 +574,23 @@
     \begin{itemize}
         \item il tempo di conservazione coincide con quello assegnato all'aggregazione documentale a cui il documento appartiene
     \end{itemize}
+    \item \textbf{Estensioni}: \ref{erroreTempoConservazioneEffettivoDocumento} Errore Visualizzazione Tempo di Conservazione Effettivo documento
+\end{itemize}
+
+\usecase{erroreTempoConservazioneEffettivoDocumento}{Errore visualizzazione Tempo di Conservazione Effettivo documento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento
+        \item Il documento ha un tempo di conservazione uguale a quello assegnato all'aggregazione documentale informatica a cui appartiene
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza un messaggio di errore relativo alla visualizzazione del tempo di conservazione effettivo del documento selezionato
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video il messaggio: Il tempo di conservazione del documento coincide con quello assegnato all'aggregazione documentale a cui appartiene.
+        \end{enumerate}
 \end{itemize}
 
 \usecase{visualizzaNoteDocumento}{Visualizza Note documento}
@@ -593,6 +610,22 @@
     \begin{itemize}
         \item Le note del documento sono assenti o vuote.
     \end{itemize}
+    \item \textbf{Estensioni}: \ref{erroreNoteDocumento} Errore Visualizzazione Note documento
+\end{itemize}
+
+\usecase{erroreNoteDocumento}{Errore Visualizzazione Note documento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza un messaggio di errore relativo alla visualizzazione delle note del documento selezionato
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Le note del documento sono assenti o vuote.
+        \end{enumerate}
 \end{itemize}
 
 \usecase{visualizzaDatiRegistrazioneDocumento}{Visualizza Dati di Registrazione documento}

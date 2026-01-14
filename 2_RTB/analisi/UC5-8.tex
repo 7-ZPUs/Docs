@@ -554,9 +554,28 @@
             \item L'utente tenta di salvare il documento nella cartella del DIP: il sistema blocca l'operazione e mostra il messaggio "Impossibile salvare nel DIP. Selezionare un'altra cartella per preservare l'integrità del DIP."
             \item L'utente annulla l'operazione: il sistema chiude il dialogo senza salvare.
         \end{itemize}
+    \item \textbf{Estensioni}: \ref{erroreScaricamentoFile} Errore Scaricamento File
 \end{itemize}
 
-\subusecase{erroreGenerazionePDF}{Errore generazione PDF}
+\usecase{erroreScaricamentoFile}{Errore Scaricamento File}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+        \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente ha selezionato un file da scaricare (Documento o Report).
+        \end{itemize} 
+    \item \textbf{Postcondizioni}: L'utente visualizza un messaggio d'errore.
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema apre un dialogo di selezione cartella
+            \item L'utente seleziona la cartella di destinazione
+            \item Il sistema blocca l'operazione e mostra il messaggio "Impossibile salvare nel DIP. Selezionare un'altra cartella per preservare l'integrità del DIP."
+            \item L'utente annulla l'operazione: il sistema chiude il dialogo senza salvare.
+        \end{enumerate}
+\end{itemize}
+
+\usecase{erroreGenerazionePDF}{Errore generazione PDF}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: 

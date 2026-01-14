@@ -1,4 +1,4 @@
-\usecase{ricercaDIP}{Ricerca nel DIP (Astratto)}
+\usecase{ricercaDIP}{Ricerca nel DIP}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -24,7 +24,7 @@
       \item \textbf{Estensioni}: \ref{nessunRisultato} Nessun risultato
 \end{itemize}
 
-\usecase{ricercaDIPConFiltri}{Ricerca nel DIP con filtri}
+\subusecase{ricercaDIPConFiltri}{Ricerca nel DIP con filtri}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -51,7 +51,7 @@
       \item \textbf{Specializza}: \ref{ricercaDIP} Ricerca nel DIP
 \end{itemize}
 
-\usecase{ricercaDIPSemantica}{Ricerca nel DIP semantica}
+\subusecase{ricercaDIPSemantica}{Ricerca nel DIP semantica}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -72,7 +72,7 @@
     
 \end{itemize}
 
-\usecase{ricercaClasse}{Ricerca Classe Documentale per Nome}
+\subusecase{ricercaClasse}{Ricerca Classe Documentale per Nome}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -94,7 +94,7 @@
       \item \textbf{Specializza}: \ref{ricercaDIP} Ricerca nel DIP
 \end{itemize}
 
-\subusecase{inserimentoNomeClasseDocumentale}{Inserimento Nome Classe Documentale}
+\subsubusecase{inserimentoNomeClasseDocumentale}{Inserimento Nome Classe Documentale}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}:
@@ -111,7 +111,7 @@
       \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila Valore Filtro
 \end{itemize}
 
-\usecase{ricercaProcesso}{Ricerca Processo per Id}
+\subusecase{ricercaProcesso}{Ricerca Processo per Id}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
@@ -128,7 +128,7 @@
       \item \textbf{Specializza}: \ref{ricercaDIP} Ricerca nel DIP
 \end{itemize}
 
-\subusecase{inserimentoIdProcesso}{Inserimento Id Processo}
+\subsubusecase{inserimentoIdProcesso}{Inserimento Id Processo}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}:
@@ -468,7 +468,7 @@
       \end{enumerate}
 \end{itemize}
 
-\subusecase{specificaFiltriDI-DAI}{Specifica filtri per Documento Informatico e Amministrativo Informatico}
+\subsubusecase{specificaFiltriDI-DAI}{Specifica filtri per Documento Informatico e Amministrativo Informatico}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -500,7 +500,7 @@
       \item \textbf{Specializza}: \ref{addFiltriTipoDocumento} Specifica filtri per Tipo di Documento
 \end{itemize}
 
-\subsubusecase{selezionaCampiDI-DAI}{Selezione campi di ricerca per DI/DAI}
+\deepusecase{selezionaCampiDI-DAI}{Selezione campi di ricerca per DI/DAI}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
@@ -518,7 +518,7 @@
       \item \textbf{Inclusioni}: \ref{visualizzaListaCampiDIDAI} Visualizza lista campi DI/DAI
 \end{itemize}
 
-\deepusecase{visualizzaListaCampiDIDAI}{Visualizza lista campi DI/DAI}
+\subdeepusecase{visualizzaListaCampiDIDAI}{Visualizza lista campi DI/DAI}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
@@ -534,7 +534,7 @@
       \item \textbf{Inclusioni}: \ref{visualizzaNomeCampo} Visualizza nome del campo
 \end{itemize}
 
-\subsubusecase{addDatiRegistrazione}{Specifica filtro Dati di Registrazione}
+\deepusecase{addDatiRegistrazione}{Specifica filtro Dati di Registrazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -569,7 +569,7 @@
       \end{enumerate}
 \end{itemize}
 
-\subsubusecase{addTipologiaDocumentale}{Specifica filtro Tipologia Documentale}
+\deepusecase{addTipologiaDocumentale}{Specifica filtro Tipologia Documentale}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -592,7 +592,7 @@
       \end{enumerate}
 \end{itemize}
 
-\subsubusecase{addModalitaFormazione}{Specifica filtro Modalità di Formazione}
+\deepusecase{addModalitaFormazione}{Specifica filtro Modalità di Formazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -620,7 +620,7 @@
       \end{enumerate}
 \end{itemize}
 
-\subsubusecase{addRiservato}{Specifica filtro campo Riservato}
+\deepusecase{addRiservato}{Specifica filtro campo Riservato}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -641,7 +641,7 @@
             \end{enumerate}
 \end{itemize}
 
-\subsubusecase{addIdentificativoFormato}{Specifica filtro Identificativo di Formato}
+\deepusecase{addIdentificativoFormato}{Specifica filtro Identificativo di Formato}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -669,7 +669,7 @@
             \end{enumerate}
 \end{itemize}
 
-\subsubusecase{addDatiVerifica}{Specifica filtro Dati di Verifica}
+\deepusecase{addDatiVerifica}{Specifica filtro Dati di Verifica}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -694,7 +694,7 @@
             \end{enumerate}
 \end{itemize}
 
-\subsubusecase{addNomeDocumento}{Specifica filtro Nome del Documento}
+\deepusecase{addNomeDocumento}{Specifica filtro Nome del Documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -715,7 +715,7 @@
             \end{enumerate}
 \end{itemize}
 
-\subsubusecase{addVersioneDocumento}{Specifica filtro Versione del Documento}
+\deepusecase{addVersioneDocumento}{Specifica filtro Versione del Documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -736,7 +736,7 @@
             \end{enumerate}
 \end{itemize}
 
-\subsubusecase{addIdentificativoDocumentoPrimario}{Specifica filtro Identificativo del Documento Primario}
+\deepusecase{addIdentificativoDocumentoPrimario}{Specifica filtro Identificativo del Documento Primario}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}:
@@ -757,7 +757,7 @@
             \end{enumerate}
 \end{itemize}
 
-\subsubusecase{addTracciatureModificheDocumento}{Specifica filtro Tracciature Modifiche di Documento}
+\deepusecase{addTracciatureModificheDocumento}{Specifica filtro Tracciature Modifiche di Documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -787,7 +787,7 @@
             \end{enumerate}
 \end{itemize}
 
-\subusecase{specificaFiltriAggregazione}{Specifica filtri per Aggregazione Documentale Informatica}
+\subsubusecase{specificaFiltriAggregazione}{Specifica filtri per Aggregazione Documentale Informatica}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -818,7 +818,7 @@
       \item \textbf{Specializza}: \ref{addFiltriTipoDocumento} Specifiche filtri per Tipo di Documento
 \end{itemize}
 
-\subsubusecase{selezionaCampiAggregazioneDocumentale}{Selezione campi di ricerca per Aggregazione Documentale}
+\deepusecase{selezionaCampiAggregazioneDocumentale}{Selezione campi di ricerca per Aggregazione Documentale}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
@@ -836,7 +836,7 @@
       \item \textbf{Inclusioni}: \ref{visualizzaListaCampiAggregazioneDocumentale} Visualizza lista campi Aggregazione Documentale
 \end{itemize}
 
-\deepusecase{visualizzaListaCampiAggregazioneDocumentale}{Visualizza lista campi Aggregazione Documentale}
+\subdeepusecase{visualizzaListaCampiAggregazioneDocumentale}{Visualizza lista campi Aggregazione Documentale}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -853,7 +853,7 @@
       \item \textbf{Inclusioni}: \ref{visualizzaNomeCampo} Visualizza nome campo
 \end{itemize}
 
-\subsubusecase{addTipoAggregazione}{Specifica filtro Tipo di Aggregazione}
+\deepusecase{addTipoAggregazione}{Specifica filtro Tipo di Aggregazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -881,7 +881,7 @@
       \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
 \end{itemize}
 
-\subsubusecase{addIdAggregazione}{Specifica filtro Id dell'Aggregazione}
+\deepusecase{addIdAggregazione}{Specifica filtro Id dell'Aggregazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -903,7 +903,7 @@
       \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
 \end{itemize}
 
-\subsubusecase{addTipologiaFascicolo}{Specifica filtro Tipologia di Fascicolo}
+\deepusecase{addTipologiaFascicolo}{Specifica filtro Tipologia di Fascicolo}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -931,7 +931,7 @@
       \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
 \end{itemize}
 
-\subsubusecase{addIdAggregazionePrimario}{Specifica filtro Id Aggregazione Primario}
+\deepusecase{addIdAggregazionePrimario}{Specifica filtro Id Aggregazione Primario}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -953,7 +953,7 @@
       \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
 \end{itemize}
 
-\subsubusecase{addDataApertura}{Specifica filtro Data Apertura}
+\deepusecase{addDataApertura}{Specifica filtro Data Apertura}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -975,7 +975,7 @@
       \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
 \end{itemize}
 
-\subsubusecase{addDataChiusura}{Specifica filtro Data Chiusura}
+\deepusecase{addDataChiusura}{Specifica filtro Data Chiusura}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -997,7 +997,7 @@
       \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
 \end{itemize}
 
-\subsubusecase{addProcedimentoAmministrativo}{Specifica filtro Procedimento Amministrativo}
+\deepusecase{addProcedimentoAmministrativo}{Specifica filtro Procedimento Amministrativo}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -1027,7 +1027,7 @@
       \end{itemize}
 \end{itemize}
       
-\deepusecase{addFasiProcedimentoAmministrativo}{Aggiunta Fase del Procedimento Amministrativo}
+\subdeepusecase{addFasiProcedimentoAmministrativo}{Aggiunta Fase del Procedimento Amministrativo}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -1052,7 +1052,7 @@
       \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
 \end{itemize}
 
-\subsubusecase{addAssegnazione}{Specifica filtro Assegnazione}
+\deepusecase{addAssegnazione}{Specifica filtro Assegnazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -1075,7 +1075,7 @@
       \item \textbf{Inclusioni}: \ref{addAssegnazione} Aggiunta Valore Assegnazione
 \end{itemize}
       
-\deepusecase{addAssegnazione}{Aggiunta Valore Assegnazione}
+\subdeepusecase{addAssegnazione}{Aggiunta Valore Assegnazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -1100,7 +1100,7 @@
       \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
 \end{itemize}
       
-\subsubusecase{addProgressivoAggregazione}{Specifica filtro Progressivo Aggregazione}
+\deepusecase{addProgressivoAggregazione}{Specifica filtro Progressivo Aggregazione}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -1569,6 +1569,7 @@
       \begin{itemize}
             \item Il valore non rispetta il formato corretto (\ref{formatoNonCorretto}).
       \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorretto} Formato Non Corretto
 \end{itemize}
 
 \usecase{formatoNonCorretto}{Formato Non Corretto}
