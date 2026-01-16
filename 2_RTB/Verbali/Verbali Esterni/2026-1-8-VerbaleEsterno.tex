@@ -114,7 +114,7 @@
 
 \noindent
 \textbf{Data:} 2026/1/8 \\
-\textbf{Durata:} 25 minuti circa\\
+\textbf{Durata:} 30 minuti \\
 \textbf{Luogo:} incontro online ( Meet )
 
 \vspace{0.3cm}
@@ -166,36 +166,71 @@
 \vspace{0.5cm}
 
 \section{Svolgimento e Discussione}
-Durante l’incontro è stato discusso l’andamento generale del progetto, evidenziando una riduzione delle attività in concomitanza con il periodo d’esami e sottolineando come
- il lavoro si sia concentrato principalmente sulla terminazione dell’analisi dei requisiti e sullo sviluppo di un PoC.
-  
- Successivamente è stato presentato il PoC, ponendo l’attenzione sulle sue funzionalità di base.
 
-\subsection{Presentazionde del PoC}
-Nel corso della presentazione del PoC sono state illustrate tutte le funzionalità attualmente implementate, tra cui il caricamento e la visualizzazione del DIP. A seguito
- della presentazione, sono emerse alcune criticità relative alla verifica della funzione di hash. In particolare, è stato chiesto alla proponente se, nel DIP di esempio, 
- i codici hash fossero generati casualmente o meno.
+Durante l’incontro sono stati affrontati i seguenti punti:
+\begin{itemize}
+    \item andamento generale del progetto.
+    \item riduzione delle attività dovuta al periodo d’esami.
+    \item avanzamento del lavoro svolto.
+\end{itemize}
 
-Dal confronto con la proponente è emerso che nei DIP i codici hash sono codificati in Base64. Di conseguenza, qualsiasi funzione di verifica deve necessariamente applicare
- tale codifica per poter distinguere correttamente i file corrotti da quelli integri.
+È stato evidenziato che il lavoro si è concentrato principalmente su:
+\begin{itemize}
+    \item conclusione dell’analisi dei requisiti.
+    \item sviluppo del Proof of Concept (PoC).
+\end{itemize}
+
+Successivamente è stato presentato il PoC stesso, con particolare attenzione alle sue funzionalità di base.
+
+\subsection{Presentazione del PoC}
+
+Durante la presentazione sono stati discussi i seguenti aspetti:
+\begin{itemize}
+    \item funzionalità attualmente implementate.
+    \item caricamento e visualizzazione del DIP.
+    \item verifica dell’integrità dei file tramite funzione di hash.
+\end{itemize}
+
+\vspace{.3cm}
+
+In merito alla funzione di hash sono emerse alcune criticità. 
+
+
+Dal confronto con la proponente è emerso che, nei DIP, i codici hash sono codificati in Base64 e che la funzione di verifica 
+deve applicare la stessa codifica per eseguire la verifica dell'integrità correttamente.
 
 \section{Domande e Risposte}
 
-\textbf{Domanda:} È necessario implementare la ricerca semantica anche nel PoC, nonostante sia un requisito opzionale?
+\begin{itemize}[label={}]
+    \item \textbf{Domanda:} È necessario implementare la ricerca semantica anche nel PoC, nonostante sia un requisito opzionale?
+    
+    \item \textbf{Risposta:} Sì. Il PoC dovrebbe rappresentare il più fedelmente possibile il prodotto finale.  
+    È quindi preferibile:
+    \begin{itemize}[label={•}]
+        \item trascurare aspetti secondari, come l’interfaccia grafica;
+        \item concentrarsi sulle funzionalità principali;
+        \item implementare il maggior numero possibile di requisiti funzionali.
+    \end{itemize}
+\end{itemize}
 
-\textbf{Risposta:} Sì. Poiché il PoC dovrebbe rappresentare nel modo più fedele possibile il prodotto finale, è preferibile trascurare gli aspetti secondari, come l'interfaccia
- grafica, e concentrarsi invece sulle funzionalità, implementandone il maggior numero possibile. 
-\vspace{0.5cm}
 
-\textbf{Domanda:} È possibile lasciare all'utente la scelta del livello di precisione della ricerca semantica (ad esempio alto, medio o basso)?
-
-\textbf{Risposta:} No, poiché ciò rischierebbe di generare confusione nell'utente. È preferibile individuare un livello di precisione che risulti adeguato nella maggior parte
- dei casi. 
+\begin{itemize}[label={}]
+    \item \textbf{Domanda:} È possibile lasciare all’utente la scelta del livello di precisione della ricerca semantica?
+    
+    \item \textbf{Risposta:} No. Questa scelta potrebbe generare confusione nell’utente finale.  
+    È preferibile:
+    \begin{itemize}[label={•}]
+        \item definire un unico livello di precisione;
+        \item selezionarlo in modo che sia adeguato nella maggior parte dei casi d’uso.
+    \end{itemize}
+\end{itemize}
 
 \section{Decisioni e Conclusione}
+
+Al termine dell’incontro il Team ha deciso di:
 \begin{itemize}
-    \item Il Team ha deciso di procedere alla conclusione dell'analisi dei requisiti. 
-    \item Il Team ha inoltre deciso di continuare con lo sviluppo del PoC. 
+    \item procedere con la conclusione dell’analisi dei requisiti;
+    \item continuare lo sviluppo del Proof of Concept (PoC).
 \end{itemize}
 
 \vfill
