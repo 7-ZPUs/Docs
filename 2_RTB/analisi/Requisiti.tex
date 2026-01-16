@@ -26,9 +26,132 @@ Dove:
 
 \subsection{Requisiti Funzionali}
 
+\setlength{\LTleft}{0cm}
+
+
 \begin{longtable}{|p{2.5cm}|p{8cm}|p{3cm}|}
 \hline
 \textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+R-1-F-Ob & L'utente deve poter visualizzare l'elenco di classi documentali nel DIP & \ref{classiDocumentali} \\
+\hline
+R-2-F-Ob & In caso non vi siano classi documentali nel DIP, l'utente deve poter visualizzare un messaggio di errore & \ref{elencoVuoto} \\
+\hline
+R-3-F-Ob & Quando viene selezionata una classe documentale, l'utente deve poter visualizzare ciascuna classe documentale all'interno dell'elenco & \ref{classeDocumentale} \\
+\hline
+R-4-F-Ob & L'utente deve poter visualizzare il nome della classe documentale & \ref{nomeClasseDocumentale} \\
+\hline
+R-5-F-Ob & L'utente deve poter visualizzare lo stato di verifica della classe documentale & \ref{statoVerificaElemento} \\
+\hline
+R-6-F-Ob & L'utente deve poter visualizzare la marcatura temporale della classe documentale & \ref{marcaturaTemporaleElemento} \\
+\hline
+R-7-F-Ob & L'utente deve poter visualizzare l'elenco dei processi associati alla classe documentale & \ref{processiClasseDocumentale} \\
+\hline
+R-14-F-Ob & In caso non vi siano processi associati alla classe documentale, l'utente deve poter visualizzare un messaggio di errore & \ref{elencoVuoto} \\
+\hline
+R-8-F-Ob & Quando viene selezionato un processo, l'utente deve poter visualizzare ciascun processo all'interno dell'elenco & \ref{processoClasseDocumentale} \\
+\hline
+R-9-F-Ob & L'utente deve poter visualizzare il nome del processo & \ref{idProcessoClasse} \\
+\hline
+R-10-F-Ob & L'utente deve poter visualizzare l'elenco di documenti associati a un processo & \ref{documentiProcesso} \\
+\hline
+R-14-F-Ob & In caso non vi siano documenti associati al processo, l'utente deve poter visualizzare un messaggio di errore & \ref{elencoVuoto} & \\
+\hline
+R-11-F-Ob & Quando viene selezionato un documento, l'utente deve poter visualizzare ciascun documento all'interno dell'elenco & \ref{documentoProcesso} \\
+\hline
+R-12-F-Ob & L'utente deve poter visualizzare il nome del documento & \ref{nomeDocumentoProcesso} \\
+\hline
+R-13-F-Ob & L'utente deve poter visualizzare lo stato di verifica del documento & \ref{statoVerificaElemento} \\
+\hline
+R-14-F-Ob & L'utente deve poter visualizzare la marcatura temporale del documento & \ref{marcaturaTemporaleElemento} \\
+\hline
+R-15-F-Ob & L'utente deve poter selezionare una classe documentale  & \ref{selezionaClasseDocumentale} \\
+\hline
+R-16-F-Ob & L'utente deve poter selezionare un processo  & \ref{selezionaProcesso} \\
+\hline
+R-17-F-Ob & L'utente deve poter visualizzare l'anteprima di un documento selezionato  & \ref{anteprimaDocumento} \\
+\hline
+R-18-F-Ob & Se il documento selezionato non è visualizzabile in anteprima, l'utente deve poter visualizzare un messaggio di errore  & \ref{formatoDocumentoNonSupportato} \\
+\hline
+R-18-F-Ob & L'utente deve poter ricercare un documento, un processo, o una classe documentale & \ref{ricercaDIP} \\
+\hline
+R-19-F-Ob & L'utente può cercare una classe documentale esclusivamente per nome & \begin{tabular}{l} \ref{ricercaClasse} \\ \ref{inserimentoNomeClasseDocumentale} \end{tabular} \\
+\hline
+R-20-F-Ob & L'utente può cercare un processo esclusivamente per uuid & \begin{tabular}{l} \ref{ricercaProcesso} \\ \ref{inserimentoIdProcesso} \end{tabular} \\
+\hline
+R-21-F-Op & L'utente deve poter effettuare una ricerca semantica basata sui metadati dei documenti presenti nel DIP & \ref{ricercaDIPSemantica} \\
+\hline
+R-22-F-Op & Il sistema deve rendere disponibile un comando o opzione per avviare l'indicizzazione semantica dei documenti nel DIP per la ricerca & \ref{indicizzazioneSemantica} \\
+\hline
+R-23-F-Ob & Quando viene selezionata l'indicizzazione semantica il sistema deve indicizzare i documenti presenti nel DIP  & \ref{indicizzazioneSemantica} \\
+\hline
+R-24-F-Ob & Se il sistema non riesce ad indicizzare i documenti presenti nel DIP, l'utente deve poter visualizzare un messaggio di errore & \ref{erroreIndicizzazioneSemantica} \\
+\hline
+R-25-F-Ob & Quando viene selezionata l'indicizzazione semantica il sistema deve rendere disponibile il livello di precisione di ricerca & \ref{PrecisioneSemantica} \\
+\hline
+R-26-F-Ob & Quando l'utente sta scegliendo il livello di precisione di ricerca, il sistema rende disponibile tre livelli: Basso, Medio e Alto & \ref{PrecisioneSemantica} \\
+\hline
+R-27-F-Ob & Il sistema deve rendere disponibile un campo di ricerca & \\
+\hline
+R-28-F-Ob & Il sistema deve rendere disponibile l'opzione di ricerca per documenti & \\
+\hline
+R-28-F-Ob & Il sistema deve rendere disponibile l'opzione di ricerca per processi & \\
+\hline
+R-29-F-Ob & Il sistema deve rendere disponibile l'opzione di ricerca per classi documentali & \\
+\hline
+R-30-F-Ob & Il sistema deve rendere disponibile la ricerca avanzata con filtri & \\
+\hline
+R-31-F-Ob & Il sistema deve rendere disponibile la sezione di filtri di ricerca comuni & \\
+\hline
+R-32-F-Ob & Il sistema deve rendere disponibile la sezione di filtri di ricerca specifici per tipo documentale & \\
+\hline
+R-33-F-Ob & Il sistema deve rendere disponibile la sezione di filtri di ricerca specifici per metadati custom & \\
+\hline
+R-34-F-Ob & Il sistema deve permettere di applicare più filtri contemporaneamente & \\
+\hline
+R-35-F-Ob & Il sistema deve permettere di rimuovere i filtri applicati & \\
+\hline
+R-36-F-Ob & Il sistema deve permettere di resettare tutti i filtri applicati & \\
+\hline
+R-37-F-Ob & Il sistema deve permettere di selezionare filtri per tipo documentale per un singolo tipo di documento & \\
+\hline
+R-38-F-Ob & Il sistema deve rendere racchiudere i filtri di ricerca comuni in una sezione espandibile dedicata & \\
+\hline
+R-39-F-Ob & Il sistema deve rendere racchiudere i filtri di ricerca specifici per tipo documentale in una sezione espandibile dedicata & \\
+\hline
+R-40-F-Ob & Il sistema deve rendere racchiudere i filtri di ricerca specifici per metadati custom in una sezione espandibile dedicata & \\
+\hline
+R-41-F-Ob & Il sistema deve permettere di visualizzare i filtri comuni applicabili & \\
+\hline
+R-42-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Chiave Descrittiva" & \\
+\hline
+R-43-F-Ob & L'utente deve poter inserire il valore per il campo "Chiave Descrittiva" & \\
+\hline
+R-44-F-Ob & L'utente deve poter inserire il valore per il campo "Oggetto" & \\
+\hline
+R-45-F-Ob & L'utente deve poter inserire il valore per il campo "Parole chiave" & \\
+\hline
+R-46-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Classificazione" & \\
+\hline
+R-47-F-Ob & L'utente deve poter inserire il valore per il campo "Indice di classificazione" & \\
+\hline
+R-48-F-Ob & L'utente deve poter inserire il valore per il campo "Descrizione" & \\
+\hline
+R-49-F-Ob & L'utente deve poter inserire il valore per il campo "Piano di fascicolo" & \\
+\hline
+R-50-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Tempo di conservazione" & \\
+\hline
+R-51-F-Ob & L'utente deve poter inserire il valore per il filtro "Tempo di conservazione" & \\
+\hline
+R-52-F-Ob & L'utente deve poter selezionare l'opzione "Perenne" per il filtro "Tempo di conservazione" & \\
+\hline
+R-53-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Note" & \\
+\hline
+R-54-F-Ob & L'utente deve poter inserire il valore per il filtro "Note" & \\
+\hline
+R-55-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Tipo di documento" & \\
+\hline
+R-56-F-Ob & L'utente deve poter selezionare il valore per il filtro "Tipo di documento" tra "Documento informatico", "Documento amministrativo informatico", "Aggregazione documentale" & \\
 \hline
 \endfirsthead
 
