@@ -1,0 +1,236 @@
+\documentclass[a4paper,12pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 2026/01/16 \\
+\textbf{Durata:} 30 minuti\\
+\textbf{Luogo:} Incontro online (Discord)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    0.1 & 2026/01/16 & Fattoni Antoni & Gingilino Aaron & Creazione del verbale e stesura iniziale \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Gingilino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+\end{itemize}
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Allineamento sullo svolgimento delle task
+\end{enumerate}
+
+
+\section{Svolgimento e Discussione}
+
+\subsection{Allineamento sullo svolgimento delle task}
+Durante l'incontro si è discusso dello stato di avanzamento delle task assegnate a ciascun membro del gruppo per lo sprint corrente. Si è proceduto a fare il punto della situazione per la stesura dei diagrammi degli use case e dei requisiti funzionali, assegnati agli analisti, e per lo studio delle nuove funzionalità da implementare nella PoC, assegnate ai programmatori.
+
+\subsection{Definizione ruoli}
+I ruoli necessari in questa sprint sono:
+\begin{itemize}[noitemsep]
+    \item Analista
+    \item Verificatore
+    \item Programmatore
+\end{itemize}
+
+I ruoli assegnati a ciascun membro per questo sprint sono i seguenti:
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm}
+    \centering
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Membro} & \textbf{Ruolo} \\
+    \hline
+    Fattoni Antonio & Programmatore \\
+    \hline
+    Georgescu Diana & Analista \\
+    \hline
+    Gingilino Aaron & Analista \\
+    \hline
+    Laoud Zakaria & Analista \\
+    \hline
+    Rocco Matteo A. & Programmatore \\
+    \hline
+    Soligo Lorenzo & Programmatore \\
+    \hline
+    Vigolo Davide & Programmatore \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+\textbf{Tutti} i membri del gruppo faranno anche da \textbf{verificatori}.
+
+\section{Decisioni}
+\begin{enumerate}[noitemsep]
+    \item Si è deciso di procedere con le task precedentemente assegnate, ovvero gli analisti si occuperanno della creazione dei diagrammi degli use case e della stesura dei requisiti funzionali, mentre i programmatori studieranno le nuove funzionalità da implementare nella PoC.
+    \item Si è deciso, in particolare, che i Programmatori proveranno ad implementare la ricerca in 3 modi differenti per verificare quale sia il più efficiente.
+    \item Si è deciso di mandare una mail all'azienda Sanmarco per richiedere un pacchetto DIP dalle dimensioni maggiori, in modo da poter effettuare test più realistici.
+\end{enumerate}
+
+
+\section*{Tabella delle decisioni}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
+    \hline
+    \#0 & Redazione del verbale interno& \href{https://7zpus.atlassian.net/browse/DIPR-198}{DIPR-198} & Fattoni Antonio & Gingilino Aaron \\
+    \hline
+    \#1 & Creazione diagrammi UC & \begin{tabular}[c]{@{}c@{}} \href{https://7zpus.atlassian.net/browse/DIPR-157}{DIPR-161} \\ \href{https://7zpus.atlassian.net/browse/DIPR-161}{DIPR-161} \\ \href{https://7zpus.atlassian.net/browse/DIPR-162}{DIPR-162} \\ \href{https://7zpus.atlassian.net/browse/DIPR-171}{DIPR-171}\end{tabular}& Analisti & Analisti \\
+    \hline
+    \#1 & Stesura requisiti funzionali & \begin{tabular}[c]{@{}c@{}} \href{https://7zpus.atlassian.net/browse/DIPR-172}{DIPR-172} \\ \href{https://7zpus.atlassian.net/browse/DIPR-173}{DIPR-173} \\ \href{https://7zpus.atlassian.net/browse/DIPR-174}{DIPR-174} \\ \href{https://7zpus.atlassian.net/browse/DIPR-175}{DIPR-175} \end{tabular} & Analisti & Analisti \\
+    \hline
+    \#2 & Studio nuove funzionalità PoC & \href{https://7zpus.atlassian.net/browse/DIPR-12}{DIPR-12} & Programmatori & Programmatori \\
+    \hline
+    \#2 & Implementazione Ricerca nel PoC & \begin{tabular}[c]{@{}c@{}} \href{https://7zpus.atlassian.net/browse/DIPR-182}{DIPR-182} \\ \href{https://7zpus.atlassian.net/browse/DIPR-183}{DIPR-183} \\ \href{https://7zpus.atlassian.net/browse/DIPR-184}{DIPR-184} \end{tabular} & Programmatori & Programmatori \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
