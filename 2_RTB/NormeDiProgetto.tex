@@ -697,15 +697,48 @@ Per la numerazione delle versioni si adotta lo standard di versionamento \textbf
 
 
 \subsection{Processo di garanzia della qualità}
+
+
 \subsection{Processo di verifica}
+La verifica è un processo il cui scopo è l'allineamento del software prodotto ai requisiti generati dalle aspettative della proponente.
+Per evitare possibili derive del software ad ogni task vengono assegnati uno o più verificatori. In base al tipo di task i verificatori andranno ad adoperare un insieme di tecniche e pratiche consone per analizzare se il prodotto è conforme agli standard di qualità.
+All'interno del Piano di Qualifica vengono elencate le attività che i verificatori devono fare al completamento della task a loro assegnatali. Troviamo anche per ogni attività gli obbiettivi, gli esiti desiderabili e quelli ottenuti.
+\subsubsection{Verifica documentale}
+I passaggi che il verificatore deve svolgere per approvare un documento sono specificati nella sezione \ref{produzioneDocs}. Perché un documento possa essere approvato il verificatore deve controllare che sia corretto: 
+\begin{itemize}
+    \item Il contenuto
+    \item La grammatica
+    \item La presentazione, rispetto alle linee guida
+    \item La comprensibilità del testo
+\end{itemize}
+
+Individuiamo due tipologie di verifica inerenti al codice, l'analisi statica e quella dinamica
+\subsubsection{Analisi Statica}
+L'analisi statica prevede di analizzare il codice in modo statico, ovvero senza che venga eseguito. Ci concentriamo sulla documentazione e sul codice, e ci accertiamo che non presentino errori che non li rendano conformi alle norme, o che non producano risultati attesi. Per fare ciò possiamo utilizzare dei metodi di lettura oppure dei metodi formali. Iniziamo concentrandoci sui metodi di lettura, possono essere svolti da esseri umani o tramite processi automatizzati, e si suddividono in:
+\begin{itemize}
+    \item Walkthrough: a priori non conosciamo l'errore, ne sappiamo la sua locazione, quindi andiamo ad analizzare il testo in maniera esplorativa. I verificatori si occupano di quest'ultimo passo, la correzione sarà poi a carico degli autori del testo in questione. Questo processo potrebbe risultare particolarmente laborioso in proporzione alla quantità di dati da ispezionare.
+    \item Inspection: sappiamo dove si potrebbe situare l'errore e quindi a nostro vantaggio possiamo essere selettivi rispetto alle porzioni di testo da esaminare. Come per il Walkthrough sono gli autori a correggere l'errore, mentre i verificatori lo cercano. Questo tipo di metodo ha come presupposto la conoscenza del problema a priori, questa conoscenza è ottenibile tramite esperienza.
+\end{itemize}
+
+\subsubsection{Analisi Dinamica}
+L'analisi dinamica prevede l'esecuzione dell'oggetto di verifica. Durante la sua esecuzione possiamo eseguire dei test, essi dovranno essere ripetibili e automatizzabili: ripetibili perché non vogliamo evitare la regressione del software, automatizzati (perché è più efficiente) tramite Driver (permette di invocare il componente da testare se quest'ultimo non ha ancora chi lo chiama),  Stub (permette di evitare le chiamate ad altri moduli che non vogliamo testare) e Logger (permette di tracciare i test).
+Vediamo le tipologie di test più comuni:
+\begin{itemize}
+    \item Unità: verificano il singolo componente in isolamento. Si suddividono in funzionali e strutturali, i primi si basano sulle specifiche funzionali e non sull'implementazione, cioè verificano il comportamento dell'unità in base alle specifiche, i secondi invece sulla struttura interna del codice, come ad esempio la copertura dei rami.
+    \item Test di regressione: verificano che modifiche o correzioni non introducano nuovi errori in parti del codice già verificate. Ripetiamo i test già eseguiti. 
+    \item Test di integrazione: verifichiamo che più unità già testate singolarmente possano essere integrate, cioè interagiscano correttamente.
+    \item Test di sistema: verificano la totalità del sistema rispetto ai requisiti. Andiamo a collaudare il sistema con il committente, questo fa parte del processo di validazione, trattato nella sezione successiva
+\end{itemize}
+
 \subsection{Processo di validazione}
+La validazione è un processo che prevede di controllare se i requisiti e le aspettative della proponente sono state soddisfatte tramite apposti test di accettazione. Questi test permettono di simulare uno scenario realistico, in modo da dimostrare alla proponente il prodotto e ricevere il suo feedback.
+
 \subsection{Processo di revisione congiunta}
 \subsection{Processo di risoluzione dei problemi}
 \subsection{Gestione della qualità}
 
-\section{Processi Organizzativi}
 
-\subsection{Gestione}
+\section{Processi Organizzativi}
 
 \subsection{Infrastruttura}
 Il processo di Infrastruttura fornisce il supporto tecnico necessario per lo
