@@ -121,12 +121,12 @@
 \section{Introduzione}
 
 \subsection{Scopo}
-Lo scopo di questo documento è definire le metriche di qualità a supporto della verifica e validazione del ciclo di vita del progetto necessarie per poter fornire un prodotto corrispondente ai requisiti della proponente e agli obiettivi del team fornitore mantenendo standard qualitativi elevati.
-La struttura è suddivisa in:
+Lo scopo di questo documento è di fondamentale importanza. Permette di definire misure quantitative per misurare la qualità di processo e di prodotto. Assieme al cruscotto di valutazione permette di monitorare l'efficacia e l'efficienza dei processi di ciclo di vita istanziati nel progetto.
+Garantire una sufficiente qualità di processo e di prodotto, è condizione necessaria alla qualità di prodotto in uso, che è di interesse primario per la committente. Il Piano di Qualifica si compone di tre elementi:
 \begin{itemize}
-    \item Metriche di qualità
-    \item Test di verifica
-    \item Cruscotto di valutazione e miglioramento
+    \item Piano della Qualità: Definizione di obiettivi quantitativi di qualità, metriche e strategie per raggiungerla
+    \item Controllo di Qualità: insieme di attività e tecniche per valutare che il piano stabilito sia efficace.
+    \item Miglioramento continuo: stabilire eventuali azioni correttive alla luce dei risultati del controllo, adattando processi, obiettivi e vincoli.
 \end{itemize}
 
 \subsection{Glossario}
@@ -164,25 +164,25 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
         \hline
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
-        MPC-1 & EA (Earned Value) & & \\
+        MPC-1 & EV (Earned Value) & $\geq$0 & PV \\
         \hline
-        MPC-2 & PV (Planned Value) & & \\
+        MPC-2 & PV (Planned Value) & $\geq$0 & - \\
         \hline
-        MPC-3 & AC (Actual Cost) & & \\
+        MPC-3 & AC (Actual Cost) & $\geq$0 & $\leq$EV \\
         \hline
-        MPC-4 & CPI (Cost Performance Index) & & \\
+        MPC-4 & CPI (Cost Performance Index) & $\geq$0.5 & $\geq$1 \\
         \hline
-        MPC-5 & SPI (Schedule Performance Index) & & \\
+        MPC-5 & SPI (Schedule Performance Index) & $\geq$0.5 & $\geq$1 \\
         \hline
-        MPC-6 & TEAC (Time Estimate at Completion) & & \\
+        MPC-6 & TEAC (Time Estimate at Completion) & $\geq$0 & $\leq$scadenza \\
         \hline
-        MPC-7 & ETC (Estimate to Complete) & & \\
+        MPC-7 & ETC (Estimate to Complete) & $\geq$0 & $\leq$BAC - AC \\
         \hline
-        MPC-8 & EAC (Estimate at Completion) & & \\
+        MPC-8 & EAC (Estimate at Completion) & $\geq$0 & $\leq$BAC \\
         \hline
-        MPC-9 & BV (Budget Variance) & & \\
+        MPC-9 & BV (Budget Variance) & - & $>$0\\
         \hline
-        MPC-10 & SV (Schedule Variance) & & \\
+        MPC-10 & SV (Schedule Variance) & - & $>$0 \\
         \hline
     \end{tabular}
     \end{spacing}
@@ -199,11 +199,9 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
         \hline
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
-        MPC-11 & Work in progress & & \\
+        MPC-11 & Deployment frequency & - & 1/gg \\
         \hline
-        MPC-12 & Deployment frequency & & \\
-        \hline
-        MPC-13 & Change failure rate & & \\
+        MPC-12 & Stabilità dei requisiti & $\geq$70\% & 100\% \\
         \hline
     \end{tabular}
     \end{spacing}
@@ -222,9 +220,9 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
         \hline
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
-        MPC-14 & Indice di Gulpease & & \\
+        MPC-13 & Indice di Gulpease & $\geq$60 & $\geq$75\\
         \hline
-        MPC-15 & Correttezza ortografica & & \\
+        MPC-14 & Correttezza ortografica & 0 & 0 \\
         \hline
     \end{tabular}
     \end{spacing}
@@ -241,9 +239,7 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
         \hline
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
-        MPC-16 & Build success rate & & \\
-        \hline
-        MPC-17 & Average build time & & \\
+        MPC-15 & Average build time & $\leq$15 min & $\leq$10 min \\
         \hline
     \end{tabular}
     \end{spacing}
@@ -260,11 +256,9 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
         \hline
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
-        MPC-18 & Code review turnaround time & & \\
+        MPC-16 & Code review turnaround time & $\leq$72h & $\leq$24h\\
         \hline
-        MPC-19 & Statement coverage & & \\
-        \hline
-        MPC-20 & Branch coverage & & \\
+        MPC-17 & Test success rate & 1 & 1\\
         \hline
     \end{tabular}
     \end{spacing}
@@ -281,11 +275,23 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
         \hline
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
-        MPC-21 & Rischi non previsti & & \\
+        MPC-18 & Rischi non previsti & $\geq$0 & 0\\
         \hline
-        MPC-22 & Efficacia contromisure rischi & & \\
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsubsection{Gestione della Qualità}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
         \hline
-        MPC-23 & Densità degli errori & & \\
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPD-1 & Metriche soddisfatte & $\geq$70\% & 100\% \\
         \hline
     \end{tabular}
     \end{spacing}
@@ -293,9 +299,18 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
 \end{table}
 
 
-
 \subsection{Qualità di prodotto}
-In seguito vengono elencate le metriche ritenute necessarie per fornire un prodotto di qualità. 
+Le metriche definite in questa sezione riguardano principalmente caratteristiche di qualità "interne" del prodotto software. Raggiungere la qualità su queste caratteristiche abilita all'ottenimento di qualità in uso, o "esterna".
+Suddividiamo le metriche secondo raggruppamenti logici qui di seguito elencati ed esplicitati:
+\begin{itemize}
+    \item \textbf{Funzionalità}: completezza, correttezza ed appropriatezza del prodotto
+    \item \textbf{Affidabilità}: maturità, disponibilità, tolleranza ai guasti e riparabilità del prodotto
+    \item \textbf{Usabilità}: apprendibilità, operabilità, UX e accessibilità del prodotto
+    \item \textbf{Efficienza}: nel tempo, nelle altre risorse, nella capacità
+    \item \textbf{Manutenibilità}: modularità, riusabilità, analizzabilità, modificabilità e verificabilità del prodotto
+    \item \textbf{Portabilità}: adattabilità del prodotto a diversi ambienti
+\end{itemize}
+
 
 \subsubsection{Funzionalità}
 
@@ -307,15 +322,11 @@ In seguito vengono elencate le metriche ritenute necessarie per fornire un prodo
         \hline
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
-        MPD-1 & Stabilità dei requisiti & & \\
+        MPD-2 & Requisiti obbligatori soddisfatti & $\geq$0\% & 100\% \\
         \hline
-        MPD-2 & Metriche soddisfatte & & \\
+        MPD-3 & Requisiti opzionali soddisfatti & $\geq$0\% & 100\%\\
         \hline
-        MPD-3 & Requisiti obbligatori soddisfatti & & \\
-        \hline
-        MPD-4 & Requisiti opzionali soddisfatti & & \\
-        \hline
-        MPD-5 & Requisiti desiderabili soddisfatti & & \\
+        MPD-4 & Requisiti desiderabili soddisfatti & $\geq$0\% & 100\% \\
         \hline
     \end{tabular}
     \end{spacing}
@@ -333,16 +344,16 @@ In seguito vengono elencate le metriche ritenute necessarie per fornire un prodo
         \hline
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
-        MPD-6 & Tasso errori HTTP & & \\
+        MPD-5 & Broken Links & 2 & 0\\
+        \hline
+        MPD-6 & Branch coverage & $\geq$80\% & $\geq$90\% \\
+        \hline
+        MPD-7 & Statement Coverage & $\geq$65\% & $\geq$80\% \\
         \hline
     \end{tabular}
     \end{spacing}
     \end{adjustwidth}
 \end{table}
-
-
-
-
 
 \subsubsection{Usabilità}
 
@@ -354,13 +365,9 @@ In seguito vengono elencate le metriche ritenute necessarie per fornire un prodo
         \hline
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
-        MPD-7 & Indice di Gulpease & & \\
+        MPD-8 & Profondità di navigazione & $\geq$0 & $\leq$5 \\
         \hline
-        MPD-8 & Livello conformità WCAG & & \\
-        \hline
-        MPD-9 & Profondità di navigazione & & \\
-        \hline
-        MPD-10 & Search Success Rate & & \\
+        MPD-9 & Search Success Rate & $\geq$90\% & 100\% \\
         \hline
     \end{tabular}
     \end{spacing}
@@ -378,15 +385,13 @@ In seguito vengono elencate le metriche ritenute necessarie per fornire un prodo
         \hline
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
-        MPD-11 & Tempo di risposta (Time To First Byte) & 1.5 s & 0.5 s \\
+        MPD-10 & Indexing Time & 2min & $\leq$30 s \\
         \hline
-        MPD-12 & Document Retrieval Time (DRT) & & \\
+        MPD-11 & Tempo rendering prima pagina & 2 s & $\leq$1 s \\
         \hline
-        MPD-13 & Tempo rendering prima pagina & & \\
+        MPD-12 & Average CPU usage & $\leq$30\% & $\leq$15\% \\
         \hline
-        MPD-14 & Average CPU usage & & \\
-        \hline
-        MPD-15 & Peak memory usage & & \\
+        MPD-13 & Peak memory usage & $\leq$1 GB & $\leq$500 MB \\
         \hline
     \end{tabular}
     \end{spacing}
@@ -405,11 +410,11 @@ In seguito vengono elencate le metriche ritenute necessarie per fornire un prodo
         \hline
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
        \hline
-        MPD-16 & Complessità ciclomatica & & \\
+        MPD-14 & Complessità ciclomatica & $\leq$15 & $\leq$10 \\
         \hline
-        MPD-17 & Comment ratio & & \\
+        MPD-15 & Accoppiamento tra classi & $\leq$0.4 & $\leq$0.2 \\
         \hline
-        MPD-18 & Accoppiamento tra classi & & \\
+        MPD-16 & Code Smells & $\leq$15 & 0 \\
         \hline
     \end{tabular}
     \end{spacing}
@@ -426,9 +431,9 @@ In seguito vengono elencate le metriche ritenute necessarie per fornire un prodo
         \hline
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
-        MPD-19 & Browser supportati & & \\
+        MPD-17 & Browser supportati & Chrome, Firefox, Edge  & Safari, Arc, Brave \\
         \hline
-        MPD-20 & Sistemi operativi supportati & & \\
+        MPD-18 & Sistemi operativi supportati & Windows, macOS, Linux & Windows, macOS, Linux \\
         \hline
     \end{tabular}
     \end{spacing}
@@ -439,7 +444,6 @@ In seguito vengono elencate le metriche ritenute necessarie per fornire un prodo
 minimo e desiderabile
 
 \section{Cruscotto di valutazione e miglioramento}
-
 
 
 \vfill
