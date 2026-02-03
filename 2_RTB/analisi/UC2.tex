@@ -1,4 +1,10 @@
 \usecase{ricercaDIP}{Ricerca nel DIP}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../assets/uml/UC14.png}
+    \caption{UC14 - Ricerca nel DIP}
+    \label{fig:uc_ricercaDIP}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -10,7 +16,7 @@
             \begin{itemize}
                   \item Il sistema produce i risultati di ricerca in base ai criteri specificati
             \end{itemize}
-      \item \textbf{Flusso Principale}
+      \item \textbf{Flusso Principale}:
       \begin{enumerate}
             \item L'utente specifica i criteri di ricerca
             \item Il sistema produce i risultati di ricerca in base ai criteri specificati
@@ -23,8 +29,20 @@
       \item \textbf{Inclusioni}: \ref{visualizzaRisultati} Visualizzazione Risultati di Ricerca
       \item \textbf{Estensioni}: \ref{nessunRisultato} Nessun risultato
 \end{itemize}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{../assets/uml/UC14INC.png}
+      \caption{Inclusioni UC14 - Ricerca nel DIP}
+      \label{fig:inclusioniRicercaDIP}
+\end{figure}
 
 \subusecase{ricercaDIPConFiltri}{Ricerca nel DIP con filtri}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../assets/uml/UC14.1.png}
+    \caption{UC14.1 - Ricerca nel DIP con filtri}
+    \label{fig:uc_ricercaDIPConFiltri}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -50,6 +68,12 @@
       \item \textbf{Estensioni}: \ref{campoNonValido} Uno o più valori dei filtri di ricerca non validi
       \item \textbf{Specializza}: \ref{ricercaDIP} Ricerca nel DIP
 \end{itemize}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{../assets/uml/UC14.1INC.png}
+      \caption{Inclusioni UC14.1 - Ricerca nel DIP con filtri}
+      \label{fig:inclusioniRicercaDIPConFiltri}
+\end{figure}
 
 \subusecase{ricercaDIPSemantica}{Ricerca nel DIP semantica}
 \begin{itemize}
@@ -150,10 +174,10 @@
 
 \usecase{campoNonValido}{Uno o più valori dei filtri di ricerca non validi}
 \begin{itemize}
-      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Attore Primario}: Sistema
       \item \textbf{Precondizioni}: 
       \begin{itemize}
-            \item L'utente ha avviato l'applicazione
+            \item L'Utente ha avviato l'applicazione
             \item L'Utente sta effettuando una ricerca nel DIP con filtri
       \end{itemize}
       \item \textbf{Postcondizioni}: Il sistema annulla la ricerca mostrando un messaggio di errore che indica i campi non validi
@@ -165,6 +189,12 @@
 \end{itemize}
 
 \usecase{indicizzazioneSemantica}{Indicizza DIP con engine semantico}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../assets/uml/UC16.png}
+    \caption{UC16 - Indicizza DIP con engine semantico}
+    \label{fig:uc_indicizzazioneSemantica}
+\end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -207,27 +237,27 @@
       \end{enumerate}
 \end{itemize}
 
-\usecase{PrecisioneSemantica}{Imposta precisione di ricerca semantica}
+\usecase{StatoIndicizzazione}{Visualizza stato indicizzazione semantica}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC18.png}
+    \caption{UC18 - Visualizza stato indicizzazione semantica}
+    \label{fig:uc_statoIndicizzazione}
+\end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{itemize}
       \item L'Utente ha avviato l'applicazione
-      \item Il sistema ha indicizzato i documenti presenti nel DIP
+      \item L'Utente ha selezionato l'opzione di indicizzazione semantica
     \end{itemize}
     \item \textbf{Postcondizioni}:
     \begin{itemize}
-        \item L'Utente ha impostato il valore di precisione per la ricerca semantica
+        \item L'Utente vede lo stato di indicizzazione per la ricerca semantica
     \end{itemize}
     \item \textbf{Flusso principale}:
     \begin{enumerate}
-        \item L'Utente specifica il valore di precisione per la ricerca semantica tra:
-        \begin{itemize}
-            \item Basso
-            \item Medio
-            \item Alto
-        \end{itemize}
-        \item Il sistema applica il livello di precisione alla ricerca semantica.
+        \item L'Utente visualizza lo stato "In corso" o "Completata" dell'indicizzazione semantica
     \end{enumerate}
 \end{itemize}
 
@@ -278,6 +308,12 @@
             \item \ref{addSoggetti} Specifica filtro soggetti
       \end{itemize}
 \end{itemize}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=1\textwidth]{../assets/uml/UC19.1.png}
+      \caption{UC19.1 - Specifica filtri per Campi Comuni}
+      \label{fig:uc_specificaFiltriComuni}
+\end{figure}
 
 \subsubusecase{selezionaCampiRicercaComuni}{Selezione campi di ricerca comuni}
 \begin{itemize}
@@ -452,6 +488,12 @@
 
 
 \subusecase{addFiltriTipoDocumento}{Specifica filtri per Tipo di Documento}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../assets/uml/UC19.2.png}
+    \caption{UC19.2 - Specifica filtri per Tipo di Documento}
+    \label{fig:uc_specificaFiltriTipoDocumento}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -468,6 +510,12 @@
 \end{itemize}
 
 \subsubusecase{specificaFiltriDI-DAI}{Specifica filtri per Documento Informatico e Amministrativo Informatico}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC19.2.1.png}
+    \caption{UC19.2.1 - Specifica filtri per Documento Informatico e Amministrativo Informatico}
+    \label{fig:uc_specificaFiltriDI-DAI}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -498,6 +546,12 @@
       \end{itemize}
       \item \textbf{Specializza}: \ref{addFiltriTipoDocumento} Specifica filtri per Tipo di Documento
 \end{itemize}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=1\textwidth]{../assets/uml/UC19.2.1INC.png}
+      \caption{Inclusioni UC19.2.1 - Specifica filtri per Documento Informatico e Amministrativo Informatico}
+      \label{fig:inclusioniSpecificaFiltriDI-DAI}
+\end{figure}
 
 \deepusecase{selezionaCampiDI-DAI}{Selezione campi di ricerca per DI/DAI}
 \begin{itemize}
@@ -800,6 +854,12 @@
 \end{itemize}
 
 \subsubusecase{specificaFiltriAggregazione}{Specifica filtri per Aggregazione Documentale Informatica}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC19.2.2.png}
+    \caption{UC19.2.2 - Specifica filtri per Aggregazione Documentale}
+    \label{fig:uc_specificaFiltriAggregazione}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -829,6 +889,12 @@
       \end{itemize}
       \item \textbf{Specializza}: \ref{addFiltriTipoDocumento} Specifiche filtri per Tipo di Documento
 \end{itemize}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=1\textwidth]{../assets/uml/UC19.2.2INC.png}
+      \caption{Inclusioni UC19.2.2 - Specifica filtri per Aggregazione Documentale}
+      \label{fig:inclusioniSpecificaFiltriAggregazione}
+\end{figure}
 
 \deepusecase{selezionaCampiAggregazioneDocumentale}{Selezione campi di ricerca per Aggregazione Documentale}
 \begin{itemize}
@@ -1152,6 +1218,12 @@
       \item \textbf{Inclusioni}: \ref{addFiltroMetadatoCustom} Specifica filtro Metadato Custom
       \item \textbf{Nota}: Per costruzione aziendale i custom metadata sono tutti stringhe e quindi l'inserimento e la validazione seguono le regole dei campi di testo liberi.
 \end{itemize}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{../assets/uml/UC19.3INC.png}
+      \caption{Inclusioni UC19.3 - Specifica filtri per Custom Metadata}
+      \label{fig:inclusioniSpecificaFiltriCustomMetadata}
+\end{figure}
 
 \subsubusecase{addFiltroMetadatoCustom}{Specifica filtro Metadato Custom}
 \begin{itemize}
@@ -1194,6 +1266,12 @@
             \item \ref{addDettagliSoggetto} Specifica dettagli soggetto
       \end{itemize}
 \end{itemize}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=1\textwidth]{../assets/uml/UC20INC.png}
+      \caption{Inclusioni UC20 - Aggiunta Soggetto ad un filtro}
+      \label{fig:inclusioniAggiuntaSoggetto}
+\end{figure}
 
 \subusecase{specificaRuoloSoggetto}{Specifica ruolo del soggetto}
 \begin{itemize}
@@ -1301,6 +1379,12 @@
 \end{itemize}
 
 \subusecase{addDettagliSoggetto}{Specifica dettagli soggetto}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=1\textwidth]{../assets/uml/UC20.3.png}
+      \caption{UC20.3 - Specifica dettagli soggetto}
+      \label{fig:uc_SpecificaDettagliSoggetto}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -1501,6 +1585,12 @@
 \end{itemize}
 
 \usecase{visualizzaRisultati}{Visualizzazione Risultati di Ricerca} \label{risultatiRicerca}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\textwidth]{../assets/uml/UC22.png}
+      \caption{UC22 - Visualizzazione Risultati di Ricerca}
+      \label{fig:uc_VisualizzazioneRisultatiDiRicerca}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
@@ -1516,6 +1606,12 @@
       \end{enumerate}
       \item \textbf{Inclusioni}: \ref{infoRisultatiRicerca} Informazioni Elenco Elementi
 \end{itemize}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{../assets/uml/UC22INC.png}
+      \caption{Inclusioni UC22 - Informazioni Elenco Elementi}
+      \label{fig:inclusioniInformazioniElencoElementi}
+\end{figure}
 
 \subusecase{infoRisultatiRicerca}{Informazioni Elenco Elementi}
 \begin{itemize}
@@ -1542,6 +1638,12 @@
 \end{itemize}
 
 \usecase{nessunRisultato}{Nessun Risultato}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\textwidth]{../assets/uml/UC23.png}
+      \caption{UC23 - Nessun Risultato}
+      \label{fig:uc_NessunRisultato}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
