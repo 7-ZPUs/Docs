@@ -12,7 +12,7 @@ I requisiti vengono classificati secondo le seguenti categorie:
 
 Ogni requisito è identificato da un codice univoco nella forma:
 \begin{center}
-\texttt{R-[ID]-[Tipo]-[Priorità]}
+R-[ID]-[Tipo]-[Priorità]
 \end{center}
 
 Dove:
@@ -26,19 +26,232 @@ Dove:
 
 \subsection{Requisiti Funzionali}
 
-\begin{longtable}{|p{2.5cm}|p{8cm}|p{3cm}|}
+\setlength{\LTleft}{0cm}
+\renewcommand{\arraystretch}{1.3}
+
+\begin{longtable}{|p{2.5cm}|p{9.5cm}|p{2.5cm}|}
 \hline
 \textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
 \hline
-\endfirsthead
-
+R-1-F-Ob &  L'utente deve poter visualizzare l'elenco di classi documentali nel DIP & \ref{classiDocumentali} \\
 \hline
-\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+R-2-F-Ob &  In caso non vi siano classi documentali nel DIP, l'utente deve poter visualizzare un messaggio di errore & \ref{elencoVuoto} \\
 \hline
-\endhead
-
+R-3-F-Ob &  Quando viene selezionata una classe documentale, l'utente deve poter visualizzare ciascuna classe documentale all'interno dell'elenco & \ref{classeDocumentale} \\
 \hline
-\endfoot
+R-4-F-Ob &  L'utente deve poter visualizzare il nome della classe documentale & \ref{nomeClasseDocumentale} \\
+\hline
+R-5-F-Ob &  L'utente deve poter visualizzare lo stato di verifica della classe documentale & \ref{statoVerificaElemento} \\
+\hline
+R-6-F-Ob &  L'utente deve poter visualizzare la marcatura temporale della classe documentale & \ref{marcaturaTemporaleElemento} \\
+\hline
+R-7-F-Ob &  L'utente deve poter visualizzare l'elenco dei processi associati alla classe documentale & \ref{processiClasseDocumentale} \\
+\hline
+R-8-F-Ob &  In caso non vi siano processi associati alla classe documentale, l'utente deve poter visualizzare un messaggio di errore & \ref{elencoVuoto} \\
+\hline
+R-9-F-Ob &  Quando viene selezionato un processo, l'utente deve poter visualizzare ciascun processo all'interno dell'elenco & \ref{processoClassedDocumentale} \\
+\hline
+R-10-F-Ob &  L'utente deve poter visualizzare il nome del processo & \ref{idProcessoClasse} \\
+\hline
+R-11-F-Ob &  L'utente deve poter visualizzare l'elenco di documenti associati a un processo & \ref{documentiProcesso} \\
+\hline
+R-12-F-Ob &  In caso non vi siano documenti associati al processo, l'utente deve poter visualizzare un messaggio di errore & \ref{elencoVuoto} \\
+\hline
+R-13-F-Ob &  Quando viene selezionato un documento, l'utente deve poter visualizzare ciascun documento all'interno dell'elenco & \ref{documentoProcesso} \\
+\hline
+R-14-F-Ob &  L'utente deve poter visualizzare il nome del documento & \ref{nomeDocumentoProcesso} \\
+\hline
+R-15-F-Ob &  L'utente deve poter visualizzare lo stato di verifica del documento & \ref{statoVerificaElemento} \\
+\hline
+R-16-F-Ob &  L'utente deve poter visualizzare la marcatura temporale del documento & \ref{marcaturaTemporaleElemento} \\
+\hline
+R-17-F-Ob &  L'utente deve poter selezionare una classe documentale  & \ref{selezionaClasseDocumentale} \\
+\hline
+R-18-F-Ob &  L'utente deve poter selezionare un processo  & \ref{selezionaProcesso} \\
+\hline
+R-19-F-Ob &  L'utente deve poter visualizzare l'anteprima di un documento selezionato  & \ref{anteprimaDocumento} \\
+\hline
+R-20-F-Ob &  Se il documento selezionato non è visualizzabile in anteprima, l'utente deve poter visualizzare un messaggio di errore  & \ref{formatoDocumentoNonSupportato} \\
+\hline
+R-21-F-Ob &  L'utente deve poter ricercare un documento, un processo, o una classe documentale & \ref{ricercaDIP} \\
+\hline
+R-22-F-Ob &  L'utente può cercare una classe documentale esclusivamente per nome & \begin{tabular}[t]{@{}l} \ref{ricercaClasse} \\ \ref{inserimentoNomeClasseDocumentale} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-23-F-Ob &  L'utente può cercare un processo esclusivamente per uuid & \begin{tabular}[t]{@{}l} \ref{ricercaProcesso} \\ \ref{inserimentoIdProcesso} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-24-F-Op &  L'utente deve poter effettuare una ricerca semantica basata sui metadati dei documenti presenti nel DIP & \ref{ricercaDIPSemantica} \\
+\hline
+R-25-F-Op &  Il sistema deve rendere disponibile un comando o opzione per avviare l'indicizzazione semantica dei documenti nel DIP per la ricerca & \ref{indicizzazioneSemantica} \\
+\hline
+R-26-F-Ob &  Quando viene selezionata l'indicizzazione semantica il sistema deve indicizzare i documenti presenti nel DIP  & \ref{indicizzazioneSemantica} \\
+\hline
+R-27-F-Ob &  Se il sistema non riesce ad indicizzare i documenti presenti nel DIP, l'utente deve poter visualizzare un messaggio di errore & \ref{erroreIndicizzazioneSemantica} \\
+\hline
+R-28-F-Ob & L'utente deve poter visualizzare lo stato dell'indicizzazione semantica & \ref{StatoIndicizzazione} \\
+\hline
+R-29-F-Ob &  Il sistema deve rendere disponibile un campo di ricerca & \ref{ricercaDIP} \\
+\hline
+R-30-F-Ob &  Il sistema deve comunicare all'utente quando inserisce un valore non valido nel campo di ricerca & \ref{campoNonValido} \\
+\hline
+R-31-F-Ob &  Il sistema deve rendere disponibile l'opzione di ricerca per documenti & \ref{specificaFiltriRicercaDocumento} \\
+\hline
+R-32-F-Ob &  Il sistema deve rendere disponibile l'opzione di ricerca per processi & \ref{ricercaProcesso} \\
+\hline
+R-33-F-Ob &  Il sistema deve rendere disponibile l'opzione di ricerca per classi documentali & \ref{ricercaClasse} \\
+\hline
+R-34-F-Ob &  Il sistema deve rendere disponibile la ricerca avanzata con filtri & \ref{ricercaDIPConFiltri} \\
+\hline
+R-35-F-Ob &  Il sistema deve rendere disponibile la sezione di filtri di ricerca comuni & \ref{specificaFiltriComuni} \\
+\hline
+R-36-F-Ob &  Il sistema deve rendere disponibile la sezione di filtri di ricerca specifici per tipo documentale & \ref{addFiltriTipoDocumento} \\
+\hline
+R-37-F-Ob &  Il sistema deve rendere disponibile la sezione di filtri di ricerca specifici per metadati custom & \ref{addCustomMetadata} \\
+\hline
+R-38-F-Ob &  Il sistema deve permettere di applicare più filtri contemporaneamente & \ref{ricercaDIPConFiltri} \\
+\hline
+R-39-F-Ob &  Il sistema deve permettere di rimuovere i filtri applicati & \ref{ricercaDIPConFiltri} \\
+\hline
+R-40-F-Ob &  Il sistema deve permettere di rimuovere tutti i filtri applicati & \ref{ricercaDIPConFiltri} \\
+\hline
+R-41-F-Ob &  Il sistema deve permettere di selezionare filtri per tipo documentale per un singolo tipo di documento & \ref{addFiltriTipoDocumento} \\
+\hline
+R-42-F-Ob &  Il sistema deve racchiudere i filtri di ricerca comuni in una sezione espandibile dedicata & \ref{specificaFiltriComuni} \\
+\hline
+R-43-F-Ob &  Il sistema deve racchiudere i filtri di ricerca specifici per tipo documentale in una sezione espandibile dedicata & \ref{addFiltriTipoDocumento} \\
+\hline
+R-44-F-Ob &  Il sistema deve racchiudere i filtri di ricerca specifici per metadati custom in una sezione espandibile dedicata & \ref{addCustomMetadata} \\
+\hline
+R-45-F-Ob &  Il sistema deve permettere di visualizzare i filtri comuni applicabili & \ref{visualizzaListaCampiComuni} \\
+\hline
+R-46-F-Ob &  Il sistema deve rendere disponibile una sezione per il filtro comune "Chiave Descrittiva" & \ref{addChiaveDescrittiva} \\
+\hline
+R-47-F-Ob &  L'utente deve poter inserire il valore per i campi "Chiave Descrittiva", "Oggetto" e "Parole chiave" & \begin{tabular}[t]{@{}l} \ref{addChiaveDescrittiva} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-48-F-Ob &  Il sistema deve rendere disponibile una sezione per il filtro comune "Classificazione" & \ref{addClassificazione} \\
+\hline
+R-49-F-Ob &  L'utente deve poter inserire il valore per i campi "Indice di classificazione", "Descrizione" e "Piano di fascicolo" & \begin{tabular}[t]{@{}l} \ref{addClassificazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-50-F-Ob &  Il sistema deve rendere disponibile una sezione per il filtro comune "Tempo di conservazione" & \ref{addTempoConserva} \\
+\hline
+R-51-F-Ob &  L'utente deve poter inserire il valore per il filtro "Tempo di conservazione" & \begin{tabular}[t]{@{}l} \ref{addTempoConserva} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-52-F-Ob &  L'utente deve poter selezionare l'opzione "Perenne" per il filtro "Tempo di conservazione" & \ref{addTempoConserva} \\
+\hline
+R-53-F-Ob &  Il sistema deve rendere disponibile una sezione per il filtro comune "Note" & \ref{addNote} \\
+\hline
+R-54-F-Ob &  L'utente deve poter inserire il valore per il filtro "Note" & \begin{tabular}[t]{@{}l} \ref{addNote} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-55-F-Ob &  Il sistema deve rendere disponibile una sezione per il filtro comune "Tipo di documento" & \ref{addTipoDocumento} \\
+\hline
+R-56-F-Ob &  L'utente deve poter selezionare il valore per il filtro "Tipo di documento" tra "Documento informatico", "Documento amministrativo informatico", "Aggregazione documentale" & \begin{tabular}[t]{@{}l} \ref{addTipoDocumento} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-57-F-Ob &  Il sistema deve rendere disponibile una sezione per il filtro comune "Soggetto" & \ref{addSoggetti} \\
+\hline
+R-58-F-Ob &  L'utente deve poter inserire il valore per il filtro "Soggetto" & \ref{addSoggetti} \\
+\hline
+R-59-F-Ob &  Il sistema deve rendere disponibile una sezione per il filtro del Ruolo del Soggetto & \ref{specificaRuoloSoggetto} \\
+\hline
+R-60-F-Ob &  All'interno della sezione del filtro del Ruolo del Soggetto, l'utente deve poter selezionare il ruolo del soggetto tra quelli disponibili & \ref{specificaRuoloSoggetto} \\
+\hline
+R-61-F-Ob &  Il sistema deve rendere disponibile una sezione per il filtro del Tipo di Soggetto & \ref{specificaTipoSoggetto} \\
+\hline
+R-62-F-Ob &  All'interno della sezione del filtro del Tipo di Soggetto, l'utente deve poter selezionare il tipo di soggetto tra quelli disponibili & \ref{specificaTipoSoggetto} \\
+\hline
+R-63-F-Ob &  Il sistema deve rendere disponibile una sezione per il filtro "Dettagli" del Soggetto & \ref{addDettagliSoggetto} \\
+\hline
+R-64-F-Ob &  Se il soggetto selezionato è di tipo "PAI", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Denominazione Amministrazione/Codice IPA", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliPAI} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-65-F-Ob &  Se il soggetto selezionato è di tipo "PAE", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Denominazione Amministrazione", "Denominazione Ufficio" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliPAE} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-66-F-Ob &  Se il soggetto selezionato è di tipo "AS", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Cognome", "Nome", "Codice Fiscale", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliAS} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-67-F-Ob &  Se il soggetto selezionato è di tipo "PG", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Denominazione Organizzazione", "Codice Fiscale/Partita IVA", "Denominazione Ufficio" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliPG} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-68-F-Ob &  Se il soggetto selezionato è di tipo "PF", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Cognome", "Nome" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliPF} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-69-F-Ob &  Se il soggetto selezionato è di tipo "RUP", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Cognome", "Nome", "Codice Fiscale" "Denominazione Amministrazione/Codice IPA", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliRUP} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-70-F-Ob &  Se il soggetto selezionato è di tipo "SW", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per il campo "Denominazione Sistema" & \begin{tabular}[t]{@{}l} \ref{addDettagliSW} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-71-F-Ob &  All'interno della sezione di filtri per tipo documentale, il sistema deve permettere di selezionare i filtri specifici per il tipo "Documento Informatico e Amministrativo Informatico" & \ref{selezionaCampiDI-DAI} \\
+\hline
+R-72-F-Ob &  Per il Documento Informatico e Amministrativo Informatico, il sistema deve mostrare la lista di filtri specifici & \ref{visualizzaListaCampiDIDAI} \\
+\hline
+R-73-F-Ob &  Per il Documento Informatico e Amministrativo Informatico, il sistema deve rendere disponibile una sezione per il filtro "Dati di Registrazione" & \ref{addDatiRegistrazione} \\
+\hline
+R-74-F-Ob &  Per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Dati di Registrazione", l'utente deve poter inserire il valore per i campi "Tipologia di Flusso", "Tipo di Registro", "Data/Ora di Registrazione", "Numero Documento" e "Codice Registro" & \begin{tabular}[t]{@{}l} \ref{addDatiRegistrazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-75-F-Ob &  Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Tipologia Documentale" & \begin{tabular}[t]{@{}l} \ref{addTipologiaDocumentale} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-76-F-Ob &  Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Modalità di Formazione" tra:
+\begin{itemize}
+    \item Creazione tramite l'utilizzo di strumenti software che assicurino la produzione di documenti nei formati previsti nell'Allegato 2 delle Linee Guida;
+    \item Acquisizione di un documento informatico per via telematica o su supporto informatico, acquisizione della copia per immagine su supporto informatico di un documento analogico, acquisizione della copia informatica di un documento analogico;
+    \item Memorizzazione su supporto informatico in formato digitale delle informazioni risultanti da transazioni o processi informatici o dalla presentazione telematica di dati attraverso moduli o formulari resi disponibili all'utente;
+    \item Generazione o raggruppamento anche in via automatica di un insieme di dati o registrazioni, provenienti da una o più banche dati, anche appartenenti a più soggetti interoperanti, secondo una struttura logica predeterminata e memorizzata in forma statica;
+\end{itemize}  & \begin{tabular}[t]{@{}l} \ref{addModalitaFormazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-77-F-Ob &  Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Campo Riservato" tra "Vero" o "Falso" & \begin{tabular}[t]{@{}l} \ref{addRiservato} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-78-F-Ob &  Per il Documento Informatico e Amministrativo Informatico, il sistema deve rendere disponibile una sezione per il filtro "Identificativo del Formato" & \ref{addIdentificativoFormato} \\
+\hline
+R-79-F-Ob &  Per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Identificativo del Formato", l'utente deve poter inserire il valore per i campi "Formato" e "Prodotto Software" & \begin{tabular}[t]{@{}l} \ref{addIdentificativoFormato} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-80-F-Ob &  Per il Documento Informatico e Amministrativo Informatico, il sistema deve rendere disponibile una sezione per il filtro "Dati di Verifica" & \ref{addDatiVerifica} \\
+\hline
+R-81-F-Ob &  Per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Dati di Verifica", l'utente deve poter inserire il valore booleano per i campi "Firmato Digitalmente", "Sigillato Elettronicamente", "Marcatura Temporale" e "conformità copie immagine su supporto informatico" & \begin{tabular}[t]{@{}l} \ref{addDatiVerifica} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-82-F-Ob &  Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Nome del Documento" & \begin{tabular}[t]{@{}l} \ref{addNomeDocumento} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-83-F-Ob &  Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Versione del Documento" & \begin{tabular}[t]{@{}l} \ref{addVersioneDocumento} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-84-F-Ob &  Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Identificativo del Documento Primario" & \begin{tabular}[t]{@{}l} \ref{addIdentificativoDocumentoPrimario} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-85-F-Ob &  Per il Documento Informatico e Amministrativo Informatico, il sistema deve rendere disponibile una sezione per il filtro "Tracciatura Modifiche di Documento" & \ref{addTracciatureModificheDocumento} \\
+\hline
+R-86-F-Ob &  Per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Tracciatura Modifiche di Documento", l'utente deve poter inserire il valore per i campi "Tipo di Modifica", "Soggetto Autore della Modifica", "Data/Ora della Modifica" e "IdDoc versione precedente" & \begin{tabular}[t]{@{}l} \ref{addTracciatureModificheDocumento} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-87-F-Ob &  All'interno della sezione di filtri per tipo documentale, il sistema deve permettere di selezionare i filtri specifici per il tipo "Aggregazione Documentale Informatica" & \ref{specificaFiltriAggregazione} \\
+\hline
+R-88-F-Ob &  Per l'Aggregazione Documentale Informatica, il sistema deve mostrare la lista di filtri specifici & \ref{visualizzaListaCampiAggregazioneDocumentale} \\
+\hline
+R-89-F-Ob &  Per l'Aggregazione Documentale Informatica, il sistema deve rendere disponibile una sezione per il filtro "Tipo di Aggregazione" & \ref{addTipoAggregazione} \\
+\hline
+R-90-F-Ob &  Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Tipo di Aggregazione", l'utente deve poter inserire il valore per il campo "Tipo di Aggregazione" tra "Fascicolo", "Serie Documentale" o "Serie di Fascicoli" & \begin{tabular}[t]{@{}l} \ref{addTipoAggregazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-91-F-Ob &  Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Identificativo dell'Aggreagazione Documentale" & \begin{tabular}[t]{@{}l} \ref{addIdAggregazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-92-F-Ob &  Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Tipologia di Fascicolo" tra "Affare", "Attività", "Persona Fisica", "Persona Giuridica" e "Procedimento Amministrativo" & \begin{tabular}[t]{@{}l} \ref{addTipologiaFascicolo} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-93-F-Ob &  Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Id Aggregazione Primario" & \begin{tabular}[t]{@{}l} \ref{addIdAggregazionePrimario} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-94-F-Ob &  Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Data Apertura" & \begin{tabular}[t]{@{}l} \ref{addDataApertura} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-95-F-Ob &  Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Data Chiusura" & \begin{tabular}[t]{@{}l} \ref{addDataChiusura} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-96-F-Ob &  Per l'Aggregazione Documentale Informatica, il sistema deve rendere disponibile una sezione per il filtro "Procedimento Amministrativo" & \ref{addProcedimentoAmministrativo} \\
+\hline
+R-97-F-Ob &  Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Procedimento Amministrativo", l'utente deve poter inserire il valore per i campi "Materia/Argomento/Struttura", "Procedimento", "Catalogo Procedimenti" e "Fasi" & \begin{tabular}[t]{@{}l} \ref{addProcedimentoAmministrativo} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-98-F-Ob &  Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Procedimento Amministrativo" per il campo "Fasi", l'utente deve poter inserire il valore per il campo "Tipo Fase" tra "Preparatoria", "Istruttoria", "Consultiva", "Decisoria o Deliberativa" o "Integrazione dell'efficacia", il campo "Data Inizio Fase" e "Data Fine Fase" se presente & \begin{tabular}[t]{@{}l} \ref{addFasiProcedimentoAmministrativo} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-99-F-Ob &  Per l'Aggregazione Documentale Informatica, il sistema deve rendere disponibile una sezione per il filtro "Assegnazione" & \ref{addAssegnazione} \\
+\hline
+R-100-F-Ob &  Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Assegnazione", l'utente deve poter inserire una o più volte il valore per i campi "Tipo Assegnazione", "Soggetto Assegnatario", "Data Inizio Assegnazione" e "Data Fine Assegnazione" & \begin{tabular}[t]{@{}l} \ref{addAssegnazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-101-F-Ob &  Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Progressivo Aggregazione" & \begin{tabular}[t]{@{}l} \ref{addProgressivoAggregazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-102-F-Ob &  All'interno della sezione di filtri per custom metadata, il sistema deve permettere di selezionare i filtri specifici per i metadata presenti & \ref{addCustomMetadata} \\
+\hline
+R-103-F-Ob &  Per ciascun custom metadata, l'utente deve poter inserire il nome del metadato e il relativo valore & \begin{tabular}[t]{@{}l} \ref{addFiltroMetadatoCustom} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-104-F-Ob &  Quando viene eseguita una ricerca, il sistema deve mostrare i risultati della ricerca & \ref{visualizzaRisultati} \\
+\hline
+R-105-F-Ob &  Il sistema deve mostrare per ogni risultato le informazioni rilevanti: Nome del documento o aggregazione, Data di registrazione/creazione del documento/aggregazione, Tipo di elemento tra Documento, Aggregazione, Processo o Classe Documentale & \ref{infoRisultatiRicerca} \\
+\hline
+R-106-F-Ob &  Se la ricerca non produce risultati, l'utente deve poter visualizzare un messaggio di errore & \ref{nessunRisultato} \\
+\hline
+R-107-F-Ob &  Il sistema deve comunicare all'utente quando il formato del valore inserito non è valido & \ref{formatoNonCorretto} \\
 \hline
 \caption{Requisiti Funzionali}
 \label{tab:req-funzionali}
@@ -50,16 +263,6 @@ Dove:
 \hline
 \textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
 \hline
-\endfirsthead
-
-\hline
-\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
-\hline
-\endhead
-
-\hline
-\endfoot
-\hline
 \caption{Requisiti di Qualità}
 \label{tab:req-qualita}
 \end{longtable}
@@ -70,16 +273,6 @@ Dove:
 \hline
 \textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
 \hline
-\endfirsthead
-
-\hline
-\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
-\hline
-\endhead
-
-\hline
-\endfoot
-
 \caption{Requisiti di Vincolo}
 \label{tab:req-vincolo}
 \end{longtable}
@@ -93,15 +286,307 @@ Dove:
 \textbf{Fonte} & \textbf{Requisiti} \\
 \hline
 \endfirsthead
-
 \hline
 \textbf{Fonte} & \textbf{Requisiti} \\
 \hline
 \endhead
-
+\ref{classiDocumentali} & R-1-F-Ob \\
 \hline
-\endfoot
-
+\ref{elencoVuoto} & R-2-F-Ob, R-8-F-Ob, R-12-F-Ob \\
+\hline
+\ref{classeDocumentale} & R-3-F-Ob \\
+\hline
+\ref{nomeClasseDocumentale} & R-4-F-Ob \\
+\hline
+\ref{statoVerificaElemento} & R-5-F-Ob, R-15-F-Ob \\
+\hline
+\ref{marcaturaTemporaleElemento} & R-6-F-Ob, R-16-F-Ob \\
+\hline
+\ref{processiClasseDocumentale} & R-7-F-Ob \\
+\hline
+\ref{processoClassedDocumentale} & R-9-F-Ob \\
+\hline
+\ref{idProcessoClasse} & R-10-F-Ob \\
+\hline
+\ref{documentiProcesso} & R-11-F-Ob \\
+\hline
+\ref{documentoProcesso} & R-13-F-Ob \\
+\hline
+\ref{nomeDocumentoProcesso} & R-14-F-Ob \\
+\hline
+\ref{selezionaClasseDocumentale} & R-17-F-Ob \\
+\hline
+\ref{selezionaProcesso} & R-18-F-Ob \\
+\hline
+\ref{anteprimaDocumento} & R-19-F-Ob \\
+\hline
+\ref{formatoDocumentoNonSupportato} & R-20-F-Ob \\
+\hline
+\ref{ricercaDIP} & R-21-F-Ob, R-22-F-Ob, R-23-F-Ob, R-29-F-Ob, R-32-F-Ob, R-33-F-Ob \\
+\hline
+\ref{ricercaClasse} & R-22-F-Ob, R-33-F-Ob \\
+\hline
+\ref{inserimentoNomeClasseDocumentale} & R-22-F-Ob \\
+\hline
+\ref{ricercaProcesso} & R-23-F-Ob, R-32-F-Ob \\
+\hline
+\ref{inserimentoIdProcesso} & R-23-F-Ob \\
+\hline
+\ref{ricercaDIPSemantica} & R-24-F-Op \\
+\hline
+\ref{indicizzazioneSemantica} & R-25-F-Op, R-26-F-Ob \\
+\hline
+\ref{erroreIndicizzazioneSemantica} & R-27-F-Ob \\
+\hline
+\ref{StatoIndicizzazione} & R-28-F-Ob \\
+\hline
+\ref{campoNonValido} & R-30-F-Ob \\
+\hline
+\ref{ricercaDIPConFiltri} & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+R-31-F-Ob & R-34-F-Ob \\
+R-35-F-Ob & R-36-F-Ob \\
+R-37-F-Ob & R-38-F-Ob \\
+R-39-F-Ob & R-40-F-Ob \\
+R-42-F-Ob & R-43-F-Ob \\
+R-44-F-Ob & R-45-F-Ob \\
+R-46-F-Ob & R-47-F-Ob \\
+R-48-F-Ob & R-49-F-Ob \\
+R-50-F-Ob & R-51-F-Ob \\
+R-52-F-Ob & R-53-F-Ob \\
+R-54-F-Ob & R-55-F-Ob \\
+R-56-F-Ob & R-57-F-Ob \\
+R-58-F-Ob & R-59-F-Ob \\
+R-60-F-Ob & R-61-F-Ob \\
+R-62-F-Ob & R-63-F-Ob \\
+R-64-F-Ob & R-65-F-Ob \\
+R-66-F-Ob & R-67-F-Ob \\
+R-68-F-Ob & R-69-F-Ob \\
+R-70-F-Ob & R-71-F-Ob \\
+R-72-F-Ob & R-73-F-Ob \\
+R-74-F-Ob & R-75-F-Ob \\
+R-76-F-Ob & R-77-F-Ob \\
+R-78-F-Ob & R-79-F-Ob \\
+R-80-F-Ob & R-81-F-Ob \\
+R-82-F-Ob & R-83-F-Ob \\
+R-84-F-Ob & R-85-F-Ob \\
+R-86-F-Ob & R-87-F-Ob \\
+R-88-F-Ob & R-89-F-Ob \\
+R-90-F-Ob & R-91-F-Ob \\
+R-92-F-Ob & R-93-F-Ob \\
+R-94-F-Ob & R-95-F-Ob \\
+R-96-F-Ob & R-97-F-Ob \\
+R-98-F-Ob & R-99-F-Ob \\
+R-100-F-Ob & R-101-F-Ob \\
+R-102-F-Ob & R-103-F-Ob
+\end{tabular} \\
+\hline
+\ref{specificaFiltriRicercaDocumento} & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+R-31-F-Ob & R-35-F-Ob \\
+R-36-F-Ob & R-37-F-Ob \\
+R-42-F-Ob & R-43-F-Ob \\
+R-44-F-Ob & R-45-F-Ob \\
+R-46-F-Ob & R-47-F-Ob \\
+R-48-F-Ob & R-49-F-Ob \\
+R-50-F-Ob & R-51-F-Ob \\
+R-52-F-Ob & R-53-F-Ob \\
+R-54-F-Ob & R-55-F-Ob \\
+R-56-F-Ob & R-57-F-Ob \\
+R-58-F-Ob & R-59-F-Ob \\
+R-60-F-Ob & R-61-F-Ob \\
+R-62-F-Ob & R-63-F-Ob \\
+R-64-F-Ob & R-65-F-Ob \\
+R-66-F-Ob & R-67-F-Ob \\
+R-68-F-Ob & R-69-F-Ob \\
+R-70-F-Ob & R-71-F-Ob \\
+R-72-F-Ob & R-73-F-Ob \\
+R-74-F-Ob & R-75-F-Ob \\
+R-76-F-Ob & R-77-F-Ob \\
+R-78-F-Ob & R-79-F-Ob \\
+R-80-F-Ob & R-81-F-Ob \\
+R-82-F-Ob & R-83-F-Ob \\
+R-84-F-Ob & R-85-F-Ob \\
+R-86-F-Ob & R-87-F-Ob \\
+R-88-F-Ob & R-89-F-Ob \\
+R-90-F-Ob & R-91-F-Ob \\
+R-92-F-Ob & R-93-F-Ob \\
+R-94-F-Ob & R-95-F-Ob \\
+R-96-F-Ob & R-97-F-Ob \\
+R-98-F-Ob & R-99-F-Ob \\
+R-100-F-Ob & R-101-F-Ob \\
+R-102-F-Ob & R-103-F-Ob
+\end{tabular} \\
+\hline
+\ref{specificaFiltriComuni} & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+R-35-F-Ob & R-42-F-Ob \\
+R-45-F-Ob & R-46-F-Ob \\
+R-47-F-Ob & R-48-F-Ob \\
+R-49-F-Ob & R-50-F-Ob \\
+R-51-F-Ob & R-52-F-Ob \\
+R-53-F-Ob & R-54-F-Ob \\
+R-55-F-Ob & R-56-F-Ob \\
+R-57-F-Ob & R-58-F-Ob \\
+R-59-F-Ob & R-60-F-Ob \\
+R-61-F-Ob & R-62-F-Ob \\
+R-63-F-Ob & R-64-F-Ob \\
+R-65-F-Ob & R-66-F-Ob \\
+R-67-F-Ob & R-68-F-Ob \\
+R-69-F-Ob & R-70-F-Ob
+\end{tabular} \\
+\hline
+\ref{addFiltriTipoDocumento} & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+R-36-F-Ob & R-41-F-Ob \\
+R-43-F-Ob & R-71-F-Ob \\
+R-72-F-Ob & R-73-F-Ob \\
+R-74-F-Ob & R-75-F-Ob \\
+R-76-F-Ob & R-77-F-Ob \\
+R-78-F-Ob & R-79-F-Ob \\
+R-80-F-Ob & R-81-F-Ob \\
+R-82-F-Ob & R-83-F-Ob \\
+R-84-F-Ob & R-85-F-Ob \\
+R-86-F-Ob & R-87-F-Ob \\
+R-88-F-Ob & R-89-F-Ob \\
+R-90-F-Ob & R-91-F-Ob \\
+R-92-F-Ob & R-93-F-Ob \\
+R-94-F-Ob & R-95-F-Ob \\
+R-96-F-Ob & R-97-F-Ob \\
+R-98-F-Ob & R-99-F-Ob \\
+R-100-F-Ob & R-101-F-Ob
+\end{tabular} \\
+\hline
+\ref{specificaFiltriDI-DAI} & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+R-71-F-Ob & R-72-F-Ob \\
+R-73-F-Ob & R-74-F-Ob \\
+R-75-F-Ob & R-76-F-Ob \\
+R-77-F-Ob & R-78-F-Ob \\
+R-79-F-Ob & R-80-F-Ob \\
+R-81-F-Ob & R-82-F-Ob \\
+R-83-F-Ob & R-84-F-Ob \\
+R-85-F-Ob & R-86-F-Ob
+\end{tabular} \\
+\hline
+\ref{addCustomMetadata} & R-37-F-Ob, R-44-F-Ob, R-102-F-Ob, R-103-F-Ob \\
+\hline
+\ref{visualizzaListaCampiComuni} & R-45-F-Ob \\
+\hline
+\ref{addChiaveDescrittiva} & R-46-F-Ob, R-47-F-Ob \\
+\hline
+\ref{addClassificazione} & R-48-F-Ob, R-49-F-Ob \\
+\hline
+\ref{addTempoConserva} & R-50-F-Ob, R-51-F-Ob, R-52-F-Ob \\
+\hline
+\ref{addNote} & R-53-F-Ob, R-54-F-Ob \\
+\hline
+\ref{addTipoDocumento} & R-55-F-Ob, R-56-F-Ob \\
+\hline
+\ref{addSoggetti} & R-57-F-Ob, R-58-F-Ob \\
+\hline
+\ref{specificaRuoloSoggetto} & R-59-F-Ob, R-60-F-Ob \\
+\hline
+\ref{specificaTipoSoggetto} & R-61-F-Ob, R-62-F-Ob \\
+\hline
+\ref{addDettagliSoggetto} & R-63-F-Ob \\
+\hline
+\ref{addDettagliPAI} & R-64-F-Ob \\
+\hline
+\ref{addDettagliPAE} & R-65-F-Ob \\
+\hline
+\ref{addDettagliAS} & R-66-F-Ob \\
+\hline
+\ref{addDettagliPG} & R-67-F-Ob \\
+\hline
+\ref{addDettagliPF} & R-68-F-Ob \\
+\hline
+\ref{addDettagliRUP} & R-69-F-Ob \\
+\hline
+\ref{addDettagliSW} & R-70-F-Ob \\
+\hline
+\ref{selezionaCampiDI-DAI} & R-71-F-Ob \\
+\hline
+\ref{visualizzaListaCampiDIDAI} & R-72-F-Ob \\
+\hline
+\ref{addDatiRegistrazione} & R-73-F-Ob, R-74-F-Ob \\
+\hline
+\ref{addTipologiaDocumentale} & R-75-F-Ob \\
+\hline
+\ref{addModalitaFormazione} & R-76-F-Ob \\
+\hline
+\ref{addRiservato} & R-77-F-Ob \\
+\hline
+\ref{addIdentificativoFormato} & R-78-F-Ob, R-79-F-Ob \\
+\hline
+\ref{addDatiVerifica} & R-80-F-Ob, R-81-F-Ob \\
+\hline
+\ref{addNomeDocumento} & R-82-F-Ob \\
+\hline
+\ref{addVersioneDocumento} & R-83-F-Ob \\
+\hline
+\ref{addIdentificativoDocumentoPrimario} & R-84-F-Ob \\
+\hline
+\ref{addTracciatureModificheDocumento} & R-85-F-Ob, R-86-F-Ob \\
+\hline
+\ref{specificaFiltriAggregazione} & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+R-87-F-Ob & R-88-F-Ob \\
+R-89-F-Ob & R-90-F-Ob \\
+R-91-F-Ob & R-92-F-Ob \\
+R-93-F-Ob & R-94-F-Ob \\
+R-95-F-Ob & R-96-F-Ob \\
+R-97-F-Ob & R-98-F-Ob \\
+R-99-F-Ob & R-100-F-Ob \\
+R-101-F-Ob &
+\end{tabular} \\
+\hline
+\ref{visualizzaListaCampiAggregazioneDocumentale} & R-88-F-Ob \\
+\hline
+\ref{addTipoAggregazione} & R-89-F-Ob, R-90-F-Ob \\
+\hline
+\ref{addIdAggregazione} & R-91-F-Ob \\
+\hline
+\ref{addTipologiaFascicolo} & R-92-F-Ob \\
+\hline
+\ref{addIdAggregazionePrimario} & R-93-F-Ob \\
+\hline
+\ref{addDataApertura} & R-94-F-Ob \\
+\hline
+\ref{addDataChiusura} & R-95-F-Ob \\
+\hline
+\ref{addProcedimentoAmministrativo} & R-96-F-Ob, R-97-F-Ob \\
+\hline
+\ref{addFasiProcedimentoAmministrativo} & R-98-F-Ob \\
+\hline
+\ref{addAssegnazione} & R-99-F-Ob, R-100-F-Ob \\
+\hline
+\ref{addProgressivoAggregazione} & R-101-F-Ob \\
+\hline
+\ref{addFiltroMetadatoCustom} & R-103-F-Ob \\
+\hline
+\ref{visualizzaRisultati} & R-104-F-Ob, R-105-F-Ob \\
+\hline
+\ref{infoRisultatiRicerca} & R-105-F-Ob \\
+\hline
+\ref{nessunRisultato} & R-106-F-Ob \\
+\hline
+\ref{formatoNonCorretto} & R-107-F-Ob \\
+\hline
+\ref{compilaValoreFiltro} & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+R-22-F-Ob & R-23-F-Ob \\
+R-47-F-Ob & R-49-F-Ob \\
+R-51-F-Ob & R-54-F-Ob \\
+R-56-F-Ob & R-64-F-Ob \\
+R-65-F-Ob & R-66-F-Ob \\
+R-67-F-Ob & R-68-F-Ob \\
+R-69-F-Ob & R-70-F-Ob \\
+R-74-F-Ob & R-75-F-Ob \\
+R-76-F-Ob & R-77-F-Ob \\
+R-79-F-Ob & R-81-F-Ob \\
+R-82-F-Ob & R-83-F-Ob \\
+R-84-F-Ob & R-86-F-Ob \\
+R-90-F-Ob & R-91-F-Ob \\
+R-92-F-Ob & R-93-F-Ob \\
+R-94-F-Ob & R-95-F-Ob \\
+R-97-F-Ob & R-98-F-Ob \\
+R-100-F-Ob & R-101-F-Ob \\
+R-103-F-Ob &
+\end{tabular} \\
 \hline
 \caption{Tracciamento Fonti - Requisiti}
 \label{tab:trace-fonti-req}
@@ -109,20 +594,502 @@ Dove:
 
 \subsubsection{Tracciamento Requisiti - Fonti}
 
+\renewcommand{\arraystretch}{1.3}
 \begin{longtable}{|p{3cm}|p{11cm}|}
 \hline
 \textbf{Requisito} & \textbf{Fonti} \\
 \hline
 \endfirsthead
-
 \hline
 \textbf{Requisito} & \textbf{Fonti} \\
 \hline
 \endhead
-
+R-1-F-Ob & \ref{classiDocumentali} \\
 \hline
-\endfoot
-
+R-2-F-Ob & \ref{elencoVuoto} \\
+\hline
+R-3-F-Ob & \ref{classeDocumentale} \\
+\hline
+R-4-F-Ob & \ref{nomeClasseDocumentale} \\
+\hline
+R-5-F-Ob & \ref{statoVerificaElemento} \\
+\hline
+R-6-F-Ob & \ref{marcaturaTemporaleElemento} \\
+\hline
+R-7-F-Ob & \ref{processiClasseDocumentale} \\
+\hline
+R-8-F-Ob & \ref{elencoVuoto} \\
+\hline
+R-9-F-Ob & \ref{processoClassedDocumentale} \\
+\hline
+R-10-F-Ob & \ref{idProcessoClasse} \\
+\hline
+R-11-F-Ob & \ref{documentiProcesso} \\
+\hline
+R-12-F-Ob & \ref{elencoVuoto} \\
+\hline
+R-13-F-Ob & \ref{documentoProcesso} \\
+\hline
+R-14-F-Ob & \ref{nomeDocumentoProcesso} \\
+\hline
+R-15-F-Ob & \ref{statoVerificaElemento} \\
+\hline
+R-16-F-Ob & \ref{marcaturaTemporaleElemento} \\
+\hline
+R-17-F-Ob & \ref{selezionaClasseDocumentale} \\
+\hline
+R-18-F-Ob & \ref{selezionaProcesso} \\
+\hline
+R-19-F-Ob & \ref{anteprimaDocumento} \\
+\hline
+R-20-F-Ob & \ref{formatoDocumentoNonSupportato} \\
+\hline
+R-21-F-Ob & \ref{ricercaDIP} \\
+\hline
+R-22-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaClasse} \\
+\ref{inserimentoNomeClasseDocumentale} & \ref{compilaValoreFiltro}
+\end{tabular} \\
+\hline
+R-23-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaProcesso} \\
+\ref{inserimentoIdProcesso} & \ref{compilaValoreFiltro}
+\end{tabular} \\
+\hline
+R-24-F-Op & \ref{ricercaDIP}, \ref{ricercaDIPSemantica} \\
+\hline
+R-25-F-Op & \ref{indicizzazioneSemantica} \\
+\hline
+R-26-F-Ob & \ref{indicizzazioneSemantica} \\
+\hline
+R-27-F-Ob & \ref{erroreIndicizzazioneSemantica} \\
+\hline
+R-28-F-Ob & \ref{StatoIndicizzazione} \\
+\hline
+R-29-F-Ob & \ref{ricercaDIP} \\
+\hline
+R-30-F-Ob & \ref{campoNonValido} \\
+\hline
+R-31-F-Ob & \ref{ricercaDIP}, \ref{ricercaDIPConFiltri}, \ref{specificaFiltriRicercaDocumento} \\
+\hline
+R-32-F-Ob & \ref{ricercaDIP}, \ref{ricercaProcesso} \\
+\hline
+R-33-F-Ob & \ref{ricercaDIP}, \ref{ricercaClasse} \\
+\hline
+R-34-F-Ob & \ref{ricercaDIP}, \ref{ricercaDIPConFiltri} \\
+\hline
+R-35-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni}
+\end{tabular} \\
+\hline
+R-36-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento}
+\end{tabular} \\
+\hline
+R-37-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addCustomMetadata}
+\end{tabular} \\
+\hline
+R-38-F-Ob & \ref{ricercaDIP}, \ref{ricercaDIPConFiltri} \\
+\hline
+R-39-F-Ob & \ref{ricercaDIP}, \ref{ricercaDIPConFiltri} \\
+\hline
+R-40-F-Ob & \ref{ricercaDIP}, \ref{ricercaDIPConFiltri} \\
+\hline
+R-41-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento}
+\end{tabular} \\
+\hline
+R-42-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni}
+\end{tabular} \\
+\hline
+R-43-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento}
+\end{tabular} \\
+\hline
+R-44-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addCustomMetadata}
+\end{tabular} \\
+\hline
+R-45-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{visualizzaListaCampiComuni} &
+\end{tabular} \\
+\hline
+R-46-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addChiaveDescrittiva} &
+\end{tabular} \\
+\hline
+R-47-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addChiaveDescrittiva} & \ref{compilaValoreFiltro}
+\end{tabular} \\
+\hline
+R-48-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addClassificazione} &
+\end{tabular} \\
+\hline
+R-49-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addClassificazione} & \ref{compilaValoreFiltro}
+\end{tabular} \\
+\hline
+R-50-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addTempoConserva} &
+\end{tabular} \\
+\hline
+R-51-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addTempoConserva} & \ref{compilaValoreFiltro}
+\end{tabular} \\
+\hline
+R-52-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addTempoConserva} &
+\end{tabular} \\
+\hline
+R-53-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addNote} &
+\end{tabular} \\
+\hline
+R-54-F-Ob & \ref{addNote}, \ref{compilaValoreFiltro} \\
+\hline
+R-55-F-Ob & \ref{addTipoDocumento} \\
+\hline
+R-56-F-Ob & \ref{addTipoDocumento}, \ref{compilaValoreFiltro} \\
+\hline
+R-57-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addSoggetti} &
+\end{tabular} \\
+\hline
+R-58-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addSoggetti} &
+\end{tabular} \\
+\hline
+R-59-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addSoggetti} & \ref{specificaRuoloSoggetto}
+\end{tabular} \\
+\hline
+R-60-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addSoggetti} & \ref{specificaRuoloSoggetto}
+\end{tabular} \\
+\hline
+R-61-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addSoggetti} & \ref{specificaTipoSoggetto}
+\end{tabular} \\
+\hline
+R-62-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addSoggetti} & \ref{specificaTipoSoggetto}
+\end{tabular} \\
+\hline
+R-63-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addSoggetti} & \ref{addDettagliSoggetto}
+\end{tabular} \\
+\hline
+R-64-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addSoggetti} & \ref{addDettagliSoggetto} \\
+\ref{addDettagliPAI} & \ref{compilaValoreFiltro}
+\end{tabular} \\
+\hline
+R-65-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addSoggetti} & \ref{addDettagliSoggetto} \\
+\ref{addDettagliPAE} & \ref{compilaValoreFiltro}
+\end{tabular} \\
+\hline
+R-66-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addSoggetti} & \ref{addDettagliSoggetto} \\
+\ref{addDettagliAS} & \ref{compilaValoreFiltro}
+\end{tabular} \\
+\hline
+R-67-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addSoggetti} & \ref{addDettagliSoggetto} \\
+\ref{addDettagliPG} & \ref{compilaValoreFiltro}
+\end{tabular} \\
+\hline
+R-68-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addSoggetti} & \ref{addDettagliSoggetto} \\
+\ref{addDettagliPF} & \ref{compilaValoreFiltro}
+\end{tabular} \\
+\hline
+R-69-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addSoggetti} & \ref{addDettagliSoggetto} \\
+\ref{addDettagliRUP} & \ref{compilaValoreFiltro}
+\end{tabular} \\
+\hline
+R-70-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{specificaFiltriComuni} \\
+\ref{addSoggetti} & \ref{addDettagliSoggetto} \\
+\ref{addDettagliSW} & \ref{compilaValoreFiltro}
+\end{tabular} \\
+\hline
+R-71-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriDI-DAI} & \ref{selezionaCampiDI-DAI}
+\end{tabular} \\
+\hline
+R-72-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriDI-DAI} & \ref{visualizzaListaCampiDIDAI}
+\end{tabular} \\
+\hline
+R-73-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriDI-DAI} & \ref{addDatiRegistrazione}
+\end{tabular} \\
+\hline
+R-74-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriDI-DAI} & \ref{addDatiRegistrazione} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-75-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriDI-DAI} & \ref{addTipologiaDocumentale} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-76-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriDI-DAI} & \ref{addModalitaFormazione} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-77-F-Ob & \ref{addRiservato}, \ref{compilaValoreFiltro} \\
+\hline
+R-78-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriDI-DAI} & \ref{addIdentificativoFormato}
+\end{tabular} \\
+\hline
+R-79-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriDI-DAI} & \ref{addIdentificativoFormato} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-80-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriDI-DAI} & \ref{addDatiVerifica}
+\end{tabular} \\
+\hline
+R-81-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriDI-DAI} & \ref{addDatiVerifica} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-82-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriDI-DAI} & \ref{addNomeDocumento} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-83-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriDI-DAI} & \ref{addVersioneDocumento} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-84-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriDI-DAI} & \ref{addIdentificativoDocumentoPrimario} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-85-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriDI-DAI} & \ref{addTracciatureModificheDocumento}
+\end{tabular} \\
+\hline
+R-86-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriDI-DAI} & \ref{addTracciatureModificheDocumento} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-87-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriAggregazione} &
+\end{tabular} \\
+\hline
+R-88-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriAggregazione} & \ref{visualizzaListaCampiAggregazioneDocumentale}
+\end{tabular} \\
+\hline
+R-89-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriAggregazione} & \ref{addTipoAggregazione}
+\end{tabular} \\
+\hline
+R-90-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriAggregazione} & \ref{addTipoAggregazione} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-91-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriAggregazione} & \ref{addIdAggregazione} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-92-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriAggregazione} & \ref{addTipologiaFascicolo} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-93-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriAggregazione} & \ref{addIdAggregazionePrimario} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-94-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriAggregazione} & \ref{addDataApertura} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-95-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriAggregazione} & \ref{addDataChiusura} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-96-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriAggregazione} & \ref{addProcedimentoAmministrativo}
+\end{tabular} \\
+\hline
+R-97-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriAggregazione} & \ref{addProcedimentoAmministrativo} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-98-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriAggregazione} & \ref{addProcedimentoAmministrativo} \\
+\ref{addFasiProcedimentoAmministrativo} & \ref{compilaValoreFiltro}
+\end{tabular} \\
+\hline
+R-99-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriAggregazione} & \ref{addAssegnazione}
+\end{tabular} \\
+\hline
+R-100-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriAggregazione} & \ref{addAssegnazione} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-101-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addFiltriTipoDocumento} \\
+\ref{specificaFiltriAggregazione} & \ref{addProgressivoAggregazione} \\
+\ref{compilaValoreFiltro} &
+\end{tabular} \\
+\hline
+R-102-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addCustomMetadata}
+\end{tabular} \\
+\hline
+R-103-F-Ob & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l}
+\ref{ricercaDIP} & \ref{ricercaDIPConFiltri} \\
+\ref{specificaFiltriRicercaDocumento} & \ref{addCustomMetadata} \\
+\ref{addFiltroMetadatoCustom} & \ref{compilaValoreFiltro}
+\end{tabular} \\
+\hline
+R-104-F-Ob & \ref{ricercaDIP}, \ref{visualizzaRisultati} \\
+\hline
+R-105-F-Ob & \ref{ricercaDIP}, \ref{visualizzaRisultati}, \ref{infoRisultatiRicerca} \\
+\hline
+R-106-F-Ob & \ref{ricercaDIP}, \ref{nessunRisultato} \\
+\hline
+R-107-F-Ob & \ref{formatoNonCorretto} \\
+\hline
 \caption{Tracciamento Requisiti - Fonti}
 \label{tab:trace-req-fonti}
 \end{longtable}
@@ -147,3 +1114,11 @@ Vincolo & X & Y & Z & N \\
 \caption{Riepilogo dei Requisiti}
 \label{tab:riepilogo-requisiti}
 \end{table}
+
+
+
+
+
+
+
+
