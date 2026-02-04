@@ -107,7 +107,7 @@
 
 
 \begin{center}
-    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \includegraphics[width=9.5cm]{logo7zpus.jpg}\\
     \small\hspace{10cm} 7zpus.swe@gmail.com\\
     \Large \textbf{Verbale Esterno Gruppo di Progetto e Sanmarco Informatica}\\
     \vspace{0.5cm}
@@ -116,7 +116,7 @@
 
 \noindent
 \textbf{Data:} 13/11/2025 \\
-\textbf{Durata:}  \\
+\textbf{Durata:}  50 minuti\\
 \textbf{Luogo:} Incontro online (Google Meet)
 
 \vspace{0.3cm}
@@ -137,7 +137,7 @@
     \hline
     \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
     \hline
-    0.1 & 07/11/2025 & Autore & Verificatore & Creazione del verbale e stesura iniziale \\
+    1.0 & 13/11/2025 & Georgescu Diana & Laoud Zakaria & Creazione del verbale \\
     \hline
 \end{tabular}
     \end{adjustwidth}
@@ -160,39 +160,76 @@
 \section{Ordine del Giorno}
 \begin{enumerate}[noitemsep]
     \item Organizzazione incontri tra gruppo e proponente
-    \item 
+    \item Chiarimenti sui requisiti dell’applicazione
+    \item Organizzazione dei futuri incontri con l’azienda
+    \item Presentazione della struttura dei materiali tecnici forniti
 \end{enumerate}
 
 \vspace{0.5cm}
 
 \section{Svolgimento e Discussione}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullamco laboriosam, nisi ut aliquid ex ea commodi consequatur. Duis aute irure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+L’incontro è iniziato con una verifica da parte dell’azienda sulla presenza di eventuali dubbi o domande rispetto alla riunione precedente.
+Il gruppo ha confermato di aver già iniziato a esaminare i requisiti funzionali e non funzionali del progetto, e ha richiesto ulteriori chiarimenti su alcuni aspetti tecnici.
+
+La proponente ha comunicato la volontà di organizzare meeting ogni due settimane. Per questo ha richiesto l’invio, tramite la mail di gruppo, del calendario delle lezioni e delle disponibilità dei membri, in modo da pianificare facilmente gli incontri durante l’anno. Hanno inoltre specificato che, pur mantenendo una pianificazione strutturata, sono disponibili a una certa flessibilità di volta in volta.
+
+Per quanto riguarda la documentazione, l’azienda ha predisposto una cartella condivisa su Google Drive, contenente materiale utile allo svolgimento del progetto.
+
+All’interno sono presenti:
+\begin{itemize}
+    \item una cartella con i verbali delle riunioni,
+    \item una cartella Assets contenente:
+    \begin{itemize}
+        \item pacchetti ZIP rappresentativi dei DIP
+        \item una cartella Schema con file .xsd per la validazione XML
+        \item una cartella con la struttura del pacchetto ZIP e relative note tecniche
+        \item documentazione con linee guida AGID per lo sviluppo sicuro
+    \end{itemize}
+\end{itemize}
+
+
+Il gruppo ha concordato di procedere con una prima analisi autonoma dei file messi a disposizione, prima di richiedere ulteriori approfondimenti.
+
+Durante la discussione, sono stati affrontati anche i requisiti funzionali minimi dell’applicazione.
+In particolare, il gruppo dovrà realizzare un’app in grado di:
+\begin{itemize}
+\item caricare un pacchetto ZIP del DIP
+\item popolare un database con la struttura delle cartelle del DIP
+\item estrarre e indicizzare i metadati contenuti nei file XML allegati a ciascun documento
+\item consentire ricerche efficienti attraverso un indice locale
+\item gestire pacchetti contenenti diverse classi documentali, con metadati che possono essere presenti o mancanti a seconda del pacchetto
+\item visualizzare la struttura suddivisa per classi documentali
+\end{itemize}
+\vspace{0.5cm}
+
+Inoltre è stato spiegato che all’interno di ogni cartella documentale sono presenti il documento principale e i file di metadati associati.
+
+Il pacchetto ZIP può essere protetto da una password ed è richiesta una gestione minima delle eccezioni, ad esempio in caso di formattazione errata, file corrotti o durante la verifica dell’integrità del pacchetto.
 
 
 \section{Domande e Risposte}
-Non so se sia una sezione ricorrente e da mantenere, valuterei di incorporare tutto in Svolgimento e Discussione. \\
+\textbf{Domanda 1:} L’applicazione deve prevedere ruoli diversi, ad esempio admin e utente? \\[0.5em]
+\textbf{Risposta:} No, non è prevista alcuna distinzione tra ruoli: chi accede al DIP deve poter consultare tutti i documenti allo stesso livello.
+\vspace{2em}
 
-\begin{infobox}
-Nota bene che infatti ora è ancora una sezione quindi la subsection qui sotto degli ordini del giorno andrebbe sotto svolgimento, non sotto domande e risposte.
-\end{infobox}
+\textbf{Domanda 2:} Conviene effettuare ricerche direttamente sui file XML? \\[0.5em]
+\textbf{Risposta:} Dipende dal tipo di informazione ricercata: se si cerca il nome del documento allora la ricerca può essere fatta direttamente sul file XML; se invece si vuole sapere, per esempio, se il documento è firmato o meno, no, perchè questa informazione è contenuta nei file di metadata.
+\vspace{2em}
 
+\textbf{Domanda 3:} Conviene indicizzare i metadati per migliorare le prestazioni dell’app? \\[0.5em]
+\textbf{Risposta:} Sì, conviene farlo per garantire ricerche rapide ed efficienti, soprattutto perché i pacchetti DIP possono contenere molte classi documentali e volumi elevati di metadati.
 
-\subsection{Sottosezioni corrispondenti agli ordini del giorno}
-Creare una sottosezione per ogni punto da trattare.
-
-\section{Eventuali argomenti non affrontati}
-Possiamo inserirci o gli ordini del giorno che non si è riusciti a discutere completamente (e quindi la sezione degli ordini del giorno sono più una dichiarazione di intenti di cosa discutere più che un sommario degli argomenti trattati) oppure argomenti che sappiamo saranno prossimimente trattati.
+\vspace{0.5cm}
 
 \section{Decisioni e Conclusione}
 \begin{itemize}
-    \item Elenco in riferimento all'ordine del giorno trattato con le relative decisioni.
+    \item \textbf{Chiarimenti sui requisiti funzionali e non funzionali}: 
+    Il gruppo procederà con un’analisi autonoma dei file forniti per preparare una prima definizione dettagliata dei requisiti.
+    \item \textbf{Organizzazione dei futuri incontri}: 
+    Sarà inviata all’azienda una mail contenente il calendario delle lezioni e le disponibilità del gruppo. Gli incontri verranno programmati con cadenza bisettimanale, con flessibilità all’occorrenza.
+    \item \textbf{Presentazione della struttura dei materiali tecnici forniti}: Il gruppo utilizzerà la cartella Google Drive fornita come spazio ufficiale di consultazione della documentazione. Per correttezza e trasparenza, verrà inoltre aggiornato regolarmente il foglio Google condiviso dall’azienda. Parallelamente, il gruppo continuerà ad adottare le proprie tecnologie: GitHub per l’archiviazione dei verbali e la gestione del versionamento, e Jira per l’organizzazione delle task e il monitoraggio dell’avanzamento del lavoro.
+    
 \end{itemize}
-
-\subsection{Ordine del giorno Prossimo Incontro}
-\begin{enumerate}
-    \item Lorem ipsum dolor sit amet
-    \item Lorem ipsum dolor sit amet
-\end{enumerate}
 
 \vfill
 
@@ -213,5 +250,4 @@ Firma: & \hrulefill \\
 \begin{flushright}
     \textit{7-ZPUs}
 \end{flushright}
-
 \end{document}
