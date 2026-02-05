@@ -1,0 +1,235 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian, provide=*]{babel}
+\usepackage[sfdefault]{atkinson}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Esterno Gruppo di Progetto e Sanmarco Informatica}\\
+    \vspace{0.5cm}
+\end{center}
+
+
+\noindent
+\textbf{Data:} 2026/1/22 \\
+\textbf{Durata:} 15 minuti \\
+\textbf{Luogo:} incontro online ( Meet )
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    0.1 & 2026/1/22 & Rocco Matteo A. & Fattoni Antonio & Creazione del verbale e stesura iniziale \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\tableofcontents
+
+\newpage
+
+
+
+
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Gingilino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+    \item Rossi Andrea
+\end{itemize}
+
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Esposizione dello stato di avanzamento del PoC.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section{Svolgimento e Discussione}
+\subsection{Esposizione dello stato di avanzamento del PoC}
+
+Durante l'incontro il Team ha esposto lo stato di avanzamento del Proof of Concept (PoC), in particolare ha riportato i diversi approcci all'indicizzazione e alla ricerca del DIP che sono stati considerati:
+\begin{itemize}
+    \item indicizzazione pura con database SQL.
+    \item indicizzazione mista con file json e database SQL.
+    \item indicizzazione basata sulla libreria Tantivy.
+\end{itemize}
+
+Il primo approccio è stato illustrato brevemente in quanto ancora in fase di sviluppo e non ancora testato.\\
+Il secondo approccio, basato sulla prima versione di PoC presentata alla proponente, è stato migliorato dal punto di vista dell'usabilità e corretto per quanto riguarda la verifica dell'integrità dei file tramite funzione di hash in Base64.\\
+Il terzo approccio, basato sulla libreria Tantivy, sebbene interessante, è stato scartato in quanto sviluppato in Rust, cosa che avrebbe richiesto il mantenimento continuo del codice per adattare il PoC alle nuove versioni del linguaggio e della libreria stessa.
+
+
+\section{Domande e Risposte}
+
+\begin{itemize}[label={}]
+    \item \textbf{Domanda:} È necessario implementare la ricerca semantica anche nel PoC, nonostante sia un requisito opzionale?
+    
+    \item \textbf{Risposta:} Sì. Il PoC dovrebbe rappresentare il più fedelmente possibile il prodotto finale.  
+    È quindi preferibile:
+    \begin{itemize}[label={•}]
+        \item trascurare aspetti secondari, come l’interfaccia grafica.
+        \item concentrarsi sulle funzionalità principali.
+        \item implementare il maggior numero possibile di requisiti funzionali.
+    \end{itemize}
+\end{itemize}
+
+
+\begin{itemize}[label={}]
+    \item \textbf{Domanda:} È possibile lasciare all’utente la scelta del livello di precisione della ricerca semantica?
+    
+    \item \textbf{Risposta:} No. Questa scelta potrebbe generare confusione nell’utente finale.  
+    È preferibile:
+    \begin{itemize}[label={•}]
+        \item definire un unico livello di precisione.
+        \item selezionarlo in modo che sia adeguato nella maggior parte dei casi d’uso.
+    \end{itemize}
+\end{itemize}
+
+\section{Decisioni e Conclusione}
+
+Al termine dell’incontro il Team ha deciso di:
+\begin{itemize}
+    \item procedere con la conclusione dell’analisi dei requisiti.
+    \item continuare lo sviluppo del Proof of Concept (PoC).
+\end{itemize}
+
+\vfill
+
+
+\begin{flushleft}
+\begin{tabular}{@{}p{0.5in}p{2in}@{}}
+Data: & \hrulefill \\
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{@{}p{0.5in}p{2in}@{}}
+Firma: & \hrulefill \\
+& [Sanmarco Informatica SPA] \\
+\end{tabular}
+\end{flushleft}
+
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
