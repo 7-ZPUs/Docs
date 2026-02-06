@@ -105,6 +105,8 @@
         \begin{tabular}{|c|c|c|c|c|}
             \hline
             \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione} \\
+            0.9 & 6/2/2026 & Laoud Zakaria & Soligo Lorenzo & Stesura paragrafi 3.6, 3.7, 3.8 \\
+            \hline
             0.8.1 & 19/1/2026 & Soligo Lorenzo & Laoud Zakaria & Fine scrittura paragrafi 4.2, 4.3, 4.4 \\
             \hline
             0.8 & 11/1/2026 & Soligo Lorenzo & Laoud Zakaria & Stesura paragrafi 4.2, 4.3, 4.4 \\
@@ -693,8 +695,323 @@ Per la numerazione delle versioni si adotta lo standard di versionamento \textbf
 \subsection{Processo di verifica}
 \subsection{Processo di validazione}
 \subsection{Processo di revisione congiunta}
+Il processo di revisione congiunta regola le attività di verifica periodica svolte congiuntamente con la proponente per verificare 
+l'allineamento rispetto ai requisiti e agli obiettivi concordati. Questo processo garantisce che lo sviluppo del prodotto proceda in conformità 
+con le aspettative della proponente e permette di identificare tempestivamente eventuali problemi.
+
+I ruoli coinvolti in questo processo sono:
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+        \centering
+        \begin{spacing}{1.1}
+        \begin{tabular}{|c|c|}
+            \hline
+            \textbf{Ruolo} & \textbf{Specifica} \\
+            \hline
+            Responsabile & \begin{tabular}[c]{@{}c@{}} Coordina gli incontri preparando i materiali e gestendo \\ la comunicazione con la proponente \end{tabular} \\
+            \hline
+            Tutti i membri del team & \begin{tabular}[c]{@{}c@{}} Partecipano attivamente alle revisioni ponendo \\ quesiti quando necessario \end{tabular} \\
+            \hline
+        \end{tabular}
+        \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsection{Attività di processo}
+
+\paragraph{Pianificazione delle revisioni}
+Come concordato con la proponente (§2.1), con cadenza bisettimanale il gruppo di lavoro si incontra con l’azienda tramite Google Meet per discutere lo stato di avanzamento 
+del progetto.\\
+L’amministratore si occupa della creazione della \glossario{task} Jira relativa all’incontro, assegnando anche la scrittura e verifica del verbale.
+
+\paragraph{Preparazione dei materiali}
+Al fine di garantire un’organizzazione efficace degli incontri, vengono adottate le seguenti modalità operative:
+\begin{enumerate}
+    \item È già stato fornito alla proponente un link alla dashboard per il monitoraggio continuo dell’avanzamento dei lavori.
+    \item Prima di ogni incontro si svolge un meeting su Discord per definire l’ordine di esposizione degli argomenti.
+    \item Prima di ogni incontro viene concordato il materiale da mostrare durante la revisione. \\Vengono, inoltre, raccolte e organizzate le domande, 
+    provenienti da tutti i membri del gruppo, da sottoporre alla proponente.
+\end{enumerate}
+
+\paragraph{Conduzione della revisione}
+Durante l'incontro di revisione congiunta:
+\begin{enumerate}
+    \item Il responsabile presenta lo stato di avanzamento rispetto alla pianificazione
+    \item Vengono mostrate, se presenti, le demo delle nuove funzionalità implementate
+    \item Si discutono eventuali problematiche emerse e si raccolgono feedback dalla proponente chiarendo eventuali dubbi
+\end{enumerate}
+
+\paragraph{Post incontro}
+Al termine di ogni revisione congiunta:
+\begin{enumerate}
+    \item Viene completato il verbale esterno riportante le tematiche trattate e i dubbi discussi 
+    \item Il verbale viene condiviso con la proponente tramite Google Drive per approvazione e firma
+    \item Eventuali variazioni rispetto alla visione iniziale del gruppo vengono formalizzate tramite 
+    la creazione di apposite Issue Jira e assegnate al membro del team competente.
+    \item Il verbale approvato viene archiviato nel repository secondo le procedure di documentazione (§3.1.2)
+\end{enumerate}
+
+\subsubsection{Strumenti}
+\begin{itemize}
+    \item \textbf{Google Drive:} Per la condivisione dei verbali esterni e dei materiali di revisione con la proponente
+    \item \textbf{Gmail:} Per la comunicazione formale con la proponente
+    \item \textbf{Discord:} Per il coordinamento interno del team in preparazione alle revisioni
+    \item \textbf{Jira:} Per il tracciamento delle Issue emerse dalle revisioni
+    \item \textbf{Google Meet:} Per lo svolgimento delle revisioni in modalità sincrona con la proponente
+\end{itemize}
+
 \subsection{Processo di risoluzione dei problemi}
+Il processo di risoluzione dei problemi definisce le modalità sistematiche per identificare, analizzare e risolvere problematiche tecniche oppure organizzative 
+che emergono durante lo sviluppo. \\Questo processo garantisce che i problemi vengano gestiti in modo strutturato, documentato e tempestivo, 
+minimizzando l'impatto sulle attività di progetto.
+
+I ruoli coinvolti in questo processo sono:
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+        \centering
+        \begin{spacing}{1.1}
+        \begin{tabular}{|c|c|}
+            \hline
+            \textbf{Ruolo} & \textbf{Specifica} \\
+            \hline
+            Responsabile & \begin{tabular}[c]{@{}c@{}} Coordina l'analisi dei problemi critici e decide l'allocazione \\ delle risorse per la risoluzione \end{tabular} \\
+            \hline
+            Amministratore & \begin{tabular}[c]{@{}c@{}} Gestisce i problemi legati all'infrastruttura e agli strumenti, \\ come descritto in §4.1 \end{tabular} \\
+            \hline
+            Analista/Progettista & \begin{tabular}[c]{@{}c@{}} Risolve problemi legati a requisiti ambigui o \\ scelte architetturali \end{tabular} \\
+            \hline
+            Programmatore & \begin{tabular}[c]{@{}c@{}} Risolve problemi tecnici nel codice e implementa \\ le soluzioni concordate \end{tabular} \\
+            \hline
+            Verificatore & \begin{tabular}[c]{@{}c@{}} Verifica che le soluzioni implementate risolvano\\ effettivamente il problema \end{tabular} \\
+            \hline
+        \end{tabular}
+        \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsection{Attività di processo}
+
+\paragraph{Identificazione del problema}
+Qualsiasi membro del team può identificare e segnalare un problema utilizzando uno dei seguenti canali di comunicazione:
+\begin{enumerate}
+    \item Gruppo WhatsApp, per segnalazioni rapide e comunicazioni immediate.
+    \item Server Discord, per discussioni strutturate e confronti approfonditi.
+    \item Chiamate straordinarie tra sottogruppi di membri, in caso di problematiche che richiedano un confronto diretto.
+    \item Riunione settimanale del team, per l’analisi condivisa di problematiche di carattere organizzativo, tecnico o progettuale
+    \item Stand-up meeting periodici 
+\end{enumerate}
+
+La segnalazione di un problema deve includere, ove possibile, le seguenti informazioni:
+\begin{itemize}
+    \item Descrizione chiara e dettagliata del problema riscontrato.
+    \item Indicazione del livello di urgenza e della priorità suggerita.
+    \item Eventuali tentativi di risoluzione già effettuati o possibili soluzioni proposte.
+\end{itemize}
+
+\paragraph{Analisi e classificazione}
+Una volta identificato, il problema viene analizzato dal responsabile insieme ai membri competenti per:
+\begin{enumerate}
+    \item \textbf{Classificare la tipologia:} 
+    \begin{itemize}
+        \item Problema tecnico 
+        \item Problema di processo 
+        \item Problema organizzativo 
+    \end{itemize}
+    \item \textbf{Valutare la priorità:}
+    \begin{itemize}
+        \item \textit{Critica:} Blocca completamente le attività, richiede risoluzione immediata
+        \item \textit{Alta:} Impatta significativamente il progresso
+        \item \textit{Media:} Causa rallentamenti, da risolvere entro lo sprint corrente
+        \item \textit{Bassa:} Impatto minimo, da risolvere quando possibile
+    \end{itemize}
+    \item \textbf{Identificare le cause radice:} Attraverso tecniche di analisi
+    \item \textbf{Stimare risorse da allocare:} Per la risoluzione del problema
+\end{enumerate}
+
+\paragraph{Sviluppo della soluzione}
+In base alla classificazione e all'analisi effettuata:
+\begin{enumerate}
+    \item Il responsabile assegna il problema al membro o ai membri più competenti
+    \item Viene creata una issue Jira collegata al problema
+    \item Il team propone una o più soluzioni alternative, valutando:
+    \begin{itemize}
+        \item Efficacia nel risolvere il problema
+        \item Impatto su altre componenti o processi
+        \item Tempo e risorse necessarie
+        \item Rischi associati all'implementazione
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{Implementazione e verifica}
+La soluzione viene implementata seguendo le normali procedure di sviluppo:
+\begin{enumerate}
+    \item Creazione del branch di lavoro secondo gli standard (§3.2.2)
+    \item Implementazione della soluzione con commit e smart commit (§3)
+    \item Verifica della soluzione da parte di un verificatore diverso dall’implementatore, mediante 
+    l’esecuzione di test volti ad accertare che la soluzione risolva effettivamente il problema.
+    \item Merge della soluzione secondo le procedure di revisione (§3.1.3)
+\end{enumerate}
+
+\subsubsection{Procedure di risoluzione}
+Le seguenti procedure guidano il Team nella risoluzione sistematica dei problemi:
+\begin{enumerate}
+    \item \textbf{Segnalazione immediata:} Ogni problema deve essere segnalato appena identificato, non posticipato
+    \item \textbf{Comunicazione trasparente:} I problemi critici vengono comunicati immediatamente a tutto il team e, se necessario, alla proponente
+    \item \textbf{Documentazione completa:} Ogni problema risolto deve essere documentato per evitare ricorrenze
+\end{enumerate}
+
+\subsubsection{Integrazione con altri processi}
+Il processo di risoluzione dei problemi si integra con:
+\begin{itemize}
+    \item \textbf{Gestione dei rischi operativi (§2.3.2):} I problemi ricorrenti vengono aggiunti al registro dei rischi
+    \item \textbf{Analisi degli incidenti (§5.1.1):} Per problemi infrastrutturali seguono le procedure specifiche
+    \item \textbf{Processo di miglioramento (§5.1):} I problemi sistemici alimentano i cicli di miglioramento continuo
+    \item \textbf{Metriche di qualità:} Le metriche aiutano a identificare aree problematiche in modo proattivo
+\end{itemize}
+
+\subsubsection{Strumenti}
+\begin{itemize}
+    \item \textbf{Jira:} Per il tracciamento formale dei problemi, della loro classificazione e risoluzione
+    \item \textbf{Discord:} Per la comunicazione immediata di problemi urgenti e per sessioni di problem solving sincrone
+    \item \textbf{Whatsapp:} Per notifiche urgenti di problemi critici che richiedono attenzione immediata
+    \item \textbf{Dashboard Jira:} Per il monitoraggio dello stato dei problemi aperti e delle tendenze nel tempo
+    \item \textbf{GitHub:} Per la gestione dei branch di lavoro e il merge delle soluzioni implementate
+\end{itemize}
+
 \subsection{Gestione della qualità}
+Il processo di gestione della qualità sovrintende all'applicazione sistematica delle metriche definite e all'integrazione tra i processi di
+garanzia della qualità, verifica, validazione e miglioramento per garantire la qualità complessiva del prodotto finale e dei processi. 
+\\Questo processo coordina tutte le attività volte a mantenere e migliorare gli standard qualitativi durante l'intero ciclo di vita del progetto.
+% da ricontrollare !!!!!!
+I ruoli coinvolti in questo processo sono:
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+        \centering
+        \begin{spacing}{1.1}
+        \begin{tabular}{|c|c|}
+            \hline
+            \textbf{Ruolo} & \textbf{Specifica} \\
+            \hline
+            Responsabile & \begin{tabular}[c]{@{}c@{}} Coordina le attività di gestione della qualità e garantisce \\ il rispetto degli obiettivi definiti nel Piano di Qualifica \end{tabular} \\
+            \hline
+            Verificatori & \begin{tabular}[c]{@{}c@{}} Eseguono le verifiche secondo le procedure definite e monitorano \\ le metriche di qualità di processo e prodotto \end{tabular} \\
+            \hline
+            Amministratore & \begin{tabular}[c]{@{}c@{}} Configura e mantiene gli strumenti di automazione per il monitoraggio\\ della qualità (GitHub Actions, Dashboard e Issue Jira) \end{tabular} \\
+            \hline
+            Tutti i membri & \begin{tabular}[c]{@{}c@{}} Contribuiscono al mantenimento della qualità seguendo \\ le norme e segnalando deviazioni dagli standard \end{tabular} \\
+            \hline
+        \end{tabular}
+        \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsection{Attività di processo}
+
+\paragraph{Pianificazione della qualità}
+All'inizio di ogni sprint, il responsabile coordina la pianificazione degli obiettivi di qualità:
+\begin{enumerate}
+    \item \textbf{Definizione degli obiettivi di sprint:} In base alle attività pianificate, vengono identificati gli obiettivi specifici di qualità da raggiungere
+    \item \textbf{Selezione delle metriche applicabili:} Tra quelle definite nella sezione §6, vengono scelte le metriche più rilevanti per lo sprint corrente
+    \item \textbf{Definizione delle soglie:} Per ogni metrica selezionata, vengono stabilite le soglie minime accettabili e quelle target, in conformità con il Piano di Qualifica
+    \item \textbf{Assegnazione delle responsabilità:} I verificatori vengono assegnati alle diverse attività di controllo
+\end{enumerate}
+
+Gli obiettivi di qualità vengono documentati e comunicati a tutto il team durante la riunione di pianificazione dello sprint.
+
+\paragraph{Monitoraggio continuo}
+Durante lo svolgimento dello sprint, la qualità viene monitorata costantemente attraverso:
+\begin{enumerate}
+    \item \textbf{Controllo automatizzato:} 
+    \begin{itemize}
+        \item Le GitHub Actions eseguono verifiche automatiche ad ogni commit (indice Gulpease, build success rate)
+        \item La pipeline di CI/CD monitora le metriche di processo come build time e test coverage
+        \item Gli strumenti di analisi statica verificano la complessità ciclomatica e altre metriche di codice
+    \end{itemize}
+    \item \textbf{Controllo manuale:}
+    \begin{itemize}
+        \item I verificatori eseguono revisioni del codice e della documentazione secondo le procedure definite
+        \item Vengono eseguiti test manuali per verificare usabilità e funzionalità
+        \item Si monitora l'aderenza alle norme di progetto
+    \end{itemize}
+    \item \textbf{Utilizzo del Cruscotto di Qualità:}
+    \begin{itemize}
+        \item La Dashboard Jira personalizzata (§5) fornisce una vista in tempo reale dello stato delle metriche
+        \item Vengono monitorati trend e deviazioni rispetto agli obiettivi
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{Valutazione periodica}
+A cadenza regolare vengono effettuate valutazioni approfondite della qualità:
+\begin{enumerate}
+    \item \textbf{Review settimanale:} Durante le riunioni di team, vengono discusse brevemente le metriche principali e le eventuali criticità emerse
+    \item \textbf{Review di fine sprint:} Al termine di ogni sprint:
+    \begin{itemize}
+        \item Si confrontano le metriche ottenute con gli obiettivi pianificati
+        \item Si analizzano le cause di eventuali scostamenti significativi
+        \item Si valuta l'efficacia delle azioni correttive implementate
+        \item Si aggiorna il cruscotto di qualità nel Piano di Qualifica
+    \end{itemize}
+    \item \textbf{Review di milestone:} In preparazione delle milestone:
+    \begin{itemize}
+        \item Si effettua una valutazione complessiva della qualità raggiunta
+        \item Si verifica il rispetto di tutti i requisiti di qualità obbligatori
+        \item Si producono report dettagliati per committente e proponente
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{Azioni correttive}
+Quando il monitoraggio evidenzia deviazioni dagli standard di qualità:
+\begin{enumerate}
+    \item \textbf{Identificazione della deviazione:} Attraverso il monitoraggio continuo o le review periodiche
+    \item \textbf{Analisi della causa:} Si applica il processo di risoluzione dei problemi (§3.7) per identificare le cause radice
+    \item \textbf{Pianificazione dell'intervento:}
+    \begin{itemize}
+        \item Per deviazioni minori: si assegna una issue correttiva al membro responsabile
+        \item Per deviazioni significative: il responsabile convoca una sessione dedicata per pianificare l'intervento
+    \end{itemize}
+    \item \textbf{Implementazione e verifica:} L'azione correttiva viene implementata e verificata secondo le normali procedure
+    \item \textbf{Monitoraggio dell'efficacia:} Si verifica che l'azione correttiva abbia effettivamente risolto il problema senza introdurre nuove criticità
+\end{enumerate}
+
+\subsubsection{Procedure di gestione della qualità}
+Le seguenti procedure guidano il Team nella gestione sistematica della qualità:
+\begin{enumerate}
+    \item \textbf{Prevenzione > Correzione:} Si privilegia l'adozione di pratiche preventive (code review, test automatici, standard di codifica) rispetto alla correzione a posteriori
+    \item \textbf{Automazione quando possibile:} Le verifiche ripetitive vengono automatizzate per ridurre errori umani e liberare tempo per attività a maggior valore aggiunto
+    \item \textbf{Tracciabilità completa:} Ogni decisione relativa alla qualità, ogni deviazione e ogni azione correttiva vengono documentate per garantire tracciabilità
+    \item \textbf{Miglioramento continuo:} Le metriche e le procedure di qualità vengono periodicamente riviste e aggiornate in base all'esperienza accumulata
+    \item \textbf{Responsabilità condivisa:} La qualità è responsabilità di tutti i membri del team, non solo dei verificatori
+\end{enumerate}
+
+\subsubsection{Integrazione con altri processi}
+Il processo di gestione della qualità coordina e si integra con:
+\begin{itemize}
+    \item \textbf{Processo di garanzia della qualità (§3.3):} Fornisce il framework metodologico per le attività di quality assurance
+    \item \textbf{Processo di verifica (§3.4):} Esegue le verifiche tecniche secondo le procedure definite
+    \item \textbf{Processo di validazione (§3.5):} Conferma che il prodotto soddisfi le esigenze degli utenti
+    \item \textbf{Processo di revisione congiunta (§3.6):} Comunica alla proponente lo stato della qualità e raccoglie feedback
+    \item \textbf{Processo di risoluzione dei problemi (§3.7):} Gestisce le non conformità rispetto agli standard di qualità
+    \item \textbf{Processo di miglioramento (§4.2):} Utilizza i dati di qualità per identificare aree di miglioramento
+\end{itemize}
+
+\subsubsection{Metriche di gestione della qualità}
+L'efficacia del processo di gestione della qualità viene valutata attraverso:
+\begin{itemize}
+    \item \textbf{Percentuale di metriche rispettate:} Numero di metriche che soddisfano le soglie minime rispetto al totale delle metriche monitorate
+    \item \textbf{Tasso di ricorrenza delle non conformità:} Percentuale di non conformità che si ripetono dopo essere state risolte
+    \item \textbf{Copertura delle verifiche:} Percentuale di deliverable che hanno superato tutte le verifiche previste
+\end{itemize}
+
+Queste meta-metriche vengono rendicontate nel Piano di Qualifica insieme alle metriche di processo e prodotto definite nella sezione §6.
+
+\subsubsection{Strumenti}
+\begin{itemize}
+    \item \textbf{Piano di Qualifica:} Documento di riferimento per obiettivi, metriche e soglie di qualità
+    \item \textbf{Jira e Dashboard Jira (§5):} Per il monitoraggio in tempo reale dello stato delle metriche, 
+    il tracciamento delle non conformità, le azioni correttive e la condivisione di report di qualità con la proponente
+    \item \textbf{GitHub Actions (§5):} Per l'automazione delle verifiche di qualità (Gulpease, build, test)
+    \item \textbf{Strumenti di analisi statica:} Per il calcolo automatico di metriche di codice (complessità, coverage)
+\end{itemize}
 
 \section{Processi Organizzativi}
 
