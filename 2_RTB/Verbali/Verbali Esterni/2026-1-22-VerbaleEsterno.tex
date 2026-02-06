@@ -149,6 +149,7 @@
     \item Soligo Lorenzo
     \item Vigolo Davide
     \item Rossi Andrea
+    \item Sarra Luca
 \end{itemize}
 
 
@@ -159,7 +160,11 @@
 
 \vspace{0.5cm}
 
+\section{Organizzazione incontri successivi}
+Sono state programmate le date degli incontri successivi, che si terranno ogni 2 settimane, fino al 16/04/2026, data in cui è prevista la consegna della Product Baseline.
+
 \section{Svolgimento e Discussione}
+
 \subsection{Esposizione dello stato di avanzamento del PoC}
 
 Durante l'incontro il Team ha esposto lo stato di avanzamento del Proof of Concept (PoC), in particolare ha riportato i diversi approcci all'indicizzazione e alla ricerca del DIP che sono stati considerati:
@@ -170,40 +175,29 @@ Durante l'incontro il Team ha esposto lo stato di avanzamento del Proof of Conce
 \end{itemize}
 
 Il primo approccio è stato illustrato brevemente in quanto ancora in fase di sviluppo e non ancora testato.\\
+
 Il secondo approccio, basato sulla prima versione di PoC presentata alla proponente, è stato migliorato dal punto di vista dell'usabilità e corretto per quanto riguarda la verifica dell'integrità dei file tramite funzione di hash in Base64.\\
-Il terzo approccio, basato sulla libreria Tantivy, sebbene interessante, è stato scartato in quanto sviluppato in Rust, cosa che avrebbe richiesto il mantenimento continuo del codice per adattare il PoC alle nuove versioni del linguaggio e della libreria stessa.
+
+Il terzo approccio, basato sulla libreria Tantivy, sebbene interessante, è stato scartato in quanto sviluppata in Rust, cosa che avrebbe richiesto il mantenimento continuo del codice per adattare il PoC alle nuove versioni del linguaggio e della libreria stessa.\\
+
+Le prime due versioni di PoC verranno testate e confrontate per valutare quale delle due implementazioni risulti più efficiente, in tal senso sarà significativo confrontare i tempi di indicizzazione del pacchetto DIP di test fornito in data 15/01/2026 dalla proponente su richiesta del Team, che ha una dimensione di diversi ordini di grandezza superiore rispetto ai pacchetti DIP utilizzati finora.
+
+\subsection{Ricerca semantica}
+Le risorse previste per lo studio della terzo approccio sono state reindirizzate allo studio e alla progettazione dell'implementazione della ricerca semantica, che è un requisito opzionale ma che il Team ritiene importante implementare già nel PoC, in quanto rappresenta una funzionalità chiave del prodotto finale e potrebbe essere complessa da implementare.\\
+In particolare è stata individuata una libreria integrata in SQLite in linguaggio C, \texttt{sql-vec}, che permette di effettuare ricerche semantiche basate su vettori, che sembra essere adatta alle esigenze del progetto come alternativa alla libreria FAISS.\\
 
 
 \section{Domande e Risposte}
 
 \begin{itemize}
-    \item \textbf{Domanda:} È necessario implementare la ricerca semantica anche nel PoC, nonostante sia un requisito opzionale?
-    
-    \item \textbf{Risposta:} Sì. Il PoC dovrebbe rappresentare il più fedelmente possibile il prodotto finale.  
-    È quindi preferibile:
-    \begin{itemize}
-        \item trascurare aspetti secondari, come l'interfaccia grafica.
-        \item concentrarsi sulle funzionalità principali.
-        \item implementare il maggior numero possibile di requisiti funzionali.
-    \end{itemize}
+    \item \textbf{Domanda:} È desiderabile implementare la ricerca semantica non solo sui metadati, ma anche sul contenuto dei documenti?
 
-    \item \textbf{Domanda:} È possibile lasciare all'utente la scelta del livello di precisione della ricerca semantica?
-    
-    \item \textbf{Risposta:} No. Questa scelta potrebbe generare confusione nell'utente finale.  
-    È preferibile:
-    \begin{itemize}
-        \item definire un unico livello di precisione.
-        \item selezionarlo in modo che sia adeguato nella maggior parte dei casi d'uso.
-    \end{itemize}
+    \item \textbf{Risposta:} Non riteniamo necessario implementare la ricerca semantica sul contenuto dei documenti, in quanto comporterebbe la trasformazione di tutti i documenti in vettori, diventando un lavoro particolarmente oneroso.\\
+    Per quanto riguarda la traduzione in vettori dei metadati, esistono diversi modelli di embedding che operano in locale, ad esempio con Docker Model Runner oppure ancora modelli del tool Ollama.
 \end{itemize}
 
-\section{Decisioni e Conclusione}
-
-Al termine dell'incontro il Team ha deciso di:
-\begin{itemize}
-    \item procedere con la conclusione dell'analisi dei requisiti.
-    \item continuare lo sviluppo del Proof of Concept (PoC).
-\end{itemize}
+\section{Conclusione}
+L'incontro si è concluso con una breve presentazione del PoC e si rimanda alla prossima riunione per la presentazione dei risultati dei test sulle prime due versioni di PoC e per la discussione dell'implementazione della ricerca semantica.
 
 \vfill
 
