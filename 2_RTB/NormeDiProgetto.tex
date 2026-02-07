@@ -105,9 +105,10 @@
         \begin{tabular}{|c|c|c|c|c|}
             \hline
             \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione} \\
-            0.8.1 & 19/1/2026 & Soligo Lorenzo & Laoud Zakaria & Fine scrittura paragrafi 4.2, 4.3, 4.4 \\
             \hline
-            0.8 & 11/1/2026 & Soligo Lorenzo & Laoud Zakaria & Stesura paragrafi 4.2, 4.3, 4.4 \\
+            0.9 & 25/01/2025 & Aaron Gingillino & Vigolo Davide & Scrittura paragrafi 2.2, 4.1 \\
+            \hline
+            0.8 & 25/01/2025 & Aaron Gingillino & Fattoni Antonio & Scrittura paragrafi 3.3,3.4 \\
             \hline
             0.7 & 15/12/2025 & Rocco Matteo A. & Georgescu Diana & Stesura paragrafo 5 \\
             \hline
@@ -418,7 +419,7 @@ risultati ottenuti. Tutto ciò al fine di favorire il lavoro asincrono tra
 membri del gruppo e promuovere il principio \glossario{Agile} di continuo
 miglioramento e adattamento tramite \glossario{feedback}.
 
-\subsubsection{Attività: Pianificazione della documentazione}  \label{pianificazioneDocs}
+\subsubsection{Attività: Pianificazione della documentazione} \label{pianificazioneDocs}
 La pianificazione della documentazione avviene contestualmente alla
 pianificazione delle attività di progetto. \\Durante la pianificazione di ogni
 \glossario{sprint}, il \glossario{responsabile di progetto} assegna le attività
@@ -657,13 +658,23 @@ branch in GitHub:
 Questa attività regolamenta il modo in cui le modifiche di avanzamento vengono registrate e
 tracciate rispetto ai task pianificati.
 
-\paragraph{Procedure: Smart Commit}
+\paragraph{Procedure: Smart Commit} \label{smartcommit}
 La necessità di tracciamento delle attività richiede l'adozione capillare degli
 Smart Commit per collegare i commit GitHub alle issue Jira. Questo permette di
 aggiornare automaticamente lo stato delle task e rendicontare il tempo.
-Risulta quindi uno strumento rapido ed efficace per mantenere allineati i progressi del
-lavoro con la pianificazione stabilita. Maggiori dettagli sugli Smart Commit sono disponibili \ref{smartcommit}.
 
+La sintassi obbligatoria è:
+\begin{verbatim}
+DIPR-<numero issue> #time <nd nh nm> #<stato> #comment <Descrizione> 
+\end{verbatim}
+
+\textbf{Regole di applicazione:}
+\begin{enumerate}
+    \item \textbf{Time Tracking:} L'inserimento del tempo (\texttt{\#time}) deve seguire il formato \textit{nd nh nm} (giorni, ore, minuti).
+    \item \textbf{Transizioni di Stato:} Utilizzare i tag \texttt{\#start-progress}, \texttt{\#start-review}, \texttt{\#complete} per avanzare il workflow su Jira.
+    \item \textbf{Pull Request:} Nelle PR è vietato inserire il tag \texttt{\#time} per evitare la doppia contabilizzazione delle ore lavorative.
+    \item \textbf{Issue Multiple:} È possibile agire su più issue in un singolo commit separandole con spazi (utile per chiudere issue di sviluppo e verifica contemporaneamente)[cite: 97, 98].
+\end{enumerate}
 
 \paragraph{Strumenti}
 \begin{itemize}
@@ -688,203 +699,97 @@ Per la numerazione delle versioni si adotta lo standard di versionamento \textbf
     \item \textbf{PATCH} viene incrementato per correzioni di bug, miglioramenti minori o modifiche che non influenzano le funzionalità principali del documento.
 \end{itemize}
 
-
-\subsection{Processo di garanzia della qualità}
 \subsection{Processo di verifica}
+La verifica serve a controllare che il software prodotto corrisponda ai requisiti richiesti dalla proponente. Per evitare problemi, a ogni task viene assegnato uno o più verificatori. A seconda del tipo di task, i verificatori useranno tecniche e pratiche adeguate per verificare che il prodotto rispetti gli standard di qualità. 
+Dentro il Piano di Qualifica sono elencate le attività che i verificatori devono fare al completamento della task a loro assegnatali. Troviamo anche per ogni attività gli obbiettivi, gli esiti desiderabili e quelli ottenuti.
+\subsubsection{Verifica documentale}
+I passaggi che il verificatore deve svolgere per approvare un documento sono specificati nella sezione \ref{produzioneDocs}. Perché un documento possa essere approvato il verificatore deve controllare che sia corretto: 
+\begin{itemize}
+    \item Il contenuto.
+    \item La grammatica.
+    \item La presentazione, rispetto alle linee guida.
+    \item La comprensibilità del testo.
+\end{itemize}
+
+Individuiamo due tipologie di verifica inerenti al codice, l'analisi statica e quella dinamica
+\subsubsection{Analisi Statica}
+L'analisi statica prevede di analizzare il codice in modo statico, ovvero senza che venga eseguito. Ci concentriamo sulla documentazione e sul codice, e ci accertiamo che non presentino errori che non li rendano conformi alle norme, o che non producano risultati attesi. Per fare ciò possiamo utilizzare dei metodi di lettura oppure dei metodi formali. Iniziamo concentrandoci sui metodi di lettura, possono essere svolti da esseri umani o tramite processi automatizzati, e si suddividono in:
+\begin{itemize}
+    \item Walkthrough: a priori non conosciamo l'errore, ne sappiamo la sua locazione, quindi andiamo ad analizzare il testo in maniera esplorativa. I verificatori si occupano di quest'ultimo passo, la correzione sarà poi a carico degli autori del testo in questione. Questo processo potrebbe risultare particolarmente laborioso in proporzione alla quantità di dati da ispezionare.
+    \item Inspection: sappiamo dove si potrebbe situare l'errore e quindi a nostro vantaggio possiamo essere selettivi rispetto alle porzioni di testo da esaminare. Come per il Walkthrough sono gli autori a correggere l'errore, mentre i verificatori lo cercano. Questo tipo di metodo ha come presupposto la conoscenza del problema a priori, questa conoscenza è ottenibile tramite esperienza.
+\end{itemize}
+
+\subsubsection{Analisi Dinamica}
+L'analisi dinamica consiste nell'eseguire l'oggetto da verificare. Durante l'esecuzione si possono eseguire dei test, che devono essere \textbf{ripetibili} e \textbf{automatizzabili}. I test devono essere ripetibili per evitare regressioni del software e automatizzati per essere più efficienti.
+ Per farlo si usano:
+\begin{itemize}
+    \item \textbf{Driver}, che permette di invocare il componente da testare se ancora nessuno lo chiama;
+    \item \textbf{Stub}, che evita le chiamate a moduli non testati;
+    \item \textbf{Logger}, che traccia i test.
+\end{itemize}
+
+Vediamo le tipologie di test più comuni:
+\begin{itemize}
+    \item \textbf{Unità}: verificano il singolo componente in isolamento. Si suddividono in funzionali e strutturali, i primi si basano sulle specifiche funzionali e non sull'implementazione, cioè verificano il comportamento dell'unità in base alle specifiche, i secondi invece sulla struttura interna del codice, come ad esempio la copertura dei rami.
+    \item \textbf{Regressione}: verificano che modifiche o correzioni non introducano nuovi errori in parti del codice già verificate. Ripetiamo i test già eseguiti. 
+    \item \textbf{Integrazione}: verifichiamo che più unità già testate singolarmente possano essere integrate, cioè interagiscano correttamente.
+    \item \textbf{Sistema}: verificano la totalità del sistema rispetto ai requisiti. Andiamo a collaudare il sistema con il committente, questo fa parte del processo di validazione, trattato nella sezione successiva
+\end{itemize}
+
 \subsection{Processo di validazione}
+La validazione serve a verificare se i requisiti e le aspettative della proponente sono stati soddisfatti tramite test di accettazione. Questi test simulano uno scenario realistico, permettendo di mostrare il prodotto alla proponente e raccogliere il suo feedback. 
+
 \subsection{Processo di revisione congiunta}
 \subsection{Processo di risoluzione dei problemi}
 \subsection{Gestione della qualità}
 
-\section{Processi Organizzativi}
 
+\section{Processi Organizzativi}
 \subsection{Gestione}
 
-\subsection{Processo di Infrastruttura}
+\subsection{Infrastruttura}
 Il processo di Infrastruttura fornisce il supporto tecnico necessario per lo
 sviluppo e la gestione del progetto.
-I ruoli coinvolti in questo processo sono:
-\begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-        \centering
-        \begin{spacing}{1.1}
-        \begin{tabular}{|c|c|c|c|c|}
-            \hline
-            \textbf{Ruolo} & \textbf{Specifica} \\
-            \hline
-            Amministratore & Ruolo incaricato di gestire le risorse e i processi di infrastruttura. \\
-            \hline
-            Responsabile &\begin{tabular}[c]{@{}c@{}} Ruolo incaricato di coordinare le attività di infrastruttura e di controllare\\ che questa faciliti e assista il team. \end{tabular} \\
-            \hline
-            Verificatori & \begin{tabular}[c]{@{}c@{}}A tutti i membri è richiesto di porre attenzione nell'utilizzo dei tool e \\delle procedure al fine di poter risolvere eventuali malfunzionamenti\\ e per contribuire al miglioramento continuo \end{tabular} \\
-            \hline
-        \end{tabular}
-        \end{spacing}
-    \end{adjustwidth}
-\end{table}
 
-\subsubsection{Attività: Implementazione} \label{implementazioneInfrastruttura}
-L'attività di Implementazione comprende la selezione, l'installazione e il testing degli strumenti e delle tecnologie necessarie per supportare le attività di progetto.
-È la prima fase del processo di infrastruttura e getta le basi per le successive attività di creazione e manutenzione.
+\subsubsection{Attività di processo}
+Il processo si articola nelle seguenti attività principali:
+\begin{itemize}
+    \item \textbf{Implementazione:} scelta, configurazione e gestione degli strumenti e delle tecnologie necessarie per supportare le attività di progetto.
+    \item \textbf{Creazione:} sviluppo e manutenzione dell'infrastruttura tecnica, strumenti, procedure e ambienti di sviluppo.
+    \item \textbf{Manutenzione:} aggiornamento, monitoraggio e risoluzione di eventuali problemi legati all'infrastruttura esistente.
+\end{itemize}
 
-\paragraph{Procedure di Implementazione}
-Le seguenti procedure guidano il Team nella scelta degli strumenti di
-infrastruttura, garantendo un uso coerente al contesto di sviluppo ed efficiente delle risorse
-disponibili.
-\begin{enumerate}
-    \item \textbf{Analisi delle necessità:} il Responsabile e Amministratore analizzano le necessità del prodotto finale e del team di sviluppo.
-    \item \textbf{Valutazione delle opzioni:} vengono valutate diverse soluzioni tecnologiche in base a criteri quali costo, scalabilità, facilità d'uso e supporto.
-    \item \textbf{Selezione degli strumenti:} viene effettua la scelta degli strumenti più adatti per soddisfare i requisiti identificati.
-\end{enumerate}
-\paragraph{Strumenti di Implementazione}
-Non sono previsti strumenti specifici per questa fase, in quanto la scelta degli
-strumenti avviene in base alle necessità e viene effettuata in base agli standard di mercato e alle best practice del settore.
-Per la gestione della task di implementazione si rimanda a \ref{Jira}.
-
-
-\subsubsection{Attività: Creazione} \label{creazioneInfrastruttura}
-L'attività di Creazione riguarda lo sviluppo e l'integrazione degli strumenti e delle tecnologie selezionate durante la fase di Implementazione.
-Questa fase include la configurazione degli ambienti di sviluppo, la creazione di procedure operative e la documentazione degli strumenti utilizzati.
-
-\paragraph{Procedure di Creazione}
+\subsubsection{Procedure di processo}
 Le seguenti procedure guidano il Team nell'utilizzo degli strumenti di
 infrastruttura, garantendo un uso coerente ed efficiente delle risorse
 disponibili.
-\begin{enumerate}
-    \item \textbf{Integrazione:} gli strumenti selezionati vengono integrati nell'ambiente di sviluppo esistente. 
-    \item \textbf{Documentazione:} viene mantenuta una documentazione aggiornata sugli strumenti utilizzati, le loro configurazioni e le procedure operative. 
-    Così facendo tutto il team può accedere facilmente alle informazioni necessarie per utilizzare gli strumenti in modo efficace.
-\end{enumerate}
 
-\paragraph{Strumenti di Creazione}
-Gli strumenti adottati per il testing delle tecnologie e la documentazione sono i seguenti.
-\paragraph{Jira} \label{Jira}
-Come descritto in \ref{pianificazioneDocs}, è necessaria la creazione di una issue concordata in fase di pianificazione per ogni nuovo strumento da adottare. 
-In questo modo si garantisce la tracciabilità della decisione e la documentazione delle motivazioni alla base della scelta.
-\paragraph{GitHub} \label{GitHub}
-Strumento per l'hosting utilizzato per il testing delle nuove tecnologie. 
-Ogni nuova tecnologia deve essere testata nell'apposita repository o branch, per evitare di compromettere l'infrastruttura esistente.
-Per gli standard di versionamento e gestione delle branch si rimanda a \ref{stdBranch}.
-
-\subsubsection{Attività: Manutenzione}
-L'attività di Manutenzione riguarda l'aggiornamento, il monitoraggio e la risoluzione di eventuali problemi legati agli strumenti e alle tecnologie
-utilizzati nel progetto.
-
-\paragraph{Procedure di Manutenzione}
-Le seguenti procedure guidano il Team nella manutenzione degli strumenti di
-infrastruttura, garantendo la loro efficienza e affidabilità nel tempo.
-\begin{enumerate}
-    \item \textbf{Monitoraggio continuo:} viene effettuato un monitoraggio costante delle prestazioni degli strumenti per identificare eventuali problemi o inefficienze.
-    \item \textbf{Aggiornamenti regolari:} gli strumenti vengono aggiornati regolarmente per garantire la sicurezza e l'efficienza.
-    \item \textbf{Supporto tecnico:} viene fornito supporto tecnico ai membri del team per l'utilizzo degli strumenti di infrastruttura.
-    \item \textbf{Disaster Recovery:} viene mantenuto un'analisi dei rischi per i processi di progetto.
-\end{enumerate}
-In vista dell'attività di produzione di codice, l'infrastruttura verrà aggiornata e ampliata per poter rimanere al passo con le nuove necessità.
-Sono in particolare previste le seguenti aggiunte:
-\begin{itemize}
-    \item \textbf{Tracciamento dei requisiti:} Deploy di uno strumento automatico per il tracciamento dei requisiti che ammetta codice solo se i requisiti sono stati tracciati correttamente.\\ Tale codice è in fase di scrittura e verrà integrato non appena testato.
-    \item \textbf{Integrazioni di Analisi Statica e Dinamica:} Deploy di strumenti di analisi statica e dinamica del codice per garantire la qualità del software prodotto.
-    \item \textbf{CI/CD:} Implementazione di pipeline di integrazione continua e distribuzione continua per automatizzare il processo di build, test e rilascio del software.
-\end{itemize}
-
-\paragraph{Strumenti di Manutenzione}
-Gli strumenti adottati per il monitoraggio e la manutenzione dell'infrastruttura sono i seguenti.
-\begin{itemize}
-    \item \textbf{Jira:} Tracciamento delle attività di manutenzione e monitoraggio degli interventi effettuati.
-    \item \textbf{GitHub:} Gestione dei branch di hotfix e documentazione degli update di sicurezza e stabilità.
-\end{itemize}
-
-\paragraph{Criteri di Scelta degli Strumenti}
-La scelta degli strumenti di infrastruttura segue i seguenti criteri misurabili:
-\begin{itemize}
-    \item \textbf{Costo:} Valutare il rapporto costo-beneficio e la sostenibilità economica a lungo termine.
-    \item \textbf{Scalabilità:} Verificare la capacità dello strumento di adattarsi alle crescenti esigenze del progetto.
-    \item \textbf{Facilità d'uso:} Assicurare che lo strumento sia intuitivo e richieda un tempo di apprendimento minimo.
-    \item \textbf{Supporto e Comunità:} Valutare la disponibilità di documentazione, supporto tecnico e comunità attiva.
-    \item \textbf{Integrazione:} Verificare la compatibilità con gli strumenti già in uso nel progetto.
-    \item \textbf{Sicurezza:} Assicurare che lo strumento rispetti gli standard di sicurezza e privacy richiesti dal progetto.
-\end{itemize}
-
-\section{Knowledge Base}
-In questa sezione sono contenute le informazioni principali sugli strumenti implementati dal gruppo, completi di istruzioni per le singole procedure e best practice adottate.
+\subsubsection{Strumenti a supporto}
 \paragraph{GitHub} \label{GitHub}
 Piattaforma di hosting per il versionamento e la gestione dei contenuti di
 progetto. Il Team deve sfruttare appieno le potenzialità di GitHub, in
 particolare per l'integrazione con Jira. Vengo quindi descritti gli Smart
 Commit, lo standard per la scrittura di commit e la gestione dello stato di
-vita degli work item.\\
-L'\textit{Enterprise} 7-ZPUs su GitHub è accessibile a tutti i membri del gruppo e
-viene utilizzata per la gestione del codice sorgente, della documentazione e
-degli artefatti di progetto. È organizzata in repository specifiche, Docs per la documentazione e PoC per il Proof of Concept.\\
-La Repository è strutturata come segue:
-\begin{itemize}
-    \item \textbf{1\_Candidatura}: Directory contenente tutta la documentazione prodotta per la candidatura al Progetto di Ingegneria del Software.
-    \item \textbf{2\_RTB}: Directory contenente tutta la documentazione prodotta prima del raggiungimento della milestone di RTB.
-    \begin{itemize}
-        \item Verbali \begin{itemize}
-            \item Interni
-            \item Esterni
-    \end{itemize}
-    \item \textbf{gh-pages}: Directory contenente la pagina GitHub Pages del progetto.
-    \end{itemize}
-\end{itemize}
-
-\subparagraph{GitHub Action}
-Le GitHub Action sono utilizzate per automatizzare i flussi di lavoro all'interno del repository. 
-Il Team ha implementato diverse azioni per migliorare l'efficienza del processo di sviluppo, tra cui:
-\begin{itemize}
-    \item Test di Complessità del Testo LaTeX ad ogni commit (Indice Gulpease) 
-    \item Aggiornamento della pagina GitHub Pages ad ogni rilascio della pagina di Glossario
-\end{itemize}
-Tali file sono presenti nella cartella \texttt{.github/workflows} della repository.
-
+vita degli work item.
 
 \paragraph{Jira} \label{Jira}
 Strumento di gestione delle attività di progetto adottato per potenzialità e
 flessibilità del sistema. Permette di tracciare le attività di progetto,
 assegnarle ai membri del gruppo, monitorare lo stato di avanzamento e gestire
-le scadenze.
+le scadenze.\\
 
 \subparagraph{Automation}\label{JiraAutomation}
 Il Team ha deciso di adottare alcune automazioni per facilitare la gestione
 delle attività di progetto. Le automazioni attualmente implementate sono:
 \begin{itemize}
     \item Make child work items inherit labels from parent work items
-    \item When a commit is made $\rightarrow$ then move issue to in progress
-    \item When all child work items are completed $\rightarrow$ then close parent
-    \item When all sub-tasks are done $\rightarrow$ move parent to done
-    \item When Item In Progress $\rightarrow$ Parent In Progress
-    \item Diario Assegnato $\rightarrow$ Creo Preparazione Slide
-    \item Riunione Assegnata $\rightarrow$ Creo Scrittura Verbale
+    \item When a commit is made → then move issue to in progress
+    \item When all child work items are completed → then close parent
+    \item When all sub-tasks are done → move parent to done
+    \item When Item In Progress → Parent In Progress
+    \item Diario Assegnato → Creo Preparazione Slide
+    \item Riunione Assegnata → Creo Scrittura Verbale
 \end{itemize}
-
-\subparagraph{Smart Dashboard}\label{JiraDashboard}
-Il Team utilizza una dashboard personalizzata per monitorare lo stato di
-avanzamento delle attività di progetto. La dashboard include grafici e
-report che forniscono una panoramica delle attività in corso, delle scadenze e
-delle performance del team. La dashboard è accessibile a tutti i membri del gruppo (\href{https://7zpus.atlassian.net/jira/dashboards/10000}{\ul{Dashboard})\setulcolor{black}} e viene
-aggiornata automaticamente in base alle modifiche apportate alle attività di
-progetto.
-È stata scelta tra gli strumenti principali per la gestione delle attività di progetto e per la tracciabilità delle ore lavorate.\\
-Una dashboard ad hoc è stata creata per l'azienda proponente, in modo da poter monitorare l'andamento del progetto in tempo reale, la quale l'ha accolta positivamente.
-
-\subparagraph{Jira Smart Commit} \label{smartcommit}
-Gli Smart Commit sono utilizzati per collegare i commit GitHub alle issue Jira. Questo permette di aggiornare automaticamente lo stato delle task e rendicontare il
-tempo.\\
-
-La sintassi obbligatoria è:
-\begin{verbatim}
-DIPR-<numero issue> #time <nd nh nm> #<stato> #comment <Descrizione> 
-\end{verbatim}
-
-\textbf{Regole di applicazione:}
-\begin{enumerate}
-    \item \textbf{Time Tracking:} L'inserimento del tempo (\texttt{\#time}) deve seguire il formato \textit{nd nh nm} (giorni, ore, minuti).
-    \item \textbf{Transizioni di Stato:} Utilizzare i tag \texttt{\#start-progress}, \texttt{\#start-review}, \texttt{\#complete} per avanzare il workflow su Jira.
-    \item \textbf{Pull Request:} Nelle PR è vietato inserire il tag \texttt{\#time} per evitare la doppia contabilizzazione delle ore lavorative.
-    \item \textbf{Issue Multiple:} È possibile agire su più issue in un singolo commit separandole con spazi (utile per chiudere issue di sviluppo e verifica contemporaneamente).
-\end{enumerate}
-Importante precisazione: affinchè i commit vengano riconosciuti da Jira, è necessario che la \textbf{email} con cui si effettua il commit sia la \textbf{stessa associata all'account Jira}.
 
 \paragraph{VSCode} \label{vscode}
 Ambiente di sviluppo integrato (IDE) utilizzato per la scrittura del codice e
@@ -904,161 +809,9 @@ adattino allo standard comune. Le estensioni attualmente utilizzate sono:
 Altre estensioni come GitHub Copilot possono essere utilizzate a discrezione del
 membro del gruppo, al fine di velocizzare, per esempio, il processo di Documentazione \ref{documentazione}.
 
-\subparagraph{Atlassian: Jira, Rovo Dev, Bitbucket}
-Estensione per l'integrazione di Jira e GitHub in VSCode. Permette di visualizzare e gestire le issue Jira direttamente dall'IDE, creare branch di
-lavoro basati sulle issue e monitorare lo stato di avanzamento delle attività.\\
-\subparagraph{GitHub Pull Requests and Issues}
-Estensione per la gestione delle pull request e delle issue GitHub. Permette di
-creare, revisionare e gestire le pull request direttamente dall'IDE, migliorando
-l'efficienza del processo di revisione del codice.\\
+\subsection{Miglioramento}
 
-\paragraph{Google Presentazioni}
-Strumento utilizzato per la creazione dei Diari di Bordo. La scelta di
-questo strumento è dovuta alla sua facilità d'uso e alla possibilità di
-collaborare in tempo reale tra i membri del gruppo.
-Cosi è possibile tracciare le problematiche e i dubbi emersi durante lo
-svolgimento delle attività di progetto.
-Per i DIari di Bordo è stato impostato un template presente nel Google Drive di gruppo.
-
-\paragraph{Google Drive}
-Strumento di archiviazione e condivisione dei file con l'azienda proponente e per la condivisione rapida dei Diari di Bordo.
-\\ Questo strumento è inoltre utilizzato come mezzo di condivisione dei file con \textbf{Sanmarco Informatica}, quali materiali formativi, materiale d'esempio e normative aziendali.
-Sempre tramite Google Drive vengono condivisi i verbali esterni con l'azienda proponente, in modo da poter essere approvati e archiviati in modo sicuro.
-
-\paragraph{Google Mail}
-Strumento di comunicazione formale con l'azienda proponente e per la gestione delle comunicazioni ufficiali del gruppo.\\
-Tutti i membri del gruppo devono utilizzare l'account di posta elettronica ufficiale del gruppo per le comunicazioni formali, garantendo così la tracciabilità e 
-la professionalità nelle interazioni esterne.\\
-Le comunicazioni esterne sono gestite dal Responsabile salvo diverse indicazioni, il quale deve ricordare che parla a nome di tutto il gruppo.
-
-\paragraph{Discord}
-Strumento di comunicazione principale del gruppo, utilizzato per la coordinazione delle attività, la condivisione di informazioni e la
-collaborazione tra i membri del team.\\
-L'accesso al server Discord del gruppo è obbligatorio per tutti i membri, in quanto rappresenta il canale ufficiale di comunicazione e supporto.
-
-\paragraph{Whatsapp}
-Strumento di comunicazione informale e sincrono tra i membri del gruppo, utilizzato per la coordinazione rapida delle attività e la condivisione di informazioni urgenti.\\
-Si raccomanda di essere particolarmente responsivi su questo canale, in quanto spesso viene utilizzato per comunicazioni che richiedono una risposta tempestiva.
-
-\subsection{Processo di Miglioramento}
-Il processo di miglioramento continuo mira a identificare e implementare
-modifiche ai processi e alle pratiche di progetto per aumentare l'efficienza
-e la qualità del lavoro svolto.
-
-\subsubsection{Attività: Analisi degli Incidenti}
-L'attività di Analisi degli Incidenti riguarda l'identificazione, documentazione e risoluzione dei problemi riscontrati durante l'utilizzo degli strumenti e dei processi di progetto.
-\paragraph{Procedure di Analisi degli Incidenti}
-Le seguenti procedure guidano il Team nella gestione degli incidenti e nella formulazione di soluzioni:
-\begin{enumerate}
-    \item \textbf{Segnalazione:} Qualsiasi membro del team può segnalare un incidente tramite Jira creando un'issue con label "incident".
-    \item \textbf{Analisi della causa radice:} Il Responsabile coordina l'analisi per identificare le cause sottostanti.
-    \item \textbf{Implementazione della soluzione:} Una volta identificata la causa, viene pianificata e implementata una soluzione.
-    \item \textbf{Verifica della risoluzione:} Viene verificato che la soluzione risolva effettivamente l'incidente.
-    \item \textbf{Archiviazione e apprendimento:} L'incidente e la soluzione vengono archiviati per consultazione futura e per evitare ricorrenze. Tali informazioni vengono tracciate nei Verbali Interni e nei Piano di Progetto.
-\end{enumerate}
-
-\subsubsection{Attività: Monitoraggio degli Strumenti}
-Il monitoraggio degli strumenti è un'attività fondamentale per garantire che tutti i membri del gruppo utilizzino gli strumenti in modo efficace e coerente. Questo include il controllo dell'utilizzo dei tool di comunicazione, collaborazione e gestione del progetto, nonché l'identificazione di eventuali problemi o inefficienze.
-\paragraph{Procedure di Monitoraggio}
-Le seguenti procedure guidano il Team nel monitoraggio degli strumenti di
-progetto, garantendo un uso coerente ed efficiente delle risorse
-disponibili.
-\begin{enumerate}
-    \item \textbf{Raccolta feedback:} viene raccolto il feedback dai membri del team sull'efficacia degli strumenti utilizzati.
-    \item \textbf{Analisi delle prestazioni:} vengono analizzate le prestazioni degli strumenti per identificare eventuali problemi o inefficienze. A questo scopo si possono utilizzare metriche specifiche per lo strumento e la task presa in considerazione.
-\end{enumerate}
-\paragraph{Strumenti di Monitoraggio}
-Gli strumenti adottati per il monitoraggio degli strumenti di progetto sono i seguenti.
-\begin{itemize}
-    \item \textbf{Jira:} Utilizzato per tracciare le attività di monitoraggio e raccogliere feedback dai membri del team.
-    \item \textbf{Discord:} Utilizzato per comunicare con i membri del team e raccogliere feedback sugli strumenti utilizzati.
-    \item \textbf{Whatsapp:} Utilizzato per comunicazioni rapide e raccolta di feedback urgenti.
-\end{itemize}
-
-\subsubsection{Attività: Modifiche all'Infrastruttura}
-L'attività di Modifiche all'Infrastruttura riguarda l'implementazione di
-modifiche agli strumenti e alle tecnologie utilizzate nel progetto, al fine di
-migliorarne l'efficienza e l'affidabilità.
-\paragraph{Procedure di Modifica}
-Le seguenti procedure guidano il Team nell'implementazione delle modifiche
-all'infrastruttura di progetto, garantendo un uso coerente ed efficiente delle
-risorse disponibili.
-\begin{enumerate}
-    \item \textbf{Pianificazione delle modifiche:} viene pianificata l'implementazione delle modifiche, definendo gli obiettivi, le risorse necessarie e i tempi di esecuzione.
-    \item \textbf{Implementazione delle modifiche:} le modifiche vengono implementate secondo la pianificazione stabilita e seguendo le stesse norme descritte in \ref{implementazioneInfrastruttura} e \ref{creazioneInfrastruttura}.
-    \item \textbf{Verifica delle modifiche:} viene effettuata una verifica delle modifiche per garantire che siano state implementate correttamente e che abbiano raggiunto gli obiettivi prefissati.
-\end{enumerate}
-\paragraph{Strumenti di Modifica}
-Gli strumenti adottati per l'implementazione delle modifiche all'infrastruttura di progetto sono i seguenti.
-\begin{itemize}
-    \item \textbf{Jira:} Utilizzato per tracciare le attività di modifica e monitorare lo stato di avanzamento.
-    \item \textbf{GitHub:} Utilizzato per gestire i branch o repository di testing degli strumenti e per la documentazione di questi ultimi.
-\end{itemize}
-
-\subsubsection{Frequenza dei Cicli di Miglioramento}
-I cicli di miglioramento continuo seguono una cadenza regolare:
-\begin{itemize}
-    \item \textbf{Review settimanale:} Durante le riunioni di team, vengono discussi brevemente i feedback e i problemi riscontrati.
-    \item \textbf{Review mensile:} Una sessione dedicata mira a identificare modelli nei feedback e proporre miglioramenti significativi.
-    \item \textbf{Review trimestrale:} Una valutazione più approfondita della qualità complessiva dei processi e dell'infrastruttura.
-\end{itemize}
-
-\subsubsection{Metriche di Miglioramento}
-Il progresso dei miglioramenti implementati viene misurato attraverso le seguenti metriche:
-\begin{itemize}
-    \item \textbf{Tempo di Risoluzione degli Incidenti:} Media del tempo impiegato per risolvere i problemi segnalati (target: $<$ 48 ore per problemi critici).
-    \item \textbf{Satisfaction Index:} Feedback qualitativo raccolto dai membri del team sulla soddisfazione riguardo gli strumenti e i processi.
-    \item \textbf{Adoption Rate:} Percentuale di utilizzo effettivo dei nuovi strumenti o processi implementati.
-    \item \textbf{Numero di Incidenti Ricorrenti:} Monitoraggio dei problemi che si ripetono, indicatore di efficacia della risoluzione.
-\end{itemize}
-
-\subsection{Processo di Formazione}
-Il processo di formazione mira a garantire che tutti i membri del gruppo abbiano le competenze e le conoscenze necessarie per svolgere efficacemente le loro attività di progetto.
-
-\subsubsection{Attività: Pianificazione della Formazione}
-La pianificazione della formazione è un'attività fondamentale per garantire un'efficace trasmissione delle conoscenze. 
-La pianificazione di queste attività segue la pianificazione generale del progetto, in modo da integrare la formazione con le altre attività di progetto.
-\paragraph{Procedure di Pianificazione}
-Le seguenti procedure guidano il Team nella pianificazione delle attività di
-formazione, garantendo un uso coerente ed efficiente delle risorse
-disponibili.
-\begin{enumerate}
-    \item \textbf{Identificazione delle necessità formative:} vengono identificate le necessità formative dei membri del team, in base alle competenze richieste per le attività di progetto.
-    \item \textbf{Pianificazione delle attività formative:} vengono pianificate le attività formative, definendo gli obiettivi, i contenuti, le risorse necessarie e i tempi di erogazione.
-    \item \textbf{Allocazione delle risorse:} vengono allocate le risorse umane e strumentali necessarie per garantire l'efficacia della formazione.
-\end{enumerate}
-
-\subsubsection{Attività: Erogazione della Formazione}
-L'erogazione della formazione si implementa attraverso sessioni di formazione. In particolare, sono identificabili due tipologie di sessioni:
-
-\paragraph{Procedure di Erogazione}
-Le seguenti procedure guidano il Team nell'erogazione delle attività di
-formazione e la condivisione delle conoscenze al fine di migliorare le competenze dell'intero gruppo.
-\begin{itemize}
-    \item \textbf{Formazione Autonoma:} Sessioni di formazione condotte dai membri del gruppo con competenze specifiche su determinati argomenti e strumenti in modo individuale.
-    \item \textbf{Confronto:} Sessioni di formazione condotte da tutti i membri coinvolti su un argomento specifico, con l'obiettivo di condividere conoscenze, best practice e formulare soluzioni comuni.
-    \item \textbf{Archiviazione:} I materiali e le note della formazione vengono salvati nelle Norme di Progetto per rendere disponibili a tutti i materiali di Formazione.
-\end{itemize}
-
-\subsubsection{Attività: Valutazione della Formazione}
-L'attività di Valutazione della Formazione serve a verificare l'efficacia delle sessioni di formazione e l'acquisizione delle competenze da parte dei partecipanti.
-\paragraph{Procedure di Valutazione}
-Le seguenti procedure guidano il Team nella valutazione dell'efficacia della formazione:
-\begin{enumerate}
-    \item \textbf{Feedback immediato:} Al termine di ogni sessione di formazione, viene raccolto feedback qualitativo dai partecipanti sulla chiarezza e l'utilità dei contenuti.
-    \item \textbf{Verifica pratica:} Nei giorni successivi alla formazione, vengono assegnati esercizi pratici o task che richiedono l'applicazione delle conoscenze apprese.
-    \item \textbf{Valutazione del risultato:} Le performance nei task assegnati vengono valutate per determinare il livello di acquisizione delle competenze.
-    \item \textbf{Seguito:} Nel caso in cui i risultati della valutazione indichino lacune, viene organizzata formazione integrativa.
-\end{enumerate}
-
-\paragraph{Strumenti di Valutazione}
-Gli strumenti utilizzati per la valutazione della formazione includono:
-\begin{itemize}
-    \item \textbf{Jira:} Per tracciare i task di verifica assegnati post-formazione.
-    \item \textbf{Discord:} Per la discussione e il confronto tra i membri coinvolti nella formazione.
-    \item \textbf{VSCode:} IDE principale del gruppo che grazie alle integrazioni con Jira e GitHub permette una gestione semplice della procedura di Verifica pratica.
-\end{itemize}
-
+\subsection{Formazione}
 
 \section{Metriche della qualità}
 
