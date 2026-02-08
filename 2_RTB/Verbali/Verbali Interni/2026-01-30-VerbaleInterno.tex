@@ -1,0 +1,254 @@
+\documentclass[a4paper,12pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\definecolor{lightblack}{gray}{0.35}
+\newcommand{\glossario}[1]{\textit{#1}\textsubscript{\textbf{\textit{\textcolor{lightblack}{G}}}}}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 2026/01/30 \\
+\textbf{Durata:} 1 ora\\
+\textbf{Luogo:} Incontro online (Discord)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    0.1 & 2026/02/07 & Rocco Matteo A. & Vigolo Davide & \begin{tabular}[c]{@{}l@{}}Creazione del verbale\\ e stesura iniziale\end{tabular} \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+\end{itemize}
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Retrospettiva dello sprint e riflessioni
+    \item Definizione dei ruoli
+    \item Pianificazione delle prossime attività e decisioni
+\end{enumerate}
+
+
+\section{Svolgimento e Discussione}
+
+\subsection{Retrospettiva dello sprint e riflessioni}
+Il gruppo ha discusso le difficoltà incontrate durante lo \glossario{sprint} 5, in particolare quelle legate alla rendicontazione e pianificazione del tempo necessario per lo svolgimento delle attività. È emersa l'importanza di una pianificazione più dettagliata e dell'utilizzo più rigoroso di Jira, in particolare la stima del tempo necessario per ogni task e l'inserimento del tempo effettivamente impiegato.\\
+Per avere un quadro più chiaro e immediato della rendicontazione del tempo collegata al budget di progetto si è deciso di normare l'utilizzo di un apposito foglio di calcolo condiviso che comprende tabelle aggiornate dinamicamente in base ai tempi inseriti, contenenti i costi previsti ed effettivi per ogni sprint e per ogni membro del gruppo in relazione al ruolo svolto.\\
+
+Si è rivelata inefficace la pianificazione iniziale delle attività dello scorso periodo, caratterizzati da un carico di lavoro eccessivo in rapporto al tempo disponibile, notevolmente ridotto a causa della sessione d'esami e della concomitanza con la consegna del progetto didattico del corso di Tecnologie Web.\\
+In particolare nonostante fosse stato previsto il rischio \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/PianoDiProgetto.pdf}{RO05} le azioni intraprese per mitigarlo non sono state sufficienti a garantire il completamento di tutte le attività pianificate, causando il non rispetto delle dipendenze tra task e quindi amplificando ulteriormente i ritardi.\\
+
+Tenendo conto delle osservazioni di cui sopra, il gruppo ha deciso di approfondire la fase di analisi delle attività da svolgere, identificando con maggiore precisione le dipendenze tra task e stimando in modo più accurato il tempo necessario per il loro completamento.\\ 
+
+\subsection{Definizione dei ruoli}
+I ruoli principali assegnati a ciascun membro per questo sprint sono i seguenti:
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm}
+    \centering
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Membro} & \textbf{Ruolo} \\
+    \hline
+    Laoud Zakaria & Responsabile \\
+    \hline
+    Georgescu Diana & Amministratore \\
+    \hline
+    Gingilino Aaron & Analista \\
+    \hline
+    Fattoni Antonio & Programmatore \\
+    \hline
+    Rocco Matteo A. & Analista \\
+    \hline
+    Soligo Lorenzo & Programmatore \\
+    \hline
+    Vigolo Davide & Amministratore \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+\textbf{Tutti} i membri del gruppo faranno anche da \textbf{verificatori}, inoltre alcuni membri si occuperanno della scrittura delle norme di progetto, con ruolo conformemente assegnato a seconda del paragrafo di competenza.
+
+\section{Pianificazione delle prossime attività e decisioni}
+Il gruppo ha individuato le attività principali da svolgere durante il prossimo sprint, che includono:
+\begin{itemize}[noitemsep]
+    \item Completamento del documento di analisi dei requisiti, in particolare la sezione di tracciamento fonti-requisiti e dei requisiti di qualità e di vincolo.
+    \item Completamento del testing sulla Ricerca Semantica per il PoC.
+    \item Controllo formale dei documenti prodotti finora e aggiornamento della repository con le versioni finali dei documenti, in vista della baseline RTB.
+    \item Aggiornamento dei paragrafi mancanti delle norme di progetto, con assegnazione dei compiti in base alle competenze e ai ruoli dei membri del gruppo.
+    \item Invio di una mail a Sanmarco Informatica per posticipare il prossimo incontro di allineamento previsto per il prossimo 5 febbraio per poter avere più materiale da mostrare e discutere durante l'incontro, in particolare per quanto riguarda i risultati dei test sulla Ricerca Semantica.
+    \item Completamento del Piano di Qualifica.
+    \item Aggiornamento del Glossario con i termini emersi durante l'analisi dei requisiti e lo studio delle tecnologie per il Proof of Concept.
+    \item Definizione attività di preparazione alla baseline RTB.
+\end{itemize}
+
+
+\section*{Tabella delle decisioni}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
+    \hline
+    \#0 & Redazione del verbale interno& \href{https://7zpus.atlassian.net/browse/DIPR-211}{DIPR-211} & Rocco Matteo A. & Vigolo Davide \\
+    \hline
+    \#1 & \begin{tabular}[c]{@{}c@{}}Invio mail di \\ posticipa a Sanmarco \end{tabular} & --- & Fattoni Antonio & --- \\
+    \hline
+    \#2 & \begin{tabular}[c]{@{}c@{}}Completamento sezione di\\ cruscotto di qualità\\ e inserimento sezione\\ di test \end{tabular} & \begin{tabular}[c]{@{}c@{}} \href{https://7zpus.atlassian.net/browse/DIPR-??}{DIPR-??} \\ \href{https://7zpus.atlassian.net/browse/DIPR-??}{DIPR-??} \end{tabular}  & \begin{tabular}[c]{@{}c@{}} Davide Vigolo \\ Rocco Matteo A. \end{tabular}  & Soligo Lorenzo \\
+    \hline
+    \#3 & \begin{tabular}[c]{@{}c@{}} Studio delle tecnologie\\ per Ricerca Semantica  \end{tabular}&  \href{https://7zpus.atlassian.net/browse/DIPR-??}{DIPR-??} & Soligo Lorenzo & ?? \\
+    \hline
+    \#4 & \begin{tabular}[c]{@{}c@{}}Completamento Paragrafi delle\\Norme di Progetto mancanti  \end{tabular}& \begin{tabular}[c]{@{}c@{}} \href{https://7zpus.atlassian.net/browse/DIPR-??}{DIPR-??} \\ \href{https://7zpus.atlassian.net/browse/DIPR-??}{DIPR-??} \\ \href{https://7zpus.atlassian.net/browse/DIPR-??}{DIPR-??} \end{tabular} & \begin{tabular}[c]{@{}c@{}} Vigolo Davide \\ Fattoni Antonio \\ Rocco Matteo A. \end{tabular} & \begin{tabular}[c]{@{}c@{}} ?? \\ ?? \\ ?? \end{tabular} \\
+    \hline
+    \#5 & \begin{tabular}[c]{@{}c@{}} Stesura lettera di \\ candidatura per RTB \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-??}{DIPR-??} & Laoud Zakaria & ?? \\
+    \hline
+    \#6 & \begin{tabular}[c]{@{}c@{}} Revisione generale\\ forma documentazione  \end{tabular}&  \href{https://7zpus.atlassian.net/browse/DIPR-??}{DIPR-??} & Rocco Matteo A. & ?? \\
+    \hline
+    \#7 & Aggiornamento Glossario & \href{https://7zpus.atlassian.net/browse/DIPR-??}{DIPR-??} & Georgescu Diana & ?? \\
+    \hline
+    \#8 & Aggiornamento sito web & \href{https://7zpus.atlassian.net/browse/DIPR-??}{DIPR-??} & Fattoni Antonio & ?? \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
