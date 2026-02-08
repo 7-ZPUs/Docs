@@ -60,7 +60,6 @@ def calculate_gulpease(text):
     # Mantieni solo lettere, numeri e punteggiatura terminativa
     clean_text = re.sub(r'[^\w\s\.\,\!\?\'\’]', '', text, flags=re.UNICODE)
     clean_text = re.sub(r'\s+', ' ', clean_text).strip()
-    print(clean_text)
 
     # 9. CALCOLO METRICHE
     words_list = re.findall(r'\w+', clean_text)
