@@ -105,6 +105,9 @@
         \begin{tabular}{|c|c|c|c|c|}
             \hline
             \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione} \\
+            \hline
+            0.12 & 2026/02/08 & Vigolo Davide & - & Definizione metriche di qualità \\
+            \hline
             0.11 & 6/2/2026 & Laoud Zakaria & Soligo Lorenzo & Stesura paragrafi 3.6, 3.7, 3.8 \\
             \hline
             0.10 & 25/01/2025 & Aaron Gingillino & Vigolo Davide & Scrittura paragrafi 2.2, 4.1 \\
@@ -1363,7 +1366,6 @@ Gli strumenti utilizzati per la valutazione della formazione includono:
 
 \section{Metriche della qualità} \label{metriche_qualita}
 
-\subsection{Attività per la qualità}
 Lo standard ISO/IEC 9126-1:1999 individua tre categorie fondamentali di requisiti per la qualità che concorrono alla creazione del prodotto e interconnesse tra loro secondo il Modello a V\hyperref[fig:vmodel]{\ped{(Figura 5)}} (\glossario{V-Model}):
 \begin{itemize}
     \item \textbf{Bisogni utente}: sono i requisiti che il prodotto deve soddisfare per incontrare i bisogni dell'utente. L'output corrispondente e' la qualità in uso, verificata da apposite metriche esterne.
@@ -1379,11 +1381,12 @@ Lo standard ISO/IEC 9126-1:1999 individua tre categorie fondamentali di requisit
 \end{figure}
 
 
-\subsection{Procedure per la qualità}
 Di seguito vengono indicate le metriche utilizzate per valutare la qualità del prodotto e dei processi di sviluppo.
 
-\subsubsection{Qualità di Processo}
+\subsection{Qualità di Processo}
 In questa sezione vengono definite le metriche utilizzate per valutare l'efficienza e l'efficacia dei processi del ciclo di vita del software, in conformità con lo standard ISO/IEC 12207.
+
+\subsubsection{Processi primari}
 
 \paragraph{Processo di fornitura}
 
@@ -1402,47 +1405,54 @@ In questa sezione vengono definite le metriche utilizzate per valutare l'efficie
 \metricdef{MPC-5}{Schedule Performance Index (SPI)}{Indice di efficienza della schedulazione. Un valore $< 1$ indica che il progetto è in ritardo.}
 \metricformula{SPI = \frac{EV}{PV}}
 
+\metricdef{MPC-6}{Estimate to Complete}{Rappresenta l'ammontare rimanente stimato per completare il progetto}
+\metricformula{ETC = EAC-AC}
+
+\metricdef{MPC-7}{Estimate at Completion (EAC)}{Stima totale dei costi alla fine del progetto, basata sulle performance attuali.}
+\metricformula{EAC = \frac{BAC}{CPI}}
+
 \paragraph{Processo di Sviluppo}
 
-\metricdef{MPC-11}{Work in Progress (WIP)}{Numero di task o ticket su cui il team sta lavorando attivamente in contemporanea. Un valore alto indica colli di bottiglia.}
-\metricformula{WIP = \sum \text{Ticket in stato "In Progress"}}
+\metricdef{MPC-8}{Deployment Frequency}{Frequenza con cui il team rilascia nuove versioni del software, potenzialmente trasportabili in produzione.}
+\metricformula{DF = \frac{\text{Numero di deployment}}{\text{Periodo di tempo}}}
 
-\metricdef{MPC-13}{Change Failure Rate (CFR)}{Percentuale di deployment o merge in produzione che causano un guasto richiedendo un hotfix.}
-\metricformula{CFR = \left( \frac{\text{Numero di deployment falliti}}{\text{Numero totale di deployment}} \right) \times 100}
+\metricdef{MPC-9}{Requirements Stability Index}{Rappresenta la stabilità dei requisiti del prodotto software nel tempo.}
+\metricformula{RSI = \frac{\#\text{Requisiti originali} - (\#\text{Requisiti modificati} + \#\text{Requisiti eliminati} + \#\text{Requisiti aggiunti})}{\#\text{Requisiti originali}} \cdot 100}
+
+\subsubsection{Processi di supporto}
 
 \paragraph{Processo di Documentazione}
 
-\metricdef{MPC-14}{Indice di Gulpease}{Indice che valuta la leggibilità di un testo in lingua italiana. Valori bassi indicano bassa leggibilità.}
-\metricformula{G = 89 + \frac{300 \times (\text{numero frasi}) - 10 \times (\text{numero lettere})}{\text{numero parole}}}
+\metricdef{MPC-10}{Indice di Gulpease}{Indice che valuta la leggibilità di un testo in lingua italiana. Valori bassi indicano bassa leggibilità.}
+\metricformula{G = 89 + \frac{300 \times (\#\text{Frasi}) - 10 \times (\#\text{Lettere})}{\#\text{Parole}}}
 
-\metricdef{MPC-15}{Correttezza Ortografica}{Misura la densità di errori ortografici presenti nella documentazione.}
-\metricformula{C = 1 - \left( \frac{\text{Numero errori ortografici}}{\text{Numero parole totali}} \right)}
+\metricdef{MPC-11}{Correttezza Ortografica}{Misura la densità di errori ortografici presenti nella documentazione.}
+\metricformula{C = \#\text{errori ortografici}}
 
 \paragraph{Processo di Configurazione}
 
-\metricdef{MPC-16}{Build Success Rate (BSR)}{Percentuale di build completate con successo dalla pipeline di CI/CD rispetto al totale delle build eseguite.}
-\metricformula{BSR = \left( \frac{\text{Builds con esito positivo}}{\text{Builds totali}} \right) \times 100}
-
-\metricdef{MPC-17}{Average Build Time}{Tempo medio impiegato dalla pipeline per completare il processo di build e test automatici.}
+\metricdef{MPC-12}{Average Build Time}{Tempo medio impiegato per completare il processo di build e test automatici.}
 \metricformula{T_{avg} = \frac{\sum_{i=1}^{n} T_{build\_i}}{n}}
 
 \paragraph{Processo di Verifica}
 
-\metricdef{MPC-19}{Statement Coverage}{Percentuale di istruzioni (statements) del codice sorgente eseguite durante i test automatici.}
-\metricformula{SC = \left( \frac{\text{Linee di codice eseguite}}{\text{Linee di codice totali}} \right) \times 100}
+\metricdef{MPC-13}{Code review turnaround time}{Tempo medio impiegato per completare una revisione del codice in vista di una Pull Request.}
+\metricformula{CRT = \frac{\sum_{i=1}^{n} T_{review\_i}}{n}}
 
-\metricdef{MPC-20}{Branch Coverage}{Percentuale di rami decisionali (if, switch, loop) percorsi durante i test.}
-\metricformula{BC = \left( \frac{\text{Rami percorsi}}{\text{Rami totali}} \right) \times 100}
+\metricdef{MPC-14}{Test success rate}{Percentuale di test superati rispetto al totale dei test eseguiti.}
+\metricformula{TSR = \left( \frac{\#\text{Test superati}}{\#\text{Test eseguiti}} \right) \times 100}
 
-\paragraph{Processi Organizzativi)}
+\subsubsection{Processi Organizzativi}
 
-\metricdef{MPC-21}{Retrospective Effectiveness}{Misura la capacità del team di risolvere i problemi identificati durante le retrospettive.}
-\metricformula{E_{retro} = \left( \frac{\text{Action items risolti}}{\text{Action items identificati}} \right) \times 100}
+\paragraph{Processo di Management}
 
-\metricdef{MPC-22}{Meeting Attendance}{Percentuale di presenza dei membri del team alle riunioni obbligatorie.}
-\metricformula{MA = \left( \frac{\text{Presenze effettive}}{\text{Presenze attese totali}} \right) \times 100}
+\metricdef{MPC-15}{Rischi non previsti}{Numero di rischi non previsti ad inizio periodo, per ciascun periodo di progetto.}
+\metricformula{RNP = \#\text{Rischi non previsti}}
 
-\subsubsection{Qualità di Prodotto}
+\metricdef{MPC-16}{Metriche soddisfatte}{Percentuale di metriche di qualità che vengono soddisfatte in un determinato istante di tempo.}
+\metricformula{MS = \left( \frac{\#\text{Metriche soddisfatte}}{\#\text{Metriche totali}} \right) \times 100}
+
+\subsection{Qualità di Prodotto}
 In questa sezione vengono definite le metriche per valutare la qualità intrinseca del prodotto software, basandosi sul modello ISO/IEC 9126.
 
 \paragraph{Funzionalità}
@@ -1455,11 +1465,11 @@ In questa sezione vengono definite le metriche per valutare la qualità intrinse
 
 \paragraph{Affidabilità}
 
-\metricdef{MPD-6}{Tasso Errori HTTP}{Percentuale di richieste al server che restituiscono codici di errore (4xx o 5xx) rispetto al totale delle richieste.}
-\metricformula{E_{http} = \left( \frac{\text{Richieste con status } \ge 400}{\text{Richieste totali}} \right) \times 100}
+\metricdef{MPC-19}{Statement Coverage}{Percentuale di istruzioni (statements) del codice sorgente eseguite durante i test automatici.}
+\metricformula{SC = \left( \frac{\text{Linee di codice eseguite}}{\text{Linee di codice totali}} \right) \times 100}
 
-\metricdef{MPD-NEW}{Availability (Disponibilità)}{Percentuale di tempo in cui il sistema è operativo e accessibile agli utenti.}
-\metricformula{A = \left( \frac{\text{Tempo totale} - \text{Tempo di disservizio}}{\text{Tempo totale}} \right) \times 100}
+\metricdef{MPC-20}{Branch Coverage}{Percentuale di rami decisionali (if, switch, loop) percorsi durante i test.}
+\metricformula{BC = \left( \frac{\text{Rami percorsi}}{\text{Rami totali}} \right) \times 100}
 
 \paragraph{Usabilità}
 
