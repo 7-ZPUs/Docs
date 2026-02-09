@@ -26,10 +26,18 @@ Dove:
 
 \setlength{\LTleft}{0cm}
 \renewcommand{\arraystretch}{1.3}
+
+\rowcolors{2}{gray!15}{white}
 \begin{longtable}{|p{2.5cm}|p{9.5cm}|p{2.5cm}|}
-\setlength{\LTleft}{0cm}
+\hline
+\rowcolor{zpusgreen!30}
 \textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
 \hline
+\endfirsthead
+\rowcolor{zpusgreen!30}
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endhead
 R-1-F-Ob & L'utente deve poter visualizzare l'elenco di classi documentali nel DIP & \ref{classiDocumentali} \\
 \hline
 R-2-F-Ob &  In caso non vi siano classi documentali nel DIP, l'utente deve poter visualizzare un messaggio di errore & \ref{elencoVuoto} \\
@@ -607,34 +615,91 @@ R-277-F-Ob & Se il documento selezionato non dispone di metadati custom, il sist
 
 \subsection{Requisiti di Qualità}
 
-\begin{longtable}{|p{2.5cm}|p{8cm}|p{3cm}|}
+\rowcolors{2}{gray!15}{white}
+\begin{longtable}{|p{2.5cm}|p{9.5cm}|p{2.5cm}|}
 \hline
+\rowcolor{zpusgreen!30}
 \textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
 \hline
+\endfirsthead
+\rowcolor{zpusgreen!30}
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endhead
+R-1-Q-Ob & Il sistema deve garantire un tempo di risposta inferiore a 2 secondi per il caricamento delle interfacce principali dell'applicazione & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-2-Q-Ob & Il sistema deve garantire un tempo di risposta inferiore a 2 minuti per le ricerche effettuate dall'utente & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-3-Q-Ob & Il sistema deve fornire un'interfaccia utente intuitiva e user-friendly & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-4-Q-De & Il sistema deve fornire una sezione dedicata per la consultazione dei report di integrità, presentati in modo chiaro e comprensibile & \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20Esterni/2025-12-23-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-12-23}\setulcolor{black}} \\
+\hline
+R-5-Q-Ob & Il sistema essere sottoposto a opportuni test di unità & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-6-Q-Ob & Lo sviluppo deve seguire le \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/NormeDiProgetto.pdf}{\ul{Norme di Progetto}\setulcolor{black}\ped{v1.0}} & \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/NormeDiProgetto.pdf}{\ul{Norme di Progetto}\setulcolor{black}\ped{v1.0}} \\
+\hline
+R-7-Q-Ob & Il sistema deve essere utilizzabile da ogni utente senza la necessità di un manuale d'uso & \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20Esterni/2025-11-27-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-11-27}\setulcolor{black}} \\
+\hline
+R-8-Q-De & L'interfaccia utente deve rispettare i criteri di accessibilità definiti dalle linee guida WCAG 2.1 livello AA & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
 \caption{Requisiti di Qualità}
-
 \label{tab:req-qualita}
 \end{longtable}
 
 \subsection{Requisiti di Vincolo}
 
-\begin{longtable}{|p{2.5cm}|p{8cm}|p{3cm}|}
+\rowcolors{2}{gray!15}{white}
+\begin{longtable}{|p{2.5cm}|p{9.5cm}|p{2.5cm}|}
 \hline
+\rowcolor{zpusgreen!30}
 \textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endfirsthead
+\rowcolor{zpusgreen!30}
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endhead
+R-1-V-Ob & Il sistema deve operare in modalità \textit{portable}, ovvero senza necessità di installazioni o privilegi di amministratore nel sistema ospite & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-2-V-Ob & Il sistema deve garantire la compatibilità multipiattaforma, assicurando il corretto funzionamento e l'integrità delle funzionalità sui sistemi operativi Windows, MacOs e Linux & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-3-V-Ob & L'architettura del sistema deve essere basata su componenti modulari e interfacce di astrazione per permettere l'integrazione di nuove metodologie di reperimento dati & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-4-V-Ob & Il sistema deve garantire la piena funzionalità di ricerca e consultazione in assenza di connettività di rete & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-5-V-Ob & Il sistema deve deve utilizzare un motore di ricerca \textit{embedded} che non richieda un server standalone & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-6-V-Ob & Il sistema deve essere sviluppato utilizzando il framework Angular & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-7-V-Ob & Il sistema deve essere gestito e consegnato tramite il sistema di versionamento del codice GitHub & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-8-V-Ob & Devono essere prodotti i diagrammi UML relativi ai casi d'uso & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-9-V-Ob & Devono essere prodotti gli schemi di database e chiamate API utilizzati dal sistema & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-10-V-Ob & Deve essere prodotta una documentazione tecnica relativa ai casi di test gestiti con relativa reportistica e una lista dei bug risolti & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-11-V-Ob & Il sistema deve supportare rigorosamente la struttura dei metadati definita dalle Linee Guida AGID & \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20-Esterni/2025-11-13-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-11-13}\setulcolor{black}} \\
+
 \hline
 \caption{Requisiti di Vincolo}
 \label{tab:req-vincolo}
 \end{longtable}
 
+
 \subsection{Tracciamento}
 
 \subsubsection{Tracciamento Fonti - Requisiti}
 
+\rowcolors{2}{gray!15}{white}
 \begin{longtable}{|p{4cm}|p{10cm}|}
-
-
-
-\textbf{Fonte} & \textbf{Requisiti} \\
+\hline
+\rowcolor{zpusgreen!30}
+\textbf{Fonti} & \textbf{Requisiti} \\
+\hline
+\endfirsthead
+\rowcolor{zpusgreen!30}
+\textbf{Fonti} & \textbf{Requisiti} \\
 \hline
 \endhead
 \ref{classiDocumentali} & R-1-F-Ob \\
@@ -1215,18 +1280,41 @@ R-109-F-Ob &
 \hline
 \ref{metadatiCustomAssenti} & R-277-F-Ob \\
 \hline
+\href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} & \begin{tabular}[t]{@{}l@{\hspace{0.5em}}l} 
+R-1-Q-Ob & R-2-Q-Ob \\ 
+R-3-Q-Ob & R-5-Q-Ob \\ 
+R-8-Q-De & R-1-V-Ob \\  
+R-2-V-Ob & R-3-V-Ob \\
+R-4-V-Ob & R-5-V-Ob \\
+R-6-V-Ob & R-7-V-Ob \\
+R-8-V-Ob & R-9-V-Ob \\
+R-10-V-Ob &
+\end{tabular} \\
+\hline
+\href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20Esterni/2025-12-23-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-12-23}\setulcolor{black}} & R-4-Q-Ob \\
+\hline
+\href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/NormeDiProgetto.pdf}{\ul{Norme di Progetto}\setulcolor{black}\ped{v1.0}} & R-6-Q-Ob \\
+\hline
+\href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20Esterni/2025-11-27-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-11-27}\setulcolor{black}} & R-7-Q-Ob \\
+\hline
+\href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20-Esterni/2025-11-13-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-11-13}\setulcolor{black}} & R-11-V-Ob \\
+\hline
 \caption{Tracciamento Fonti - Requisiti}
 \label{tab:trace-fonti-req}
 \end{longtable}
 
+
+
 \subsubsection{Tracciamento Requisiti - Fonti}
 
-
+\rowcolors{2}{gray!15}{white}
 \begin{longtable}{|p{4cm}|p{10cm}|}
 \hline
-
-
-
+\rowcolor{zpusgreen!30}
+\textbf{Requisito} & \textbf{Fonti} \\
+\hline
+\endfirsthead
+\rowcolor{zpusgreen!30}
 \textbf{Requisito} & \textbf{Fonti} \\
 \hline
 \endhead
@@ -2066,28 +2154,68 @@ R-276-F-Ob & \ref{visualizzaValoreMetadatoCustom} \\
 \hline
 R-277-F-Ob & \ref{metadatiCustomAssenti} \\
 \hline
+R-1-Q-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-2-Q-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-3-Q-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-4-Q-De & \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20Esterni/2025-12-23-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-12-23}\setulcolor{black}} \\
+\hline
+R-5-Q-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-6-Q-Ob & \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/NormeDiProgetto.pdf}{\ul{Norme di Progetto}\setulcolor{black}\ped{v1.0}} \\
+\hline
+R-7-Q-Ob & \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20Esterni/2025-11-27-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-11-27}\setulcolor{black}} \\
+\hline
+R-8-Q-De & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-1-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-2-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-3-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-4-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-5-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-6-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-7-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-8-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-9-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-10-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-11-V-Ob & \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20-Esterni/2025-11-13-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-11-13}\setulcolor{black}} \\
+\hline
 
 \caption{Tracciamento Requisiti - Fonti}
 \label{tab:trace-req-fonti}
 \end{longtable}
 
+\newpage
 \subsection{Riepilogo}
-
 \begin{table}[h]
-\centering
-\begin{tabular}{|l|c|c|c|c|}
-\hline
-\textbf{Tipologia} & \textbf{Obbligatori} & \textbf{Desiderabili} & \textbf{Opzionali} & \textbf{Totale} \\
-\hline
-Funzionali & X & Y & Z & N \\
-\hline
-Qualità & X & Y & Z & N \\
-\hline
-Vincolo & X & Y & Z & N \\
-\hline
-\textbf{Totale} & X & Y & Z & \textbf{N} \\
-\hline
-\end{tabular}
-\caption{Riepilogo dei Requisiti}
-\label{tab:riepilogo-requisiti}
+    \centering
+    \rowcolors{2}{gray!15}{white}
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \rowcolor{zpusgreen!30}
+        \textbf{Tipologia} & \textbf{Obbligatori} & \textbf{Desiderabili} & \textbf{Opzionali} & \textbf{Totale} \\
+        \hline
+        Funzionali & 272 & 0 & 5 & 277 \\
+        \hline
+        Qualità & 6 & 2 & 0 & 8 \\
+        \hline
+        Vincolo & 11 & 0 & 0 & 11 \\
+        \hline
+        \textbf{Totale} & 289 & 2 & 5 & \textbf{296} \\
+        \hline
+    \end{tabular}
+    \caption{Riepilogo dei Requisiti}
+    \label{tab:riepilogo-requisiti}
 \end{table}
