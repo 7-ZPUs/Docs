@@ -105,6 +105,11 @@
         \begin{tabular}{|c|c|c|c|c|}
             \hline
             \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione} \\
+            \hline
+            0.13 & 2026/02/09 & Fattoni Antonio & Vigolo Davide & Correzione processo di documentazione e controllo della configurazione \\
+            \hline
+            0.12 & 2026/02/08 & Vigolo Davide & - & Definizione metriche di qualità \\
+            \hline
             0.11 & 6/2/2026 & Laoud Zakaria & Soligo Lorenzo & Stesura paragrafi 3.6, 3.7, 3.8 \\
             \hline
             0.10 & 25/01/2025 & Aaron Gingillino & Vigolo Davide & Scrittura paragrafi 2.2, 4.1 \\
@@ -281,10 +286,11 @@ prodotto finale. L'obiettivo è definire in maniera non ambigua i
 (\textit{Requirements}) del software. Il documento è diviso nelle seguenti
 sezioni:
 \begin{enumerate}
-    \item Introduzione
-    \item Descrizione
-    \item Definizione dei casi d'uso
-    \item Definizione dei requisiti
+    \item \textbf{Introduzione:} Include lo scopo, i riferimenti normativi (come il Capitolato C3) e informativi, e il rimando a un Glossario esterno per la terminologia tecnica.
+    \item \textbf{Descrizione:} Fornisce una panoramica del sistema, le sue funzionalità generali e l'identificazione degli utenti di destinazione.
+    \item \textbf{User Stories:} Elenca i bisogni degli utenti espressi in linguaggio naturale.
+    \item \textbf{Definizione dei casi d'uso:} Rappresenta il nucleo del documento, con i casi d'uso principali descritti tramite diagrammi UML e schede tecniche che includono attori, precondizioni, postcondizioni e flussi principali.
+    \item \textbf{Definizione dei requisiti:} Classificazione dettagliata dei requisiti individuati
 \end{enumerate}
 
 \paragraph{Glossario}
@@ -461,73 +467,48 @@ documentazione:
     \item \glossario{DashBoard/Cruscotto} di Jira per il monitoraggio delle attività assegnate per ogni membro del gruppo.
 \end{itemize}
 
+
 \subsubsection{Attività: Produzione della documentazione}\label{produzioneDocs}
-La produzione della documentazione, assegnata durante la pianificazione, è
-visibile all'assegnatario come \glossario{Work item} grazie all'estensione Jira
-di VSCode \ref{vscode}. Grazie a quest'ultima è possibile creare direttamente
-il Branch di lavoro che si baserà sulla feature branch principale. Una volta
-completata la stesura, seguendo i modelli standard sopracitati, l'autore del
-documento crea una \glossario{(PR) Pull Request} verso la feature branch
-principale, assegnando come revisore il membro del gruppo designato, diverso da
-se. \\ A questo punto:
+La produzione della documentazione è un'attività fondamentale per garantire la tracciabilità e la comunicazione efficace all'interno del gruppo e con gli stakeholder esterni. Ogni documento deve essere redatto seguendo le linee guida stabilite, utilizzando i modelli approvati e rispettando le scadenze stabilite durante la pianificazione.
+
+\paragraph{Linee guida per la produzione della documentazione}\label{lineeGuidaProduzioneDocs}
+Per garantire la coerenza e la qualità della documentazione, il gruppo segue le seguenti linee guida:
 \begin{itemize}
-    \item Se il revisore \textbf{approva la PR}, questo branch viene automaticamente
-          eliminato, il work item viene marcato come completato in Jira e l'assegnatario
-          può proseguire con gli altri compiti a lui assegnati.
-    \item Se il revisore richiede modifiche \textbf{la PR viene rifiutata} e
-          l'assegnatario deve procedere con le modifiche richieste. Una volta completate,
-          l'assegnatario notifica il revisore che procederà con una nuova revisione.
-          Questo ciclo si ripete fino a quando la PR non viene approvata.
+    \item \textbf{Verbali:} la stesura dei verbali utilizza un template standard approvato per garantire continuità e chiarezza nella comunicazione. La struttura prevede:
+    \begin{itemize}
+        \item Intestazione con logo del gruppo, data, durata della riunione e luogo (fisico o virtuale);    
+        \item Indice dei contenuti;
+        \item Tabella di versionamento;
+        \item elenco dei partecipanti;
+        \item Ordine del giorno;
+        \item Resoconto dettagliato dei punti discussi;
+        \item Tabella di definizione dei ruoli (se necessario);
+        \item Decisioni prese e tabella delle attività associate.
+    \end{itemize}
+    \item \textbf{Diario di bordo:} la struttura dei diari di bordo segue anch'essa un template standard che include il logo del gruppo, la data, un numero progressivo, e il numero del gruppo. Le sezioni principali sono:
+    \begin{itemize}
+        \item Difficoltà affrontate;
+        \item Dubbi e incertezze;
+        \item Pagina conclusiva. 
+    \end{itemize}
+    \item \textbf{Altri documenti:} Per tutti gli altri documenti non vengono utilizzati modelli particolari in quanto prevediamo una sola istanza di ciascuno di essi. Tuttavia seguiamo delle linee guida comuni per garantire consistenza dell'impianto tipografico. In particolare:
+    \begin{itemize}
+        \item Frontespizio con logo e titolo del documento;
+        \item Tabella di versionamento;
+        \item Indice dei contenuti. 
+    \end{itemize}
 \end{itemize}
-L'integrazione con Jira permette di controllare lo stato di avanzamento dei Work Item, la rendicontazione delle ore lavorate e la gestione delle scadenze.
-Risulta quindi \textbf{obbligatorio} l'utilizzo di Smart Commit per tutti i commit, compresi quelli di Pull Request. Più in \ref{smartcommit}.
 
-\begin{figure}[H]
-    \label{fig:workflowDocs}
-    \centering
-    \includegraphics[width=0.7\textwidth]{../assets/workflowWorkItem.png}
-    \caption{Flusso del processo di documentazione}
-\end{figure}
-
-\paragraph{Procedure di Produzione}\label{procedureProduzioneDocs}
-I seguenti passaggi guidano il Team nella produzione di documenti:
-\begin{enumerate}
-    \item Consultando l'estensione
-          \href{https://marketplace.visualstudio.com/items?itemName=Atlassian.atlascode}{"Atlassian:
-              Jira, Rovo Dev, Bitbucket"} il membro del gruppo potrà avere accesso al Work
-          Item assegnatogli e cliccando su "Start Work" potrà \textbf{creare il branch}
-          di lavoro secondo le convenzioni stabilite (\ref{stdBranch}). Nell'immagine
-          sottostante sono indicati visivamente i passi.
-          \begin{figure}[H]
-              \centering
-              \includegraphics[width=1\textwidth]{../assets/estensioneJira.png}
-              \caption{Creazione del branch di lavoro tramite estensione Jira in VSCode}
-          \end{figure}
-    \item Quando è necessario \textbf{effettuare un commit} è obbligatorio utilizzare lo
-          Smart Commit. Più in \ref{Jira}.
-    \item Una volta completata la task, è necessario \textbf{creare la PR} verso la
-          branch \textit{"in\_lavorazione"} di riferimento mettendo come revisore il
-          membro del gruppo designato.\\ Per esempio, una volta completata la stesura di
-          un verbale viene creata una PR verso \textit{verbali\_in\_lavorazione} e se
-          questa viene approvata, il documento sarà pronto per la revisione finale del
-          responsabile che si occuperà del merge al \textit{main} in sede di milestone.\\
-          \begin{figure}[H]
-              \label{PR1}
-              \centering
-              \includegraphics[width=1.1\textwidth]{../assets/PRDocs1.png}
-              \caption{Creazione della PR verso l'issue branch \textit{in\_lavorazione}}
-          \end{figure}
-\end{enumerate}
-\subparagraph{Denominazione e datazione}\label{convenzioniNomiDate}
-Per una corretta archiviazione e reperibilità dei documenti, è necessario
+\subparagraph{Denominazione e datazione documentazione}\label{convenzioniNomiDate}
+Per una corretta archiviazione e reperibilità delle modifiche apportate ai documenti, è necessario
 seguire le seguenti convenzioni per la datazione e denominazione.
 \begin{itemize}
     \item Tutti i file dei documenti devono seguire la regola del \textbf{Pascal Case}, ovvero
 devono essere scritti senza spazi e con la prima lettera di ogni parola in
-maiuscola.\\
-\item All'interno dei documenti, la data deve essere riportata nel formato \textbf{DD-MM-YYYY}, giorno-mese-anno.
+maiuscola.
+\item All'interno dei documenti, la data deve essere riportata nel formato \textbf{YYYY-MM-DD}, anno-mese-giorno.
 \end{itemize}
-La denominazione dei file sul sito necessita di seguire invece la datazione usata per il nome dei file su GitHub ovvero \textbf{YYYY-MM-DD}, con l'aggiunta del numero di versione alla fine del nome. Per le specifiche di versionamento, si rimanda alla sezione \ref{versione}.
+La denominazione dei file sul sito segue anch'essa la datazione usata per il nome dei file su GitHub ovvero \textbf{YYYY-MM-DD}, con l'aggiunta del numero di versione alla fine del nome. Per le specifiche di versionamento, si rimanda alla sezione \ref{versione}.
 
 \paragraph{Strumenti di Produzione}
 \begin{itemize}
@@ -635,33 +616,59 @@ Per entrambi, la creazione della issue di produzione avviene automaticamente una
 \begin{itemize}
     \item \textbf{Jira:} Strumento di gestione delle attività di progetto.
 \end{itemize}
-\subsubsection{Attività: Versionamento e Identificazione} \label{versionamento_identificazione}
-Questa attività definisce le regole per l'identificazione univoca degli
-artefatti e la gestione delle ramificazioni nel repository.
 
-\paragraph{Procedure: Standard per le Branch} \label{stdBranch}
-Per garantire una gestione ordinata e coerente del codice e della
-documentazione, il Team adotta il seguente standard per la denominazione dei
-branch in GitHub:
+\subsubsection{Attività: Controllo della configurazione}\label{controlloConfig}
+Il controllo della configurazione è il processo con il quale vengono gestite le richieste di modifica. 
+Una volta effettuata una modifica l'autore crea una \glossario{(PR) Pull Request} verso la feature branch
+principale, assegnando come revisore il membro del gruppo designato, diverso da
+se. \\ A questo punto:
 \begin{itemize}
-    \item La creazione del branch deve avvenire preferibilmente in modo automatico
-          tramite l'integrazione Jira-VSCode \ref{vscode}.
-    \item Il formato obbligatorio è:
-    \begin{verbatim}
-    DIPR-<numero issue>-<descrizione-breve>
-    \end{verbatim}
-    \item È necessario scegliere una descrizione breve che identifichi chiaramente il contenuto della modifica.
+    \item Se il revisore \textbf{approva la PR}, questo branch viene automaticamente
+          eliminato, il work item viene marcato come completato in Jira e l'assegnatario
+          può proseguire con gli altri compiti a lui assegnati.
+    \item Se il revisore richiede modifiche \textbf{la PR viene rifiutata} e
+          l'assegnatario deve procedere con le modifiche richieste. Una volta completate,
+          l'assegnatario notifica il revisore che procederà con una nuova revisione.
+          Questo ciclo si ripete fino a quando la PR non viene approvata.
 \end{itemize}
+L'integrazione con Jira permette di controllare lo stato di avanzamento dei Work Item, la rendicontazione delle ore lavorate e la gestione delle scadenze.
+Risulta quindi \textbf{obbligatorio} l'utilizzo di Smart Commit per tutti i commit, compresi quelli di Pull Request. Più in \ref{smartcommit}.
 
-\paragraph{Strumenti di Versionamento}
-\begin{itemize}
-    \item \textbf{GitHub:} Repository remoto per la memorizzazione delle versioni.
-    \item \textbf{VSCode (Estensione Jira):} Per l'automazione della nomenclatura delle branch.
-\end{itemize}
+\begin{figure}[H]
+    \label{fig:workflowDocs}
+    \centering
+    \includegraphics[width=0.7\textwidth]{../assets/workflowWorkItem.png}
+    \caption{Flusso del processo di controllo}
+\end{figure}
 
-\subsubsection{Attività: Controllo delle Configurazioni}
-Questa attività regolamenta il modo in cui le modifiche di avanzamento vengono registrate e
-tracciate rispetto ai task pianificati.
+I seguenti passaggi guidano il Team nella produzione di modifiche alla baseline:
+\begin{enumerate}
+    \item Consultando l'estensione
+          \href{https://marketplace.visualstudio.com/items?itemName=Atlassian.atlascode}{"Atlassian:
+              Jira, Rovo Dev, Bitbucket"} il membro del gruppo potrà avere accesso al Work
+          Item assegnatogli e cliccando su "Start Work" potrà \textbf{creare il branch}
+          di lavoro secondo le convenzioni stabilite (\ref{stdBranch}). Nell'immagine
+          sottostante sono indicati visivamente i passi.
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=1\textwidth]{../assets/estensioneJira.png}
+              \caption{Creazione del branch di lavoro tramite estensione Jira in VSCode}
+          \end{figure}
+    \item Quando è necessario \textbf{effettuare un commit} è obbligatorio utilizzare lo
+          Smart Commit. Più in \ref{Jira}.
+    \item Una volta completata la task, è necessario \textbf{creare la PR} verso la
+          branch \textit{"in\_lavorazione"} di riferimento mettendo come revisore il
+          membro del gruppo designato.\\ Per esempio, una volta completata la stesura di
+          un verbale viene creata una PR verso \textit{verbali\_in\_lavorazione} e se
+          questa viene approvata, il documento sarà pronto per la revisione finale del
+          responsabile che si occuperà del merge al \textit{main} in sede di milestone.\\
+          \begin{figure}[H]
+              \label{PR1}
+              \centering
+              \includegraphics[width=1.1\textwidth]{../assets/PRDocs1.png}
+              \caption{Creazione della PR verso l'issue branch \textit{in\_lavorazione}}
+          \end{figure}
+\end{enumerate}
 
 \paragraph{Procedure: Smart Commit} \label{smartcommit}
 La necessità di tracciamento delle attività richiede l'adozione capillare degli
@@ -686,6 +693,32 @@ DIPR-<numero issue> #time <nd nh nm> #<stato> #comment <Descrizione>
     \item \textbf{Jira Automation:} Interpreta gli Smart Commit per aggiornare i Work Item.
     \item \textbf{Git/GitHub:} Motore di versionamento sottostante.
 \end{itemize}
+
+
+\subsubsection{Attività: Versionamento e Identificazione} \label{versionamento_identificazione}
+Questa attività definisce le regole per l'identificazione univoca degli
+artefatti e la gestione delle ramificazioni nel repository.
+
+\paragraph{Procedure: Standard per le Branch} \label{stdBranch}
+Per garantire una gestione ordinata e coerente del codice e della
+documentazione, il Team adotta il seguente standard per la denominazione dei
+branch in GitHub:
+\begin{itemize}
+    \item La creazione del branch deve avvenire preferibilmente in modo automatico
+          tramite l'integrazione Jira-VSCode \ref{vscode}.
+    \item Il formato obbligatorio è:
+    \begin{verbatim}
+    DIPR-<numero issue>-<descrizione-breve>
+    \end{verbatim}
+    \item È necessario scegliere una descrizione breve che identifichi chiaramente il contenuto della modifica.
+\end{itemize}
+
+\paragraph{Strumenti di Versionamento}
+\begin{itemize}
+    \item \textbf{GitHub:} Repository remoto per la memorizzazione delle versioni.
+    \item \textbf{VSCode (Estensione Jira):} Per l'automazione della nomenclatura delle branch.
+\end{itemize}
+
 \subsubsection{Registrazione delle Configurazioni}
 Questa attività prevede la documentazione e la registrazione delle modifiche apportate agli SCIs.
 \paragraph{Procedure: Registrazione delle Modifiche}\label{versione}
@@ -1363,7 +1396,6 @@ Gli strumenti utilizzati per la valutazione della formazione includono:
 
 \section{Metriche della qualità} \label{metriche_qualita}
 
-\subsection{Attività per la qualità}
 Lo standard ISO/IEC 9126-1:1999 individua tre categorie fondamentali di requisiti per la qualità che concorrono alla creazione del prodotto e interconnesse tra loro secondo il Modello a V\hyperref[fig:vmodel]{\ped{(Figura 5)}} (\glossario{V-Model}):
 \begin{itemize}
     \item \textbf{Bisogni utente}: sono i requisiti che il prodotto deve soddisfare per incontrare i bisogni dell'utente. L'output corrispondente e' la qualità in uso, verificata da apposite metriche esterne.
@@ -1379,11 +1411,12 @@ Lo standard ISO/IEC 9126-1:1999 individua tre categorie fondamentali di requisit
 \end{figure}
 
 
-\subsection{Procedure per la qualità}
 Di seguito vengono indicate le metriche utilizzate per valutare la qualità del prodotto e dei processi di sviluppo.
 
-\subsubsection{Qualità di Processo}
+\subsection{Qualità di Processo}
 In questa sezione vengono definite le metriche utilizzate per valutare l'efficienza e l'efficacia dei processi del ciclo di vita del software, in conformità con lo standard ISO/IEC 12207.
+
+\subsubsection{Processi primari}
 
 \paragraph{Processo di fornitura}
 
@@ -1402,95 +1435,170 @@ In questa sezione vengono definite le metriche utilizzate per valutare l'efficie
 \metricdef{MPC-5}{Schedule Performance Index (SPI)}{Indice di efficienza della schedulazione. Un valore $< 1$ indica che il progetto è in ritardo.}
 \metricformula{SPI = \frac{EV}{PV}}
 
+\metricdef{MPC-6}{Estimate to Complete}{Rappresenta l'ammontare rimanente stimato per completare il progetto}
+\metricformula{ETC = EAC-AC}
+
+\metricdef{MPC-7}{Estimate at Completion (EAC)}{Stima totale dei costi alla fine del progetto, basata sulle performance attuali.}
+\metricformula{EAC = \frac{BAC}{CPI}}
+
 \paragraph{Processo di Sviluppo}
 
-\metricdef{MPC-11}{Work in Progress (WIP)}{Numero di task o ticket su cui il team sta lavorando attivamente in contemporanea. Un valore alto indica colli di bottiglia.}
-\metricformula{WIP = \sum \text{Ticket in stato "In Progress"}}
+\metricdef{MPC-8}{Deployment Frequency}{Frequenza con cui il team rilascia nuove versioni del software, potenzialmente trasportabili in produzione.}
+\metricformula{DF = \frac{\text{Numero di deployment}}{\text{Periodo di tempo}}}
 
-\metricdef{MPC-13}{Change Failure Rate (CFR)}{Percentuale di deployment o merge in produzione che causano un guasto richiedendo un hotfix.}
-\metricformula{CFR = \left( \frac{\text{Numero di deployment falliti}}{\text{Numero totale di deployment}} \right) \times 100}
+\metricdef{MPC-9}{Requirements Stability Index}{Rappresenta la stabilità dei requisiti del prodotto software nel tempo.}
+\metricformula{RSI = \frac{\#\text{Requisiti originali} - (\#\text{Requisiti modificati} + \#\text{Requisiti eliminati} + \#\text{Requisiti aggiunti})}{\#\text{Requisiti originali}} \cdot 100}
+
+\subsubsection{Processi di supporto}
 
 \paragraph{Processo di Documentazione}
 
-\metricdef{MPC-14}{Indice di Gulpease}{Indice che valuta la leggibilità di un testo in lingua italiana. Valori bassi indicano bassa leggibilità.}
-\metricformula{G = 89 + \frac{300 \times (\text{numero frasi}) - 10 \times (\text{numero lettere})}{\text{numero parole}}}
+\metricdef{MPC-10}{Indice di Gulpease}{Indice che valuta la leggibilità di un testo in lingua italiana. Valori bassi indicano bassa leggibilità.}
+\metricformula{G = 89 + \frac{300 \times (\#\text{Frasi}) - 10 \times (\#\text{Lettere})}{\#\text{Parole}}}
 
-\metricdef{MPC-15}{Correttezza Ortografica}{Misura la densità di errori ortografici presenti nella documentazione.}
-\metricformula{C = 1 - \left( \frac{\text{Numero errori ortografici}}{\text{Numero parole totali}} \right)}
+\metricdef{MPC-11}{Correttezza Ortografica}{Misura la densità di errori ortografici presenti nella documentazione.}
+\metricformula{C = \#\text{errori ortografici}}
 
 \paragraph{Processo di Configurazione}
 
-\metricdef{MPC-16}{Build Success Rate (BSR)}{Percentuale di build completate con successo dalla pipeline di CI/CD rispetto al totale delle build eseguite.}
-\metricformula{BSR = \left( \frac{\text{Builds con esito positivo}}{\text{Builds totali}} \right) \times 100}
-
-\metricdef{MPC-17}{Average Build Time}{Tempo medio impiegato dalla pipeline per completare il processo di build e test automatici.}
+\metricdef{MPC-12}{Average Build Time}{Tempo medio impiegato per completare il processo di build e test automatici.}
 \metricformula{T_{avg} = \frac{\sum_{i=1}^{n} T_{build\_i}}{n}}
 
 \paragraph{Processo di Verifica}
 
-\metricdef{MPC-19}{Statement Coverage}{Percentuale di istruzioni (statements) del codice sorgente eseguite durante i test automatici.}
-\metricformula{SC = \left( \frac{\text{Linee di codice eseguite}}{\text{Linee di codice totali}} \right) \times 100}
+\metricdef{MPC-13}{Code review turnaround time}{Tempo medio impiegato per completare una revisione del codice in vista di una Pull Request.}
+\metricformula{CRT = \frac{\sum_{i=1}^{n} T_{review\_i}}{n}}
 
-\metricdef{MPC-20}{Branch Coverage}{Percentuale di rami decisionali (if, switch, loop) percorsi durante i test.}
-\metricformula{BC = \left( \frac{\text{Rami percorsi}}{\text{Rami totali}} \right) \times 100}
+\metricdef{MPC-14}{Test success rate}{Percentuale di test superati rispetto al totale dei test eseguiti.}
+\metricformula{TSR = \left( \frac{\#\text{Test superati}}{\#\text{Test eseguiti}} \right) \times 100}
 
-\paragraph{Processi Organizzativi)}
+\subsubsection{Processi Organizzativi}
 
-\metricdef{MPC-21}{Retrospective Effectiveness}{Misura la capacità del team di risolvere i problemi identificati durante le retrospettive.}
-\metricformula{E_{retro} = \left( \frac{\text{Action items risolti}}{\text{Action items identificati}} \right) \times 100}
+\paragraph{Processo di Management}
 
-\metricdef{MPC-22}{Meeting Attendance}{Percentuale di presenza dei membri del team alle riunioni obbligatorie.}
-\metricformula{MA = \left( \frac{\text{Presenze effettive}}{\text{Presenze attese totali}} \right) \times 100}
+\metricdef{MPC-15}{Rischi non previsti}{Numero di rischi non previsti ad inizio periodo, per ciascun periodo di progetto.}
+\metricformula{RNP = \#\text{Rischi non previsti}}
 
-\subsubsection{Qualità di Prodotto}
+\metricdef{MPC-16}{Metriche soddisfatte}{Percentuale di metriche di qualità che vengono soddisfatte in un determinato istante di tempo.}
+\metricformula{MS = \left( \frac{\#\text{Metriche soddisfatte}}{\#\text{Metriche totali}} \right) \times 100}
+
+\subsection{Qualità di Prodotto}
 In questa sezione vengono definite le metriche per valutare la qualità intrinseca del prodotto software, basandosi sul modello ISO/IEC 9126.
 
 \paragraph{Funzionalità}
 
-\metricdef{MPD-2}{Completezza dell'implementazione}{Misura la percentuale di requisiti funzionali obbligatori implementati e testati.}
-\metricformula{CI = \left( \frac{\text{Requisiti funzionali implementati}}{\text{Requisiti funzionali totali}} \right) \times 100}
+\metricdef{MPD-1}{Requisiti obbligatori soddisfatti}{Percentuale di requisiti funzionali obbligatori implementati e testati.}
+\metricformula{R\textsubscript{ob} = \left( \frac{\text{Requisiti obbligatori soddisfatti}}{\text{Requisiti obbligatori totali}} \right) \times 100}
 
-\metricdef{MPD-3}{Accuratezza dei risultati}{Percentuale di test funzionali che producono il risultato atteso senza deviazioni.}
-\metricformula{Acc = \left( \frac{\text{Test funzionali passati}}{\text{Test funzionali eseguiti}} \right) \times 100}
+\metricdef{MPD-2}{Requisiti opzionali soddisfatti}{Percentuale di requisiti funzionali opzionali implementati e testati.}
+\metricformula{R\textsubscript{op} = \left( \frac{\text{Requisiti opzionali soddisfatti}}{\text{Requisiti opzionali totali}} \right) \times 100}
+
+\metricdef{MPD-3}{Requisiti desiderabili soddisfatti}{Percentuale di requisiti funzionali desiderabili implementati e testati.}
+\metricformula{R\textsubscript{de} = \left( \frac{\text{Requisiti desiderabili soddisfatti}}{\text{Requisiti desiderabili totali}} \right) \times 100}
 
 \paragraph{Affidabilità}
 
-\metricdef{MPD-6}{Tasso Errori HTTP}{Percentuale di richieste al server che restituiscono codici di errore (4xx o 5xx) rispetto al totale delle richieste.}
-\metricformula{E_{http} = \left( \frac{\text{Richieste con status } \ge 400}{\text{Richieste totali}} \right) \times 100}
+\metricdef{MPD-5}{Broken links}{Numero di riferimenti ipertestuali all'interno dell'applicazione che non portano alla risorsa corretta o non portano ad alcuna risorsa.}
+\metricformula{BL = \#\text{Broken Links}}
 
-\metricdef{MPD-NEW}{Availability (Disponibilità)}{Percentuale di tempo in cui il sistema è operativo e accessibile agli utenti.}
-\metricformula{A = \left( \frac{\text{Tempo totale} - \text{Tempo di disservizio}}{\text{Tempo totale}} \right) \times 100}
+\metricdef{MPD-6}{Statement Coverage}{Percentuale di istruzioni (statements) del codice sorgente eseguite durante i test automatici.}
+\metricformula{SC = \left( \frac{\text{Linee di codice eseguite}}{\text{Linee di codice totali}} \right) \times 100}
+
+\metricdef{MPD-7}{Branch Coverage}{Percentuale di rami decisionali (if, switch, loop) percorsi durante i test.}
+\metricformula{BC = \left( \frac{\text{Rami percorsi}}{\text{Rami totali}} \right) \times 100}
 
 \paragraph{Usabilità}
 
-\metricdef{MPD-9}{Profondità di Navigazione}{Numero massimo di click necessari per raggiungere una qualsiasi pagina di contenuto partendo dalla Home Page.}
-\metricformula{Clicks \le 3}
-
-\metricdef{MPD-10}{Search Success Rate}{Percentuale di ricerche effettuate dagli utenti che portano al clic su un risultato utile.}
-\metricformula{SSR = \left( \frac{\text{Ricerche con clic}}{\text{Ricerche totali}} \right) \times 100}
+\metricdef{MPD-8}{Profondità di Navigazione}{Numero massimo di click necessari per raggiungere una qualsiasi pagina di contenuto partendo dalla Home Page.}
+\metricformula{\sum_{i=1}^{n} \frac{\text{Click}_i}{n} \quad \begin{array}{l} (\text{dove } n = \text{numero di pagine}) \\ (\text{dove } \text{Click}_i = \text{numero di click per raggiungere la pagina } i) \end{array}}
 
 \paragraph{Efficienza}
 
-\metricdef{MPD-11}{Time to First Byte (TTFB)}{Tempo che intercorre tra l'invio della richiesta HTTP dal client e la ricezione del primo byte di risposta dal server.}
-\metricformula{TTFB = T_{ricezione\_primo\_byte} - T_{invio\_richiesta}}
+\metricdef{MPD-9}{Indexing time}{Tempo di indicizzazione per un DiP di dimensioni standard (1-4GB).}
+\metricformula{IT = \text{Tempo di indicizzazione (secondi)}}
 
-\metricdef{MPD-13}{Tempo di Rendering}{Tempo necessario al browser per completare il rendering visivo della pagina (First Contentful Paint).}
-\metricformula{T_{render} \text{ (misurato tramite API del browser)}}
+\metricdef{MPD-10}{Search Time}{Tempo medio di risposta per un set di query predefinite.}
+\metricformula{ST = \sum_{i=1}^{n} \frac{\text{Tempo di risposta}_i}{n} \quad \begin{array}{l} (\text{dove } n = \text{numero di query}) \\ (\text{dove }i = \text{indice della query}) \end{array}}
+
+\metricdef{MPD-11}{Average CPU usage}{Percentuale media di utilizzo della CPU durante l'esecuzione del software. Si considera un campione di misurazioni effettuate in condizioni di carico (durante l'indicizzazione o la ricerca) nonché in idle. Quest'ultimo per assicurare che il software non consumi risorse inutilmente quando non è in uso.}
+\metricformula{CPU_{avg} = \sum_{i=1}^{n} \frac{\text{Utilizzo CPU}_i}{n} \quad (\text{dove }n = \text{numero di misurazioni})}
+
+\newpage
+
+\metricdef{MPD-12}{Peak memory usage}{Massima quantità di memoria RAM utilizzata durante l'esecuzione del software. Permette di individuare eventuali memory leak o scarsa gestione delle risorse.}
+\metricformula{MEM_{peak} = \max(\text{Utilizzo RAM}_i) \quad (\text{dove }i = 1, \dots, n)}
 
 \paragraph{Manutenibilità}
 
-\metricdef{MPD-16}{Complessità Ciclomatica}{Misura la complessità del flusso di controllo del codice. Valori superiori a 15 indicano codice difficile da testare e manutenere.}
+\metricdef{MPD-13}{Complessità Ciclomatica}{Misura la complessità del flusso di controllo del codice. Valori superiori a 15 indicano codice difficile da testare e manutenere.}
 \metricformula{M = E - N + 2P \quad (\text{dove } E=\text{archi}, N=\text{nodi}, P=\text{componenti connessi})}
 
-\metricdef{MPD-17}{Comment Ratio}{Rapporto tra le righe di commento e le righe di codice totali (LOC).}
-\metricformula{CR = \frac{\text{Linee di commento}}{\text{Linee di Codice (SLOC)}}}
+\metricdef{MPD-14}{Accoppiamento tra Classi (CBO)}{Numero di classi a cui una determinata classe è accoppiata (usa o è usata da). Un valore alto indica scarsa modularità.}
+\metricformula{CBO = \frac{\#\text{Dipendenze}}{\#\text{Componenti}}}
 
-\metricdef{MPD-18}{Accoppiamento tra Classi (CBO)}{Numero di classi a cui una determinata classe è accoppiata (usa o è usata da). Un valore alto indica scarsa modularità.}
-\metricformula{CBO = \text{Conteggio dipendenze esterne per classe}}
+\metricdef{MPD-15}{Code smells}{Numero di code smells, misurato ogni 1000 righe di codice (KLOC). I code smells sono indicatori di potenziali problemi di design o implementazione.}
 
+\paragraph{Portabilità}
+
+\metricdef{MPD-16}{SO Compatibility}{Numero di sistemi operativi supportati dal software. Un valore alto indica una maggiore portabilità.}
+\metricformula{SO_{comp} = \#\text{Sistemi operativi supportati}}
 
 \subsection{Strumenti}
+\paragraph{Jira Software}
+Utilizzato come strumento di Project Management per il tracciamento dei requisiti e la gestione del workflow.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPC-1 \dots MPC-7 (Earned Value Management), MPC-16 (Metriche soddisfatte), MPD-1 \dots MPD-3 (Requisiti).
+    \item \textbf{Utilizzo:} Attraverso la funzione di esportazione JQL $\rightarrow$ csv, e uno script python appositamente sviluppato, vengono estratti i dati necessari per il calcolo delle metriche di Earned Value e dei requisiti soddisfatti, permettendo un monitoraggio costante dell'andamento del progetto.
+\end{itemize}
 
+\paragraph{GitHub \& GitHub Actions}
+Viene utilizzato per il controllo di versione e l'automazione della CI/CD.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPC-8 (Deployment Frequency), MPC-12 (Build Time), MPC-13 (Code Review Turnaround Time), MPC-14 (Test success rate).
+    \item \textbf{Utilizzo:} I workflow di GitHub Actions oltre che garantire la metrica MPC-14 (Test success rate) attraverso l'esecuzione di test automatici, permettono di tracciare i tempi di build e code review, fornendo dati utili per il calcolo delle metriche di processo.
+\end{itemize}
+
+\subsubsection{Strumenti di Analisi Statica e Qualità del Codice}
+
+\paragraph{SonarQube}
+Piattaforma centrale per la \textit{Continuous Inspection} del codice TypeScript (Angular) e JavaScript (Electron).
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPD-6 (Statement Coverage), MPD-7 (Branch Coverage), MPD-13 (Complessità Ciclomatica), MPD-14 (CBO), MPD-15 (Code Smells).
+    \item \textbf{Utilizzo:} Analizza staticamente il codice ad ogni \textit{Push}, verificando che il superamento dei \textit{Quality Gates} stabiliti sia coerente con le soglie definite nelle metriche di manutenibilità.
+\end{itemize}
+
+\paragraph{Aspell \& Script Python (Custom)}
+Data la natura della documentazione in lingua italiana, si rende necessario uno strumento specifico per l'analisi testuale.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPC-10 (Indice di Gulpease), MPC-11 (Correttezza Ortografica).
+    \item \textbf{Utilizzo:} Uno script Python che utilizza la libreria \texttt{textstat} per il calcolo dell'indice di Gulpease e le API di \textit{Aspell} per il conteggio degli errori ortografici nei file Markdown/LaTeX.
+\end{itemize}
+
+\subsubsection{Strumenti di Testing e Performance (Electron-Angular)}
+
+\paragraph{Cypress}
+Framework di testing End-to-End utilizzato per simulare l'interazione utente all'interno dell'ambiente Electron.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPD-8 (Profondità di Navigazione).
+    \item \textbf{Utilizzo:} Viene configurato un \textit{crawler} automatizzato che percorre l'albero di navigazione dell'applicazione Angular, validando la raggiungibilità dei link e calcolando il numero di interazioni (click) necessarie per raggiungere i nodi foglia.
+\end{itemize}
+
+\paragraph{Electron Manager \& Chrome DevTools Protocol}
+Per misurare l'efficienza di un'applicazione Electron, è necessario monitorare l'istanza di Chromium sottostante.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPD-11 (Average CPU usage), MPD-12 (Peak memory usage).
+    \item \textbf{Utilizzo:} Durante le sessioni di test automatizzati con Cypress, vengono invocati script Node.js che interrogano le API \texttt{process.getProcessMemoryInfo()} e \texttt{process.getCPUUsage()} di Electron per campionare il consumo di risorse in idle e sotto carico.
+\end{itemize}
+
+\paragraph{Lighthouse}
+Integrato nei tool di sviluppo, viene utilizzato per profilare i tempi di risposta dell'interfaccia Angular.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPD-5 (Broken links).
+    \item \textbf{Utilizzo:} Misura i tempi di latenza tra l'input dell'utente (query) e il rendering dei risultati nel DOM, fornendo report dettagliati sulle performance di risposta.
+\end{itemize}
+
+\paragraph{Funzioni interne di misurazione performance}
+Integrate direttamente nel codice sorgente, queste funzioni permettono di misurare i tempi di indicizzazione e risposta alle query, fornendo dati precisi per le metriche MPD-9 (Indexing time) e MPD-10 (Search Time).
 
 
 
