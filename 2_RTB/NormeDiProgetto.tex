@@ -1417,7 +1417,12 @@ In questa sezione vengono definite le metriche utilizzate per valutare l'efficie
 \metricformula{DF = \frac{\text{Numero di deployment}}{\text{Periodo di tempo}}}
 
 \metricdef{MPC-9}{Requirements Stability Index}{Rappresenta la stabilità dei requisiti del prodotto software nel tempo.}
-\metricformula{RSI = \frac{\#\text{Requisiti originali} - (\#\text{Requisiti modificati} + \#\text{Requisiti eliminati} + \#\text{Requisiti aggiunti})}{\#\text{Requisiti originali}} \cdot 100}
+\metricformula{RSI = \frac{\#\text{Req originali} - (\#\text{Req modificati} + \#\text{Req eliminati} + \#\text{Req aggiunti})}{\#\text{Req originali}} \cdot 100}
+
+\paragraph{Processo di Integrazione}
+
+\metricdef{MPC-12}{Average Build Time}{Tempo medio impiegato per completare il processo di build e test automatici.}
+\metricformula{T_{avg} = \frac{\sum_{i=1}^{n} T_{build\_i}}{n}}
 
 \subsubsection{Processi di supporto}
 
@@ -1429,11 +1434,6 @@ In questa sezione vengono definite le metriche utilizzate per valutare l'efficie
 \metricdef{MPC-11}{Correttezza Ortografica}{Misura la densità di errori ortografici presenti nella documentazione.}
 \metricformula{C = \#\text{errori ortografici}}
 
-\paragraph{Processo di Configurazione}
-
-\metricdef{MPC-12}{Average Build Time}{Tempo medio impiegato per completare il processo di build e test automatici.}
-\metricformula{T_{avg} = \frac{\sum_{i=1}^{n} T_{build\_i}}{n}}
-
 \paragraph{Processo di Verifica}
 
 \metricdef{MPC-13}{Code review turnaround time}{Tempo medio impiegato per completare una revisione del codice in vista di una Pull Request.}
@@ -1444,10 +1444,12 @@ In questa sezione vengono definite le metriche utilizzate per valutare l'efficie
 
 \subsubsection{Processi Organizzativi}
 
-\paragraph{Processo di Management}
+\paragraph{Processo di Gestione dei Rischi}
 
 \metricdef{MPC-15}{Rischi non previsti}{Numero di rischi non previsti ad inizio periodo, per ciascun periodo di progetto.}
 \metricformula{RNP = \#\text{Rischi non previsti}}
+
+\paragraph{Processo di Gestione della qualità}
 
 \metricdef{MPC-16}{Metriche soddisfatte}{Percentuale di metriche di qualità che vengono soddisfatte in un determinato istante di tempo.}
 \metricformula{MS = \left( \frac{\#\text{Metriche soddisfatte}}{\#\text{Metriche totali}} \right) \times 100}
@@ -1496,7 +1498,7 @@ In questa sezione vengono definite le metriche per valutare la qualità intrinse
 \newpage
 
 \metricdef{MPD-12}{Peak memory usage}{Massima quantità di memoria RAM utilizzata durante l'esecuzione del software. Permette di individuare eventuali memory leak o scarsa gestione delle risorse.}
-\metricformula{MEM_{peak} = \max(\text{Utilizzo RAM}_i) \quad (\text{dove }i = 1, \dots, n)}
+\metricformula{MEM_{peak} = \max(\text{Utilizzo RAM}_i) \quad (\text{dove }i = 1, \dots, n, \text{istante di tempo } i-\text{esimo})}
 
 \paragraph{Manutenibilità}
 
