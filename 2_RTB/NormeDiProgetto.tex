@@ -1457,50 +1457,118 @@ In questa sezione vengono definite le metriche per valutare la qualità intrinse
 
 \paragraph{Funzionalità}
 
-\metricdef{MPD-2}{Completezza dell'implementazione}{Misura la percentuale di requisiti funzionali obbligatori implementati e testati.}
-\metricformula{CI = \left( \frac{\text{Requisiti funzionali implementati}}{\text{Requisiti funzionali totali}} \right) \times 100}
+\metricdef{MPD-1}{Requisiti obbligatori soddisfatti}{Percentuale di requisiti funzionali obbligatori implementati e testati.}
+\metricformula{R\textsubscript{ob} = \left( \frac{\text{Requisiti obbligatori soddisfatti}}{\text{Requisiti obbligatori totali}} \right) \times 100}
 
-\metricdef{MPD-3}{Accuratezza dei risultati}{Percentuale di test funzionali che producono il risultato atteso senza deviazioni.}
-\metricformula{Acc = \left( \frac{\text{Test funzionali passati}}{\text{Test funzionali eseguiti}} \right) \times 100}
+\metricdef{MPD-2}{Requisiti opzionali soddisfatti}{Percentuale di requisiti funzionali opzionali implementati e testati.}
+\metricformula{R\textsubscript{op} = \left( \frac{\text{Requisiti opzionali soddisfatti}}{\text{Requisiti opzionali totali}} \right) \times 100}
+
+\metricdef{MPD-3}{Requisiti desiderabili soddisfatti}{Percentuale di requisiti funzionali desiderabili implementati e testati.}
+\metricformula{R\textsubscript{de} = \left( \frac{\text{Requisiti desiderabili soddisfatti}}{\text{Requisiti desiderabili totali}} \right) \times 100}
 
 \paragraph{Affidabilità}
 
-\metricdef{MPC-19}{Statement Coverage}{Percentuale di istruzioni (statements) del codice sorgente eseguite durante i test automatici.}
+\metricdef{MPD-5}{Broken links}{Numero di riferimenti ipertestuali all'interno dell'applicazione che non portano alla risorsa corretta o non portano ad alcuna risorsa.}
+\metricformula{BL = \#\text{Broken Links}}
+
+\metricdef{MPD-6}{Statement Coverage}{Percentuale di istruzioni (statements) del codice sorgente eseguite durante i test automatici.}
 \metricformula{SC = \left( \frac{\text{Linee di codice eseguite}}{\text{Linee di codice totali}} \right) \times 100}
 
-\metricdef{MPC-20}{Branch Coverage}{Percentuale di rami decisionali (if, switch, loop) percorsi durante i test.}
+\metricdef{MPD-7}{Branch Coverage}{Percentuale di rami decisionali (if, switch, loop) percorsi durante i test.}
 \metricformula{BC = \left( \frac{\text{Rami percorsi}}{\text{Rami totali}} \right) \times 100}
 
 \paragraph{Usabilità}
 
-\metricdef{MPD-9}{Profondità di Navigazione}{Numero massimo di click necessari per raggiungere una qualsiasi pagina di contenuto partendo dalla Home Page.}
-\metricformula{Clicks \le 3}
-
-\metricdef{MPD-10}{Search Success Rate}{Percentuale di ricerche effettuate dagli utenti che portano al clic su un risultato utile.}
-\metricformula{SSR = \left( \frac{\text{Ricerche con clic}}{\text{Ricerche totali}} \right) \times 100}
+\metricdef{MPD-8}{Profondità di Navigazione}{Numero massimo di click necessari per raggiungere una qualsiasi pagina di contenuto partendo dalla Home Page.}
+\metricformula{\sum_{i=1}^{n} \frac{\text{Click}_i}{n} \quad \begin{array}{l} (\text{dove } n = \text{numero di pagine}) \\ (\text{dove } \text{Click}_i = \text{numero di click per raggiungere la pagina } i) \end{array}}
 
 \paragraph{Efficienza}
 
-\metricdef{MPD-11}{Time to First Byte (TTFB)}{Tempo che intercorre tra l'invio della richiesta HTTP dal client e la ricezione del primo byte di risposta dal server.}
-\metricformula{TTFB = T_{ricezione\_primo\_byte} - T_{invio\_richiesta}}
+\metricdef{MPD-9}{Indexing time}{Tempo di indicizzazione per un DiP di dimensioni standard (1-4GB).}
+\metricformula{IT = \text{Tempo di indicizzazione (secondi)}}
 
-\metricdef{MPD-13}{Tempo di Rendering}{Tempo necessario al browser per completare il rendering visivo della pagina (First Contentful Paint).}
-\metricformula{T_{render} \text{ (misurato tramite API del browser)}}
+\metricdef{MPD-10}{Search Time}{Tempo medio di risposta per un set di query predefinite.}
+\metricformula{ST = \sum_{i=1}^{n} \frac{\text{Tempo di risposta}_i}{n} \quad \begin{array}{l} (\text{dove } n = \text{numero di query}) \\ (\text{dove }i = \text{indice della query}) \end{array}}
+
+\metricdef{MPD-11}{Average CPU usage}{Percentuale media di utilizzo della CPU durante l'esecuzione del software. Si considera un campione di misurazioni effettuate in condizioni di carico (durante l'indicizzazione o la ricerca) nonché in idle. Quest'ultimo per assicurare che il software non consumi risorse inutilmente quando non è in uso.}
+\metricformula{CPU_{avg} = \sum_{i=1}^{n} \frac{\text{Utilizzo CPU}_i}{n} \quad (\text{dove }n = \text{numero di misurazioni})}
+
+\newpage
+
+\metricdef{MPD-12}{Peak memory usage}{Massima quantità di memoria RAM utilizzata durante l'esecuzione del software. Permette di individuare eventuali memory leak o scarsa gestione delle risorse.}
+\metricformula{MEM_{peak} = \max(\text{Utilizzo RAM}_i) \quad (\text{dove }i = 1, \dots, n)}
 
 \paragraph{Manutenibilità}
 
-\metricdef{MPD-16}{Complessità Ciclomatica}{Misura la complessità del flusso di controllo del codice. Valori superiori a 15 indicano codice difficile da testare e manutenere.}
+\metricdef{MPD-13}{Complessità Ciclomatica}{Misura la complessità del flusso di controllo del codice. Valori superiori a 15 indicano codice difficile da testare e manutenere.}
 \metricformula{M = E - N + 2P \quad (\text{dove } E=\text{archi}, N=\text{nodi}, P=\text{componenti connessi})}
 
-\metricdef{MPD-17}{Comment Ratio}{Rapporto tra le righe di commento e le righe di codice totali (LOC).}
-\metricformula{CR = \frac{\text{Linee di commento}}{\text{Linee di Codice (SLOC)}}}
+\metricdef{MPD-14}{Accoppiamento tra Classi (CBO)}{Numero di classi a cui una determinata classe è accoppiata (usa o è usata da). Un valore alto indica scarsa modularità.}
+\metricformula{CBO = \frac{\#\text{Dipendenze}}{\#\text{Componenti}}}
 
-\metricdef{MPD-18}{Accoppiamento tra Classi (CBO)}{Numero di classi a cui una determinata classe è accoppiata (usa o è usata da). Un valore alto indica scarsa modularità.}
-\metricformula{CBO = \text{Conteggio dipendenze esterne per classe}}
+\metricdef{MPD-15}{Code smells}{Numero di code smells, misurato ogni 1000 righe di codice (KLOC). I code smells sono indicatori di potenziali problemi di design o implementazione.}
 
+\paragraph{Portabilità}
+
+\metricdef{MPD-16}{SO Compatibility}{Numero di sistemi operativi supportati dal software. Un valore alto indica una maggiore portabilità.}
+\metricformula{SO_{comp} = \#\text{Sistemi operativi supportati}}
 
 \subsection{Strumenti}
+\paragraph{Jira Software}
+Utilizzato come strumento di Project Management per il tracciamento dei requisiti e la gestione del workflow.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPC-1 \dots MPC-7 (Earned Value Management), MPC-16 (Metriche soddisfatte), MPD-1 \dots MPD-3 (Requisiti).
+    \item \textbf{Utilizzo:} Attraverso la funzione di esportazione JQL $\rightarrow$ csv, e uno script python appositamente sviluppato, vengono estratti i dati necessari per il calcolo delle metriche di Earned Value e dei requisiti soddisfatti, permettendo un monitoraggio costante dell'andamento del progetto.
+\end{itemize}
 
+\paragraph{GitHub \& GitHub Actions}
+Viene utilizzato per il controllo di versione e l'automazione della CI/CD.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPC-8 (Deployment Frequency), MPC-12 (Build Time), MPC-13 (Code Review Turnaround Time), MPC-14 (Test success rate).
+    \item \textbf{Utilizzo:} I workflow di GitHub Actions oltre che garantire la metrica MPC-14 (Test success rate) attraverso l'esecuzione di test automatici, permettono di tracciare i tempi di build e code review, fornendo dati utili per il calcolo delle metriche di processo.
+\end{itemize}
+
+\subsubsection{Strumenti di Analisi Statica e Qualità del Codice}
+
+\paragraph{SonarQube}
+Piattaforma centrale per la \textit{Continuous Inspection} del codice TypeScript (Angular) e JavaScript (Electron).
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPD-6 (Statement Coverage), MPD-7 (Branch Coverage), MPD-13 (Complessità Ciclomatica), MPD-14 (CBO), MPD-15 (Code Smells).
+    \item \textbf{Utilizzo:} Analizza staticamente il codice ad ogni \textit{Push}, verificando che il superamento dei \textit{Quality Gates} stabiliti sia coerente con le soglie definite nelle metriche di manutenibilità.
+\end{itemize}
+
+\paragraph{Aspell \& Script Python (Custom)}
+Data la natura della documentazione in lingua italiana, si rende necessario uno strumento specifico per l'analisi testuale.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPC-10 (Indice di Gulpease), MPC-11 (Correttezza Ortografica).
+    \item \textbf{Utilizzo:} Uno script Python che utilizza la libreria \texttt{textstat} per il calcolo dell'indice di Gulpease e le API di \textit{Aspell} per il conteggio degli errori ortografici nei file Markdown/LaTeX.
+\end{itemize}
+
+\subsubsection{Strumenti di Testing e Performance (Electron-Angular)}
+
+\paragraph{Cypress}
+Framework di testing End-to-End utilizzato per simulare l'interazione utente all'interno dell'ambiente Electron.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPD-8 (Profondità di Navigazione).
+    \item \textbf{Utilizzo:} Viene configurato un \textit{crawler} automatizzato che percorre l'albero di navigazione dell'applicazione Angular, validando la raggiungibilità dei link e calcolando il numero di interazioni (click) necessarie per raggiungere i nodi foglia.
+\end{itemize}
+
+\paragraph{Electron Manager \& Chrome DevTools Protocol}
+Per misurare l'efficienza di un'applicazione Electron, è necessario monitorare l'istanza di Chromium sottostante.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPD-11 (Average CPU usage), MPD-12 (Peak memory usage).
+    \item \textbf{Utilizzo:} Durante le sessioni di test automatizzati con Cypress, vengono invocati script Node.js che interrogano le API \texttt{process.getProcessMemoryInfo()} e \texttt{process.getCPUUsage()} di Electron per campionare il consumo di risorse in idle e sotto carico.
+\end{itemize}
+
+\paragraph{Lighthouse}
+Integrato nei tool di sviluppo, viene utilizzato per profilare i tempi di risposta dell'interfaccia Angular.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPD-5 (Broken links).
+    \item \textbf{Utilizzo:} Misura i tempi di latenza tra l'input dell'utente (query) e il rendering dei risultati nel DOM, fornendo report dettagliati sulle performance di risposta.
+\end{itemize}
+
+\paragraph{Funzioni interne di misurazione performance}
+Integrate direttamente nel codice sorgente, queste funzioni permettono di misurare i tempi di indicizzazione e risposta alle query, fornendo dati precisi per le metriche MPD-9 (Indexing time) e MPD-10 (Search Time).
 
 
 
