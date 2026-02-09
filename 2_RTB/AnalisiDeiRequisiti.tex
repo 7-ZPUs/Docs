@@ -14,18 +14,22 @@
 \usepackage{chngpage}
 \usepackage{tocloft}
 \usepackage{longtable}
+\usepackage{ltablex}
 \usepackage{array}
 \usepackage{graphicx}
 \usepackage{fancyhdr}
 \usepackage{xcolor}
 \usepackage{color,soul}
 \usepackage[most]{tcolorbox}
+\usepackage{nameref}
 \usepackage[colorlinks=true]{hyperref}
 
 \hypersetup{
     linkcolor=black,
     urlcolor=blue
 }
+
+\setlength{\LTleft}{-1.4cm}
 
 \definecolor{lightblack}{gray}{0.35}
 \newcommand{\glossario}[1]{\textit{#1}\textsubscript{\textbf{\textit{\textcolor{lightblack}{G}}}}}
@@ -46,6 +50,9 @@
 \renewcommand{\listoftables}{Elenco delle tabelle}
 \renewcommand{\listoffigures}{Elenco delle immagini}
 \geometry{margin=2.5cm}
+\usepackage{titlesec}
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
 
 
 \titleformat{\section}{\LARGE\bfseries}{\thesection}{1em}{}
@@ -54,6 +61,150 @@
 \titleformat{\subsubsubsection}{\normalsize\bfseries}{}{1em}{}
 \titleformat{\paragraph}{\large\bfseries}{}{1em}{}
 \titleformat{\subparagraph}{\normalsize\bfseries}{}{1em}{}
+
+% --- INIZIO DEFINIZIONE CONTATORI UC (METODO EREDITARIETÀ) ---
+
+% 1. Contatore Principale (es. UC-1)
+\newcounter{ucMain}
+% Qui definiamo che la rappresentazione del contatore include già il prefisso "UC-"
+\renewcommand{\theucMain}{UC-\arabic{ucMain}}
+
+\newcommand{\usecase}[2]{% #1=Label (opzionale), #2=Titolo
+    \refstepcounter{ucMain}%
+    \setcounter{ucSub}{0}% Reset sotto-contatori
+    \setcounter{ucVar}{0}%
+    % Nota: Ora usiamo solo \theucMain perché include già "UC-"
+    \subsubsection*{\theucMain\ - #2}%
+    \addcontentsline{toc}{subsubsection}{\theucMain\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
+}
+
+% 2. Contatore Varianti (es. UC-2a)
+\newcounter{ucVar}[ucMain]
+% Definiamo che la variante è: NomePadre (UC-2) + Lettera (a) -> UC-2a
+\renewcommand{\theucVar}{\theucMain\alph{ucVar}}
+
+\newcommand{\varusecase}[2]{%
+    \stepcounter{ucMain}% Incrementa il padre (senza ref)
+    \refstepcounter{ucVar}% Incrementa la variante (ref punta qui)
+    \subsubsection*{\theucVar\ - #2}%
+    \addcontentsline{toc}{subsubsection}{\theucVar\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
+}
+
+% --- RAMO VARIANTI (Figli di UC-2a) ---
+
+% 3. Contatore Figlio di Variante (es. UC-3c.1)
+\newcounter{varSub}[ucVar]
+% Ereditarietà: NomePadre (UC-3c) + Punto + Numero
+\renewcommand{\thevarSub}{\theucVar.\arabic{varSub}}
+
+\newcommand{\varsubusecase}[2]{%
+    \refstepcounter{varSub}%
+    \subsubsection*{\thevarSub\ - #2}%
+    \addcontentsline{toc}{subsubsection}{\thevarSub\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
+}
+
+% 4. Contatore Nipote di Variante (es. UC-3c.1.3)
+\newcounter{varSubSub}[varSub]
+\renewcommand{\thevarSubSub}{\thevarSub.\arabic{varSubSub}}
+
+\newcommand{\varsubsubusecase}[2]{%
+    \refstepcounter{varSubSub}%
+    \paragraph*{\thevarSubSub\ - #2}%
+    \addcontentsline{toc}{paragraph}{\thevarSubSub\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
+}
+
+% 5. Livello profondo variante (es. UC-3c.1.1.1)
+\newcounter{varDeep}[varSubSub]
+\renewcommand{\thevarDeep}{\thevarSubSub.\arabic{varDeep}}
+
+\newcommand{\vardeepusecase}[2]{%
+    \refstepcounter{varDeep}%
+    \paragraph*{\thevarDeep\ - #2}%
+    \addcontentsline{toc}{paragraph}{\thevarDeep\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
+}
+
+% 6. Livello massimo variante (es. UC-3c.1.1.1.1)
+\newcounter{varSubDeep}[varDeep]
+\renewcommand{\thevarSubDeep}{\thevarDeep.\arabic{varSubDeep}}
+
+\newcommand{\varsubdeepusecase}[2]{%
+    \refstepcounter{varSubDeep}%
+    \paragraph*{\thevarSubDeep\ - #2}%
+    \addcontentsline{toc}{paragraph}{\thevarSubDeep\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
+}
+
+% --- RAMO STANDARD (Figli di UC-1) ---
+
+% 3. Contatore Secondario (es. UC-1.1)
+\newcounter{ucSub}[ucMain]
+% Ereditarietà: NomePadre (UC-1) + Punto + Numero
+\renewcommand{\theucSub}{\theucMain.\arabic{ucSub}}
+
+\newcommand{\subusecase}[2]{%
+    \refstepcounter{ucSub}%
+    \subsubsection*{\theucSub\ - #2}%
+    \addcontentsline{toc}{paragraph}{\theucSub\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
+}
+
+% 4. Contatore Terziario (es. UC-3.1.1)
+\newcounter{ucSubSub}[ucSub]
+\renewcommand{\theucSubSub}{\theucSub.\arabic{ucSubSub}}
+
+\newcommand{\subsubusecase}[2]{%
+    \refstepcounter{ucSubSub}%
+    \paragraph*{\theucSubSub\ - #2}%
+    \addcontentsline{toc}{subparagraph}{\theucSubSub\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
+}
+
+% 5. Contatore Quaternario (es. UC-3.2.1.1)
+\newcounter{ucDeep}[ucSubSub]
+\renewcommand{\theucDeep}{\theucSubSub.\arabic{ucDeep}}
+
+\newcommand{\deepusecase}[2]{%
+    \refstepcounter{ucDeep}%
+    \paragraph*{\theucDeep\ - #2}%
+    \addcontentsline{toc}{subparagraph}{\protect\hspace{2em}\theucDeep\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
+}
+
+% 6. Contatore 5 (es. UC-3.2.1.1.5)
+\newcounter{ucSubDeep}[ucSubSub] % NOTA: Nel tuo originale era su ucSubSub, forse intendevi su ucDeep?
+% Ho corretto ipotizzando erediti da ucDeep per coerenza
+\renewcommand{\theucSubDeep}{\theucDeep.\arabic{ucSubDeep}}
+
+\newcommand{\subdeepusecase}[2]{%
+    \refstepcounter{ucSubDeep}%
+    \paragraph*{\theucSubDeep\ - #2}%
+    \addcontentsline{toc}{subparagraph}{\protect\hspace{4em}\theucSubDeep\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
+}
+
+% --- FINE DEFINIZIONE CONTATORI UC ---
+
+% --- Configurazione Indentazione Indice (TOC) ---
+
+% 1. Livello Padre (Use Case principale) -> Mappato su subsubsection
+% Lo teniamo allineato a sinistra (o con un rientro minimo)
+\setlength{\cftsubsubsecindent}{0pt} 
+\setlength{\cftsubsubsecnumwidth}{3em} % Spazio per il numero (es. UC-1)
+
+% 2. Livello Figlio (Sub Use Case) -> Mappato su paragraph
+% Rientro ridotto (es. 1.5em invece del default che è molto largo)
+\setlength{\cftparaindent}{1.5em} 
+\setlength{\cftparanumwidth}{3.5em} 
+
+% 3. Livello Nipote (Sub Sub Use Case) -> Mappato su subparagraph
+% Rientro progressivo ridotto (es. 3em)
+\setlength{\cftsubparaindent}{3em} 
+\setlength{\cftsubparanumwidth}{4em}
 
 \begin{document}
 \pagenumbering{roman}
@@ -67,10 +218,9 @@
 \input{analisi/UC2.tex}
 \input{analisi/UC3.tex}
 \input{analisi/UC4.tex}
-\input{analisi/UC5.tex}
-\input{analisi/UC6-7.tex}
-\input{analisi/UC8-9.tex}
-\input{analisi/UC10.tex}
-\input{analisi/UC11-12.tex}
+\input{analisi/UC5-8.tex}
+\input{analisi/UC10-13.tex}
+\input{analisi/UC14-26.tex}
+\input{analisi/UC27-42.tex}
 \input{analisi/Requisiti.tex}
 \end{document}

@@ -1,19 +1,77 @@
-\subsubsection{UC-3 - Salvataggio documento (LS)}
-
-\subsubsection{UC 3.1 - Salvataggio di un singolo Documento}
+\usecase{salvaDocumento}{Salvataggio di un documento}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\textwidth]{../assets/uml/UC26.png}
+      \caption{UC26 - Salvataggio di un documento}
+      \label{fig:uc_salvaDocumento}
+\end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente sta visualizzando il documento
-    \item \textbf{Postcondizioni}: Il documento viene salvato in locale in una cartella selezionata dall'utente
-    \item \textbf{Flusso Principale}: L'Utente cliccando può selezionare il salvataggio del documento corrente in una cartella del proprio file system, al di fuori del DIP.
-    \item \textbf{Flusso Alternativo}: L'Utente cerca di salvare il documento nella cartella del DIP e questa operazione viene bloccata per garantire lo stato del DIP.
+    \item \textbf{Precondizioni}: 
+    \begin{itemize}
+        \item L'Utente ha avviato l'applicazione
+        \item L'Utente ha selezionato un elemento
+    \end{itemize}
+    \item \textbf{Postcondizioni}: L'Utente ha salvato il documento in locale in una cartella selezionata
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema apre un dialogo di selezione cartella
+            \item L'utente seleziona la cartella di destinazione 
+            \item Il sistema salva il File nella cartella selezionata
+            \item Il sistema conferma il salvataggio con un messaggio "File salvato con successo in [percorso]".
+        \end{enumerate}
+    \item \textbf{Flusso Alternativo}:
+    \begin{itemize}
+            \item L'utente tenta di salvare il documento in una cartella: il sistema blocca l'operazione e mostra il messaggio "Impossibile salvare il documento.".
+            \item L'utente annulla l'operazione: il sistema chiude il dialogo senza salvare.
+        \end{itemize}
+    \item \textbf{Estensioni}: \ref{salvataggioFallito} Salvataggio fallito
 \end{itemize}
 
-\subsubsection{UC 3.2 - Salvataggio di più Documenti}
+
+\usecase{salvaPiuDocumenti}{Salvataggio di più Documenti}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\textwidth]{../assets/uml/UC27.png}
+      \caption{UC27 - Salvataggio di più documenti}
+      \label{fig:uc_salvaPiuDocumenti}
+\end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente sta visualizzando più Documenti o una aggregazione di essi
-    \item \textbf{Postcondizioni}: I documenti vengono salvati in locale in una cartella selezionata dall'utente
-    \item \textbf{Flusso Principale}: L'Utente cliccando può selezionare più documenti di cui effettuare il salvataggio in una cartella del proprio file system
-    \item \textbf{Flusso Alternativo}: L'Utente cerca di salvare i documenti nella cartella del DIP e questa operazione viene bloccata per garantire lo stato del DIP.
+    \item \textbf{Precondizioni}: 
+    \begin{itemize}
+        \item L'Utente ha avviato l'applicazione
+        \item L'Utente sta visualizzando un folder con più documenti o ha selezionato più documenti
+    \end{itemize}
+    \item \textbf{Postcondizioni}: L'Utente ha salvato i documenti in locale in una cartella selezionata
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema apre un dialogo di selezione cartella
+            \item L'utente seleziona la cartella di destinazione
+            \item Il sistema salva i File nella cartella selezionata
+            \item Il sistema conferma il salvataggio con un messaggio "File salvati con successo in [percorso]".
+        \end{enumerate}
+    \item \textbf{Flusso Alternativo}:
+    \begin{itemize}
+            \item L'utente tenta di salvare i documenti nella cartella: il sistema blocca l'operazione e mostra il messaggio "Impossibile salvare i documenti. Selezionare un'altra cartella.".
+            \item L'utente annulla l'operazione: il sistema chiude il dialogo senza salvare.
+        \end{itemize}
+    \item \textbf{Estensioni}: \ref{salvataggioFallito} Salvataggio fallito
+\end{itemize}
+
+\usecase{salvataggioFallito}{Salvataggio fallito}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+    \begin{itemize}
+        \item L'Utente ha avviato l'applicazione
+        \item L'Utente ha selezionato un elemento
+        \item L'utente tenta di salvare uno o più documenti nel proprio computer
+    \end{itemize}
+    \item \textbf{Postcondizioni}: Il sistema annulla l'operazione di salvataggio e mostra un messaggio di errore.
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema annulla l'operazione di salvataggio.
+            \item Il sistema mostra a video un messaggio di errore che indica il motivo del fallimento.
+        \end{enumerate}
 \end{itemize}
