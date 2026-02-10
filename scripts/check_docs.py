@@ -42,7 +42,7 @@ def calculate_gulpease(text):
 
     # 6. RIMOZIONE COMMENTI E AMBIENTI NON TESTUALI
     text = re.sub(r'(?<!\\)%.*', '', text)
-    for env in ['tabular', 'table', 'figure', 'adjustwidth', 'spacing', 'center', 'tcolorbox']:
+    for env in ['tabular', 'table', 'figure', 'adjustwidth', 'spacing', 'center', 'tcolorbox', 'longtable']:
         text = re.sub(r'\\begin\{' + env + r'\}.*?\\end\{' + env + r'\}', '', text, flags=re.DOTALL)
 
     # 7. ESTRAZIONE TESTO DA COMANDI NIDIFICATI (ul, textbf, glossario)
