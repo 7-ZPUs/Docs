@@ -106,7 +106,7 @@
             \hline
             \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione} \\
             \hline
-            0.12 & 2026/02/08 & Vigolo Davide & - & Definizione metriche di qualità \\
+            0.12 & 2026/02/08 & Vigolo Davide & Soligo Lorenzo & Definizione metriche di qualità \\
             \hline
             0.11 & 6/2/2026 & Laoud Zakaria & Soligo Lorenzo & Stesura paragrafi 3.6, 3.7, 3.8 \\
             \hline
@@ -993,7 +993,7 @@ Durante lo svolgimento dello sprint, la qualità viene monitorata costantemente 
     \item \textbf{Controllo automatizzato:} 
     \begin{itemize}
         \item Le GitHub Actions eseguono verifiche automatiche ad ogni commit (indice Gulpease, build success rate)
-        \item La pipeline di CI/CD monitora le metriche di processo come build time e test coverage
+        \item La pipeline di CI/CD monitora le metriche di processo come \glossario{build} time e test coverage
         \item Gli strumenti di analisi statica verificano la complessità ciclomatica e altre metriche di codice
     \end{itemize}
     \item \textbf{Controllo manuale:}
@@ -1402,7 +1402,7 @@ In questa sezione vengono definite le metriche utilizzate per valutare l'efficie
 \metricdef{MPC-4}{Cost Performance Index (CPI)}{Indice di efficienza dei costi. Un valore $< 1$ indica che il progetto è fuori budget.}
 \metricformula{CPI = \frac{EV}{AC}}
 
-\metricdef{MPC-5}{Schedule Performance Index (SPI)}{Indice di efficienza della schedulazione. Un valore $< 1$ indica che il progetto è in ritardo.}
+\metricdef{MPC-5}{Schedule Performance Index (SPI)}{Indice di efficienza della \glossario{schedulazione}. Un valore $< 1$ indica che il progetto è in ritardo.}
 \metricformula{SPI = \frac{EV}{PV}}
 
 \metricdef{MPC-6}{Estimate to Complete}{Rappresenta l'ammontare rimanente stimato per completare il progetto}
@@ -1486,7 +1486,7 @@ In questa sezione vengono definite le metriche per valutare la qualità intrinse
 
 \paragraph{Efficienza}
 
-\metricdef{MPD-9}{Indexing time}{Tempo di indicizzazione per un DiP di dimensioni standard (1-4GB).}
+\metricdef{MPD-9}{Indexing time}{Tempo di \glossario{indicizzazione} per un DiP di dimensioni standard (1-4GB).}
 \metricformula{IT = \text{Tempo di indicizzazione (secondi)}}
 
 \metricdef{MPD-10}{Search Time}{Tempo medio di risposta per un set di query predefinite.}
@@ -1520,7 +1520,7 @@ In questa sezione vengono definite le metriche per valutare la qualità intrinse
 Utilizzato come strumento di Project Management per il tracciamento dei requisiti e la gestione del workflow.
 \begin{itemize}
     \item \textbf{Metriche associate:} MPC-1 \dots MPC-7 (Earned Value Management), MPC-16 (Metriche soddisfatte), MPD-1 \dots MPD-3 (Requisiti).
-    \item \textbf{Utilizzo:} Attraverso la funzione di esportazione JQL $\rightarrow$ csv, e uno script python appositamente sviluppato, vengono estratti i dati necessari per il calcolo delle metriche di Earned Value e dei requisiti soddisfatti, permettendo un monitoraggio costante dell'andamento del progetto.
+    \item \textbf{Utilizzo:} Attraverso la funzione di esportazione \glossario{JQL} $\rightarrow$ csv, e uno script python appositamente sviluppato, vengono estratti i dati necessari per il calcolo delle metriche di Earned Value e dei requisiti soddisfatti, permettendo un monitoraggio costante dell'andamento del progetto.
 \end{itemize}
 
 \paragraph{GitHub \& GitHub Actions}
@@ -1536,7 +1536,7 @@ Viene utilizzato per il controllo di versione e l'automazione della CI/CD.
 Piattaforma centrale per la \textit{Continuous Inspection} del codice TypeScript (Angular) e JavaScript (Electron).
 \begin{itemize}
     \item \textbf{Metriche associate:} MPD-6 (Statement Coverage), MPD-7 (Branch Coverage), MPD-13 (Complessità Ciclomatica), MPD-14 (CBO), MPD-15 (Code Smells).
-    \item \textbf{Utilizzo:} Analizza staticamente il codice ad ogni \textit{Push}, verificando che il superamento dei \textit{Quality Gates} stabiliti sia coerente con le soglie definite nelle metriche di manutenibilità.
+    \item \textbf{Utilizzo:} Analizza staticamente il codice ad ogni \glossario{\textit{Push}}, verificando che il superamento dei \glossario{\textit{Quality Gates}} stabiliti sia coerente con le soglie definite nelle metriche di manutenibilità.
 \end{itemize}
 
 \paragraph{Aspell \& Script Python (Custom)}
@@ -1562,11 +1562,11 @@ Per misurare l'efficienza di un'applicazione Electron, è necessario monitorare 
     \item \textbf{Utilizzo:} Durante le sessioni di test automatizzati con Cypress, vengono invocati script Node.js che interrogano le API \texttt{process.getProcessMemoryInfo()} e \texttt{process.getCPUUsage()} di Electron per campionare il consumo di risorse in idle e sotto carico.
 \end{itemize}
 
-\paragraph{Lighthouse}
+\paragraph{TotalValidator}
 Integrato nei tool di sviluppo, viene utilizzato per profilare i tempi di risposta dell'interfaccia Angular.
 \begin{itemize}
     \item \textbf{Metriche associate:} MPD-5 (Broken links).
-    \item \textbf{Utilizzo:} Misura i tempi di latenza tra l'input dell'utente (query) e il rendering dei risultati nel DOM, fornendo report dettagliati sulle performance di risposta.
+    \item \textbf{Utilizzo:} Controllo formale di consistenza e correttezza della struttura dell'interfaccia utente Angular.
 \end{itemize}
 
 \paragraph{Funzioni interne di misurazione performance}
