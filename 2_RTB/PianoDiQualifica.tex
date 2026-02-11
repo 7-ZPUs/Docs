@@ -1,0 +1,483 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage[sfdefault]{atkinson}
+\usepackage{float}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{chngpage}
+\usepackage{tocloft}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{color,soul}
+\usepackage[most]{tcolorbox}
+\usepackage[colorlinks=true]{hyperref}
+
+
+
+\hypersetup{
+    linkcolor=black,
+    urlcolor=blue
+}
+
+\definecolor{lightblack}{gray}{0.35}
+\newcommand{\glossario}[1]{\textit{#1}\textsubscript{\textbf{\textit{\textcolor{lightblack}{G}}}}}
+\newcommand{\ped}[1]{\textsubscript{#1}}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{\rightmark}
+\rhead{7-ZPUs}
+\lfoot{Piano di Qualifica}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.1}
+
+\titleclass{\subsubsubsection}{straight}[\subsection]
+
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
+\renewcommand\theparagraph{\thesubsubsubsection.\arabic{paragraph}} % optional; useful if paragraphs are to be numbered
+
+\titleformat{\subsubsubsection}
+  {\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
+\titlespacing*{\subsubsubsection}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{5}{\z@}%
+  {3.25ex \@plus1ex \@minus.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{6}{\parindent}%
+  {3.25ex \@plus1ex \@minus .2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\def\toclevel@subsubsubsection{4}
+\def\toclevel@paragraph{5}
+%\def\toclevel@paragraph{6}
+\def\toclevel@subparagraph{6}
+\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
+\def\l@paragraph{\@dottedtocline{5}{10em}{5em}}
+\def\l@subparagraph{\@dottedtocline{6}{14em}{6em}}
+\makeatother
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+\titleformat{\section}{\LARGE\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}
+\titleformat{\paragraph}{\large\bfseries}{\theparagraph}{1em}{}
+\titleformat{\subparagraph}{\normalsize\bfseries}{\thesubparagraph}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../assets/logo7ZPUs.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \vspace{0.5cm}
+    \Large \textbf{Piano di Qualifica}\\
+\end{center}
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+        \hline
+        0.3.0 & 2025/02/08 & Vigolo Davide & Soligo Lorenzo & \begin{tabular}[c]{@{}c@{}} Aggiunta sezione cruscotto \\ di valutazione \end{tabular} \\
+        \hline
+        0.2.0 & 2025/02/02 & Vigolo Davide & Soligo Lorenzo & \begin{tabular}[c]{@{}c@{}} Revisione metriche\\ e aggiornamento soglie \end{tabular} \\
+        \hline
+        0.1.0 & 2025/12/14 & Rocco Matteo A. & Vigolo Davide & \begin{tabular}[c]{@{}c@{}} Creazione del documento\\ e stesura iniziale \end{tabular} \\
+        \hline
+    \end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\tableofcontents
+
+\newpage
+
+\section{Introduzione}
+
+\subsection{Scopo}
+Lo scopo di questo documento è di fondamentale importanza. Permette di definire misure quantitative per misurare la qualità di processo e di prodotto. Assieme al cruscotto di valutazione permette di monitorare l'efficacia e l'efficienza dei processi di ciclo di vita istanziati nel progetto.
+Garantire una sufficiente qualità di processo e di prodotto, è condizione necessaria alla qualità di prodotto in uso, che è di interesse primario per la committente. Il Piano di Qualifica si compone di tre elementi:
+\begin{itemize}
+    \item Piano della Qualità: Definizione di obiettivi quantitativi di qualità, metriche e strategie per raggiungerla
+    \item Controllo di Qualità: insieme di attività e tecniche per valutare che il piano stabilito sia efficace.
+    \item Miglioramento continuo: stabilire eventuali azioni correttive alla luce dei risultati del controllo, adattando processi, obiettivi e vincoli.
+\end{itemize}
+
+\subsection{Glossario}
+Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{Ingegneria del Software} utilizzato nella documentazione di progetto viene definito nell'apposito documento \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@norme_in_lavorazione/2_RTB/Glossario.pdf}{\ul{Glossario1.0}\setulcolor{blue}}\ped{(ultimo accesso: 17/11/2025)}.
+
+\subsection{Riferimenti}
+
+\subsubsection{Riferimenti Normativi}
+\begin{itemize}
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@norme_in_lavorazione/2_RTB/NormeDiProgetto.pdf}{\ul{NormeDiProgetto1.0}\setulcolor{blue}}\ped{(ultimo accesso: 3/12/2025)}
+    \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato C3: DIPReader}\setulcolor{blue}} \ped{(ultimo accesso: 01/12/2025)}
+    \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/PD1.pdf}{\ul{Regolamento di Progetto Didattico a.a. 2025/2026}\setulcolor{blue}} \ped{(ultimo accesso: 17/11/2025)}
+\end{itemize}
+\subsubsection{Riferimenti Informativi}
+\begin{itemize}
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@norme_in_lavorazione/2_RTB/Glossario.pdf}{\ul{Glossario1.0}\setulcolor{blue}}\ped{(ultimo accesso: 17/11/2025)}
+    \item \href{https://iso25000.com}{\ul{The ISO/IEC 25000 Series of Standards}\setulcolor{blue}}
+    \item \href{https://www.iso.org/standard/63712.html}{\ul{Standard ISO/IEC 9126-1:2001}\setulcolor{blue}}
+    \item \href{https://www.iso.org/standard/71952.html}{\ul{Standard ISO/IEC 145981-1:1999}\setulcolor{blue}}
+\end{itemize}
+
+\section{Metriche di qualità}
+
+\subsection{Qualità di processo}
+
+\subsubsection{Processi primari}
+
+\subsubsubsection{Fornitura}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPC-1 & EV (Earned Value) & $\geq$0 & PV \\
+        \hline
+        MPC-2 & PV (Planned Value) & $\geq$0 & - \\
+        \hline
+        MPC-3 & AC (Actual Cost) & $\geq$0 & $\leq$EV \\
+        \hline
+        MPC-4 & CPI (Cost Performance Index) & $\geq$0.5 & $\geq$1 \\
+        \hline
+        MPC-5 & SPI (Schedule Performance Index) & $\geq$0.5 & $\geq$1 \\
+        \hline
+        MPC-6 & ETC (Estimate to Complete) & $\geq$0 & $\leq$BAC\textsubscript{\textit{G}} - AC\textsubscript{\textit{G}} \\
+        \hline
+        MPC-7 & EAC (Estimate at Completion) & $\geq$0 & $\leq$BAC \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsubsection{Sviluppo}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPC-8 & Deployment frequency & - & 1/gg \\
+        \hline
+        MPC-9 & Requirements Stability Index & $\geq$70\% & 100\% \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsubsection{Integrazione}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPC-12 & Average build time & $\leq$15 min & $\leq$10 min \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsection{Processi di supporto}
+
+\subsubsubsection{Documentazione}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPC-10 & Indice di Gulpease & $\geq$60 & $\geq$75\\
+        \hline
+        MPC-11 & Correttezza ortografica & 0 & 0 \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsubsection{Verifica}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPC-13 & Code review turnaround time & $\leq$72h & $\leq$24h\\
+        \hline
+        MPC-14 & Test success rate & 100\% & 100\%\\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsection{Processi organizzativi}
+
+\subsubsubsection{Gestione dei rischi}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPC-15 & Rischi non previsti & $\geq$0 & 0\\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsubsection{Gestione della Qualità}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPC-16 & Metriche soddisfatte & $\geq$70\% & 100\% \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+
+\subsection{Qualità di prodotto}
+Le metriche definite in questa sezione riguardano principalmente caratteristiche di qualità "interne" del prodotto software. Raggiungere la qualità su queste caratteristiche abilita all'ottenimento di qualità in uso, o "esterna".
+Suddividiamo le metriche secondo raggruppamenti logici qui di seguito elencati ed esplicitati:
+\begin{itemize}
+    \item \textbf{Funzionalità}: completezza, correttezza ed appropriatezza del prodotto
+    \item \textbf{Affidabilità}: maturità, disponibilità, tolleranza ai guasti e riparabilità del prodotto
+    \item \textbf{Usabilità}: apprendibilità, operabilità, UX e accessibilità del prodotto
+    \item \textbf{Efficienza}: nel tempo, nelle altre risorse, nella capacità
+    \item \textbf{Manutenibilità}: modularità, riusabilità, analizzabilità, modificabilità e verificabilità del prodotto
+    \item \textbf{Portabilità}: adattabilità del prodotto a diversi ambienti
+\end{itemize}
+
+
+\subsubsection{Funzionalità}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPD-2 & Requisiti obbligatori soddisfatti & $\geq$0\% & 100\% \\
+        \hline
+        MPD-3 & Requisiti opzionali soddisfatti & $\geq$0\% & 100\%\\
+        \hline
+        MPD-4 & Requisiti desiderabili soddisfatti & $\geq$0\% & 100\% \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+
+\subsubsection{Affidabilità}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPD-5 & Broken Links & 2 & 0\\
+        \hline
+        MPD-6 & Branch coverage & $\geq$80\% & $\geq$90\% \\
+        \hline
+        MPD-7 & Statement Coverage & $\geq$65\% & $\geq$80\% \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsection{Usabilità}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPD-8 & Profondità di navigazione & $\geq$0 & $\leq$5 \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+
+\subsubsection{Efficienza}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPD-9 & Indexing Time & 2min & $\leq$30 s \\
+        \hline
+        MPD-10 & Search Time & $\leq$2 s & $\leq$1 s \\
+        \hline
+        MPD-11 & Average CPU usage & $\leq$30\% & $\leq$15\% \\
+        \hline
+        MPD-12 & Peak memory usage & $\leq$1 GB & $\leq$500 MB \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+
+
+\subsubsection{Manutenibilità}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+       \hline
+        MPD-13 & Complessità ciclomatica & $\leq$15 & $\leq$10 \\
+        \hline
+        MPD-14 & Accoppiamento tra classi & $\leq$0.4 & $\leq$0.2 \\
+        \hline
+        MPD-15 & Code Smells & $\leq$15 & 0 \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsection{Portabilità}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{spacing}{1.5}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
+        \hline
+        MPD-16 & Sistemi operativi supportati & 3 & $\geq$3 \\
+        \hline
+    \end{tabular}
+    \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\section{Test di verifica}
+todo.
+
+\section{Cruscotto di valutazione e miglioramento}
+
+Il cruscotto di valutazione è strumento fondamentale per la corretta gestione di progetto. Permette di avere un visione oggettiva dell'andamento, e di identificare eventuali problemi o criticità. Nei grafici seguenti sono riportati i dati per ogni settimana. Questo perché un monitoraggio solamente a termine di periodo è una scelta miope e di marginale utilità. Si preferisce invece avere un monitoraggio costante. Si fa notare come nel primo periodo
+il gruppo, non disponendo ancora del cruscotto, non abbia attivamente monitorato le metriche. Nonostante ciò, essendo esse ricavabili vengono riportate per completezza.
+
+\subsection{MPC-1, MPC-2, MPC-3: Earned Value, Planned Value, Actual Cost}
+\includegraphics[width=\textwidth]{../assets/pdq/ev_pv_ac.png}
+Dal grafico si può apprezzare come il progetto sia partito lentamente durante le prime due settimane, dovuto ovviamente alle fasi iniziali di organizzazione del gruppo. Successivamente durante il terzo e il quarto sprint si può notare una differenza importante tr PV ed EV. Questo, come riportato nelle retrospettive, è dovuto ad una stima delle attività troppo ottimistica. Il gruppo ha intrapreso dunque un approccio più conservativo che ha portato al ricongiungersi dei due valori alla settimana 10-11. \\
+\subsection{MPC-4, MPC-5: CPI, SPI}
+\includegraphics[width=\textwidth]{../assets/pdq/cpi_spi.png}
+Possiamo notare anche da CPI e SPI la pianificazione troppo ottimistica con un calo dello SPI.
+Nonostante il rallentamento, il gruppo ha completato le attività con costi inferiori al previsto.
+Successivamente invece si è riusciti a recuperare il ritardo. Lo SPI è tornato sopra 1, dovuto al fatto che si sono dovute recuperare le task in ritardo, tuttavia spendendo più del previsto. Il CPI si è stabilizzato nelle ultime settimane, dovuto al fatto che il gruppo ha familiarizzato e accumulato esperienza nello stimare task simili. \\
+\subsection{MPC-7: EAC confrontato con BAC}
+\includegraphics[width=\textwidth]{../assets/pdq/eac_bac.png}
+Strettamente collegato, e conseguenza del CPI, è l'andamento di EAC e BAC. Tra le settimane 3 e 5 si osserva una diminuzione. Tale diminuzione non tiene conto della sottostima delle attività: nelle attività completate il costo reale è risultato inferiore. Successivamente l'EAC aumenta, segnalando un incremento dei costi. Questo aumento è dovuto alle numerose iterazioni, a volte molto distruttive, sul documento di Analisi dei Requisiti. Dopo gli incontri con il prof. Cardin il gruppo ha dovuto rivedere quasi completamente la struttura degli Use Case\textsubscript{\textit{G}}. \\
+\subsection{MPC-1, MPC-2, MPC-3, MPC-6, MPC-7: EV, PV, AC, ETC, EAC}
+\includegraphics[width=\textwidth]{../assets/pdq/ev_pv_ac_eac_etc.png}
+Si può apprezzare dal grafico quanto detto fino ad ora. Si osserva un aumento dell EAC nella fase iniziale, con un suo successivo rientro. \\
+\subsection{MPC-10: Indice di Gulpease}
+\includegraphics[width=\textwidth]{../assets/pdq/gfi.png}
+Il gruppo misura l'Indice di Gulpease per garantire la leggibilità, soprattutto dei documenti rivolti ad esterni. Nelle fasi iniziali non è stata posta particolare attenzione, ma i risultati sono stati comunque buoni. Un'eccezione sono le Norme di Progetto: più descrittive e con pochi elenchi, mostrano valori inferiori. Per garantire un limite minimo, nelle settimane 7--10 (SPRINT 4) è stato introdotto un controllo automatico che accetta in repository solo documenti con Gulpease $\geq$ 60. \\
+\subsection{MPC-11: Correttezza ortografica}
+\includegraphics[width=\textwidth]{../assets/pdq/eo.png}
+Gli errori ortografici sono stati gestiti in maniera analoga e parallela al Gulpease Index. Il gruppo ha deciso di non accettare documenti con errori ortografici, implementando un controllo automatico. \\
+\subsection{MPC-15: Rischi non previsti}
+\includegraphics[width=\textwidth]{../assets/pdq/rnp.png}
+Il gruppo ha registrato due rischi imprevisti in due sprint diversi. Il primo, coerente con i dati mostrati, è stato causato dalla sottostima delle attività. Nel secondo sprint si è verificato un rischio imprevedibile: un membro del gruppo è stato indisposto. \\
+\subsection{MPC-9: Requirements Stability Index}
+\includegraphics[width=\textwidth]{../assets/pdq/rsi.png}
+Dal grafico si osserva che, all'inizio, la stabilità dei requisiti è rimasta costante mentre il gruppo definiva le Norme di Progetto e i requisiti non erano ancora esplorati. Successivamente si è verificato un calo significativo: l'attenzione si è spostata sullo studio del dominio applicativo e sulle aspettative della proponente. La scarsa conoscenza del dominio e la continua selezione e revisione dei requisiti, anche per motivi di fattibilità, hanno generato instabilità. La proponente non ha imposto vincoli rigidi sulle funzionalità; di conseguenza i requisiti sono stati proposti e discussi in modo progressivo. Questo ha fatto sì che non si sia reso spesso necessario modificare, aggiungere o eliminare requisiti, e l'indice si è stabilizzato nella fase finale.
+\subsection{MPC-16: Metriche soddisfatte}
+\includegraphics[width=\textwidth]{../assets/pdq/ms.png}
+Si nota un calo iniziale, corrispondentemente al periodo di instabilità generale del progetto. Successivamente, grazie a misure correttive e ai controlli automatici di alcune metriche si è raggiunta la stabilità. Questo anche grazie alla crescente attenzione rivolta al soddisfacimento delle metriche di qualità.
+
+\vfill
+
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
