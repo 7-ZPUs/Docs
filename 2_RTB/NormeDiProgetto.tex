@@ -106,7 +106,11 @@
             \hline
             \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione} \\
             \hline
+<<<<<<< HEAD
+            0.9 & 07/02/2025& Aaron Gingillino & Vigolo Davide & Scrittura paragrafi 2.2, 4.1 \\
+=======
             0.13 & 2026/02/09 & Fattoni Antonio & Vigolo Davide & Correzione processo di documentazione e controllo della configurazione \\
+>>>>>>> b4fe916483a810f1e4a0d164094a551023e7193e
             \hline
             0.12 & 2026/02/08 & Vigolo Davide & - & Definizione metriche di qualità \\
             \hline
@@ -335,8 +339,58 @@ La lettera di presentazione è il documento necessario alla candidatura per la m
 \end{itemize}
 
 \subsection{Processo di sviluppo}
-
+Il processo di sviluppo prevede l'insieme di attività che definiscono lo svolgimento dell'Analisi dei Requisiti.
 \subsubsection{Attività di processo}
+L'elenco di attività previste è basato sullo standard ISO/IEC 12207:1995, e sono descritte di seguito:
+\begin{itemize}
+    \item \textbf{Definizione del processo di sviluppo}: selezione del Ciclo di Vita del Software più idoneo tenendo conto degli obiettivi, della rilevanza e della complessità del progetto;
+    \item \textbf{Raccolta e analisi dei requisiti}: attività volta a individuare e specificare le esigenze dell’utente finale rispetto alle funzionalità richieste al Software. Un’analisi esaustiva deve includere le funzioni del Sistema, i bisogni degli utilizzatori e i vincoli stabiliti dal committente;
+    \item \textbf{Progettazione dell’architettura di Sistema}: identificazione delle componenti hardware e software necessarie a garantire il soddisfacimento di tutti i requisiti definiti, supportata da un adeguato tracciamento degli stessi;
+    \item \textbf{Analisi dei requisiti Software}: studio di come il Software risponde ai requisiti lato utente, includendo anche gli aspetti di qualità, quali funzionalità (comprensive di requisiti prestazionali), interfacce tra componenti e requisiti di sicurezza;
+    \item \textbf{Definizione dell’architettura Software}: progettazione delle principali componenti del sistema e delle loro interazioni, con particolare attenzione alla struttura complessiva piuttosto che ai dettagli implementativi;
+    \item \textbf{Progettazione dettagliata del Software}: sviluppo del progetto delle singole componenti Software fino all’individuazione delle unità elementari;
+    \item \textbf{Sviluppo e verifica del Software}: realizzazione delle unità che costituiscono le componenti progettate, accompagnata da test specifici per verificarne il corretto funzionamento;
+    \item \textbf{Integrazione delle componenti Software}: assemblaggio delle diverse parti in componenti complete, supportato da test di integrazione per garantirne il comportamento corretto;
+    \item \textbf{Test di qualificazione del Software}: esecuzione di test dedicati per verificare che il Software soddisfi i requisiti e gli obiettivi di qualità prefissati;
+    \item \textbf{Integrazione del Sistema}: combinazione di tutte le componenti realizzate nel Sistema finale;
+    \item \textbf{Test di qualificazione del Sistema}: verifica dell’intero Sistema attraverso test complessivi per accertarne il corretto funzionamento;
+    \item \textbf{Installazione del Software}: consegna e messa in opera del prodotto presso il cliente finale nell’ambiente precedentemente concordato;
+    \item \textbf{Supporto all’approvazione del Software}: attività di assistenza all’utente finale per verificare che tutti i requisiti richiesti siano stati effettivamente soddisfatti.
+\end{itemize}
+\subsubsection{Analisi dei Requisiti}
+L’\glossario{Analisi dei Requisiti} rappresenta una delle attività fondamentali all’interno della \glossario{\textbf{Requirements and Technology Baseline} (RTB)} e ha l’obiettivo di identificare in modo completo l’insieme dei requisiti che il sistema sviluppato dovrà soddisfare.
+
+I risultati di tale attività sono raccolti nel documento \textit{Analisi dei Requisiti}, nel quale sono riportate in maniera dettagliata tutte le informazioni necessarie. Questo documento costituisce un riferimento essenziale per le successive fasi di progettazione dell’architettura e di codifica, supportando il lavoro dei progettisti e degli sviluppatori.
+
+Un ulteriore elemento di riferimento è il \textit{Piano di Qualifica} che, includendo l’elenco dei test e il loro stato di avanzamento, consente di verificare quali requisiti risultano soddisfatti e quali siano ancora da validare.
+
+In particolare, il documento di Analisi dei Requisiti organizza i \glossario{casi d’uso} individuati e i relativi requisiti associati. Al fine di agevolarne la consultazione, viene di seguito illustrata nel dettaglio la nomenclatura adottata.
+ 
+\subsubsection{Casi d'uso}
+I casi d'uso utilizzano la nomenclatura seguente:
+
+\centerline{\textbf{UC-[Primario](-[Secondario]-[Terziario]-ecc.)}}
+
+UC sta per Use Case, ovvero caso d'uso in inglese. Gli UC sono identificati univocamente tramite una numerazione crescente. \textit{Primario} è il numero dello UC principale. È possibile avere dei \textit{sotto-UC}, in tal caso verrà aggiunto il numero crescente del sotto-UC come appendice allo UC genitore. 
+Ogni UC è anche dotato di un nome descrittivo.
+\subsubsection{Requisiti}
+I requisiti utilizzano la nomenclatura seguente:
+
+\centerline{\textbf{R-[ID]-[Tipo]-[Priorità]}}
+
+Dove:
+\begin{itemize}
+    \item \textbf{ID}: numero progressivo del requisito
+    \item Tipo:
+    \begin{itemize}
+        \item  \textbf{F} (Requisiti Funzionali): descrivono le funzionalità del sistema
+        \item \textbf{Q} (Requisiti di Qualità): descrivono le caratteristiche qualitative del sistema 
+        \item \textbf{V} (Requisiti di Vincolo): descrivono i vincoli tecnologici e normativi
+
+    \end{itemize}
+\item Priorità: \textbf{Ob} (Obbligatorio), \textbf{De} (Desiderabile), \textbf{Op} (Opzionale)
+\end{itemize}
+
 
 \subsection{Processo operativo}
 Il processo operativo comprende quell'insieme di attività trasversali che sono necessarie a garantire il corretto coordinamento tra i membri del gruppo e il raggiungimento degli obiettivi del progetto. Tale processo assicura comunicazioni efficaci, nonchè una distribuzione ottimale dei compiti, al fine di mantenere alta la qualità del software e rispettare le tempistiche stabilite. Il processo operativo si integra naturalmente con tutti gli altri processi del progetto.
@@ -1119,7 +1173,32 @@ Queste meta-metriche vengono rendicontate nel Piano di Qualifica insieme alle me
 \end{itemize}
 
 \section{Processi Organizzativi}
+<<<<<<< HEAD
+\subsection{Gestione}
+La gestione descrive le modalità di comunicazione interne ed esterne, i vari ruoli e i loro compiti. 
+\subsubsection{Ruoli di progetto}
+Durante lo sprint ogni membro del gruppo assume un singolo ruolo. Il ruolo può variare da sprint a sprint. Di seguito elenchiamo le responsabilità di ogni ruolo:
+\begin{itemize}
+    \item Responsabile: gestisce la distribuzione di attività tra i membri, assegnando le attività basandosi sull'ammontare ore rimasto per ogni ruolo ed ogni membro. Si occupa inoltre della redazione dei verbali, della comunicazione con la proponente e dell'aggiornamento del piano di progetto.
+    \item Amministratore: si occupa del corretto svolgimento del progetto, manutenendo l'infrastruttura, e controllando il corretto aderimento alle pratiche sprint. Si occupa anche della scrittura delle norme di progetto. 
+    \item Analista: concepisce i casi d'uso basandosi sui requisiti ricavati dalle richieste della proponente. Si occupa della scrittura dell'analisi dei requisiti e del piano di qualifica.
+    \item Progettista: traduce i requisti individuati dagli analisti in un progetto, questo include la scelta delle tecnologie da utilizzare, la struttura interna del progetto, cioè le sue parti e sotto-parti. Si occupa anche della supervisione dello sviluppo, verificando il corretto aderimento al progetto.
+    \item Programmatore: il suo ruolo è sviluppare il progetto generato dal progettista. Lavorando con quest'ultimo implementa tutte le funzionalità richieste tramite le tecnologie prestabilite. Si occupa anche della creazione di test automatizzati, utilizzati per verificare la correttezza del codice sviluppato. 
+    \item Verificatore: si occupa di verificare che il prodotto sia a regola d'arte, dunque che aderisca alle norme di progetto. Si occupa di controllare la documentazione e il codice in cerca di possibili errori, che siano stilistici o di contenuto, e avvisare gli autori in questione del problema.
+\end{itemize}
+\subsubsection{Attività}
+Appoggiandoci allo standard ISO/IEC 12207:1997 individuiamo le seguenti attività:
+\begin{itemize}
+    \item Processo di Gestione.
+    \item Processo di Infrastruttura.
+    \item Processo di Miglioramento.
+    \item Processo di Formazione.
+\end{itemize}
+Le sezioni di seguito tratteranno i processi sopra scritti in dettaglio.
+
+=======
 \subsection{Gestione}\label{gestione_processi_organizzativi}
+>>>>>>> b4fe916483a810f1e4a0d164094a551023e7193e
 
 \subsection{Infrastruttura}
 Il processo di Infrastruttura fornisce il supporto tecnico necessario per lo
