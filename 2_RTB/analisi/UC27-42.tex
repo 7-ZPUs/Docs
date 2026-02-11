@@ -48,7 +48,7 @@
     \item \textbf{Postcondizioni}: L'utente visualizza il tipo di formato del documento
     \item \textbf{Flusso Principale}: 
     \begin{enumerate} 
-        \item Il sistema mostra a video il tipo di formato del documento tra quelli indicati nelle Linee guida AGID
+        \item Il sistema mostra a video il tipo di formato del documento tra quelli indicati nelle Linee guida AGID (allegato 2 formati di file e riversamento)
     \end{enumerate}
 \end{itemize}
 
@@ -193,7 +193,7 @@
     \item \textbf{Postcondizioni}: L'utente visualizza se vi è conformità alle copie immagine su supporto informatico
     \item \textbf{Flusso Principale}:
         \begin{enumerate} 
-        \item Il sistema mostra a video se vi è conformità alle copie immagine su supporto informatico (sì/no)
+        \item Il sistema mostra a video se vi è conformità alle copie immagine su supporto informatico o meno
     \end{enumerate}
 \end{itemize}
 
@@ -263,11 +263,7 @@
     \item \textbf{Flusso Principale}: 
     \begin{enumerate}
         \item L'utente visualizza il numero di allegati (\ref{visualizzaNumeroAllegatiDocumento})
-        \item L'utente visualizza le informazioni identificative degli allegati, se presenti, quali:
-        \begin{itemize}
-            \item Identificativo dell'allegato (\ref{visualizzaIdentificativoAllegato})
-            \item Descrizione dell'allegato (\ref{visualizzaDescrizioneAllegato})
-        \end{itemize}    
+        \item L'utente visualizza gli allegati del documento    
     \end{enumerate}
     \item \textbf{Flusso Alternativo}:
     \begin{itemize} 
@@ -276,8 +272,7 @@
     \item \textbf{Inclusioni}:
     \begin{itemize}
         \item \ref{visualizzaNumeroAllegatiDocumento} Visualizza numero allegati documento
-        \item \ref{visualizzaIdentificativoAllegato} Visualizza identificativo allegato
-        \item \ref{visualizzaDescrizioneAllegato} Visualizza descrizione allegato
+        \item \ref{visualizzaAllegatoInListaAllegati} Visualizza allegato in lista allegati
     \end{itemize}
     \item \textbf{Estensioni}: \ref{allegatiNonPresenti} Allegati non presenti
 \end{itemize}
@@ -302,7 +297,31 @@
     \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaIdentificativoAllegato}{Visualizza identificativo allegato}
+\subusecase{visualizzaAllegatoInListaAllegati}{Visualizza allegato in lista allegati}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento di tipo: "informatico" o "amministrativo informatico"
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza le informazioni sugli allegati del documento
+    \item \textbf{Flusso Principale}: 
+    \begin{enumerate}
+        \item L'utente visualizza le informazioni identificative degli allegati quali:
+        \begin{itemize}
+            \item Identificativo dell'allegato (\ref{visualizzaIdentificativoAllegato})
+            \item Descrizione dell'allegato (\ref{visualizzaDescrizioneAllegato})
+        \end{itemize}    
+    \end{enumerate}
+    \item \textbf{Inclusioni}:
+    \begin{itemize}
+        \item \ref{visualizzaIdentificativoAllegato} Visualizza identificativo allegato
+        \item \ref{visualizzaDescrizioneAllegato} Visualizza descrizione allegato
+    \end{itemize}
+\end{itemize}
+
+\subsubusecase{visualizzaIdentificativoAllegato}{Visualizza identificativo allegato}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -323,7 +342,7 @@
     \item \textbf{Estensioni}: \ref{erroreIdentificativoAllegato} Errore Visualizzazione identificativo allegato
 \end{itemize}
 
-\subusecase{erroreIdentificativoAllegato}{Errore Visualizzazione identificativo allegato}
+\subsubusecase{erroreIdentificativoAllegato}{Errore Visualizzazione identificativo allegato}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -339,7 +358,7 @@
     \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaDescrizioneAllegato}{Visualizza descrizione allegato}
+\subsubusecase{visualizzaDescrizioneAllegato}{Visualizza descrizione allegato}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -360,7 +379,7 @@
     \item \textbf{Estensioni}: \ref{erroreDescrizioneAllegato} Errore Visualizzazione descrizione allegato
 \end{itemize}
 
-\subusecase{erroreDescrizioneAllegato}{Errore Visualizzazione descrizione allegato}
+\subsubusecase{erroreDescrizioneAllegato}{Errore Visualizzazione descrizione allegato}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:

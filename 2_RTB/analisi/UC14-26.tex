@@ -113,10 +113,10 @@
         \item Il sistema visualizza le informazioni comuni del soggetto
         \item Il sistema visualizza le informazioni identificative del soggetto, quali:
         \begin{itemize}
-            \item Nome \ref{visualizzaNomeSoggetto}
-            \item Cognome \ref{visualizzaCognomeSoggetto}
-            \item Codice Fiscale \ref{visualizzaCodiceFiscaleSoggetto}
-            \item Indirizzi digitali di riferimento \ref{visualizzaIndirizziDigitaliSoggetto}
+            \item Nome (\ref{visualizzaNomeSoggetto})
+            \item Cognome (\ref{visualizzaCognomeSoggetto})
+            \item Codice Fiscale (\ref{visualizzaCodiceFiscaleSoggetto})
+            \item Indirizzi digitali di riferimento (\ref{visualizzaIndirizziDigitaliSoggetto})
         \end{itemize}
     \end{enumerate}
     \item \textbf{Inclusioni}:
@@ -214,10 +214,10 @@
         \item Il sistema visualizza le informazioni comuni del soggetto
         \item Il sistema visualizza le informazioni identificative del soggetto, quali:
         \begin{itemize}
-            \item Denominazione dell'organizzazione \ref{visualizzaDenominazioneOrganizzazioneSoggetto}
-            \item Codice Fiscale / Partita IVA \ref{visualizzaCodiceFiscaleSoggetto} / \ref{visualizzaPartitaIVA}
-            \item Denominazione dell'ufficio \ref{visualizzaDenominazioneUfficioSoggetto}
-            \item Indirizzi digitali di riferimento \ref{visualizzaIndirizziDigitaliSoggetto}
+            \item Denominazione dell'organizzazione (\ref{visualizzaDenominazioneOrganizzazioneSoggetto})
+            \item Codice Fiscale / Partita IVA (\ref{visualizzaCodiceFiscaleSoggetto}) / (\ref{visualizzaPartitaIVA})
+            \item Denominazione dell'ufficio (\ref{visualizzaDenominazioneUfficioSoggetto})
+            \item Indirizzi digitali di riferimento (\ref{visualizzaIndirizziDigitaliSoggetto})
         \end{itemize}
     \end{enumerate}
     \item \textbf{Inclusioni}: 
@@ -758,9 +758,9 @@
     \caption{Inclusioni UC57 - Visualizza Dati di Registrazione documento}
     \label{fig:inclusioniVisualizzaDatiRegistrazioneDocumento}
 \end{figure}
+
 \subusecase{visualizzaTipologiaFlussoDocumento}{Visualizza Tipologia di Flusso documento}
 \begin{itemize}
-    \item \textbf{Descrizione}: L'utente vuole visualizzare la tipologia di flusso del documento, che indica se si tratta di un documento in uscita, in entrata o interno.
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{enumerate}
@@ -770,95 +770,151 @@
     \item \textbf{Postcondizioni}: L'utente visualizza la tipologia di flusso del documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video la tipologia del flusso del documento selezionato
+            \item Il sistema mostra a video la tipologia del flusso del documento selezionato tra le seguenti:
+            \begin{itemize}
+                \item In uscita
+                \item In entrata
+                \item Interno
+            \end{itemize}
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaTipoRegistroDocumento}{Visualizza Tipo di Registro documento}
+\subusecase{visualizzaTipoRegistroDocumento}{Visualizza tipo di registro documento}
 \begin{itemize}
-    \item \textbf{Descrizione}: L'utente vuole visualizzare il tipo di registro del documento, che indica il sistema di registrazione adottato: protocollo ordinario/protocollo emergenza, o Repertorio/Registro.
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
         \item L'utente ha selezionato un documento
     \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza il Tipo di Registro del documento selezionato
+    \item \textbf{Postcondizioni}: L'utente visualizza il tipo di registro del documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video il Tipo di Registro 
-            del documento selezionato
+            \item Il sistema mostra a video il tipo di registro 
+            del documento selezionato tra le seguenti tipologie:
+            \begin{itemize}
+                \item Protocollo ordinario
+                \item Protocollo emergenza
+                \item Repertorio
+                \item Registro
+            \end{itemize}
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaDataRegistrazioneDocumento}{Visualizza Data di Registrazione documento}
+\subusecase{visualizzaDataRegistrazioneDocumento}{Visualizza data di registrazione documento}
 \begin{itemize}
-    \item \textbf{Descrizione}: L'utente vuole visualizzare la data di registrazione del documento, che indica nel caso di documento non protocollato:
-    \begin{itemize}
-        \item Data di registrazione del Documento/Ora di registrazione del Documento
-    \end{itemize}
-    nel caso di documento protocollato:
-    \begin{itemize}
-        \item Data di registrazione di protocollo/Ora di protocollazione del Documento
-    \end{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
         \item L'utente ha selezionato un documento
     \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza la Data di Registrazione del documento selezionato
+    \item \textbf{Postcondizioni}: L'utente visualizza la data di registrazione del documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video la Data di Registrazione
-            del documento selezionato
+            \item Il sistema mostra a video la data di registrazione del documento selezionato
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaNumeroDocumento}{Visualizza Numero documento}
+\subsubusecase{visualizzaDataNonProtocollato}{Visualizza data di registrazione documento non protocollato}
 \begin{itemize}
-    \item \textbf{Descrizione}: L'utente vuole visualizzare il numero del documento, che indica nel caso di documento non protocollato:
-    \begin{itemize}
-        \item Numero di registrazione del documento
-    \end{itemize}
-    mentre nel caso di documento protocollato:
-    \begin{itemize}
-        \item Numero di protocollo
-    \end{itemize}
+\item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento non protocollato
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la data di registrazione del documento non protocollato selezionato
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video la data di registrazione del documento non protocollato selezionato
+        \end{enumerate}
+    \item \textbf{Specializza}: \ref{visualizzaDataRegistrazioneDocumento} Visualizza data di registrazione documento
+\end{itemize}
+
+\subsubusecase{visualizzaDataProtocollato}{Visualizza data di protocollazione documento protocollato}
+\begin{itemize}
+\item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento protocollato
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la data di protocollazione del documento protocollato selezionato
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video la data di protocollazione del documento protocollato selezionato
+        \end{enumerate}
+    \item \textbf{Specializza}: \ref{visualizzaDataRegistrazioneDocumento} Visualizza data di registrazione documento
+\end{itemize}
+
+\subusecase{visualizzaNumeroDocumento}{Visualizza numero documento}
+\begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
         \item L'utente ha selezionato un documento
     \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza il Numero del documento selezionato
+    \item \textbf{Postcondizioni}: L'utente visualizza il numero del documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video il Numero del documento selezionato
+            \item Il sistema mostra a video il numero del documento selezionato
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaCodiceIdentificativoRegistroAppartenenzaDocumento}{Visualizza Codice identificativo del Registro di appartenenza documento}
+\subsubusecase{visualizzaNumeroNonProtocollato}{Visualizza numero documento non protocollato}
 \begin{itemize}
-    \item \textbf{Descrizione}: L'utente vuole visualizzare il codice identificativo del registro in cui il documento viene registrato.
+\item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento non protocollato
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza il numero di registrazione del documento non protocollato selezionato
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video il numero di registrazione del documento non protocollato selezionato
+        \end{enumerate}
+    \item \textbf{Specializza}: \ref{visualizzaNumeroDocumento} Visualizza numero del documento
+\end{itemize}
+
+\subsubusecase{visualizzaNumeroProtocollato}{Visualizza numero documento protocollato}
+\begin{itemize}
+\item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento protocollato
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza il numero di protocollo del documento protocollato selezionato
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video il numero di protocollo del documento protocollato selezionato
+        \end{enumerate}
+    \item \textbf{Specializza}: \ref{visualizzaNumeroDocumento} Visualizza numero del documento
+\end{itemize}
+
+\subusecase{visualizzaCodiceIdentificativoRegistroAppartenenzaDocumento}{Visualizza codice identificativo del registro di appartenenza documento}
+\begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
         \item L'utente ha selezionato un documento
     \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza il Codice identificativo del Registro in cui è stato registrato il documento selezionato
+    \item \textbf{Postcondizioni}: L'utente visualizza il codice identificativo del registro in cui è stato registrato il documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video il Codice identificativo del Registro in cui è stato registrato il documento selezionato
+            \item Il sistema mostra a video il Codice identificativo del registro in cui è stato registrato il documento selezionato
         \end{enumerate}
 \end{itemize}
 
-\usecase{visualizzaTipologiaDocumentaleDocumento}{Visualizza Tipologia documentale documento}
+\usecase{visualizzaTipologiaDocumentaleDocumento}{Visualizza tipologia documentale documento}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{../assets/uml/UC58.png}
-    \caption{UC58 - Visualizza Tipologia documentale documento}
+    \caption{UC58 - Visualizza tipologia documentale documento}
     \label{fig:uc_visualizzaTipologiaDocumentaleDocumento}
 \end{figure}
 \begin{itemize}
@@ -868,18 +924,18 @@
         \item L'utente ha avviato l'applicazione
         \item L'utente ha selezionato un documento
     \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza la Tipologia documentale del documento selezionato
+    \item \textbf{Postcondizioni}: L'utente visualizza la tipologia documentale del documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema mostra a video la tipologia documentale del documento selezionato
         \end{enumerate}
 \end{itemize}
 
-\usecase{visualizzaModalitaFormazioneDocumento}{Visualizza Modalità di formazione documento}
+\usecase{visualizzaModalitaFormazioneDocumento}{Visualizza modalità di formazione documento}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{../assets/uml/UC59.png}
-    \caption{UC59 - Visualizza Modalità di formazione documento}
+    \caption{UC59 - Visualizza modalità di formazione documento}
     \label{fig:uc_visualizzaModalitaFormazioneDocumento}
 \end{figure}
 \begin{itemize}
@@ -889,32 +945,31 @@
         \item L'utente ha avviato l'applicazione
         \item L'utente ha selezionato un documento
     \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza la Modalità di formazione del documento selezionato
+    \item \textbf{Postcondizioni}: L'utente visualizza la modalità di formazione del documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video la Modalità di formazione del documento selezionato
+            \item Il sistema mostra a video la modalità di formazione del documento selezionato
         \end{enumerate}
 \end{itemize}
 
-\usecase{visualizzaStatoRiservatezzaDocumento}{Visualizza Stato di riservatezza documento}
+\usecase{visualizzaStatoRiservatezzaDocumento}{Visualizza stato di riservatezza documento}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{../assets/uml/UC60.png}
-    \caption{UC60 - Visualizza Stato di riservatezza documento}
+    \caption{UC60 - Visualizza stato di riservatezza documento}
     \label{fig:uc_visualizzaStatoRiservatezzaDocumento}
 \end{figure}
 \begin{itemize}
-    \item \textbf{Descrizione}: L'utente vuole visualizzare lo stato di riservatezza del documento, che indica se quest'ultimo è accessibile solo al personale autorizzato
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
         \item L'utente ha selezionato un documento
     \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza lo Stato di riservatezza del documento selezionato
+    \item \textbf{Postcondizioni}: L'utente visualizza lo stato di riservatezza del documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video lo Stato di riservatezza del documento selezionato
+            \item Il sistema mostra a video lo stato di riservatezza del documento selezionato
         \end{enumerate}
 \end{itemize}
 
