@@ -106,9 +106,23 @@
             \hline
             \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione} \\
             \hline
+<<<<<<< HEAD
             0.9 & 07/02/2025& Aaron Gingillino & Vigolo Davide & Scrittura paragrafi 2.2, 4.1 \\
+=======
+            0.13 & 2026/02/09 & Fattoni Antonio & Vigolo Davide & Correzione processo di documentazione e controllo della configurazione \\
+>>>>>>> b4fe916483a810f1e4a0d164094a551023e7193e
             \hline
-            0.8 & 25/01/2025 & Aaron Gingillino & Fattoni Antonio & Scrittura paragrafi 3.3,3.4 \\
+            0.12 & 2026/02/08 & Vigolo Davide & - & Definizione metriche di qualità \\
+            \hline
+            0.11 & 6/2/2026 & Laoud Zakaria & Soligo Lorenzo & Stesura paragrafi 3.6, 3.7, 3.8 \\
+            \hline
+            0.10 & 25/01/2025 & Aaron Gingillino & Vigolo Davide & Scrittura paragrafi 2.2, 4.1 \\
+            \hline
+            0.9 & 25/01/2025 & Aaron Gingillino & Fattoni Antonio & Scrittura paragrafi 3.3,3.4 \\
+            \hline
+            0.8.1 & 19/1/2026 & Soligo Lorenzo & Laoud Zakaria & Fine scrittura paragrafi 4.2, 4.3, 4.4 \\
+            \hline
+            0.8 & 11/1/2026 & Soligo Lorenzo & Laoud Zakaria & Stesura paragrafi 4.2, 4.3, 4.4 \\
             \hline
             0.7 & 15/12/2025 & Rocco Matteo A. & Georgescu Diana & Stesura paragrafo 5 \\
             \hline
@@ -193,7 +207,7 @@ approfondimenti tratti dalla sua versione più recente, ISO/IEC/IEEE
 
 \section{Processi Primari}
 
-\subsection{Processo di Fornitura}
+\subsection{Processo di Fornitura}\label{processoDiFornitura}
 Il \glossario{processo} di fornitura contiene le attività e i compiti svolti
 dal \glossario{fornitore}. Per implementare correttamente il processo il gruppo
 si impegna a svolgere le seguenti attività.
@@ -276,10 +290,11 @@ prodotto finale. L'obiettivo è definire in maniera non ambigua i
 (\textit{Requirements}) del software. Il documento è diviso nelle seguenti
 sezioni:
 \begin{enumerate}
-    \item Introduzione
-    \item Descrizione
-    \item Definizione dei casi d'uso
-    \item Definizione dei requisiti
+    \item \textbf{Introduzione:} Include lo scopo, i riferimenti normativi (come il Capitolato C3) e informativi, e il rimando a un Glossario esterno per la terminologia tecnica.
+    \item \textbf{Descrizione:} Fornisce una panoramica del sistema, le sue funzionalità generali e l'identificazione degli utenti di destinazione.
+    \item \textbf{User Stories:} Elenca i bisogni degli utenti espressi in linguaggio naturale.
+    \item \textbf{Definizione dei casi d'uso:} Rappresenta il nucleo del documento, con i casi d'uso principali descritti tramite diagrammi UML e schede tecniche che includono attori, precondizioni, postcondizioni e flussi principali.
+    \item \textbf{Definizione dei requisiti:} Classificazione dettagliata dei requisiti individuati
 \end{enumerate}
 
 \paragraph{Glossario}
@@ -393,7 +408,7 @@ Procedure di pianificazione operativa:
 \end{enumerate}
 
 
-\subsubsection{Gestione dei rischi operativi}
+\subsubsection{Gestione dei rischi operativi} \label{gestione_rischi_operativi}
 La gestione dei rischi operativi mira a identificare in maniera proattiva le potenziali problematiche che potrebbero minare il normale svolgimento delle attività e a pianificare le dovute azioni di mitigazione.
 \vspace{0.5cm}
 I principali rischi operativi identificati sono:
@@ -458,7 +473,7 @@ Per valutare l'efficacia della manutenzione, il gruppo monitora le seguenti metr
     \item Distribuzione per tipologia: suddivisione degli interventi di manutenzione per categoria.
 \end{itemize}
 
-\section{Processi di Supporto}
+\section{Processi di Supporto} \label{processi_supporto}
 I processi di supporto sono volti a garantire l'efficacia e l'efficienza dei
 processi primari.
 
@@ -506,73 +521,48 @@ documentazione:
     \item \glossario{DashBoard/Cruscotto} di Jira per il monitoraggio delle attività assegnate per ogni membro del gruppo.
 \end{itemize}
 
+
 \subsubsection{Attività: Produzione della documentazione}\label{produzioneDocs}
-La produzione della documentazione, assegnata durante la pianificazione, è
-visibile all'assegnatario come \glossario{Work item} grazie all'estensione Jira
-di VSCode \ref{vscode}. Grazie a quest'ultima è possibile creare direttamente
-il Branch di lavoro che si baserà sulla feature branch principale. Una volta
-completata la stesura, seguendo i modelli standard sopracitati, l'autore del
-documento crea una \glossario{(PR) Pull Request} verso la feature branch
-principale, assegnando come revisore il membro del gruppo designato, diverso da
-se. \\ A questo punto:
+La produzione della documentazione è un'attività fondamentale per garantire la tracciabilità e la comunicazione efficace all'interno del gruppo e con gli stakeholder esterni. Ogni documento deve essere redatto seguendo le linee guida stabilite, utilizzando i modelli approvati e rispettando le scadenze stabilite durante la pianificazione.
+
+\paragraph{Linee guida per la produzione della documentazione}\label{lineeGuidaProduzioneDocs}
+Per garantire la coerenza e la qualità della documentazione, il gruppo segue le seguenti linee guida:
 \begin{itemize}
-    \item Se il revisore \textbf{approva la PR}, questo branch viene automaticamente
-          eliminato, il work item viene marcato come completato in Jira e l'assegnatario
-          può proseguire con gli altri compiti a lui assegnati.
-    \item Se il revisore richiede modifiche \textbf{la PR viene rifiutata} e
-          l'assegnatario deve procedere con le modifiche richieste. Una volta completate,
-          l'assegnatario notifica il revisore che procederà con una nuova revisione.
-          Questo ciclo si ripete fino a quando la PR non viene approvata.
+    \item \textbf{Verbali:} la stesura dei verbali utilizza un template standard approvato per garantire continuità e chiarezza nella comunicazione. La struttura prevede:
+    \begin{itemize}
+        \item Intestazione con logo del gruppo, data, durata della riunione e luogo (fisico o virtuale);    
+        \item Indice dei contenuti;
+        \item Tabella di versionamento;
+        \item elenco dei partecipanti;
+        \item Ordine del giorno;
+        \item Resoconto dettagliato dei punti discussi;
+        \item Tabella di definizione dei ruoli (se necessario);
+        \item Decisioni prese e tabella delle attività associate.
+    \end{itemize}
+    \item \textbf{Diario di bordo:} la struttura dei diari di bordo segue anch'essa un template standard che include il logo del gruppo, la data, un numero progressivo, e il numero del gruppo. Le sezioni principali sono:
+    \begin{itemize}
+        \item Difficoltà affrontate;
+        \item Dubbi e incertezze;
+        \item Pagina conclusiva. 
+    \end{itemize}
+    \item \textbf{Altri documenti:} Per tutti gli altri documenti non vengono utilizzati modelli particolari in quanto prevediamo una sola istanza di ciascuno di essi. Tuttavia seguiamo delle linee guida comuni per garantire consistenza dell'impianto tipografico. In particolare:
+    \begin{itemize}
+        \item Frontespizio con logo e titolo del documento;
+        \item Tabella di versionamento;
+        \item Indice dei contenuti. 
+    \end{itemize}
 \end{itemize}
-L'integrazione con Jira permette di controllare lo stato di avanzamento dei Work Item, la rendicontazione delle ore lavorate e la gestione delle scadenze.
-Risulta quindi \textbf{obbligatorio} l'utilizzo di Smart Commit per tutti i commit, compresi quelli di Pull Request. Più in \ref{smartcommit}.
 
-\begin{figure}[H]
-    \label{fig:workflowDocs}
-    \centering
-    \includegraphics[width=0.7\textwidth]{../assets/workflowWorkItem.png}
-    \caption{Flusso del processo di documentazione}
-\end{figure}
-
-\paragraph{Procedure di Produzione}\label{procedureProduzioneDocs}
-I seguenti passaggi guidano il Team nella produzione di documenti:
-\begin{enumerate}
-    \item Consultando l'estensione
-          \href{https://marketplace.visualstudio.com/items?itemName=Atlassian.atlascode}{"Atlassian:
-              Jira, Rovo Dev, Bitbucket"} il membro del gruppo potrà avere accesso al Work
-          Item assegnatogli e cliccando su "Start Work" potrà \textbf{creare il branch}
-          di lavoro secondo le convenzioni stabilite (\ref{stdBranch}). Nell'immagine
-          sottostante sono indicati visivamente i passi.
-          \begin{figure}[H]
-              \centering
-              \includegraphics[width=1\textwidth]{../assets/estensioneJira.png}
-              \caption{Creazione del branch di lavoro tramite estensione Jira in VSCode}
-          \end{figure}
-    \item Quando è necessario \textbf{effettuare un commit} è obbligatorio utilizzare lo
-          Smart Commit. Più in \ref{Jira}.
-    \item Una volta completata la task, è necessario \textbf{creare la PR} verso la
-          branch \textit{"in\_lavorazione"} di riferimento mettendo come revisore il
-          membro del gruppo designato.\\ Per esempio, una volta completata la stesura di
-          un verbale viene creata una PR verso \textit{verbali\_in\_lavorazione} e se
-          questa viene approvata, il documento sarà pronto per la revisione finale del
-          responsabile che si occuperà del merge al \textit{main} in sede di milestone.\\
-          \begin{figure}[H]
-              \label{PR1}
-              \centering
-              \includegraphics[width=1.1\textwidth]{../assets/PRDocs1.png}
-              \caption{Creazione della PR verso l'issue branch \textit{in\_lavorazione}}
-          \end{figure}
-\end{enumerate}
-\subparagraph{Denominazione e datazione}\label{convenzioniNomiDate}
-Per una corretta archiviazione e reperibilità dei documenti, è necessario
+\subparagraph{Denominazione e datazione documentazione}\label{convenzioniNomiDate}
+Per una corretta archiviazione e reperibilità delle modifiche apportate ai documenti, è necessario
 seguire le seguenti convenzioni per la datazione e denominazione.
 \begin{itemize}
     \item Tutti i file dei documenti devono seguire la regola del \textbf{Pascal Case}, ovvero
 devono essere scritti senza spazi e con la prima lettera di ogni parola in
-maiuscola.\\
-\item All'interno dei documenti, la data deve essere riportata nel formato \textbf{DD-MM-YYYY}, giorno-mese-anno.
+maiuscola.
+\item All'interno dei documenti, la data deve essere riportata nel formato \textbf{YYYY-MM-DD}, anno-mese-giorno.
 \end{itemize}
-La denominazione dei file sul sito necessita di seguire invece la datazione usata per il nome dei file su GitHub ovvero \textbf{YYYY-MM-DD}, con l'aggiunta del numero di versione alla fine del nome. Per le specifiche di versionamento, si rimanda alla sezione \ref{versione}.
+La denominazione dei file sul sito segue anch'essa la datazione usata per il nome dei file su GitHub ovvero \textbf{YYYY-MM-DD}, con l'aggiunta del numero di versione alla fine del nome. Per le specifiche di versionamento, si rimanda alla sezione \ref{versione}.
 
 \paragraph{Strumenti di Produzione}
 \begin{itemize}
@@ -583,7 +573,7 @@ La denominazione dei file sul sito necessita di seguire invece la datazione usat
     \item \glossario{GitHub} per la gestione delle versioni della documentazione di progetto.
 \end{itemize}
 
-\subsubsection{Attività: Revisione e Approvazione}
+\subsubsection{Attività: Revisione e Approvazione} \label{revisione_approvazione}
 Ogni documento redatto viene sottoposto a un processo di revisione interna che
 ne accerta la correttezza contenutistica, formale, e stilistica. La revisione viene effettuata da un membro del gruppo diverso dall'autore del documento seguendo la procedura definita a seguire
 \paragraph{Procedure di Revisione e Approvazione}\label{procedureRevisioneDocs}
@@ -680,7 +670,86 @@ Per entrambi, la creazione della issue di produzione avviene automaticamente una
 \begin{itemize}
     \item \textbf{Jira:} Strumento di gestione delle attività di progetto.
 \end{itemize}
-\subsubsection{Attività: Versionamento e Identificazione}
+
+\subsubsection{Attività: Controllo della configurazione}\label{controlloConfig}
+Il controllo della configurazione è il processo con il quale vengono gestite le richieste di modifica. 
+Una volta effettuata una modifica l'autore crea una \glossario{(PR) Pull Request} verso la feature branch
+principale, assegnando come revisore il membro del gruppo designato, diverso da
+se. \\ A questo punto:
+\begin{itemize}
+    \item Se il revisore \textbf{approva la PR}, questo branch viene automaticamente
+          eliminato, il work item viene marcato come completato in Jira e l'assegnatario
+          può proseguire con gli altri compiti a lui assegnati.
+    \item Se il revisore richiede modifiche \textbf{la PR viene rifiutata} e
+          l'assegnatario deve procedere con le modifiche richieste. Una volta completate,
+          l'assegnatario notifica il revisore che procederà con una nuova revisione.
+          Questo ciclo si ripete fino a quando la PR non viene approvata.
+\end{itemize}
+L'integrazione con Jira permette di controllare lo stato di avanzamento dei Work Item, la rendicontazione delle ore lavorate e la gestione delle scadenze.
+Risulta quindi \textbf{obbligatorio} l'utilizzo di Smart Commit per tutti i commit, compresi quelli di Pull Request. Più in \ref{smartcommit}.
+
+\begin{figure}[H]
+    \label{fig:workflowDocs}
+    \centering
+    \includegraphics[width=0.7\textwidth]{../assets/workflowWorkItem.png}
+    \caption{Flusso del processo di controllo}
+\end{figure}
+
+I seguenti passaggi guidano il Team nella produzione di modifiche alla baseline:
+\begin{enumerate}
+    \item Consultando l'estensione
+          \href{https://marketplace.visualstudio.com/items?itemName=Atlassian.atlascode}{"Atlassian:
+              Jira, Rovo Dev, Bitbucket"} il membro del gruppo potrà avere accesso al Work
+          Item assegnatogli e cliccando su "Start Work" potrà \textbf{creare il branch}
+          di lavoro secondo le convenzioni stabilite (\ref{stdBranch}). Nell'immagine
+          sottostante sono indicati visivamente i passi.
+          \begin{figure}[H]
+              \centering
+              \includegraphics[width=1\textwidth]{../assets/estensioneJira.png}
+              \caption{Creazione del branch di lavoro tramite estensione Jira in VSCode}
+          \end{figure}
+    \item Quando è necessario \textbf{effettuare un commit} è obbligatorio utilizzare lo
+          Smart Commit. Più in \ref{Jira}.
+    \item Una volta completata la task, è necessario \textbf{creare la PR} verso la
+          branch \textit{"in\_lavorazione"} di riferimento mettendo come revisore il
+          membro del gruppo designato.\\ Per esempio, una volta completata la stesura di
+          un verbale viene creata una PR verso \textit{verbali\_in\_lavorazione} e se
+          questa viene approvata, il documento sarà pronto per la revisione finale del
+          responsabile che si occuperà del merge al \textit{main} in sede di milestone.\\
+          \begin{figure}[H]
+              \label{PR1}
+              \centering
+              \includegraphics[width=1.1\textwidth]{../assets/PRDocs1.png}
+              \caption{Creazione della PR verso l'issue branch \textit{in\_lavorazione}}
+          \end{figure}
+\end{enumerate}
+
+\paragraph{Procedure: Smart Commit} \label{smartcommit}
+La necessità di tracciamento delle attività richiede l'adozione capillare degli
+Smart Commit per collegare i commit GitHub alle issue Jira. Questo permette di
+aggiornare automaticamente lo stato delle task e rendicontare il tempo.
+
+La sintassi obbligatoria è:
+\begin{verbatim}
+DIPR-<numero issue> #time <nd nh nm> #<stato> #comment <Descrizione> 
+\end{verbatim}
+
+\textbf{Regole di applicazione:}
+\begin{enumerate}
+    \item \textbf{Time Tracking:} L'inserimento del tempo (\texttt{\#time}) deve seguire il formato \textit{nd nh nm} (giorni, ore, minuti).
+    \item \textbf{Transizioni di Stato:} Utilizzare i tag \texttt{\#start-progress}, \texttt{\#start-review}, \texttt{\#complete} per avanzare il workflow su Jira.
+    \item \textbf{Pull Request:} Nelle PR è vietato inserire il tag \texttt{\#time} per evitare la doppia contabilizzazione delle ore lavorative.
+    \item \textbf{Issue Multiple:} È possibile agire su più issue in un singolo commit separandole con spazi (utile per chiudere issue di sviluppo e verifica contemporaneamente)[cite: 97, 98].
+\end{enumerate}
+
+\paragraph{Strumenti di Controllo delle Configurazioni}
+\begin{itemize}
+    \item \textbf{Jira Automation:} Interpreta gli Smart Commit per aggiornare i Work Item.
+    \item \textbf{Git/GitHub:} Motore di versionamento sottostante.
+\end{itemize}
+
+
+\subsubsection{Attività: Versionamento e Identificazione} \label{versionamento_identificazione}
 Questa attività definisce le regole per l'identificazione univoca degli
 artefatti e la gestione delle ramificazioni nel repository.
 
@@ -704,33 +773,6 @@ branch in GitHub:
     \item \textbf{VSCode (Estensione Jira):} Per l'automazione della nomenclatura delle branch.
 \end{itemize}
 
-\subsubsection{Attività: Controllo delle Configurazioni}
-Questa attività regolamenta il modo in cui le modifiche di avanzamento vengono registrate e
-tracciate rispetto ai task pianificati.
-
-\paragraph{Procedure: Smart Commit} \label{smartcommit}
-La necessità di tracciamento delle attività richiede l'adozione capillare degli
-Smart Commit per collegare i commit GitHub alle issue Jira. Questo permette di
-aggiornare automaticamente lo stato delle task e rendicontare il tempo.
-
-La sintassi obbligatoria è:
-\begin{verbatim}
-DIPR-<numero issue> #time <nd nh nm> #<stato> #comment <Descrizione> 
-\end{verbatim}
-
-\textbf{Regole di applicazione:}
-\begin{enumerate}
-    \item \textbf{Time Tracking:} L'inserimento del tempo (\texttt{\#time}) deve seguire il formato \textit{nd nh nm} (giorni, ore, minuti).
-    \item \textbf{Transizioni di Stato:} Utilizzare i tag \texttt{\#start-progress}, \texttt{\#start-review}, \texttt{\#complete} per avanzare il workflow su Jira.
-    \item \textbf{Pull Request:} Nelle PR è vietato inserire il tag \texttt{\#time} per evitare la doppia contabilizzazione delle ore lavorative.
-    \item \textbf{Issue Multiple:} È possibile agire su più issue in un singolo commit separandole con spazi (utile per chiudere issue di sviluppo e verifica contemporaneamente)[cite: 97, 98].
-\end{enumerate}
-
-\paragraph{Strumenti}
-\begin{itemize}
-    \item \textbf{Jira Automation:} Interpreta gli Smart Commit per aggiornare i Work Item.
-    \item \textbf{Git/GitHub:} Motore di versionamento sottostante.
-\end{itemize}
 \subsubsection{Registrazione delle Configurazioni}
 Questa attività prevede la documentazione e la registrazione delle modifiche apportate agli SCIs.
 \paragraph{Procedure: Registrazione delle Modifiche}\label{versione}
@@ -749,8 +791,8 @@ Per la numerazione delle versioni si adotta lo standard di versionamento \textbf
     \item \textbf{PATCH} viene incrementato per correzioni di bug, miglioramenti minori o modifiche che non influenzano le funzionalità principali del documento.
 \end{itemize}
 
-\subsection{Processo di verifica}
-La verifica serve a controllare che il software prodotto corrisponda ai requisiti richiesti dalla proponente. Per evitare problemi, a ogni task viene assegnato uno o più verificatori. A seconda del tipo di task, i verificatori useranno tecniche e pratiche adeguate per verificare che il prodotto rispetti gli standard di qualità. 
+
+\subsection{Processo di verifica}La verifica serve a controllare che il software prodotto corrisponda ai requisiti richiesti dalla proponente. Per evitare problemi, a ogni task viene assegnato uno o più verificatori. A seconda del tipo di task, i verificatori useranno tecniche e pratiche adeguate per verificare che il prodotto rispetti gli standard di qualità. 
 Dentro il Piano di Qualifica sono elencate le attività che i verificatori devono fare al completamento della task a loro assegnatali. Troviamo anche per ogni attività gli obbiettivi, gli esiti desiderabili e quelli ottenuti.
 \subsubsection{Verifica documentale}
 I passaggi che il verificatore deve svolgere per approvare un documento sono specificati nella sezione \ref{produzioneDocs}. Perché un documento possa essere approvato il verificatore deve controllare che sia corretto: 
@@ -789,12 +831,349 @@ Vediamo le tipologie di test più comuni:
 \subsection{Processo di validazione}
 La validazione serve a verificare se i requisiti e le aspettative della proponente sono stati soddisfatti tramite test di accettazione. Questi test simulano uno scenario realistico, permettendo di mostrare il prodotto alla proponente e raccogliere il suo feedback. 
 
-\subsection{Processo di revisione congiunta}
-\subsection{Processo di risoluzione dei problemi}
-\subsection{Gestione della qualità}
+\subsection{Processo di revisione congiunta}\label{proc_revisione_congiunta}
+Il processo di revisione congiunta regola le attività di verifica periodica svolte congiuntamente con la proponente per verificare 
+l'allineamento rispetto ai requisiti e agli obiettivi concordati. Questo processo garantisce che lo sviluppo del prodotto proceda in conformità 
+con le aspettative della proponente e permette di identificare tempestivamente eventuali problemi.
 
+I ruoli coinvolti in questo processo sono:
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+        \centering
+        \begin{spacing}{1.1}
+        \begin{tabular}{|c|c|}
+            \hline
+            \textbf{Ruolo} & \textbf{Specifica} \\
+            \hline
+            Responsabile & \begin{tabular}[c]{@{}c@{}} Coordina gli incontri preparando i materiali e gestendo \\ la comunicazione con la proponente \end{tabular} \\
+            \hline
+            Tutti i membri del team & \begin{tabular}[c]{@{}c@{}} Partecipano attivamente alle revisioni ponendo \\ quesiti quando necessario \end{tabular} \\
+            \hline
+        \end{tabular}
+        \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsection{Attività: Pianificazione delle revisioni}\label{pianificazione_revisioni}
+
+\paragraph{Procedure di Revisione}
+Come concordato con la proponente (\ref{processoDiFornitura}), con cadenza bisettimanale il gruppo di lavoro si incontra con l'azienda tramite Google Meet per discutere lo stato di avanzamento 
+del progetto.\\
+L'amministratore si occupa della creazione della task Jira relativa all'incontro, assegnando anche la scrittura e verifica del verbale.
+
+\subsubsection{Attività: Preparazione dei materiali}\label{preparazione_materiali}
+
+\paragraph{Procedure di preparazione}
+Al fine di garantire un'organizzazione efficace degli incontri, vengono adottate le seguenti modalità operative:
+\begin{enumerate}
+    \item È già stato fornito alla proponente un link alla dashboard per il monitoraggio continuo dell'avanzamento dei lavori.
+    \item Prima di ogni incontro si svolge un meeting su Discord per definire l'ordine di esposizione degli argomenti.
+    \item Prima di ogni incontro viene concordato il materiale da mostrare durante la revisione. Vengono, inoltre, raccolte e organizzate le domande, 
+    provenienti da tutti i membri del gruppo, da sottoporre alla proponente.
+\end{enumerate}
+
+\subsubsection{Attività: Conduzione della revisione}\label{conduzione_revisione}
+
+\paragraph{Procedure di conduzione}
+Durante l'incontro di revisione congiunta:
+\begin{enumerate}
+    \item Il responsabile presenta lo stato di avanzamento rispetto alla pianificazione
+    \item Vengono mostrate, se presenti, le demo delle nuove funzionalità implementate
+    \item Si discutono eventuali problematiche emerse e si raccolgono feedback dalla proponente chiarendo eventuali dubbi
+\end{enumerate}
+
+\subsubsection{Attività: Post incontro}\label{post_incontro}
+
+\paragraph{Procedure post incontro}
+Al termine di ogni revisione congiunta:
+\begin{enumerate}
+    \item Viene completato il verbale esterno riportante le tematiche trattate e i dubbi discussi 
+    \item Il verbale viene condiviso con la proponente tramite Google Drive per approvazione e firma
+    \item Eventuali variazioni rispetto alla visione iniziale del gruppo vengono formalizzate tramite 
+    la creazione di apposite Issue Jira e assegnate al membro del team competente.
+    \item Il verbale approvato viene archiviato nel repository secondo le procedure di documentazione (\ref{produzioneDocs})
+\end{enumerate}
+
+\subsubsection{Strumenti di revisione congiunta}\label{strumenti_revisione_congiunta}
+\begin{itemize}
+    \item \textbf{Google Drive:} Per la condivisione dei verbali esterni e dei materiali di revisione con la proponente
+    \item \textbf{Gmail:} Per la comunicazione formale con la proponente
+    \item \textbf{Discord:} Per il coordinamento interno del team in preparazione alle revisioni
+    \item \textbf{Jira:} Per il tracciamento delle Issue emerse dalle revisioni
+    \item \textbf{Google Meet:} Per lo svolgimento delle revisioni in modalità sincrona con la proponente
+\end{itemize}
+
+\subsection{Processo di risoluzione dei problemi}\label{proc_risoluzione_problemi}
+Il processo di risoluzione dei problemi definisce le modalità sistematiche per identificare, analizzare e risolvere problematiche tecniche oppure organizzative 
+che emergono durante lo sviluppo. \\Questo processo garantisce che i problemi vengano gestiti in modo strutturato, documentato e tempestivo, 
+minimizzando l'impatto sulle attività di progetto.
+
+I ruoli coinvolti in questo processo sono:
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+        \centering
+        \begin{spacing}{1.1}
+        \begin{tabular}{|c|c|}
+            \hline
+            \textbf{Ruolo} & \textbf{Specifica} \\
+            \hline
+            Responsabile & \begin{tabular}[c]{@{}c@{}} Coordina l'analisi dei problemi critici e decide l'allocazione \\ delle risorse per la risoluzione \end{tabular} \\
+            \hline
+            Amministratore & \begin{tabular}[c]{@{}c@{}} Gestisce i problemi legati all'infrastruttura e agli strumenti, \\ come descritto in \ref{gestione_processi_organizzativi} \end{tabular} \\
+            \hline
+            Analista/Progettista & \begin{tabular}[c]{@{}c@{}} Risolve problemi legati a requisiti ambigui o \\ scelte architetturali \end{tabular} \\
+            \hline
+            Programmatore & \begin{tabular}[c]{@{}c@{}} Risolve problemi tecnici nel codice e implementa \\ le soluzioni concordate \end{tabular} \\
+            \hline
+            Verificatore & \begin{tabular}[c]{@{}c@{}} Verifica che le soluzioni implementate risolvano\\ effettivamente il problema \end{tabular} \\
+            \hline
+        \end{tabular}
+        \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsection{Attività: Identificazione del problema}\label{identificazione_problema}
+
+\paragraph{Procedure di identificazione}
+Qualsiasi membro del team può identificare e segnalare un problema utilizzando uno dei seguenti canali di comunicazione:
+\begin{enumerate}
+    \item Gruppo WhatsApp, per segnalazioni rapide e comunicazioni immediate.
+    \item Server Discord, per discussioni strutturate e confronti approfonditi.
+    \item Chiamate straordinarie tra sottogruppi di membri, in caso di problematiche che richiedano un confronto diretto.
+    \item Riunione settimanale del team, per l'analisi condivisa di problematiche di carattere organizzativo, tecnico o progettuale
+    \item Stand-up meeting periodici 
+\end{enumerate}
+
+La segnalazione di un problema deve includere, ove possibile, le seguenti informazioni:
+\begin{itemize}
+    \item Descrizione chiara e dettagliata del problema riscontrato.
+    \item Indicazione del livello di urgenza e della priorità suggerita.
+    \item Eventuali tentativi di risoluzione già effettuati o possibili soluzioni proposte.
+\end{itemize}
+
+\subsubsection{Attività: Analisi e classificazione}\label{analisi_classificazione}
+
+\paragraph{Procedure di analisi e classificazione}
+Una volta identificato, il problema viene analizzato dal responsabile insieme ai membri competenti per:
+\begin{enumerate}
+    \item \textbf{Classificare la tipologia:} 
+    \begin{itemize}
+        \item Problema tecnico 
+        \item Problema di processo 
+        \item Problema organizzativo 
+    \end{itemize}
+    \item \textbf{Valutare la priorità:}
+    \begin{itemize}
+        \item \textit{Critica:} Blocca completamente le attività, richiede risoluzione immediata
+        \item \textit{Alta:} Impatta significativamente il progresso
+        \item \textit{Media:} Causa rallentamenti, da risolvere entro lo sprint corrente
+        \item \textit{Bassa:} Impatto minimo, da risolvere quando possibile
+    \end{itemize}
+    \item \textbf{Identificare le cause radice:} Attraverso tecniche di analisi
+    \item \textbf{Stimare risorse da allocare:} Per la risoluzione del problema
+\end{enumerate}
+
+\subsubsection{Attività: Sviluppo della soluzione}\label{sviluppo_soluzione}
+
+\paragraph{Procedure di sviluppo della soluzione}
+In base alla classificazione e all'analisi effettuata:
+\begin{enumerate}
+    \item Il responsabile assegna il problema al membro o ai membri più competenti
+    \item Viene creata una issue Jira collegata al problema
+    \item Il team propone una o più soluzioni alternative, valutando:
+    \begin{itemize}
+        \item Efficacia nel risolvere il problema
+        \item Impatto su altre componenti o processi
+        \item Tempo e risorse necessarie
+        \item Rischi associati all'implementazione
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Attività: Implementazione e verifica}\label{implementazione_verifica}
+
+\paragraph{Procedure di implementazione e verifica}
+La soluzione viene implementata seguendo le normali procedure di sviluppo:
+\begin{enumerate}
+    \item Creazione del branch di lavoro secondo gli standard (\ref{versionamento_identificazione})
+    \item Implementazione della soluzione con commit e smart commit (\ref{processi_supporto})
+    \item Verifica della soluzione da parte di un verificatore diverso dall'implementatore, mediante 
+    l'esecuzione di test volti ad accertare che la soluzione risolva effettivamente il problema.
+    \item Merge della soluzione secondo le procedure di revisione (\ref{revisione_approvazione})
+\end{enumerate}
+
+\subsubsection{Attività: Procedure generali di risoluzione}\label{procedure_risoluzione}
+
+\paragraph{Procedure generali di risoluzione}
+Le seguenti procedure guidano il Team nella risoluzione sistematica dei problemi:
+\begin{enumerate}
+    \item \textbf{Segnalazione immediata:} Ogni problema deve essere segnalato appena identificato, non posticipato
+    \item \textbf{Comunicazione trasparente:} I problemi critici vengono comunicati immediatamente a tutto il team e, se necessario, alla proponente
+    \item \textbf{Documentazione completa:} Ogni problema risolto deve essere documentato per evitare ricorrenze
+\end{enumerate}
+
+\subsubsection{Integrazione con altri processi}\label{integrazione_risoluzione_problemi}
+Il processo di risoluzione dei problemi si integra con:
+\begin{itemize}
+    \item \textbf{Gestione dei rischi operativi (\ref{gestione_rischi_operativi}):} I problemi ricorrenti vengono aggiunti al registro dei rischi
+    \item \textbf{Analisi degli incidenti (\ref{analisi_incidenti}):} Per problemi infrastrutturali seguono le procedure specifiche
+    \item \textbf{Processo di miglioramento (\ref{processo_miglioramento}):} I problemi sistemici alimentano i cicli di miglioramento continuo
+    \item \textbf{Metriche di qualità:} Le metriche aiutano a identificare aree problematiche in modo proattivo
+\end{itemize}
+
+\subsubsection{Strumenti di risoluzione dei problemi}\label{strumenti_risoluzione_problemi}
+\begin{itemize}
+    \item \textbf{Jira:} Per il tracciamento formale dei problemi, della loro classificazione e risoluzione
+    \item \textbf{Discord:} Per la comunicazione immediata di problemi urgenti e per sessioni di problem solving sincrone
+    \item \textbf{Whatsapp:} Per notifiche urgenti di problemi critici che richiedono attenzione immediata
+    \item \textbf{Dashboard Jira:} Per il monitoraggio dello stato dei problemi aperti e delle tendenze nel tempo
+    \item \textbf{GitHub:} Per la gestione dei branch di lavoro e il merge delle soluzioni implementate
+\end{itemize}
+
+\subsection{Gestione della qualità}\label{gestione_qualita}
+Il processo di gestione della qualità sovrintende all'applicazione sistematica delle metriche definite e all'integrazione tra i processi di
+garanzia della qualità, verifica, validazione e miglioramento per garantire la qualità complessiva del prodotto finale e dei processi. 
+\\Questo processo coordina tutte le attività volte a mantenere e migliorare gli standard qualitativi durante l'intero ciclo di vita del progetto.
+
+I ruoli coinvolti in questo processo sono:
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+        \centering
+        \begin{spacing}{1.1}
+        \begin{tabular}{|c|c|}
+            \hline
+            \textbf{Ruolo} & \textbf{Specifica} \\
+            \hline
+            Responsabile & \begin{tabular}[c]{@{}c@{}} Coordina le attività di gestione della qualità e garantisce \\ il rispetto degli obiettivi definiti nel Piano di Qualifica \end{tabular} \\
+            \hline
+            Verificatori & \begin{tabular}[c]{@{}c@{}} Eseguono le verifiche secondo le procedure definite e monitorano \\ le metriche di qualità di processo e prodotto \end{tabular} \\
+            \hline
+            Amministratore & \begin{tabular}[c]{@{}c@{}} Configura e mantiene gli strumenti di automazione per il monitoraggio\\ della qualità (GitHub Actions, Dashboard e Issue Jira) \end{tabular} \\
+            \hline
+            Tutti i membri & \begin{tabular}[c]{@{}c@{}} Contribuiscono al mantenimento della qualità seguendo \\ le norme e segnalando deviazioni dagli standard \end{tabular} \\
+            \hline
+        \end{tabular}
+        \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsection{Attività: Pianificazione della qualità}\label{pianificazione_qualita}
+
+\paragraph{Procedure di pianificazione}
+All'inizio di ogni sprint, il responsabile coordina la pianificazione degli obiettivi di qualità:
+\begin{enumerate}
+    \item \textbf{Definizione degli obiettivi di sprint:} In base alle attività pianificate, vengono identificati gli obiettivi specifici di qualità da raggiungere
+    \item \textbf{Selezione delle metriche applicabili:} Tra quelle definite nella sezione \ref{metriche_qualita}, vengono scelte le metriche più rilevanti per lo sprint corrente
+    \item \textbf{Definizione delle soglie:} Per ogni metrica selezionata, vengono stabilite le soglie minime accettabili e quelle target, in conformità con il Piano di Qualifica
+    \item \textbf{Assegnazione delle responsabilità:} I verificatori vengono assegnati alle diverse attività di controllo
+\end{enumerate}
+
+Gli obiettivi di qualità vengono documentati e comunicati a tutto il team durante la riunione di pianificazione dello sprint.
+
+\subsubsection{Attività: Monitoraggio continuo}\label{monitoraggio_continuo}
+
+\paragraph{Procedure di monitoraggio}
+Durante lo svolgimento dello sprint, la qualità viene monitorata costantemente attraverso:
+\begin{enumerate}
+    \item \textbf{Controllo automatizzato:} 
+    \begin{itemize}
+        \item Le GitHub Actions eseguono verifiche automatiche ad ogni commit (indice Gulpease, build success rate)
+        \item La pipeline di CI/CD monitora le metriche di processo come build time e test coverage
+        \item Gli strumenti di analisi statica verificano la complessità ciclomatica e altre metriche di codice
+    \end{itemize}
+    \item \textbf{Controllo manuale:}
+    \begin{itemize}
+        \item I verificatori eseguono revisioni del codice e della documentazione secondo le procedure definite
+        \item Vengono eseguiti test manuali per verificare usabilità e funzionalità
+        \item Si monitora l'aderenza alle norme di progetto
+    \end{itemize}
+    \item \textbf{Utilizzo del Cruscotto di Qualità:}
+    \begin{itemize}
+        \item La Dashboard Jira personalizzata (\ref{knowladge_base}) fornisce una vista in tempo reale dello stato delle metriche
+        \item Vengono monitorati trend e deviazioni rispetto agli obiettivi
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Attività: Valutazione periodica}\label{valutazione_periodica}
+
+\paragraph{Procedure di valutazione}
+A cadenza regolare vengono effettuate valutazioni approfondite della qualità:
+\begin{enumerate}
+    \item \textbf{Review settimanale:} Durante le riunioni di team, vengono discusse brevemente le metriche principali e le eventuali criticità emerse
+    \item \textbf{Review di fine sprint:} Al termine di ogni sprint:
+    \begin{itemize}
+        \item Si confrontano le metriche ottenute con gli obiettivi pianificati
+        \item Si analizzano le cause di eventuali scostamenti significativi
+        \item Si valuta l'efficacia delle azioni correttive implementate
+        \item Si aggiorna il cruscotto di qualità nel Piano di Qualifica
+    \end{itemize}
+    \item \textbf{Review di milestone:} In preparazione delle milestone:
+    \begin{itemize}
+        \item Si effettua una valutazione complessiva della qualità raggiunta
+        \item Si verifica il rispetto di tutti i requisiti di qualità obbligatori
+        \item Si producono report dettagliati per committente e proponente
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Attività: Azioni correttive}\label{azioni_correttive}
+
+\paragraph{Procedure per azioni correttive}
+Quando il monitoraggio evidenzia deviazioni dagli standard di qualità:
+\begin{enumerate}
+    \item \textbf{Identificazione della deviazione:} Attraverso il monitoraggio continuo o le review periodiche
+    \item \textbf{Analisi della causa:} Si applica il processo di risoluzione dei problemi (\ref{proc_risoluzione_problemi}) per identificare le cause radice
+    \item \textbf{Pianificazione dell'intervento:}
+    \begin{itemize}
+        \item Per deviazioni minori: si assegna una issue correttiva al membro responsabile
+        \item Per deviazioni significative: il responsabile convoca una sessione dedicata per pianificare l'intervento
+    \end{itemize}
+    \item \textbf{Implementazione e verifica:} L'azione correttiva viene implementata e verificata secondo le normali procedure
+    \item \textbf{Monitoraggio dell'efficacia:} Si verifica che l'azione correttiva abbia effettivamente risolto il problema senza introdurre nuove criticità
+\end{enumerate}
+
+\subsubsection{Attività: Procedure generali di gestione della qualità}\label{procedure_gestione_qualita}
+
+\paragraph{Procedure di gestione della qualità}
+Le seguenti procedure guidano il Team nella gestione sistematica della qualità:
+\begin{enumerate}
+    \item \textbf{Prevenzione > Correzione:} Si privilegia l'adozione di pratiche preventive (code review, test automatici, standard di codifica) rispetto alla correzione a posteriori
+    \item \textbf{Automazione quando possibile:} Le verifiche ripetitive vengono automatizzate per ridurre errori umani e liberare tempo per attività a maggior valore aggiunto
+    \item \textbf{Tracciabilità completa:} Ogni decisione relativa alla qualità, ogni deviazione e ogni azione correttiva vengono documentate per garantire tracciabilità
+    \item \textbf{Miglioramento continuo:} Le metriche e le procedure di qualità vengono periodicamente riviste e aggiornate in base all'esperienza accumulata
+    \item \textbf{Responsabilità condivisa:} La qualità è responsabilità di tutti i membri del team, non solo dei verificatori
+\end{enumerate}
+
+\subsubsection{Integrazione con altri processi}\label{integrazione_gestione_qualita}
+Il processo di gestione della qualità coordina e si integra con:
+\begin{itemize}
+    \item \textbf{Processo di garanzia della qualità (\ref{garanzia_qualita}):} Fornisce il framework metodologico per le attività di quality assurance
+    \item \textbf{Processo di verifica (\ref{processo_verifica}):} Esegue le verifiche tecniche secondo le procedure definite
+    \item \textbf{Processo di validazione (\ref{prosso_validazione}):} Conferma che il prodotto soddisfi le esigenze degli utenti
+    \item \textbf{Processo di revisione congiunta (\ref{proc_revisione_congiunta}):} Comunica alla proponente lo stato della qualità e raccoglie feedback
+    \item \textbf{Processo di risoluzione dei problemi (\ref{proc_risoluzione_problemi}):} Gestisce le non conformità rispetto agli standard di qualità
+    \item \textbf{Processo di miglioramento (\ref{processo_miglioramento}):} Utilizza i dati di qualità per identificare aree di miglioramento
+\end{itemize}
+
+\subsubsection{Metriche di gestione della qualità}\label{metriche_gestione_qualita}
+L'efficacia del processo di gestione della qualità viene valutata attraverso:
+\begin{itemize}
+    \item \textbf{Percentuale di metriche rispettate:} Numero di metriche che soddisfano le soglie minime rispetto al totale delle metriche monitorate
+    \item \textbf{Tasso di ricorrenza delle non conformità:} Percentuale di non conformità che si ripetono dopo essere state risolte
+    \item \textbf{Copertura delle verifiche:} Percentuale di deliverable che hanno superato tutte le verifiche previste
+\end{itemize}
+
+Queste meta-metriche vengono rendicontate nel Piano di Qualifica insieme alle metriche di processo e prodotto definite nella sezione \ref{metriche_qualita}.
+
+\subsubsection{Strumenti di gestione della qualità}\label{strumenti_gestione_qualita}
+\begin{itemize}
+    \item \textbf{Piano di Qualifica:} Documento di riferimento per obiettivi, metriche e soglie di qualità
+    \item \textbf{Jira e Dashboard Jira (\ref{knowladge_base}):} Per il monitoraggio in tempo reale dello stato delle metriche, 
+    il tracciamento delle non conformità, le azioni correttive e la condivisione di report di qualità con la proponente
+    \item \textbf{GitHub Actions (\ref{knowladge_base}):} Per l'automazione delle verifiche di qualità (Gulpease, build, test)
+    \item \textbf{Strumenti di analisi statica:} Per il calcolo automatico di metriche di codice (complessità, coverage, accoppiamento)
+\end{itemize}
 
 \section{Processi Organizzativi}
+<<<<<<< HEAD
 \subsection{Gestione}
 La gestione descrive le modalità di comunicazione interne ed esterne, i vari ruoli e i loro compiti. 
 \subsubsection{Ruoli di progetto}
@@ -817,6 +1196,9 @@ Appoggiandoci allo standard ISO/IEC 12207:1997 individuiamo le seguenti attivit�
 \end{itemize}
 Le sezioni di seguito tratteranno i processi sopra scritti in dettaglio.
 
+=======
+\subsection{Gestione}\label{gestione_processi_organizzativi}
+>>>>>>> b4fe916483a810f1e4a0d164094a551023e7193e
 
 \subsection{Infrastruttura}
 Il processo di Infrastruttura fornisce il supporto tecnico necessario per lo
@@ -834,8 +1216,63 @@ Il processo si articola nelle seguenti attività principali:
 Le seguenti procedure guidano il Team nell'utilizzo degli strumenti di
 infrastruttura, garantendo un uso coerente ed efficiente delle risorse
 disponibili.
+\begin{enumerate}
+    \item \textbf{Integrazione:} gli strumenti selezionati vengono integrati nell'ambiente di sviluppo esistente. 
+    \item \textbf{Documentazione:} viene mantenuta una documentazione aggiornata sugli strumenti utilizzati, le loro configurazioni e le procedure operative. 
+    Così facendo tutto il team può accedere facilmente alle informazioni necessarie per utilizzare gli strumenti in modo efficace.
+\end{enumerate}
 
-\subsubsection{Strumenti a supporto}
+\paragraph{Strumenti di Creazione}
+Gli strumenti adottati per il testing delle tecnologie e la documentazione sono i seguenti.
+\paragraph{Jira} \label{Jira}
+Come descritto in \ref{pianificazioneDocs}, è necessaria la creazione di una issue concordata in fase di pianificazione per ogni nuovo strumento da adottare. 
+In questo modo si garantisce la tracciabilità della decisione e la documentazione delle motivazioni alla base della scelta.
+\paragraph{GitHub} \label{GitHub}
+Strumento per l'hosting utilizzato per il testing delle nuove tecnologie. 
+Ogni nuova tecnologia deve essere testata nell'apposita repository o branch, per evitare di compromettere l'infrastruttura esistente.
+Per gli standard di versionamento e gestione delle branch si rimanda a \ref{stdBranch}.
+
+\subsubsection{Attività: Manutenzione}
+L'attività di Manutenzione riguarda l'aggiornamento, il monitoraggio e la risoluzione di eventuali problemi legati agli strumenti e alle tecnologie
+utilizzati nel progetto.
+
+\paragraph{Procedure di Manutenzione}
+Le seguenti procedure guidano il Team nella manutenzione degli strumenti di
+infrastruttura, garantendo la loro efficienza e affidabilità nel tempo.
+\begin{enumerate}
+    \item \textbf{Monitoraggio continuo:} viene effettuato un monitoraggio costante delle prestazioni degli strumenti per identificare eventuali problemi o inefficienze.
+    \item \textbf{Aggiornamenti regolari:} gli strumenti vengono aggiornati regolarmente per garantire la sicurezza e l'efficienza.
+    \item \textbf{Supporto tecnico:} viene fornito supporto tecnico ai membri del team per l'utilizzo degli strumenti di infrastruttura.
+    \item \textbf{Disaster Recovery:} viene mantenuto un'analisi dei rischi per i processi di progetto.
+\end{enumerate}
+In vista dell'attività di produzione di codice, l'infrastruttura verrà aggiornata e ampliata per poter rimanere al passo con le nuove necessità.
+Sono in particolare previste le seguenti aggiunte:
+\begin{itemize}
+    \item \textbf{Tracciamento dei requisiti:} Deploy di uno strumento automatico per il tracciamento dei requisiti che ammetta codice solo se i requisiti sono stati tracciati correttamente.\\ Tale codice è in fase di scrittura e verrà integrato non appena testato.
+    \item \textbf{Integrazioni di Analisi Statica e Dinamica:} Deploy di strumenti di analisi statica e dinamica del codice per garantire la qualità del software prodotto.
+    \item \textbf{CI/CD:} Implementazione di pipeline di integrazione continua e distribuzione continua per automatizzare il processo di build, test e rilascio del software.
+\end{itemize}
+
+\paragraph{Strumenti di Manutenzione}
+Gli strumenti adottati per il monitoraggio e la manutenzione dell'infrastruttura sono i seguenti.
+\begin{itemize}
+    \item \textbf{Jira:} Tracciamento delle attività di manutenzione e monitoraggio degli interventi effettuati.
+    \item \textbf{GitHub:} Gestione dei branch di hotfix e documentazione degli update di sicurezza e stabilità.
+\end{itemize}
+
+\paragraph{Criteri di Scelta degli Strumenti}
+La scelta degli strumenti di infrastruttura segue i seguenti criteri misurabili:
+\begin{itemize}
+    \item \textbf{Costo:} Valutare il rapporto costo-beneficio e la sostenibilità economica a lungo termine.
+    \item \textbf{Scalabilità:} Verificare la capacità dello strumento di adattarsi alle crescenti esigenze del progetto.
+    \item \textbf{Facilità d'uso:} Assicurare che lo strumento sia intuitivo e richieda un tempo di apprendimento minimo.
+    \item \textbf{Supporto e Comunità:} Valutare la disponibilità di documentazione, supporto tecnico e comunità attiva.
+    \item \textbf{Integrazione:} Verificare la compatibilità con gli strumenti già in uso nel progetto.
+    \item \textbf{Sicurezza:} Assicurare che lo strumento rispetti gli standard di sicurezza e privacy richiesti dal progetto.
+\end{itemize}
+
+\subsection{Knowledge Base} \label{knowladge_base}
+In questa sezione sono contenute le informazioni principali sugli strumenti implementati dal gruppo, completi di istruzioni per le singole procedure e best practice adottate.
 \paragraph{GitHub} \label{GitHub}
 Piattaforma di hosting per il versionamento e la gestione dei contenuti di
 progetto. Il Team deve sfruttare appieno le potenzialità di GitHub, in
@@ -880,13 +1317,164 @@ adattino allo standard comune. Le estensioni attualmente utilizzate sono:
 Altre estensioni come GitHub Copilot possono essere utilizzate a discrezione del
 membro del gruppo, al fine di velocizzare, per esempio, il processo di Documentazione \ref{documentazione}.
 
-\subsection{Miglioramento}
+\subparagraph{Atlassian: Jira, Rovo Dev, Bitbucket}
+Estensione per l'integrazione di Jira e GitHub in VSCode. Permette di visualizzare e gestire le issue Jira direttamente dall'IDE, creare branch di
+lavoro basati sulle issue e monitorare lo stato di avanzamento delle attività.\\
+\subparagraph{GitHub Pull Requests and Issues}
+Estensione per la gestione delle pull request e delle issue GitHub. Permette di
+creare, revisionare e gestire le pull request direttamente dall'IDE, migliorando
+l'efficienza del processo di revisione del codice.\\
 
-\subsection{Formazione}
+\paragraph{Google Presentazioni}
+Strumento utilizzato per la creazione dei Diari di Bordo. La scelta di
+questo strumento è dovuta alla sua facilità d'uso e alla possibilità di
+collaborare in tempo reale tra i membri del gruppo.
+Cosi è possibile tracciare le problematiche e i dubbi emersi durante lo
+svolgimento delle attività di progetto.
+Per i DIari di Bordo è stato impostato un template presente nel Google Drive di gruppo.
 
-\section{Metriche della qualità}
+\paragraph{Google Drive}
+Strumento di archiviazione e condivisione dei file con l'azienda proponente e per la condivisione rapida dei Diari di Bordo.
+\\ Questo strumento è inoltre utilizzato come mezzo di condivisione dei file con \textbf{Sanmarco Informatica}, quali materiali formativi, materiale d'esempio e normative aziendali.
+Sempre tramite Google Drive vengono condivisi i verbali esterni con l'azienda proponente, in modo da poter essere approvati e archiviati in modo sicuro.
 
-\subsection{Attività per la qualità}
+\paragraph{Google Mail}
+Strumento di comunicazione formale con l'azienda proponente e per la gestione delle comunicazioni ufficiali del gruppo.\\
+Tutti i membri del gruppo devono utilizzare l'account di posta elettronica ufficiale del gruppo per le comunicazioni formali, garantendo così la tracciabilità e 
+la professionalità nelle interazioni esterne.\\
+Le comunicazioni esterne sono gestite dal Responsabile salvo diverse indicazioni, il quale deve ricordare che parla a nome di tutto il gruppo.
+
+\paragraph{Discord}
+Strumento di comunicazione principale del gruppo, utilizzato per la coordinazione delle attività, la condivisione di informazioni e la
+collaborazione tra i membri del team.\\
+L'accesso al server Discord del gruppo è obbligatorio per tutti i membri, in quanto rappresenta il canale ufficiale di comunicazione e supporto.
+
+\paragraph{Whatsapp}
+Strumento di comunicazione informale e sincrono tra i membri del gruppo, utilizzato per la coordinazione rapida delle attività e la condivisione di informazioni urgenti.\\
+Si raccomanda di essere particolarmente responsivi su questo canale, in quanto spesso viene utilizzato per comunicazioni che richiedono una risposta tempestiva.
+
+\subsection{Processo di Miglioramento} \label{processo_miglioramento}
+Il processo di miglioramento continuo mira a identificare e implementare
+modifiche ai processi e alle pratiche di progetto per aumentare l'efficienza
+e la qualità del lavoro svolto.
+
+\subsubsection{Attività: Analisi degli Incidenti} \label{analisi_incidenti}
+L'attività di Analisi degli Incidenti riguarda l'identificazione, documentazione e risoluzione dei problemi riscontrati durante l'utilizzo degli strumenti e dei processi di progetto.
+\paragraph{Procedure di Analisi degli Incidenti}
+Le seguenti procedure guidano il Team nella gestione degli incidenti e nella formulazione di soluzioni:
+\begin{enumerate}
+    \item \textbf{Segnalazione:} Qualsiasi membro del team può segnalare un incidente tramite Jira creando un'issue con label "incident".
+    \item \textbf{Analisi della causa radice:} Il Responsabile coordina l'analisi per identificare le cause sottostanti.
+    \item \textbf{Implementazione della soluzione:} Una volta identificata la causa, viene pianificata e implementata una soluzione.
+    \item \textbf{Verifica della risoluzione:} Viene verificato che la soluzione risolva effettivamente l'incidente.
+    \item \textbf{Archiviazione e apprendimento:} L'incidente e la soluzione vengono archiviati per consultazione futura e per evitare ricorrenze. Tali informazioni vengono tracciate nei Verbali Interni e nei Piano di Progetto.
+\end{enumerate}
+
+\subsubsection{Attività: Monitoraggio degli Strumenti}
+Il monitoraggio degli strumenti è un'attività fondamentale per garantire che tutti i membri del gruppo utilizzino gli strumenti in modo efficace e coerente. Questo include il controllo dell'utilizzo dei tool di comunicazione, collaborazione e gestione del progetto, nonché l'identificazione di eventuali problemi o inefficienze.
+\paragraph{Procedure di Monitoraggio}
+Le seguenti procedure guidano il Team nel monitoraggio degli strumenti di
+progetto, garantendo un uso coerente ed efficiente delle risorse
+disponibili.
+\begin{enumerate}
+    \item \textbf{Raccolta feedback:} viene raccolto il feedback dai membri del team sull'efficacia degli strumenti utilizzati.
+    \item \textbf{Analisi delle prestazioni:} vengono analizzate le prestazioni degli strumenti per identificare eventuali problemi o inefficienze. A questo scopo si possono utilizzare metriche specifiche per lo strumento e la task presa in considerazione.
+\end{enumerate}
+\paragraph{Strumenti di Monitoraggio}
+Gli strumenti adottati per il monitoraggio degli strumenti di progetto sono i seguenti.
+\begin{itemize}
+    \item \textbf{Jira:} Utilizzato per tracciare le attività di monitoraggio e raccogliere feedback dai membri del team.
+    \item \textbf{Discord:} Utilizzato per comunicare con i membri del team e raccogliere feedback sugli strumenti utilizzati.
+    \item \textbf{Whatsapp:} Utilizzato per comunicazioni rapide e raccolta di feedback urgenti.
+\end{itemize}
+
+\subsubsection{Attività: Modifiche all'Infrastruttura}
+L'attività di Modifiche all'Infrastruttura riguarda l'implementazione di
+modifiche agli strumenti e alle tecnologie utilizzate nel progetto, al fine di
+migliorarne l'efficienza e l'affidabilità.
+\paragraph{Procedure di Modifica}
+Le seguenti procedure guidano il Team nell'implementazione delle modifiche
+all'infrastruttura di progetto, garantendo un uso coerente ed efficiente delle
+risorse disponibili.
+\begin{enumerate}
+    \item \textbf{Pianificazione delle modifiche:} viene pianificata l'implementazione delle modifiche, definendo gli obiettivi, le risorse necessarie e i tempi di esecuzione.
+    \item \textbf{Implementazione delle modifiche:} le modifiche vengono implementate secondo la pianificazione stabilita e seguendo le stesse norme descritte in \ref{implementazioneInfrastruttura} e \ref{creazioneInfrastruttura}.
+    \item \textbf{Verifica delle modifiche:} viene effettuata una verifica delle modifiche per garantire che siano state implementate correttamente e che abbiano raggiunto gli obiettivi prefissati.
+\end{enumerate}
+\paragraph{Strumenti di Modifica}
+Gli strumenti adottati per l'implementazione delle modifiche all'infrastruttura di progetto sono i seguenti.
+\begin{itemize}
+    \item \textbf{Jira:} Utilizzato per tracciare le attività di modifica e monitorare lo stato di avanzamento.
+    \item \textbf{GitHub:} Utilizzato per gestire i branch o repository di testing degli strumenti e per la documentazione di questi ultimi.
+\end{itemize}
+
+\subsubsection{Frequenza dei Cicli di Miglioramento}
+I cicli di miglioramento continuo seguono una cadenza regolare:
+\begin{itemize}
+    \item \textbf{Review settimanale:} Durante le riunioni di team, vengono discussi brevemente i feedback e i problemi riscontrati.
+    \item \textbf{Review mensile:} Una sessione dedicata mira a identificare modelli nei feedback e proporre miglioramenti significativi.
+    \item \textbf{Review trimestrale:} Una valutazione più approfondita della qualità complessiva dei processi e dell'infrastruttura.
+\end{itemize}
+
+\subsubsection{Metriche di Miglioramento}
+Il progresso dei miglioramenti implementati viene misurato attraverso le seguenti metriche:
+\begin{itemize}
+    \item \textbf{Tempo di Risoluzione degli Incidenti:} Media del tempo impiegato per risolvere i problemi segnalati (target: $<$ 48 ore per problemi critici).
+    \item \textbf{Satisfaction Index:} Feedback qualitativo raccolto dai membri del team sulla soddisfazione riguardo gli strumenti e i processi.
+    \item \textbf{Adoption Rate:} Percentuale di utilizzo effettivo dei nuovi strumenti o processi implementati.
+    \item \textbf{Numero di Incidenti Ricorrenti:} Monitoraggio dei problemi che si ripetono, indicatore di efficacia della risoluzione.
+\end{itemize}
+
+\subsection{Processo di Formazione}
+Il processo di formazione mira a garantire che tutti i membri del gruppo abbiano le competenze e le conoscenze necessarie per svolgere efficacemente le loro attività di progetto.
+
+\subsubsection{Attività: Pianificazione della Formazione}
+La pianificazione della formazione è un'attività fondamentale per garantire un'efficace trasmissione delle conoscenze. 
+La pianificazione di queste attività segue la pianificazione generale del progetto, in modo da integrare la formazione con le altre attività di progetto.
+\paragraph{Procedure di Pianificazione}
+Le seguenti procedure guidano il Team nella pianificazione delle attività di
+formazione, garantendo un uso coerente ed efficiente delle risorse
+disponibili.
+\begin{enumerate}
+    \item \textbf{Identificazione delle necessità formative:} vengono identificate le necessità formative dei membri del team, in base alle competenze richieste per le attività di progetto.
+    \item \textbf{Pianificazione delle attività formative:} vengono pianificate le attività formative, definendo gli obiettivi, i contenuti, le risorse necessarie e i tempi di erogazione.
+    \item \textbf{Allocazione delle risorse:} vengono allocate le risorse umane e strumentali necessarie per garantire l'efficacia della formazione.
+\end{enumerate}
+
+\subsubsection{Attività: Erogazione della Formazione}
+L'erogazione della formazione si implementa attraverso sessioni di formazione. In particolare, sono identificabili due tipologie di sessioni:
+
+\paragraph{Procedure di Erogazione}
+Le seguenti procedure guidano il Team nell'erogazione delle attività di
+formazione e la condivisione delle conoscenze al fine di migliorare le competenze dell'intero gruppo.
+\begin{itemize}
+    \item \textbf{Formazione Autonoma:} Sessioni di formazione condotte dai membri del gruppo con competenze specifiche su determinati argomenti e strumenti in modo individuale.
+    \item \textbf{Confronto:} Sessioni di formazione condotte da tutti i membri coinvolti su un argomento specifico, con l'obiettivo di condividere conoscenze, best practice e formulare soluzioni comuni.
+    \item \textbf{Archiviazione:} I materiali e le note della formazione vengono salvati nelle Norme di Progetto per rendere disponibili a tutti i materiali di Formazione.
+\end{itemize}
+
+\subsubsection{Attività: Valutazione della Formazione}
+L'attività di Valutazione della Formazione serve a verificare l'efficacia delle sessioni di formazione e l'acquisizione delle competenze da parte dei partecipanti.
+\paragraph{Procedure di Valutazione}
+Le seguenti procedure guidano il Team nella valutazione dell'efficacia della formazione:
+\begin{enumerate}
+    \item \textbf{Feedback immediato:} Al termine di ogni sessione di formazione, viene raccolto feedback qualitativo dai partecipanti sulla chiarezza e l'utilità dei contenuti.
+    \item \textbf{Verifica pratica:} Nei giorni successivi alla formazione, vengono assegnati esercizi pratici o task che richiedono l'applicazione delle conoscenze apprese.
+    \item \textbf{Valutazione del risultato:} Le performance nei task assegnati vengono valutate per determinare il livello di acquisizione delle competenze.
+    \item \textbf{Seguito:} Nel caso in cui i risultati della valutazione indichino lacune, viene organizzata formazione integrativa.
+\end{enumerate}
+
+\paragraph{Strumenti di Valutazione}
+Gli strumenti utilizzati per la valutazione della formazione includono:
+\begin{itemize}
+    \item \textbf{Jira:} Per tracciare i task di verifica assegnati post-formazione.
+    \item \textbf{Discord:} Per la discussione e il confronto tra i membri coinvolti nella formazione.
+    \item \textbf{VSCode:} IDE principale del gruppo che grazie alle integrazioni con Jira e GitHub permette una gestione semplice della procedura di Verifica pratica.
+\end{itemize}
+
+
+\section{Metriche della qualità} \label{metriche_qualita}
+
 Lo standard ISO/IEC 9126-1:1999 individua tre categorie fondamentali di requisiti per la qualità che concorrono alla creazione del prodotto e interconnesse tra loro secondo il Modello a V\hyperref[fig:vmodel]{\ped{(Figura 5)}} (\glossario{V-Model}):
 \begin{itemize}
     \item \textbf{Bisogni utente}: sono i requisiti che il prodotto deve soddisfare per incontrare i bisogni dell'utente. L'output corrispondente e' la qualità in uso, verificata da apposite metriche esterne.
@@ -902,11 +1490,12 @@ Lo standard ISO/IEC 9126-1:1999 individua tre categorie fondamentali di requisit
 \end{figure}
 
 
-\subsection{Procedure per la qualità}
 Di seguito vengono indicate le metriche utilizzate per valutare la qualità del prodotto e dei processi di sviluppo.
 
-\subsubsection{Qualità di Processo}
+\subsection{Qualità di Processo}
 In questa sezione vengono definite le metriche utilizzate per valutare l'efficienza e l'efficacia dei processi del ciclo di vita del software, in conformità con lo standard ISO/IEC 12207.
+
+\subsubsection{Processi primari}
 
 \paragraph{Processo di fornitura}
 
@@ -925,95 +1514,170 @@ In questa sezione vengono definite le metriche utilizzate per valutare l'efficie
 \metricdef{MPC-5}{Schedule Performance Index (SPI)}{Indice di efficienza della schedulazione. Un valore $< 1$ indica che il progetto è in ritardo.}
 \metricformula{SPI = \frac{EV}{PV}}
 
+\metricdef{MPC-6}{Estimate to Complete}{Rappresenta l'ammontare rimanente stimato per completare il progetto}
+\metricformula{ETC = EAC-AC}
+
+\metricdef{MPC-7}{Estimate at Completion (EAC)}{Stima totale dei costi alla fine del progetto, basata sulle performance attuali.}
+\metricformula{EAC = \frac{BAC}{CPI}}
+
 \paragraph{Processo di Sviluppo}
 
-\metricdef{MPC-11}{Work in Progress (WIP)}{Numero di task o ticket su cui il team sta lavorando attivamente in contemporanea. Un valore alto indica colli di bottiglia.}
-\metricformula{WIP = \sum \text{Ticket in stato "In Progress"}}
+\metricdef{MPC-8}{Deployment Frequency}{Frequenza con cui il team rilascia nuove versioni del software, potenzialmente trasportabili in produzione.}
+\metricformula{DF = \frac{\text{Numero di deployment}}{\text{Periodo di tempo}}}
 
-\metricdef{MPC-13}{Change Failure Rate (CFR)}{Percentuale di deployment o merge in produzione che causano un guasto richiedendo un hotfix.}
-\metricformula{CFR = \left( \frac{\text{Numero di deployment falliti}}{\text{Numero totale di deployment}} \right) \times 100}
+\metricdef{MPC-9}{Requirements Stability Index}{Rappresenta la stabilità dei requisiti del prodotto software nel tempo.}
+\metricformula{RSI = \frac{\#\text{Requisiti originali} - (\#\text{Requisiti modificati} + \#\text{Requisiti eliminati} + \#\text{Requisiti aggiunti})}{\#\text{Requisiti originali}} \cdot 100}
+
+\subsubsection{Processi di supporto}
 
 \paragraph{Processo di Documentazione}
 
-\metricdef{MPC-14}{Indice di Gulpease}{Indice che valuta la leggibilità di un testo in lingua italiana. Valori bassi indicano bassa leggibilità.}
-\metricformula{G = 89 + \frac{300 \times (\text{numero frasi}) - 10 \times (\text{numero lettere})}{\text{numero parole}}}
+\metricdef{MPC-10}{Indice di Gulpease}{Indice che valuta la leggibilità di un testo in lingua italiana. Valori bassi indicano bassa leggibilità.}
+\metricformula{G = 89 + \frac{300 \times (\#\text{Frasi}) - 10 \times (\#\text{Lettere})}{\#\text{Parole}}}
 
-\metricdef{MPC-15}{Correttezza Ortografica}{Misura la densità di errori ortografici presenti nella documentazione.}
-\metricformula{C = 1 - \left( \frac{\text{Numero errori ortografici}}{\text{Numero parole totali}} \right)}
+\metricdef{MPC-11}{Correttezza Ortografica}{Misura la densità di errori ortografici presenti nella documentazione.}
+\metricformula{C = \#\text{errori ortografici}}
 
 \paragraph{Processo di Configurazione}
 
-\metricdef{MPC-16}{Build Success Rate (BSR)}{Percentuale di build completate con successo dalla pipeline di CI/CD rispetto al totale delle build eseguite.}
-\metricformula{BSR = \left( \frac{\text{Builds con esito positivo}}{\text{Builds totali}} \right) \times 100}
-
-\metricdef{MPC-17}{Average Build Time}{Tempo medio impiegato dalla pipeline per completare il processo di build e test automatici.}
+\metricdef{MPC-12}{Average Build Time}{Tempo medio impiegato per completare il processo di build e test automatici.}
 \metricformula{T_{avg} = \frac{\sum_{i=1}^{n} T_{build\_i}}{n}}
 
 \paragraph{Processo di Verifica}
 
-\metricdef{MPC-19}{Statement Coverage}{Percentuale di istruzioni (statements) del codice sorgente eseguite durante i test automatici.}
-\metricformula{SC = \left( \frac{\text{Linee di codice eseguite}}{\text{Linee di codice totali}} \right) \times 100}
+\metricdef{MPC-13}{Code review turnaround time}{Tempo medio impiegato per completare una revisione del codice in vista di una Pull Request.}
+\metricformula{CRT = \frac{\sum_{i=1}^{n} T_{review\_i}}{n}}
 
-\metricdef{MPC-20}{Branch Coverage}{Percentuale di rami decisionali (if, switch, loop) percorsi durante i test.}
-\metricformula{BC = \left( \frac{\text{Rami percorsi}}{\text{Rami totali}} \right) \times 100}
+\metricdef{MPC-14}{Test success rate}{Percentuale di test superati rispetto al totale dei test eseguiti.}
+\metricformula{TSR = \left( \frac{\#\text{Test superati}}{\#\text{Test eseguiti}} \right) \times 100}
 
-\paragraph{Processi Organizzativi)}
+\subsubsection{Processi Organizzativi}
 
-\metricdef{MPC-21}{Retrospective Effectiveness}{Misura la capacità del team di risolvere i problemi identificati durante le retrospettive.}
-\metricformula{E_{retro} = \left( \frac{\text{Action items risolti}}{\text{Action items identificati}} \right) \times 100}
+\paragraph{Processo di Management}
 
-\metricdef{MPC-22}{Meeting Attendance}{Percentuale di presenza dei membri del team alle riunioni obbligatorie.}
-\metricformula{MA = \left( \frac{\text{Presenze effettive}}{\text{Presenze attese totali}} \right) \times 100}
+\metricdef{MPC-15}{Rischi non previsti}{Numero di rischi non previsti ad inizio periodo, per ciascun periodo di progetto.}
+\metricformula{RNP = \#\text{Rischi non previsti}}
 
-\subsubsection{Qualità di Prodotto}
+\metricdef{MPC-16}{Metriche soddisfatte}{Percentuale di metriche di qualità che vengono soddisfatte in un determinato istante di tempo.}
+\metricformula{MS = \left( \frac{\#\text{Metriche soddisfatte}}{\#\text{Metriche totali}} \right) \times 100}
+
+\subsection{Qualità di Prodotto}
 In questa sezione vengono definite le metriche per valutare la qualità intrinseca del prodotto software, basandosi sul modello ISO/IEC 9126.
 
 \paragraph{Funzionalità}
 
-\metricdef{MPD-2}{Completezza dell'implementazione}{Misura la percentuale di requisiti funzionali obbligatori implementati e testati.}
-\metricformula{CI = \left( \frac{\text{Requisiti funzionali implementati}}{\text{Requisiti funzionali totali}} \right) \times 100}
+\metricdef{MPD-1}{Requisiti obbligatori soddisfatti}{Percentuale di requisiti funzionali obbligatori implementati e testati.}
+\metricformula{R\textsubscript{ob} = \left( \frac{\text{Requisiti obbligatori soddisfatti}}{\text{Requisiti obbligatori totali}} \right) \times 100}
 
-\metricdef{MPD-3}{Accuratezza dei risultati}{Percentuale di test funzionali che producono il risultato atteso senza deviazioni.}
-\metricformula{Acc = \left( \frac{\text{Test funzionali passati}}{\text{Test funzionali eseguiti}} \right) \times 100}
+\metricdef{MPD-2}{Requisiti opzionali soddisfatti}{Percentuale di requisiti funzionali opzionali implementati e testati.}
+\metricformula{R\textsubscript{op} = \left( \frac{\text{Requisiti opzionali soddisfatti}}{\text{Requisiti opzionali totali}} \right) \times 100}
+
+\metricdef{MPD-3}{Requisiti desiderabili soddisfatti}{Percentuale di requisiti funzionali desiderabili implementati e testati.}
+\metricformula{R\textsubscript{de} = \left( \frac{\text{Requisiti desiderabili soddisfatti}}{\text{Requisiti desiderabili totali}} \right) \times 100}
 
 \paragraph{Affidabilità}
 
-\metricdef{MPD-6}{Tasso Errori HTTP}{Percentuale di richieste al server che restituiscono codici di errore (4xx o 5xx) rispetto al totale delle richieste.}
-\metricformula{E_{http} = \left( \frac{\text{Richieste con status } \ge 400}{\text{Richieste totali}} \right) \times 100}
+\metricdef{MPD-5}{Broken links}{Numero di riferimenti ipertestuali all'interno dell'applicazione che non portano alla risorsa corretta o non portano ad alcuna risorsa.}
+\metricformula{BL = \#\text{Broken Links}}
 
-\metricdef{MPD-NEW}{Availability (Disponibilità)}{Percentuale di tempo in cui il sistema è operativo e accessibile agli utenti.}
-\metricformula{A = \left( \frac{\text{Tempo totale} - \text{Tempo di disservizio}}{\text{Tempo totale}} \right) \times 100}
+\metricdef{MPD-6}{Statement Coverage}{Percentuale di istruzioni (statements) del codice sorgente eseguite durante i test automatici.}
+\metricformula{SC = \left( \frac{\text{Linee di codice eseguite}}{\text{Linee di codice totali}} \right) \times 100}
+
+\metricdef{MPD-7}{Branch Coverage}{Percentuale di rami decisionali (if, switch, loop) percorsi durante i test.}
+\metricformula{BC = \left( \frac{\text{Rami percorsi}}{\text{Rami totali}} \right) \times 100}
 
 \paragraph{Usabilità}
 
-\metricdef{MPD-9}{Profondità di Navigazione}{Numero massimo di click necessari per raggiungere una qualsiasi pagina di contenuto partendo dalla Home Page.}
-\metricformula{Clicks \le 3}
-
-\metricdef{MPD-10}{Search Success Rate}{Percentuale di ricerche effettuate dagli utenti che portano al clic su un risultato utile.}
-\metricformula{SSR = \left( \frac{\text{Ricerche con clic}}{\text{Ricerche totali}} \right) \times 100}
+\metricdef{MPD-8}{Profondità di Navigazione}{Numero massimo di click necessari per raggiungere una qualsiasi pagina di contenuto partendo dalla Home Page.}
+\metricformula{\sum_{i=1}^{n} \frac{\text{Click}_i}{n} \quad \begin{array}{l} (\text{dove } n = \text{numero di pagine}) \\ (\text{dove } \text{Click}_i = \text{numero di click per raggiungere la pagina } i) \end{array}}
 
 \paragraph{Efficienza}
 
-\metricdef{MPD-11}{Time to First Byte (TTFB)}{Tempo che intercorre tra l'invio della richiesta HTTP dal client e la ricezione del primo byte di risposta dal server.}
-\metricformula{TTFB = T_{ricezione\_primo\_byte} - T_{invio\_richiesta}}
+\metricdef{MPD-9}{Indexing time}{Tempo di indicizzazione per un DiP di dimensioni standard (1-4GB).}
+\metricformula{IT = \text{Tempo di indicizzazione (secondi)}}
 
-\metricdef{MPD-13}{Tempo di Rendering}{Tempo necessario al browser per completare il rendering visivo della pagina (First Contentful Paint).}
-\metricformula{T_{render} \text{ (misurato tramite API del browser)}}
+\metricdef{MPD-10}{Search Time}{Tempo medio di risposta per un set di query predefinite.}
+\metricformula{ST = \sum_{i=1}^{n} \frac{\text{Tempo di risposta}_i}{n} \quad \begin{array}{l} (\text{dove } n = \text{numero di query}) \\ (\text{dove }i = \text{indice della query}) \end{array}}
+
+\metricdef{MPD-11}{Average CPU usage}{Percentuale media di utilizzo della CPU durante l'esecuzione del software. Si considera un campione di misurazioni effettuate in condizioni di carico (durante l'indicizzazione o la ricerca) nonché in idle. Quest'ultimo per assicurare che il software non consumi risorse inutilmente quando non è in uso.}
+\metricformula{CPU_{avg} = \sum_{i=1}^{n} \frac{\text{Utilizzo CPU}_i}{n} \quad (\text{dove }n = \text{numero di misurazioni})}
+
+\newpage
+
+\metricdef{MPD-12}{Peak memory usage}{Massima quantità di memoria RAM utilizzata durante l'esecuzione del software. Permette di individuare eventuali memory leak o scarsa gestione delle risorse.}
+\metricformula{MEM_{peak} = \max(\text{Utilizzo RAM}_i) \quad (\text{dove }i = 1, \dots, n)}
 
 \paragraph{Manutenibilità}
 
-\metricdef{MPD-16}{Complessità Ciclomatica}{Misura la complessità del flusso di controllo del codice. Valori superiori a 15 indicano codice difficile da testare e manutenere.}
+\metricdef{MPD-13}{Complessità Ciclomatica}{Misura la complessità del flusso di controllo del codice. Valori superiori a 15 indicano codice difficile da testare e manutenere.}
 \metricformula{M = E - N + 2P \quad (\text{dove } E=\text{archi}, N=\text{nodi}, P=\text{componenti connessi})}
 
-\metricdef{MPD-17}{Comment Ratio}{Rapporto tra le righe di commento e le righe di codice totali (LOC).}
-\metricformula{CR = \frac{\text{Linee di commento}}{\text{Linee di Codice (SLOC)}}}
+\metricdef{MPD-14}{Accoppiamento tra Classi (CBO)}{Numero di classi a cui una determinata classe è accoppiata (usa o è usata da). Un valore alto indica scarsa modularità.}
+\metricformula{CBO = \frac{\#\text{Dipendenze}}{\#\text{Componenti}}}
 
-\metricdef{MPD-18}{Accoppiamento tra Classi (CBO)}{Numero di classi a cui una determinata classe è accoppiata (usa o è usata da). Un valore alto indica scarsa modularità.}
-\metricformula{CBO = \text{Conteggio dipendenze esterne per classe}}
+\metricdef{MPD-15}{Code smells}{Numero di code smells, misurato ogni 1000 righe di codice (KLOC). I code smells sono indicatori di potenziali problemi di design o implementazione.}
 
+\paragraph{Portabilità}
+
+\metricdef{MPD-16}{SO Compatibility}{Numero di sistemi operativi supportati dal software. Un valore alto indica una maggiore portabilità.}
+\metricformula{SO_{comp} = \#\text{Sistemi operativi supportati}}
 
 \subsection{Strumenti}
+\paragraph{Jira Software}
+Utilizzato come strumento di Project Management per il tracciamento dei requisiti e la gestione del workflow.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPC-1 \dots MPC-7 (Earned Value Management), MPC-16 (Metriche soddisfatte), MPD-1 \dots MPD-3 (Requisiti).
+    \item \textbf{Utilizzo:} Attraverso la funzione di esportazione JQL $\rightarrow$ csv, e uno script python appositamente sviluppato, vengono estratti i dati necessari per il calcolo delle metriche di Earned Value e dei requisiti soddisfatti, permettendo un monitoraggio costante dell'andamento del progetto.
+\end{itemize}
 
+\paragraph{GitHub \& GitHub Actions}
+Viene utilizzato per il controllo di versione e l'automazione della CI/CD.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPC-8 (Deployment Frequency), MPC-12 (Build Time), MPC-13 (Code Review Turnaround Time), MPC-14 (Test success rate).
+    \item \textbf{Utilizzo:} I workflow di GitHub Actions oltre che garantire la metrica MPC-14 (Test success rate) attraverso l'esecuzione di test automatici, permettono di tracciare i tempi di build e code review, fornendo dati utili per il calcolo delle metriche di processo.
+\end{itemize}
+
+\subsubsection{Strumenti di Analisi Statica e Qualità del Codice}
+
+\paragraph{SonarQube}
+Piattaforma centrale per la \textit{Continuous Inspection} del codice TypeScript (Angular) e JavaScript (Electron).
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPD-6 (Statement Coverage), MPD-7 (Branch Coverage), MPD-13 (Complessità Ciclomatica), MPD-14 (CBO), MPD-15 (Code Smells).
+    \item \textbf{Utilizzo:} Analizza staticamente il codice ad ogni \textit{Push}, verificando che il superamento dei \textit{Quality Gates} stabiliti sia coerente con le soglie definite nelle metriche di manutenibilità.
+\end{itemize}
+
+\paragraph{Aspell \& Script Python (Custom)}
+Data la natura della documentazione in lingua italiana, si rende necessario uno strumento specifico per l'analisi testuale.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPC-10 (Indice di Gulpease), MPC-11 (Correttezza Ortografica).
+    \item \textbf{Utilizzo:} Uno script Python che utilizza la libreria \texttt{textstat} per il calcolo dell'indice di Gulpease e le API di \textit{Aspell} per il conteggio degli errori ortografici nei file Markdown/LaTeX.
+\end{itemize}
+
+\subsubsection{Strumenti di Testing e Performance (Electron-Angular)}
+
+\paragraph{Cypress}
+Framework di testing End-to-End utilizzato per simulare l'interazione utente all'interno dell'ambiente Electron.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPD-8 (Profondità di Navigazione).
+    \item \textbf{Utilizzo:} Viene configurato un \textit{crawler} automatizzato che percorre l'albero di navigazione dell'applicazione Angular, validando la raggiungibilità dei link e calcolando il numero di interazioni (click) necessarie per raggiungere i nodi foglia.
+\end{itemize}
+
+\paragraph{Electron Manager \& Chrome DevTools Protocol}
+Per misurare l'efficienza di un'applicazione Electron, è necessario monitorare l'istanza di Chromium sottostante.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPD-11 (Average CPU usage), MPD-12 (Peak memory usage).
+    \item \textbf{Utilizzo:} Durante le sessioni di test automatizzati con Cypress, vengono invocati script Node.js che interrogano le API \texttt{process.getProcessMemoryInfo()} e \texttt{process.getCPUUsage()} di Electron per campionare il consumo di risorse in idle e sotto carico.
+\end{itemize}
+
+\paragraph{Lighthouse}
+Integrato nei tool di sviluppo, viene utilizzato per profilare i tempi di risposta dell'interfaccia Angular.
+\begin{itemize}
+    \item \textbf{Metriche associate:} MPD-5 (Broken links).
+    \item \textbf{Utilizzo:} Misura i tempi di latenza tra l'input dell'utente (query) e il rendering dei risultati nel DOM, fornendo report dettagliati sulle performance di risposta.
+\end{itemize}
+
+\paragraph{Funzioni interne di misurazione performance}
+Integrate direttamente nel codice sorgente, queste funzioni permettono di misurare i tempi di indicizzazione e risposta alle query, fornendo dati precisi per le metriche MPD-9 (Indexing time) e MPD-10 (Search Time).
 
 
 
