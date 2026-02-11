@@ -2,7 +2,7 @@
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../assets/uml/UC14.png}
-    \caption{UC14 - Ricerca nel DIP}
+    \caption{Generalizzazione UC14 - Ricerca nel DIP}
     \label{fig:uc_ricercaDIP}
 \end{figure}
 \begin{itemize}
@@ -26,7 +26,7 @@
       \begin{itemize}
             \item La ricerca non produce risultati e il sistema informa l'Utente (\ref{nessunRisultato})
       \end{itemize}
-      \item \textbf{Inclusioni}: \ref{visualizzaRisultati} Visualizzazione Risultati di Ricerca
+      \item \textbf{Inclusioni}: \ref{visualizzaRisultati} Visualizzazione risultati di ricerca
       \item \textbf{Estensioni}: \ref{nessunRisultato} Nessun risultato
 \end{itemize}
 \begin{figure}[H]
@@ -64,7 +64,7 @@
             \begin{enumerate}
                   \item Uno o più campi non rispettano i formati previsti (\ref{campoNonValido})
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{specificaFiltriRicercaDocumento} Specifica filtri per Ricerca Documento 
+      \item \textbf{Inclusioni}: \ref{specificaFiltriRicercaDocumento} Specifica filtri per ricerca documento 
       \item \textbf{Estensioni}: \ref{campoNonValido} Uno o più valori dei filtri di ricerca non validi
       \item \textbf{Specializza}: \ref{ricercaDIP} Ricerca nel DIP
 \end{itemize}
@@ -96,7 +96,7 @@
     
 \end{itemize}
 
-\subusecase{ricercaClasse}{Ricerca Classe Documentale per Nome}
+\subusecase{ricercaClasse}{Ricerca classe documentale per nome}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -114,17 +114,17 @@
                   \item Il sistema produce i risultati di ricerca in base al nome inserito
             \end{enumerate}
 
-      \item \textbf{Inclusioni}: \ref{inserimentoNomeClasseDocumentale} Inserimento Nome Classe Documentale
+      \item \textbf{Inclusioni}: \ref{inserimentoNomeClasseDocumentale} Inserimento nome classe documentale
       \item \textbf{Specializza}: \ref{ricercaDIP} Ricerca nel DIP
 \end{itemize}
 \begin{figure}[H]
       \centering
       \includegraphics[width=0.6\textwidth]{../assets/uml/UC14.3INC.png}
-      \caption{Inclusioni UC14.3 - Ricerca Classe Documentale per Nome}
+      \caption{Inclusioni UC14.3 - Ricerca classe documentale per nome}
       \label{fig:inclusioniRicercaClasse}
 \end{figure}
 
-\subsubusecase{inserimentoNomeClasseDocumentale}{Inserimento Nome Classe Documentale}
+\subsubusecase{inserimentoNomeClasseDocumentale}{Inserimento nome classe documentale}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}:
@@ -141,7 +141,7 @@
       \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila Valore Filtro
 \end{itemize}
 
-\subusecase{ricercaProcesso}{Ricerca Processo per Id}
+\subusecase{ricercaProcesso}{Ricerca processo per Id}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
@@ -154,17 +154,17 @@
             \item L'Utente inserisce l'Id del Processo (\ref{inserimentoIdProcesso})
             \item Il sistema produce i risultati di ricerca in base all'Id inserito
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{inserimentoIdProcesso} Inserimento Id Processo
+      \item \textbf{Inclusioni}: \ref{inserimentoIdProcesso} Inserimento Id processo
       \item \textbf{Specializza}: \ref{ricercaDIP} Ricerca nel DIP
 \end{itemize}
 \begin{figure}[H]
       \centering
       \includegraphics[width=0.6\textwidth]{../assets/uml/UC14.4INC.png}
-      \caption{Inclusioni UC14.4 - Ricerca Processo per Id}
+      \caption{Inclusioni UC14.4 - Ricerca processo per Id}
       \label{fig:inclusioniRicercaProcesso}
 \end{figure}
 
-\subsubusecase{inserimentoIdProcesso}{Inserimento Id Processo}
+\subsubusecase{inserimentoIdProcesso}{Inserimento Id processo}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}:
@@ -200,54 +200,9 @@
       \end{enumerate}
 \end{itemize}
 
-\usecase{indicizzazioneSemantica}{Indicizza DIP con engine semantico}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{../assets/uml/UC16.png}
-    \caption{UC16 - Indicizza DIP con engine semantico}
-    \label{fig:uc_indicizzazioneSemantica}
-\end{figure}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{itemize}
-      \item L'Utente ha avviato l'applicazione
-    \end{itemize}
-    \item \textbf{Postcondizioni}:
-    \begin{itemize}
-        \item Il sistema ha indicizzato i documenti presenti nel DIP con l'engine semantico
-    \end{itemize}
-    \item \textbf{Flusso principale}:
-    \begin{enumerate}
-        \item L'Utente seleziona l'opzione di indicizzazione semantica
-        \item Il sistema indicizza i documenti presenti nel DIP con l'engine semantico
-    \end{enumerate}
-    \item \textbf{Flusso alternativo}:
-    \begin{itemize}
-        \item L'Utente tenta di indicizzare il DIP con l'engine semantico
-        \item L'indicizzazione semantica del DIP fallisce mostrando un messaggio di errore (\ref{erroreIndicizzazioneSemantica})
-    \end{itemize}
-    \item \textbf{Estensioni}: \ref{erroreIndicizzazioneSemantica} Errore Indicizzazione Semantica
-\end{itemize}
 
-\usecase{erroreIndicizzazioneSemantica}{Indicizzazione semantica fallita}
-\begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-      \begin{itemize}
-        \item L'Utente ha avviato l'applicazione
-        \item L'Utente ha selezionato l'opzione di indicizzazione semantica
-      \end{itemize}
-      \item \textbf{Postcondizioni}:
-      \begin{itemize}
-          \item Il sistema annulla l'indicizzazione semantica del DIP, mostrando un messaggio di errore
-      \end{itemize}
-      \item \textbf{Flusso Principale}:
-      \begin{enumerate}
-          \item Il sistema annulla l'operazione di indicizzazione semantica
-          \item Il sistema mostra a video un messaggio di errore che indica il motivo del fallimento
-      \end{enumerate}
-\end{itemize}
+
+
 
 \usecase{StatoIndicizzazione}{Visualizza stato indicizzazione semantica}
 \begin{figure}[H]
@@ -269,11 +224,11 @@
     \end{itemize}
     \item \textbf{Flusso principale}:
     \begin{enumerate}
-        \item L'Utente visualizza lo stato "In corso" o "Completata" dell'indicizzazione semantica
+        \item L'Utente visualizza un messaggio di notifica che indica che la Ricerca Semantica è disponibile.
     \end{enumerate}
 \end{itemize}
 
-\usecase{specificaFiltriRicercaDocumento}{Specifica filtri per Ricerca Documento}
+\usecase{specificaFiltriRicercaDocumento}{Specifica filtri per ricerca documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -290,13 +245,13 @@
       \end{enumerate}
       \item \textbf{Inclusioni}: 
       \begin{itemize}
-            \item \ref{specificaFiltriComuni} Specifica filtri per Campi Comuni
-            \item \ref{addFiltriTipoDocumento} Specifica filtri per Tipo di Documento
-            \item \ref{addCustomMetadata} Specifica filtri per Custom Metadata
+            \item \ref{specificaFiltriComuni} Specifica filtri per campi comuni
+            \item \ref{addFiltriTipoDocumento} Specifica filtri per tipo di documento
+            \item \ref{addCustomMetadata} Specifica filtri per custom metadata
       \end{itemize}
 \end{itemize}
 
-\subusecase{specificaFiltriComuni}{Specifica filtri per Campi Comuni}
+\subusecase{specificaFiltriComuni}{Specifica filtri per campi comuni}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}:\begin{itemize}
@@ -323,7 +278,7 @@
 \begin{figure}[H]
       \centering
       \includegraphics[width=1\textwidth]{../assets/uml/UC19.1.png}
-      \caption{UC19.1 - Specifica filtri per Campi Comuni}
+      \caption{UC19.1 - Specifica filtri per campi comuni}
       \label{fig:uc_specificaFiltriComuni}
 \end{figure}
 
@@ -499,7 +454,7 @@
 
 
 
-\subusecase{addFiltriTipoDocumento}{Specifica filtri per Tipo di Documento}
+\subusecase{addFiltriTipoDocumento}{Specifica filtri per tipo di documento}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{../assets/uml/UC19.2.png}
@@ -521,7 +476,7 @@
       \end{enumerate}
 \end{itemize}
 
-\subsubusecase{specificaFiltriDI-DAI}{Specifica filtri per Documento Informatico e Amministrativo Informatico}
+\subsubusecase{specificaFiltriDI-DAI}{Specifica filtri per documento informatico e amministrativo informatico}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{../assets/uml/UC19.2.1.png}
@@ -556,12 +511,12 @@
             \item \ref{addIdentificativoDocumentoPrimario} Specifica filtr Identificativo del Documento Primario
             \item \ref{addTracciatureModificheDocumento} Specifica filtro Tracciature di Modifiche del Documento
       \end{itemize}
-      \item \textbf{Specializza}: \ref{addFiltriTipoDocumento} Specifica filtri per Tipo di Documento
+      \item \textbf{Specializza}: \ref{addFiltriTipoDocumento} Specifica filtri per tipo di documento
 \end{itemize}
 \begin{figure}[H]
       \centering
       \includegraphics[width=1\textwidth]{../assets/uml/UC19.2.1INC.png}
-      \caption{Inclusioni UC19.2.1 - Specifica filtri per Documento Informatico e Amministrativo Informatico}
+      \caption{Inclusioni UC19.2.1 - Specifica filtri per documento informatico e amministrativo informatico}
       \label{fig:inclusioniSpecificaFiltriDI-DAI}
 \end{figure}
 
@@ -1650,12 +1605,6 @@
 \end{itemize}
 
 \usecase{nessunRisultato}{Nessun Risultato}
-\begin{figure}[H]
-      \centering
-      \includegraphics[width=0.6\textwidth]{../assets/uml/UC23.png}
-      \caption{UC23 - Nessun Risultato}
-      \label{fig:uc_NessunRisultato}
-\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}

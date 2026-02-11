@@ -21,7 +21,7 @@
 \end{itemize}
 
 % inclusioni: nomeClasseDocumentale
-\usecase{classeDocumentale}{Visualizza classe documentale in elenco}
+\subusecase{classeDocumentale}{Visualizza classe documentale in elenco}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{../assets/uml/UC2.png}
@@ -30,11 +30,15 @@
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
-    \item \textbf{Postcondizioni}: L'Utente visualizza l'elenco delle classi documentali.
+    \item \textbf{Precondizioni}: 
+    \begin{itemize}
+        \item L'Utente ha avviato l'applicazione.
+        \item L'Utente sta visualizzando l'elenco delle classi documentali.
+    \end{itemize}
+    \item \textbf{Postcondizioni}: L'Utente visualizza una classe documentale.
     \item \textbf{Flusso Principale}:
     \begin{enumerate}
-        \item Per ogni singola classe documentale presente nell'elenco viene mostrato:
+        \item Per ogni classe documentale viene mostrato:
         \begin{itemize}
             \item Nome della classe documentale (\ref{nomeClasseDocumentale})
             \item Stato di verifica della classe documentale (\ref{statoVerificaElemento})
@@ -51,11 +55,11 @@
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{../assets/uml/UC2INC.png}
-    \caption{Inclusioni UC2 - Visualizza elenco processi di una classe documentale}
+    \caption{Inclusioni UC2 - Visualizza nome classe documentale}
     \label{fig:inclusioniClasseDocumentale}
 \end{figure}
 
-\subusecase{nomeClasseDocumentale}{Visualizza Nome Classe Documentale}
+\subsubusecase{nomeClasseDocumentale}{Visualizza nome classe documentale}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
@@ -66,27 +70,7 @@
           \end{enumerate}
 \end{itemize}
 
-\subusecase{statoVerificaElemento}{Visualizza Stato di Verifica Elemento}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento.
-    \item \textbf{Postcondizioni}: L'utente visualizza lo stato di verifica dell' elemento selezionato.
-    \item \textbf{Flusso Principale}:
-    \begin{enumerate}
-              \item Il sistema mostra a video lo stato di verifica dell'elemento selezionato
-    \end{enumerate}
-\end{itemize}
 
-\subusecase{marcaturaTemporaleElemento}{Visualizza Marcatura Temporale Elemento}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento.
-    \item \textbf{Postcondizioni}: L'utente visualizza la marcatura temporale dell' elemento selezionato.
-    \item \textbf{Flusso Principale}:
-    \begin{enumerate}
-              \item Il sistema mostra a video la marcatura temporale dell' elemento selezionato
-    \end{enumerate}
-\end{itemize}
 
 \usecase{processiClasseDocumentale}{Visualizza elenco dei processi di una classe documentale}
 \begin{figure}[H]
@@ -113,7 +97,7 @@
     \item \textbf{Estensioni}: \ref{elencoVuoto} Visualizza elenco vuoto
 \end{itemize}
 
-\usecase{processoClasseDocumentale}{Visualizza processi in elenco}
+\subusecase{processoClasseDocumentale}{Visualizza processi in elenco}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{../assets/uml/UC4.png}
@@ -151,7 +135,7 @@
     \label{fig:inclusioniProcessoClasseDocumentale}
 \end{figure}
 
-\subusecase{idProcessoClasse}{Visualizza Id Processo}
+\subsubusecase{idProcessoClasse}{Visualizza Id processo}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: \begin{itemize}
@@ -193,7 +177,7 @@
     \item \textbf{Estensioni}: \ref{elencoVuoto} Visualizza elenco vuoto
 \end{itemize}
 
-\usecase{documentoProcesso}{Visualizza documento in elenco}
+\subusecase{documentoProcesso}{Visualizza documento in elenco}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{../assets/uml/UC6.png}
@@ -230,7 +214,7 @@
     \label{fig:inclusioniDocumentoProcesso}
 \end{figure}
 
-\subusecase{nomeDocumentoProcesso}{Visualizza Nome Documento}
+\subsubusecase{nomeDocumentoProcesso}{Visualizza nome documento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
@@ -241,7 +225,30 @@
     \end{enumerate}
 \end{itemize}
 
-\usecase{elencoVuoto}{Elenco Vuoto}
+\usecase{statoVerificaElemento}{Visualizza stato di verifica elemento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento.
+    \item \textbf{Postcondizioni}: L'utente visualizza lo stato di verifica dell' elemento selezionato.
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+              \item Il sistema mostra a video lo stato di verifica dell'elemento selezionato
+    \end{enumerate}
+\end{itemize}
+
+\usecase{marcaturaTemporaleElemento}{Visualizza marcatura temporale elemento}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento.
+    \item \textbf{Postcondizioni}: L'utente visualizza la marcatura temporale dell' elemento selezionato.
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+              \item Il sistema mostra a video la marcatura temporale dell' elemento selezionato
+    \end{enumerate}
+\end{itemize}
+
+
+\usecase{elencoVuoto}{Elenco vuoto}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: \begin{itemize}
@@ -255,153 +262,12 @@
           \end{enumerate}
 \end{itemize}
 
-\usecase{selezioneElemento}{Selezione Elemento del DIP}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/UC8.png}
-    \caption{UC8 - Selezione Elemento del DIP}
-    \label{fig:uc_selezioneElemento}
-\end{figure}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: 
-        \begin{itemize}
-            \item L'utente ha avviato l'applicazione
-            \item L'utente sta visualizzando una lista di elementi del DIP (Classi Documentali, Processi o Documenti)
-        \end{itemize}
-    \item \textbf{Postcondizioni}: Viene selezionato l'elemento scelto dall'utente.
-    \item \textbf{Flusso Principale}:
-    \begin{enumerate}
-              \item Il sistema seleziona l'elemento scelto dall'utente.
-    \end{enumerate}
-\end{itemize}
 
-\usecase{selezionaClasseDocumentale}{Seleziona classe documentale}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/UC9.png}
-    \caption{UC9 - Seleziona classe documentale}
-    \label{fig:uc_selezionaClasseDocumentale}
-\end{figure}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{itemize}
-        \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando una lista di classe documentale
-    \end{itemize}
-    \item \textbf{Postcondizioni}:
-    \begin{itemize}
-        \item Viene selezionata una classe documentale sulla quale effettuare un operazione
-    \end{itemize}
-    \item \textbf{Flusso principale}:
-    \begin{enumerate}
-        \item L'utente seleziona una classe documentale dalla lista
-    \end{enumerate}
-\end{itemize}
-
-\usecase{selezionaProcesso}{Seleziona processo}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/UC10.png}
-    \caption{UC10 - Seleziona processo}
-    \label{fig:uc_selezionaProcesso}
-\end{figure}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{itemize}
-        \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando una lista di processi
-    \end{itemize}
-    \item \textbf{Postcondizioni}:
-    \begin{itemize}
-        \item Viene selezionato un processo sul quale effettuare un operazione
-    \end{itemize}
-    \item \textbf{Flusso principale}:
-    \begin{enumerate}
-        \item L'utente seleziona un processo dalla lista
-    \end{enumerate}
-\end{itemize}
-
-\usecase{selezionaDocumento}{Seleziona documento}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/UC11.png}
-    \caption{UC11 - Seleziona documento}
-    \label{fig:uc_selezionaDocumento}
-\end{figure}
-\begin{itemize}
-    \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}:
-    \begin{itemize}
-        \item L'utente ha avviato l'applicazione
-        \item L'utente sta visualizzando una lista di documenti
-    \end{itemize}
-    \item \textbf{Postcondizioni}:
-    \begin{itemize}
-        \item Viene selezionato un documento sul quale effettuare un operazione
-    \end{itemize}
-    \item \textbf{Flusso principale}:
-    \begin{enumerate}
-        \item L'utente seleziona un documento dalla lista
-    \end{enumerate}
-\end{itemize}
-
-% questo non serve più per quello che ha detto cardin il 9/01,che non c'è use case selezione multipla ma direttamente "download file multipli" o "stampa file multipli"
-%\usecase{selezionaPiuDocumenti}{Seleziona più documenti} 
-%\begin{itemize}
-%    \item \textbf{Attore Primario}: Utente
-%    \item \textbf{Precondizioni}:
-%    \begin{itemize}
-%        \item L'utente ha avviato l'applicazione
-%        \item L'utente sta visualizzando una lista di documenti
-%    \end{itemize}
-%    \item \textbf{Postcondizioni}:
-%    \begin{itemize}
-%        \item Viene selezionati più documenti sul quale effettuare un operazione
-%    \end{itemize}
-%    \item \textbf{Flusso principale}:
-%    \begin{itemize}
-%        \item L'utente seleziona un insieme di documenti dalla lista
-%    \end{itemize}
-%\end{itemize}
-
-
-
-% \subusecase{informazioniElemento}{Visualizza Informazioni di un elemento}
-% \begin{itemize}
-%     \item \textbf{Attore Primario}: Utente
-%     \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento del DIP.
-%     \item \textbf{Postcondizioni}: L'Utente visualizza i metadati e le azioni disponibili per l'elemento selezionato tra Documento, Processo, Classe Documentale e DIP.
-%     \item \textbf{Flusso Principale}:\begin{enumerate}
-%               \item L'Utente seleziona una cartella (Classe Documentale o Processo) o un documento dalla struttura del DIP (\ref{strutturaDIP}).
-%               \item Il sistema mostra i metadati associati, tra cui:
-%                     \begin{itemize}
-%                       \item Verifica l'integrità (\ref{verificaIntegritaDIPCompleto}, \ref{verificaIntegritaProcesso}, \ref{verificaIntegritaClasseDocumentale})
-%                       \item Stampa (\ref{stampaSingoloDoc} e \ref{stampaInsiemeDoc})
-%                       \item Salva in locale (\ref{scaricaFile} e \ref{salvaPiuDOcs})
-%                       \item Visualizza l'anteprima (\ref{anteprimaDocumento})
-%                       \item Visualizza Informazioni sull'AIP (\ref{visualizzaInfoAiP})
-%                       \item Visualizza tutti i metadati associati (\ref{ })
-%                     \end{itemize}
-%           \end{enumerate}
-%     \item \textbf{Flussi Alternativi}: \begin{itemize}
-%               \item Se l'Utente seleziona un elemento non valido, il sistema non mostra alcuna informazione.
-%               \item L'Utente esegue un'azione sull'elemento selezionato:
-%                 \begin{itemize}
-%           
-%                 \end{itemize}
-%           \end{itemize}
-%     \item \textbf{Inclusioni}: \ref{nomeElemento}, \ref{statoVerificaElemento}, 
-%     \item \textbf{Estensioni}: \ref{verificaIntegritaDIPCompleto}, \ref{verificaIntegritaProcesso}, \ref{verificaIntegritaClasseDocumentale}, \ref{stampaSingoloDoc}, \ref{stampaInsiemeDoc}, \ref{scaricaFile}, \ref{salvaPiuDOcs}, \ref{anteprimaDocumento}, \ref{visualizzaInfoAiP}
-% \end{itemize}
-
-\usecase{anteprimaDocumento}{Visualizza Anteprima Documento}
+\usecase{anteprimaDocumento}{Visualizza anteprima documento}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{../assets/uml/UC12.png}
-    \caption{UC12 - Visualizza Anteprima Documento}
+    \caption{UC12 - Visualizza anteprima documento}
     \label{fig:uc_anteprimaDocumento}
 \end{figure}
 \begin{itemize}
@@ -424,7 +290,7 @@
     \item \textbf{Estensioni}: \ref{formatoDocumentoNonSupportato} Formato Documento non Supportato dal Sistema per l'anteprima
 \end{itemize}
 
-\usecase{formatoDocumentoNonSupportato}{Formato Documento non Supportato dal Sistema per l'anteprima}
+\usecase{formatoDocumentoNonSupportato}{Formato documento non supportato dal sistema per l'anteprima}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: 
