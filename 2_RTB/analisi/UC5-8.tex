@@ -652,12 +652,12 @@
         \end{enumerate}
 \end{itemize}
 
-\usecase{convertiReportVerificaPDF}{Converti report verifica in PDF}
+\usecase{esportaReportVerificaPDF}{Esporta report verifica in PDF}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{../assets/uml/UC35.png}
-      \caption{\ref{convertiReportVerificaPDF} - Converti report verifica in PDF}
-    \label{fig:uc_convertiReportVerificaPDF}
+      \caption{\ref{esportaReportVerificaPDF} - Esporta report verifica in PDF}
+    \label{fig:uc_esportaReportVerificaPDF}
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -675,9 +675,15 @@
         \end{enumerate}
     \item \textbf{Flusso Alternativo}:
     \begin{itemize}
-        \item La conversione non va a buon fine: viene visualizzato un messaggio di errore "Impossibile generare il PDF. Riprovare.".
+        \item La conversione non va a buon fine: viene visualizzato un messaggio di errore "Impossibile generare il PDF. Riprovare."
+        \item Si verifica un errore durante il salvataggio del file PDF: viene visualizzato un messaggio di errore "Impossibile salvare il PDF. Riprovare."
     \end{itemize}
-    \item \textbf{Estensioni}: \ref{erroreGenerazionePDF} Errore generazione PDF
+    \item \textbf{Estensioni}: 
+    \begin{itemize}
+        \item \ref{erroreGenerazionePDF} Errore generazione PDF
+        \item \ref{erroreScaricamentoFile} Errore scaricamento file
+    \end{itemize}
+    
 \end{itemize}
 
 \usecase{scaricaFile}{Scarica file}
