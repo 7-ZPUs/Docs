@@ -1,0 +1,210 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian, provide=*]{babel}
+\usepackage[sfdefault]{atkinson}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Esterno Gruppo di Progetto e Sanmarco Informatica}\\
+    \vspace{0.5cm}
+\end{center}
+
+
+\noindent
+\textbf{Data:} 2026/1/22 \\
+\textbf{Durata:} 15 minuti \\
+\textbf{Luogo:} incontro online ( Meet )
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    0.1 & 2026/1/22 & Rocco Matteo A. & Fattoni Antonio & \begin{tabular}[c]{@{}l@{}}Creazione del verbale\\ e stesura iniziale\end{tabular} \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\tableofcontents
+
+\newpage
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Gingilino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+    \item Rossi Andrea
+    \item Sarra Luca
+\end{itemize}
+
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Esposizione dello stato di avanzamento del PoC.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section{Organizzazione incontri successivi}
+Sono state programmate le date degli incontri successivi, che si terranno ogni 2 settimane, fino al 16/04/2026, data in cui è prevista la consegna della Product Baseline.
+
+\section{Svolgimento e Discussione}
+
+\subsection{Esposizione dello stato di avanzamento del PoC}
+
+Durante l'incontro il Team ha esposto lo stato di avanzamento del Proof of Concept (PoC), in particolare ha riportato i diversi approcci all'indicizzazione e alla ricerca del DIP che sono stati considerati:
+\begin{itemize}
+    \item indicizzazione pura con database SQL.
+    \item indicizzazione mista con file json e database SQL.
+    \item indicizzazione basata sulla libreria Tantivy.
+\end{itemize}
+
+Il primo approccio è stato illustrato brevemente in quanto ancora in fase di sviluppo e non ancora testato.\\
+
+Il secondo approccio, basato sulla prima versione di PoC presentata alla proponente, è stato migliorato dal punto di vista dell'usabilità e corretto per quanto riguarda la verifica dell'integrità dei file tramite funzione di hash in Base64.\\
+
+Il terzo approccio, basato sulla libreria Tantivy, sebbene interessante, è stato scartato in quanto sviluppata in Rust, cosa che avrebbe richiesto il mantenimento continuo del codice per adattare il PoC alle nuove versioni del linguaggio e della libreria stessa.\\
+
+Le prime due versioni di PoC verranno testate e confrontate per valutare quale delle due implementazioni risulti più efficiente, in tal senso sarà significativo confrontare i tempi di indicizzazione del pacchetto DIP di test fornito in data 15/01/2026 dalla proponente su richiesta del Team, che ha una dimensione di diversi ordini di grandezza superiore rispetto ai pacchetti DIP utilizzati finora.
+
+\subsection{Ricerca semantica}
+Le risorse previste per lo studio della terzo approccio sono state reindirizzate allo studio e alla progettazione dell'implementazione della ricerca semantica, che è un requisito opzionale ma che il Team ritiene importante implementare già nel PoC, in quanto rappresenta una funzionalità chiave del prodotto finale e potrebbe essere complessa da implementare.\\
+In particolare è stata individuata una libreria integrata in SQLite in linguaggio C, \texttt{sql-vec}, che permette di effettuare ricerche semantiche basate su vettori, che sembra essere adatta alle esigenze del progetto come alternativa alla libreria FAISS.\\
+
+
+\section{Domande e Risposte}
+
+\begin{itemize}
+    \item \textbf{Domanda:} È desiderabile implementare la ricerca semantica non solo sui metadati, ma anche sul contenuto dei documenti?
+
+    \item \textbf{Risposta:} Non riteniamo necessario implementare la ricerca semantica sul contenuto dei documenti, in quanto comporterebbe la trasformazione di tutti i documenti in vettori, diventando un lavoro particolarmente oneroso.\\
+    Per quanto riguarda la traduzione in vettori dei metadati, esistono diversi modelli di embedding che operano in locale, ad esempio con Docker Model Runner oppure ancora modelli del tool Ollama.
+\end{itemize}
+
+\section{Conclusione}
+L'incontro si è concluso con una breve presentazione del PoC e si rimanda alla prossima riunione per la presentazione dei risultati dei test sulle prime due versioni di PoC e per la discussione dell'implementazione della ricerca semantica.
+
+\vfill
+
+\begin{flushleft}
+\begin{tabular}{@{}p{0.5in}p{2in}@{}}
+Data: & \hrulefill \\
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{@{}p{0.5in}p{2in}@{}}
+Firma: & \hrulefill \\
+& [Sanmarco Informatica SPA] \\
+\end{tabular}
+\end{flushleft}
+
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
