@@ -653,6 +653,12 @@
 \end{itemize}
 
 \usecase{scaricaReport}{Esporta un report di verifica in PDF}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../assets/uml/UC34.png}
+    \caption{\ref{scaricaReport} - Esporta un report di verifica in PDF}
+    \label{fig:uc_scaricaReport}
+\end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -674,13 +680,16 @@
     \begin{itemize}
         \item La conversione in PDF non va a buon fine: il sistema mostra un messaggio d'errore "Errore nella conversione del report in PDF. Riprova."
     \end{itemize}
-    \item \textbf{Estensioni}: \ref{erroreGenerazionePDF} Errore generazione PDF
+    \item \textbf{Estensioni}: \begin{itemize}
+        \item \ref{erroreGenerazionePDF} Errore generazione PDF
+        \item \ref{erroreScaricamentoFile} Errore scaricamento file
+        \end{itemize}
 \end{itemize}
 
 \usecase{scaricaFile}{Scarica file}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{../assets/uml/UC36.png}
+    \includegraphics[width=0.8\textwidth]{../assets/uml/UC35.png}
     \caption{\ref{scaricaFile} - Scarica File}
     \label{fig:uc_scaricaFile}
 \end{figure}
