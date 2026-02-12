@@ -18,7 +18,6 @@
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item L'utente sceglie: "Verifica Integrità dell'intero DIP"
-            \item Il sistema verifica l'integrità del DIP completo e delle sue componenti ricorsivamente
             \item Il sistema aggiorna lo stato della verifica del DIP e delle sue componenti.
         \end{enumerate}
 \end{itemize}
@@ -44,7 +43,6 @@
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item L'utente sceglie "Verifica Integrità" sulla classe documentale
-            \item Il sistema verifica l'integrità della classe documentale e delle sue componenti ricorsivamente
             \item Il sistema aggiorna lo stato della verifica della classe documentale e delle sue componenti.
         \end{enumerate}
 \end{itemize}
@@ -70,7 +68,6 @@
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item L'utente sceglie "Verifica Integrità" sul processo
-            \item Il sistema verifica l'integrità del processo e delle sue componenti ricorsivamente
             \item Il sistema aggiorna lo stato della verifica del processo e delle sue componenti.
         \end{enumerate}
 \end{itemize}
@@ -96,7 +93,6 @@
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item L'utente sceglie "Verifica Integrità" sul documento
-            \item Il sistema verifica l'integrità del documento
             \item Il sistema aggiorna lo stato della verifica del documento.
         \end{enumerate}
 \end{itemize}
@@ -199,14 +195,14 @@
             \item Non esistono classi corrotte: viene visualizzato un messaggio "Tutte le classi sono integre".
         \end{itemize}
     \item \textbf{Inclusioni}: \begin{itemize}
-        \item \ref{visualizzaElementoListaClassiCorrotte} Visualizza elemento lista classi corrotte
+        \item \ref{visualizzaElementoListaClassiCorrotte} Visualizzazione classe corrotta
     \end{itemize}
     \item \textbf{Estensioni}: \begin{itemize}
         \item \ref{nessunaClasseCorrotta} Nessuna classe corrotta
     \end{itemize}
 \end{itemize}
 
-\subsubusecase{visualizzaElementoListaClassiCorrotte}{Visualizza elemento lista classi corrotte}
+\subsubusecase{visualizzaElementoListaClassiCorrotte}{Visualizzazione classe corrotta}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: 
@@ -354,7 +350,7 @@
             \item Non esistono processi corrotti nella classe documentale: viene visualizzato un messaggio "Tutti i processi sono integri".
         \end{itemize}
     \item \textbf{Inclusioni}: \begin{itemize}
-        \item \ref{visualizzaElementoListaProcessiCorrotti} Visualizza elemento lista processi corrotti
+        \item \ref{visualizzaElementoListaProcessiCorrotti} Visualizzazione processo corrotto
         \end{itemize}
     \item \textbf{Estensioni}
     \item \begin{itemize}
@@ -362,7 +358,7 @@
     \end{itemize}
 \end{itemize}
 
-\subsubusecase{visualizzaElementoListaProcessiCorrotti}{Visualizza elemento lista processi corrotti}
+\subsubusecase{visualizzaElementoListaProcessiCorrotti}{Visualizzazione processo corrotto}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: 
@@ -511,14 +507,14 @@
         \item Non esistono documenti corrotti nel processo: viene visualizzato un messaggio "Tutti i documenti sono integri".
         \end{enumerate}
     \item \textbf{Inclusioni}: \begin{itemize}
-        \item \ref{visualizzaElementoListaDocumentiCorrotti} Visualizza elemento lista documenti corrotti
+        \item \ref{visualizzaElementoListaDocumentiCorrotti} Visualizzazione documento corrotto
         \end{itemize}
     \item \textbf{Estensioni}: \begin{itemize}
         \item \ref{nessunDocumentoCorrotto} Nessun documento corrotto
     \end{itemize}
 \end{itemize}
 
-\subsubusecase{visualizzaElementoListaDocumentiCorrotti}{Visualizza elemento lista documenti corrotti}
+\subsubusecase{visualizzaElementoListaDocumentiCorrotti}{Visualizzazione documento corrotto}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: 
@@ -640,7 +636,7 @@
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzazioneDettagliErroreDocumento}{Visualizzazione dettagli errore documento}
+\subusecase{visualizzazioneDettagliErroreDocumento}{Visualizzazione dettaglio errore documento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: 
@@ -649,7 +645,7 @@
             \item È stata completata una verifica di integrità di un documento
             \item Il documento ha stato "Non Valido".
         \end{itemize} 
-    \item \textbf{Postcondizioni}: Dettagli dell'errore visualizzati.     
+    \item \textbf{Postcondizioni}: Dettaglio dell'errore visualizzato.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema mostra la descrizione dell'errore (ad esempio: hash calcolato non coincide con hash associato al documento, firma digitale non valida o scaduta).

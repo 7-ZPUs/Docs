@@ -26,15 +26,8 @@
       \begin{itemize}
             \item La ricerca non produce risultati e il sistema informa l'Utente (\ref{nessunRisultato})
       \end{itemize}
-      \item \textbf{Inclusioni}: \ref{visualizzaRisultati} Visualizzazione risultati di ricerca
       \item \textbf{Estensioni}: \ref{nessunRisultato} Nessun risultato
 \end{itemize}
-\begin{figure}[H]
-      \centering
-      \includegraphics[width=0.9\textwidth]{../assets/uml/UC9INC.png}
-      \caption{Inclusioni \ref{ricercaDIP} - Ricerca nel DIP}
-      \label{fig:inclusioniRicercaDIP}
-\end{figure}
 
 \subusecase{ricercaDIPConFiltri}{Ricerca nel DIP con filtri}
 \begin{figure}[H]
@@ -1600,9 +1593,24 @@
       \end{enumerate}
       \item \textbf{Inclusioni}:
       \begin{itemize}
-            \item \ref{nomeDocumentoProcesso} Visualizza Nome Documento
+            \item \ref{nomeElemento} Visualizza nome elemento
             \item \ref{visualizzaTipoElemento} Visualizza tipo elemento
       \end{itemize}
+\end{itemize}
+
+\subsubusecase{nomeElemento}{Visualizza nome elemento}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            \item L'Utente ha avviato l'applicazione
+            \item L'Utente ha eseguito una ricerca (tramite \ref{ricercaDIP} e sue specializzazioni).
+            \item L'Utente sta visualizzando un elemento della lista risultati.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: L'Utente visualizza il nome dell'elemento.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item Il sistema mostra a video il nome dell'elemento.
+      \end{enumerate}
 \end{itemize}
 
 \subsubusecase{visualizzaTipoElemento}{Visualizza tipo elemento}
