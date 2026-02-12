@@ -1551,7 +1551,7 @@
       \end{enumerate}
 \end{itemize}
 
-\usecase{visualizzaRisultati}{Visualizzazione Risultati di Ricerca} \label{risultatiRicerca}
+\usecase{visualizzaRisultati}{Visualizza Risultati di Ricerca} \label{risultatiRicerca}
 \begin{figure}[H]
       \centering
       \includegraphics[width=0.6\textwidth]{../assets/uml/UC22.png}
@@ -1562,46 +1562,63 @@
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
             \item L'Utente ha eseguito una ricerca (tramite \ref{ricercaDIP} e sue specializzazioni).
       \end{itemize}
       \item \textbf{Postcondizioni}: I risultati della ricerca sono presentati all'Utente come lista di elementi.
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente visualizza un elenco di documenti o aggregazioni che corrispondono ai criteri di ricerca.
+            \item L'Utente visualizza un elenco di elementi che corrispondono ai criteri di ricerca.
             \item Per ogni elemento, vengono mostrate le informazioni principali (Nome, Data, Tipo) (\ref{infoRisultatiRicerca})
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{infoRisultatiRicerca} Informazioni Elenco Elementi
+      \item \textbf{Flusso Alternativo}:
+      \begin{enumerate}
+            \item Il sistema non trova risultati che corrispondono ai criteri di ricerca.
+      \end{enumerate}
+      \item \textbf{Inclusioni}: \ref{infoRisultatiRicerca} Visualizza elemento lista risultati
+      \item \textbf{Estensioni}: \ref{nessunRisultato} Nessun Risultato
 \end{itemize}
 \begin{figure}[H]
       \centering
       \includegraphics[width=0.9\textwidth]{../assets/uml/UC22INC.png}
-      \caption{Inclusioni \ref{visualizzaRisultati} - Informazioni Elenco Elementi}
+      \caption{Inclusioni \ref{visualizzaRisultati} - Visualizza elemento lista risultati}
       \label{fig:inclusioniInformazioniElencoElementi}
 \end{figure}
 
-\subusecase{infoRisultatiRicerca}{Informazioni Elenco Elementi}
+\subusecase{infoRisultatiRicerca}{Visualizza elemento lista risultati}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
             \item L'Utente ha eseguito una ricerca (tramite \ref{ricercaDIP} e sue specializzazioni).
-            \item La ricerca ha prodotto dei risultati.
       \end{itemize}
-      \item \textbf{Postcondizioni}: I risultati della ricerca sono presentati all'Utente come lista di elementi.
+      \item \textbf{Postcondizioni}: Le proprietà di un elemento della lista risultati vengono mostrate all'utente.
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente visualizza il nome del documento o dell'aggregazione (\ref{visualizzazioneNomeDocumento}).
-            \item L'Utente visualizza la data di creazione o di registrazione del documento o dell'aggregazione (\ref{visualizzaDataRegistrazioneDocumento}).
+            \item L'Utente visualizza il nome dell'elemento (\ref{visualizzazioneNomeDocumento}).
             \item L'Utente visualizza il tipo di elemento tra Documento, Aggregazione, Processo e Classe Documentale.
       \end{enumerate}
       \item \textbf{Inclusioni}:
       \begin{itemize}
-            \item \ref{visualizzazioneNomeDocumento} Visualizzazione Nome Documento
-            \item \ref{visualizzaDataRegistrazioneDocumento} Visualizzazione Data Registrazione Documento
+            \item \ref{visualizzazioneNomeDocumento} Visualizza Nome Documento
+            \item \ref{visualizzaTipoElemento} Visualizza tipo elemento
       \end{itemize}
+\end{itemize}
+
+\subsubusecase{visualizzaTipoElemento}{Visualizza tipo elemento}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente ha eseguito una ricerca (tramite \ref{ricercaDIP} e sue specializzazioni).
+            \item L'Utente sta visualizzando un elemento della lista risultati.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: L'Utente visualizza il tipo dell'elemento tra Documento, Aggregazione, Processo e Classe Documentale.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item Il sistema mostra a video il tipo dell'elemento tra Documento, Aggregazione, Processo e Classe Documentale.
+      \end{enumerate}
 \end{itemize}
 
 \usecase{nessunRisultato}{Nessun Risultato}
@@ -1609,7 +1626,6 @@
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item Il sistema ha indicizzato i documenti presenti nel DIP
             \item L'Utente ha eseguito una ricerca (tramite \ref{ricercaDIP} e sue specializzazioni).
       \end{itemize}
       \item \textbf{Postcondizioni}: Il sistema informa l'Utente che non sono stati trovati risultati.
@@ -1623,7 +1639,7 @@
 \begin{figure}[H]
       \centering
       \includegraphics[width=0.6\textwidth]{../assets/uml/UC24.png}
-      \caption{UC24 - Compila valore filtro}
+      \caption{\ref{compilaValoreFiltro} - Compila valore filtro}
       \label{fig:uc_compilaValoreFiltro}
 \end{figure}
 \begin{itemize}
@@ -1632,8 +1648,7 @@
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
             \item L'Utente sta effettuando una ricerca nel DIP con filtri
-            \item L'Utente ha selezionato un filtro da compilare tra quelli disponibili.
-            \item L'Utente sta specificando il valore per un metadato del filtro selezionato.
+            \item L'Utente sta specificando il valore per un metadato di un filtro selezionato.
       \end{itemize}
       \item \textbf{Postcondizioni}: Il valore inserito dall'Utente viene salvato come parte del filtro selezionato.
       \item \textbf{Flusso Principale}:
@@ -1654,7 +1669,6 @@
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
             \item L'Utente sta effettuando una ricerca nel DIP con filtri
-            \item L'Utente ha selezionato un filtro da compilare tra quelli disponibili.
             \item L'Utente sta specificando il valore per un metadato del filtro selezionato.
       \end{itemize}
       \item \textbf{Postcondizioni}: Il sistema informa l'Utente che il valore inserito non rispetta il formato corretto.
