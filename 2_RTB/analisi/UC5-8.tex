@@ -661,18 +661,21 @@
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: 
-        \begin{itemize}
-            \item L'Utente ha avviato l'applicazione
-            \item È stata completata una verifica di integrità (DIP completo / Classe Documentale / Processo / Documento)
-            \item L'utente sta visualizzando un report di verifica (DIP completo / Classe Documentale / Processo / Documento).
-        \end{itemize} 
-    \item \textbf{Postcondizioni}: Il report visualizzato viene convertito in PDF.     
+    \item \textbf{Precondizioni}:
+    \begin{itemize}
+        \item L'Utente ha avviato l'applicazione
+        \item L'Utente sta visualizzando un report di verifica (DIP completo / Classe Documentale / Processo / Documento)
+        \item L'Utente ha scelto l'opzione di esportazione in PDF del report
+    \end{itemize}
+    \item \textbf{Postcondizioni}: Il report di verifica è stato convertito in PDF e scaricato nella cartella selezionata.
     \item \textbf{Flusso Principale}:
-        \begin{enumerate}
-            \item L'utente seleziona "Salva Report"
-            \item Il sistema converte il report corrente in formato PDF.
-        \end{enumerate}
+    \begin{enumerate}
+        \item Il sistema converte il report di verifica in un file PDF.
+        \item Il sistema apre un dialogo di selezione cartella.
+        \item L'utente seleziona la cartella di destinazione.
+        \item Il sistema salva il file PDF nella cartella selezionata.
+        \item Il sistema conferma il salvataggio con un messaggio "Report salvato con successo in [percorso]".
+    \end{enumerate}
     \item \textbf{Flusso Alternativo}:
     \begin{itemize}
         \item La conversione non va a buon fine: viene visualizzato un messaggio di errore "Impossibile generare il PDF. Riprovare."
@@ -698,7 +701,7 @@
     \item \textbf{Precondizioni}: 
         \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item L'Utente ha selezionato un file da scaricare (Documento o Report).
+            \item L'Utente ha selezionato un file da scaricare (Documento).
         \end{itemize} 
     \item \textbf{Postcondizioni}: L'utente ha scaricato il File nella cartella selezionata.     
     \item \textbf{Flusso Principale}:
