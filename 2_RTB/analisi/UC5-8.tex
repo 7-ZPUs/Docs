@@ -678,12 +678,14 @@
     \end{enumerate}
     \item \textbf{Flusso Alternativo}:
     \begin{itemize}
-        \item La conversione in PDF non va a buon fine: il sistema mostra un messaggio d'errore "Errore nella conversione del report in PDF. Riprova."
+        \item La conversione non va a buon fine: il file PDF non viene generato.
+        \item Si verifica un errore durante il salvataggio del file PDF: il file non viene scaricato.
     \end{itemize}
-    \item \textbf{Estensioni}: \begin{itemize}
+    \item \textbf{Estensioni}: 
+    \begin{itemize}
         \item \ref{erroreGenerazionePDF} Errore generazione PDF
         \item \ref{erroreScaricamentoFile} Errore scaricamento file
-        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \usecase{scaricaFile}{Scarica file}
@@ -711,7 +713,7 @@
     \item \textbf{Flusso Alternativo}:
         \begin{itemize}
             \item L'utente tenta di salvare il documento nella cartella del DIP: il sistema blocca l'operazione.
-            \item L'utente annulla l'operazione: il sistema chiude il dialogo senza salvare.
+            \item Il sistema chiude il dialogo senza salvare.
         \end{itemize}
       \item \textbf{Estensioni}: \ref{erroreScaricamentoFile} Errore scaricamento file
 \end{itemize}
@@ -728,7 +730,7 @@
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema blocca l'operazione.
-            \item L'utente annulla l'operazione: il sistema chiude il dialogo senza salvare.
+            \item Il sistema chiude il dialogo senza salvare.
         \end{enumerate}
 \end{itemize}
 
@@ -738,15 +740,11 @@
     \item \textbf{Precondizioni}: 
         \begin{itemize}
             \item L'Utente ha avviato l'applicazione
-            \item È stata completata una verifica di integrità (DIP completo / Classe Documentale / Processo / Documento)
-            \item L'utente sta visualizzando un report di verifica (DIP completo / Classe Documentale / Processo / Documento)
-            \item È stata scelta l'opzione di conversione in PDF del report
-            \item La conversione PDF non è andata a buon fine.
+            \item È stata scelta l'opzione di conversione in PDF di un report di verifica.
         \end{itemize} 
     \item \textbf{Postcondizioni}: L'utente visualizza un messaggio d'errore.     
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item La conversione non va a buon fine
             \item L'utente visualizza un messaggio d'errore.
         \end{enumerate}
 \end{itemize}
