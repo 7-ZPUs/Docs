@@ -556,7 +556,7 @@ R-255-F-Ob & L'utente deve poter visualizzare la versione del prodotto software 
 \hline
 R-256-F-Ob & L'utente deve poter visualizzare il produttore del software che ha generato il documento selezionato & \ref{visualizzaProduttoreSoftware} \\
 \hline
-R-257-F-Ob & L'utente deve poter visualizzare le informazioni di verifica del documento selezionato & \ref{visualizzaInformazisoniVerifica} \\
+R-257-F-Ob & L'utente deve poter visualizzare le informazioni di verifica del documento selezionato & \ref{visualizzaInformazioniVerifica} \\
 \hline
 R-258-F-Ob & L'utente deve poter visualizzare se il documento selezionato è firmato digitalmente & \ref{visualizzaFirmaDigitaleDocumento} \\
 \hline
@@ -586,7 +586,7 @@ R-270-F-Ob & Se l'informazione sulla descrizione dell'allegato non è disponibil
 \hline
 R-271-F-Ob & Se il documento non ha allegati, l'utente deve essere informato con un messaggio che indica l'assenza degli allegati & \ref{allegatiNonPresenti} \\
 \hline
-R-272-F-Ob & L'utente deve poter visualizzare tutte le informazioni sulle modifiche di un documento & \ref{visualizzaInformazioniModifiche} \\
+R-272-F-Ob & L'utente deve poter visualizzare tutte le informazioni sulle modifiche di un documento & \ref{visualizzaInformazioniModificheDocumento} \\
 \hline
 R-273-F-Ob & L'utente deve poter visualizzare il tipo di modifica per ogni modifica del documento selezionato tra: Annullamento, Rettifica, Integrazione e Annotazione & \ref{visualizzaTipoModificaDocumento} \\
 \hline
@@ -1234,7 +1234,7 @@ R-11-V-Ob & Il sistema deve supportare rigorosamente la struttura dei metadati d
 \hline
 \ref{metadatiCustomAssenti} & R-306-F-Ob \\
 \hline
-\ref{visualizzaInformazioniModifiche} & R-272-F-Ob \\
+\ref{visualizzaInformazioniModificheDocumento} & R-272-F-Ob \\
 \hline
 \ref{visualizzaInformazioniVerifica} & R-257-F-Ob \\
 \hline
@@ -1309,9 +1309,9 @@ R-20-F-Ob & \ref{formatoDocumentoNonSupportato} \\
 \hline
 R-21-F-Ob & \ref{ricercaDIP} \\
 \hline
-R-22-F-Ob & - \\
+R-22-F-Ob & \ref{ricercaClasse}, \ref{inserimentoNomeClasseDocumentale}, \ref{compilaValoreFiltro} \\
 \hline
-R-23-F-Ob & - \\
+R-23-F-Ob & \ref{ricercaProcesso}, \ref{inserimentoIdProcesso}, \ref{compilaValoreFiltro}\\
 \hline
 R-24-F-Op & \ref{ricercaDIP}, \ref{ricercaDIPSemantica} \\
 \hline
@@ -1357,25 +1357,25 @@ R-44-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, 
 \hline
 R-45-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addChiaveDescrittiva} \\
 \hline
-R-46-F-Ob & - \\
+R-46-F-Ob & \ref{addChiaveDescrittiva}, \ref{compilaValoreFiltro} \\
 \hline
 R-47-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addClassificazione} \\
 \hline
-R-48-F-Ob & - \\
+R-48-F-Ob & \ref{addClassificazione}, \ref{compilaValoreFiltro} \\
 \hline
 R-49-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addTempoConserva} \\
 \hline
-R-50-F-Ob & - \\
+R-50-F-Ob & \ref{addTempoConserva}, \ref{compilaValoreFiltro} \\
 \hline
 R-51-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addTempoConserva} \\
 \hline
 R-52-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addNote} \\
 \hline
-R-53-F-Ob & - \\
+R-53-F-Ob & \ref{addNote}, \ref{compilaValoreFiltro} \\
 \hline
 R-54-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addTipoDocumento} \\
 \hline
-R-55-F-Ob & - \\
+R-55-F-Ob & \ref{addTipoDocumento}, \ref{compilaValoreFiltro} \\
 \hline
 R-56-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addSoggetti} \\
 \hline
@@ -1395,19 +1395,19 @@ R-63-F-Ob & \ref{addSoggetto}, \ref{specificaTipoSoggetto}, \ref{visualizzaTipiS
 \hline
 R-64-F-Ob & \ref{addSoggetto}, \ref{addDettagliSoggetto} \\
 \hline
-R-65-F-Ob & - \\
+R-65-F-Ob & \ref{addDettagliPAI}, \ref{compilaValoreFiltro} \\
 \hline
-R-66-F-Ob & - \\
+R-66-F-Ob & \ref{addDettagliPAE}, \ref{compilaValoreFiltro} \\
 \hline
-R-67-F-Ob & - \\
+R-67-F-Ob & \ref{addDettagliAS}, \ref{compilaValoreFiltro} \\
 \hline
-R-68-F-Ob & - \\
+R-68-F-Ob & \ref{addDettagliPG}, \ref{compilaValoreFiltro} \\
 \hline
-R-69-F-Ob & - \\
+R-69-F-Ob & \ref{addDettagliPF}, \ref{compilaValoreFiltro} \\
 \hline
-R-70-F-Ob & - \\
+R-70-F-Ob & \ref{addDettagliRUP}, \ref{compilaValoreFiltro} \\
 \hline
-R-71-F-Ob & - \\
+R-71-F-Ob & \ref{addDettagliSW}, \ref{compilaValoreFiltro} \\
 \hline
 R-72-F-Ob & \ref{visualizzaNomeCampo} \\
 \hline
@@ -1417,31 +1417,31 @@ R-74-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento},
 \hline
 R-75-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriDI-DAI}, \ref{addDatiRegistrazione} \\
 \hline
-R-76-F-Ob & - \\
+R-76-F-Ob & \ref{addDatiRegistrazione}, \ref{compilaValoreFiltro} \\
 \hline
-R-77-F-Ob & - \\
+R-77-F-Ob & \ref{addTipologiaDocumentale}, \ref{compilaValoreFiltro} \\
 \hline
-R-78-F-Ob & - \\
+R-78-F-Ob & \ref{addModalitaFormazione}, \ref{compilaValoreFiltro} \\
 \hline
-R-79-F-Ob & - \\
+R-79-F-Ob & \ref{addRiservato}, \ref{compilaValoreFiltro} \\
 \hline
 R-80-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriDI-DAI}, \ref{addIdentificativoFormato} \\
 \hline
-R-81-F-Ob & - \\
+R-81-F-Ob & \ref{addIdentificativoFormato}, \ref{compilaValoreFiltro} \\
 \hline
 R-82-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriDI-DAI}, \ref{addDatiVerifica} \\
 \hline
-R-83-F-Ob & - \\
+R-83-F-Ob & \ref{addDatiVerifica}, \ref{compilaValoreFiltro} \\
 \hline
-R-84-F-Ob & - \\
+R-84-F-Ob & \ref{addNomeDocumento}, \ref{compilaValoreFiltro} \\
 \hline
-R-85-F-Ob & - \\
+R-85-F-Ob & \ref{addVersioneDocumento}, \ref{compilaValoreFiltro} \\
 \hline
-R-86-F-Ob & - \\
+R-86-F-Ob & \ref{addIdentificativoDocumentoPrimario}, \ref{compilaValoreFiltro} \\
 \hline
 R-87-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriDI-DAI}, \ref{addTracciatureModificheDocumento} \\
 \hline
-R-88-F-Ob & - \\
+R-88-F-Ob & \ref{addTracciatureModificheDocumento}, \ref{compilaValoreFiltro} \\
 \hline
 R-89-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriAggregazione} \\
 \hline
@@ -1451,33 +1451,33 @@ R-91-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento},
 \hline
 R-92-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriAggregazione}, \ref{addTipoAggregazione} \\
 \hline
-R-93-F-Ob & - \\
+R-93-F-Ob & \ref{addTipoAggregazione}, \ref{compilaValoreFiltro} \\
 \hline
-R-94-F-Ob & - \\
+R-94-F-Ob & \ref{addIdAggregazione}, \ref{compilaValoreFiltro} \\
 \hline
-R-95-F-Ob & - \\
+R-95-F-Ob & \ref{addTipologiaFascicolo}, \ref{compilaValoreFiltro} \\
 \hline
-R-96-F-Ob & - \\
+R-96-F-Ob & \ref{addIdAggregazionePrimario}, \ref{compilaValoreFiltro} \\
 \hline
-R-97-F-Ob & - \\
+R-97-F-Ob & \ref{addDataApertura}, \ref{compilaValoreFiltro} \\
 \hline
-R-98-F-Ob & - \\
+R-98-F-Ob & \ref{addDataChiusura}, \ref{compilaValoreFiltro} \\
 \hline
 R-99-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriAggregazione}, \ref{addProcedimentoAmministrativo} \\
 \hline
-R-100-F-Ob & - \\
+R-100-F-Ob & \ref{addProcedimentoAmministrativo}, \ref{compilaValoreFiltro} \\
 \hline
-R-101-F-Ob & - \\
+R-101-F-Ob & \ref{addFasiProcedimentoAmministrativo}, \ref{compilaValoreFiltro} \\
 \hline
 R-102-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriAggregazione}, \ref{addProcedimentoAmministrativo}, \ref{addAssegnazione} \\
 \hline
-R-103-F-Ob & - \\
+R-103-F-Ob & \ref{addAssegnazione}, \ref{compilaValoreFiltro} \\
 \hline
-R-104-F-Ob & - \\
+R-104-F-Ob & \ref{addProgressivoAggregazione}, \ref{compilaValoreFiltro} \\
 \hline
 R-105-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addCustomMetadata} \\
 \hline
-R-106-F-Ob & - \\
+R-106-F-Ob & \ref{addFiltroMetadatoCustom}, \ref{compilaValoreFiltro} \\
 \hline
 R-107-F-Ob & \ref{visualizzaRisultati} \\
 \hline
@@ -1779,7 +1779,7 @@ R-255-F-Ob & \ref{visualizzaInformazioniIdentificativoFormato}, \ref{visualizzaV
 \hline
 R-256-F-Ob & \ref{visualizzaInformazioniIdentificativoFormato}, \ref{visualizzaProduttoreSoftware} \\
 \hline
-R-257-F-Ob & \ref{visualizzaInformazisoniVerifica} \\
+R-257-F-Ob & \ref{visualizzaInformazioniVerifica} \\
 \hline
 R-258-F-Ob & \ref{visualizzaInformazioniVerifica}, \ref{visualizzaFirmaDigitaleDocumento} \\
 \hline
@@ -1809,7 +1809,7 @@ R-270-F-Ob & \ref{visualizzaInformazioniAllegati}, \ref{visualizzaAllegatoInList
 \hline
 R-271-F-Ob & \ref{visualizzaInformazioniAllegati}, \ref{allegatiNonPresenti} \\
 \hline
-R-272-F-Ob & \ref{visualizzaInformazioniModifiche} \\
+R-272-F-Ob & \ref{visualizzaInformazioniModificheDocumento} \\
 \hline
 R-273-F-Ob & \ref{visualizzaInformazioniModificheDocumento}, \ref{visualizzaTipoModificaDocumento} \\
 \hline
@@ -1827,7 +1827,7 @@ R-279-F-Ob & \ref{visualizzaTipologiaFascicolo} \\
 \hline
 R-280-F-Ob & \ref{visualizzaAssegnazioneAggregazione}, \ref{visualizzaTipoAssegnazioneAggregazione} \\
 \hline
-R-281-F-Ob & - \\
+R-281-F-Ob & \ref{visualizzaAssegnazioneAggregazione}, \ref{visualizzaInfoSoggettoCoinvolto} \\
 \hline
 R-282-F-Ob & \ref{visualizzaAssegnazioneAggregazione}, \ref{visualizzaDataOraInizioAssegnazioneAggregazione} \\
 \hline
