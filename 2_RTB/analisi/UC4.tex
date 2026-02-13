@@ -1,0 +1,101 @@
+% DA UC-33
+
+\usecase{stampaSingoloDoc}{Stampa di un singolo documento}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{../assets/uml/UC22.png}
+      \caption{\ref{stampaSingoloDoc} - Stampa di un singolo documento}
+      \label{fig:uc_stampaSingoloDoc}
+\end{figure}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Attore Secondario}: Stampante e Driver della stampante
+    \item \textbf{Precondizioni}: 
+    \begin{itemize}
+        \item L'Utente ha avviato l'applicazione
+        \item L'Utente ha selezionato un documento
+        \item L'Utente sta visualizzando il documento
+    \end{itemize}
+    \item \textbf{Postcondizioni}: L'Utente ha stampato il documento
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item L'Utente sceglie l'opzione di stampa del documento.
+            \item Il sistema invia il documento al driver della stampante che stampa il documento.
+        \end{enumerate}
+    \item \textbf{Flusso Alternativo}:
+    \begin{itemize}
+        \item L'Utente cerca di stampare un documento ma un errore esterno al programma e legato alla stampante interrompe l'azione (\ref{stampaFallita})
+        \item L'Utente cerca di stampare un Documento non stampabile (video, audio per esempio) (\ref{stampaNonDisponibile})
+    \end{itemize}
+    \item \textbf{Estensioni}: 
+    \begin{itemize}
+        \item \ref{stampaFallita} Stampa fallita
+        \item \ref{stampaNonDisponibile} Stampa Non Disponibile
+    \end{itemize}
+\end{itemize}
+
+\usecase{stampaInsiemeDoc}{Stampa di un insieme di documenti}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{../assets/uml/UC23.png}
+      \caption{\ref{stampaInsiemeDoc} - Stampa di un insieme di documenti}
+      \label{fig:uc_stampaInsiemeDoc}
+\end{figure}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Attore Secondario}: Stampante e Driver della stampante
+    \item \textbf{Precondizioni}: 
+    \begin{itemize}
+        \item L'Utente ha avviato l'applicazione
+        \item L'Utente ha selezionato più documenti
+    \end{itemize}
+    \item \textbf{Postcondizioni}: L'Utente ha stampato tutti i documenti selezionati uno dopo l'altro 
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item L'Utente sceglie l'opzione di stampa di tutti i documenti selezionati.
+        \end{enumerate}
+    \item \textbf{Flusso Alternativo}:
+    \begin{itemize}
+        \item L'Utente sceglie l'opzione di stampa di tutti i documenti selezionati ma un errore esterno al programma e legato alla stampante interrompe l'azione (\ref{stampaFallita})
+        \item L'Utente cerca di stampare uno o più documenti non stampabile (video, audio per esempio) (\ref{stampaNonDisponibile})
+    \end{itemize}
+    \item \textbf{Estensioni}: 
+    \begin{itemize}
+        \item \ref{stampaFallita} Stampa fallita
+        \item \ref{stampaNonDisponibile} Stampa Non Disponibile
+    \end{itemize}
+\end{itemize}
+
+\usecase{stampaFallita}{Stampa fallita}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+    \begin{itemize}
+        \item L'Utente ha avviato l'applicazione
+        \item L'Utente ha selezionato un elemento
+        \item L'utente ha scelto l'opzione di stampare uno o più documenti
+    \end{itemize}
+    \item \textbf{Postcondizioni}: Il sistema annulla l'operazione di stampa e mostra un messaggio di errore.
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema annulla l'operazione di stampa.
+        \item Il sistema mostra a video un messaggio di errore che indica il motivo del fallimento.
+    \end{enumerate}
+\end{itemize}
+
+\usecase{stampaNonDisponibile}{Stampa non disponibile}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: 
+    \begin{itemize}
+        \item L'Utente ha avviato l'applicazione
+        \item L'Utente ha selezionato un elemento
+        \item L'utente ha scelto l'opzione di stampare uno o più documenti
+    \end{itemize}
+    \item \textbf{Postcondizioni}: Il sistema annulla l'operazione di stampa e mostra un messaggio di errore.
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+        \item Il sistema annulla l'operazione di stampa.
+        \item Il sistema mostra a video un messaggio di errore che indica la presenza di documenti non stampabili.
+    \end{enumerate}
+\end{itemize}

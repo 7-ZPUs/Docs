@@ -1,0 +1,1952 @@
+\section{Requisiti}
+
+\subsection{Introduzione}
+I requisiti vengono classificati secondo le seguenti categorie:
+\begin{itemize}
+    \item \textbf{Requisiti Funzionali (F)}: descrivono le funzionalità del sistema
+    \item \textbf{Requisiti di Qualità (Q)}: descrivono le caratteristiche qualitative del sistema
+    \item \textbf{Requisiti di Vincolo (V)}: descrivono i vincoli tecnologici e normativi
+\end{itemize}
+
+Ogni requisito è identificato da un codice univoco nella forma:
+\begin{center}
+R-[ID]-[Tipo]-[Priorità]
+\end{center}
+
+Dove:
+\begin{itemize}
+    \item \textbf{ID}: numero progressivo del requisito
+    \item \textbf{Tipo}: F (Funzionale), Q (Qualità), V (Vincolo)
+    \item \textbf{Priorità}: Ob (Obbligatorio), De (Desiderabile), Op (Opzionale)
+\end{itemize}
+
+\newpage
+
+\subsection{Requisiti Funzionali}
+
+\setlength{\LTleft}{0cm}
+\renewcommand{\arraystretch}{1.3}
+
+\rowcolors{2}{gray!15}{white}
+\begin{longtable}{|p{2.5cm}|p{9.5cm}|p{2.5cm}|}
+\hline
+\rowcolor{zpusgreen!30}
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endfirsthead
+\rowcolor{zpusgreen!30}
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endhead
+R-1-F-Ob & L'utente deve poter visualizzare l'elenco di classi documentali nel DIP & \ref{classiDocumentali} \\
+\hline
+R-2-F-Ob & In caso non vi siano classi documentali nel DIP, l'utente deve poter visualizzare un messaggio di errore & \ref{elencoVuoto} \\
+\hline
+R-3-F-Ob & Quando viene selezionata una classe documentale, l'utente deve poter visualizzare ciascuna classe documentale all'interno dell'elenco & \ref{classeDocumentale} \\
+\hline
+R-4-F-Ob & L'utente deve poter visualizzare il nome della classe documentale & \ref{nomeClasseDocumentale} \\
+\hline
+R-5-F-Ob & L'utente deve poter visualizzare lo stato di verifica della classe documentale & \ref{statoVerificaElemento} \\
+\hline
+R-6-F-Ob & L'utente deve poter visualizzare lo stato di verifica della classe documentale & \ref{statoVerificaElemento} \\
+\hline
+R-7-F-Ob & L'utente deve poter visualizzare la marcatura temporale della classe documentale & \ref{marcaturaTemporaleElemento} \\
+\hline
+R-8-F-Ob & L'utente deve poter visualizzare l'elenco dei processi associati alla classe documentale & \ref{processiClasseDocumentale} \\
+\hline
+R-9-F-Ob & In caso non vi siano processi associati alla classe documentale, l'utente deve poter visualizzare un messaggio di errore & \ref{elencoVuoto} \\
+\hline
+R-10-F-Ob & Quando viene selezionato un processo, l'utente deve poter visualizzare ciascun processo all'interno dell'elenco & \ref{processoClasseDocumentale} \\
+\hline
+R-11-F-Ob & L'utente deve poter visualizzare il nome del processo & \ref{idProcessoClasse} \\
+\hline
+R-12-F-Ob & L'utente deve poter visualizzare l'elenco di documenti associati a un processo & \ref{documentiProcesso} \\
+\hline
+R-13-F-Ob & In caso non vi siano documenti associati al processo, l'utente deve poter visualizzare un messaggio di errore & \ref{elencoVuoto} \\
+\hline
+R-14-F-Ob & Quando viene selezionato un documento, l'utente deve poter visualizzare ciascun documento all'interno dell'elenco & \ref{documentoProcesso} \\
+\hline
+R-15-F-Ob & L'utente deve poter visualizzare il nome del documento & \ref{nomeDocumentoProcesso} \\
+\hline
+R-16-F-Ob & L'utente deve poter visualizzare lo stato di verifica del documento & \ref{statoVerificaElemento} \\
+\hline
+R-17-F-Ob & L'utente deve poter visualizzare la marcatura temporale del documento & \ref{marcaturaTemporaleElemento} \\
+\hline
+R-18-F-Ob & L'utente deve poter essere informato se un elenco di elementi del DIP risulta vuoto & \ref{elencoVuoto} \\
+\hline
+R-19-F-Ob & L'utente deve poter visualizzare l'anteprima di un documento selezionato & \ref{anteprimaDocumento} \\
+\hline
+R-20-F-Ob & Se il documento selezionato non è visualizzabile in anteprima, l'utente deve poter visualizzare un messaggio di errore & \ref{formatoDocumentoNonSupportato} \\
+\hline
+R-21-F-Ob & L'utente deve poter ricercare un documento, un processo, o una classe documentale & \ref{ricercaDIP} \\
+\hline
+R-22-F-Ob & L'utente può cercare una classe documentale esclusivamente per nome & \begin{tabular}[t]{@{}l} \ref{ricercaClasse} \\ \ref{inserimentoNomeClasseDocumentale} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-23-F-Ob & L'utente può cercare un processo esclusivamente per uuid & \begin{tabular}[t]{@{}l} \ref{ricercaProcesso} \\ \ref{inserimentoIdProcesso} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-24-F-Op & L'utente deve poter effettuare una ricerca semantica basata sui metadati dei documenti presenti nel DIP & \ref{ricercaDIPSemantica} \\
+\hline
+R-25-F-Op & L'utente deve poter visualizzare lo stato dell'indicizzazione semantica & \ref{StatoIndicizzazione} \\
+\hline
+R-26-F-Ob & Il sistema deve rendere disponibile un campo di ricerca & \ref{ricercaDIP} \\
+\hline
+R-27-F-Ob & Il sistema deve comunicare all'utente quando inserisce un valore non valido nel campo di ricerca & \ref{campoNonValido} \\
+\hline
+R-28-F-Ob & Il sistema deve rendere disponibile l'opzione di ricerca per documenti & \ref{specificaFiltriRicercaDocumento} \\
+\hline
+R-29-F-Ob & Il sistema deve rendere disponibile l'opzione di ricerca per processi & \ref{ricercaProcesso} \\
+\hline
+R-30-F-Ob & Il sistema deve rendere disponibile l'opzione di ricerca per classi documentali & \ref{ricercaClasse} \\
+\hline
+R-31-F-Ob & Il sistema deve rendere disponibile la ricerca avanzata con filtri & \ref{ricercaDIPConFiltri} \\
+\hline
+R-32-F-Ob & Il sistema deve rendere disponibile la sezione di filtri di ricerca comuni & \ref{specificaFiltriComuni} \\
+\hline
+R-33-F-Ob & Il sistema deve rendere disponibile la sezione di filtri di ricerca specifici per tipo documentale & \ref{addFiltriTipoDocumento} \\
+\hline
+R-34-F-Ob & Il sistema deve rendere disponibile la sezione di filtri di ricerca specifici per metadati custom & \ref{addCustomMetadata} \\
+\hline
+R-35-F-Ob & Il sistema deve permettere di applicare più filtri contemporaneamente & \ref{ricercaDIPConFiltri} \\
+\hline
+R-36-F-Ob & Il sistema deve permettere di rimuovere i filtri applicati & \ref{ricercaDIPConFiltri} \\
+\hline
+R-37-F-Ob & Il sistema deve permettere di rimuovere tutti i filtri applicati & \ref{ricercaDIPConFiltri} \\
+\hline
+R-38-F-Ob & Il sistema deve permettere di selezionare filtri per tipo documentale per un singolo tipo di documento & \ref{addFiltriTipoDocumento} \\
+\hline
+R-39-F-Ob & Il sistema deve permettere di specificare il valore per i filtri per tipo Documento Informatico e Amministrativo Informatico & \ref{specificaFiltriDI-DAI} \\
+\hline
+R-40-F-Ob & Il sistema deve racchiudere i filtri di ricerca comuni in una sezione espandibile dedicata & \ref{specificaFiltriComuni} \\
+\hline
+R-41-F-Ob & Il sistema deve racchiudere i filtri di ricerca specifici per tipo documentale in una sezione espandibile dedicata & \ref{addFiltriTipoDocumento} \\
+\hline
+R-42-F-Ob & Il sistema deve racchiudere i filtri di ricerca specifici per metadati custom in una sezione espandibile dedicata & \ref{addCustomMetadata} \\
+\hline
+R-43-F-Ob & Il sistema deve permettere di visualizzare i filtri comuni applicabili & \ref{visualizzaListaCampiComuni} \\
+\hline
+R-44-F-Ob & Il sistema deve permettere di selezionare per la compilazione e l'aggiunta alla ricerca i filtri comuni & \ref{selezionaCampiRicercaComuni} \\
+\hline
+R-45-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Chiave Descrittiva" & \ref{addChiaveDescrittiva} \\
+\hline
+R-46-F-Ob & L'utente deve poter inserire il valore per i campi "Chiave Descrittiva", "Oggetto" e "Parole chiave" & \begin{tabular}[t]{@{}l} \ref{addChiaveDescrittiva} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-47-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Classificazione" & \ref{addClassificazione} \\
+\hline
+R-48-F-Ob & L'utente deve poter inserire il valore per i campi "Indice di classificazione", "Descrizione" e "Piano di fascicolo" & \begin{tabular}[t]{@{}l} \ref{addClassificazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-49-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Tempo di conservazione" & \ref{addTempoConserva} \\
+\hline
+R-50-F-Ob & L'utente deve poter inserire il valore per il filtro "Tempo di conservazione" & \begin{tabular}[t]{@{}l} \ref{addTempoConserva} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-51-F-Ob & L'utente deve poter selezionare l'opzione "Perenne" per il filtro "Tempo di conservazione" & \ref{addTempoConserva} \\
+\hline
+R-52-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Note" & \ref{addNote} \\
+\hline
+R-53-F-Ob & L'utente deve poter inserire il valore per il filtro "Note" & \begin{tabular}[t]{@{}l} \ref{addNote} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-54-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Tipo di documento" & \ref{addTipoDocumento} \\
+\hline
+R-55-F-Ob & L'utente deve poter selezionare il valore per il filtro "Tipo di documento" tra "Documento informatico", "Documento amministrativo informatico", "Aggregazione documentale" & \begin{tabular}[t]{@{}l} \ref{addTipoDocumento} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-56-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Soggetto" & \ref{addSoggetti} \\
+\hline
+R-57-F-Ob & L'utente deve poter inserire il valore per il filtro "Soggetto" & \ref{addSoggetto} \\
+\hline
+R-58-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro del Ruolo del Soggetto & \ref{specificaRuoloSoggetto} \\
+\hline
+R-59-F-Ob & All'interno della sezione del filtro del Ruolo del Soggetto, l'utente deve mostrare ogni ruolo disponibile per il tipo documentale selezionato & \ref{visualizzaRuoliPerTipoDocumento} \\
+\hline
+R-60-F-Ob & All'interno della sezione del filtro del Ruolo del Soggetto, l'utente deve poter visualizzare il nome del ruolo del soggetto disponibile per il tipo documentale selezionato & \ref{visualizzaNomeRuolo} \\
+\hline
+R-61-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro del Tipo di Soggetto & \ref{specificaTipoSoggetto} \\
+\hline
+R-62-F-Ob & All'interno della sezione del filtro del Tipo di Soggetto, l'utente deve poter visualizzare i tipi di soggetto disponibili per il ruolo selezionato & \ref{visualizzaTipiSoggettoPerRuolo} \\
+\hline
+R-63-F-Ob & All'interno della sezione del filtro del Tipo di Soggetto, l'utente deve poter visualizzare il nome del tipo di soggetto disponibile per il ruolo selezionato & \ref{visualizzaNomeTipoSoggetto} \\
+\hline
+R-64-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro "Dettagli" del Soggetto & \ref{addDettagliSoggetto} \\
+\hline
+R-65-F-Ob & Se il soggetto selezionato è di tipo "PAI", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Denominazione Amministrazione/Codice IPA", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliPAI} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-66-F-Ob & Se il soggetto selezionato è di tipo "PAE", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Denominazione Amministrazione", "Denominazione Ufficio" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliPAE} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-67-F-Ob & Se il soggetto selezionato è di tipo "AS", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Cognome", "Nome", "Codice Fiscale", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliAS} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-68-F-Ob & Se il soggetto selezionato è di tipo "PG", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Denominazione Organizzazione", "Codice Fiscale/Partita IVA", "Denominazione Ufficio" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliPG} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-69-F-Ob & Se il soggetto selezionato è di tipo "PF", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Cognome", "Nome" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliPF} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-70-F-Ob & Se il soggetto selezionato è di tipo "RUP", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Cognome", "Nome", "Codice Fiscale" "Denominazione Amministrazione/Codice IPA", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliRUP} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-71-F-Ob & Se il soggetto selezionato è di tipo "SW", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per il campo "Denominazione Sistema" & \begin{tabular}[t]{@{}l} \ref{addDettagliSW} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-72-F-Ob & All'interno di una ricerca con filtri, l'utente deve poter visualizzare il nome del campo in una lista & \ref{visualizzaNomeCampo} \\
+\hline
+R-73-F-Ob & All'interno della sezione di filtri per tipo documentale, il sistema deve permettere di selezionare i filtri specifici per il tipo "Documento Informatico e Amministrativo Informatico" & \ref{selezionaCampiDI-DAI} \\
+\hline
+R-74-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter visualizzare la lista di filtri specifici & \ref{visualizzaListaCampiDIDAI} \\
+\hline
+R-75-F-Ob & Per il Documento Informatico e Amministrativo Informatico, il sistema deve rendere disponibile una sezione per il filtro "Dati di Registrazione" & \ref{addDatiRegistrazione} \\
+\hline
+R-76-F-Ob & Per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Dati di Registrazione", l'utente deve poter inserire il valore per i campi "Tipologia di Flusso", "Tipo di Registro", "Data/Ora di Registrazione", "Numero Documento" e "Codice Registro" & \begin{tabular}[t]{@{}l} \ref{addDatiRegistrazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-77-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Tipologia Documentale" & \begin{tabular}[t]{@{}l} \ref{addTipologiaDocumentale} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-78-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Modalità di Formazione" tra:
+\begin{itemize}
+    \item Creazione tramite l'utilizzo di strumenti software che assicurino la produzione di documenti nei formati previsti nell'Allegato 2 delle Linee Guida;
+    \item Acquisizione di un documento informatico per via telematica o su supporto informatico, acquisizione della copia per immagine su supporto informatico di un documento analogico, acquisizione della copia informatica di un documento analogico;
+    \item Memorizzazione su supporto informatico in formato digitale delle informazioni risultanti da transazioni o processi informatici o dalla presentazione telematica di dati attraverso moduli o formulari resi disponibili all'utente;
+    \item Generazione o raggruppamento anche in via automatica di un insieme di dati o registrazioni, provenienti da una o più banche dati, anche appartenenti a più soggetti interoperanti, secondo una struttura logica predeterminata e memorizzata in forma statica;
+\end{itemize} & \begin{tabular}[t]{@{}l} \ref{addModalitaFormazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-79-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Campo Riservato" tra "Vero" o "Falso" & \begin{tabular}[t]{@{}l} \ref{addRiservato} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-80-F-Ob & Per il Documento Informatico e Amministrativo Informatico, il sistema deve rendere disponibile una sezione per il filtro "Identificativo del Formato" & \ref{addIdentificativoFormato} \\
+\hline
+R-81-F-Ob & Per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Identificativo del Formato", l'utente deve poter inserire il valore per i campi "Formato" e "Prodotto Software" & \begin{tabular}[t]{@{}l} \ref{addIdentificativoFormato} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-82-F-Ob & Per il Documento Informatico e Amministrativo Informatico, il sistema deve rendere disponibile una sezione per il filtro "Dati di Verifica" & \ref{addDatiVerifica} \\
+\hline
+R-83-F-Ob & Per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Dati di Verifica", l'utente deve poter inserire il valore booleano per i campi "Firmato Digitalmente", "Sigillato Elettronicamente", "Marcatura Temporale" e "conformità copie immagine su supporto informatico" & \begin{tabular}[t]{@{}l} \ref{addDatiVerifica} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-84-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Nome del Documento" & \begin{tabular}[t]{@{}l} \ref{addNomeDocumento} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-85-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Versione del Documento" & \begin{tabular}[t]{@{}l} \ref{addVersioneDocumento} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-86-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Identificativo del Documento Primario" & \begin{tabular}[t]{@{}l} \ref{addIdentificativoDocumentoPrimario} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-87-F-Ob & Per il Documento Informatico e Amministrativo Informatico, il sistema deve rendere disponibile una sezione per il filtro "Tracciatura Modifiche di Documento" & \ref{addTracciatureModificheDocumento} \\
+\hline
+R-88-F-Ob & Per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Tracciatura Modifiche di Documento", l'utente deve poter inserire il valore per i campi "Tipo di Modifica", "Soggetto Autore della Modifica", "Data/Ora della Modifica" e "IdDoc versione precedente" & \begin{tabular}[t]{@{}l} \ref{addTracciatureModificheDocumento} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-89-F-Ob & All'interno della sezione di filtri per tipo documentale, il sistema deve permettere di selezionare i filtri specifici per il tipo "Aggregazione Documentale Informatica" & \ref{specificaFiltriAggregazione} \\
+\hline
+R-90-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter visualizzare la lista di filtri specifici & \ref{visualizzaListaCampiAggregazioneDocumentale} \\
+\hline
+R-91-F-Ob & Per l'Aggregazione Documentale Informatica, il sistema deve rendere disponibili per la compilazione e l'aggiunta alla ricerca i filtri specifici & \ref{selezionaCampiAggregazioneDocumentale} \\
+\hline
+R-92-F-Ob & Per l'Aggregazione Documentale Informatica, il sistema deve rendere disponibile una sezione per il filtro "Tipo di Aggregazione" & \ref{addTipoAggregazione} \\
+\hline
+R-93-F-Ob & Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Tipo di Aggregazione", l'utente deve poter inserire il valore per il campo "Tipo di Aggregazione" tra "Fascicolo", "Serie Documentale" o "Serie di Fascicoli" & \begin{tabular}[t]{@{}l} \ref{addTipoAggregazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-94-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Identificativo dell'Aggreagazione Documentale" & \begin{tabular}[t]{@{}l} \ref{addIdAggregazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-95-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Tipologia di Fascicolo" tra "Affare", "Attività", "Persona Fisica", "Persona Giuridica" e "Procedimento Amministrativo" & \begin{tabular}[t]{@{}l} \ref{addTipologiaFascicolo} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-96-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Id Aggregazione Primario" & \begin{tabular}[t]{@{}l} \ref{addIdAggregazionePrimario} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-97-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Data Apertura" & \begin{tabular}[t]{@{}l} \ref{addDataApertura} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-98-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Data Chiusura" & \begin{tabular}[t]{@{}l} \ref{addDataChiusura} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-99-F-Ob & Per l'Aggregazione Documentale Informatica, il sistema deve rendere disponibile una sezione per il filtro "Procedimento Amministrativo" & \ref{addProcedimentoAmministrativo} \\
+\hline
+R-100-F-Ob & Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Procedimento Amministrativo", l'utente deve poter inserire il valore per i campi "Materia/Argomento/Struttura", "Procedimento", "Catalogo Procedimenti" e "Fasi" & \begin{tabular}[t]{@{}l} \ref{addProcedimentoAmministrativo} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-101-F-Ob & Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Procedimento Amministrativo" per il campo "Fasi", l'utente deve poter inserire il valore per il campo "Tipo Fase" tra "Preparatoria", "Istruttoria", "Consultiva", "Decisoria o Deliberativa" o "Integrazione dell'efficacia", il campo "Data Inizio Fase" e "Data Fine Fase" se presente & \begin{tabular}[t]{@{}l} \ref{addFasiProcedimentoAmministrativo} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-102-F-Ob & Per l'Aggregazione Documentale Informatica, il sistema deve rendere disponibile una sezione per il filtro "Assegnazione" & \ref{addAssegnazione} \\
+\hline
+R-103-F-Ob & Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Assegnazione", l'utente deve poter inserire una o più volte il valore per i campi "Tipo Assegnazione", "Soggetto Assegnatario", "Data Inizio Assegnazione" e "Data Fine Assegnazione" & \begin{tabular}[t]{@{}l} \ref{addAssegnazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-104-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Progressivo Aggregazione" & \begin{tabular}[t]{@{}l} \ref{addProgressivoAggregazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-105-F-Ob & All'interno della sezione di filtri per custom metadata, il sistema deve permettere di selezionare i filtri specifici per i metadata presenti & \ref{addCustomMetadata} \\
+\hline
+R-106-F-Ob & Per ciascun custom metadata, l'utente deve poter inserire il nome del metadato e il relativo valore & \begin{tabular}[t]{@{}l} \ref{addFiltroMetadatoCustom} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\hline
+R-107-F-Ob & Quando viene eseguita una ricerca, l'utente deve poter visualizzare i risultati della ricerca & \ref{visualizzaRisultati} \\
+\hline
+R-108-F-Ob & L'utente deve poter visualizzare per ogni risultato le informazioni rilevanti: Nome del documento o aggregazione, Data di registrazione/creazione del documento/aggregazione, Tipo di elemento tra Documento, Aggregazione, Processo o Classe Documentale & \ref{infoRisultatiRicerca} \\
+\hline
+R-109-F-Ob & L'utente deve poter visualizzare il nome del documento o aggregazione & \ref{nomeElemento} \\
+\hline
+R-110-F-Ob & L'utente deve poter visualizzare il tipo del documento o aggregazione & \ref{visualizzaTipoElemento} \\
+\hline
+R-111-F-Ob & Se la ricerca non produce risultati, l'utente deve poter visualizzare un messaggio di errore & \ref{nessunRisultato} \\
+\hline
+R-112-F-Ob & L'utente deve essere informato quando il formato del valore inserito non è valido & \ref{formatoNonCorretto} \\
+\hline
+R-113-F-Ob & L'utente deve poter compilare il filtro selezionato con un valore & \ref{compilaValoreFiltro} \\
+\hline
+R-114-F-Ob & Se il valore inserito in un filtro non è corretto l'utente deve poter visualizzare un messaggio di errore & \ref{formatoNonCorretto} \\
+\hline
+R-115-F-Ob & L'utente deve poter salvare il documento in locale in una cartella selezionata & \ref{salvaDocumento} \\
+\hline
+R-116-F-Ob & L'utente deve poter salvare più documenti in una cartella selezionata & \ref{salvaPiuDocumenti} \\
+\hline
+R-117-F-Ob & Se il salvataggio di uno o più documenti fallisce, l'utente deve poter visualizzare un messaggio di errore & \ref{salvataggioFallito} \\
+\hline
+R-118-F-Ob & L'utente deve poter stampare un documento & \ref{stampaSingoloDoc} \\
+\hline
+R-119-F-Ob & L'utente deve poter stampare un insieme di documenti & \ref{stampaInsiemeDoc} \\
+\hline
+R-120-F-Ob & Se la stampa di uno o più documenti fallisce, l'utente deve poter visualizzare un messaggio di errore & \ref{stampaFallita} \\
+\hline
+R-121-F-Ob & Se la stampa non è disponibile, l'utente deve poter visualizzare un messaggio di errore & \ref{stampaNonDisponibile} \\
+\hline
+R-122-F-Ob & L'utente deve poter avviare la verifica del DIP & \ref{verificaIntegritaDIPCompleto} \\
+\hline
+R-123-F-Ob & L'utente deve poter visualizzare lo stato di verifica del DIP & \ref{verificaIntegritaDIPCompleto} \\
+\hline
+R-124-F-Ob & L'utente deve poter avviare la verifica della classe documentale & \ref{verificaIntegritaClasseDocumentale}\\
+\hline
+R-125-F-Ob & L'utente deve poter visualizzare lo stato di verifica della classe documentale & \ref{verificaIntegritaClasseDocumentale} \\
+\hline
+R-126-F-Ob & L'utente deve poter avviare la verifica dell'integrità processo & \ref{verificaIntegritaProcesso} \\
+\hline
+R-127-F-Ob & L'utente deve poter visualizzare lo stato di verifica dell'integrità processo & \ref{verificaIntegritaProcesso} \\
+\hline
+R-128-F-Ob & L'utente deve poter avviare la verifica del documento & \ref{verificaIntegritaDocumento} \\
+\hline
+R-129-F-Ob & L'utente deve poter visualizzare lo stato di verifica del documento & \ref{verificaIntegritaDocumento} \\
+\hline
+R-130-F-Ob & L'utente deve poter visualizzare il report di integrità del DIP completo con le informazioni aggregate & \ref{visualizzazioneReportIntegritaDIPCompleto} \\
+\hline
+R-131-F-Ob & L'utente deve poter visualizzare il conteggio totale delle classi documentali verificate nel report del DIP & \ref{visualizzazioneNumeroClassiVerificate} \\
+\hline
+R-132-F-Ob & L'utente deve poter visualizzare il numero di classi integre (stato "Valido") in colore verde nel report del DIP & \ref{visualizzazioneNumeroClassiIntegre} \\
+\hline
+R-133-F-Ob & L'utente deve poter visualizzare il numero di classi corrotte (stato "Non Valido") in colore rosso nel report del DIP & \ref{visualizzazioneNumeroClassiCorrotte} \\
+\hline
+R-134-F-Ob & L'utente deve poter visualizzare l'elenco delle classi corrotte indicando nome e numero di processi corrotti per ciascuna & \ref{visualizzazioneListaClassiCorrotte} \\
+\hline
+R-135-F-Ob & L'utente deve poter visualizzare la classe corrotta indicando nome e numero di processi corrotti & \ref{visualizzaElementoListaClassiCorrotte} \\
+\hline
+R-136-F-Ob & L'utente deve poter visualizzare la data e l'ora di inizio della verifica del DIP nel formato "GG/MM/AAAA HH:MM:SS" & \ref{visualizzazioneDataEOraVerificaDIP} \\
+\hline
+R-137-F-Ob & L'utente deve essere informato con un messaggio nel caso in cui non vi siano classi corrotte & \ref{nessunaClasseCorrotta} \\
+\hline
+R-138-F-Ob & L'utente deve poter visualizzare il report di integrità dettagliato per una singola classe documentale & \ref{visualizzazioneReportIntegritaClasseDocumentale} \\
+\hline
+R-139-F-Ob & L'utente deve poter visualizzare il conteggio dei processi verificati all'interno della classe documentale & \ref{visualizzazioneNumeroProcessiVerificati} \\
+\hline
+R-140-F-Ob & L'utente deve poter visualizzare il numero di processi integri (stato "Valido") in colore verde nella classe documentale & \ref{visualizzazioneNumeroProcessiIntegri} \\
+\hline
+R-141-F-Ob & L'utente deve poter visualizzare il numero di processi corrotti (stato "Non Valido") in colore rosso nella classe documentale & \ref{visualizzazioneNumeroProcessiCorrotti} \\
+\hline
+R-142-F-Ob & L'utente deve poter visualizzare la lista dei processi corrotti con il relativo numero di documenti compromessi & \ref{visualizzazioneListaProcessiCorrotti} \\
+\hline
+R-143-F-Ob & L'utente deve poter visualizzare il singolo processo corrotto con il relativo numero di documenti compromessi & \ref{visualizzaElementoListaProcessiCorrotti} \\
+\hline
+R-144-F-Ob & L'utente deve poter visualizzare la data e l'ora di inizio della verifica della classe nel formato "GG/MM/AAAA HH:MM:SS" & \ref{visualizzazioneDataEOraVerificaClasse} \\
+\hline
+R-145-F-Ob & L'utente deve essere informato che tutti i processi sono integri & \ref{visualizzazioneDataEOraVerificaClasse} \\
+\hline
+R-146-F-Ob & L'utente deve poter visualizzare il report di integrità dettagliato di un singolo processo & \ref{visualizzazioneReportIntegritaProcesso} \\
+\hline
+R-147-F-Ob & L'utente deve poter visualizzare il conteggio dei documenti verificati all'interno del processo selezionato & \ref{visualizzazioneNumeroDocumentiVerificati} \\
+\hline
+R-148-F-Ob & L'utente deve poter visualizzare il numero di documenti integri (stato "Valido") in colore verde nel processo selezionato & \ref{visualizzazioneNumeroDocumentiIntegri} \\
+\hline
+R-149-F-Ob & L'utente deve poter visualizzare il numero di documenti corrotti (stato "Non Valido") in colore rosso nel processo selezionato & \ref{visualizzazioneNumeroDocumentiCorrotti} \\
+\hline
+R-150-F-Ob & L'utente deve poter visualizzare la lista dei documenti corrotti & \ref{visualizzazioneListaDocumentiCorrotti} \\
+\hline
+R-151-F-Ob & L'utente deve poter visualizzare i singoli documenti corrotti della lista dei documenti corrotti, con i dettagli dell'errore & \ref{visualizzaElementoListaDocumentiCorrotti} \\
+\hline
+R-152-F-Ob & L'utente deve poter visualizzare la data e l'ora di inizio della verifica del processo nel formato "GG/MM/AAAA HH:MM:SS" & \ref{visualizzazioneDataEOraVerificaProcesso} \\
+\hline
+R-153-F-Ob & L'utente deve essere avvisato che tutti i documenti sono integri tramite un messaggio & \ref{nessunDocumentoCorrotto} \\
+\hline
+R-154-F-Ob & L'utente deve poter visualizzare il report di integrità di un singolo documento & \ref{visualizzazioneReportIntegritaDocumento} \\
+\hline
+R-155-F-Ob & L'utente deve poter visualizzare il nome del documento all'interno del report di integrità & \ref{nomeDocumentoProcesso} \\
+\hline
+R-156-F-Ob & L'utente deve poter visualizzare lo stato della verifica (Valido / Non Valido) per il documento selezionato & \ref{visualizzazioneStatoVerificaDocumento} \\
+\hline
+R-157-F-Ob & L'utente deve poter visualizzare la data e l'ora di inizio della verifica del documento nel formato "GG/MM/AAAA HH:MM:SS" & \ref{visualizzazioneDataEOraVerificaDocumento} \\
+\hline
+R-158-F-Ob & L'utente deve poter visualizzare la descrizione tecnica del dettaglio dell'errore per i documenti con stato "Non Valido" & \ref{visualizzazioneDettagliErroreDocumento} \\
+\hline
+R-159-F-Ob & L'utente deve poter avviare la conversione del report di verifica visualizzato in formato PDF & \ref{scaricaReport} \\
+\hline
+R-160-F-Ob & L'utente deve essere informato con un messaggio di errore qualora la generazione del file PDF non vada a buon fine & \ref{erroreGenerazionePDF} \\
+\hline
+R-161-F-Ob & L'utente deve poter scaricare un file in una cartella locale previa selezione della cartella di destinazione & \ref{scaricaFile} \\
+\hline
+R-162-F-Ob & L'utente deve essere informato con un messaggio di conferma indicando il percorso di destinazione al termine del salvataggio & \ref{scaricaFile} \\
+\hline
+R-163-F-Ob & Il sistema deve impedire il salvataggio di file all'interno della cartella sorgente del DIP per preservarne l'integrità & \ref{scaricaFile}, \ref{erroreScaricamentoFile} \\
+\hline
+R-164-F-Ob & L'utente deve essere informato con un errore specifico se l'utente tenta di scaricare un file nel percorso protetto del DIP & \ref{erroreScaricamentoFile} \\
+\hline
+R-165-F-Ob & L'utente deve poter visualizzare le informazioni dell'AiP di provenienza di un documento selezionato & \ref{visualizzaInfoAiP} \\
+\hline
+R-166-F-Ob & L'utente deve poter visualizzare la classe documentale di appartenenza dell'AiP relativo al documento selezionato & \ref{visualizzaClasseDocumentaleAiP} \\
+\hline
+R-167-F-Ob & L'utente deve poter visualizzare lo UUID dell'AiP relativo al documento selezionato & \ref{visualizzaUUIDAiP} \\
+\hline
+R-168-F-Ob & L'utente deve poter visualizzare le informazioni del processo di conservazione dell'AiP & \ref{visualizzaInfoProcessoConservazioneAiP} \\
+\hline
+R-169-F-Ob & L'utente deve poter visualizzare la data di inizio di un processo o sessione & \ref{visualizzaDataInizioProcessoSessione} \\
+\hline
+R-170-F-Ob & L'utente deve poter visualizzare la data di fine di un processo o sessione & \ref{visualizzaDataFineProcessoSessione} \\
+\hline
+R-171-F-Ob & Se il processo o la sessione non è ancora terminato/a, al posto della data di fine l'utente deve essere informato con un messaggio che indica l'assenza della data di fine & \ref{erroreDataFineProcessoSessione} \\
+\hline
+R-172-F-Ob & L'utente deve poter visualizzare lo UUID dell'utente attivatore di un processo o sessione & \ref{visualizzaUUIDUtenteAttivatore} \\
+\hline
+R-173-F-Ob & L'utente deve poter visualizzare lo UUID dell'utente terminatore di un processo o sessione & \ref{visualizzaUUIDUtenteTerminatore} \\
+\hline
+R-174-F-Ob & Se il processo o la sessione non è ancora terminato/a, al posto dello UUID dell'utente terminatore l'utente deve essere informato con un messaggio che indica l'assenza dello UUID & \ref{erroreUUIDUtenteTerminatore} \\
+\hline
+R-175-F-Ob & L'utente deve poter visualizzare il nome del canale di attivazione di un processo o sessione & \ref{visualizzaNomeCanaleAttivazione} \\
+\hline
+R-176-F-Ob & L'utente deve poter visualizzare il nome del canale di terminazione di un processo o sessione & \ref{visualizzaNomeCanaleTerminazione} \\
+\hline
+R-177-F-Ob & Se il processo o la sessione non è ancora terminato/a, al posto del nome del canale di terminazione l'utente deve essere informato con un messaggio che indica l'assenza del nome del canale di terminazione & \ref{erroreNomeCanaleTerminazione} \\
+\hline
+R-178-F-Ob & L'utente deve poter visualizzare lo stato di un processo o sessione & \ref{visualizzaStatoProcessoSessione} \\
+\hline
+R-179-F-Ob & L'utente deve poter visualizzare le informazioni della sessione di versamento del processo di conservazione selezionato & \ref{visualizzaInfoSessioneVersamento} \\
+\hline
+R-180-F-Ob & L'utente deve poter visualizzare la data di inizio della sessione di versamento & \ref{visualizzaDataInizioProcessoSessione} \\
+\hline
+R-181-F-Ob & L'utente deve poter visualizzare la data di fine della sessione di versamento & \ref{visualizzaDataFineProcessoSessione} \\
+\hline
+R-182-F-Ob & Se la sessione di versamento non è ancora terminata, al posto della data di fine l'utente deve essere informato con un messaggio che indica l'assenza della data di fine & \ref{erroreDataFineProcessoSessione} \\
+\hline
+R-183-F-Ob & L'utente deve poter visualizzare lo UUID dell'utente attivatore della sessione di versamento & \ref{visualizzaUUIDUtenteAttivatore} \\
+\hline
+R-184-F-Ob & L'utente deve poter visualizzare lo UUID dell'utente terminatore della sessione di versamento & \ref{visualizzaUUIDUtenteTerminatore} \\
+\hline
+R-185-F-Ob & Se la sessione di versamento non è ancora terminata, al posto dello UUID dell'utente terminatore l'utente deve essere informato con un messaggio che indica l'assenza dello UUID & \ref{erroreUUIDUtenteTerminatore} \\
+\hline
+R-186-F-Ob & L'utente deve poter visualizzare il nome del canale di attivazione della sessione di versamento & \ref{visualizzaNomeCanaleAttivazione} \\
+\hline
+R-187-F-Ob & L'utente deve poter visualizzare il nome del canale di terminazione della sessione di versamento & \ref{visualizzaNomeCanaleTerminazione} \\
+\hline
+R-188-F-Ob & Se la sessione di versamento non è ancora terminata, al posto del nome del canale di terminazione l'utente deve essere informato con un messaggio che indica l'assenza del nome del canale di terminazione & \ref{erroreNomeCanaleTerminazione} \\
+\hline
+R-189-F-Ob & L'utente deve poter visualizzare lo stato della sessione di versamento & \ref{visualizzaStatoProcessoSessione} \\
+\hline
+R-190-F-Ob & L'utente deve poter visualizzare le informazioni della sessione di conservazione del processo di conservazione selezionato & \ref{visualizzaInfoSessioneConservazione} \\
+\hline
+R-191-F-Ob & L'utente deve poter visualizzare la data di inizio della sessione di conservazione & \ref{visualizzaDataInizioProcessoSessione} \\
+\hline
+R-192-F-Ob & L'utente deve poter visualizzare la data di fine della sessione di conservazione & \ref{visualizzaDataFineProcessoSessione} \\
+\hline
+R-193-F-Ob & Se la sessione di conservazione non è ancora terminata, al posto della data di fine l'utente deve essere informato con un messaggio che indica l'assenza della data di fine & \ref{erroreDataFineProcessoSessione} \\
+\hline
+R-194-F-Ob & L'utente deve poter visualizzare lo UUID dell'utente attivatore della sessione di conservazione & \ref{visualizzaUUIDUtenteAttivatore} \\
+\hline
+R-195-F-Ob & L'utente deve poter visualizzare lo UUID dell'utente terminatore della sessione di conservazione & \ref{visualizzaUUIDUtenteTerminatore} \\
+\hline
+R-196-F-Ob & Se la sessione di conservazione non è ancora terminata, al posto dello UUID dell'utente terminatore l'utente deve essere informato con un messaggio che indica l'assenza dello UUID & \ref{erroreUUIDUtenteTerminatore} \\
+\hline
+R-197-F-Ob & L'utente deve poter visualizzare il nome del canale di attivazione della sessione di conservazione & \ref{visualizzaNomeCanaleAttivazione} \\
+\hline
+R-198-F-Ob & L'utente deve poter visualizzare il nome del canale di terminazione della sessione di conservazione & \ref{visualizzaNomeCanaleTerminazione} \\
+\hline
+R-199-F-Ob & Se la sessione di conservazione non è ancora terminata, al posto del nome del canale di terminazione l'utente deve essere informato con un messaggio che indica l'assenza del nome del canale di terminazione & \ref{erroreNomeCanaleTerminazione} \\
+\hline
+R-200-F-Ob & L'utente deve poter visualizzare lo stato della sessione di conservazione & \ref{visualizzaStatoProcessoSessione} \\
+\hline
+R-201-F-Ob & L'utente deve poter visualizzare la descrizione del documento selezionato & \ref{visualizzaDescrizioneDocumento} \\
+\hline
+R-202-F-Ob & L'utente deve poter visualizzare la lista dei soggetti coinvolti nel documento selezionato & \ref{visualizzaListaSoggettiCoinvolti} \\
+\hline
+R-203-F-Ob & Per ogni soggetto coinvolto nel documento, l'utente deve poter visualizzare il ruolo del soggetto nel documento & \ref{visualizzaRuoloSoggetto} \\
+\hline
+R-204-F-Ob & Per ogni soggetto coinvolto nel documento, l'utente deve poter visualizzare il tipo di soggetto & \ref{visualizzaTipoSoggetto} \\
+\hline
+R-205-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente deve poter visualizzare tutti i dati legati a questo tipo di soggetto & \ref{visualizzaInfoPF} \\
+\hline
+R-206-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente deve poter visualizzare il nome del soggetto & \ref{visualizzaNomeSoggetto} \\
+\hline
+R-207-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente deve poter visualizzare il cognome del soggetto & \ref{visualizzaCognomeSoggetto} \\
+\hline
+R-208-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente deve poter visualizzare il codice fiscale del soggetto & \ref{visualizzaCodiceFiscaleSoggetto} \\
+\hline
+R-209-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente deve poter visualizzare gli indirizzi digitali di riferimento del soggetto & \ref{visualizzaIndirizziDigitaliSoggetto} \\
+\hline
+R-210-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente deve poter visualizzare tutti i dati legati a questo tipo di soggetto & \ref{visualizzaInfoPG} \\
+\hline
+R-211-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente deve poter visualizzare la denominazione dell'organizzazione del soggetto & \ref{visualizzaDenominazioneOrganizzazioneSoggetto} \\
+\hline
+R-212-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente deve poter visualizzare la partita IVA del soggetto & \ref{visualizzaPartitaIVA} \\
+\hline
+R-213-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente deve poter visualizzare il codice fiscale del soggetto & \ref{visualizzaCodiceFiscaleSoggetto} \\
+\hline
+R-214-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente deve poter visualizzare la denominazione dell'ufficio del soggetto & \ref{visualizzaDenominazioneUfficioSoggetto} \\
+\hline
+R-215-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente deve poter visualizzare gli indirizzi digitali di riferimento del soggetto & \ref{visualizzaIndirizziDigitaliSoggetto} \\
+\hline
+R-216-F-Ob & Se il soggetto coinvolto nel documento è di tipo AS, l'utente deve poter visualizzare tutti i dati legati a questo tipo di soggetto & \ref{visualizzaInfoAS} \\
+\hline
+R-217-F-Ob & Se il soggetto coinvolto nel documento è di tipo AS, l'utente deve poter visualizzare il cognome del soggetto & \ref{visualizzaCognomeSoggetto} \\
+\hline
+R-218-F-Ob & Se il soggetto coinvolto nel documento è di tipo AS, l'utente deve poter visualizzare il nome del soggetto & \ref{visualizzaNomeSoggetto} \\
+\hline
+R-219-F-Ob & Se il soggetto coinvolto nel documento è di tipo AS, l'utente deve poter visualizzare il codice fiscale del soggetto & \ref{visualizzaCodiceFiscaleSoggetto} \\
+\hline
+R-220-F-Ob & Se il soggetto coinvolto nel documento è di tipo AS, l'utente deve poter visualizzare la denominazione dell'organizzazione del soggetto & \ref{visualizzaDenominazioneOrganizzazioneSoggetto} \\
+\hline
+R-221-F-Ob & Se il soggetto coinvolto nel documento è di tipo AS, l'utente deve poter visualizzare la denominazione dell'ufficio del soggetto & \ref{visualizzaDenominazioneUfficioSoggetto} \\
+\hline
+R-222-F-Ob & Se il soggetto coinvolto nel documento è di tipo AS, l'utente deve poter visualizzare gli indirizzi digitali di riferimento del soggetto & \ref{visualizzaIndirizziDigitaliSoggetto} \\
+\hline
+R-223-F-Ob &Se il soggetto coinvolto nel documento è di tipo PAI, l'utente deve poter visualizzare tutti i dati legati a questo tipo di soggetto& \ref{visualizzaInfoPAI} \\
+\hline
+R-224-F-Ob & Se il soggetto coinvolto nel documento è di tipo PAI, l'utente deve poter visualizzare la denominazione dell'amministrazione e il codice IPA del soggetto & \ref{visualizzaDenominazioneAmministrazioneCodiceIPA} \\
+\hline
+R-225-F-Ob & Se il soggetto coinvolto nel documento è di tipo PAI, l'utente deve poter visualizzare la denominazione dell'amministrazione AOO e il codice IPA AOO del soggetto & \ref{visualizzaDenominazioneAmministrazioneAOOCodiceIPAOOO} \\
+\hline
+R-226-F-Ob & Se il soggetto coinvolto nel documento è di tipo PAI, l'utente deve poter visualizzare la denominazione dell'amministrazione UOR e il codice IPA UOR del soggetto & \ref{visualizzaDenominazioneAmministrazioneUORCodiceIPAUOR} \\
+\hline
+R-227-F-Ob & Se il soggetto coinvolto nel documento è di tipo PAI, l'utente deve poter visualizzare gli indirizzi digitali di riferimento del soggetto & \ref{visualizzaIndirizziDigitaliSoggetto} \\
+\hline
+R-228-F-Ob & Se il soggetto coinvolto nel documento è di tipo PAE, l'utente deve poter visualizzare tutti i dati legati a questo tipo di soggetto & \ref{visualizzaInfoPAE} \\
+\hline
+R-229-F-Ob & Se il soggetto coinvolto nel documento è di tipo PAE, l'utente deve poter visualizzare la denominazione dell'amministrazione del soggetto & \ref{visualizzaDenominazioneAmministrazioneSoggetto} \\
+\hline
+R-230-F-Ob & Se il soggetto coinvolto nel documento è di tipo PAE, l'utente deve poter visualizzare la denominazione dell'ufficio del soggetto & \ref{visualizzaDenominazioneUfficioSoggetto} \\
+\hline
+R-231-F-Ob & Se il soggetto coinvolto nel documento è di tipo PAE, l'utente deve poter visualizzare gli indirizzi digitali di riferimento del soggetto & \ref{visualizzaIndirizziDigitaliSoggetto} \\
+\hline
+R-232-F-Ob & Se il soggetto coinvolto nel documento è di tipo SW, l'utente deve poter visualizzare tutti i dati legati a questo tipo di soggetto & \ref{visualizzaInfoSW} \\
+\hline
+R-233-F-Ob & Se il soggetto coinvolto nel documento è di tipo SW, l'utente deve poter visualizzare la denominazione del sistema del soggetto & \ref{visualizzaDenominazioneSistemaSoggetto} \\
+\hline
+R-234-F-Ob & L'utente deve poter visualizzare l'indice di classificazione del documento selezionato & \ref{visualizzaIndiceClassificazioneDocumento} \\
+\hline
+R-235-F-Ob & L'utente deve poter visualizzare la descrizione dell'indice di classificazione del documento selezionato & \ref{visualizzaDescrizioneIndiceClassificazioneDocumento} \\
+\hline
+R-236-F-Ob & L'utente deve poter visualizzare l'URI del piano di classificazione del documento selezionato & \ref{visualizzaURIPianoClassificazioneDocumento} \\
+\hline
+R-237-F-Ob & Se il documento selezionato ha un tempo di conservazione diverso da quello assegnato all'aggregazione documentale informatica a cui appartiene, l'utente deve poter visualizzare il tempo di conservazione effettivo del documento & \ref{visualizzaTempoConservazioneEffettivoDocumento} \\
+\hline
+R-238-F-Ob & Se il tempo di conservazione del documento coincide con quello assegnato all'aggregazione documentale a cui appartiene, l'utente deve essere informato con un messaggio che indica questa coincidenza & \ref{erroreTempoConservazioneEffettivoDocumento} \\
+\hline
+R-239-F-Ob & L'utente deve poter visualizzare le note relative al documento selezionato & \ref{visualizzaNoteDocumento} \\
+\hline
+R-240-F-Ob & Se le note del documento sono assenti o vuote, l'utente deve essere informato con un messaggio che indica l'assenza delle note & \ref{erroreNoteDocumento} \\
+\hline
+R-241-F-Ob & L'utente deve poter visualizzare la tipologia di flusso del documento selezionato & \ref{visualizzaTipologiaFlussoDocumento} \\
+\hline
+R-242-F-Ob & L'utente deve poter visualizzare il tipo di registro del documento selezionato & \ref{visualizzaTipoRegistroDocumento} \\
+\hline
+R-243-F-Ob & L'utente deve poter visualizzare la data di registrazione del documento selezionato & \ref{visualizzaDataRegistrazioneDocumento} \\
+\hline
+R-244-F-Ob & L'utente deve poter visualizzare la data di registrazione del documento non protocollato selezionato & \ref{visualizzaDataNonProtocollato} \\
+\hline
+R-245-F-Ob & L'utente deve poter visualizzare la data di protocollazione del documento protocollato selezionato & \ref{visualizzaDataProtocollato} \\
+\hline
+R-246-F-Ob & L'utente deve poter visualizzare il numero del documento selezionato & \ref{visualizzaNumeroDocumento} \\
+\hline
+R-247-F-Ob & L'utente deve poter visualizzare il numero di registrazione del documento non protocollato selezionato & \ref{visualizzaNumeroNonProtocollato} \\
+\hline
+R-248-F-Ob & L'utente deve poter visualizzare il numero di protocollo del documento protocollato selezionato & \ref{visualizzaNumeroProtocollato} \\
+\hline
+R-249-F-Ob & L'utente deve poter visualizzare il codice identificativo del registro di appartenenza del documento selezionato & \ref{visualizzaCodiceIdentificativoRegistroAppartenenzaDocumento} \\
+\hline
+R-250-F-Ob & L'utente deve poter visualizzare la tipologia documentale del documento selezionato & \ref{visualizzaTipologiaDocumentaleDocumento} \\
+\hline
+R-251-F-Ob & L'utente deve poter visualizzare la modalità di formazione del documento selezionato & \ref{visualizzaModalitaFormazioneDocumento} \\
+\hline
+R-252-F-Ob & L'utente deve poter visualizzare lo stato di riservatezza del documento selezionato & \ref{visualizzaStatoRiservatezzaDocumento} \\
+\hline
+R-253-F-Ob & L'utente deve poter visualizzare il tipo di formato del documento selezionato & \ref{visualizzaTipoFormatoDocumento} \\
+\hline
+R-254-F-Ob & L'utente deve poter visualizzare il nome del prodotto software che ha generato il documento selezionato & \ref{visualizzaNomeProdottoSoftware} \\
+\hline
+R-255-F-Ob & L'utente deve poter visualizzare la versione del prodotto software che ha generato il documento selezionato & \ref{visualizzaVersioneProdottoSoftware} \\
+\hline
+R-256-F-Ob & L'utente deve poter visualizzare il produttore del software che ha generato il documento selezionato & \ref{visualizzaProduttoreSoftware} \\
+\hline
+R-257-F-Ob & L'utente deve poter visualizzare le informazioni di verifica del documento selezionato & \ref{visualizzaInformazisoniVerifica} \\
+\hline
+R-258-F-Ob & L'utente deve poter visualizzare se il documento selezionato è firmato digitalmente & \ref{visualizzaFirmaDigitaleDocumento} \\
+\hline
+R-259-F-Ob & L'utente deve poter visualizzare se il documento selezionato è sigillato elettronicamente & \ref{visualizzaSigilloElettronicoDocumento} \\
+\hline
+R-260-F-Ob & L'utente deve poter visualizzare se il documento selezionato è dotato di marcatura temporale & \ref{visualizzaMarcaturaTemporaleDocumento} \\
+\hline
+R-261-F-Ob & L'utente deve poter visualizzare se vi è conformità alle copie immagine su supporto informatico del documento selezionato & \ref{visualizzaConformitaCopieImmagineDocumento} \\
+\hline
+R-262-F-Ob & L'utente deve poter visualizzare la versione del documento selezionato & \ref{visualizzaVersioneDocumento} \\
+\hline
+R-263-F-Ob & L'utente deve poter visualizzare il nome del documento selezionato & \ref{visualizzaNomeDocumento} \\
+\hline
+R-264-F-Ob & L'utente deve poter visualizzare le informazioni degli allegati del documento selezionato & \ref{visualizzaInformazioniAllegati} \\
+\hline
+R-265-F-Ob & L'utente deve poter visualizzare il numero di allegati del documento selezionato & \ref{visualizzaNumeroAllegatiDocumento} \\
+\hline
+R-266-F-Ob & L'utente deve poter visualizzare il singolo allegato & \ref{visualizzaAllegatoInListaAllegati} \\
+\hline
+R-267-F-Ob & Se il documento ha almeno un allegato, l'utente deve poter visualizzare l'identificativo di ciascun allegato & \ref{visualizzaIdentificativoAllegato} \\
+\hline
+R-268-F-Ob & Se l'informazione sull'identificativo dell'allegato non è disponibile, l'utente deve essere informato con un messaggio di errore & \ref{erroreIdentificativoAllegato} \\
+\hline
+R-269-F-Ob & Se il documento ha almeno un allegato, l'utente deve poter visualizzare la descrizione di ciascun allegato & \ref{visualizzaDescrizioneAllegato} \\
+\hline
+R-270-F-Ob & Se l'informazione sulla descrizione dell'allegato non è disponibile, l'utente deve essere informato con un messaggio di errore & \ref{erroreDescrizioneAllegato} \\
+\hline
+R-271-F-Ob & Se il documento non ha allegati, l'utente deve essere informato con un messaggio che indica l'assenza degli allegati & \ref{allegatiNonPresenti} \\
+\hline
+R-272-F-Ob & L'utente deve poter visualizzare tutte le informazioni sulle modifiche di un documento & \ref{visualizzaInformazioniModifiche} \\
+\hline
+R-273-F-Ob & L'utente deve poter visualizzare il tipo di modifica per ogni modifica del documento selezionato tra: Annullamento, Rettifica, Integrazione e Annotazione & \ref{visualizzaTipoModificaDocumento} \\
+\hline
+R-274-F-Ob & L'utente deve poter visualizzare le informazioni del soggetto autore di ogni modifica del documento selezionato & \ref{visualizzaSoggettoAutoreModifica} \\
+\hline
+R-275-F-Ob & L'utente deve poter visualizzare la data e l'ora di ogni modifica del documento selezionato & \ref{visualizzaDataOraModifica} \\
+\hline
+R-276-F-Ob & L'utente deve poter visualizzare l'identificativo del documento alla versione precedente alla modifica & \ref{visualizzaIdentificativoVersionePrecedenteDocumento} \\
+\hline
+R-277-F-Ob & L'utente deve poter visualizzare il tipo di aggregazione dell'aggregazione documentale selezionata tra: Fascicolo, Serie Documentale e Serie di Fascicoli & \ref{visualizzaTipoAggregazione} \\
+\hline
+R-278-F-Ob & L'utente deve poter visualizzare l'identificativo dell'aggregazione documentale selezionata & \ref{visualizzaIdentificativoAggregazione} \\
+\hline
+R-279-F-Ob & L'utente deve poter visualizzare la tipologia di fascicolo dell'aggregazione documentale selezionata tra: Affare, Attività, Persona Fisica, Persona Giuridica e Procedimento Amministrativo & \ref{visualizzaTipologiaFascicolo} \\
+\hline
+R-280-F-Ob & L'utente deve poter visualizzare il tipo di assegnazione dell'aggregazione documentale selezionata tra: Per competenza e Per conoscenza & \ref{visualizzaTipoAssegnazioneAggregazione} \\
+\hline
+R-281-F-Ob & L'utente deve poter visualizzare le informazioni del soggetto assegnatario dell'aggregazione documentale selezionata &  \begin{tabular}[t]{@{}l} \ref{visualizzaAssegnazioneAggregazione}\\ \ref{visualizzaInfoSoggettoCoinvolto} \end{tabular} \\
+\hline
+R-282-F-Ob & L'utente deve poter visualizzare la data e l'ora di inizio dell'assegnazione dell'aggregazione documentale selezionata & \ref{visualizzaDataOraInizioAssegnazioneAggregazione} \\
+\hline
+R-283-F-Ob & L'utente deve poter visualizzare la data e l'ora di fine dell'assegnazione dell'aggregazione documentale selezionata & \ref{visualizzaDataOraFineAssegnazioneAggregazione} \\
+\hline
+R-284-F-Ob & L'utente deve poter visualizzare la data di apertura dell'aggregazione documentale selezionata & \ref{visualizzaDataAperturaAggregazione} \\
+\hline
+R-285-F-Ob & L'utente deve poter visualizzare la data di chiusura dell'aggregazione documentale selezionata & \ref{visualizzaDataChiusuraAggregazione} \\
+\hline
+R-286-F-Ob & L'utente deve poter visualizzare il progressivo dell'aggregazione documentale selezionata & \ref{visualizzaProgressivoAggregazione} \\
+\hline
+R-287-F-Ob & L'utente deve poter visualizzare le informazioni del procedimento amministrativo dell'aggregazione documentale selezionata & \ref{visualizzaProcedimentoAmministrativoAggregazione} \\
+\hline
+R-288-F-Ob & L'utente deve poter visualizzare l'indice della materia/argomento/struttura per la quale sono catalogati i procedimenti dell'aggregazione documentale selezionata & \ref{visualizzaIndiceProcedimentoAmministrativo} \\
+\hline
+R-289-F-Ob & L'utente deve poter visualizzare la denominazione del procedimento amministrativo dell'aggregazione documentale selezionata & \ref{visualizzaDenominazioneProcedimentoAmministrativo} \\
+\hline
+R-290-F-Ob & L'utente deve poter visualizzare il catalogo dei procedimenti come URI di pubblicazione dell'aggregazione documentale selezionata & \ref{visualizzaCatalogoProcedimentiAmministrativi} \\
+\hline
+R-291-F-Ob & L'utente deve poter visualizzare la lista delle fasi del procedimento amministrativo dell'aggregazione documentale selezionata & \ref{visualizzaFasiProcedimentoAmministrativo} \\
+\hline
+R-292-F-Ob & L'utente deve poter visualizzare le singole fasi della lista delle fasi del procedimento amministrativo dell'aggregazione documentale selezionata complete di dati della fase & \ref{visualizzaFaseProcedimentoAmministrativo} \\
+\hline
+R-293-F-Ob & Per ogni fase del procedimento amministrativo, l'utente deve poter visualizzare il tipo di fase tra: Preparatoria, Istruttoria, Consultiva, Decisoria o deliberativa e Integrazione dell'efficacia & \ref{visualizzaTipoFaseProcedimentoAmministrativo} \\
+\hline
+R-294-F-Ob & Per ogni fase del procedimento amministrativo, l'utente deve poter visualizzare la data e l'ora di inizio della fase & \ref{visualizzaDataOraInizioFase} \\
+\hline
+R-295-F-Ob & Per ogni fase del procedimento amministrativo, l'utente deve poter visualizzare la data e l'ora di fine della fase & \ref{visualizzaDataOraFineFase} \\
+\hline
+R-296-F-Ob & L'utente deve poter visualizzare l'indice dei documenti contenuti nell'aggregazione documentale selezionata & \ref{visualizzaIndiceDocumentiAggregazione} \\
+\hline
+R-297-F-Ob & L'utente deve poter visualizzare ogni voce dell'indice dei documenti dell'aggregazione documentale selezionata & \ref{visualizzaVoceIndiceDocumentiAggregazione} \\
+\hline
+R-298-F-Ob & Per ogni voce dell'indice dei documenti dell'aggregazione, l'utente deve poter visualizzare il tipo di documento contenuto & \ref{visualizzaTipoDocumentiAggregazione} \\
+\hline
+R-299-F-Ob & Per ogni voce dell'indice dei documenti dell'aggregazione, l'utente deve poter visualizzare l'identificativo del documento contenuto & \ref{visualizzaIdentificativoDocumentoAggregazione} \\
+\hline
+R-300-F-Ob & L'utente deve poter visualizzare la posizione fisica dell'aggregazione documentale selezionata & \ref{visualizzaPosizioneFisicaAggregazione} \\
+\hline
+R-301-F-Ob & L'utente deve poter visualizzare l'identificativo dell'aggregazione primaria dell'aggregazione documentale selezionata & \ref{visualizzaIdentificativoAggregazionePrimaria} \\
+\hline
+R-302-F-Ob & L'utente deve poter visualizzare il tempo di conservazione dell'aggregazione documentale selezionata & \ref{visualizzaTempoConservazioneAggregazione} \\
+\hline
+R-303-F-Ob & L'utente deve poter visualizzare le informazioni di ciascun metadato custom del documento selezionato & \ref{visualizzaMetadatiCustomDocumento} \\
+\hline
+R-304-F-Ob & L'utente deve poter visualizzare il nome di ciascun metadato custom del documento selezionato & \ref{visualizzaNomeMetadatoCustom} \\
+\hline
+R-305-F-Ob & L'utente deve poter visualizzare il valore di ciascun metadato custom del documento selezionato & \ref{visualizzaValoreMetadatoCustom} \\
+\hline
+R-306-F-Ob & Se il documento selezionato non dispone di metadati custom, l'utente deve essere informato con un messaggio che indica l'assenza dei metadati custom & \ref{metadatiCustomAssenti} \\
+\hline
+R-307-F-Ob & L'utente deve poter visualizzare i dati di registrazione del documento selezionato & \ref{visualizzaDatiRegistrazioneDocumento} \\
+\hline
+R-308-F-Ob & L'utente deve poter visualizzare informazioni di classificazione del documento selezionato & \ref{visualizzaInfoClassificazioneDocumento} \\
+\hline
+R-309-F-Ob & L'utente deve poter visualizzare informazioni e informazioni sul formato del documento e sul
+prodotto software che lo ha generato & \ref{visualizzaInformazioniIdentificativoFormato} \\
+\hline
+\caption{Requisiti Funzionali}
+\label{tab:req-funzionali}
+\end{longtable}
+
+\subsection{Requisiti di Qualità}
+
+\rowcolors{2}{gray!15}{white}
+\begin{longtable}{|p{2.5cm}|p{9.5cm}|p{2.5cm}|}
+\hline
+\rowcolor{zpusgreen!30}
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endfirsthead
+\rowcolor{zpusgreen!30}
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endhead
+R-1-Q-Ob & Il sistema deve garantire un tempo di risposta inferiore a 2 secondi per il caricamento delle interfacce principali dell'applicazione & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-2-Q-Ob & Il sistema deve garantire un tempo di risposta inferiore a 2 minuti per le ricerche effettuate dall'utente & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-3-Q-Ob & Il sistema deve fornire un'interfaccia utente intuitiva e user-friendly & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-4-Q-De & Il sistema deve fornire una sezione dedicata per la consultazione dei report di integrità, presentati in modo chiaro e comprensibile & \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20Esterni/2025-12-23-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-12-23}\setulcolor{black}} \\
+\hline
+R-5-Q-Ob & Il sistema essere sottoposto a opportuni test di unità & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-6-Q-Ob & Lo sviluppo deve seguire le \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/NormeDiProgetto.pdf}{\ul{Norme di Progetto}\setulcolor{black}\ped{v1.0}} & \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/NormeDiProgetto.pdf}{\ul{Norme di Progetto}\setulcolor{black}\ped{v1.0}} \\
+\hline
+R-7-Q-Ob & Il sistema deve essere utilizzabile da ogni utente senza la necessità di un manuale d'uso & \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20Esterni/2025-11-27-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-11-27}\setulcolor{black}} \\
+\hline
+R-8-Q-De & L'interfaccia utente deve rispettare i criteri di accessibilità definiti dalle linee guida WCAG 2.1 livello AA & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+\rowcolor{white}
+\caption{Requisiti di Qualità}
+\label{tab:req-qualita}
+\end{longtable}
+
+\subsection{Requisiti di Vincolo}
+
+\rowcolors{2}{gray!15}{white}
+\begin{longtable}{|p{2.5cm}|p{9.5cm}|p{2.5cm}|}
+\hline
+\rowcolor{zpusgreen!30}
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endfirsthead
+\rowcolor{zpusgreen!30}
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endhead
+R-1-V-Ob & Il sistema deve operare in modalità \textit{portable}, ovvero senza necessità di installazioni o privilegi di amministratore nel sistema ospite & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-2-V-Ob & Il sistema deve garantire la compatibilità multipiattaforma, assicurando il corretto funzionamento e l'integrità delle funzionalità sui sistemi operativi Windows, MacOs e Linux & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-3-V-Ob & L'architettura del sistema deve essere basata su componenti modulari e interfacce di astrazione per permettere l'integrazione di nuove metodologie di reperimento dati & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-4-V-Ob & Il sistema deve garantire la piena funzionalità di ricerca e consultazione in assenza di connettività di rete & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-5-V-Ob & Il sistema deve deve utilizzare un motore di ricerca \textit{embedded} che non richieda un server standalone & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-6-V-Ob & Il sistema deve essere sviluppato utilizzando il framework Angular & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-7-V-Ob & Il sistema deve essere gestito e consegnato tramite il sistema di versionamento del codice GitHub & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-8-V-Ob & Devono essere prodotti i diagrammi UML relativi ai casi d'uso & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-9-V-Ob & Devono essere prodotti gli schemi di database e chiamate API utilizzati dal sistema & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-10-V-Ob & Deve essere prodotta una documentazione tecnica relativa ai casi di test gestiti con relativa reportistica e una lista dei bug risolti & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-11-V-Ob & Il sistema deve supportare rigorosamente la struttura dei metadati definita dalle Linee Guida AGID & \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20-Esterni/2025-11-13-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-11-13}\setulcolor{black}} \\
+\hline
+
+\caption{Requisiti di Vincolo}
+\label{tab:req-vincolo}
+\end{longtable}
+
+
+\subsection{Tracciamento}
+
+\subsubsection{Tracciamento Fonti - Requisiti}
+
+\rowcolors{2}{gray!15}{white}
+\begin{longtable}{|p{4cm}|p{10cm}|}
+\hline
+\rowcolor{zpusgreen!30}
+\textbf{Fonti} & \textbf{Requisiti} \\
+\hline
+\endfirsthead
+\rowcolor{zpusgreen!30}
+\textbf{Fonti} & \textbf{Requisiti} \\
+\hline
+\endhead
+\ref{classiDocumentali} & R-1-F-Ob \\
+\hline
+\ref{classeDocumentale} & R-3-F-Ob \\
+\hline
+\ref{nomeClasseDocumentale} & R-4-F-Ob \\
+\hline
+\ref{processiClasseDocumentale} & R-8-F-Ob \\
+\hline
+\ref{processoClasseDocumentale} & R-10-F-Ob \\
+\hline
+\ref{idProcessoClasse} & R-11-F-Ob \\
+\hline
+\ref{documentiProcesso} & R-12-F-Ob \\
+\hline
+\ref{documentoProcesso} & R-14-F-Ob \\
+\hline
+\ref{nomeDocumentoProcesso} & R-15-F-Ob, R-155-F-Ob \\
+\hline
+\ref{statoVerificaElemento} & R-5-F-Ob, R-6-F-Ob, R-16-F-Ob \\
+\hline
+\ref{marcaturaTemporaleElemento} & R-7-F-Ob, R-17-F-Ob \\
+\hline
+\ref{elencoVuoto} & R-2-F-Ob, R-9-F-Ob, R-13-F-Ob, R-18-F-Ob \\
+\hline
+\ref{anteprimaDocumento} & R-19-F-Ob \\
+\hline
+\ref{formatoDocumentoNonSupportato} & R-20-F-Ob \\
+\hline
+\ref{ricercaDIP} & R-21-F-Ob, R-26-F-Ob \\
+\hline
+\ref{ricercaDIPConFiltri} & R-31-F-Ob, R-35-F-Ob, R-36-F-Ob, R-37-F-Ob \\
+\hline
+\ref{ricercaDIPSemantica} & R-24-F-Op \\
+\hline
+\ref{ricercaClasse} & R-22-F-Ob, R-30-F-Ob \\
+\hline
+\ref{ricercaProcesso} & R-23-F-Ob, R-29-F-Ob \\
+\hline
+\ref{campoNonValido} & R-27-F-Ob \\
+\hline
+\ref{StatoIndicizzazione} & R-25-F-Op \\
+\hline
+\hline
+\ref{specificaFiltriRicercaDocumento} & R-28-F-Ob \\
+\hline
+\ref{specificaFiltriComuni} & R-32-F-Ob, R-40-F-Ob \\
+\hline
+\ref{selezionaCampiRicercaComuni} & R-44-F-Ob \\
+\hline
+\ref{visualizzaListaCampiComuni} & R-43-F-Ob \\
+\hline
+\ref{addChiaveDescrittiva} & R-45-F-Ob, R-46-F-Ob \\
+\hline
+\ref{addClassificazione} & R-47-F-Ob, R-48-F-Ob \\
+\hline
+\ref{addTempoConserva} & R-49-F-Ob, R-50-F-Ob, R-51-F-Ob \\
+\hline
+\ref{addNote} & R-52-F-Ob, R-53-F-Ob \\
+\hline
+\ref{addTipoDocumento} & R-54-F-Ob, R-55-F-Ob \\
+\hline
+\ref{addSoggetti} & R-56-F-Ob \\
+\hline
+\ref{addFiltriTipoDocumento} & R-33-F-Ob, R-38-F-Ob, R-41-F-Ob \\
+\hline
+\ref{specificaFiltriDI-DAI} & R-39-F-Ob \\
+\hline
+\ref{selezionaCampiDI-DAI} & R-73-F-Ob \\
+\hline
+\ref{visualizzaListaCampiDIDAI} & R-74-F-Ob \\
+\hline
+\ref{addDatiRegistrazione} & R-75-F-Ob, R-76-F-Ob \\
+\hline
+\ref{addTipologiaDocumentale} & R-77-F-Ob \\
+\hline
+\ref{addModalitaFormazione} & R-78-F-Ob \\
+\hline
+\ref{addRiservato} & R-79-F-Ob \\
+\hline
+\ref{addIdentificativoFormato} & R-80-F-Ob, R-81-F-Ob \\
+\hline
+\ref{addDatiVerifica} & R-82-F-Ob, R-83-F-Ob \\
+\hline
+\ref{addNomeDocumento} & R-84-F-Ob \\
+\hline
+\ref{addVersioneDocumento} & R-85-F-Ob \\
+\hline
+\ref{addIdentificativoDocumentoPrimario} & R-86-F-Ob \\
+\hline
+\ref{addTracciatureModificheDocumento} & R-87-F-Ob, R-88-F-Ob \\
+\hline
+\ref{specificaFiltriAggregazione} & R-89-F-Ob \\
+\hline
+\ref{selezionaCampiAggregazioneDocumentale} & R-91-F-Ob \\
+\hline
+\ref{visualizzaListaCampiAggregazioneDocumentale} & R-90-F-Ob \\
+\hline
+\ref{addTipoAggregazione} & R-92-F-Ob, R-93-F-Ob \\
+\hline
+\ref{addIdAggregazione} & R-94-F-Ob \\
+\hline
+\ref{addTipologiaFascicolo} & R-95-F-Ob \\
+\hline
+\ref{addIdAggregazionePrimario} & R-96-F-Ob \\
+\hline
+\ref{addDataApertura} & R-97-F-Ob \\
+\hline
+\ref{addDataChiusura} & R-98-F-Ob \\
+\hline
+\ref{addProcedimentoAmministrativo} & R-99-F-Ob, R-100-F-Ob \\
+\hline
+\ref{addFasiProcedimentoAmministrativo} & R-101-F-Ob \\
+\hline
+\ref{addAssegnazione} & R-102-F-Ob, R-103-F-Ob \\
+\hline
+\ref{addProgressivoAggregazione} & R-104-F-Ob \\
+\hline
+\ref{addCustomMetadata} & R-34-F-Ob, R-42-F-Ob, R-105-F-Ob \\
+\hline
+\ref{addFiltroMetadatoCustom} & R-106-F-Ob \\
+\hline
+\ref{addSoggetto} & R-57-F-Ob \\
+\hline
+\ref{specificaRuoloSoggetto} & R-58-F-Ob \\
+\hline
+\ref{visualizzaRuoliPerTipoDocumento} & R-59-F-Ob \\
+\hline
+\ref{visualizzaNomeRuolo} & R-60-F-Ob \\
+\hline
+\ref{specificaTipoSoggetto} & R-61-F-Ob \\
+\hline
+\ref{visualizzaTipiSoggettoPerRuolo} & R-62-F-Ob \\
+\hline
+\ref{visualizzaNomeTipoSoggetto} & R-63-F-Ob \\
+\hline
+\ref{addDettagliSoggetto} & R-64-F-Ob \\
+\hline
+\ref{addDettagliPAI} & R-65-F-Ob \\
+\hline
+\ref{addDettagliPAE} & R-66-F-Ob \\
+\hline
+\ref{addDettagliAS} & R-67-F-Ob \\
+\hline
+\ref{addDettagliPG} & R-68-F-Ob \\
+\hline
+\ref{addDettagliPF} & R-69-F-Ob \\
+\hline
+\ref{addDettagliRUP} & R-70-F-Ob \\
+\hline
+\ref{addDettagliSW} & R-71-F-Ob \\
+\hline
+\ref{visualizzaNomeCampo} & R-72-F-Ob \\
+\hline
+\ref{visualizzaRisultati} & R-107-F-Ob \\
+\hline
+\ref{infoRisultatiRicerca} & R-108-F-Ob \\
+\hline
+\ref{nomeElemento} & R-109-F-Ob \\
+\hline
+\ref{visualizzaTipoElemento} & R-110-F-Ob \\
+\hline
+\ref{nessunRisultato} & R-111-F-Ob \\
+\hline
+\ref{compilaValoreFiltro} & R-113-F-Ob \\
+\hline
+\ref{formatoNonCorretto} & R-112-F-Ob, R-114-F-Ob \\
+\hline
+\ref{salvaDocumento} & R-115-F-Ob \\
+\hline
+\ref{salvaPiuDocumenti} & R-116-F-Ob \\
+\hline
+\ref{salvataggioFallito} & R-117-F-Ob \\
+\hline
+\ref{stampaSingoloDoc} & R-118-F-Ob \\
+\hline
+\ref{stampaInsiemeDoc} & R-119-F-Ob \\
+\hline
+\ref{stampaFallita} & R-120-F-Ob \\
+\hline
+\ref{stampaNonDisponibile} & R-121-F-Ob \\
+\hline
+\ref{verificaIntegritaDIPCompleto} & R-122-F-Ob, R-123-F-Ob \\
+\hline
+\ref{verificaIntegritaClasseDocumentale} & R-124-F-Ob, R-124-F-Ob \\
+\hline
+\ref{verificaIntegritaProcesso} & R-126-F-Ob, R-127-F-Ob \\
+\hline
+\ref{verificaIntegritaDocumento} & R-128-F-Ob, R-129-F-Ob \\
+\hline
+\ref{visualizzazioneReportIntegritaDIPCompleto} & R-130-F-Ob \\
+\hline
+\ref{visualizzazioneNumeroClassiVerificate} & R-131-F-Ob \\
+\hline
+\ref{visualizzazioneNumeroClassiIntegre} & R-132-F-Ob \\
+\hline
+\ref{visualizzazioneNumeroClassiCorrotte} & R-133-F-Ob \\
+\hline
+\ref{visualizzazioneListaClassiCorrotte} & R-134-F-Ob \\
+\hline
+\ref{visualizzaElementoListaClassiCorrotte} & R-135-F-Ob \\
+\hline
+\ref{visualizzazioneDataEOraVerificaDIP} & R-136-F-Ob \\
+\hline
+\ref{nessunaClasseCorrotta} & R-137-F-Ob \\
+\hline
+\ref{visualizzazioneReportIntegritaClasseDocumentale} & R-138-F-Ob \\
+\hline
+\ref{visualizzazioneNumeroProcessiVerificati} & R-139-F-Ob \\
+\hline
+\ref{visualizzazioneNumeroProcessiIntegri} & R-140-F-Ob \\
+\hline
+\ref{visualizzazioneNumeroProcessiCorrotti} & R-141-F-Ob \\
+\hline
+\ref{visualizzazioneListaProcessiCorrotti} & R-142-F-Ob \\
+\hline
+\ref{visualizzaElementoListaProcessiCorrotti} & R-143-F-Ob \\
+\hline
+\ref{visualizzazioneDataEOraVerificaClasse} & R-144-F-Ob, R-145-F-Ob \\
+\hline
+\ref{visualizzazioneReportIntegritaProcesso} & R-146-F-Ob \\
+\hline
+\ref{visualizzazioneNumeroDocumentiVerificati} & R-147-F-Ob \\
+\hline
+\ref{visualizzazioneNumeroDocumentiIntegri} & R-148-F-Ob \\
+\hline
+\ref{visualizzazioneNumeroDocumentiCorrotti} & R-149-F-Ob \\
+\hline
+\ref{visualizzazioneListaDocumentiCorrotti} & R-150-F-Ob \\
+\hline
+\ref{visualizzaElementoListaDocumentiCorrotti} & R-151-F-Ob \\
+\hline
+\ref{visualizzazioneDataEOraVerificaProcesso} & R-152-F-Ob \\
+\hline
+\ref{nessunDocumentoCorrotto} & R-153-F-Ob \\
+\hline
+\ref{visualizzazioneReportIntegritaDocumento} & R-154-F-Ob \\
+\hline
+\ref{visualizzazioneStatoVerificaDocumento} & R-156-F-Ob \\
+\hline
+\ref{visualizzazioneDataEOraVerificaDocumento} & R-157-F-Ob \\
+\hline
+\ref{visualizzazioneDettagliErroreDocumento} & R-158-F-Ob \\
+\hline
+\ref{scaricaReport} & R-159-F-Ob \\
+\hline
+\ref{scaricaFile} & R-161-F-Ob, R-162-F-Ob, R-163-F-Ob \\
+\hline
+\ref{erroreScaricamentoFile} & R-163-F-Ob, R-164-F-Ob \\
+\hline
+\ref{erroreGenerazionePDF} & R-160-F-Ob \\
+\hline
+\ref{visualizzaInfoAiP} & R-165-F-Ob \\
+\hline
+\ref{visualizzaClasseDocumentaleAiP} & R-166-F-Ob \\
+\hline
+\ref{visualizzaUUIDAiP} & R-167-F-Ob \\
+\hline
+\ref{visualizzaInfoProcessoConservazioneAiP} & R-168-F-Ob \\
+\hline
+\ref{visualizzaDataInizioProcessoSessione} & R-169-F-Ob, R-180-F-Ob, R-191-F-Ob \\
+\hline
+\ref{visualizzaDataFineProcessoSessione} & R-170-F-Ob, R-181-F-Ob, R-192-F-Ob \\
+\hline
+\ref{erroreDataFineProcessoSessione} & R-171-F-Ob, R-182-F-Ob, R-193-F-Ob \\
+\hline
+\ref{visualizzaUUIDUtenteAttivatore} & R-172-F-Ob, R-183-F-Ob, R-194-F-Ob \\
+\hline
+\ref{visualizzaUUIDUtenteTerminatore} & R-173-F-Ob, R-184-F-Ob, R-195-F-Ob \\
+\hline
+\ref{erroreUUIDUtenteTerminatore} & R-174-F-Ob, R-185-F-Ob, R-196-F-Ob \\
+\hline
+\ref{visualizzaNomeCanaleAttivazione} & R-175-F-Ob, R-186-F-Ob, R-197-F-Ob \\
+\hline
+\ref{visualizzaNomeCanaleTerminazione} & R-176-F-Ob, R-187-F-Ob, R-198-F-Ob \\
+\hline
+\ref{erroreNomeCanaleTerminazione} & R-177-F-Ob, R-188-F-Ob, R-199-F-Ob \\
+\hline
+\ref{visualizzaStatoProcessoSessione} & R-178-F-Ob, R-189-F-Ob, R-200-F-Ob \\
+\hline
+\ref{visualizzaInfoSessioneVersamento} & R-179-F-Ob \\
+\hline
+\ref{visualizzaInfoSessioneConservazione} & R-190-F-Ob \\
+\hline
+\ref{visualizzaDescrizioneDocumento} & R-201-F-Ob \\
+\hline
+\ref{visualizzaListaSoggettiCoinvolti} & R-202-F-Ob \\
+\hline
+\ref{visualizzaInfoSoggettoCoinvolto} & R-281-F-Ob \\
+\hline
+\ref{visualizzaInfoPF} & R-205-F-Ob \\
+\hline
+\ref{visualizzaNomeSoggetto} & R-206-F-Ob, R-218-F-Ob \\
+\hline
+\ref{visualizzaCognomeSoggetto} & R-207-F-Ob, R-217-F-Ob \\
+\hline
+\ref{visualizzaCodiceFiscaleSoggetto} & R-208-F-Ob, R-213-F-Ob, R-219-F-Ob \\
+\hline
+\ref{visualizzaIndirizziDigitaliSoggetto} & R-209-F-Ob, R-215-F-Ob, R-222-F-Ob, R-227-F-Ob, R-231-F-Ob \\
+\hline
+\ref{visualizzaInfoPG} & R-210-F-Ob \\
+\hline
+\ref{visualizzaDenominazioneOrganizzazioneSoggetto} & R-211-F-Ob, R-220-F-Ob \\
+\hline
+\ref{visualizzaPartitaIVA} & R-212-F-Ob \\
+\hline
+\ref{visualizzaDenominazioneUfficioSoggetto} & R-214-F-Ob, R-221-F-Ob, R-230-F-Ob \\
+\hline
+\ref{visualizzaInfoAS} & R-216-F-Ob \\
+\hline
+\ref{visualizzaInfoPAI} & R-223-F-Ob \\
+\hline
+\ref{visualizzaDenominazioneAmministrazioneCodiceIPA} & R-224-F-Ob \\
+\hline
+\ref{visualizzaDenominazioneAmministrazioneAOOCodiceIPAOOO} & R-225-F-Ob \\
+\hline
+\ref{visualizzaDenominazioneAmministrazioneUORCodiceIPAUOR} & R-226-F-Ob \\
+\hline
+\ref{visualizzaInfoPAE} & R-228-F-Ob \\
+\hline
+\ref{visualizzaDenominazioneAmministrazioneSoggetto} & R-229-F-Ob \\
+\hline
+\ref{visualizzaInfoSW} & R-232-F-Ob \\
+\hline
+\ref{visualizzaDenominazioneSistemaSoggetto} & R-233-F-Ob \\
+\hline
+\ref{visualizzaRuoloSoggetto} & R-203-F-Ob \\
+\hline
+\ref{visualizzaTipoSoggetto} & R-204-F-Ob \\
+\hline
+\ref{visualizzaInfoClassificazioneDocumento} & R-308-F-Ob \\
+\hline
+\ref{visualizzaIndiceClassificazioneDocumento} & R-234-F-Ob \\
+\hline
+\ref{visualizzaDescrizioneIndiceClassificazioneDocumento} & R-235-F-Ob \\
+\hline
+\ref{visualizzaURIPianoClassificazioneDocumento} & R-236-F-Ob \\
+\hline
+\ref{visualizzaTempoConservazioneEffettivoDocumento} & R-237-F-Ob \\
+\hline
+\ref{erroreTempoConservazioneEffettivoDocumento} & R-238-F-Ob \\
+\hline
+\ref{visualizzaNoteDocumento} & R-239-F-Ob \\
+\hline
+\ref{erroreNoteDocumento} & R-240-F-Ob \\
+\hline
+\ref{visualizzaDatiRegistrazioneDocumento} & R-307-F-Ob \\
+\hline
+\ref{visualizzaTipologiaFlussoDocumento} & R-241-F-Ob \\
+\hline
+\ref{visualizzaTipoRegistroDocumento} & R-242-F-Ob \\
+\hline
+\ref{visualizzaDataRegistrazioneDocumento} & R-243-F-Ob \\
+\hline
+\ref{visualizzaDataNonProtocollato} & R-244-F-Ob \\
+\hline
+\ref{visualizzaDataProtocollato} & R-245-F-Ob \\
+\hline
+\ref{visualizzaNumeroDocumento} & R-246-F-Ob \\
+\hline
+\ref{visualizzaNumeroNonProtocollato} & R-247-F-Ob \\
+\hline
+\ref{visualizzaNumeroProtocollato} & R-248-F-Ob \\
+\hline
+\ref{visualizzaCodiceIdentificativoRegistroAppartenenzaDocumento} & R-249-F-Ob \\
+\hline
+\ref{visualizzaTipologiaDocumentaleDocumento} & R-250-F-Ob \\
+\hline
+\ref{visualizzaModalitaFormazioneDocumento} & R-251-F-Ob \\
+\hline
+\ref{visualizzaStatoRiservatezzaDocumento} & R-252-F-Ob \\
+\hline
+\ref{visualizzaInformazioniIdentificativoFormato} & R-309-F-Ob \\
+\hline
+\ref{visualizzaTipoFormatoDocumento} & R-253-F-Ob \\
+\hline
+\ref{visualizzaNomeProdottoSoftware} & R-254-F-Ob \\
+\hline
+\ref{visualizzaVersioneProdottoSoftware} & R-255-F-Ob \\
+\hline
+\ref{visualizzaProduttoreSoftware} & R-256-F-Ob \\
+\hline
+\ref{visualizzaFirmaDigitaleDocumento} & R-258-F-Ob \\
+\hline
+\ref{visualizzaSigilloElettronicoDocumento} & R-259-F-Ob \\
+\hline
+\ref{visualizzaMarcaturaTemporaleDocumento} & R-260-F-Ob \\
+\hline
+\ref{visualizzaConformitaCopieImmagineDocumento} & R-261-F-Ob \\
+\hline
+\ref{visualizzaVersioneDocumento} & R-262-F-Ob \\
+\hline
+\ref{visualizzaNomeDocumento} & R-263-F-Ob \\
+\hline
+\ref{visualizzaInformazioniAllegati} & R-264-F-Ob \\
+\hline
+\ref{visualizzaNumeroAllegatiDocumento} & R-265-F-Ob \\
+\hline
+\ref{visualizzaAllegatoInListaAllegati} & R-266-F-Ob \\
+\hline
+\ref{visualizzaIdentificativoAllegato} & R-267-F-Ob \\
+\hline
+\ref{erroreIdentificativoAllegato} & R-268-F-Ob \\
+\hline
+\ref{visualizzaDescrizioneAllegato} & R-269-F-Ob \\
+\hline
+\ref{erroreDescrizioneAllegato} & R-270-F-Ob \\
+\hline
+\ref{allegatiNonPresenti} & R-271-F-Ob \\
+\hline
+\ref{visualizzaTipoModificaDocumento} & R-273-F-Ob \\
+\hline
+\ref{visualizzaSoggettoAutoreModifica} & R-274-F-Ob \\
+\hline
+\ref{visualizzaDataOraModifica} & R-275-F-Ob \\
+\hline
+\ref{visualizzaIdentificativoVersionePrecedenteDocumento} & R-276-F-Ob \\
+\hline
+\ref{visualizzaTipoAggregazione} & R-277-F-Ob \\
+\hline
+\ref{visualizzaIdentificativoAggregazione} & R-278-F-Ob \\
+\hline
+\ref{visualizzaTipologiaFascicolo} & R-279-F-Ob \\
+\hline
+\ref{visualizzaAssegnazioneAggregazione} & R-281-F-Ob \\
+\hline
+\ref{visualizzaTipoAssegnazioneAggregazione} & R-280-F-Ob \\
+\hline
+\ref{visualizzaDataOraInizioAssegnazioneAggregazione} & R-282-F-Ob \\
+\hline
+\ref{visualizzaDataOraFineAssegnazioneAggregazione} & R-283-F-Ob \\
+\hline
+\ref{visualizzaDataAperturaAggregazione} & R-284-F-Ob \\
+\hline
+\ref{visualizzaDataChiusuraAggregazione} & R-285-F-Ob \\
+\hline
+\ref{visualizzaProgressivoAggregazione} & R-286-F-Ob \\
+\hline
+\ref{visualizzaProcedimentoAmministrativoAggregazione} & R-287-F-Ob \\
+\hline
+\ref{visualizzaIndiceProcedimentoAmministrativo} & R-288-F-Ob \\
+\hline
+\ref{visualizzaDenominazioneProcedimentoAmministrativo} & R-289-F-Ob \\
+\hline
+\ref{visualizzaCatalogoProcedimentiAmministrativi} & R-290-F-Ob \\
+\hline
+\ref{visualizzaFasiProcedimentoAmministrativo} & R-291-F-Ob \\
+\hline
+\ref{visualizzaFaseProcedimentoAmministrativo} & R-292-F-Ob \\
+\hline
+\ref{visualizzaTipoFaseProcedimentoAmministrativo} & R-293-F-Ob \\
+\hline
+\ref{visualizzaDataOraInizioFase} & R-294-F-Ob \\
+\hline
+\ref{visualizzaDataOraFineFase} & R-295-F-Ob \\
+\hline
+\ref{visualizzaIndiceDocumentiAggregazione} & R-296-F-Ob \\
+\hline
+\ref{visualizzaVoceIndiceDocumentiAggregazione} & R-297-F-Ob \\
+\hline
+\ref{visualizzaTipoDocumentiAggregazione} & R-298-F-Ob \\
+\hline
+\ref{visualizzaIdentificativoDocumentoAggregazione} & R-299-F-Ob \\
+\hline
+\ref{visualizzaPosizioneFisicaAggregazione} & R-300-F-Ob \\
+\hline
+\ref{visualizzaIdentificativoAggregazionePrimaria} & R-301-F-Ob \\
+\hline
+\ref{visualizzaTempoConservazioneAggregazione} & R-302-F-Ob \\
+\hline
+\ref{visualizzaMetadatiCustomDocumento} & R-303-F-Ob \\
+\hline
+\ref{visualizzaNomeMetadatoCustom} & R-304-F-Ob \\
+\hline
+\ref{visualizzaValoreMetadatoCustom} & R-305-F-Ob \\
+\hline
+\ref{metadatiCustomAssenti} & R-306-F-Ob \\
+\hline
+\ref{visualizzaInformazioniModifiche} & R-272-F-Ob \\
+\hline
+\ref{visualizzaInformazioniVerifica} & R-257-F-Ob \\
+\hline
+\href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20Esterni/2025-12-23-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-12-23}\setulcolor{black}} & R-4-Q-Ob \\
+\hline
+\href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/NormeDiProgetto.pdf}{\ul{Norme di Progetto}\setulcolor{black}\ped{v1.0}} & R-6-Q-Ob \\
+\hline
+\href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20Esterni/2025-11-27-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-11-27}\setulcolor{black}} & R-7-Q-Ob \\
+\hline
+\href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20-Esterni/2025-11-13-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-11-13}\setulcolor{black}} & R-11-V-Ob \\
+\hline
+\rowcolor{white}
+\caption{Tracciamento Fonti - Requisiti}
+\label{tab:trace-fonti-req}
+\end{longtable}
+
+
+
+\subsubsection{Tracciamento Requisiti - Fonti}
+
+\rowcolors{2}{gray!15}{white}
+\begin{longtable}{|p{4cm}|p{10cm}|}
+\hline
+\rowcolor{zpusgreen!30}
+\textbf{Requisito} & \textbf{Fonti} \\
+\hline
+\endfirsthead
+\rowcolor{zpusgreen!30}
+\textbf{Requisito} & \textbf{Fonti} \\
+\hline
+\endhead
+
+R-1-F-Ob & \ref{classiDocumentali} \\
+\hline
+R-2-F-Ob & \ref{elencoVuoto} \\
+\hline
+R-3-F-Ob & \ref{classiDocumentali}, \ref{classeDocumentale} \\
+\hline
+R-4-F-Ob & \ref{classiDocumentali}, \ref{classeDocumentale}, \ref{nomeClasseDocumentale} \\
+\hline
+R-5-F-Ob & \ref{statoVerificaElemento} \\
+\hline
+R-6-F-Ob & \ref{statoVerificaElemento} \\
+\hline
+R-7-F-Ob & \ref{marcaturaTemporaleElemento} \\
+\hline
+R-8-F-Ob & \ref{processiClasseDocumentale} \\
+\hline
+R-9-F-Ob & \ref{elencoVuoto} \\
+\hline
+R-10-F-Ob & \ref{processiClasseDocumentale}, \ref{processoClasseDocumentale} \\
+\hline
+R-11-F-Ob & \ref{processiClasseDocumentale}, \ref{processoClasseDocumentale}, \ref{idProcessoClasse} \\
+\hline
+R-12-F-Ob & \ref{documentiProcesso} \\
+\hline
+R-13-F-Ob & \ref{elencoVuoto} \\
+\hline
+R-14-F-Ob & \ref{documentiProcesso}, \ref{documentoProcesso} \\
+\hline
+R-15-F-Ob & \ref{documentiProcesso}, \ref{documentoProcesso}, \ref{nomeDocumentoProcesso} \\
+\hline
+R-16-F-Ob & \ref{statoVerificaElemento} \\
+\hline
+R-17-F-Ob & \ref{marcaturaTemporaleElemento} \\
+\hline
+R-18-F-Ob & \ref{elencoVuoto} \\
+\hline
+R-19-F-Ob & \ref{anteprimaDocumento} \\
+\hline
+R-20-F-Ob & \ref{formatoDocumentoNonSupportato} \\
+\hline
+R-21-F-Ob & \ref{ricercaDIP} \\
+\hline
+R-22-F-Ob & - \\
+\hline
+R-23-F-Ob & - \\
+\hline
+R-24-F-Op & \ref{ricercaDIP}, \ref{ricercaDIPSemantica} \\
+\hline
+R-25-F-Op & \ref{StatoIndicizzazione} \\
+\hline
+R-26-F-Ob & \ref{ricercaDIP} \\
+\hline
+R-27-F-Ob & \ref{campoNonValido} \\
+\hline
+R-28-F-Ob & \ref{specificaFiltriRicercaDocumento} \\
+\hline
+R-29-F-Ob & \ref{ricercaDIP}, \ref{ricercaProcesso} \\
+\hline
+R-30-F-Ob & \ref{ricercaDIP}, \ref{ricercaClasse} \\
+\hline
+R-31-F-Ob & \ref{ricercaDIP}, \ref{ricercaDIPConFiltri} \\
+\hline
+R-32-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni} \\
+\hline
+R-33-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento} \\
+\hline
+R-34-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addCustomMetadata} \\
+\hline
+R-35-F-Ob & \ref{ricercaDIP}, \ref{ricercaDIPConFiltri} \\
+\hline
+R-36-F-Ob & \ref{ricercaDIP}, \ref{ricercaDIPConFiltri} \\
+\hline
+R-37-F-Ob & \ref{ricercaDIP}, \ref{ricercaDIPConFiltri} \\
+\hline
+R-38-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento} \\
+\hline
+R-39-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriDI-DAI} \\
+\hline
+R-40-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni} \\
+\hline
+R-41-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento} \\
+\hline
+R-42-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addCustomMetadata} \\
+\hline
+R-43-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{selezionaCampiRicercaComuni}, \ref{visualizzaListaCampiComuni} \\
+\hline
+R-44-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{selezionaCampiRicercaComuni} \\
+\hline
+R-45-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addChiaveDescrittiva} \\
+\hline
+R-46-F-Ob & - \\
+\hline
+R-47-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addClassificazione} \\
+\hline
+R-48-F-Ob & - \\
+\hline
+R-49-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addTempoConserva} \\
+\hline
+R-50-F-Ob & - \\
+\hline
+R-51-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addTempoConserva} \\
+\hline
+R-52-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addNote} \\
+\hline
+R-53-F-Ob & - \\
+\hline
+R-54-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addTipoDocumento} \\
+\hline
+R-55-F-Ob & - \\
+\hline
+R-56-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addSoggetti} \\
+\hline
+R-57-F-Ob & \ref{addSoggetto} \\
+\hline
+R-58-F-Ob & \ref{addSoggetto}, \ref{specificaRuoloSoggetto} \\
+\hline
+R-59-F-Ob & \ref{addSoggetto}, \ref{specificaRuoloSoggetto}, \ref{visualizzaRuoliPerTipoDocumento} \\
+\hline
+R-60-F-Ob & \ref{addSoggetto}, \ref{specificaRuoloSoggetto}, \ref{visualizzaRuoliPerTipoDocumento}, \ref{visualizzaNomeRuolo} \\
+\hline
+R-61-F-Ob & \ref{addSoggetto}, \ref{specificaTipoSoggetto} \\
+\hline
+R-62-F-Ob & \ref{addSoggetto}, \ref{specificaTipoSoggetto}, \ref{visualizzaTipiSoggettoPerRuolo} \\
+\hline
+R-63-F-Ob & \ref{addSoggetto}, \ref{specificaTipoSoggetto}, \ref{visualizzaTipiSoggettoPerRuolo}, \ref{visualizzaNomeTipoSoggetto} \\
+\hline
+R-64-F-Ob & \ref{addSoggetto}, \ref{addDettagliSoggetto} \\
+\hline
+R-65-F-Ob & - \\
+\hline
+R-66-F-Ob & - \\
+\hline
+R-67-F-Ob & - \\
+\hline
+R-68-F-Ob & - \\
+\hline
+R-69-F-Ob & - \\
+\hline
+R-70-F-Ob & - \\
+\hline
+R-71-F-Ob & - \\
+\hline
+R-72-F-Ob & \ref{visualizzaNomeCampo} \\
+\hline
+R-73-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriDI-DAI}, \ref{selezionaCampiDI-DAI} \\
+\hline
+R-74-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriDI-DAI}, \ref{selezionaCampiDI-DAI}, \ref{visualizzaListaCampiDIDAI} \\
+\hline
+R-75-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriDI-DAI}, \ref{addDatiRegistrazione} \\
+\hline
+R-76-F-Ob & - \\
+\hline
+R-77-F-Ob & - \\
+\hline
+R-78-F-Ob & - \\
+\hline
+R-79-F-Ob & - \\
+\hline
+R-80-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriDI-DAI}, \ref{addIdentificativoFormato} \\
+\hline
+R-81-F-Ob & - \\
+\hline
+R-82-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriDI-DAI}, \ref{addDatiVerifica} \\
+\hline
+R-83-F-Ob & - \\
+\hline
+R-84-F-Ob & - \\
+\hline
+R-85-F-Ob & - \\
+\hline
+R-86-F-Ob & - \\
+\hline
+R-87-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriDI-DAI}, \ref{addTracciatureModificheDocumento} \\
+\hline
+R-88-F-Ob & - \\
+\hline
+R-89-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriAggregazione} \\
+\hline
+R-90-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriAggregazione}, \ref{selezionaCampiAggregazioneDocumentale}, \ref{visualizzaListaCampiAggregazioneDocumentale} \\
+\hline
+R-91-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriAggregazione}, \ref{selezionaCampiAggregazioneDocumentale} \\
+\hline
+R-92-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriAggregazione}, \ref{addTipoAggregazione} \\
+\hline
+R-93-F-Ob & - \\
+\hline
+R-94-F-Ob & - \\
+\hline
+R-95-F-Ob & - \\
+\hline
+R-96-F-Ob & - \\
+\hline
+R-97-F-Ob & - \\
+\hline
+R-98-F-Ob & - \\
+\hline
+R-99-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriAggregazione}, \ref{addProcedimentoAmministrativo} \\
+\hline
+R-100-F-Ob & - \\
+\hline
+R-101-F-Ob & - \\
+\hline
+R-102-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriAggregazione}, \ref{addProcedimentoAmministrativo}, \ref{addAssegnazione} \\
+\hline
+R-103-F-Ob & - \\
+\hline
+R-104-F-Ob & - \\
+\hline
+R-105-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addCustomMetadata} \\
+\hline
+R-106-F-Ob & - \\
+\hline
+R-107-F-Ob & \ref{visualizzaRisultati} \\
+\hline
+R-108-F-Ob & \ref{visualizzaRisultati}, \ref{infoRisultatiRicerca} \\
+\hline
+R-109-F-Ob & \ref{visualizzaRisultati}, \ref{infoRisultatiRicerca}, \ref{nomeElemento} \\
+\hline
+R-110-F-Ob & \ref{visualizzaRisultati}, \ref{infoRisultatiRicerca}, \ref{visualizzaTipoElemento} \\
+\hline
+R-111-F-Ob & \ref{nessunRisultato} \\
+\hline
+R-112-F-Ob & \ref{formatoNonCorretto} \\
+\hline
+R-113-F-Ob & \ref{compilaValoreFiltro} \\
+\hline
+R-114-F-Ob & \ref{formatoNonCorretto} \\
+\hline
+R-115-F-Ob & \ref{salvaDocumento} \\
+\hline
+R-116-F-Ob & \ref{salvaPiuDocumenti} \\
+\hline
+R-117-F-Ob & \ref{salvataggioFallito} \\
+\hline
+R-118-F-Ob & \ref{stampaSingoloDoc} \\
+\hline
+R-119-F-Ob & \ref{stampaInsiemeDoc} \\
+\hline
+R-120-F-Ob & \ref{stampaFallita} \\
+\hline
+R-121-F-Ob & \ref{stampaNonDisponibile} \\
+\hline
+R-122-F-Ob & \ref{verificaIntegritaDIPCompleto} \\
+\hline
+R-123-F-Ob & \ref{verificaIntegritaDIPCompleto} \\
+\hline
+R-124-F-Ob & \ref{verificaIntegritaClasseDocumentale} \\
+\hline
+R-125-F-Ob & \ref{verificaIntegritaClasseDocumentale} \\
+\hline
+R-126-F-Ob & \ref{verificaIntegritaProcesso} \\
+\hline
+R-127-F-Ob & \ref{verificaIntegritaProcesso} \\
+\hline
+R-128-F-Ob & \ref{verificaIntegritaDocumento} \\
+\hline
+R-129-F-Ob & \ref{verificaIntegritaDocumento} \\
+\hline
+R-130-F-Ob & \ref{visualizzazioneReportIntegritaDIPCompleto} \\
+\hline
+R-131-F-Ob & \ref{visualizzazioneReportIntegritaDIPCompleto}, \ref{visualizzazioneNumeroClassiVerificate} \\
+\hline
+R-132-F-Ob & \ref{visualizzazioneReportIntegritaDIPCompleto}, \ref{visualizzazioneNumeroClassiIntegre} \\
+\hline
+R-133-F-Ob & \ref{visualizzazioneReportIntegritaDIPCompleto}, \ref{visualizzazioneNumeroClassiCorrotte} \\
+\hline
+R-134-F-Ob & \ref{visualizzazioneReportIntegritaDIPCompleto}, \ref{visualizzazioneListaClassiCorrotte} \\
+\hline
+R-135-F-Ob & \ref{visualizzazioneReportIntegritaDIPCompleto}, \ref{visualizzazioneListaClassiCorrotte}, \ref{visualizzaElementoListaClassiCorrotte} \\
+\hline
+R-136-F-Ob & \ref{visualizzazioneReportIntegritaDIPCompleto}, \ref{visualizzazioneDataEOraVerificaDIP} \\
+\hline
+R-137-F-Ob & \ref{visualizzazioneReportIntegritaDIPCompleto}, \ref{nessunaClasseCorrotta} \\
+\hline
+R-138-F-Ob & \ref{visualizzazioneReportIntegritaClasseDocumentale} \\
+\hline
+R-139-F-Ob & \ref{visualizzazioneReportIntegritaClasseDocumentale}, \ref{visualizzazioneNumeroProcessiVerificati} \\
+\hline
+R-140-F-Ob & \ref{visualizzazioneReportIntegritaClasseDocumentale}, \ref{visualizzazioneNumeroProcessiIntegri} \\
+\hline
+R-141-F-Ob & \ref{visualizzazioneReportIntegritaClasseDocumentale}, \ref{visualizzazioneNumeroProcessiCorrotti} \\
+\hline
+R-142-F-Ob & \ref{visualizzazioneReportIntegritaClasseDocumentale}, \ref{visualizzazioneListaProcessiCorrotti} \\
+\hline
+R-143-F-Ob & \ref{visualizzazioneReportIntegritaClasseDocumentale}, \ref{visualizzazioneListaProcessiCorrotti}, \ref{visualizzaElementoListaProcessiCorrotti} \\
+\hline
+R-144-F-Ob & \ref{visualizzazioneReportIntegritaClasseDocumentale}, \ref{visualizzazioneDataEOraVerificaClasse} \\
+\hline
+R-145-F-Ob & \ref{visualizzazioneReportIntegritaClasseDocumentale}, \ref{visualizzazioneDataEOraVerificaClasse} \\
+\hline
+R-146-F-Ob & \ref{visualizzazioneReportIntegritaProcesso} \\
+\hline
+R-147-F-Ob & \ref{visualizzazioneReportIntegritaProcesso}, \ref{visualizzazioneNumeroDocumentiVerificati} \\
+\hline
+R-148-F-Ob & \ref{visualizzazioneReportIntegritaProcesso}, \ref{visualizzazioneNumeroDocumentiIntegri} \\
+\hline
+R-149-F-Ob & \ref{visualizzazioneReportIntegritaProcesso}, \ref{visualizzazioneNumeroDocumentiCorrotti} \\
+\hline
+R-150-F-Ob & \ref{visualizzazioneReportIntegritaProcesso}, \ref{visualizzazioneListaDocumentiCorrotti} \\
+\hline
+R-151-F-Ob & \ref{visualizzazioneReportIntegritaProcesso}, \ref{visualizzazioneListaDocumentiCorrotti}, \ref{visualizzaElementoListaDocumentiCorrotti} \\
+\hline
+R-152-F-Ob & \ref{visualizzazioneReportIntegritaProcesso}, \ref{visualizzazioneDataEOraVerificaProcesso} \\
+\hline
+R-153-F-Ob & \ref{visualizzazioneReportIntegritaProcesso}, \ref{nessunDocumentoCorrotto} \\
+\hline
+R-154-F-Ob & \ref{visualizzazioneReportIntegritaDocumento} \\
+\hline
+R-155-F-Ob & \ref{documentiProcesso}, \ref{documentoProcesso}, \ref{nomeDocumentoProcesso} \\
+\hline
+R-156-F-Ob & \ref{visualizzazioneReportIntegritaDocumento}, \ref{visualizzazioneStatoVerificaDocumento} \\
+\hline
+R-157-F-Ob & \ref{visualizzazioneReportIntegritaDocumento}, \ref{visualizzazioneDataEOraVerificaDocumento} \\
+\hline
+R-158-F-Ob & \ref{visualizzazioneReportIntegritaDocumento}, \ref{visualizzazioneDettagliErroreDocumento} \\
+\hline
+R-159-F-Ob & \ref{scaricaReport} \\
+\hline
+R-160-F-Ob & \ref{erroreGenerazionePDF} \\
+\hline
+R-161-F-Ob & \ref{scaricaFile} \\
+\hline
+R-162-F-Ob & \ref{scaricaFile} \\
+\hline
+R-163-F-Ob & \ref{scaricaFile} \\
+\hline
+R-164-F-Ob & \ref{erroreScaricamentoFile} \\
+\hline
+R-165-F-Ob & \ref{visualizzaInfoAiP} \\
+\hline
+R-166-F-Ob & \ref{visualizzaInfoAiP}, \ref{visualizzaClasseDocumentaleAiP} \\
+\hline
+R-167-F-Ob & \ref{visualizzaInfoAiP}, \ref{visualizzaUUIDAiP} \\
+\hline
+R-168-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP} \\
+\hline
+R-169-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaDataInizioProcessoSessione} \\
+\hline
+R-170-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaDataFineProcessoSessione} \\
+\hline
+R-171-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{erroreDataFineProcessoSessione} \\
+\hline
+R-172-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaUUIDUtenteAttivatore} \\
+\hline
+R-173-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaUUIDUtenteTerminatore} \\
+\hline
+R-174-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{erroreUUIDUtenteTerminatore} \\
+\hline
+R-175-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaNomeCanaleAttivazione} \\
+\hline
+R-176-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaNomeCanaleTerminazione} \\
+\hline
+R-177-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{erroreNomeCanaleTerminazione} \\
+\hline
+R-178-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaStatoProcessoSessione} \\
+\hline
+R-179-F-Ob & \ref{visualizzaInfoSessioneVersamento} \\
+\hline
+R-180-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaDataInizioProcessoSessione} \\
+\hline
+R-181-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaDataFineProcessoSessione} \\
+\hline
+R-182-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{erroreDataFineProcessoSessione} \\
+\hline
+R-183-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaUUIDUtenteAttivatore} \\
+\hline
+R-184-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaUUIDUtenteTerminatore} \\
+\hline
+R-185-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{erroreUUIDUtenteTerminatore} \\
+\hline
+R-186-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaNomeCanaleAttivazione} \\
+\hline
+R-187-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaNomeCanaleTerminazione} \\
+\hline
+R-188-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{erroreNomeCanaleTerminazione} \\
+\hline
+R-189-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaStatoProcessoSessione} \\
+\hline
+R-190-F-Ob & \ref{visualizzaInfoSessioneConservazione} \\
+\hline
+R-191-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaDataInizioProcessoSessione} \\
+\hline
+R-192-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaDataFineProcessoSessione} \\
+\hline
+R-193-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{erroreDataFineProcessoSessione} \\
+\hline
+R-194-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaUUIDUtenteAttivatore} \\
+\hline
+R-195-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaUUIDUtenteTerminatore} \\
+\hline
+R-196-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{erroreUUIDUtenteTerminatore} \\
+\hline
+R-197-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaNomeCanaleAttivazione} \\
+\hline
+R-198-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaNomeCanaleTerminazione} \\
+\hline
+R-199-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{erroreNomeCanaleTerminazione} \\
+\hline
+R-200-F-Ob & \ref{visualizzaInfoProcessoConservazioneAiP}, \ref{visualizzaStatoProcessoSessione} \\
+\hline
+R-201-F-Ob & \ref{visualizzaDescrizioneDocumento} \\
+\hline
+R-202-F-Ob & \ref{visualizzaListaSoggettiCoinvolti} \\
+\hline
+R-203-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaRuoloSoggetto} \\
+\hline
+R-204-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaTipoSoggetto} \\
+\hline
+R-205-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPF} \\
+\hline
+R-206-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPF}, \ref{visualizzaNomeSoggetto} \\
+\hline
+R-207-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPF}, \ref{visualizzaCognomeSoggetto} \\
+\hline
+R-208-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPF}, \ref{visualizzaCodiceFiscaleSoggetto} \\
+\hline
+R-209-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPF}, \ref{visualizzaIndirizziDigitaliSoggetto} \\
+\hline
+R-210-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPG} \\
+\hline
+R-211-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPG}, \ref{visualizzaDenominazioneOrganizzazioneSoggetto} \\
+\hline
+R-212-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPG}, \ref{visualizzaPartitaIVA} \\
+\hline
+R-213-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPF}, \ref{visualizzaCodiceFiscaleSoggetto} \\
+\hline
+R-214-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPG}, \ref{visualizzaDenominazioneUfficioSoggetto} \\
+\hline
+R-215-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPF}, \ref{visualizzaIndirizziDigitaliSoggetto} \\
+\hline
+R-216-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoAS} \\
+\hline
+R-217-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPF}, \ref{visualizzaCognomeSoggetto} \\
+\hline
+R-218-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPF}, \ref{visualizzaNomeSoggetto} \\
+\hline
+R-219-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPF}, \ref{visualizzaCodiceFiscaleSoggetto} \\
+\hline
+R-220-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPG}, \ref{visualizzaDenominazioneOrganizzazioneSoggetto} \\
+\hline
+R-221-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPG}, \ref{visualizzaDenominazioneUfficioSoggetto} \\
+\hline
+R-222-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPF}, \ref{visualizzaIndirizziDigitaliSoggetto} \\
+\hline
+R-223-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPAI} \\
+\hline
+R-224-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPAI}, \ref{visualizzaDenominazioneAmministrazioneCodiceIPA} \\
+\hline
+R-225-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPAI}, \ref{visualizzaDenominazioneAmministrazioneAOOCodiceIPAOOO} \\
+\hline
+R-226-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPAI}, \ref{visualizzaDenominazioneAmministrazioneUORCodiceIPAUOR} \\
+\hline
+R-227-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPF}, \ref{visualizzaIndirizziDigitaliSoggetto} \\
+\hline
+R-228-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPAE} \\
+\hline
+R-229-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPAE}, \ref{visualizzaDenominazioneAmministrazioneSoggetto} \\
+\hline
+R-230-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPG}, \ref{visualizzaDenominazioneUfficioSoggetto} \\
+\hline
+R-231-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoPF}, \ref{visualizzaIndirizziDigitaliSoggetto} \\
+\hline
+R-232-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoSW} \\
+\hline
+R-233-F-Ob & \ref{visualizzaListaSoggettiCoinvolti}, \ref{visualizzaInfoSoggettoCoinvolto}, \ref{visualizzaInfoSW}, \ref{visualizzaDenominazioneSistemaSoggetto} \\
+\hline
+R-234-F-Ob & \ref{visualizzaInfoClassificazioneDocumento}, \ref{visualizzaIndiceClassificazioneDocumento} \\
+\hline
+R-235-F-Ob & \ref{visualizzaInfoClassificazioneDocumento}, \ref{visualizzaDescrizioneIndiceClassificazioneDocumento} \\
+\hline
+R-236-F-Ob & \ref{visualizzaInfoClassificazioneDocumento}, \ref{visualizzaURIPianoClassificazioneDocumento} \\
+\hline
+R-237-F-Ob & \ref{visualizzaTempoConservazioneEffettivoDocumento} \\
+\hline
+R-238-F-Ob & \ref{erroreTempoConservazioneEffettivoDocumento} \\
+\hline
+R-239-F-Ob & \ref{visualizzaNoteDocumento} \\
+\hline
+R-240-F-Ob & \ref{erroreNoteDocumento} \\
+\hline
+R-241-F-Ob & \ref{visualizzaDatiRegistrazioneDocumento}, \ref{visualizzaTipologiaFlussoDocumento} \\
+\hline
+R-242-F-Ob & \ref{visualizzaDatiRegistrazioneDocumento}, \ref{visualizzaTipoRegistroDocumento} \\
+\hline
+R-243-F-Ob & \ref{visualizzaDatiRegistrazioneDocumento}, \ref{visualizzaDataRegistrazioneDocumento} \\
+\hline
+R-244-F-Ob & \ref{visualizzaDatiRegistrazioneDocumento}, \ref{visualizzaDataRegistrazioneDocumento}, \ref{visualizzaDataNonProtocollato} \\
+\hline
+R-245-F-Ob & \ref{visualizzaDatiRegistrazioneDocumento}, \ref{visualizzaDataRegistrazioneDocumento}, \ref{visualizzaDataProtocollato} \\
+\hline
+R-246-F-Ob & \ref{visualizzaDatiRegistrazioneDocumento}, \ref{visualizzaNumeroDocumento} \\
+\hline
+R-247-F-Ob & \ref{visualizzaDatiRegistrazioneDocumento}, \ref{visualizzaNumeroDocumento}, \ref{visualizzaNumeroNonProtocollato} \\
+\hline
+R-248-F-Ob & \ref{visualizzaDatiRegistrazioneDocumento}, \ref{visualizzaNumeroDocumento}, \ref{visualizzaNumeroProtocollato} \\
+\hline
+R-249-F-Ob & \ref{visualizzaDatiRegistrazioneDocumento}, \ref{visualizzaCodiceIdentificativoRegistroAppartenenzaDocumento} \\
+\hline
+R-250-F-Ob & \ref{visualizzaTipologiaDocumentaleDocumento} \\
+\hline
+R-251-F-Ob & \ref{visualizzaModalitaFormazioneDocumento} \\
+\hline
+R-252-F-Ob & \ref{visualizzaStatoRiservatezzaDocumento} \\
+\hline
+R-253-F-Ob & \ref{visualizzaInformazioniIdentificativoFormato}, \ref{visualizzaTipoFormatoDocumento} \\
+\hline
+R-254-F-Ob & \ref{visualizzaInformazioniIdentificativoFormato}, \ref{visualizzaNomeProdottoSoftware} \\
+\hline
+R-255-F-Ob & \ref{visualizzaInformazioniIdentificativoFormato}, \ref{visualizzaVersioneProdottoSoftware} \\
+\hline
+R-256-F-Ob & \ref{visualizzaInformazioniIdentificativoFormato}, \ref{visualizzaProduttoreSoftware} \\
+\hline
+R-257-F-Ob & \ref{visualizzaInformazisoniVerifica} \\
+\hline
+R-258-F-Ob & \ref{visualizzaInformazioniVerifica}, \ref{visualizzaFirmaDigitaleDocumento} \\
+\hline
+R-259-F-Ob & \ref{visualizzaInformazioniVerifica}, \ref{visualizzaSigilloElettronicoDocumento} \\
+\hline
+R-260-F-Ob & \ref{visualizzaInformazioniVerifica}, \ref{visualizzaMarcaturaTemporaleDocumento} \\
+\hline
+R-261-F-Ob & \ref{visualizzaInformazioniVerifica}, \ref{visualizzaConformitaCopieImmagineDocumento} \\
+\hline
+R-262-F-Ob & \ref{visualizzaVersioneDocumento} \\
+\hline
+R-263-F-Ob & \ref{visualizzaNomeDocumento} \\
+\hline
+R-264-F-Ob & \ref{visualizzaInformazioniAllegati} \\
+\hline
+R-265-F-Ob & \ref{visualizzaInformazioniAllegati}, \ref{visualizzaNumeroAllegatiDocumento} \\
+\hline
+R-266-F-Ob & \ref{visualizzaInformazioniAllegati}, \ref{visualizzaAllegatoInListaAllegati} \\
+\hline
+R-267-F-Ob & \ref{visualizzaInformazioniAllegati}, \ref{visualizzaAllegatoInListaAllegati}, \ref{visualizzaIdentificativoAllegato} \\
+\hline
+R-268-F-Ob & \ref{visualizzaInformazioniAllegati}, \ref{visualizzaAllegatoInListaAllegati}, \ref{erroreIdentificativoAllegato} \\
+\hline
+R-269-F-Ob & \ref{visualizzaInformazioniAllegati}, \ref{visualizzaAllegatoInListaAllegati}, \ref{visualizzaDescrizioneAllegato} \\
+\hline
+R-270-F-Ob & \ref{visualizzaInformazioniAllegati}, \ref{visualizzaAllegatoInListaAllegati}, \ref{erroreDescrizioneAllegato} \\
+\hline
+R-271-F-Ob & \ref{visualizzaInformazioniAllegati}, \ref{allegatiNonPresenti} \\
+\hline
+R-272-F-Ob & \ref{visualizzaInformazioniModifiche} \\
+\hline
+R-273-F-Ob & \ref{visualizzaInformazioniModificheDocumento}, \ref{visualizzaTipoModificaDocumento} \\
+\hline
+R-274-F-Ob & \ref{visualizzaInformazioniModificheDocumento}, \ref{visualizzaSoggettoAutoreModifica} \\
+\hline
+R-275-F-Ob & \ref{visualizzaInformazioniModificheDocumento}, \ref{visualizzaDataOraModifica} \\
+\hline
+R-276-F-Ob & \ref{visualizzaInformazioniModificheDocumento}, \ref{visualizzaIdentificativoVersionePrecedenteDocumento} \\
+\hline
+R-277-F-Ob & \ref{visualizzaTipoAggregazione} \\
+\hline
+R-278-F-Ob & \ref{visualizzaIdentificativoAggregazione} \\
+\hline
+R-279-F-Ob & \ref{visualizzaTipologiaFascicolo} \\
+\hline
+R-280-F-Ob & \ref{visualizzaAssegnazioneAggregazione}, \ref{visualizzaTipoAssegnazioneAggregazione} \\
+\hline
+R-281-F-Ob & - \\
+\hline
+R-282-F-Ob & \ref{visualizzaAssegnazioneAggregazione}, \ref{visualizzaDataOraInizioAssegnazioneAggregazione} \\
+\hline
+R-283-F-Ob & \ref{visualizzaAssegnazioneAggregazione}, \ref{visualizzaDataOraFineAssegnazioneAggregazione} \\
+\hline
+R-284-F-Ob & \ref{visualizzaDataAperturaAggregazione} \\
+\hline
+R-285-F-Ob & \ref{visualizzaDataChiusuraAggregazione} \\
+\hline
+R-286-F-Ob & \ref{visualizzaProgressivoAggregazione} \\
+\hline
+R-287-F-Ob & \ref{visualizzaProcedimentoAmministrativoAggregazione} \\
+\hline
+R-288-F-Ob & \ref{visualizzaProcedimentoAmministrativoAggregazione}, \ref{visualizzaIndiceProcedimentoAmministrativo} \\
+\hline
+R-289-F-Ob & \ref{visualizzaProcedimentoAmministrativoAggregazione}, \ref{visualizzaDenominazioneProcedimentoAmministrativo} \\
+\hline
+R-290-F-Ob & \ref{visualizzaProcedimentoAmministrativoAggregazione}, \ref{visualizzaCatalogoProcedimentiAmministrativi} \\
+\hline
+R-291-F-Ob & \ref{visualizzaProcedimentoAmministrativoAggregazione}, \ref{visualizzaFasiProcedimentoAmministrativo} \\
+\hline
+R-292-F-Ob & \ref{visualizzaProcedimentoAmministrativoAggregazione}, \ref{visualizzaFasiProcedimentoAmministrativo}, \ref{visualizzaFaseProcedimentoAmministrativo} \\
+\hline
+R-293-F-Ob & \ref{visualizzaProcedimentoAmministrativoAggregazione}, \ref{visualizzaFasiProcedimentoAmministrativo}, \ref{visualizzaFaseProcedimentoAmministrativo}, \ref{visualizzaTipoFaseProcedimentoAmministrativo} \\
+\hline
+R-294-F-Ob & \ref{visualizzaProcedimentoAmministrativoAggregazione}, \ref{visualizzaFasiProcedimentoAmministrativo}, \ref{visualizzaFaseProcedimentoAmministrativo}, \ref{visualizzaDataOraInizioFase} \\
+\hline
+R-295-F-Ob & \ref{visualizzaProcedimentoAmministrativoAggregazione}, \ref{visualizzaFasiProcedimentoAmministrativo}, \ref{visualizzaFaseProcedimentoAmministrativo}, \ref{visualizzaDataOraFineFase} \\
+\hline
+R-296-F-Ob & \ref{visualizzaIndiceDocumentiAggregazione} \\
+\hline
+R-297-F-Ob & \ref{visualizzaIndiceDocumentiAggregazione}, \ref{visualizzaVoceIndiceDocumentiAggregazione} \\
+\hline
+R-298-F-Ob & \ref{visualizzaIndiceDocumentiAggregazione}, \ref{visualizzaVoceIndiceDocumentiAggregazione}, \ref{visualizzaTipoDocumentiAggregazione} \\
+\hline
+R-299-F-Ob & \ref{visualizzaIndiceDocumentiAggregazione}, \ref{visualizzaVoceIndiceDocumentiAggregazione}, \ref{visualizzaIdentificativoDocumentoAggregazione} \\
+\hline
+R-300-F-Ob & \ref{visualizzaPosizioneFisicaAggregazione} \\
+\hline
+R-301-F-Ob & \ref{visualizzaIdentificativoAggregazionePrimaria} \\
+\hline
+R-302-F-Ob & \ref{visualizzaTempoConservazioneAggregazione} \\
+\hline
+R-303-F-Ob & \ref{visualizzaMetadatiCustomDocumento} \\
+\hline
+R-304-F-Ob & \ref{visualizzaMetadatiCustomDocumento}, \ref{visualizzaNomeMetadatoCustom} \\
+\hline
+R-305-F-Ob & \ref{visualizzaMetadatiCustomDocumento}, \ref{visualizzaValoreMetadatoCustom} \\
+\hline
+R-306-F-Ob & \ref{visualizzaMetadatiCustomDocumento}, \ref{metadatiCustomAssenti} \\
+\hline
+R-307-F-Ob & \ref{visualizzaDatiRegistrazioneDocumento} \\
+\hline
+R-308-F-Ob & \ref{visualizzaInfoClassificazioneDocumento} \\
+\hline
+R-309-F-Ob & \ref{visualizzaInformazioniIdentificativoFormato} \\
+\hline
+R-1-Q-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-2-Q-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-3-Q-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-4-Q-De & \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20Esterni/2025-12-23-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-12-23}\setulcolor{black}} \\
+\hline
+R-5-Q-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-6-Q-Ob & \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/NormeDiProgetto.pdf}{\ul{Norme di Progetto}\setulcolor{black}\ped{v1.0}} \\
+\hline
+R-7-Q-Ob & \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20Esterni/2025-11-27-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-11-27}\setulcolor{black}} \\
+\hline
+R-8-Q-De & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-1-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-2-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-3-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-4-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-5-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-6-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-7-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-8-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-9-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-10-V-Ob & \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato di Progetto}\setulcolor{black}} \\
+\hline
+R-11-V-Ob & \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20-Esterni/2025-11-13-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-11-13}\setulcolor{black}} \\
+\hline
+\rowcolor{white}
+\caption{Tracciamento Requisiti - Fonti}
+\label{tab:trace-req-fonti}
+\end{longtable}
+
+\newpage
+\subsection{Riepilogo}
+\begin{table}[h]
+    \centering
+    \rowcolors{2}{gray!15}{white}
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \rowcolor{zpusgreen!30}
+        \textbf{Tipologia} & \textbf{Obbligatori} & \textbf{Desiderabili} & \textbf{Opzionali} & \textbf{Totale} \\
+        \hline
+        Funzionali & 270 & 0 & 2 & 272 \\
+        \hline
+        Qualità & 6 & 2 & 0 & 8 \\
+        \hline
+        Vincolo & 11 & 0 & 0 & 11 \\
+        \hline
+        \textbf{Totale} & 287 & 2 & 2 & \textbf{291} \\
+        \hline
+    \end{tabular}
+    \caption{Riepilogo dei Requisiti}
+    \label{tab:riepilogo-requisiti}
+\end{table}

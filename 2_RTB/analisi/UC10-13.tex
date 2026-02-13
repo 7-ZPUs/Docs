@@ -1,0 +1,393 @@
+% DA UC-41
+
+\usecase{visualizzaInfoAiP}{Visualizzazione informazioni AiP di provenienza documento}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC38.png}
+      \caption{\ref{visualizzaInfoAiP} - Visualizzazione informazioni AiP di provenienza documento}
+    \label{fig:uc_visualizzazioneInfoAiP}
+\end{figure}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente ha ottenuto le informazioni sull'AiP di provenienza relativo al documento: UUID e classe documentale.
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video le informazioni sull'AiP:
+            \begin{itemize}
+                \item Classe documentale AiP (\ref{visualizzaClasseDocumentaleAiP})
+                \item UUID AiP (\ref{visualizzaUUIDAiP})
+            \end{itemize}
+        \end{enumerate}
+    \item \textbf{Inclusioni}:
+    \begin{itemize}
+          \item \ref{visualizzaClasseDocumentaleAiP} Visualizzazione classe documentale di appartenenza AiP
+        \item \ref{visualizzaUUIDAiP} Visualizza UUID AiP
+    \end{itemize}
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC38INC.png}
+    \caption{Inclusioni \ref{visualizzaInfoAiP} - Visualizzazione informazioni AiP di provenienza documento}
+    \label{fig:inclusioniVisualizzazioneInfoAiP}
+\end{figure}
+
+\subusecase{visualizzaClasseDocumentaleAiP}{Visualizza classe documentale di appartenenza AiP}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un AiP
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la classe documentale dell'AiP relativo al documento selezionato
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video la classe documentale dell'AiP relativo al documento selezionato
+        \end{enumerate}
+\end{itemize}
+
+\subusecase{visualizzaUUIDAiP}{Visualizza UUID AiP}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un AiP
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza lo UUID dell'AiP relativo al documento selezionato
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video lo UUID dell'AiP relativo al documento selezionato
+        \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaInfoProcessoConservazioneAiP}{Visualizza informazioni processo di conservazione AiP}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC39.png}
+    \caption{\ref{visualizzaInfoProcessoConservazioneAiP} - Visualizzazione informazioni processo di conservazione AiP}
+    \label{fig:uc_visualizzaInfoProcessoConservazioneAiP}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un AiP
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza le informazioni del processo di conservazione, quali: data inizio, data fine, uuid utente responsabile, canale di attivazione, stato del processo, sessione di versamento, sessione di conservazione.
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Vengono mostrati a video, in riferimento all'AiP selezionato:
+            \begin{itemize}
+                \item Data inizio (\ref{visualizzaDataInizioProcessoSessione})
+                \item Data fine (\ref{visualizzaDataFineProcessoSessione})
+                \item UUID utente attivatore (\ref{visualizzaUUIDUtenteAttivatore})
+                \item UUID utente terminatore (\ref{visualizzaUUIDUtenteTerminatore})
+                \item Nome canale di attivazione (\ref{visualizzaNomeCanaleAttivazione})
+                \item Nome canale di terminazione (\ref{visualizzaNomeCanaleTerminazione})
+                \item Stato del processo (\ref{visualizzaStatoProcessoSessione})
+                \item Informazioni sulla sessione di versamento (\ref{visualizzaInfoSessioneVersamento})
+                \item Informazioni sulla sessione di conservazione (\ref{visualizzaInfoSessioneConservazione})
+            \end{itemize}
+        \end{enumerate}
+    \item \textbf{Inclusioni}:
+    \begin{itemize}
+        \item \ref{visualizzaDataInizioProcessoSessione} Visualizza data inizio processo/sessione
+        \item \ref{visualizzaDataFineProcessoSessione} Visualizza data fine processo/sessione
+        \item \ref{visualizzaUUIDUtenteAttivatore} Visualizza UUID utente attivatore di un processo/sessione
+        \item \ref{visualizzaUUIDUtenteTerminatore} Visualizza UUID utente terminatore di un processo/sessione
+        \item \ref{visualizzaNomeCanaleAttivazione} Visualizza nome canale di attivazione di un processo/sessione
+        \item \ref{visualizzaNomeCanaleTerminazione} Visualizza nome canale di terminazione di un processo/sessione
+        \item \ref{visualizzaStatoProcessoSessione} Visualizza stato di un processo/sessione
+        \item \ref{visualizzaInfoSessioneVersamento} Visualizza Informazioni sulla Sessione di Versamento
+        \item \ref{visualizzaInfoSessioneConservazione} Visualizza Informazioni sulla Sessione di Conservazione
+    \end{itemize}
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../assets/uml/UC39INC.png}
+    \caption{Inclusioni \ref{visualizzaInfoProcessoConservazioneAiP} - Visualizzazione informazioni processo di conservazione AiP}
+    \label{fig:inclusioniVisualizzaInfoProcessoConservazioneAiP}
+\end{figure}
+
+\subusecase{visualizzaDataInizioProcessoSessione}{Visualizza data inizio processo/sessione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la data di inizio del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video la data di inizio del/la processo/sessione
+        \end{enumerate}
+\end{itemize}
+
+\subusecase{visualizzaDataFineProcessoSessione}{Visualizza data fine processo/sessione}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../assets/uml/UC39.2.png}
+    \caption{\ref{visualizzaDataFineProcessoSessione} - Visualizzazione data fine processo/sessione}
+    \label{fig:uc_visualizzaDataFineProcessoSessione}
+\end{figure}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la data di fine del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video la data di fine del/la processo/sessione
+        \end{enumerate}
+    \item \textbf{Flusso Alternativo}:
+    \begin{itemize}
+        \item La data di fine è assente in quanto il/la processo/sessione non è terminato/a
+    \end{itemize}
+    \item \textbf{Estensioni}: \ref{erroreDataFineProcessoSessione} Errore visualizzazione data fine processo/sessione
+\end{itemize}
+
+\subusecase{erroreDataFineProcessoSessione}{Errore visualizzazione data fine processo/sessione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza un messaggio di errore in merito alla data di fine del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video il messaggio: La data di fine è assente in quanto il/la processo/sessione non è terminato/a
+        \end{enumerate}
+\end{itemize}
+
+\subusecase{visualizzaUUIDUtenteAttivatore}{Visualizza UUID utente attivatore di un processo/sessione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza lo UUID dell'utente che è responsabile dell'attivazione del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video lo UUID dell'utente attivatore del/la processo/sessione
+        \end{enumerate}
+\end{itemize}
+
+\subusecase{visualizzaUUIDUtenteTerminatore}{Visualizza UUID utente terminatore di un processo/sessione}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../assets/uml/UC39.5.png}
+    \caption{\ref{visualizzaUUIDUtenteTerminatore} - Visualizzazione UUID utente terminatore di un processo/sessione}
+    \label{fig:uc_visualizzaUUIDUtenteTerminatore}
+\end{figure}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza lo UUID dell'utente che è responsabile della terminazione del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video lo UUID dell'utente terminatore del/la processo/sessione
+        \end{enumerate}
+    \item \textbf{Flusso Alternativo}:
+    \begin{itemize}
+        \item Non viene mostrato a video lo UUID dell'utente terminatore del/la processo/sessione è assente in quanto il/la processo/sessione non è ancora terminato/a.
+    \end{itemize}
+    \item \textbf{Estensioni}: \ref{erroreUUIDUtenteTerminatore} Errore visualizzazione UUID utente terminatore di un processo/sessione
+\end{itemize}
+
+\subusecase{erroreUUIDUtenteTerminatore}{Errore visualizzazione UUID utente terminatore di un processo/sessione  }
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza un messaggio di errore in merito allo UUID dell'utente terminatore del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video il messaggio: Lo UUID dell'utente terminatore del/la processo/sessione è assente in quanto il/la processo/sessione non è ancora terminato/a.
+        \end{enumerate}
+\end{itemize}
+
+\subusecase{visualizzaNomeCanaleAttivazione}{Visualizza nome canale di attivazione di un processo/sessione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza il nome del canale di attivazione del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video il nome del canale di attivazione del/la processo/sessione
+        \end{enumerate}
+\end{itemize}
+
+\subusecase{visualizzaNomeCanaleTerminazione}{Visualizza nome canale di terminazione di un processo/sessione}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../assets/uml/UC39.8.png}
+    \caption{\ref{visualizzaNomeCanaleTerminazione} - Visualizzazione nome canale di terminazione di un processo/sessione}
+    \label{fig:uc_visualizzaNomeCanaleTerminazione}
+\end{figure}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza il nome del canale di terminazione del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video il nome del canale di terminazione del/la processo/sessione
+        \end{enumerate}
+    \item \textbf{Flusso Alternativo}:
+    \begin{itemize}
+        \item Non viene mostrato a video il nome del canale di terminazione del/la processo/sessione in quanto il/la processo/sessione non è ancora terminato/a.
+    \end{itemize}
+    \item \textbf{Estensioni}: \ref{erroreNomeCanaleTerminazione} Errore visualizzazione nome canale di terminazione di un processo/sessione
+\end{itemize}
+
+\subusecase{erroreNomeCanaleTerminazione}{Errore visualizzazione nome canale di terminazione di un processo/sessione  }
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza un messaggio di errore in merito al nome del canale di terminazione del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video il messaggio: Il nome del canale di terminazione del/la processo/sessione è assente in quanto il/la processo/sessione non è ancora terminato/a.
+        \end{enumerate}
+\end{itemize}
+
+\subusecase{visualizzaStatoProcessoSessione}{Visualizza stato di un processo/sessione}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando le informazioni di un processo/sessione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza lo stato del/la processo/sessione
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video lo stato del/la processo/sessione
+        \end{enumerate}
+\end{itemize}
+
+\usecase{visualizzaInfoSessioneVersamento}{Visualizza informazioni sulla sessione di versamento}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC40.png}
+    \caption{\ref{visualizzaInfoSessioneVersamento} - Visualizzazione informazioni sulla sessione di versamento}
+    \label{fig:uc_visualizzaInfoSessioneVersamento}
+\end{figure}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato il programma
+        \item L'utente sta visualizzando i dettagli di un processo di conservazione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza i dettagli della sessione di versamento, quali: data inizio, data fine, UUID utente attivatore, UUID utente terminatore, nome canale di attivazione, nome canale di terminazione, stato del processo
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Vengono mostrati a video, relativamente alla sessione di versamento del processo selezionato:
+            \begin{itemize}
+                \item Data inizio (\ref{visualizzaDataInizioProcessoSessione})
+                \item Data fine (\ref{visualizzaDataFineProcessoSessione})
+                \item UUID utente attivatore (\ref{visualizzaUUIDUtenteAttivatore})
+                \item UUID utente terminatore (\ref{visualizzaUUIDUtenteTerminatore})
+                \item Nome canale di attivazione (\ref{visualizzaNomeCanaleAttivazione})
+                \item Nome canale di terminazione (\ref{visualizzaNomeCanaleTerminazione})
+                \item Stato del processo (\ref{visualizzaStatoProcessoSessione})
+            \end{itemize}
+        \end{enumerate}
+    \item \textbf{Inclusioni}:
+    \begin{itemize}
+        \item \ref{visualizzaDataInizioProcessoSessione} Visualizza data inizio processo/sessione
+        \item \ref{visualizzaDataFineProcessoSessione} Visualizza data fine processo/sessione
+        \item \ref{visualizzaUUIDUtenteAttivatore} Visualizza UUID utente attivatore di un processo/sessione
+        \item \ref{visualizzaUUIDUtenteTerminatore} Visualizza UUID utente terminatore di un processo/sessione
+        \item \ref{visualizzaNomeCanaleAttivazione} Visualizza nome canale di attivazione di un processo/sessione
+        \item \ref{visualizzaNomeCanaleTerminazione} Visualizza nome canale di terminazione di un processo/sessione
+        \item \ref{visualizzaStatoProcessoSessione} Visualizza stato di un processo/sessione
+    \end{itemize}
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../assets/uml/UC40INC.png}
+    \caption{Inclusioni \ref{visualizzaInfoSessioneVersamento} - Visualizzazione informazioni sulla sessione di versamento}
+    \label{fig:inclusioniVisualizzaInfoSessioneVersamento}
+\end{figure}
+
+\usecase{visualizzaInfoSessioneConservazione}{Visualizza informazioni sulla sessione di conservazione}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC41.png}
+    \caption{\ref{visualizzaInfoSessioneConservazione} - Visualizzazione informazioni sulla sessione di conservazione}
+    \label{fig:uc_visualizzaInfoSessioneConservazione}
+\end{figure}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato il programma
+        \item L'utente sta visualizzando i dettagli di un processo di conservazione
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza i dettagli della sessione di conservazione, quali: data inizio, data fine, UUID utente attivatore, UUID utente terminatore, nome canale di attivazione, nome canale di terminazione, stato del processo
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Vengono mostrati a video, relativamente alla sessione di conservazione del processo selezionato:
+            \begin{itemize}
+                \item Data inizio (\ref{visualizzaDataInizioProcessoSessione})
+                \item Data fine (\ref{visualizzaDataFineProcessoSessione})
+                \item UUID utente attivatore (\ref{visualizzaUUIDUtenteAttivatore})
+                \item UUID utente terminatore (\ref{visualizzaUUIDUtenteTerminatore})
+                \item Nome canale di attivazione (\ref{visualizzaNomeCanaleAttivazione})
+                \item Nome canale di terminazione (\ref{visualizzaNomeCanaleTerminazione})
+                \item Stato del processo (\ref{visualizzaStatoProcessoSessione})
+            \end{itemize}
+        \end{enumerate}
+    \item \textbf{Inclusioni}:
+    \begin{itemize}
+        \item \ref{visualizzaDataInizioProcessoSessione} Visualizza data inizio processo/sessione
+        \item \ref{visualizzaDataFineProcessoSessione} Visualizza data fine processo/sessione
+        \item \ref{visualizzaUUIDUtenteAttivatore} Visualizza UUID utente attivatore di un processo/sessione
+        \item \ref{visualizzaUUIDUtenteTerminatore} Visualizza UUID utente terminatore di un processo/sessione
+        \item \ref{visualizzaNomeCanaleAttivazione} Visualizza nome canale di attivazione di un processo/sessione
+        \item \ref{visualizzaNomeCanaleTerminazione} Visualizza nome canale di terminazione di un processo/sessione
+        \item \ref{visualizzaStatoProcessoSessione} Visualizza stato di un processo/sessione
+    \end{itemize}
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../assets/uml/UC41INC.png}
+    \caption{Inclusioni \ref{visualizzaInfoSessioneConservazione} - Visualizzazione informazioni sulla sessione di conservazione}
+    \label{fig:inclusioniVisualizzaInfoSessioneConservazione}
+\end{figure}
