@@ -1,8 +1,11 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,12pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
 \usepackage[italian]{babel}
 \usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
 \renewcommand*\familydefault{\sfdefault}
 \usepackage{float}
 \usepackage{geometry}
@@ -127,7 +130,9 @@
     \hline
     \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
     \hline
-    0.1 & 14/12/2025 & Zakaria Laoud & Matteo Rocco A. & Creazione del verbale e stesura iniziale \\
+    1.0 & 2026/02/13 & Laoud Zakaria & Rocco Matteo A. & \begin{tabular}[c]{@{}c@{}} Approvazione finale \\ per RTB \end{tabular} \\
+    \hline
+    0.1 & 14/12/2025 & Laoud Zakaria & Rocco Matteo A. & \begin{tabular}[c]{@{}c@{}} Creazione del verbale\\ e stesura iniziale \end{tabular} \\
     \hline
 \end{tabular}
     \end{adjustwidth}
@@ -142,7 +147,7 @@
 \begin{itemize}[noitemsep]
     \item Fattoni Antonio 
     \item Georgescu Diana
-    \item Gingilino Aaron
+    \item Gingillino Aaron
     \item Laoud Zakaria
     \item Rocco Matteo Alberto
     \item Soligo Lorenzo
@@ -161,7 +166,7 @@
 \section{Svolgimento e Discussione}
 
 \subsection{Definizione ruoli}
-I ruoli necessari in questa sprint sono:
+I ruoli necessari in questa Sprint sono:
 \begin{itemize}[noitemsep]
     \item Responsabile
     \item Amministratore
@@ -169,7 +174,7 @@ I ruoli necessari in questa sprint sono:
     \item Analista
 \end{itemize}
 
-I ruoli assegnati a ciascun membro per questo sprint sono i seguenti:
+\noindent I ruoli assegnati a ciascun membro per questo Sprint sono i seguenti:
 \begin{table}[H]
     \begin{adjustwidth}{-1cm}{-1cm}
     \centering
@@ -181,7 +186,7 @@ I ruoli assegnati a ciascun membro per questo sprint sono i seguenti:
     \hline
     Georgescu Diana & Amministratore \\
     \hline
-    Gingilino Aaron & Amministratore \\
+    Gingillino Aaron & Amministratore \\
     \hline
     Laoud Zakaria & Amministratore \\
     \hline
@@ -196,9 +201,8 @@ I ruoli assegnati a ciascun membro per questo sprint sono i seguenti:
 \end{table}
 \textbf{Tutti} i membri del gruppo sono anche \textbf{verificatori}.
 
-\subsection{Incontro con il professore Cardin}
-
-Durante l'incontro con il professore Cardin sono state poste alcune domande riguardanti l'analisi dei requisiti. Di seguito sono riportate le risposte fornite: \\\\
+\subsection{Incontro con Professor Cardin}
+Durante l'incontro con il Professor Cardin sono state poste alcune domande riguardanti l'analisi dei requisiti. Di seguito sono riportate le risposte fornite: \\\\
 \textbf{Domanda 1:} Quanto in profondità dobbiamo andare con gli use case di ricerca? Dobbiamo farne uno per metadato? \\
 \textbf{Risposta:} Poiché gli use case servono a comprendere il sistema in modo più dettagliato, è opportuno spingersi a un livello di approfondimento tale da 
 ricavare il maggior numero possibile di requisiti, facilitandone anche il successivo testing. Di conseguenza, sì: è consigliabile definire uno use case per ogni 
@@ -210,23 +214,23 @@ stima dei tempi associata.\\\\
 \textbf{Domanda 3:} Quando è che uno use case si stacca dal padre e diventa a sé stante? \\
 \textbf{Risposta:} Uno use case diventa indipendente dal padre quando l'attore può completare interamente le funzionalità previste senza dover accedere ad altri use case. \\\\
 \textbf{Domanda 4:} Quando è che uno use case ne estende un altro? \\
-\textbf{Risposta:} Uno use case estende un altro quando rappresenta uno scenario alternativo o eccezionale del caso d’uso principale. Ad esempio, se lo use case UC-11 estende UC-10,
- significa che UC-11 descrive un percorso alternativo: qualora l’attore segua UC-11, non verranno raggiunte le post-condizioni previste da UC-10. Un esempio tipico, discusso 
- anche a lezione, è quello delle estensioni che modellano possibili errori o eccezioni che possono verificarsi durante l’esecuzione dello use case principale.
+\textbf{Risposta:} Uno use case estende un altro quando rappresenta uno scenario alternativo o eccezionale del caso d'uso principale. Ad esempio, se lo use case UC-11 estende UC-10,
+ significa che UC-11 descrive un percorso alternativo: qualora l'attore segua UC-11, non verranno raggiunte le post-condizioni previste da UC-10. Un esempio tipico, discusso 
+ anche a lezione, è quello delle estensioni che modellano possibili errori o eccezioni che possono verificarsi durante l'esecuzione dello use case principale.
 
 \section{Aggiornamento analisi dei requisiti}
-Dopo l'incontro con il professore Cardin, il gruppo ha deciso di procedere con l'aggiunta dei casi di errore come estensioni degli use case principali, suddividendo il documento
+Dopo l'incontro con il Professor Cardin, il gruppo ha deciso di procedere con l'aggiunta dei casi di errore come estensioni degli use case principali, suddividendo il documento
  in più parti al fine di facilitare le modifiche parallele da parte degli analisti.
 
 \section{Retrospettiva settimanale}
-È stata svolta la retrospettiva della seconda settimana dello sprint.
+È stata svolta la retrospettiva della seconda settimana dello Sprint.
 
 \section{Decisioni}
 \begin{enumerate}[noitemsep]
     \item Si è deciso di continuare la stesura delle norme di progetto.
     \item Si è deciso di iniziare la preparazione del diario di bordo.
     \item Si è deciso di aggiornare l'analisi dei requisiti.
-    \item Si è deciso di contiuare con la stesura del piano di qualifica.
+    \item Si è deciso di continuare con la stesura del piano di qualifica.
     \item Si è deciso di iniziare a studiare le nuove tecnologie utili al progetto.
 \end{enumerate}
 
@@ -241,17 +245,17 @@ Dopo l'incontro con il professore Cardin, il gruppo ha deciso di procedere con l
     \hline
     \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
     \hline
-    \#0 & Redazione del verbale & \href{https://7zpus.atlassian.net/browse/DIPR-122}{DIPR-122} & Zakaria Laoud & Matteo Rocco A. \\
+    \#0 & Redazione del verbale & \href{https://7zpus.atlassian.net/browse/DIPR-122}{DIPR-122} & Laoud Zakaria & Rocco Matteo A. \\
     \hline
     \#1 & Norme di progetto & \href{https://7zpus.atlassian.net/browse/DIPR-139}{DIPR-139} & Amministratori & Amministratori \\
     \hline
-    \#2 & Diario di bordo &  & Matteo Rocco A. & Tutti \\
+    \#2 & Diario di bordo &  & Rocco Matteo A. & Tutti \\
     \hline
-    \#3 & Aggiornamento analisi dei requisiti & \href{https://7zpus.atlassian.net/browse/DIPR-131}{DIPR-131} & Analisti & Analisti \\
+    \#3 & \begin{tabular}[c]{@{}c@{}} Aggiornamento analisi \\dei requisiti \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-131}{DIPR-131} & Analisti & Analisti \\
     \hline
-    \#4 & Piano di qualifica & \href{https://7zpus.atlassian.net/browse/DIPR-138}{DIPR-138} & Matteo Rocco A. & Davide Vigolo \\
+    \#4 & Piano di qualifica & \href{https://7zpus.atlassian.net/browse/DIPR-138}{DIPR-138} & Rocco Matteo A. & Vigolo Davide \\
     \hline
-    \#5 & Studio nuove tecnologie &  & Tutti & Tutti \\
+    \#5 & \begin{tabular}[c]{@{}c@{}} Studio nuove\\ tecnologie \end{tabular} &  & Tutti & Tutti \\
     \hline
 \end{tabular}
     \end{adjustwidth}

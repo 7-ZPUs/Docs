@@ -1,11 +1,18 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,12pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
 \usepackage[italian]{babel}
 \usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
 \renewcommand*\familydefault{\sfdefault}
 \usepackage{float}
 \usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
 \usepackage{setspace}
 \usepackage{chngpage}
 \usepackage{enumitem}
@@ -50,7 +57,7 @@
 \end{center}
 
 \noindent
-\textbf{Data:} 07/11/2025 \\
+\textbf{Data:} 2025/11/07 \\
 \textbf{Durata:} 2 ore\\
 \textbf{Luogo:} Incontro online (Discord)
 
@@ -70,7 +77,9 @@
     \hline
     \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
     \hline
-    0.1 & 07/11/2025 & Rocco Matteo A. & Soligo Lorenzo & Creazione del verbale e stesura iniziale \\
+    1.0 & 2026/02/13 & Laoud Zakaria & Rocco Matteo A. & \begin{tabular}[c]{@{}c@{}} Approvazione finale \\ per RTB \end{tabular} \\
+    \hline
+    0.1 & 07/11/2025 & Rocco Matteo A. & Soligo Lorenzo & \begin{tabular}[c]{@{}c@{}}Creazione del verbale\\ e stesura iniziale\end{tabular} \\
     \hline
 \end{tabular}
     \end{adjustwidth}
@@ -80,7 +89,7 @@
 \begin{itemize}[noitemsep]
     \item Fattoni Antonio 
     \item Georgescu Diana
-    \item Gingilino Aaron
+    \item Gingillino Aaron
     \item Laoud Zakaria
     \item Rocco Matteo Alberto
     \item Soligo Lorenzo
@@ -105,21 +114,11 @@
 
 \subsection{Organizzazione incontri}
 Il gruppo ha deciso di regolarizzare gli incontri, seguendo la metodologia Agile Scrum, e di fissare una riunione settimanale 
-ogni venerdì mattina, la durata di ogni sprint corrisponderà perciò a una settimana.
+ogni venerdì mattina, la durata di ogni Sprint corrisponderà perciò a una settimana.
 
 \subsection{Definizione ruoli}
-Il gruppo ha ragionato sulla suddivisione dei ruoli per la sprint, e ha osservato che i ruoli maggiormente necessari in questa
-fase del progetto sono:
-\begin{itemize}[noitemsep]
-    \item Responsabile
-    \item Analista
-    \item Amministratore
-    \item Verificatore
-\end{itemize}
-Considerata l'inesperienza nel ricoprire i ruoli di progetto, è stato stabilito di assegnare a ciascun membro lo stesso ruolo 
-per la durata di due cicli di sprint, questo anche per permettere poi di condividere maggiori consigli o accortezze al membro che
-ricoprirà un determinato ruolo nel prossimo ciclo.
-I ruoli assegnati a ciascun membro per questo sprint sono i seguenti:
+Considerata l'inesperienza nel ricoprire i ruoli di progetto, è stato stabilito di mantenere i ruoli assegnati durante questo incontro per due Sprint (due settimane), questo per permettere poi di condividere maggiori consigli o accortezze al membro che ricoprirà un determinato ruolo nel prossimo ciclo.
+I ruoli assegnati a ciascun membro per questo Sprint sono i seguenti:
 \begin{table}[H]
     \begin{adjustwidth}{-1cm}{-1cm}
     \centering
@@ -131,7 +130,7 @@ I ruoli assegnati a ciascun membro per questo sprint sono i seguenti:
     \hline
     Georgescu Diana & Responsabile/Verificatore \\
     \hline
-    Gingilino Aaron & Analista/Verificatore \\
+    Gingillino Aaron & Analista/Verificatore \\
     \hline
     Laoud Zakaria & Analista/Verificatore \\
     \hline
@@ -175,8 +174,8 @@ finora e iniziare la redazione del glossario di progetto.
 Il gruppo ha deciso di utilizzare Jira by Atlassian, una piattaforma di gestione di progetti con numerose funzionalità orientate
 allo sviluppo software, per tenere traccia delle attività di progetto. L'attrattività di Jira risiede nella possibilità di poter 
 impostare l'organizzazione seguendo il framework Agile Scrum, con strumenti integrati di Issue Tracking e Time Tracking,
-oltre a fornire una dashboard comoda e intuitiva per ciascuna sprint.
-Attualmente la piattaforma è ancora in fase di configurazione e studio, ma il gruppo intende iniziare da questo ciclo di sprint ad 
+oltre a fornire una dashboard comoda e intuitiva per ciascuna Sprint.
+Attualmente la piattaforma è ancora in fase di configurazione e studio, ma il gruppo intende iniziare da questo ciclo di Sprint ad 
 utilizzarla per la creazione delle Issues e l'assegnamento delle attività.
 
 \subsection{Implementazione tabella decisioni e revisione struttura verbali interni}
@@ -195,7 +194,7 @@ i contenuti da includere. Viene usato come riferimento lo standard ISO/IEC/IEEE 
 
 \section{Decisioni}
 \begin{enumerate}[noitemsep]
-    \item Svolgimento primo ciclo di sprint con i ruoli assegnati, con aggiornamento sull'avanzamento dei lavori il 10/11/2025, 
+    \item Svolgimento primo ciclo di Sprint con i ruoli assegnati, con aggiornamento sull'avanzamento dei lavori il 10/11/2025, 
     eventuali nuove attività e decisioni verranno riportate nel verbale successivo. 
     \item Modifica della visualizzazione dei PDF nel sito aggiungendo l'opzione di aprire in una nuova finestra. Studio di un 
     metodo per riordinare i documenti all'interno della repository.
@@ -219,7 +218,7 @@ i contenuti da includere. Viene usato come riferimento lo standard ISO/IEC/IEEE 
     \hline
     \#2 & Modifiche al sito web & \href{https://7zpus.atlassian.net/browse/DIPR-61}{DIPR-61} & Fattoni Antonio & Vigolo Davide \\
     \hline
-    \#3 & Stesura Glossario & \href{https://7zpus.atlassian.net/browse/DIPR-20}{DIPR-20} & Vigolo Davide & Gingilino Aaron \\
+    \#3 & Stesura Glossario & \href{https://7zpus.atlassian.net/browse/DIPR-20}{DIPR-20} & Vigolo Davide & Gingillino Aaron \\
     \hline
     \#4 & Test connessione Jira-GitHub & \href{https://7zpus.atlassian.net/browse/DIPR-24}{DIPR-24} & Soligo Lorenzo & \begin{tabular}[c]{@{}c@{}} Rocco Matteo A.\\ Vigolo Davide \end{tabular} \\
     \hline
@@ -231,7 +230,7 @@ i contenuti da includere. Viene usato come riferimento lo standard ISO/IEC/IEEE 
     \hline
     \#6 & \begin{tabular}[c]{@{}c@{}} Definizione struttura \\Analisi dei Requisiti  \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-53}{DIPR-53} & Georgescu Diana & Laoud Zakaria\\
     \hline
-    \#7 & \begin{tabular}[c]{@{}c@{}} Preparazione e validazione\\Diario di Bordo 10/11/2025 \end{tabular} & \begin{tabular}[c]{@{}c@{}} \href{https://7zpus.atlassian.net/browse/DIPR-51}{DIPR-51}\\\href{https://7zpus.atlassian.net/browse/DIPR-52}{DIPR-52} \end{tabular} & Gingilino Aaron & Georgescu Diana \\
+    \#7 & \begin{tabular}[c]{@{}c@{}} Preparazione e validazione\\Diario di Bordo 10/11/2025 \end{tabular} & \begin{tabular}[c]{@{}c@{}} \href{https://7zpus.atlassian.net/browse/DIPR-51}{DIPR-51}\\\href{https://7zpus.atlassian.net/browse/DIPR-52}{DIPR-52} \end{tabular} & Gingillino Aaron & Georgescu Diana \\
     \hline
 \end{tabular}
     \end{adjustwidth}
