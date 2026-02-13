@@ -7,6 +7,7 @@ on:
     branches: ["main"]
     paths:
       - '1_Candidatura/**'
+      - '2_RTB/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -36,6 +37,7 @@ jobs:
         run: |
           mkdir -p gh-pages/assets/pdf
           cp -r 1_Candidatura/** gh-pages/assets/pdf/
+          cp -r 2_RTB/** gh-pages/assets/pdf/
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
