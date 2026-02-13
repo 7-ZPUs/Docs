@@ -1,0 +1,256 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian, provide=*]{babel}
+\usepackage[sfdefault]{atkinson}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Esterno Gruppo di Progetto e Sanmarco Informatica}\\
+    \vspace{0.5cm}
+\end{center}
+
+
+\noindent
+\textbf{Data:} 2026/1/8 \\
+\textbf{Durata:} 30 minuti \\
+\textbf{Luogo:} incontro online ( Meet )
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    0.1 & 2026/1/8 & Laoud Zakaria & Vigolo Davide & Creazione del verbale e stesura iniziale \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\tableofcontents
+
+\newpage
+
+
+
+
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Gingillino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+    \item Rossi Andrea
+\end{itemize}
+
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Esposizione dello stato di avanzamento dei lavori.
+    \item Presentazione di una prima versione di Poc.
+    \item Risoluzione di dubbi riguardanti le funzionalità del Proof of Concept.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section{Svolgimento e Discussione}
+
+Durante l’incontro sono stati affrontati i seguenti punti:
+\begin{itemize}
+    \item andamento generale del progetto.
+    \item riduzione delle attività dovuta al periodo d’esami.
+    \item avanzamento del lavoro svolto.
+\end{itemize}
+
+È stato evidenziato che il lavoro si è concentrato principalmente su:
+\begin{itemize}
+    \item conclusione dell’analisi dei requisiti.
+    \item sviluppo del Proof of Concept (PoC).
+\end{itemize}
+
+Successivamente è stato presentato il PoC stesso, con particolare attenzione alle sue funzionalità di base.
+
+\subsection{Presentazione del PoC}
+
+Durante la presentazione sono stati discussi i seguenti aspetti:
+\begin{itemize}
+    \item funzionalità attualmente implementate.
+    \item caricamento e visualizzazione del DIP.
+    \item verifica dell’integrità dei file tramite funzione di hash.
+\end{itemize}
+
+\vspace{.3cm}
+
+In merito alla funzione di hash sono emerse alcune criticità. 
+
+
+Dal confronto con la proponente è emerso che, nei DIP, i codici hash sono codificati in Base64 e che la funzione di verifica 
+deve applicare la stessa codifica per eseguire la verifica dell'integrità correttamente.
+
+\section{Domande e Risposte}
+
+\begin{itemize}[label={}]
+    \item \textbf{Domanda:} È necessario implementare la ricerca semantica anche nel PoC, nonostante sia un requisito opzionale?
+    
+    \item \textbf{Risposta:} Sì. Il PoC dovrebbe rappresentare il più fedelmente possibile il prodotto finale.  
+    È quindi preferibile:
+    \begin{itemize}[label={•}]
+        \item trascurare aspetti secondari, come l’interfaccia grafica.
+        \item concentrarsi sulle funzionalità principali.
+        \item implementare il maggior numero possibile di requisiti funzionali.
+    \end{itemize}
+\end{itemize}
+
+
+\begin{itemize}[label={}]
+    \item \textbf{Domanda:} È possibile lasciare all’utente la scelta del livello di precisione della ricerca semantica?
+    
+    \item \textbf{Risposta:} No. Questa scelta potrebbe generare confusione nell’utente finale.  
+    È preferibile:
+    \begin{itemize}[label={•}]
+        \item definire un unico livello di precisione.
+        \item selezionarlo in modo che sia adeguato nella maggior parte dei casi d’uso.
+    \end{itemize}
+\end{itemize}
+
+\section{Decisioni e Conclusione}
+
+Al termine dell’incontro il Team ha deciso di:
+\begin{itemize}
+    \item procedere con la conclusione dell’analisi dei requisiti.
+    \item continuare lo sviluppo del Proof of Concept (PoC).
+\end{itemize}
+
+\vfill
+
+
+\begin{flushleft}
+\begin{tabular}{@{}p{0.5in}p{2in}@{}}
+Data: & \hrulefill \\
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{@{}p{0.5in}p{2in}@{}}
+Firma: & \hrulefill \\
+& [Sanmarco Informatica SPA] \\
+\end{tabular}
+\end{flushleft}
+
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}

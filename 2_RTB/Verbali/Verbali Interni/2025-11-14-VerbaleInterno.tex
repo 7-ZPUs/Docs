@@ -1,0 +1,259 @@
+\documentclass[a4paper,12pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:}  2025/11/14 \\
+\textbf{Durata:} 2 ore\\
+\textbf{Luogo:} Incontro online (Discord)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    1.0 & 2026/02/13 & Laoud Zakaria & Rocco Matteo A. & \begin{tabular}[c]{@{}c@{}} Approvazione finale \\ per RTB \end{tabular} \\
+    \hline
+    0.1 & 2025/11/14 & Aaron Gingillino & Rocco Matteo A. & \begin{tabular}[c]{@{}c@{}} Creazione del verbale\\ e stesura iniziale \end{tabular} \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Gingillino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+\end{itemize}
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Definizione ruoli
+    \item Organizzazione incontri con Sanmarco
+    \item Suddivisione lavoro
+    \item Altre tematiche
+\end{enumerate}
+
+
+\section{Svolgimento e Discussione}
+
+\subsection{Definizione ruoli}
+I ruoli necessari in questa Sprint sono:
+\begin{itemize}[noitemsep]
+    \item Amministratore
+    \item Responsabile
+    \item Analisti
+    \item Verificatori
+\end{itemize}
+
+\noindent I ruoli assegnati a ciascun membro per questo Sprint sono i seguenti, e sono validi anche per il prossimo Sprint. All'interno di questo Sprint \textbf{ognuno} svolgerà anche il ruolo di \textbf{verificatore}.
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm}
+    \centering
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Membro} & \textbf{Ruolo} \\
+    \hline
+    Fattoni Antonio & Analista\\
+    \hline
+    Georgescu Diana & Analista\\
+    \hline
+    Gingillino Aaron& Analista\\
+    \hline
+    Laoud Zakaria & Analista\\
+    \hline
+    Rocco Matteo A. & Analista\\
+    \hline
+    Soligo Lorenzo & Amministratore\\
+    \hline
+    Vigolo Davide & Responsabile\\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\subsection{Organizzazione incontri con Sanmarco}
+È stata inviata la mail di accordo per gli incontri con la proponente, confermati in seguito per la giornata di giovedì alle ore 17:00 con cadenza bisettimanale. Si è adottato inoltre l'uso del foglio di calcolo Google "Monitoraggio Progetto 7ZPUs" condiviso dalla proponente per mantenerla aggiornata sulle attività che la coinvolgono direttamente e che possono essere fonte di discussione per gli incontri sincroni.
+
+\subsection{Suddivisione del lavoro}
+È stata trattata la suddivisione del lavoro per questo Sprint. La necessità in questo momento è di comprendere i requisiti e di studiare il materiale fornito dalla proponente, con particolare attenzione al file "allegato\_5\_metadati" e la cartella "\textit{Schema}" contenente gli schemi .xsd per l'interpretazione del DIP. Inoltre è richiesto che ogni membro del gruppo studi anche i file inerenti all'analisi dei requisiti. Siccome tutti i membri del gruppo devono leggere questi file abbiamo discusso su come sarebbe stato possibile confrontarci su questo studio di gruppo. 
+
+\subsection{Altre tematiche discusse}
+\begin{itemize}[noitemsep]
+    \item È stato discusso se è sensato mantenere due copie dei verbali nella repository, una in formato \LaTeX{} e una in formato pdf derivato dalla versione \LaTeX{}.
+    \item È stato discusso un possibile requisito riguardante la funzionalità opzionale di download di pacchetti DIP dal cloud server del sistema informatico: la proponente ha accennato la possibilità che i pacchetti scaricati siano protetti da password, con conseguente necessità di implementare l'inserimento della password per l'accesso ai file. Non è confluito in nessuna decisione in quanto giudicato argomento prematuro rispetto all'obiettivo di questo Sprint.
+\end{itemize}
+
+\section{Argomenti non affrontati/rimandati}
+Discutere se è meglio adottare un branch per ogni issue (Feature Branch Workflow) e come implementare la task di verifica in relazione alla issue.
+
+\section{Decisioni}
+\begin{enumerate}[noitemsep]
+    \item Si è deciso di mantenere entrambi i formati per i verbali;
+    \item Si procede alla creazione del diario di bordo del 2025/11/17
+    \item Si è deciso di iniziare la stesura delle norme di progetto secondo il way of working definito fino ad ora.
+    \item Si procede alla stesura del verbale esterno relativo all'incontro con la proponente del 2025/11/13 e all'aggiornamento del documento condiviso
+    \item Ogni membro del gruppo prenderà appunti durante lo studio del materiale, questo permetterà di confrontare le nozioni acquisite nell'incontro fissato al 2025/11/20;
+
+\end{enumerate}
+
+
+\section*{Tabella delle decisioni}
+\begin{table}[H]
+    \begin{adjustwidth}{-6cm}{-6cm}% modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
+    \hline
+    \#0 & Redazione del verbale & \href{https://7zpus.atlassian.net/browse/DIPR-34}{DIPR-34}& Gingillino Aaron& Rocco Matteo A. \\
+    \hline
+    \#2 & \begin{tabular}[c]{@{}c@{}} Creazione slide diario\\ di bordo 2025/11/17 \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-80}{DIPR-80}& Vigolo Davide & Georgescu Diana \\
+    \hline
+    \#3 & \begin{tabular}[c]{@{}c@{}} Aggiornamento norme\\ di progetto \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-85}{DIPR-85}& Rocco Matteo A. & Soligo Lorenzo \\
+    \hline
+    \#4 & \begin{tabular}[c]{@{}c@{}} Redazione verbale \\esterno \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-71}{DIPR-71}& Georgescu Diana & Laoud Zakaria \\
+    \hline
+    \#4 & \begin{tabular}[c]{@{}c@{}} Aggiornamento del Docs \\Post Incontro Sanmarco \end{tabular}& \href{https://7zpus.atlassian.net/browse/DIPR-82}{DIPR-82}& Laoud Zakaria & Fattoni Antonio \\
+    \hline
+    \#5 & \begin{tabular}[c]{@{}c@{}} Studio materiale \\ aziendale \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-26}{DIPR-26} & Tutti & Tutti\\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}

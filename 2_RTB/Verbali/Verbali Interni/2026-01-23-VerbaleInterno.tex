@@ -1,0 +1,245 @@
+\documentclass[a4paper,12pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 2026/01/23 \\
+\textbf{Durata:} 30 minuti\\
+\textbf{Luogo:} Presenza (Aula 1C150)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    1.0 & 2026/02/13 & Laoud Zakaria & Rocco Matteo A. & \begin{tabular}[c]{@{}c@{}} Approvazione finale \\ per RTB \end{tabular} \\
+    \hline
+    0.1 & 2026/01/23 & Soligo Lorenzo & Vigolo Davide & \begin{tabular}[c]{@{}c@{}} Creazione del verbale \\ e stesura iniziale \end{tabular} \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Gingillino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+\end{itemize}
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Retrospettiva Sprint
+    \item Analisi e discussione collettiva degli use case
+    \item Pianificazione delle prossime attività
+    \item Decisione dei ruoli
+\end{enumerate}
+
+
+\section{Svolgimento e Discussione}
+\subsection{Retrospettiva Sprint}
+A causa della concomitanza con il periodo di esami, lo Sprint è stato prolungato di una settimana, con data di conclusione il 2026/01/30. Questo denota una pianificazione purtroppo ancora erronea, in particolare che sottostima l'impatto degli impegni universitari sui membri del gruppo. 
+
+\subsection{Allineamento sullo svolgimento delle task}
+Durante l'incontro si è discusso lo stato delle task e della gestione delle attività di progetto in concomitanza degli impegni universitari. Ogni membro ha riferito i propri progressi. Gli analisti hanno fatto il punto sui requisiti. I programmatori hanno discusso gli sviluppi più recenti sul PoC.
+
+\subsection{Definizione ruoli}
+I ruoli necessari rimangono:
+\begin{itemize}[noitemsep]
+    \item Analista
+    \item Verificatore
+    \item Programmatore
+\end{itemize}
+
+In particolare, i ruoli assegnati a ciascun membro sono:
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm}
+    \centering
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Membro} & \textbf{Ruolo} \\
+    \hline
+    Fattoni Antonio & Programmatore \\
+    \hline
+    Georgescu Diana & Analista \\
+    \hline
+    Gingillino Aaron & Analista \\
+    \hline
+    Laoud Zakaria & Analista \\
+    \hline
+    Rocco Matteo A. & Programmatore \\
+    \hline
+    Soligo Lorenzo & Programmatore \\
+    \hline
+    Vigolo Davide & Programmatore \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+\textbf{Tutti} i membri del gruppo faranno anche da \textbf{verificatori}.\\
+
+
+\section{Decisioni}
+\begin{enumerate}[noitemsep]
+    \item Una volta completati i Diagrammi degli Use Case si deve procedere alla identificazione dei Requisiti e al loro tracciamento.
+    \item È stato escluso l'uso della libreria Tantivy per la ricerca con metadati in quanto non adatta al progetto. Questo perché la libreria è scritta in Rust e un \textit{binding} non è disponibile per il linguaggio di programmazione utilizzato.
+    \item Al suo posto quindi si è deciso di procedere con lo studio delle tecnologie per la Ricerca Semantica e di confrontare le tecnologie SQL studiate finora.
+    \item Sono state pianificate le attività per il prossimo Sprint in vista della baseline RTB, che includono il controllo formale dei documenti, l'aggiornamento dei paragrafi mancanti delle norme di progetto. Queste però sono attività secondarie rispetto alla finalizzazione del documento di analisi dei requisiti e allo studio delle tecnologie per la Ricerca Semantica.
+\end{enumerate}
+
+
+\section*{Tabella delle decisioni}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{\begin{tabular}[c]{@{}c@{}} Membro \\ assegnato\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}} Verificatore\end{tabular}} \\
+    \hline
+    \#0 & Redazione verbale & \href{https://7zpus.atlassian.net/browse/DIPR-204}{DIPR-204} & Soligo Lorenzo & Vigolo Davide \\
+    \hline
+    \#1 & \begin{tabular}[c]{@{}c@{}}Completamento scrittura \\Requisiti e\\tracciamento degli UC \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \href{https://7zpus.atlassian.net/browse/DIPR-172}{DIPR-172} \\ \href{https://7zpus.atlassian.net/browse/DIPR-173}{DIPR-173} \\\href{https://7zpus.atlassian.net/browse/DIPR-174}{DIPR-174}\\ \href{https://7zpus.atlassian.net/browse/DIPR-175}{DIPR-175}\end{tabular}&\begin{tabular}[c]{@{}c@{}}Rocco Matteo A.\\Gingillino Aaron\\Georgescu Diana\\Laoud Zakaria \end{tabular}  & Analisti \\
+    \hline
+    \#2 & \begin{tabular}[c]{@{}c@{}}Completamento dello \\sviluppo delle \\tecnologie per il \\database \end{tabular} & \begin{tabular}[c]{@{}c@{}} \href{https://7zpus.atlassian.net/browse/DIPR-182}{DIPR-182} \\ \href{https://7zpus.atlassian.net/browse/DIPR-184}{DIPR-184} \end{tabular}  & \begin{tabular}[c]{@{}c@{}} Davide Vigolo \\ Fattoni Antonio \end{tabular}  & Programmatori \\
+    \hline
+    \#3 & \begin{tabular}[c]{@{}c@{}}Studio delle tecnologie \\per Ricerca Semantica  \end{tabular}&  \href{https://7zpus.atlassian.net/browse/DIPR-200}{DIPR-200} & Soligo Lorenzo & \begin{tabular}[c]{@{}c@{}}Vigolo Davide\\Fattoni Antonio  \end{tabular}\\
+    \hline
+    \#4 & \begin{tabular}[c]{@{}c@{}}Completamento \\paragrafi delle \\Norme di \\progetto mancanti  \end{tabular}& \begin{tabular}[c]{@{}c@{}} \href{https://7zpus.atlassian.net/browse/DIPR-178}{DIPR-178} \\ \href{https://7zpus.atlassian.net/browse/DIPR-146}{DIPR-146} \\ \href{https://7zpus.atlassian.net/browse/DIPR-145}{DIPR-145} \end{tabular} & \begin{tabular}[c]{@{}c@{}} Gingillino Aaron \\ Laoud Zakaria \\ Gingillino Aaron \end{tabular} & \begin{tabular}[c]{@{}c@{}} Fattoni Antonio \\ Soligo Lorenzo \\ Georgescu Diana \end{tabular} \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
