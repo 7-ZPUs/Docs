@@ -1,12 +1,12 @@
 const tabButtons = document.querySelectorAll('#documentation .content-selector');
 const tabPanels = document.querySelectorAll('#documentation [role="tabpanel"]');
 const pdfBaseUrls = {
-    'verbali-interni-candidatura': 'https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/1_Candidatura/Verbali/Verbali%20Interni/',
-    'verbali-esterni-candidatura': 'https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/1_Candidatura/Verbali/Verbali%20Esterni/',
-    candidatura: 'https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/1_Candidatura/',
-    'verbali-interni-RTB': 'https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20Interni/',
-    'verbali-esterni-RTB': 'https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Verbali/Verbali%20Esterni/',
-    RTB: 'https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/',
+    'verbali-interni-candidatura': 'https://cdn.jsdelivr.net/gh/7-zpus/Docs/1_Candidatura/Verbali/Verbali%20Interni/',
+    'verbali-esterni-candidatura': 'https://cdn.jsdelivr.net/gh/7-zpus/Docs/1_Candidatura/Verbali/Verbali%20Esterni/',
+    candidatura: 'https://cdn.jsdelivr.net/gh/7-zpus/Docs/1_Candidatura/',
+    'verbali-interni-RTB': 'https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Interni/',
+    'verbali-esterni-RTB': 'https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Esterni/',
+    RTB: 'https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/',
 };
 
 if (tabButtons.length && tabPanels.length) {
