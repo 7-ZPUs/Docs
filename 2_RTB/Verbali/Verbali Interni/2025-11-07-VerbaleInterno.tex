@@ -1,0 +1,244 @@
+\documentclass[a4paper,12pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 2025/11/07 \\
+\textbf{Durata:} 2 ore\\
+\textbf{Luogo:} Incontro online (Discord)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm}
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    1.0 & 2026/02/13 & Laoud Zakaria & Rocco Matteo A. & \begin{tabular}[c]{@{}c@{}} Approvazione finale \\ per RTB \end{tabular} \\
+    \hline
+    0.1 & 2025/11/07 & Rocco Matteo A. & Soligo Lorenzo & \begin{tabular}[c]{@{}c@{}}Creazione del verbale\\ e stesura iniziale\end{tabular} \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Gingillino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+\end{itemize}
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Organizzazione incontri
+    \item Definizione ruoli
+    \item Sito web
+    \item Invio email a Sanmarco
+    \item Riorganizzazione repository GitHub
+    \item Riflessioni su documentazione a seguito della lezione rovesciata del 2025/11/06
+    \item Panoramica su Jira come strumento di gestione di progetto
+    \item Implementazione tabella decisioni e tracciamento
+    \item Analisi dei requisiti
+    \item Diario di bordo 2025/11/10
+\end{enumerate}
+
+\section{Svolgimento e Discussione}
+
+\subsection{Organizzazione incontri}
+Il gruppo ha deciso di regolarizzare gli incontri, seguendo la metodologia Agile Scrum, e di fissare una riunione settimanale 
+ogni venerdì mattina, la durata di ogni Sprint corrisponderà perciò a una settimana.
+
+\subsection{Definizione ruoli}
+Considerata l'inesperienza nel ricoprire i ruoli di progetto, è stato stabilito di mantenere i ruoli assegnati durante questo incontro per due Sprint (due settimane), questo per permettere poi di condividere maggiori consigli o accortezze al membro che ricoprirà un determinato ruolo nel prossimo ciclo.
+I ruoli assegnati a ciascun membro per questo Sprint sono i seguenti:
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm}
+    \centering
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Membro} & \textbf{Ruolo} \\
+    \hline
+    Fattoni Antonio & Programmatore \\
+    \hline
+    Georgescu Diana & Responsabile/Verificatore \\
+    \hline
+    Gingillino Aaron & Analista/Verificatore \\
+    \hline
+    Laoud Zakaria & Analista/Verificatore \\
+    \hline
+    Rocco Matteo A. & Analista/Verificatore \\
+    \hline
+    Soligo Lorenzo & Amministratore/Verificatore \\
+    \hline
+    Vigolo Davide & Analista/Verificatore \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\subsection{Sito web}
+Per migliorare l'usabilità del sito web, il gruppo ha considerato alcune alternative all'attuale visualizzatore dei documenti presente
+al suo interno. La soluzione trovata consiste nel posizionamento del lettore a destra della pagina nel momento in cui un documento viene
+aperto, inoltre verrà aggiunto affianco a ciascun documento un link per aprirlo in una nuova scheda del browser.
+Seguendo l'indicazione data dal Prof. Vardanega in sede di valutazione della candidatura inoltre si è deciso di riposizionare i documenti
+relativi alle "Lettere di Presentazione" in cima alla sezione della documentazione, per evidenziarne l'importanza e il ruolo di
+"guida" alla consultazione della restante documentazione.
+
+\subsection{Invio email a Sanmarco}
+Si è proceduto all'invio della prima mail a Sanmarco informatica per poter fissare un incontro di kick off.
+
+\subsection{Riorganizzazione repository GitHub}
+È stato fatto un ragionamento sull'utilizzo dei feature branch in maniera più studiata e organizzata, con la creazione del branch
+dedicato al sito web. Questo ha portato anche a una riflessione sull'importanza di individuare attività da assegnare che siano 
+atomiche e ben definite per evitare conflitti quando i membri del gruppo lavorano in parallelo e effettuano operazioni 
+di push all'interno della repository.
+Per migliorare la navigazione e rispettare il principio di esporre in cima le versioni più recenti e aggiornate si è reso necessario 
+modificare l'attuale nomenclatura dei verbali interni ed esterni, anteponendo la data al titolo e ordinandoli in ordine cronologico 
+decrescente.
+
+\subsection{Riflessioni su documentazione a seguito della lezione rovesciata del 2025/11/06}
+Uno dei macroargomenti trattati a lezione è il glossario, avendo iniziato la consultazione degli standard ISO/IEC/IEEE 12207:2017
+e 29148:2018 (per l'analisi dei requisiti e la gestione del ciclo di vita del progetto) alcuni membri avevano già creato un 
+glossario individuale a partire dai termini utilizzati all'interno degli standard. È stato deciso di unire i lavori prodotti 
+finora e iniziare la redazione del glossario di progetto.
+
+\subsection{Panoramica su Jira come strumento di gestione di progetto}
+Il gruppo ha deciso di utilizzare Jira by Atlassian, una piattaforma di gestione di progetti con numerose funzionalità orientate
+allo sviluppo software, per tenere traccia delle attività di progetto. L'attrattività di Jira risiede nella possibilità di poter 
+impostare l'organizzazione seguendo il framework Agile Scrum, con strumenti integrati di Issue Tracking e Time Tracking,
+oltre a fornire una dashboard comoda e intuitiva per ciascuna Sprint.
+Attualmente la piattaforma è ancora in fase di configurazione e studio, ma il gruppo intende iniziare da questo ciclo di Sprint ad 
+utilizzarla per la creazione delle Issues e l'assegnamento delle attività.
+
+\subsection{Implementazione tabella decisioni e revisione struttura verbali interni}
+In seguito alla valutazione della candidatura è emerso che l'attuale struttura dei verbali interni non permetteva una corretta 
+transizione da un verbale al successivo mantenendo una quantità di informazioni sufficiente alla sua interpretazione dall'esterno, 
+inoltre era assente il tracciamento delle decisioni e delle attività derivanti dalle decisioni di ciascun verbale. Per risolvere 
+questi problemi il gruppo ha deciso di implementare una tabella delle decisioni che abbia riferimento sia al verbale stesso che al 
+sistema di Issue Tracking di Jira (individuando quindi task quanto più atomiche e non ambigue).
+
+\subsection{Analisi dei Requisiti}
+Si è concordato che sia necessario iniziare la stesura del documento di Analisi dei Requisiti identificandone la struttura e 
+i contenuti da includere. Viene usato come riferimento lo standard ISO/IEC/IEEE 12207:2017.
+
+\newpage
+
+
+\section{Decisioni}
+\begin{enumerate}[noitemsep]
+    \item Svolgimento primo ciclo di Sprint con i ruoli assegnati, con aggiornamento sull'avanzamento dei lavori il 2025/11/10, 
+    eventuali nuove attività e decisioni verranno riportate nel verbale successivo. 
+    \item Modifica della visualizzazione dei PDF nel sito aggiungendo l'opzione di aprire in una nuova finestra. Studio di un 
+    metodo per riordinare i documenti all'interno della repository.
+    \item Creazione glossario.
+    \item Continuazione setup di Jira (sistema di Issue Tracking e connessione con GitHub, Smart Commit) e inizio stesura delle 
+    sezioni di Norme di Progetto riguardanti i processi di supporto. 
+    \item Creazione tabella delle decisioni con riferimento al verbale e al sistema di Issue Tracking.
+    \item Avvio stesura Analisi dei Requisiti.
+    \item Creazione diario di bordo 2025/11/10.
+\end{enumerate}
+
+\section*{Tabella delle decisioni}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
+    \hline
+    \#0 & Redazione del verbale & \href{https://7zpus.atlassian.net/browse/DIPR-43}{DIPR-43} & Rocco Matteo A. & Soligo Lorenzo \\
+    \hline
+    \#2 & Modifiche al sito web & \href{https://7zpus.atlassian.net/browse/DIPR-61}{DIPR-61} & Fattoni Antonio & Vigolo Davide \\
+    \hline
+    \#3 & Stesura Glossario & \href{https://7zpus.atlassian.net/browse/DIPR-20}{DIPR-20} & Vigolo Davide & Gingillino Aaron \\
+    \hline
+    \#4 & Test connessione Jira-GitHub & \href{https://7zpus.atlassian.net/browse/DIPR-24}{DIPR-24} & Soligo Lorenzo & \begin{tabular}[c]{@{}c@{}} Rocco Matteo A.\\ Vigolo Davide \end{tabular} \\
+    \hline
+    \#4 & Jira Smart Commit & \href{https://7zpus.atlassian.net/browse/DIPR-25}{DIPR-25} & Soligo Lorenzo & \begin{tabular}[c]{@{}c@{}} Rocco Matteo A.\\ Vigolo Davide \end{tabular} \\
+    \hline
+    \#4 & \begin{tabular}[c]{@{}c@{}} Documentazione Jira \\nelle Norme di Progetto \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-26}{DIPR-26} & Soligo Lorenzo & \begin{tabular}[c]{@{}c@{}} Rocco Matteo A.\\ Vigolo Davide \end{tabular} \\
+    \hline
+    \#5 & \begin{tabular}[c]{@{}c@{}} Creazione e validazione \\tabella decisioni \end{tabular} & \begin{tabular}[c]{@{}c@{}} \href{https://7zpus.atlassian.net/browse/DIPR-56}{DIPR-56}\\\href{https://7zpus.atlassian.net/browse/DIPR-57}{DIPR-57} \end{tabular} & Rocco Matteo A. & Soligo Lorenzo \\
+    \hline
+    \#6 & \begin{tabular}[c]{@{}c@{}} Definizione struttura \\Analisi dei Requisiti  \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-53}{DIPR-53} & Georgescu Diana & Laoud Zakaria\\
+    \hline
+    \#7 & \begin{tabular}[c]{@{}c@{}} Preparazione e validazione\\Diario di Bordo 2025/11/10 \end{tabular} & \begin{tabular}[c]{@{}c@{}} \href{https://7zpus.atlassian.net/browse/DIPR-51}{DIPR-51}\\\href{https://7zpus.atlassian.net/browse/DIPR-52}{DIPR-52} \end{tabular} & Gingillino Aaron & Georgescu Diana \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
