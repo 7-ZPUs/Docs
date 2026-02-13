@@ -1,0 +1,36 @@
+name: Aggiorna Glossario HTML
+
+on:
+  push:
+    paths:
+      - 'Glossario.tex'
+    branches:
+      - main
+
+jobs:
+  build-glossary:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Installa dipendenze
+      run: |
+        pip install beautifulsoup4
+        
+    - name: Esegui script di conversione
+      run: python .github/scripts/glossario.py
+      
+    - name: Commit e push del file HTML
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add glossario.html
+        git diff --quiet && git diff --staged --quiet || git commit -m "🔄 Aggiornamento automatico glossario HTML"
+        git push
