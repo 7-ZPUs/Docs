@@ -1,19 +1,26 @@
-\documentclass[a4paper,12pt]{article}
-
+\documentclass[a4paper,12pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
 \usepackage[italian]{babel}
-\renewcommand{\rmdefault}{lmss}
+\usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
 \usepackage{float}
-\usepackage{microtype}
 \usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
 \usepackage{setspace}
+\usepackage{chngpage}
 \usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage{tocloft}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{fancyhdr}
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
@@ -21,46 +28,190 @@
     urlcolor=cyan,
 }
 
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
 
 \renewcommand{\contentsname}{Indice}
 
-\geometry{margin=2.5cm}
+\geometry{margin=2cm}
 \setstretch{1.2}
 
 \titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
 
 \begin{document}
-
+\thispagestyle{plain}
 \begin{center}
-    \includegraphics[width=9.5cm]{../assets/logo7ZPUs.jpg}\\
+    \includegraphics[width=9.5cm]{../assets/logo7zpus.jpg}\\
     \small\hspace{10cm} 7zpus.swe@gmail.com\\
     \vspace{0.5cm}
     \Large \textbf{Lettera di Presentazione RTB}\\
 \end{center}
 
-\vspace{0.3cm}
+\vspace{0.2cm}
 \hrule
-\vspace{0.5cm}
+\vspace{.2cm}
 
-\tableofcontents
+\vspace{0.7cm}
 
+\begin{flushleft}
+Egregio Prof. Vardanega,\\
+Egregio Prof. Cardin,
+\end{flushleft}
+
+\vspace{0.4cm}
+
+con la presente, il gruppo \textit{7-ZPUs} intende sottoporre alla Vostra attenzione
+la richiesta ufficiale di revisione della \textit{Requirements and Technology Baseline}.  
+La revisione riguarda il lavoro svolto nell'ambito del progetto assegnato
+dall'azienda Sanmarco Informatica, relativo al capitolato \textbf{C3}, dal titolo:
+
+\begin{center}
+\textbf{\large DIPReader}
+\end{center}
+
+\noindent Il sito ufficiale del gruppo, contenente tutti i documenti, è disponibile al seguente indirizzo:
+
+\begin{center}
+\url{https://7-zpus.github.io/Docs}
+\end{center}
+
+\vspace{0.3cm}
+
+Nel corso delle attività svolte, il gruppo \textit{7-ZPUs} ha sviluppato un
+\textit{Proof of Concept}, reso disponibile al seguente indirizzo:
+
+\begin{center}
+\url{https://github.com/7-ZPUs/PoC-DIPReader}
+\end{center}
+
+Cogliamo inoltre l’occasione per segnalare che tutta la documentazione prodotta
+è consultabile nella sezione \textit{RTB} della nostra \textit{repository}, accessibile
+tramite il seguente collegamento:
+
+\begin{center}
+\url{https://github.com/7-ZPUs/Docs}
+\end{center}
+Tuttavia, per una consultazione più comoda e immediata, consigliamo di accedere ai documenti tramite il sito del gruppo indicato sopra.
 \newpage
+\noindent In tale sezione sono disponibili i seguenti documenti:
+\vspace{0.3cm}
 
-\section*{Tabella di Versionamento}
-\begin{tabular}{|c|c|c|c|}
-    \hline
-    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
-    \hline
-    1.0 & 31/10/2025 & Autore & Verificatore & \\
-    \hline
+\begin{itemize}
+    \item Lettera di presentazione\_v1.0 (il presente documento);
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/PianoDiQualifica.pdf}{Piano di Qualifica\_v1.0};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/PianoDiProgetto.pdf}{Piano di Progetto\_v1.0};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/AnalisiDeiRequisiti.pdf}{Analisi dei Requisiti\_v1.0};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/NormeDiProgetto.pdf}{Norme di Progetto\_v1.0};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Glossario.pdf}{Glossario\_v1.0};
+\end{itemize}
+\begin{tabular}{p{0.48\textwidth} p{0.48\textwidth}}
+
+\textbf{Verbali interni:}
+\begin{itemize}[leftmargin=*]
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Interni/2026-02-13-VerbaleInterno.pdf}{Verbale interno del 2026-02-13};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Interni/2026-01-30-VerbaleInterno.pdf}{Verbale interno del 2026-01-30};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Interni/2026-01-23-VerbaleInterno.pdf}{Verbale interno del 2026-01-23};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Interni/2026-01-16-VerbaleInterno.pdf}{Verbale interno del 2026-01-16};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Interni/2026-01-09-VerbaleInterno.pdf}{Verbale interno del 2026-01-09};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Interni/2025-12-27-VerbaleInterno.pdf}{Verbale interno del 2025-12-27};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Interni/2025-12-19-VerbaleInterno.pdf}{Verbale interno del 2025-12-19};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Interni/2025-12-12-VerbaleInterno.pdf}{Verbale interno del 2025-12-12};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Interni/2025-12-05-VerbaleInterno.pdf}{Verbale interno del 2025-12-05};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Interni/2025-11-28-VerbaleInterno.pdf}{Verbale interno del 2025-11-28};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Interni/2025-11-21-VerbaleInterno.pdf}{Verbale interno del 2025-11-21};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Interni/2025-11-14-VerbaleInterno.pdf}{Verbale interno del 2025-11-14};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Interni/2025-11-10-VerbaleInterno.pdf}{Verbale interno del 2025-11-10};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Interni/2025-11-07-VerbaleInterno.pdf}{Verbale interno del 2025-11-07};
+\end{itemize}
+&
+\textbf{Verbali esterni:}
+\begin{itemize}[leftmargin=*]
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Esterni/2026-01-22-VerbaleEsterno.pdf}{Verbale esterno del 2026-01-22};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Esterni/2026-01-08-VerbaleEsterno.pdf}{Verbale esterno del 2026-01-08};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Esterni/2025-12-23-VerbaleEsterno.pdf}{Verbale esterno del 2025-12-23};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Esterni/2025-12-11-VerbaleEsterno.pdf}{Verbale esterno del 2025-12-11};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Esterni/2025-11-27-VerbaleEsterno.pdf}{Verbale esterno del 2025-11-27};
+    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs/2_RTB/Verbali/Verbali%20Esterni/2025-11-13-VerbaleEsterno.pdf}{Verbale esterno del 2025-11-13};
+\end{itemize}
 
 \end{tabular}
 
+\vspace{1cm}
 
-\vfill
-\begin{flushright}
-    \textit{7-ZPUs}
-\end{flushright}
+Si conferma infine come termine ultimo per la consegna del progetto la data del
+\textbf{10/04/2026}, con un costo complessivo stimato pari a \textbf{€13545,00}.
+
+\vspace{0.8cm}
+
+Distinti saluti,\\
+\vspace{0.3cm}
+\textit{7-ZPUs}
 
 \end{document}
