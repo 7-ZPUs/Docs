@@ -3,9 +3,9 @@
 \usecase{visualizzaDescrizioneDocumento}{Visualizza descrizione documento}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/UC50.png}
-    \caption{Diagramma dell'UC-50}
-    \label{fig:IncUC50}
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC42.png}
+    \caption{\ref{visualizzaDescrizioneDocumento} - Visualizzazione descrizione documento}
+    \label{fig:uc_visualizzaDescrizioneDocumento}
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -24,9 +24,9 @@
 \usecase{visualizzaListaSoggettiCoinvolti}{Visualizza lista soggetti coinvolti nel documento}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/UC51.png}
-    \caption{Diagramma dell'UC-51}
-    \label{fig:IncUC51}
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC43.png}
+    \caption{\ref{visualizzaListaSoggettiCoinvolti} - Visualizzazione lista soggetti coinvolti nel documento}
+    \label{fig:uc_visualizzaListaSoggettiCoinvolti}
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -47,17 +47,17 @@
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/IncUC51.png}
-    \caption{Diagramma delle inclusioni dell'UC-51}
-    \label{fig:IncUC51}
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC43INC.png}
+    \caption{Inclusioni \ref{visualizzaListaSoggettiCoinvolti} - Visualizzazione lista soggetti coinvolti nel documento}
+    \label{fig:inclusioniVisualizzaListaSoggettiCoinvolti}
 \end{figure}
 
 \subusecase{visualizzaInfoSoggettoCoinvolto}{Visualizza informazioni soggetto coinvolto in un documento}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../assets/uml/GenUC51.1.png}
-    \caption{Diagramma della generalizzazione dell'UC-51.1}
-    \label{fig:GenUC51.1}
+    \includegraphics[width=1\textwidth]{../assets/uml/UC43.1.png}
+    \caption{Generalizzazione \ref{visualizzaInfoSoggettoCoinvolto} - Visualizzazione informazioni soggetto coinvolto in un documento}
+    \label{fig:generalizzazioneVisualizzaInfoSoggettoCoinvolto}
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -88,11 +88,12 @@
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/IncUC51.1.png}
-    \caption{Diagramma delle inclusioni dell'UC-51.1}
-    \label{fig:IncUC51.1}
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC43.1INC.png}
+    \caption{Inclusioni \ref{visualizzaInfoSoggettoCoinvolto} - Visualizza informazioni soggetto coinvolto in un documento}
+    \label{fig:inclusioniVisualizzaInfoSoggettoCoinvolto}
 \end{figure}
-\subsubusecase{visualizzaInfoPF}{Visualizza informazioni del soggetto Persona Fisica}
+
+\subsubusecase{visualizzaInfoPF}{Visualizza informazioni del soggetto persona fisica}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
 
@@ -112,10 +113,10 @@
         \item Il sistema visualizza le informazioni comuni del soggetto
         \item Il sistema visualizza le informazioni identificative del soggetto, quali:
         \begin{itemize}
-            \item Nome \ref{visualizzaNomeSoggetto}
-            \item Cognome \ref{visualizzaCognomeSoggetto}
-            \item Codice Fiscale \ref{visualizzaCodiceFiscaleSoggetto}
-            \item Indirizzi digitali di riferimento \ref{visualizzaIndirizziDigitaliSoggetto}
+            \item Nome (\ref{visualizzaNomeSoggetto})
+            \item Cognome (\ref{visualizzaCognomeSoggetto})
+            \item Codice Fiscale (\ref{visualizzaCodiceFiscaleSoggetto})
+            \item Indirizzi digitali di riferimento (\ref{visualizzaIndirizziDigitaliSoggetto})
         \end{itemize}
     \end{enumerate}
     \item \textbf{Inclusioni}:
@@ -129,9 +130,9 @@
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../assets/uml/IncUC51.1.1.png}
-    \caption{Diagramma delle inclusioni dell'UC-51.1.1}
-    \label{fig:IncUC51.1.1}
+    \includegraphics[width=1\textwidth]{../assets/uml/UC43.1.1INC.png}
+      \caption{Inclusioni \ref{visualizzaInfoPF} - Visualizza informazioni del soggetto persona fisica}
+    \label{fig:inclusioniVisualizzaInfoPF}
 \end{figure}
 \deepusecase{visualizzaNomeSoggetto}{Visualizza nome soggetto}
 \begin{itemize}
@@ -193,7 +194,7 @@
     \end{enumerate}
 \end{itemize}
 
-\subsubusecase{visualizzaInfoPG}{Visualizza informazioni del soggetto Persona Giuridica}
+\subsubusecase{visualizzaInfoPG}{Visualizza informazioni del soggetto persona giuridica}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
 
@@ -213,10 +214,10 @@
         \item Il sistema visualizza le informazioni comuni del soggetto
         \item Il sistema visualizza le informazioni identificative del soggetto, quali:
         \begin{itemize}
-            \item Denominazione dell'organizzazione \ref{visualizzaDenominazioneOrganizzazioneSoggetto}
-            \item Codice Fiscale / Partita IVA \ref{visualizzaCodiceFiscaleSoggetto} / \ref{visualizzaPartitaIVA}
-            \item Denominazione dell'ufficio \ref{visualizzaDenominazioneUfficioSoggetto}
-            \item Indirizzi digitali di riferimento \ref{visualizzaIndirizziDigitaliSoggetto}
+            \item Denominazione dell'organizzazione (\ref{visualizzaDenominazioneOrganizzazioneSoggetto})
+            \item Codice Fiscale / Partita IVA (\ref{visualizzaCodiceFiscaleSoggetto}) / (\ref{visualizzaPartitaIVA})
+            \item Denominazione dell'ufficio (\ref{visualizzaDenominazioneUfficioSoggetto})
+            \item Indirizzi digitali di riferimento (\ref{visualizzaIndirizziDigitaliSoggetto})
         \end{itemize}
     \end{enumerate}
     \item \textbf{Inclusioni}: 
@@ -231,9 +232,9 @@
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../assets/uml/IncUC51.1.2.png}
-    \caption{Diagramma delle inclusioni dell'UC-51.1.2}
-    \label{fig:IncUC51.1.2}
+    \includegraphics[width=1\textwidth]{../assets/uml/UC43.1.2INC.png}
+      \caption{Inclusioni \ref{visualizzaInfoPG} - Visualizza informazioni del soggetto persona giuridica}
+    \label{fig:inclusioniVisualizzaInfoPG}
 \end{figure}
 
 \deepusecase{visualizzaDenominazioneOrganizzazioneSoggetto}{Visualizza denominazione organizzazione soggetto}
@@ -322,9 +323,9 @@
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../assets/uml/IncUC51.1.3.png}
-    \caption{Diagramma delle inclusioni dell'UC-51.1.3}
-    \label{fig:IncUC51.1.3}
+    \includegraphics[width=1\textwidth]{../assets/uml/UC43.1.3INC.png}
+    \caption{Inclusioni \ref{visualizzaInfoAS} - Visualizza informazioni del soggetto AS}
+    \label{fig:inclusioniVisualizzaInfoAS}
 \end{figure}
 
 \subsubusecase{visualizzaInfoPAI}{Visualizza informazioni del soggetto PAI}
@@ -364,12 +365,12 @@
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../assets/uml/IncUC51.1.4.png}
-    \caption{Diagramma delle inclusioni dell'UC-51.1.4}
-    \label{fig:IncUC51.1.4}
+    \includegraphics[width=1\textwidth]{../assets/uml/UC43.1.4INC.png}
+    \caption{Inclusioni \ref{visualizzaInfoPAI} - Visualizza informazioni del soggetto PAI}
+    \label{fig:inclusioniVisualizzaInfoPAI}
 \end{figure}
 
-\deepusecase{visualizzaDenominazioneAmministrazioneCodiceIPA}{Visualizza Denominazione Amministrazione / Codice IPA soggetto}
+\deepusecase{visualizzaDenominazioneAmministrazioneCodiceIPA}{Visualizza denominazione amministrazione / codice IPA soggetto}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -384,7 +385,7 @@
         \end{enumerate}
 \end{itemize}
 
-\deepusecase{visualizzaDenominazioneAmministrazioneAOOCodiceIPAOOO}{Visualizza Denominazione Amministrazione AOO / Codice IPA AOO soggetto}
+\deepusecase{visualizzaDenominazioneAmministrazioneAOOCodiceIPAOOO}{Visualizza denominazione amministrazione AOO / codice IPA AOO soggetto}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -399,7 +400,7 @@
         \end{enumerate}
 \end{itemize}
 
-\deepusecase{visualizzaDenominazioneAmministrazioneUORCodiceIPAUOR}{Visualizza Denominazione Amministrazione UOR / Codice IPA UOR soggetto}
+\deepusecase{visualizzaDenominazioneAmministrazioneUORCodiceIPAUOR}{Visualizza denominazione amministrazione UOR / codice IPA UOR soggetto}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -449,12 +450,12 @@
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../assets/uml/IncUC51.1.5.png}
-    \caption{Diagramma delle inclusioni dell'UC-51.1.5}
-    \label{fig:IncUC51.1.5}
+    \includegraphics[width=1\textwidth]{../assets/uml/UC43.1.5INC.png}
+    \caption{Inclusioni \ref{visualizzaInfoPAE} - Visualizza informazioni del soggetto PAE}
+    \label{fig:inclusioniVisualizzaInfoPAE}
 \end{figure}
 
-\deepusecase{visualizzaDenominazioneAmministrazioneSoggetto}{Visualizza Denominazione Amministrazione soggetto}
+\deepusecase{visualizzaDenominazioneAmministrazioneSoggetto}{Visualizza denominazione amministrazione soggetto}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -494,16 +495,16 @@
     \end{enumerate}
 
     \item \textbf{Specializza}: \ref{visualizzaInfoSoggettoCoinvolto} Visualizza informazioni del soggetto coinvolto in un documento
-    \item \textbf{Inclusioni}: \ref{visualizzaDenominazioneSistemaSoggetto} Visualizza Denominazione Sistema soggetto
+      \item \textbf{Inclusioni}: \ref{visualizzaDenominazioneSistemaSoggetto} Visualizza denominazione sistema soggetto
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/IncUC51.1.6.png}
-    \caption{Diagramma delle inclusioni dell'UC-51.1.6}
-    \label{fig:IncUC51.1.6}
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC43.1.6INC.png}
+    \caption{Inclusioni \ref{visualizzaInfoSW} - Visualizza informazioni del soggetto SW}
+    \label{fig:inclusioniVisualizzaInfoSW}
 \end{figure}
 
-\deepusecase{visualizzaDenominazioneSistemaSoggetto}{Visualizza Denominazione Sistema soggetto}
+\deepusecase{visualizzaDenominazioneSistemaSoggetto}{Visualizza denominazione sistema soggetto}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -549,12 +550,12 @@
 \end{itemize}
 
 
-\usecase{visualizzaInfoClassificazioneDocumento}{Visualizza Informazioni di Classificazione del Documento}
+\usecase{visualizzaInfoClassificazioneDocumento}{Visualizza informazioni di classificazione del documento}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/UC52.png}
-    \caption{Diagramma dell'UC-52}
-    \label{fig:UC52}
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC44.png}
+    \caption{\ref{visualizzaInfoClassificazioneDocumento} - Visualizzazione informazioni di classificazione del documento}
+    \label{fig:uc_visualizzaInfoClassificazioneDocumento}
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -568,7 +569,7 @@
         \begin{enumerate}
             \item Il sistema mostra a video le informazioni di classificazione, quali:
             \begin{itemize}
-                \item Indice di classificazione \ref{visualizzaIndiceClassificazioneDocumento}
+                \item Indice di classificazione (\ref{visualizzaIndiceClassificazioneDocumento})
                 \item Descrizione (\ref{visualizzaDescrizioneIndiceClassificazioneDocumento})
                 \item Piano di classificazione (\ref{visualizzaURIPianoClassificazioneDocumento})
             \end{itemize}
@@ -582,12 +583,12 @@
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../assets/uml/IncUC52.png}
-    \caption{Diagramma delle inclusioni dell'UC-52}
-    \label{fig:IncUC52}
+    \includegraphics[width=1\textwidth]{../assets/uml/UC44INC.png}
+    \caption{Inclusioni \ref{visualizzaInfoClassificazioneDocumento} - Visualizzazione informazioni di classificazione del documento}
+    \label{fig:inclusioniVisualizzaInfoClassificazioneDocumento}
 \end{figure}
 
-\subusecase{visualizzaIndiceClassificazioneDocumento}{Visualizza Indice di classificazione documento}
+\subusecase{visualizzaIndiceClassificazioneDocumento}{Visualizza indice di classificazione documento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -602,7 +603,7 @@
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaDescrizioneIndiceClassificazioneDocumento}{Visualizza Descrizione dell'Indice di classificazione documento}
+\subusecase{visualizzaDescrizioneIndiceClassificazioneDocumento}{Visualizza descrizione dell'indice di classificazione documento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -617,7 +618,7 @@
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaURIPianoClassificazioneDocumento}{Visualizza URI Piano di Classificazione documento}
+\subusecase{visualizzaURIPianoClassificazioneDocumento}{Visualizza URI piano di classificazione documento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -632,12 +633,12 @@
         \end{enumerate}
 \end{itemize}
 
-\usecase{visualizzaTempoConservazioneEffettivoDocumento}{Visualizza Tempo di Conservazione Effettivo documento}
+\usecase{visualizzaTempoConservazioneEffettivoDocumento}{Visualizza tempo di conservazione effettivo documento}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{../assets/uml/UC53-ExtUC54.png}
-    \caption{Diagramma dell'UC-53 e delle sue estensioni}
-    \label{fig:UC53-ExtUC54}
+    \includegraphics[width=0.8\textwidth]{../assets/uml/UC45.png}
+    \caption{\ref{visualizzaTempoConservazioneEffettivoDocumento} - Visualizza tempo di conservazione effettivo documento}
+    \label{fig:uc_visualizzaTempoConservazioneEffettivoDocumento}
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -659,7 +660,7 @@
     \item \textbf{Estensioni}: \ref{erroreTempoConservazioneEffettivoDocumento} Errore Visualizzazione Tempo di Conservazione Effettivo documento
 \end{itemize}
 
-\usecase{erroreTempoConservazioneEffettivoDocumento}{Errore visualizzazione Tempo di Conservazione Effettivo documento}
+\usecase{erroreTempoConservazioneEffettivoDocumento}{Errore visualizzazione tempo di conservazione effettivo documento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -675,12 +676,12 @@
         \end{enumerate}
 \end{itemize}
 
-\usecase{visualizzaNoteDocumento}{Visualizza Note documento}
+\usecase{visualizzaNoteDocumento}{Visualizza note documento}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{../assets/uml/UC55-ExtUC56.png}
-    \caption{Diagramma dell'UC-55 e delle sue estensioni}
-    \label{fig:UC55-ExtUC56}
+    \includegraphics[width=0.8\textwidth]{../assets/uml/UC47.png}
+    \caption{\ref{visualizzaNoteDocumento} - Visualizza note documento}
+    \label{fig:uc_visualizzaNoteDocumento}
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -698,10 +699,10 @@
     \begin{itemize}
         \item Le note del documento sono assenti o vuote.
     \end{itemize}
-    \item \textbf{Estensioni}: \ref{erroreNoteDocumento} Errore Visualizzazione Note documento
+      \item \textbf{Estensioni}: \ref{erroreNoteDocumento} Errore visualizzazione note documento
 \end{itemize}
 
-\usecase{erroreNoteDocumento}{Errore Visualizzazione Note documento}
+\usecase{erroreNoteDocumento}{Errore visualizzazione note documento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -719,9 +720,9 @@
 \usecase{visualizzaDatiRegistrazioneDocumento}{Visualizza Dati di Registrazione documento}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/UC57.png}
-    \caption{Diagramma dell'UC-57}
-    \label{fig:UC57}
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC49.png}
+    \caption{\ref{visualizzaDatiRegistrazioneDocumento} - Visualizza Dati di Registrazione documento}
+    \label{fig:uc_visualizzaDatiRegistrazioneDocumento}
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -753,13 +754,13 @@
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../assets/uml/IncUC57.png}
-    \caption{Diagramma delle inclusioni dell'UC-57}
-    \label{fig:IncUC57}
+    \includegraphics[width=1\textwidth]{../assets/uml/UC49INC.png}
+    \caption{Inclusioni \ref{visualizzaDatiRegistrazioneDocumento} - Visualizza Dati di Registrazione documento}
+    \label{fig:inclusioniVisualizzaDatiRegistrazioneDocumento}
 \end{figure}
+
 \subusecase{visualizzaTipologiaFlussoDocumento}{Visualizza Tipologia di Flusso documento}
 \begin{itemize}
-    \item \textbf{Descrizione}: L'utente vuole visualizzare la tipologia di flusso del documento, che indica se si tratta di un documento in uscita, in entrata o interno.
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{enumerate}
@@ -769,96 +770,152 @@
     \item \textbf{Postcondizioni}: L'utente visualizza la tipologia di flusso del documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video la tipologia del flusso del documento selezionato
+            \item Il sistema mostra a video la tipologia del flusso del documento selezionato tra le seguenti:
+            \begin{itemize}
+                \item In uscita
+                \item In entrata
+                \item Interno
+            \end{itemize}
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaTipoRegistroDocumento}{Visualizza Tipo di Registro documento}
+\subusecase{visualizzaTipoRegistroDocumento}{Visualizza tipo di registro documento}
 \begin{itemize}
-    \item \textbf{Descrizione}: L'utente vuole visualizzare il tipo di registro del documento, che indica il sistema di registrazione adottato: protocollo ordinario/protocollo emergenza, o Repertorio/Registro.
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
         \item L'utente ha selezionato un documento
     \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza il Tipo di Registro del documento selezionato
+    \item \textbf{Postcondizioni}: L'utente visualizza il tipo di registro del documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video il Tipo di Registro 
-            del documento selezionato
+            \item Il sistema mostra a video il tipo di registro 
+            del documento selezionato tra le seguenti tipologie:
+            \begin{itemize}
+                \item Protocollo ordinario
+                \item Protocollo emergenza
+                \item Repertorio
+                \item Registro
+            \end{itemize}
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaDataRegistrazioneDocumento}{Visualizza Data di Registrazione documento}
+\subusecase{visualizzaDataRegistrazioneDocumento}{Visualizza data di registrazione documento}
 \begin{itemize}
-    \item \textbf{Descrizione}: L'utente vuole visualizzare la data di registrazione del documento, che indica nel caso di documento non protocollato:
-    \begin{itemize}
-        \item Data di registrazione del Documento/Ora di registrazione del Documento
-    \end{itemize}
-    nel caso di documento protocollato:
-    \begin{itemize}
-        \item Data di registrazione di protocollo/Ora di protocollazione del Documento
-    \end{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
         \item L'utente ha selezionato un documento
     \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza la Data di Registrazione del documento selezionato
+    \item \textbf{Postcondizioni}: L'utente visualizza la data di registrazione del documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video la Data di Registrazione
-            del documento selezionato
+            \item Il sistema mostra a video la data di registrazione del documento selezionato
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaNumeroDocumento}{Visualizza Numero documento}
+\subsubusecase{visualizzaDataNonProtocollato}{Visualizza data di registrazione documento non protocollato}
 \begin{itemize}
-    \item \textbf{Descrizione}: L'utente vuole visualizzare il numero del documento, che indica nel caso di documento non protocollato:
-    \begin{itemize}
-        \item Numero di registrazione del documento
-    \end{itemize}
-    mentre nel caso di documento protocollato:
-    \begin{itemize}
-        \item Numero di protocollo
-    \end{itemize}
+\item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento non protocollato
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la data di registrazione del documento non protocollato selezionato
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video la data di registrazione del documento non protocollato selezionato
+        \end{enumerate}
+    \item \textbf{Specializza}: \ref{visualizzaDataRegistrazioneDocumento} Visualizza data di registrazione documento
+\end{itemize}
+
+\subsubusecase{visualizzaDataProtocollato}{Visualizza data di protocollazione documento protocollato}
+\begin{itemize}
+\item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento protocollato
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza la data di protocollazione del documento protocollato selezionato
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video la data di protocollazione del documento protocollato selezionato
+        \end{enumerate}
+    \item \textbf{Specializza}: \ref{visualizzaDataRegistrazioneDocumento} Visualizza data di registrazione documento
+\end{itemize}
+
+\subusecase{visualizzaNumeroDocumento}{Visualizza numero documento}
+\begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
         \item L'utente ha selezionato un documento
     \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza il Numero del documento selezionato
+    \item \textbf{Postcondizioni}: L'utente visualizza il numero del documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video il Numero del documento selezionato
+            \item Il sistema mostra a video il numero del documento selezionato
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaCodiceIdentificativoRegistroAppartenenzaDocumento}{Visualizza Codice identificativo del Registro di appartenenza documento}
+\subsubusecase{visualizzaNumeroNonProtocollato}{Visualizza numero documento non protocollato}
 \begin{itemize}
-    \item \textbf{Descrizione}: L'utente vuole visualizzare il codice identificativo del registro in cui il documento viene registrato.
+\item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento non protocollato
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza il numero di registrazione del documento non protocollato selezionato
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video il numero di registrazione del documento non protocollato selezionato
+        \end{enumerate}
+    \item \textbf{Specializza}: \ref{visualizzaNumeroDocumento} Visualizza numero del documento
+\end{itemize}
+
+\subsubusecase{visualizzaNumeroProtocollato}{Visualizza numero documento protocollato}
+\begin{itemize}
+\item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente ha selezionato un documento protocollato
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza il numero di protocollo del documento protocollato selezionato
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video il numero di protocollo del documento protocollato selezionato
+        \end{enumerate}
+    \item \textbf{Specializza}: \ref{visualizzaNumeroDocumento} Visualizza numero del documento
+\end{itemize}
+
+\subusecase{visualizzaCodiceIdentificativoRegistroAppartenenzaDocumento}{Visualizza codice identificativo del registro di appartenenza documento}
+\begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
         \item L'utente ha selezionato un documento
     \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza il Codice identificativo del Registro in cui è stato registrato il documento selezionato
+    \item \textbf{Postcondizioni}: L'utente visualizza il codice identificativo del registro in cui è stato registrato il documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video il Codice identificativo del Registro in cui è stato registrato il documento selezionato
+            \item Il sistema mostra a video il Codice identificativo del registro in cui è stato registrato il documento selezionato
         \end{enumerate}
 \end{itemize}
 
-\usecase{visualizzaTipologiaDocumentaleDocumento}{Visualizza Tipologia documentale documento}
+\usecase{visualizzaTipologiaDocumentaleDocumento}{Visualizza tipologia documentale documento}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/UC58.png}
-    \caption{Diagramma dell'UC-58}
-    \label{fig:UC58}
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC50.png}
+    \caption{\ref{visualizzaTipologiaDocumentaleDocumento} - Visualizza tipologia documentale documento}
+    \label{fig:uc_visualizzaTipologiaDocumentaleDocumento}
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -867,19 +924,19 @@
         \item L'utente ha avviato l'applicazione
         \item L'utente ha selezionato un documento
     \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza la Tipologia documentale del documento selezionato
+    \item \textbf{Postcondizioni}: L'utente visualizza la tipologia documentale del documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
             \item Il sistema mostra a video la tipologia documentale del documento selezionato
         \end{enumerate}
 \end{itemize}
 
-\usecase{visualizzaModalitaFormazioneDocumento}{Visualizza Modalità di formazione documento}
+\usecase{visualizzaModalitaFormazioneDocumento}{Visualizza modalità di formazione documento}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/UC59.png}
-    \caption{Diagramma dell'UC-59}
-    \label{fig:UC59}
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC51.png}
+    \caption{\ref{visualizzaModalitaFormazioneDocumento} - Visualizza modalità di formazione documento}
+    \label{fig:uc_visualizzaModalitaFormazioneDocumento}
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -888,32 +945,31 @@
         \item L'utente ha avviato l'applicazione
         \item L'utente ha selezionato un documento
     \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza la Modalità di formazione del documento selezionato
+    \item \textbf{Postcondizioni}: L'utente visualizza la modalità di formazione del documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video la Modalità di formazione del documento selezionato
+            \item Il sistema mostra a video la modalità di formazione del documento selezionato
         \end{enumerate}
 \end{itemize}
 
-\usecase{visualizzaStatoRiservatezzaDocumento}{Visualizza Stato di riservatezza documento}
+\usecase{visualizzaStatoRiservatezzaDocumento}{Visualizza stato di riservatezza documento}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/UC60.png}
-    \caption{Diagramma dell'UC-60}
-    \label{fig:UC60}
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC52.png}
+    \caption{\ref{visualizzaStatoRiservatezzaDocumento} - Visualizza stato di riservatezza documento}
+    \label{fig:uc_visualizzaStatoRiservatezzaDocumento}
 \end{figure}
 \begin{itemize}
-    \item \textbf{Descrizione}: L'utente vuole visualizzare lo stato di riservatezza del documento, che indica se quest'ultimo è accessibile solo al personale autorizzato
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{enumerate}
         \item L'utente ha avviato l'applicazione
         \item L'utente ha selezionato un documento
     \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza lo Stato di riservatezza del documento selezionato
+    \item \textbf{Postcondizioni}: L'utente visualizza lo stato di riservatezza del documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video lo Stato di riservatezza del documento selezionato
+            \item Il sistema mostra a video lo stato di riservatezza del documento selezionato
         \end{enumerate}
 \end{itemize}
 

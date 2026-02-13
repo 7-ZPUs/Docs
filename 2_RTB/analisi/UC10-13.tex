@@ -1,11 +1,11 @@
 % DA UC-41
 
-\usecase{visualizzaInfoAiP}{Visualizzazione informazioni AiP di provenienza documento  }
+\usecase{visualizzaInfoAiP}{Visualizzazione informazioni AiP di provenienza documento}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/UC46.png}
-    \caption{Visualizzazione Informazioni AiP}
-    \label{fig:visualizzazioneInfoAiP}
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC38.png}
+      \caption{\ref{visualizzaInfoAiP} - Visualizzazione informazioni AiP di provenienza documento}
+    \label{fig:uc_visualizzazioneInfoAiP}
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -25,18 +25,18 @@
         \end{enumerate}
     \item \textbf{Inclusioni}:
     \begin{itemize}
-        \item \ref{visualizzaClasseDocumentaleAiP} Visualizzazione Classe Documentale di appartenenza AiP
+          \item \ref{visualizzaClasseDocumentaleAiP} Visualizzazione classe documentale di appartenenza AiP
         \item \ref{visualizzaUUIDAiP} Visualizza UUID AiP
     \end{itemize}
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/IncUC46.png}
-    \caption{Inclusioni UC46}
-    \label{fig:visualizzazioneInclusioniUC46}
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC38INC.png}
+    \caption{Inclusioni \ref{visualizzaInfoAiP} - Visualizzazione informazioni AiP di provenienza documento}
+    \label{fig:inclusioniVisualizzazioneInfoAiP}
 \end{figure}
 
-\subusecase{visualizzaClasseDocumentaleAiP}{Visualizza classe documentale di appartenenza AiP  }
+\subusecase{visualizzaClasseDocumentaleAiP}{Visualizza classe documentale di appartenenza AiP}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -51,7 +51,7 @@
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaUUIDAiP}{Visualizza UUID AiP  }
+\subusecase{visualizzaUUIDAiP}{Visualizza UUID AiP}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -66,19 +66,19 @@
         \end{enumerate}
 \end{itemize}
 
-\usecase{visualizzaInfoProcessoConservazioneAiP}{Visualizza informazioni processo di conservazione AiP  }
+\usecase{visualizzaInfoProcessoConservazioneAiP}{Visualizza informazioni processo di conservazione AiP}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../assets/uml/UC47.png}
-    \caption{Diagramma dell'UC-47}
-    \label{fig:UC47}
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC39.png}
+    \caption{\ref{visualizzaInfoProcessoConservazioneAiP} - Visualizzazione informazioni processo di conservazione AiP}
+    \label{fig:uc_visualizzaInfoProcessoConservazioneAiP}
 \end{figure}
 
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
     \begin{enumerate}
-        \item L'utente ha avviato il programma
+        \item L'utente ha avviato l'applicazione
         \item L'utente sta visualizzando le informazioni di un AiP
     \end{enumerate}
     \item \textbf{Postcondizioni}: L'utente visualizza le informazioni del processo di conservazione, quali: data inizio, data fine, uuid utente responsabile, canale di attivazione, stato del processo, sessione di versamento, sessione di conservazione.
@@ -112,10 +112,11 @@
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../assets/uml/incUC47.png}
-    \caption{Diagramma delle inclusioni dell'UC-47}
-    \label{fig:IncUC47}
+    \includegraphics[width=1\textwidth]{../assets/uml/UC39INC.png}
+    \caption{Inclusioni \ref{visualizzaInfoProcessoConservazioneAiP} - Visualizzazione informazioni processo di conservazione AiP}
+    \label{fig:inclusioniVisualizzaInfoProcessoConservazioneAiP}
 \end{figure}
+
 \subusecase{visualizzaDataInizioProcessoSessione}{Visualizza data inizio processo/sessione}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -134,9 +135,9 @@
 \subusecase{visualizzaDataFineProcessoSessione}{Visualizza data fine processo/sessione}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../assets/uml/UC47.2.png}
-    \caption{Diagramma dell'UC-47.2 e dell'estensione a 47.3}
-    \label{fig:UC47.2}
+    \includegraphics[width=1\textwidth]{../assets/uml/UC39.2.png}
+    \caption{\ref{visualizzaDataFineProcessoSessione} - Visualizzazione data fine processo/sessione}
+    \label{fig:uc_visualizzaDataFineProcessoSessione}
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -172,7 +173,7 @@
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaUUIDUtenteAttivatore}{Visualizza UUID utente attivatore di un processo/sessione  }
+\subusecase{visualizzaUUIDUtenteAttivatore}{Visualizza UUID utente attivatore di un processo/sessione}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -187,12 +188,12 @@
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaUUIDUtenteTerminatore}{Visualizza UUID utente terminatore di un processo/sessione  }
+\subusecase{visualizzaUUIDUtenteTerminatore}{Visualizza UUID utente terminatore di un processo/sessione}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../assets/uml/UC47.5.png}
-    \caption{Diagramma delle inclusioni dell'UC-47.5}
-    \label{fig:UC47.5}
+    \includegraphics[width=1\textwidth]{../assets/uml/UC39.5.png}
+    \caption{\ref{visualizzaUUIDUtenteTerminatore} - Visualizzazione UUID utente terminatore di un processo/sessione}
+    \label{fig:uc_visualizzaUUIDUtenteTerminatore}
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -228,7 +229,7 @@
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaNomeCanaleAttivazione}{Visualizza nome canale di attivazione di un processo/sessione  }
+\subusecase{visualizzaNomeCanaleAttivazione}{Visualizza nome canale di attivazione di un processo/sessione}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -243,12 +244,12 @@
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaNomeCanaleTerminazione}{Visualizza nome canale di terminazione di un processo/sessione  }
+\subusecase{visualizzaNomeCanaleTerminazione}{Visualizza nome canale di terminazione di un processo/sessione}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../assets/uml/UC47.8.png}
-    \caption{Diagramma delle inclusioni dell'UC-47.8}
-    \label{fig:UC47.8}
+    \includegraphics[width=1\textwidth]{../assets/uml/UC39.8.png}
+    \caption{\ref{visualizzaNomeCanaleTerminazione} - Visualizzazione nome canale di terminazione di un processo/sessione}
+    \label{fig:uc_visualizzaNomeCanaleTerminazione}
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -284,7 +285,7 @@
         \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaStatoProcessoSessione}{Visualizza stato di un processo/sessione  }
+\subusecase{visualizzaStatoProcessoSessione}{Visualizza stato di un processo/sessione}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}:
@@ -299,12 +300,12 @@
         \end{enumerate}
 \end{itemize}
 
-\usecase{visualizzaInfoSessioneVersamento}{Visualizza Informazioni sulla Sessione di Versamento}
+\usecase{visualizzaInfoSessioneVersamento}{Visualizza informazioni sulla sessione di versamento}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../assets/uml/IncUC48.png}
-    \caption{Diagramma dell'UC-48 compreso delle sue inclusioni}
-    \label{fig:IncUC48}
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC40.png}
+    \caption{\ref{visualizzaInfoSessioneVersamento} - Visualizzazione informazioni sulla sessione di versamento}
+    \label{fig:uc_visualizzaInfoSessioneVersamento}
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -325,8 +326,6 @@
                 \item Nome canale di attivazione (\ref{visualizzaNomeCanaleAttivazione})
                 \item Nome canale di terminazione (\ref{visualizzaNomeCanaleTerminazione})
                 \item Stato del processo (\ref{visualizzaStatoProcessoSessione})
-                \item Informazioni sulla sessione di versamento (\ref{visualizzaInfoSessioneVersamento})
-                \item Informazioni sulla sessione di conservazione (\ref{visualizzaInfoSessioneConservazione})
             \end{itemize}
         \end{enumerate}
     \item \textbf{Inclusioni}:
@@ -338,17 +337,21 @@
         \item \ref{visualizzaNomeCanaleAttivazione} Visualizza nome canale di attivazione di un processo/sessione
         \item \ref{visualizzaNomeCanaleTerminazione} Visualizza nome canale di terminazione di un processo/sessione
         \item \ref{visualizzaStatoProcessoSessione} Visualizza stato di un processo/sessione
-        \item \ref{visualizzaInfoSessioneVersamento} Visualizza Informazioni sulla Sessione di Versamento
-        \item \ref{visualizzaInfoSessioneConservazione} Visualizza Informazioni sulla Sessione di Conservazione
     \end{itemize}
 \end{itemize}
-
-\usecase{visualizzaInfoSessioneConservazione}{Visualizza Informazioni sulla Sessione di Conservazione}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../assets/uml/IncUC49.png}
-    \caption{Diagramma dell'UC-49 compreso delle sue inclusioni}
-    \label{fig:IncUC49}
+    \includegraphics[width=1\textwidth]{../assets/uml/UC40INC.png}
+    \caption{Inclusioni \ref{visualizzaInfoSessioneVersamento} - Visualizzazione informazioni sulla sessione di versamento}
+    \label{fig:inclusioniVisualizzaInfoSessioneVersamento}
+\end{figure}
+
+\usecase{visualizzaInfoSessioneConservazione}{Visualizza informazioni sulla sessione di conservazione}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../assets/uml/UC41.png}
+    \caption{\ref{visualizzaInfoSessioneConservazione} - Visualizzazione informazioni sulla sessione di conservazione}
+    \label{fig:uc_visualizzaInfoSessioneConservazione}
 \end{figure}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -369,8 +372,6 @@
                 \item Nome canale di attivazione (\ref{visualizzaNomeCanaleAttivazione})
                 \item Nome canale di terminazione (\ref{visualizzaNomeCanaleTerminazione})
                 \item Stato del processo (\ref{visualizzaStatoProcessoSessione})
-                \item Informazioni sulla sessione di versamento (\ref{visualizzaInfoSessioneVersamento})
-                \item Informazioni sulla sessione di conservazione (\ref{visualizzaInfoSessioneConservazione})
             \end{itemize}
         \end{enumerate}
     \item \textbf{Inclusioni}:
@@ -382,7 +383,11 @@
         \item \ref{visualizzaNomeCanaleAttivazione} Visualizza nome canale di attivazione di un processo/sessione
         \item \ref{visualizzaNomeCanaleTerminazione} Visualizza nome canale di terminazione di un processo/sessione
         \item \ref{visualizzaStatoProcessoSessione} Visualizza stato di un processo/sessione
-        \item \ref{visualizzaInfoSessioneVersamento} Visualizza Informazioni sulla Sessione di Versamento
-        \item \ref{visualizzaInfoSessioneConservazione} Visualizza Informazioni sulla Sessione di Conservazione
     \end{itemize}
 \end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../assets/uml/UC41INC.png}
+    \caption{Inclusioni \ref{visualizzaInfoSessioneConservazione} - Visualizzazione informazioni sulla sessione di conservazione}
+    \label{fig:inclusioniVisualizzaInfoSessioneConservazione}
+\end{figure}
