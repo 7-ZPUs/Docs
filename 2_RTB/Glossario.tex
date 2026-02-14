@@ -41,7 +41,14 @@
 \titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
 
+% Rimuove i numeri dall'indice
+\cftsetindents{section}{0em}{0em}
+\renewcommand{\cftsecpresnum}{\begin{lrbox}{\@tempboxa}}
+\renewcommand{\cftsecaftersnum}{\end{lrbox}}
+
 \begin{document}
+
+\setcounter{secnumdepth}{0}
 
 \begin{center}
     \includegraphics[width=9.5cm]{../assets/logo7ZPUs.jpg}\\
