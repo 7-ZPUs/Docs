@@ -552,7 +552,7 @@ Non vengono prodotti i diagrammi per use case secondari, in quanto non apportano
 %     \item Scelta delle scadenze intermedie.
 % \end{enumerate}
 
-% \paragraph{Strumenti: Pianificazione operativa}
+% \paragraph{Strumenti di Pianificazione operativa}
 % \begin{itemize}
 %     \item \textbf{Jira:} Per la gestione delle task e pianificazione degli sprint.
 %     \item \textbf{Discord:} Per le riunioni di pianificazione sincrone.
@@ -582,7 +582,7 @@ Non vengono prodotti i diagrammi per use case secondari, in quanto non apportano
 %     \item Ruolo attivo di amministratori e tester per garantire il rispetto delle norme e dei documenti di progetto interni.
 % \end{itemize}
 
-% \paragraph{Strumenti: Gestione dei rischi operativi}
+% \paragraph{Strumenti di Gestione dei rischi operativi}
 % \begin{itemize}
 %     \item \textbf{Jira:} Per il tracciamento delle issue legate ai rischi e alle azioni di mitigazione.
 %     \item \textbf{Dashboard Jira:} Per il monitoraggio in tempo reale dell'allocazione delle ore e dello stato delle attività.
@@ -592,7 +592,7 @@ Non vengono prodotti i diagrammi per use case secondari, in quanto non apportano
 
 % \subsection{Processo di Manutenzione}
 % Il processo di Manutenzione definisce come il gruppo gestisce modifiche, correzioni e aggiornamenti del software e della documentazione durante l'intero ciclo di vita 
-% del progetto. Ogni richiesta nasce come \glossario{issue} DIPR tracciata su \glossario{Jira}, collegata allo \glossario{SCIs} coinvolto tramite gli Smart Commit descritti
+% del progetto. Ogni richiesta nasce come \glossario{issue} DIPR tracciata su \glossario{Jira}, collegata allo \glossario{CIs} coinvolto tramite gli Smart Commit descritti
 %  in \ref{smartcommit} e lavorata sul relativo branch secondo lo standard \ref{stdBranch}.
 
 % \subsubsection{Attività: Manutenzione correttiva}
@@ -605,7 +605,7 @@ Non vengono prodotti i diagrammi per use case secondari, in quanto non apportano
 %     \item Esecuzione automatica di GitHub Actions, SonarQube e Cypress prima della review e del merge su \texttt{main}.
 % \end{itemize}
 
-% \paragraph{Strumenti: Manutenzione correttiva}
+% \paragraph{Strumenti di Manutenzione correttiva}
 % \begin{itemize}
 %     \item Jira per tracciamento dei Bug e collegamento ai documenti di progetto.
 %     \item GitHub + Smart Commit per versionamento e collegamento ai Work Item.
@@ -623,7 +623,7 @@ Non vengono prodotti i diagrammi per use case secondari, in quanto non apportano
 %     \item Aggiornamento coordinato di codice, documentazione \LaTeX{} e test automatici.
 % \end{itemize}
 
-% \paragraph{Strumenti: Manutenzione adattiva}
+% \paragraph{Strumenti di Manutenzione adattiva}
 % \begin{itemize}
 %     \item Jira per backlog condiviso e campi di impatto.
 %     \item Verbali interni/esterni in \texttt{2\_RTB/Verbali} per motivazioni e vincoli.
@@ -641,7 +641,7 @@ Non vengono prodotti i diagrammi per use case secondari, in quanto non apportano
 %     \item Revisione dei quality gate SonarQube e dei report Cypress per anticipare regressioni.
 % \end{itemize}
 
-% \paragraph{Strumenti: Manutenzione preventiva}
+% \paragraph{Strumenti di Manutenzione preventiva}
 % \begin{itemize}
 %     \item GitHub Actions per controlli automatici su codice e documenti.
 % \end{itemize}
@@ -655,7 +655,7 @@ Non vengono prodotti i diagrammi per use case secondari, in quanto non apportano
 %     \item Retrospettive e sviluppo quotidiano generano issue Jira.
 % \end{itemize}
 
-% \paragraph{Strumenti: Identificazione della necessità di manutenzione}
+% \paragraph{Strumenti di Identificazione della necessità di manutenzione}
 % \begin{itemize}
 %     \item Dashboard Jira.
 %     \item Notifiche GitHub Actions.
@@ -670,7 +670,7 @@ Non vengono prodotti i diagrammi per use case secondari, in quanto non apportano
 %     \item Superamento obbligatorio delle pipeline GitHub Actions e del quality gate.
 % \end{itemize}
 
-% \paragraph{Strumenti: Verifica e validazione delle modifiche}
+% \paragraph{Strumenti di Verifica e validazione delle modifiche}
 % \begin{itemize}
 %     \item GitHub Actions.
 %     \item Checklist del Piano di Qualifica per confermare aggiornamenti e metriche.
@@ -687,7 +687,7 @@ Non vengono prodotti i diagrammi per use case secondari, in quanto non apportano
 %     \item Esportazione JQL $\rightarrow$ csv elaborata da script Python per la distribuzione correttiva/adattiva/preventiva.
 % \end{itemize}
 
-% \paragraph{Strumenti: Monitoraggio delle metriche}
+% \paragraph{Strumenti di Monitoraggio delle metriche}
 % \begin{itemize}
 %     \item Dashboard Jira e Control Chart per lead time e throughput.
 %     \item Script Python dedicati che utilizzano i csv esportati da Jira.
@@ -741,7 +741,7 @@ documentazione:
           acquisire esperienza in diverse aree.
     \item Vengono create le \glossario{issue} in Jira per ogni attività di
           documentazione, specificando i dettagli del compito, le scadenze e i
-          verificatori per ogni attività. Specifiche in \ref{identificazioneSCIs}.
+          verificatori per ogni attività. Specifiche in \ref{identificazioneCIs}.
 \end{enumerate}
 \paragraph{Strumenti di Pianificazione}
 \begin{itemize}
@@ -805,41 +805,26 @@ La denominazione dei file sul sito segue anch'essa la datazione usata per il nom
 \textit{Nota}: per versionamento di github non si intende lo stesso presente nelle tabelle di versionamento dei documenti.
 
 \subsubsection{Attività: Revisione e Approvazione} \label{revisione_approvazione}
-Ogni documento redatto viene sottoposto a un processo di revisione interna che
-ne accerta la correttezza contenutistica, formale, e stilistica. La revisione viene effettuata da un membro del gruppo diverso dall'autore del documento seguendo la procedura definita a seguire
+Ogni documento redatto viene sottoposto a un processo di approvazione interna da parte del responsabile che
+ne accerta la correttezza contenutistica, formale, e stilistica. La revisione viene effettuata seguendo la procedura definita a seguire
 \paragraph{Procedure di Revisione e Approvazione}\label{procedureRevisioneDocs}
 \begin{enumerate}
-    \item Una volta ricevuta la notifica della PR da revisionare, il revisore dovrà
+    \item Una volta ricevuta la notifica della PR da revisionare, il responsabile dovrà
           controllare l'aderenza ai modelli approvati, la correttezza formale e
           sostanziale del documento. Per velocizzare, oltre alla lettura attenta, si
           consiglia l'uso di LLM, in particolare per l'analisi grammaticale e stilistica.
-    \item Completata la revisione, il revisore può:
-          \begin{itemize}
-              \item \textbf{Approvare la PR}, notificando all'autore l'approvazione. È necessario che nel
-                    testo del commit del merge siano chiuse tramite Smart Commit entrambe le issue
-                    correlate.
-              \item \textbf{Richiedere modifiche}, fornendo un feedback dettagliato all'autore, chiudendo la
-                    PR che sarà riaperta dall'autore una volta implementate le modifiche.
-          \end{itemize}
+    \item Completata la revisione, procede come descritto in \ref{controlloConfig} con l'approvazione o la richiesta di modifiche.
 \end{enumerate}
-\begin{figure}[H]
-    \label{PR2}
-    \centering
-    \includegraphics[width=1\textwidth]{../assets/PRDocs2.png}
-    \caption{Commit della PR con Smart Commit verso le due issue}
-\end{figure}
 
-Per quanto riguarda l'approvazione finale del documento, questa spetta al
-responsabile, il quale effettua il merge da "\textit{in\_lavorazione}" nel ramo
-principale \textit{main}, base
-per la versione ufficiale di rilascio corrispondente alla
-milestone. Questo passaggio dovrebbe risultare puramente formale se la documentazione è stata gestita fino a quel momento rispettando le norme definite.
+Lo stesso effettua il merge da "\textit{in\_lavorazione}" nel ramo
+principale \textit{main} come definito in \ref{controlloConfig}, base per
+la versione ufficiale di rilascio corrispondente allamilestone.
+Questo passaggio dovrebbe risultare puramente formale se la documentazione
+è stata gestita fino a quel momento rispettando le norme definite.
 Non di meno il responsabile è il garante delle qualità del documento quindi deve impiegare il
 proprio tempo, il minimo possibile, per rileggere e confermare i contenuti.
 
 \paragraph{Strumenti di Revisione e Approvazione}
-Per la gestione della documentazione di progetto il gruppo utilizza i seguenti
-strumenti:
 \begin{itemize}
     \item \textbf{GitHub}, integrato in VSCode per la gestione delle versioni e delle \glossario{\textit{Pull Request (PR)}}, comodamente nell'ambiente di sviluppo \ref{vscode}.
           Per una stesura efficiente dei documenti il Team si è dotato di modelli predefiniti (Decisione del \href{https://7-zpus.github.io/Docs/assets/pdf/Verbali/Verbali\%20Interni/2025-11-07-VerbaleInterno.pdf}{2025-11-07}).
@@ -849,165 +834,136 @@ strumenti:
 
 \subsection{Processo di Gestione della Configurazione} \label{configurazione}
 Il processo di gestione della configurazione ha lo scopo di identificare,
-definire e controllare gli elementi della configurazione software
-(\glossario{SCIs}) durante tutto il ciclo di vita del progetto, garantendo la
-tracciabilità delle modifiche e l'integrità dei rilasci. Gli SCIs, in poche
-parole, sono tutti gli artefatti prodotti e gestiti durante il progetto. 
+definire e controllare gli artefatti che compongono la baseline di progetto
+(\glossario{CIs}) durante tutto il ciclo di vita del progetto, garantendo la
+tracciabilità delle modifiche e l'integrità dei rilasci.
 
 \subsubsection{Attività: Identificazione della Configurazione} 
 Questa attività prevede la definizione degli elementi della configurazione
-(SCIs) e la loro identificazione univoca.
-\paragraph{Procedure: Identificazione degli SCIs} \label{identificazioneSCIs}
-Gli SCIs sono sempre associati ad un Work Item di Jira, che ne garantisce la
+(CIs) e la loro identificazione univoca.
+\paragraph{Procedure: Identificazione dei CIs} \label{identificazioneCIs}
+Gli CIs sono sempre associati ad un Epic di Jira, che ne garantisce la
 tracciabilità e la gestione delle modifiche. In particolare il processo di
 creazione deve seguire i seguenti passaggi:
 \begin{enumerate}
     \item Creazione di una issue in Jira per ogni nuovo artefatto da produrre (documento,
           componente software, etc).
-    \item Identificazione dell'ambito di appartenenza (Epic), della funzionalità
-          (Feature) o di una specifica attività (Task) già presenti nel sistema o da
-          aggiungere se non compatibile.
-    \item Assegnazione della issue al membro del gruppo responsabile della sua
-          supervisione.
+    \item Identificazione della versione di correzione corrispondente alla milestone RTB o PB.
     \item Aggiunta di label specifici per facilitare la ricerca e la categorizzazione
-          degli SCIs, per esempio \textit{DOCS}, \textit{Formazione}, \textit{Code} etc.
-    \item Aggiunta di Linked Issues per collegare SCIs correlati o dipendenti tra loro,
-          con relazioni di \textit{child/parent of} o \textit{blocked by} per esempio.
-    \item Aggiunta di eventuali allegati.
-    \item Definizione delle scadenze e del \glossario{Time Estimate} per la gestione del
-          carico di lavoro.
+          dei CIs, per esempio \textit{DOCS}, \textit{Formazione}, \textit{Code} etc.
 \end{enumerate}
-È quindi necessaria una specificazione sulla struttura di un Work Item. Ogni Work Item deve contenere deve consistere in una fase produttiva e una fase di revisione, per garantire la qualità del prodotto finale.
-\\ A tal fine si adottano le seguenti convenzioni:
-\begin{itemize}
-    \item Ogni Work Item deve presentare una sotto issue che rappresenta la fase di
-          produzione.
-    \item La sotto issue di produzione deve essere collegata alla issue principale
-          tramite la relazione \textit{child of}.
-    \item La sotto issue di produzione deve essere assegnata al membro del gruppo
-          responsabile della stesura o sviluppo dell'artefatto, mentre la issue
-          principale deve essere assegnata al membro responsabile della supervisione.
-\end{itemize}
-Questo approccio divide chiaramente le responsabilità e le attività, mantenendo la correlazione tra produzione e supervisione e inoltre facilita il monitoraggio dello stato di avanzamento, la gestione delle revisioni e conteggio di \glossario{Ore produttive} consumate.
-Di più nello specifico in \ref{metriche_qualita}.
-\subparagraph{Issue e SubIssue}
-In generale, come già detto, ogni Work Item deve essere composto da una issue principale e una sotto issue di produzione. Nel caso però di Riunioni e Diari di Bordo, intesi come eventi ma anche come tipi di work item Jira, la struttura cambia:
-\begin{itemize}
-    \item \textbf{Riunioni:} La Riunione rappresenta l'evento, simile al concetto di Epic o Feature, mentre le issue rappresentano i verbali interni ed esterni associati alla riunione stessa.
-    \item \textbf{Diari di Bordo:} Similarmente, il Diario di Bordo rappresenta l'evento periodico, mentre la issue associata riguarda la preparazione delle slide.
-\end{itemize}
-Per entrambi, la creazione della issue di produzione avviene automaticamente una volta che l'evento viene assegnato al membro del team che si occuperà della verifica del materiale prodotto.
 \paragraph{Strumenti di Identificazione}
 \begin{itemize}
     \item \textbf{Jira:} Strumento di gestione delle attività di progetto.
 \end{itemize}
 
 \subsubsection{Attività: Controllo della configurazione}\label{controlloConfig}
-Il controllo della configurazione è il processo con il quale vengono gestite le richieste di modifica. 
-Una volta effettuata una modifica l'autore crea una Pull Request (PR) verso la feature branch
-principale, assegnando come revisore il membro del gruppo designato, diverso da
-se. \\ A questo punto:
+Il controllo della configurazione è il processo con il quale vengono gestite le richieste di modifica ai CIs. 
+
+\paragraph{Procedure: Controllo della configurazione} \label{procedureControlloConfig}
+Ogni modifica a un CI deve provenire da un branch dedicato, collegato ad un work item Jira corrispondente,
+garantendo tracciabilità e controllo delle modifiche. Come gestire branch e work item viene descritto nella sezione \ref{gestione_processi_organizzativi}\\ \\
+Una volta effettuata una modifica nel branch relativo alla task (vedi \ref{gestione_processi_organizzativi}) l'autore crea una Pull Request (PR) dal branch associato alla task verso il
+branch di riferimento \textit{x\_in\_lavorazione} (dove x è il nome del CI), impostando come revisore
+il membro del gruppo designato alla verifica di tale task. Il revisore ha il compito di controllare che la modifica sia corretta e conforme
+alle norme definite, e di approvare o rifiutare la PR in base alla sua valutazione. \\ A questo punto si verificano i seguenti scenari:
 \begin{itemize}
-    \item Se il revisore \textbf{approva la PR}, questo branch viene automaticamente
-          eliminato, il work item viene marcato come completato in Jira e l'assegnatario
-          può proseguire con gli altri compiti a lui assegnati.
-    \item Se il revisore richiede modifiche \textbf{la PR viene rifiutata} e
-          l'assegnatario deve procedere con le modifiche richieste. Una volta completate,
-          l'assegnatario notifica il revisore che procederà con una nuova revisione.
-          Questo ciclo si ripete fino a quando la PR non viene approvata.
-\end{itemize}
-L'integrazione con Jira permette di controllare lo stato di avanzamento dei Work Item, la rendicontazione delle ore lavorate e la gestione delle scadenze.
-Risulta quindi \textbf{obbligatorio} l'utilizzo di Smart Commit per tutti i commit, compresi quelli di Pull Request. Più in \ref{smartcommit}.
-
-\begin{figure}[H]
-    \label{fig:workflowDocs}
+    \item \textbf{Approvazione}: Il revisore procede con l'approvazione delle modifiche e la chiusura della PR tramite l'opzione "Create Merge Commit".
+    \begin{figure}[H]
+    \label{PR2}
     \centering
-    \includegraphics[width=0.7\textwidth]{../assets/workflowWorkItem.png}
-    \caption{Flusso del processo di controllo}
-\end{figure}
+    \includegraphics[width=1\textwidth]{../assets/PRDocs2.png}
+    \caption{Chiusura della PR tramite "Create Merge Commit"}
+    \end{figure}
+    \item \textbf{Richiesta di modifiche}: Il revisore fornisce un feedback puntuale all'autore tramite la funzione di review di GitHub. Una volta inseriti i commenti necessari all'autore, il revisore completa la review con l'esito: \textit{"Request changes"}. L'autore provvede a correggere i punti segnalati o a discuterne eventualmente tramite l'apposita sezione. Il revisore provvede ad una nuova revisione dei cambiamenti. Questo ciclo si ripete fino a quando i cambiamenti non vengono approvati.
+    \item \textbf{Rifiuto}: Se la task viene annullata il revisore completa la review con l'esito: \textit{"Close with comment"}, inserendo un commento che spiega le motivazioni del rifiuto.
+\end{itemize}
+% L'integrazione con Jira permette di controllare lo stato di avanzamento dei Work Item, la rendicontazione delle ore lavorate e la gestione delle scadenze.
+% Risulta quindi \textbf{obbligatorio} l'utilizzo di Smart Commit per tutti i commit, compresi quelli di Pull Request. Più in \ref{smartcommit}.
 
-I seguenti passaggi guidano il Team nella produzione di modifiche alla baseline:
-\begin{enumerate}
-    \item Consultando l'estensione
-          \href{https://marketplace.visualstudio.com/items?itemName=Atlassian.atlascode}{"Atlassian:
-              Jira, Rovo Dev, Bitbucket"} il membro del gruppo potrà avere accesso al Work
-          Item assegnatogli e cliccando su "Start Work" potrà \textbf{creare il branch}
-          di lavoro secondo le convenzioni stabilite (\ref{stdBranch}). Nell'immagine
-          sottostante sono indicati visivamente i passi.
-          \begin{figure}[H]
-              \centering
-              \includegraphics[width=1\textwidth]{../assets/estensioneJira.png}
-              \caption{Creazione del branch di lavoro tramite estensione Jira in VSCode}
-          \end{figure}
-    \item Quando è necessario \textbf{effettuare un commit} è obbligatorio utilizzare lo
-          Smart Commit. Più in \ref{Jira}.
-    \item Una volta completata la task, è necessario \textbf{creare la PR} verso la
-          branch \textit{"in\_lavorazione"} di riferimento mettendo come revisore il
-          membro del gruppo designato.\\ Per esempio, una volta completata la stesura di
-          un verbale viene creata una PR verso \textit{verbali\_in\_lavorazione} e se
-          questa viene approvata, il documento sarà pronto per la revisione finale del
-          responsabile che si occuperà del merge con il \textit{main} in sede di milestone.\\
-          \begin{figure}[H]
-              \label{PR1}
-              \centering
-              \includegraphics[width=1.1\textwidth]{../assets/PRDocs1.png}
-              \caption{Creazione della PR verso l'issue branch \textit{in\_lavorazione}}
-          \end{figure}
-\end{enumerate}
+% \begin{figure}[H]
+%     \label{fig:workflowDocs}
+%     \centering
+%     \includegraphics[width=0.7\textwidth]{../assets/workflowWorkItem.png}
+%     \caption{Flusso del processo di controllo}
+% \end{figure}
 
-\paragraph{Procedure: Smart Commit} \label{smartcommit}
-La necessità di tracciamento delle attività richiede l'adozione capillare degli
-Smart Commit per collegare i commit GitHub alle issue Jira. Questo permette di
-aggiornare automaticamente lo stato delle task e rendicontare il tempo.
+% I seguenti passaggi guidano il Team nella produzione di modifiche alla baseline:
+% \begin{enumerate}
+%     \item Consultando l'estensione
+%           \href{https://marketplace.visualstudio.com/items?itemName=Atlassian.atlascode}{"Atlassian:
+%               Jira, Rovo Dev, Bitbucket"} il membro del gruppo potrà avere accesso al Work
+%           Item assegnatogli e cliccando su "Start Work" potrà \textbf{creare il branch}
+%           di lavoro secondo le convenzioni stabilite (\ref{stdBranch}). Nell'immagine
+%           sottostante sono indicati visivamente i passi.
+%           \begin{figure}[H]
+%               \centering
+%               \includegraphics[width=1\textwidth]{../assets/estensioneJira.png}
+%               \caption{Creazione del branch di lavoro tramite estensione Jira in VSCode}
+%           \end{figure}
+%     \item Quando è necessario \textbf{effettuare un commit} è obbligatorio utilizzare lo
+%           Smart Commit. Più in \ref{Jira}.
+%     \item Una volta completata la task, è necessario \textbf{creare la PR} verso la
+%           branch \textit{"in\_lavorazione"} di riferimento mettendo come revisore il
+%           membro del gruppo designato.\\ Per esempio, una volta completata la stesura di
+%           un verbale viene creata una PR verso \textit{verbali\_in\_lavorazione} e se
+%           questa viene approvata, il documento sarà pronto per la revisione finale del
+%           responsabile che si occuperà del merge con il \textit{main} in sede di milestone.\\
+%           \begin{figure}[H]
+%               \label{PR1}
+%               \centering
+%               \includegraphics[width=1.1\textwidth]{../assets/PRDocs1.png}
+%               \caption{Creazione della PR verso l'issue branch \textit{in\_lavorazione}}
+%           \end{figure}
+% \end{enumerate}
 
-La sintassi obbligatoria è:
-\begin{verbatim}
-DIPR-<numero issue> #time <nd nh nm> #<stato> #comment <Descrizione> 
-\end{verbatim}
+% \paragraph{Procedure: Smart Commit} \label{smartcommit}
+% La necessità di tracciamento delle attività richiede l'adozione capillare degli
+% Smart Commit per collegare i commit GitHub alle issue Jira. Questo permette di
+% aggiornare automaticamente lo stato delle task e rendicontare il tempo.
 
-\textbf{Regole di applicazione:}
-\begin{enumerate}
-    \item \textbf{Time Tracking:} L'inserimento del tempo (\texttt{\#time}) deve seguire il formato \textit{nd nh nm} (giorni, ore, minuti).
-    \item \textbf{Transizioni di Stato:} Utilizzare i tag \texttt{\#start-progress}, \texttt{\#start-review}, \texttt{\#complete} per avanzare il workflow su Jira.
-    \item \textbf{Pull Request:} Nelle PR è vietato inserire il tag \texttt{\#time} per evitare la doppia contabilizzazione delle ore lavorative.
-    \item \textbf{Issue Multiple:} È possibile agire su più issue in un singolo commit separandole con spazi (utile per chiudere issue di sviluppo e verifica contemporaneamente)[cite: 97, 98].
-\end{enumerate}
+% La sintassi obbligatoria è:
+% \begin{verbatim}
+% DIPR-<numero issue> #time <nd nh nm> #<stato> #comment <Descrizione> 
+% \end{verbatim}
+
+% \textbf{Regole di applicazione:}
+% \begin{enumerate}
+%     \item \textbf{Time Tracking:} L'inserimento del tempo (\texttt{\#time}) deve seguire il formato \textit{nd nh nm} (giorni, ore, minuti).
+%     \item \textbf{Transizioni di Stato:} Utilizzare i tag \texttt{\#start-progress}, \texttt{\#start-review}, \texttt{\#complete} per avanzare il workflow su Jira.
+%     \item \textbf{Pull Request:} Nelle PR è vietato inserire il tag \texttt{\#time} per evitare la doppia contabilizzazione delle ore lavorative.
+%     \item \textbf{Issue Multiple:} È possibile agire su più issue in un singolo commit separandole con spazi (utile per chiudere issue di sviluppo e verifica contemporaneamente)[cite: 97, 98].
+% \end{enumerate}
+
+% \paragraph{Procedure: Standard per le Branch} \label{stdBranch}
+% Per garantire una gestione ordinata e coerente del codice e della
+% documentazione, il Team adotta il seguente standard per la denominazione dei
+% branch in GitHub:
+% \begin{itemize}
+%     \item La creazione del branch deve avvenire preferibilmente in modo automatico
+%           tramite l'integrazione Jira-VSCode \ref{vscode}.
+%     \item Il formato obbligatorio è:
+%     \begin{verbatim}
+%     DIPR-<numero issue>-<descrizione-breve>
+%     \end{verbatim}
+%     \item È necessario scegliere una descrizione breve che identifichi chiaramente il contenuto della modifica.
+% \end{itemize}
 
 \paragraph{Strumenti di Controllo delle Configurazioni}
 \begin{itemize}
-    \item \textbf{Jira Automation:} Interpreta gli Smart Commit per aggiornare i Work Item.
-    \item \textbf{Git/GitHub:} Motore di versionamento sottostante.
+    \item \textbf{Git/GitHub:} per la gestione di PR e branch.
+    \item \textbf{Jira:} per definire e tracciare i CIs e le relative task di modifica.
 \end{itemize}
 
 
-\subsubsection{Attività: Versionamento e Identificazione} \label{versionamento_identificazione}
-Questa attività definisce le regole per l'identificazione univoca degli
-artefatti e la gestione delle ramificazioni nel repository.
+\subsubsection{Attività: Registrazione delle Configurazioni} \label{versionamento_identificazione}
+Questa attività definisce le regole per la registrazione dei cambiamenti e il versionamento dei CIs.
 
-\paragraph{Procedure: Standard per le Branch} \label{stdBranch}
-Per garantire una gestione ordinata e coerente del codice e della
-documentazione, il Team adotta il seguente standard per la denominazione dei
-branch in GitHub:
-\begin{itemize}
-    \item La creazione del branch deve avvenire preferibilmente in modo automatico
-          tramite l'integrazione Jira-VSCode \ref{vscode}.
-    \item Il formato obbligatorio è:
-    \begin{verbatim}
-    DIPR-<numero issue>-<descrizione-breve>
-    \end{verbatim}
-    \item È necessario scegliere una descrizione breve che identifichi chiaramente il contenuto della modifica.
-\end{itemize}
+\textit{Nota}: il concetto di versione di un documento non corrisponde a quello di versione su GitHub.
+Per versione in questa sezione si intende una versione stabilita come conseguenza di modifiche apportate all'artefatto di riferimento. Concetto che non coincide con quello di versione all'interno di GitHub.
 
-\paragraph{Strumenti di Versionamento}
-\begin{itemize}
-    \item \textbf{GitHub:} Repository remoto per la memorizzazione delle versioni.
-    \item \textbf{VSCode (Estensione Jira):} Per l'automazione della nomenclatura delle branch.
-\end{itemize}
-
-\subsubsection{Registrazione delle Configurazioni}
-Questa attività prevede la documentazione e la registrazione delle modifiche apportate agli SCIs.
 \paragraph{Procedure: Registrazione delle Modifiche}\label{versione}
-Per ogni modifica apportata a uno SCI, è necessario documentare le seguenti informazioni, all'interno della sezione denominata "Tabella di Versionamento", situata all'inizio di ogni documento.\\Al suo interno vi sono:
+Per ogni modifica apportata a uno CI, è necessario documentare le seguenti informazioni, all'interno della sezione denominata "Tabella di Versionamento", situata all'inizio di ogni documento.\\Al suo interno vi sono:
 \begin{itemize}
     \item Numero di versione
     \item Data della modifica (Di più in \ref{convenzioniNomiDate})
@@ -1015,45 +971,31 @@ Per ogni modifica apportata a uno SCI, è necessario documentare le seguenti inf
     \item Verificatore della modifica
     \item Descrizione della modifica, con riferimento preciso, al paragrafo o sezione interessata.
 \end{itemize}
-Per la numerazione delle versioni si adotta lo standard di versionamento \textbf{MAJOR.MINOR.PATCH}, nel quale:
+Per la numerazione delle versioni si adotta lo standard che segue:
 \begin{itemize}
     \item \textbf{MAJOR} viene incrementato per modifiche sostanziali che introducono cambiamenti significativi o incompatibili con le versioni precedenti. Viene modificato in vista delle milestone.
     \item \textbf{MINOR} viene incrementato per l'aggiunta di nuove funzionalità o miglioramenti che non compromettono la compatibilità con le versioni precedenti.
     \item \textbf{PATCH} viene incrementato per correzioni di bug, miglioramenti minori o modifiche che non influenzano le funzionalità principali del documento.
 \end{itemize}
 
+Ogni volta che viene apportata una modifica ad uno CI, è necessario aggiornare la tabella di versionamento con le informazioni sopra descritte.
+Lo scatto di versione avviene solamente in seguito all'approvazione delle modifiche da parte del verificatore stabilito.
+
+\paragraph{Strumenti di Registrazione delle Modifiche}
+\begin{itemize}
+    \item \textbf{GitHub:} per tracciare le modifiche e collegarle alle issue Jira.
+    \item \textbf{Jira:} per tracciare le task che portano alla modifica degli artefatti della baseline.
+\end{itemize}
 
 \subsection{Processo di verifica}
 Il processo di Verifica ha lo scopo di accertare che i prodotti realizzati (documenti e codice) siano conformi ai requisiti specificati e agli standard di qualità adottati dal team.
-La Verifica viene svolta durante l'intero ciclo di vita del software.  
-Ogni task viene assegnata a uno o più verificatori diversi dagli autori.
-Le attività di verifica, i relativi obiettivi e gli esiti attesi sono descritti nel Piano di Qualifica.
+La Verifica viene svolta non solo su elementi software ma anche documentali. A tal proposito, la parte di verifica riguardante gli artefatti software verrà
+affrontata successivamente al raggiungimento della milestone RTB. E' importante sottolineare che il ruolo della verifica differisce da quello della validazione.
+La verifica si concentra sulla correttezza di quanto prodotto, mentre la validazione si focalizza sull'adeguatezza del prodotto rispetto alle esigenze del cliente.
+La verifica è un processo interno al team, mentre la validazione coinvolge anche la committente.
 
-\subsubsection{Attività: Verifica documentale}
-La verifica documentale consiste nel controllo dei documenti prodotti prima della loro approvazione.
-
-\paragraph{Procedure: Verifica documentale}
-Il verificatore deve controllare che il documento sia corretto rispetto a:
-\begin{itemize}
-    \item contenuto;
-    \item correttezza grammaticale;
-    \item conformità alle linee guida redazionali;
-    \item chiarezza e comprensibilità del testo.
-\end{itemize}
-Le modalità operative per l'approvazione dei documenti sono definite nella sezione \ref{produzioneDocs}.
-
-\paragraph{Strumenti: Verifica documentale}
-\begin{itemize}
-    \item Strumenti di controllo ortografico e grammaticale;
-    \item Linee guida redazionali del progetto;
-    \item Template ufficiali dei documenti;
-    \item Checklist di verifica.
-\end{itemize}
-
-\subsubsection{Attività: Analisi statica}
+\subsubsection{Analisi statica}
 L'analisi statica consiste nell'esaminare codice e documentazione senza eseguire il software, al fine di individuare errori o non conformità agli standard.
-
-\paragraph{Procedure: Analisi statica}
 L'analisi statica viene effettuata mediante:
 \begin{itemize}
     \item \textbf{Walkthrough}: analisi esplorativa del codice o del testo senza conoscenza preventiva della posizione dell'errore. I verificatori individuano le anomalie, mentre la correzione è a carico degli autori.
@@ -1061,37 +1003,34 @@ L'analisi statica viene effettuata mediante:
     \item \textbf{Inspection}: analisi mirata di specifiche porzioni di codice o testo in cui si sospetta la presenza di errori, basata sull'esperienza e su conoscenze pregresse.
 \end{itemize}
 
-\paragraph{Strumenti: Analisi statica}
-\begin{itemize}
-    \item Strumenti automatici di analisi statica del codice;
-    \item Linee guida di codifica adottate dal team;
-    \item Checklist di controllo;
-    \item Strumenti di revisione del codice (code review).
-\end{itemize}
-
-\subsubsection{Attività: Analisi dinamica}
+\subsubsection{Analisi dinamica}
 L'analisi dinamica consiste nell'eseguire il software per verificarne il comportamento rispetto ai requisiti specificati.
 I test devono essere ripetibili e automatizzabili, al fine di prevenire regressioni e garantire efficienza.
 
-\paragraph{Procedure: Analisi dinamica}
-L'analisi dinamica viene svolta tramite le seguenti tipologie di test:
-\begin{itemize}
-    \item \textbf{Test di unità}: verifica del singolo componente in isolamento. Possono essere:
-    \begin{itemize}
-        \item funzionali, basati sulle specifiche;
-        \item strutturali, basati sulla struttura interna del codice.
-    \end{itemize}
-    \item \textbf{Test di regressione}: verifica che modifiche o correzioni non introducano nuovi errori in parti già validate.
-    \item \textbf{Test di integrazione}: verifica della corretta interazione tra più componenti.
-    \item \textbf{Test di sistema}: verifica del comportamento complessivo del sistema rispetto ai requisiti.
-\end{itemize}
+\subsubsection{Attività: Verifica documentale}
+La verifica documentale consiste nel controllo dei documenti prodotti prima della loro approvazione.
+Le modalità operative per l'approvazione dei documenti sono definite nella sezione \ref{produzioneDocs}.
 
-\paragraph{Strumenti: Analisi dinamica}
+\paragraph{Procedure: Verifica del contenuto documentale}
+La verifica del contenuto documentale avviene tramite \textbf{walkthrough}, con eventuale ausilio di LLM.
+Il controllo del contenuto avviene corrispondentemente alle aspettative definite per la singola task. E' buona prassi
+assegnare come verificatore un membro che si ritiene più competente in merito al contenuto del documento, in modo da garantire una verifica più accurata e puntuale.
+Ogni documento deve rispettare quanto descritto in \ref{lineeGuidaProduzioneDocs}.
+\paragraph{Strumenti di Verifica del contenuto documentale}
 \begin{itemize}
-    \item Framework di testing automatizzato;
-    \item \textbf{Driver}, per invocare componenti non ancora integrati;
-    \item \textbf{Stub}, per simulare moduli non ancora sviluppati;
-    \item \textbf{Logger}, per tracciare l'esecuzione dei test e registrarne gli esiti.
+    \item \textbf{LLM} per il supporto alla verifica del contenuto, in particolare per l'analisi di coerenza, completezza e aderenza alle linee guida.
+\end{itemize}
+\paragraph{Procedure: Verifica di correttezza grammaticale e di leggibilità}
+La verifica di correttezza grammaticale e di leggibilità avviene tramite script automatizzati.
+Lo script è contenuto nella directory \texttt{scripts}.
+Oltre al controllo locale, una volta aperta la Pull Request per candidare le modifiche,
+vengono eseguiti dei workflow automatizzati che prevedono un controllo di grammatica e 
+leggibilità tramite Aspell e Textstat.\\
+
+\paragraph{Strumenti per la Verifica di correttezza grammaticale e di leggibilità}
+\begin{itemize}
+    \item \textbf{Aspell} per il controllo ortografico.
+    \item \textbf{Textstat} per il controllo di leggibilità.
 \end{itemize}
 
 \subsection{Processo di validazione}
@@ -1111,7 +1050,7 @@ Per pianificare efficacemente la validazione, il Team segue i seguenti passaggi:
     \item Assegnazione delle responsabilità per le attività di validazione, identificando i membri del team che si occuperanno della progettazione e dell'esecuzione dei test di validazione.
 \end{enumerate}
 
-\paragraph{Strumenti: Pianificazione della Validazione}
+\paragraph{Strumenti di Pianificazione della Validazione}
 \begin{itemize}
     \item \textbf{Jira:} Per la gestione delle attività di validazione, con la creazione di task specifici per la progettazione e l'esecuzione dei test.
     \item \textbf{Piano di Qualifica:} Per la definizione dei criteri di accettazione e delle metriche di validazione.
@@ -1128,7 +1067,7 @@ Per definire i test di accettazione, il Team segue i seguenti passaggi:
     \item Revisione dei casi di test con la proponente per garantire che siano allineati con le aspettative del cliente e che coprano adeguatamente i requisiti chiave.
 \end{enumerate}
 
-\paragraph{Strumenti: Definizione dei test di accettazione}
+\paragraph{Strumenti di Definizione dei test di accettazione}
 \begin{itemize}
     \item \textbf{Jira:} Per la creazione e la gestione dei casi di test di accettazione, con la possibilità di tracciare l'esecuzione e i risultati dei test.
     \item \textbf{Analisi dei Requisiti:} Come riferimento per i requisiti da validare.
@@ -1485,7 +1424,7 @@ Queste meta-metriche vengono rendicontate nel Piano di Qualifica insieme alle me
 \end{itemize}
 
 \section{Processi Organizzativi}
-\subsection{Gestione}
+\subsection{Gestione} \label{gestione_processi_organizzativi}
 La gestione descrive le modalità di comunicazione interne ed esterne, i vari ruoli e i loro compiti. 
 \subsubsection{Ruoli di progetto}
 Durante lo sprint ogni membro del gruppo assume un singolo ruolo. Il ruolo può variare da sprint a sprint. Di seguito elenchiamo le responsabilità di ogni ruolo:
@@ -1506,8 +1445,6 @@ Appoggiandoci allo standard ISO/IEC 12207:1997 individuiamo le seguenti attivit�
     \item Processo di Formazione.
 \end{itemize}
 Le sezioni di seguito tratteranno i processi sopra scritti in dettaglio.
-
-\subsection{Gestione}\label{gestione_processi_organizzativi}
 
 \subsection{Infrastruttura}
 Il processo di Infrastruttura fornisce il supporto tecnico necessario per lo
