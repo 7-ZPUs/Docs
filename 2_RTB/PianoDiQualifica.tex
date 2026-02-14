@@ -1,5 +1,6 @@
 \documentclass[a4paper,12pt]{article}
-
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage[italian]{babel}
 \usepackage[sfdefault]{atkinson}
 \renewcommand*\familydefault{\sfdefault}
@@ -50,6 +51,8 @@
 \renewcommand{\footrulewidth}{0.8pt}
 
 \renewcommand{\contentsname}{Indice}
+\renewcommand{\listoftables}{Elenco delle tabelle}
+\renewcommand{\listoffigures}{Elenco delle immagini}
 
 \geometry{margin=2.5cm}
 \setstretch{1.1}
@@ -92,13 +95,15 @@
 \titleformat{\paragraph}{\large\bfseries}{\theparagraph}{1em}{}
 \titleformat{\subparagraph}{\normalsize\bfseries}{\thesubparagraph}{1em}{}
 
+\setlength\parindent{0pt}
+
 \begin{document}
 
 \begin{center}
     \includegraphics[width=9.5cm]{../assets/logo7ZPUs.jpg}\\
     \small\hspace{10cm} 7zpus.swe@gmail.com\\
     \vspace{0.5cm}
-    \Large \textbf{Piano di Qualifica}\\
+    \LARGE \textbf{Piano di Qualifica}\\
 \end{center}
 
 \vspace{0.3cm}
@@ -127,7 +132,12 @@
 \end{table}
 
 \tableofcontents
+\newpage
 
+\listoftables
+\newpage
+
+\listoffigures
 \newpage
 
 \section{Introduzione}
@@ -142,19 +152,19 @@ Garantire una sufficiente qualità di processo e di prodotto, è condizione nece
 \end{itemize}
 
 \subsection{Glossario}
-Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{Ingegneria del Software} utilizzato nella documentazione di progetto viene definito nell'apposito documento \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@norme_in_lavorazione/2_RTB/Glossario.pdf}{\ul{Glossario1.0}\setulcolor{blue}}\ped{(ultimo accesso: 17/11/2025)}.
+Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{Ingegneria del Software} utilizzato nella documentazione di progetto viene definito nell'apposito documento \href{https://7-zpus.github.io/Docs/assets/pdf/RTB/Glossario.pdf}{\ul{Glossario1.0}\setulcolor{blue}}\ped{(ultimo accesso: 17/11/2025)}.
 
 \subsection{Riferimenti}
 
 \subsubsection{Riferimenti Normativi}
 \begin{itemize}
-    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@norme_in_lavorazione/2_RTB/NormeDiProgetto.pdf}{\ul{NormeDiProgetto1.0}\setulcolor{blue}}\ped{(ultimo accesso: 3/12/2025)}
+    \item \href{https://7-zpus.github.io/Docs/assets/pdf/RTB/NormeDiProgetto.pdf}{\ul{NormeDiProgetto1.0}\setulcolor{blue}}\ped{(ultimo accesso: 3/12/2025)}
     \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato C3: DIPReader}\setulcolor{blue}} \ped{(ultimo accesso: 01/12/2025)}
     \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/PD1.pdf}{\ul{Regolamento di Progetto Didattico a.a. 2025/2026}\setulcolor{blue}} \ped{(ultimo accesso: 17/11/2025)}
 \end{itemize}
 \subsubsection{Riferimenti Informativi}
 \begin{itemize}
-    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@norme_in_lavorazione/2_RTB/Glossario.pdf}{\ul{Glossario1.0}\setulcolor{blue}}\ped{(ultimo accesso: 17/11/2025)}
+    \item \href{https://7-zpus.github.io/Docs/assets/pdf/RTB/Glossario.pdf}{\ul{Glossario1.0}\setulcolor{blue}}\ped{(ultimo accesso: 17/11/2025)}
     \item \href{https://iso25000.com}{\ul{The ISO/IEC 25000 Series of Standards}\setulcolor{blue}}
     \item \href{https://www.iso.org/standard/63712.html}{\ul{Standard ISO/IEC 9126-1:2001}\setulcolor{blue}}
     \item \href{https://www.iso.org/standard/71952.html}{\ul{Standard ISO/IEC 145981-1:1999}\setulcolor{blue}}
@@ -168,12 +178,14 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
 
 \subsubsubsection{Fornitura}
 
+\renewcommand{\arraystretch}{1.2}
+
 \begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
     \centering
-    \begin{spacing}{1.5}
+    \rowcolors{2}{gray!15}{white}
     \begin{tabular}{|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
         MPC-1 & EV (Earned Value) & $\geq$0 & PV \\
@@ -191,18 +203,18 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
         MPC-7 & EAC (Estimate at Completion) & $\geq$0 & $\leq$BAC \\
         \hline
     \end{tabular}
-    \end{spacing}
-    \end{adjustwidth}
+    \caption{Metriche di qualità di processo - Fornitura}
+    \label{tab:PCPrim-Fornitura}
 \end{table}
 
 \subsubsubsection{Sviluppo}
 
 \begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
     \centering
-    \begin{spacing}{1.5}
+    \rowcolors{2}{gray!15}{white}
     \begin{tabular}{|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
         MPC-8 & Deployment frequency & - & 1/gg \\
@@ -210,25 +222,25 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
         MPC-9 & Requirements Stability Index & $\geq$70\% & 100\% \\
         \hline
     \end{tabular}
-    \end{spacing}
-    \end{adjustwidth}
+    \caption{Metriche di qualità di processo - Sviluppo}
+    \label{tab:PCPrim-Sviluppo}
 \end{table}
 
 \subsubsubsection{Integrazione}
 
 \begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
     \centering
-    \begin{spacing}{1.5}
+    \rowcolors{2}{gray!15}{white}
     \begin{tabular}{|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
         MPC-12 & Average build time & $\leq$15 min & $\leq$10 min \\
         \hline
     \end{tabular}
-    \end{spacing}
-    \end{adjustwidth}
+    \caption{Metriche di qualità di processo - Integrazione}
+    \label{tab:PCPrim-Integrazione}
 \end{table}
 
 \subsubsection{Processi di supporto}
@@ -236,11 +248,11 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
 \subsubsubsection{Documentazione}
 
 \begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
     \centering
-    \begin{spacing}{1.5}
+    \rowcolors{2}{gray!15}{white}
     \begin{tabular}{|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
         MPC-10 & Indice di Gulpease & $\geq$60 & $\geq$75\\
@@ -248,18 +260,18 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
         MPC-11 & Correttezza ortografica & 0 & 0 \\
         \hline
     \end{tabular}
-    \end{spacing}
-    \end{adjustwidth}
+    \caption{Metriche di qualità di processo - Documentazione}
+    \label{tab:PCSupp-Documentazione}
 \end{table}
 
 \subsubsubsection{Verifica}
 
 \begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
     \centering
-    \begin{spacing}{1.5}
+    \rowcolors{2}{gray!15}{white}
     \begin{tabular}{|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
         MPC-13 & Code review turnaround time & $\leq$72h & $\leq$24h\\
@@ -267,8 +279,8 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
         MPC-14 & Test success rate & 100\% & 100\%\\
         \hline
     \end{tabular}
-    \end{spacing}
-    \end{adjustwidth}
+    \caption{Metriche di qualità di processo - Verifica}
+    \label{tab:PCSupp-Verifica}
 \end{table}
 
 \subsubsection{Processi organizzativi}
@@ -276,34 +288,34 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
 \subsubsubsection{Gestione dei rischi}
 
 \begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
     \centering
-    \begin{spacing}{1.5}
+    \rowcolors{2}{gray!15}{white}
     \begin{tabular}{|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
         MPC-15 & Rischi non previsti & $\geq$0 & 0\\
         \hline
     \end{tabular}
-    \end{spacing}
-    \end{adjustwidth}
+    \caption{Metriche di qualità di processo - Gestione dei rischi}
+    \label{tab:PCOrg-GestioneRischi}
 \end{table}
 
 \subsubsubsection{Gestione della Qualità}
 \begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
     \centering
-    \begin{spacing}{1.5}
+    \rowcolors{2}{gray!15}{white}
     \begin{tabular}{|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
         MPC-16 & Metriche soddisfatte & $\geq$70\% & 100\% \\
         \hline
     \end{tabular}
-    \end{spacing}
-    \end{adjustwidth}
+    \caption{Metriche di qualità di prodotto - Gestione della Qualità}
+    \label{tab:PCOrg-GestioneQualità}
 \end{table}
 
 
@@ -323,11 +335,11 @@ Suddividiamo le metriche secondo raggruppamenti logici qui di seguito elencati e
 \subsubsection{Funzionalità}
 
 \begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
     \centering
-    \begin{spacing}{1.5}
+    \rowcolors{2}{gray!15}{white}
     \begin{tabular}{|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
         MPD-2 & Requisiti obbligatori soddisfatti & $\geq$0\% & 100\% \\
@@ -337,19 +349,19 @@ Suddividiamo le metriche secondo raggruppamenti logici qui di seguito elencati e
         MPD-4 & Requisiti desiderabili soddisfatti & $\geq$0\% & 100\% \\
         \hline
     \end{tabular}
-    \end{spacing}
-    \end{adjustwidth}
+    \caption{Metriche di qualità di prodotto - Funzionalità}
+    \label{tab:MPD-funzionalità}
 \end{table}
 
 
 \subsubsection{Affidabilità}
 
 \begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
     \centering
-    \begin{spacing}{1.5}
+    \rowcolors{2}{gray!15}{white}
     \begin{tabular}{|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
         MPD-5 & Broken Links & 2 & 0\\
@@ -359,36 +371,36 @@ Suddividiamo le metriche secondo raggruppamenti logici qui di seguito elencati e
         MPD-7 & Statement Coverage & $\geq$65\% & $\geq$80\% \\
         \hline
     \end{tabular}
-    \end{spacing}
-    \end{adjustwidth}
+    \caption{Metriche di qualità di prodotto - Affidabilità}
+    \label{tab:MPD-affidabilità}
 \end{table}
 
 \subsubsection{Usabilità}
 
 \begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
     \centering
-    \begin{spacing}{1.5}
+    \rowcolors{2}{gray!15}{white}
     \begin{tabular}{|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
         MPD-8 & Profondità di navigazione & $\geq$0 & $\leq$5 \\
         \hline
     \end{tabular}
-    \end{spacing}
-    \end{adjustwidth}
+    \caption{Metriche di qualità di prodotto - Usabilità}
+    \label{tab:MPD-usabilità}
 \end{table}
 
 
 \subsubsection{Efficienza}
 
 \begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
     \centering
-    \begin{spacing}{1.5}
+    \rowcolors{2}{gray!15}{white}
     \begin{tabular}{|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
         MPD-9 & Indexing Time & 2min & $\leq$30 s \\
@@ -400,8 +412,8 @@ Suddividiamo le metriche secondo raggruppamenti logici qui di seguito elencati e
         MPD-12 & Peak memory usage & $\leq$1 GB & $\leq$500 MB \\
         \hline
     \end{tabular}
-    \end{spacing}
-    \end{adjustwidth}
+    \caption{Metriche di qualità di prodotto - Efficienza}
+    \label{tab:MPD-efficienza}
 \end{table}
 
 
@@ -409,11 +421,11 @@ Suddividiamo le metriche secondo raggruppamenti logici qui di seguito elencati e
 \subsubsection{Manutenibilità}
 
 \begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
     \centering
-    \begin{spacing}{1.5}
+    \rowcolors{2}{gray!15}{white}
     \begin{tabular}{|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
        \hline
         MPD-13 & Complessità ciclomatica & $\leq$15 & $\leq$10 \\
@@ -423,25 +435,26 @@ Suddividiamo le metriche secondo raggruppamenti logici qui di seguito elencati e
         MPD-15 & Code Smells & $\leq$15 & 0 \\
         \hline
     \end{tabular}
-    \end{spacing}
-    \end{adjustwidth}
+    \caption{Metriche di qualità di prodotto - Manutenibilità}
+    \label{tab:MPD-manutenibilità}
 \end{table}
 
 \subsubsection{Portabilità}
 
+
 \begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
     \centering
-    \begin{spacing}{1.5}
+    \rowcolors{2}{gray!15}{white}
     \begin{tabular}{|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
         MPD-16 & Sistemi operativi supportati & 3 & $\geq$3 \\
         \hline
     \end{tabular}
-    \end{spacing}
-    \end{adjustwidth}
+    \caption{Metriche di qualità di prodotto - Portabilità}
+    \label{tab:MPD-portabilità}
 \end{table}
 
 \section{Strategie di test}
@@ -463,159 +476,159 @@ Suddividiamo le metriche secondo raggruppamenti logici qui di seguito elencati e
 \hline
 \endhead
 
-TS-1 & Verificare che l'utente possa visualizzare l'elenco di classi documentali nel DIP & UC-1 \\
+TS-1 & Verificare che l'utente possa visualizzare l'elenco di classi documentali nel DIP & UC-1 & NO \\
 \hline
-TS-2 & Verificare che in caso non vi siano classi documentali nel DIP, l'utente possa visualizzare un messaggio di errore & UC-6 \\
+TS-2 & Verificare che in caso non vi siano classi documentali nel DIP, l'utente possa visualizzare un messaggio di errore & UC-6 & NO \\
 \hline
-TS-3 & Verificare che quando viene selezionata una classe documentale, l'utente possa visualizzare ciascuna classe documentale all'interno dell'elenco & UC-1.1 \\
+TS-3 & Verificare che quando viene selezionata una classe documentale, l'utente possa visualizzare ciascuna classe documentale all'interno dell'elenco & UC-1.1 & NO \\
 \hline
-TS-4 & Verificare che l'utente possa visualizzare il nome della classe documentale & UC-1.1.1 \\
+TS-4 & Verificare che l'utente possa visualizzare il nome della classe documentale & UC-1.1.1 & NO \\
 \hline
-TS-5 & Verificare che l'utente possa visualizzare lo stato di verifica della classe documentale & UC-4 \\
+TS-5 & Verificare che l'utente possa visualizzare lo stato di verifica della classe documentale & UC-4 & NO \\
 \hline
-TS-6 & Verificare che l'utente possa visualizzare lo stato di verifica della classe documentale & UC-4 \\
+TS-6 & Verificare che l'utente possa visualizzare lo stato di verifica della classe documentale & UC-4 & NO \\
 \hline
-TS-7 & Verificare che l'utente possa visualizzare la marcatura temporale della classe documentale & UC-5 \\
+TS-7 & Verificare che l'utente possa visualizzare la marcatura temporale della classe documentale & UC-5 & NO \\
 \hline
-TS-8 & Verificare che l'utente possa visualizzare l'elenco dei processi associati alla classe documentale & UC-2 \\
+TS-8 & Verificare che l'utente possa visualizzare l'elenco dei processi associati alla classe documentale & UC-2 & NO \\
 \hline
-TS-9 & Verificare che in caso non vi siano processi associati alla classe documentale, l'utente possa visualizzare un messaggio di errore & UC-6 \\
+TS-9 & Verificare che in caso non vi siano processi associati alla classe documentale, l'utente possa visualizzare un messaggio di errore & UC-6 & NO \\
 \hline
-TS-10 & Verificare che quando viene selezionato un processo, l'utente possa visualizzare ciascun processo all'interno dell'elenco & UC-2.1 \\
+TS-10 & Verificare che quando viene selezionato un processo, l'utente possa visualizzare ciascun processo all'interno dell'elenco & UC-2.1 & NO \\
 \hline
-TS-11 & Verificare che l'utente possa visualizzare il nome del processo & UC-2.1.1 \\
+TS-11 & Verificare che l'utente possa visualizzare il nome del processo & UC-2.1.1 & NO \\
 \hline
-TS-12 & Verificare che l'utente possa visualizzare l'elenco di documenti associati a un processo & UC-3 \\
+TS-12 & Verificare che l'utente possa visualizzare l'elenco di documenti associati a un processo & UC-3 & NO \\
 \hline
-TS-13 & Verificare che in caso non vi siano documenti associati al processo, l'utente possa visualizzare un messaggio di errore & UC-6 \\
+TS-13 & Verificare che in caso non vi siano documenti associati al processo, l'utente possa visualizzare un messaggio di errore & UC-6 & NO \\
 \hline
-TS-14 & Verificare che quando viene selezionato un documento, l'utente possa visualizzare ciascun documento all'interno dell'elenco & UC-3.1 \\
+TS-14 & Verificare che quando viene selezionato un documento, l'utente possa visualizzare ciascun documento all'interno dell'elenco & UC-3.1 & NO \\
 \hline
-TS-15 & Verificare che l'utente possa visualizzare il nome del documento & UC-3.1.1 \\
+TS-15 & Verificare che l'utente possa visualizzare il nome del documento & UC-3.1.1 & NO \\
 \hline
-TS-16 & Verificare che l'utente possa visualizzare lo stato di verifica del documento & UC-4 \\
+TS-16 & Verificare che l'utente possa visualizzare lo stato di verifica del documento & UC-4 & NO \\
 \hline
-TS-17 & Verificare che l'utente possa visualizzare la marcatura temporale del documento & UC-5 \\
+TS-17 & Verificare che l'utente possa visualizzare la marcatura temporale del documento & UC-5 & NO \\
 \hline
-TS-18 & Verificare che l'utente possa essere informato se un elenco di elementi del DIP risulta vuoto & UC-6 \\
+TS-18 & Verificare che l'utente possa essere informato se un elenco di elementi del DIP risulta vuoto & UC-6 & NO \\
 \hline
-TS-19 & Verificare che l'utente possa visualizzare l'anteprima di un documento selezionato & UC-7 \\
+TS-19 & Verificare che l'utente possa visualizzare l'anteprima di un documento selezionato & UC-7 & NO \\
 \hline
-TS-20 & Verificare che se il documento selezionato non è visualizzabile in anteprima, l'utente possa visualizzare un messaggio di errore & UC-8 \\
+TS-20 & Verificare che se il documento selezionato non è visualizzabile in anteprima, l'utente possa visualizzare un messaggio di errore & UC-8 & NO \\
 \hline
-TS-21 & Verificare che l'utente possa ricercare un documento, un processo, o una classe documentale & UC-9 \\
+TS-21 & Verificare che l'utente possa ricercare un documento, un processo, o una classe documentale & UC-9 & NO \\
 \hline
-TS-22 & Verificare che l'utente possa cercare una classe documentale esclusivamente per nome & \begin{tabular}[t]{@{}l} UC-9.3 \\ UC-9.3.1 \\ UC-17 \end{tabular} \\
+TS-22 & Verificare che l'utente possa cercare una classe documentale esclusivamente per nome & \begin{tabular}[t]{@{}l} UC-9.3 \\ UC-9.3.1 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-23 & Verificare che l'utente possa cercare un processo esclusivamente per uuid & \begin{tabular}[t]{@{}l} UC-9.4 \\ UC-9.4.1 \\ UC-17 \end{tabular} \\
+TS-23 & Verificare che l'utente possa cercare un processo esclusivamente per uuid & \begin{tabular}[t]{@{}l} UC-9.4 \\ UC-9.4.1 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-24 & Verificare che l'utente possa effettuare una ricerca semantica basata sui metadati dei documenti presenti nel DIP & UC-9.2 \\
+TS-24 & Verificare che l'utente possa effettuare una ricerca semantica basata sui metadati dei documenti presenti nel DIP & UC-9.2 & NO \\
 \hline
-TS-25 & Verificare che l'utente possa visualizzare lo stato dell'indicizzazione semantica & UC-11 \\
+TS-25 & Verificare che l'utente possa visualizzare lo stato dell'indicizzazione semantica & UC-11 & NO \\
 \hline
-TS-26 & Verificare che il sistema renda disponibile un campo di ricerca & UC-9 \\
+TS-26 & Verificare che il sistema renda disponibile un campo di ricerca & UC-9 & NO \\
 \hline
-TS-27 & Verificare che il sistema comunichi all'utente quando inserisce un valore non valido nel campo di ricerca & UC-10 \\
+TS-27 & Verificare che il sistema comunichi all'utente quando inserisce un valore non valido nel campo di ricerca & UC-10 & NO \\
 \hline
-TS-28 & Verificare che il sistema renda disponibile l'opzione di ricerca per documenti & UC-12 \\
+TS-28 & Verificare che il sistema renda disponibile l'opzione di ricerca per documenti & UC-12 & NO \\
 \hline
-TS-29 & Verificare che il sistema renda disponibile l'opzione di ricerca per processi & UC-9.4 \\
+TS-29 & Verificare che il sistema renda disponibile l'opzione di ricerca per processi & UC-9.4 & NO \\
 \hline
-TS-30 & Verificare che il sistema renda disponibile l'opzione di ricerca per classi documentali & UC-9.3 \\
+TS-30 & Verificare che il sistema renda disponibile l'opzione di ricerca per classi documentali & UC-9.3 & NO \\
 \hline
-TS-31 & Verificare che il sistema renda disponibile la ricerca avanzata con filtri & UC-9.1 \\
+TS-31 & Verificare che il sistema renda disponibile la ricerca avanzata con filtri & UC-9.1 & NO \\
 \hline
-TS-32 & Verificare che il sistema renda disponibile la sezione di filtri di ricerca comuni & UC-12.1 \\
+TS-32 & Verificare che il sistema renda disponibile la sezione di filtri di ricerca comuni & UC-12.1 & NO \\
 \hline
-TS-33 & Verificare che il sistema renda disponibile la sezione di filtri di ricerca specifici per tipo documentale & UC-12.2 \\
+TS-33 & Verificare che il sistema renda disponibile la sezione di filtri di ricerca specifici per tipo documentale & UC-12.2 & NO \\
 \hline
-TS-34 & Verificare che il sistema renda disponibile la sezione di filtri di ricerca specifici per metadati custom & UC-12.3 \\
+TS-34 & Verificare che il sistema renda disponibile la sezione di filtri di ricerca specifici per metadati custom & UC-12.3 & NO \\
 \hline
-TS-35 & Verificare che il sistema permetta di applicare più filtri contemporaneamente & UC-9.1 \\
+TS-35 & Verificare che il sistema permetta di applicare più filtri contemporaneamente & UC-9.1 & NO \\
 \hline
-TS-36 & Verificare che il sistema permetta di rimuovere i filtri applicati & UC-9.1 \\
+TS-36 & Verificare che il sistema permetta di rimuovere i filtri applicati & UC-9.1 & NO \\
 \hline
-TS-37 & Verificare che il sistema permetta di rimuovere tutti i filtri applicati & UC-9.1 \\
+TS-37 & Verificare che il sistema permetta di rimuovere tutti i filtri applicati & UC-9.1 & NO \\
 \hline
-TS-38 & Verificare che il sistema permetta di selezionare filtri per tipo documentale per un singolo tipo di documento & UC-12.2 \\
+TS-38 & Verificare che il sistema permetta di selezionare filtri per tipo documentale per un singolo tipo di documento & UC-12.2 & NO \\
 \hline
-TS-39 & Verificare che il sistema permetta di specificare il valore per i filtri per tipo Documento Informatico e Amministrativo Informatico & UC-12.2.1 \\
+TS-39 & Verificare che il sistema permetta di specificare il valore per i filtri per tipo Documento Informatico e Amministrativo Informatico & UC-12.2.1 & NO \\
 \hline
-TS-40 & Verificare che il sistema racchiuda i filtri di ricerca comuni in una sezione espandibile dedicata & UC-12.1 \\
+TS-40 & Verificare che il sistema racchiuda i filtri di ricerca comuni in una sezione espandibile dedicata & UC-12.1 & NO \\
 \hline
-TS-41 & Verificare che il sistema racchiuda i filtri di ricerca specifici per tipo documentale in una sezione espandibile dedicata & UC-12.2 \\
+TS-41 & Verificare che il sistema racchiuda i filtri di ricerca specifici per tipo documentale in una sezione espandibile dedicata & UC-12.2 & NO \\
 \hline
-TS-42 & Verificare che il sistema racchiuda i filtri di ricerca specifici per metadati custom in una sezione espandibile dedicata & UC-12.3 \\
+TS-42 & Verificare che il sistema racchiuda i filtri di ricerca specifici per metadati custom in una sezione espandibile dedicata & UC-12.3 & NO \\
 \hline
-TS-43 & Verificare che il sistema permetta di visualizzare i filtri comuni applicabili & UC-12.1.1.1 \\
+TS-43 & Verificare che il sistema permetta di visualizzare i filtri comuni applicabili & UC-12.1.1.1 & NO \\
 \hline
-TS-44 & Verificare che il sistema permetta di selezionare per la compilazione e l'aggiunta alla ricerca i filtri comuni & UC-12.1.1 \\
+TS-44 & Verificare che il sistema permetta di selezionare per la compilazione e l'aggiunta alla ricerca i filtri comuni & UC-12.1.1 & NO \\
 \hline
-TS-45 & Verificare che il sistema renda disponibile una sezione per il filtro comune "Chiave Descrittiva" & UC-12.1.2 \\
+TS-45 & Verificare che il sistema renda disponibile una sezione per il filtro comune "Chiave Descrittiva" & UC-12.1.2 & NO \\
 \hline
-TS-46 & Verificare che l'utente possa inserire il valore per i campi "Chiave Descrittiva", "Oggetto" e "Parole chiave" & \begin{tabular}[t]{@{}l} UC-12.1.2 \\ UC-17 \end{tabular} \\
+TS-46 & Verificare che l'utente possa inserire il valore per i campi "Chiave Descrittiva", "Oggetto" e "Parole chiave" & \begin{tabular}[t]{@{}l} UC-12.1.2 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-47 & Verificare che il sistema renda disponibile una sezione per il filtro comune "Classificazione" & UC-12.1.3 \\
+TS-47 & Verificare che il sistema renda disponibile una sezione per il filtro comune "Classificazione" & UC-12.1.3 & NO \\
 \hline
-TS-48 & Verificare che l'utente possa inserire il valore per i campi "Indice di classificazione", "Descrizione" e "Piano di fascicolo" & \begin{tabular}[t]{@{}l} UC-12.1.3 \\ UC-17 \end{tabular} \\
+TS-48 & Verificare che l'utente possa inserire il valore per i campi "Indice di classificazione", "Descrizione" e "Piano di fascicolo" & \begin{tabular}[t]{@{}l} UC-12.1.3 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-49 & Verificare che il sistema renda disponibile una sezione per il filtro comune "Tempo di conservazione" & UC-12.1.4 \\
+TS-49 & Verificare che il sistema renda disponibile una sezione per il filtro comune "Tempo di conservazione" & UC-12.1.4 & NO \\
 \hline
-TS-50 & Verificare che l'utente possa inserire il valore per il filtro "Tempo di conservazione" & \begin{tabular}[t]{@{}l} UC-12.1.4 \\ UC-17 \end{tabular} \\
+TS-50 & Verificare che l'utente possa inserire il valore per il filtro "Tempo di conservazione" & \begin{tabular}[t]{@{}l} UC-12.1.4 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-51 & Verificare che l'utente possa selezionare l'opzione "Perenne" per il filtro "Tempo di conservazione" & UC-12.1.4 \\
+TS-51 & Verificare che l'utente possa selezionare l'opzione "Perenne" per il filtro "Tempo di conservazione" & UC-12.1.4 & NO \\
 \hline
-TS-52 & Verificare che il sistema renda disponibile una sezione per il filtro comune "Note" & UC-12.1.5 \\
+TS-52 & Verificare che il sistema renda disponibile una sezione per il filtro comune "Note" & UC-12.1.5 & NO \\
 \hline
-TS-53 & Verificare che l'utente possa inserire il valore per il filtro "Note" & \begin{tabular}[t]{@{}l} UC-12.1.5 \\ UC-17 \end{tabular} \\
+TS-53 & Verificare che l'utente possa inserire il valore per il filtro "Note" & \begin{tabular}[t]{@{}l} UC-12.1.5 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-54 & Verificare che il sistema renda disponibile una sezione per il filtro comune "Tipo di documento" & UC-12.1.6 \\
+TS-54 & Verificare che il sistema renda disponibile una sezione per il filtro comune "Tipo di documento" & UC-12.1.6 & NO \\
 \hline
-TS-55 & Verificare che l'utente possa selezionare il valore per il filtro "Tipo di documento" tra "Documento informatico", "Documento amministrativo informatico", "Aggregazione documentale" & \begin{tabular}[t]{@{}l} UC-12.1.6 \\ UC-17 \end{tabular} \\
+TS-55 & Verificare che l'utente possa selezionare il valore per il filtro "Tipo di documento" tra "Documento informatico", "Documento amministrativo informatico", "Aggregazione documentale" & \begin{tabular}[t]{@{}l} UC-12.1.6 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-56 & Verificare che il sistema renda disponibile una sezione per il filtro comune "Soggetto" & UC-12.1.7 \\
+TS-56 & Verificare che il sistema renda disponibile una sezione per il filtro comune "Soggetto" & UC-12.1.7 & NO \\
 \hline
-TS-57 & Verificare che l'utente possa inserire il valore per il filtro "Soggetto" & UC-13 \\
+TS-57 & Verificare che l'utente possa inserire il valore per il filtro "Soggetto" & UC-13 & NO \\
 \hline
-TS-58 & Verificare che il sistema renda disponibile una sezione per il filtro del Ruolo del Soggetto & UC-13.1 \\
+TS-58 & Verificare che il sistema renda disponibile una sezione per il filtro del Ruolo del Soggetto & UC-13.1 & NO \\
 \hline
-TS-59 & Verificare che all'interno della sezione del filtro del Ruolo del Soggetto, l'utente possa mostrare ogni ruolo disponibile per il tipo documentale selezionato & UC-13.1.1 \\
+TS-59 & Verificare che all'interno della sezione del filtro del Ruolo del Soggetto, l'utente possa mostrare ogni ruolo disponibile per il tipo documentale selezionato & UC-13.1.1 & NO \\
 \hline
-TS-60 & Verificare che all'interno della sezione del filtro del Ruolo del Soggetto, l'utente possa visualizzare il nome del ruolo del soggetto disponibile per il tipo documentale selezionato & UC-13.1.1.1 \\
+TS-60 & Verificare che all'interno della sezione del filtro del Ruolo del Soggetto, l'utente possa visualizzare il nome del ruolo del soggetto disponibile per il tipo documentale selezionato & UC-13.1.1.1 & NO \\
 \hline
-TS-61 & Verificare che il sistema renda disponibile una sezione per il filtro del Tipo di Soggetto & UC-13.2 \\
+TS-61 & Verificare che il sistema renda disponibile una sezione per il filtro del Tipo di Soggetto & UC-13.2 & NO \\
 \hline
-TS-62 & Verificare che all'interno della sezione del filtro del Tipo di Soggetto, l'utente possa visualizzare i tipi di soggetto disponibili per il ruolo selezionato & UC-13.2.1 \\
+TS-62 & Verificare che all'interno della sezione del filtro del Tipo di Soggetto, l'utente possa visualizzare i tipi di soggetto disponibili per il ruolo selezionato & UC-13.2.1 & NO \\
 \hline
-TS-63 & Verificare che all'interno della sezione del filtro del Tipo di Soggetto, l'utente possa visualizzare il nome del tipo di soggetto disponibile per il ruolo selezionato & UC-13.2.1.1 \\
+TS-63 & Verificare che all'interno della sezione del filtro del Tipo di Soggetto, l'utente possa visualizzare il nome del tipo di soggetto disponibile per il ruolo selezionato & UC-13.2.1.1 & NO \\
 \hline
-TS-64 & Verificare che il sistema renda disponibile una sezione per il filtro "Dettagli" del Soggetto & UC-13.3 \\
+TS-64 & Verificare che il sistema renda disponibile una sezione per il filtro "Dettagli" del Soggetto & UC-13.3 & NO \\
 \hline
-TS-65 & Verificare che se il soggetto selezionato è di tipo "PAI", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente possa inserire il valore per i campi "Denominazione Amministrazione/Codice IPA", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} UC-13.3.1 \\ UC-17 \end{tabular} \\
+TS-65 & Verificare che se il soggetto selezionato è di tipo "PAI", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente possa inserire il valore per i campi "Denominazione Amministrazione/Codice IPA", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} UC-13.3.1 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-66 & Verificare che se il soggetto selezionato è di tipo "PAE", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente possa inserire il valore per i campi "Denominazione Amministrazione", "Denominazione Ufficio" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} UC-13.3.2 \\ UC-17 \end{tabular} \\
+TS-66 & Verificare che se il soggetto selezionato è di tipo "PAE", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente possa inserire il valore per i campi "Denominazione Amministrazione", "Denominazione Ufficio" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} UC-13.3.2 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-67 & Verificare che se il soggetto selezionato è di tipo "AS", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente possa inserire il valore per i campi "Cognome", "Nome", "Codice Fiscale", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} UC-13.3.3 \\ UC-17 \end{tabular} \\
+TS-67 & Verificare che se il soggetto selezionato è di tipo "AS", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente possa inserire il valore per i campi "Cognome", "Nome", "Codice Fiscale", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} UC-13.3.3 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-68 & Verificare che se il soggetto selezionato è di tipo "PG", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente possa inserire il valore per i campi "Denominazione Organizzazione", "Codice Fiscale/Partita IVA", "Denominazione Ufficio" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} UC-13.3.4 \\ UC-17 \end{tabular} \\
+TS-68 & Verificare che se il soggetto selezionato è di tipo "PG", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente possa inserire il valore per i campi "Denominazione Organizzazione", "Codice Fiscale/Partita IVA", "Denominazione Ufficio" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} UC-13.3.4 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-69 & Verificare che se il soggetto selezionato è di tipo "PF", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente possa inserire il valore per i campi "Cognome", "Nome" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} UC-13.3.5 \\ UC-17 \end{tabular} \\
+TS-69 & Verificare che se il soggetto selezionato è di tipo "PF", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente possa inserire il valore per i campi "Cognome", "Nome" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} UC-13.3.5 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-70 & Verificare che se il soggetto selezionato è di tipo "RUP", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente possa inserire il valore per i campi "Cognome", "Nome", "Codice Fiscale" "Denominazione Amministrazione/Codice IPA", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} UC-13.3.6 \\ UC-17 \end{tabular} \\
+TS-70 & Verificare che se il soggetto selezionato è di tipo "RUP", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente possa inserire il valore per i campi "Cognome", "Nome", "Codice Fiscale" "Denominazione Amministrazione/Codice IPA", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} UC-13.3.6 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-71 & Verificare che se il soggetto selezionato è di tipo "SW", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente possa inserire il valore per il campo "Denominazione Sistema" & \begin{tabular}[t]{@{}l} UC-13.3.7 \\ UC-17 \end{tabular} \\
+TS-71 & Verificare che se il soggetto selezionato è di tipo "SW", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente possa inserire il valore per il campo "Denominazione Sistema" & \begin{tabular}[t]{@{}l} UC-13.3.7 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-72 & Verificare che all'interno di una ricerca con filtri, l'utente possa visualizzare il nome del campo in una lista & UC-14 \\
+TS-72 & Verificare che all'interno di una ricerca con filtri, l'utente possa visualizzare il nome del campo in una lista & UC-14 & NO \\
 \hline
-TS-73 & Verificare che all'interno della sezione di filtri per tipo documentale, il sistema permetta di selezionare i filtri specifici per il tipo "Documento Informatico e Amministrativo Informatico" & UC-12.2.1.1 \\
+TS-73 & Verificare che all'interno della sezione di filtri per tipo documentale, il sistema permetta di selezionare i filtri specifici per il tipo "Documento Informatico e Amministrativo Informatico" & UC-12.2.1.1 & NO \\
 \hline
-TS-74 & Verificare che per il Documento Informatico e Amministrativo Informatico, l'utente possa visualizzare la lista di filtri specifici & UC-12.2.1.1.1 \\
+TS-74 & Verificare che per il Documento Informatico e Amministrativo Informatico, l'utente possa visualizzare la lista di filtri specifici & UC-12.2.1.1.1 & NO \\
 \hline
-TS-75 & Verificare che per il Documento Informatico e Amministrativo Informatico, il sistema renda disponibile una sezione per il filtro "Dati di Registrazione" & UC-12.2.1.2 \\
+TS-75 & Verificare che per il Documento Informatico e Amministrativo Informatico, il sistema renda disponibile una sezione per il filtro "Dati di Registrazione" & UC-12.2.1.2 & NO \\
 \hline
-TS-76 & Verificare che per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Dati di Registrazione", l'utente possa inserire il valore per i campi "Tipologia di Flusso", "Tipo di Registro", "Data/Ora di Registrazione", "Numero Documento" e "Codice Registro" & \begin{tabular}[t]{@{}l} UC-12.2.1.2 \\ UC-17 \end{tabular} \\
+TS-76 & Verificare che per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Dati di Registrazione", l'utente possa inserire il valore per i campi "Tipologia di Flusso", "Tipo di Registro", "Data/Ora di Registrazione", "Numero Documento" e "Codice Registro" & \begin{tabular}[t]{@{}l} UC-12.2.1.2 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-77 & Verificare che per il Documento Informatico e Amministrativo Informatico, l'utente possa inserire il valore per il filtro "Tipologia Documentale" & \begin{tabular}[t]{@{}l} UC-12.2.1.3 \\ UC-17 \end{tabular} \\
+TS-77 & Verificare che per il Documento Informatico e Amministrativo Informatico, l'utente possa inserire il valore per il filtro "Tipologia Documentale" & \begin{tabular}[t]{@{}l} UC-12.2.1.3 \\ UC-17 \end{tabular} & NO \\
 \hline
 TS-78 & Verificare che per il Documento Informatico e Amministrativo Informatico, l'utente possa inserire il valore per il filtro "Modalità di Formazione" tra:
 \begin{itemize}
@@ -623,469 +636,469 @@ TS-78 & Verificare che per il Documento Informatico e Amministrativo Informatico
     \item Acquisizione di un documento informatico per via telematica o su supporto informatico, acquisizione della copia per immagine su supporto informatico di un documento analogico, acquisizione della copia informatica di un documento analogico;
     \item Memorizzazione su supporto informatico in formato digitale delle informazioni risultanti da transazioni o processi informatici o dalla presentazione telematica di dati attraverso moduli o formulari resi disponibili all'utente;
     \item Generazione o raggruppamento anche in via automatica di un insieme di dati o registrazioni, provenienti da una o più banche dati, anche appartenenti a più soggetti interoperanti, secondo una struttura logica predeterminata e memorizzata in forma statica;
-\end{itemize} & \begin{tabular}[t]{@{}l} UC-12.2.1.4 \\ UC-17 \end{tabular} \\
+\end{itemize} & \begin{tabular}[t]{@{}l} UC-12.2.1.4 \\ UC-17 \end{tabular}  & NO \\
 \hline
-TS-79 & Verificare che per il Documento Informatico e Amministrativo Informatico, l'utente possa inserire il valore per il filtro "Campo Riservato" tra "Vero" o "Falso" & \begin{tabular}[t]{@{}l} UC-12.2.1.5 \\ UC-17 \end{tabular} \\
+TS-79 & Verificare che per il Documento Informatico e Amministrativo Informatico, l'utente possa inserire il valore per il filtro "Campo Riservato" tra "Vero" o "Falso" & \begin{tabular}[t]{@{}l} UC-12.2.1.5 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-80 & Verificare che per il Documento Informatico e Amministrativo Informatico, il sistema renda disponibile una sezione per il filtro "Identificativo del Formato" & UC-12.2.1.6 \\
+TS-80 & Verificare che per il Documento Informatico e Amministrativo Informatico, il sistema renda disponibile una sezione per il filtro "Identificativo del Formato" & UC-12.2.1.6 & NO \\
 \hline
-TS-81 & Verificare che per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Identificativo del Formato", l'utente possa inserire il valore per i campi "Formato" e "Prodotto Software" & \begin{tabular}[t]{@{}l} UC-12.2.1.6 \\ UC-17 \end{tabular} \\
+TS-81 & Verificare che per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Identificativo del Formato", l'utente possa inserire il valore per i campi "Formato" e "Prodotto Software" & \begin{tabular}[t]{@{}l} UC-12.2.1.6 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-82 & Verificare che per il Documento Informatico e Amministrativo Informatico, il sistema renda disponibile una sezione per il filtro "Dati di Verifica" & UC-12.2.1.7 \\
+TS-82 & Verificare che per il Documento Informatico e Amministrativo Informatico, il sistema renda disponibile una sezione per il filtro "Dati di Verifica" & UC-12.2.1.7 & NO \\
 \hline
-TS-83 & Verificare che per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Dati di Verifica", l'utente possa inserire il valore booleano per i campi "Firmato Digitalmente", "Sigillato Elettronicamente", "Marcatura Temporale" e "conformità copie immagine su supporto informatico" & \begin{tabular}[t]{@{}l} UC-12.2.1.7 \\ UC-17 \end{tabular} \\
+TS-83 & Verificare che per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Dati di Verifica", l'utente possa inserire il valore booleano per i campi "Firmato Digitalmente", "Sigillato Elettronicamente", "Marcatura Temporale" e "conformità copie immagine su supporto informatico" & \begin{tabular}[t]{@{}l} UC-12.2.1.7 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-84 & Verificare che per il Documento Informatico e Amministrativo Informatico, l'utente possa inserire il valore per il filtro "Nome del Documento" & \begin{tabular}[t]{@{}l} UC-12.2.1.8 \\ UC-17 \end{tabular} \\
+TS-84 & Verificare che per il Documento Informatico e Amministrativo Informatico, l'utente possa inserire il valore per il filtro "Nome del Documento" & \begin{tabular}[t]{@{}l} UC-12.2.1.8 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-85 & Verificare che per il Documento Informatico e Amministrativo Informatico, l'utente possa inserire il valore per il filtro "Versione del Documento" & \begin{tabular}[t]{@{}l} UC-12.2.1.9 \\ UC-17 \end{tabular} \\
+TS-85 & Verificare che per il Documento Informatico e Amministrativo Informatico, l'utente possa inserire il valore per il filtro "Versione del Documento" & \begin{tabular}[t]{@{}l} UC-12.2.1.9 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-86 & Verificare che per il Documento Informatico e Amministrativo Informatico, l'utente possa inserire il valore per il filtro "Identificativo del Documento Primario" & \begin{tabular}[t]{@{}l} UC-12.2.1.10 \\ UC-17 \end{tabular} \\
+TS-86 & Verificare che per il Documento Informatico e Amministrativo Informatico, l'utente possa inserire il valore per il filtro "Identificativo del Documento Primario" & \begin{tabular}[t]{@{}l} UC-12.2.1.10 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-87 & Verificare che per il Documento Informatico e Amministrativo Informatico, il sistema renda disponibile una sezione per il filtro "Tracciatura Modifiche di Documento" & UC-12.2.1.11 \\
+TS-87 & Verificare che per il Documento Informatico e Amministrativo Informatico, il sistema renda disponibile una sezione per il filtro "Tracciatura Modifiche di Documento" & UC-12.2.1.11 & NO \\
 \hline
-TS-88 & Verificare che per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Tracciatura Modifiche di Documento", l'utente possa inserire il valore per i campi "Tipo di Modifica", "Soggetto Autore della Modifica", "Data/Ora della Modifica" e "IdDoc versione precedente" & \begin{tabular}[t]{@{}l} UC-12.2.1.11 \\ UC-17 \end{tabular} \\
+TS-88 & Verificare che per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Tracciatura Modifiche di Documento", l'utente possa inserire il valore per i campi "Tipo di Modifica", "Soggetto Autore della Modifica", "Data/Ora della Modifica" e "IdDoc versione precedente" & \begin{tabular}[t]{@{}l} UC-12.2.1.11 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-89 & Verificare che all'interno della sezione di filtri per tipo documentale, il sistema permetta di selezionare i filtri specifici per il tipo "Aggregazione Documentale Informatica" & UC-12.2.2 \\
+TS-89 & Verificare che all'interno della sezione di filtri per tipo documentale, il sistema permetta di selezionare i filtri specifici per il tipo "Aggregazione Documentale Informatica" & UC-12.2.2 & NO \\
 \hline
-TS-90 & Verificare che per l'Aggregazione Documentale Informatica, l'utente possa visualizzare la lista di filtri specifici & UC-12.2.2.1.1 \\
+TS-90 & Verificare che per l'Aggregazione Documentale Informatica, l'utente possa visualizzare la lista di filtri specifici & UC-12.2.2.1.1 & NO \\
 \hline
-TS-91 & Verificare che per l'Aggregazione Documentale Informatica, il sistema renda disponibili per la compilazione e l'aggiunta alla ricerca i filtri specifici & UC-12.2.2.1 \\
+TS-91 & Verificare che per l'Aggregazione Documentale Informatica, il sistema renda disponibili per la compilazione e l'aggiunta alla ricerca i filtri specifici & UC-12.2.2.1  & NO \\
 \hline
-TS-92 & Verificare che per l'Aggregazione Documentale Informatica, il sistema renda disponibile una sezione per il filtro "Tipo di Aggregazione" & UC-12.2.2.2 \\
+TS-92 & Verificare che per l'Aggregazione Documentale Informatica, il sistema renda disponibile una sezione per il filtro "Tipo di Aggregazione" & UC-12.2.2.2 & NO \\
 \hline
-TS-93 & Verificare che per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Tipo di Aggregazione", l'utente possa inserire il valore per il campo "Tipo di Aggregazione" tra "Fascicolo", "Serie Documentale" o "Serie di Fascicoli" & \begin{tabular}[t]{@{}l} UC-12.2.2.2 \\ UC-17 \end{tabular} \\
+TS-93 & Verificare che per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Tipo di Aggregazione", l'utente possa inserire il valore per il campo "Tipo di Aggregazione" tra "Fascicolo", "Serie Documentale" o "Serie di Fascicoli" & \begin{tabular}[t]{@{}l} UC-12.2.2.2 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-94 & Verificare che per l'Aggregazione Documentale Informatica, l'utente possa inserire il valore per il filtro "Identificativo dell'Aggreagazione Documentale" & \begin{tabular}[t]{@{}l} UC-12.2.2.3 \\ UC-17 \end{tabular} \\
+TS-94 & Verificare che per l'Aggregazione Documentale Informatica, l'utente possa inserire il valore per il filtro "Identificativo dell'Aggreagazione Documentale" & \begin{tabular}[t]{@{}l} UC-12.2.2.3 \\ UC-17 \end{tabular}  & NO \\
 \hline
-TS-95 & Verificare che per l'Aggregazione Documentale Informatica, l'utente possa inserire il valore per il filtro "Tipologia di Fascicolo" tra "Affare", "Attività", "Persona Fisica", "Persona Giuridica" e "Procedimento Amministrativo" & \begin{tabular}[t]{@{}l} UC-12.2.2.4 \\ UC-17 \end{tabular} \\
+TS-95 & Verificare che per l'Aggregazione Documentale Informatica, l'utente possa inserire il valore per il filtro "Tipologia di Fascicolo" tra "Affare", "Attività", "Persona Fisica", "Persona Giuridica" e "Procedimento Amministrativo" & \begin{tabular}[t]{@{}l} UC-12.2.2.4 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-96 & Verificare che per l'Aggregazione Documentale Informatica, l'utente possa inserire il valore per il filtro "Id Aggregazione Primario" & \begin{tabular}[t]{@{}l} UC-12.2.2.5 \\ UC-17 \end{tabular} \\
+TS-96 & Verificare che per l'Aggregazione Documentale Informatica, l'utente possa inserire il valore per il filtro "Id Aggregazione Primario" & \begin{tabular}[t]{@{}l} UC-12.2.2.5 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-97 & Verificare che per l'Aggregazione Documentale Informatica, l'utente possa inserire il valore per il filtro "Data Apertura" & \begin{tabular}[t]{@{}l} UC-12.2.2.6 \\ UC-17 \end{tabular} \\
+TS-97 & Verificare che per l'Aggregazione Documentale Informatica, l'utente possa inserire il valore per il filtro "Data Apertura" & \begin{tabular}[t]{@{}l} UC-12.2.2.6 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-98 & Verificare che per l'Aggregazione Documentale Informatica, l'utente possa inserire il valore per il filtro "Data Chiusura" & \begin{tabular}[t]{@{}l} UC-12.2.2.7 \\ UC-17 \end{tabular} \\
+TS-98 & Verificare che per l'Aggregazione Documentale Informatica, l'utente possa inserire il valore per il filtro "Data Chiusura" & \begin{tabular}[t]{@{}l} UC-12.2.2.7 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-99 & Verificare che per l'Aggregazione Documentale Informatica, il sistema renda disponibile una sezione per il filtro "Procedimento Amministrativo" & UC-12.2.2.8 \\
+TS-99 & Verificare che per l'Aggregazione Documentale Informatica, il sistema renda disponibile una sezione per il filtro "Procedimento Amministrativo" & UC-12.2.2.8 & NO \\
 \hline
-TS-100 & Verificare che per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Procedimento Amministrativo", l'utente possa inserire il valore per i campi "Materia/Argomento/Struttura", "Procedimento", "Catalogo Procedimenti" e "Fasi" & \begin{tabular}[t]{@{}l} UC-12.2.2.8 \\ UC-17 \end{tabular} \\
+TS-100 & Verificare che per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Procedimento Amministrativo", l'utente possa inserire il valore per i campi "Materia/Argomento/Struttura", "Procedimento", "Catalogo Procedimenti" e "Fasi" & \begin{tabular}[t]{@{}l} UC-12.2.2.8 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-101 & Verificare che per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Procedimento Amministrativo" per il campo "Fasi", l'utente possa inserire il valore per il campo "Tipo Fase" tra "Preparatoria", "Istruttoria", "Consultiva", "Decisoria o Deliberativa" o "Integrazione dell'efficacia", il campo "Data Inizio Fase" e "Data Fine Fase" se presente & \begin{tabular}[t]{@{}l} UC-12.2.2.8.2 \\ UC-17 \end{tabular} \\
+TS-101 & Verificare che per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Procedimento Amministrativo" per il campo "Fasi", l'utente possa inserire il valore per il campo "Tipo Fase" tra "Preparatoria", "Istruttoria", "Consultiva", "Decisoria o Deliberativa" o "Integrazione dell'efficacia", il campo "Data Inizio Fase" e "Data Fine Fase" se presente & \begin{tabular}[t]{@{}l} UC-12.2.2.8.2 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-102 & Verificare che per l'Aggregazione Documentale Informatica, il sistema renda disponibile una sezione per il filtro "Assegnazione" & UC-12.2.2.8.3 \\
+TS-102 & Verificare che per l'Aggregazione Documentale Informatica, il sistema renda disponibile una sezione per il filtro "Assegnazione" & UC-12.2.2.8.3 & NO \\
 \hline
-TS-103 & Verificare che per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Assegnazione", l'utente possa inserire una o più volte il valore per i campi "Tipo Assegnazione", "Soggetto Assegnatario", "Data Inizio Assegnazione" e "Data Fine Assegnazione" & \begin{tabular}[t]{@{}l} UC-12.2.2.8.3 \\ UC-17 \end{tabular} \\
+TS-103 & Verificare che per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Assegnazione", l'utente possa inserire una o più volte il valore per i campi "Tipo Assegnazione", "Soggetto Assegnatario", "Data Inizio Assegnazione" e "Data Fine Assegnazione" & \begin{tabular}[t]{@{}l} UC-12.2.2.8.3 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-104 & Verificare che per l'Aggregazione Documentale Informatica, l'utente possa inserire il valore per il filtro "Progressivo Aggregazione" & \begin{tabular}[t]{@{}l} UC-12.2.2.9 \\ UC-17 \end{tabular} \\
+TS-104 & Verificare che per l'Aggregazione Documentale Informatica, l'utente possa inserire il valore per il filtro "Progressivo Aggregazione" & \begin{tabular}[t]{@{}l} UC-12.2.2.9 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-105 & Verificare che all'interno della sezione di filtri per custom metadata, il sistema permetta di selezionare i filtri specifici per i metadata presenti & UC-12.3 \\
+TS-105 & Verificare che all'interno della sezione di filtri per custom metadata, il sistema permetta di selezionare i filtri specifici per i metadata presenti & UC-12.3 & NO \\
 \hline
-TS-106 & Verificare che per ciascun custom metadata, l'utente possa inserire il nome del metadato e il relativo valore & \begin{tabular}[t]{@{}l} UC-12.3.1 \\ UC-17 \end{tabular} \\
+TS-106 & Verificare che per ciascun custom metadata, l'utente possa inserire il nome del metadato e il relativo valore & \begin{tabular}[t]{@{}l} UC-12.3.1 \\ UC-17 \end{tabular} & NO \\
 \hline
-TS-107 & Verificare che quando viene eseguita una ricerca, l'utente possa visualizzare i risultati della ricerca & UC-15 \\
+TS-107 & Verificare che quando viene eseguita una ricerca, l'utente possa visualizzare i risultati della ricerca & UC-15  & NO \\
 \hline
-TS-108 & Verificare che l'utente possa visualizzare per ogni risultato le informazioni rilevanti: Nome del documento o aggregazione, Data di registrazione/creazione del documento/aggregazione, Tipo di elemento tra Documento, Aggregazione, Processo o Classe Documentale & UC-15.1 \\
+TS-108 & Verificare che l'utente possa visualizzare per ogni risultato le informazioni rilevanti: Nome del documento o aggregazione, Data di registrazione/creazione del documento/aggregazione, Tipo di elemento tra Documento, Aggregazione, Processo o Classe Documentale & UC-15.1 & NO \\
 \hline
-TS-109 & Verificare che l'utente possa visualizzare il nome del documento o aggregazione & UC-15.1.1 \\
+TS-109 & Verificare che l'utente possa visualizzare il nome del documento o aggregazione & UC-15.1.1 & NO \\
 \hline
-TS-110 & Verificare che l'utente possa visualizzare il tipo del documento o aggregazione & UC-15.1.2 \\
+TS-110 & Verificare che l'utente possa visualizzare il tipo del documento o aggregazione & UC-15.1.2 & NO \\
 \hline
-TS-111 & Verificare che se la ricerca non produce risultati, l'utente possa visualizzare un messaggio di errore & UC-16 \\
+TS-111 & Verificare che se la ricerca non produce risultati, l'utente possa visualizzare un messaggio di errore & UC-16 & NO \\
 \hline
-TS-112 & Verificare che l'utente sia informato quando il formato del valore inserito non è valido & UC-18 \\
+TS-112 & Verificare che l'utente sia informato quando il formato del valore inserito non è valido & UC-18 & NO \\
 \hline
-TS-113 & Verificare che l'utente possa compilare il filtro selezionato con un valore & UC-17 \\
+TS-113 & Verificare che l'utente possa compilare il filtro selezionato con un valore & UC-17 & NO \\
 \hline
-TS-114 & Verificare che se il valore inserito in un filtro non è corretto l'utente possa visualizzare un messaggio di errore & UC-18 \\
+TS-114 & Verificare che se il valore inserito in un filtro non è corretto l'utente possa visualizzare un messaggio di errore & UC-18 & NO \\
 \hline
-TS-115 & Verificare che l'utente possa salvare il documento in locale in una cartella selezionata & UC-19 \\
+TS-115 & Verificare che l'utente possa salvare il documento in locale in una cartella selezionata & UC-19 & NO \\
 \hline
-TS-116 & Verificare che l'utente possa salvare più documenti in una cartella selezionata & UC-20 \\
+TS-116 & Verificare che l'utente possa salvare più documenti in una cartella selezionata & UC-20 & NO \\
 \hline
-TS-117 & Verificare che se il salvataggio di uno o più documenti fallisce, l'utente possa visualizzare un messaggio di errore & UC-21 \\
+TS-117 & Verificare che se il salvataggio di uno o più documenti fallisce, l'utente possa visualizzare un messaggio di errore & UC-21 & NO \\
 \hline
-TS-118 & Verificare che l'utente possa stampare un documento & UC-22 \\
+TS-118 & Verificare che l'utente possa stampare un documento & UC-22 & NO \\
 \hline
-TS-119 & Verificare che l'utente possa stampare un insieme di documenti & UC-23 \\
+TS-119 & Verificare che l'utente possa stampare un insieme di documenti & UC-23 & NO \\
 \hline
-TS-120 & Verificare che se la stampa di uno o più documenti fallisce, l'utente possa visualizzare un messaggio di errore & UC-24 \\
+TS-120 & Verificare che se la stampa di uno o più documenti fallisce, l'utente possa visualizzare un messaggio di errore & UC-24 & NO \\
 \hline
-TS-121 & Verificare che se la stampa non è disponibile, l'utente possa visualizzare un messaggio di errore & UC-25 \\
+TS-121 & Verificare che se la stampa non è disponibile, l'utente possa visualizzare un messaggio di errore & UC-25 & NO \\
 \hline
-TS-122 & Verificare che l'utente possa avviare la verifica del DIP & UC-26 \\
+TS-122 & Verificare che l'utente possa avviare la verifica del DIP & UC-26 & NO \\
 \hline
-TS-123 & Verificare che l'utente possa visualizzare lo stato di verifica del DIP & UC-26 \\
+TS-123 & Verificare che l'utente possa visualizzare lo stato di verifica del DIP & UC-26 & NO \\
 \hline
-TS-124 & Verificare che l'utente possa avviare la verifica della classe documentale & UC-27 \\
+TS-124 & Verificare che l'utente possa avviare la verifica della classe documentale & UC-27 & NO \\
 \hline
-TS-125 & Verificare che l'utente possa visualizzare lo stato di verifica della classe documentale & UC-27 \\
+TS-125 & Verificare che l'utente possa visualizzare lo stato di verifica della classe documentale & UC-27 & NO \\
 \hline
-TS-126 & Verificare che l'utente possa avviare la verifica dell'integrità processo & UC-28 \\
+TS-126 & Verificare che l'utente possa avviare la verifica dell'integrità processo & UC-28 & NO \\
 \hline
-TS-127 & Verificare che l'utente possa visualizzare lo stato di verifica dell'integrità processo & UC-28 \\
+TS-127 & Verificare che l'utente possa visualizzare lo stato di verifica dell'integrità processo & UC-28 & NO \\
 \hline
-TS-128 & Verificare che l'utente possa avviare la verifica del documento & UC-29 \\
+TS-128 & Verificare che l'utente possa avviare la verifica del documento & UC-29 & NO \\
 \hline
-TS-129 & Verificare che l'utente possa visualizzare lo stato di verifica del documento & UC-29 \\
+TS-129 & Verificare che l'utente possa visualizzare lo stato di verifica del documento & UC-29 & NO \\
 \hline
-TS-130 & Verificare che l'utente possa visualizzare il report di integrità del DIP completo con le informazioni aggregate & UC-30 \\
+TS-130 & Verificare che l'utente possa visualizzare il report di integrità del DIP completo con le informazioni aggregate & UC-30 & NO \\
 \hline
-TS-131 & Verificare che l'utente possa visualizzare il conteggio totale delle classi documentali verificate nel report del DIP & UC-30.1 \\
+TS-131 & Verificare che l'utente possa visualizzare il conteggio totale delle classi documentali verificate nel report del DIP & UC-30.1 & NO \\
 \hline
-TS-132 & Verificare che l'utente possa visualizzare il numero di classi integre (stato "Valido") in colore verde nel report del DIP & UC-30.2 \\
+TS-132 & Verificare che l'utente possa visualizzare il numero di classi integre (stato "Valido") in colore verde nel report del DIP & UC-30.2 & NO \\
 \hline
-TS-133 & Verificare che l'utente possa visualizzare il numero di classi corrotte (stato "Non Valido") in colore rosso nel report del DIP & UC-30.3 \\
+TS-133 & Verificare che l'utente possa visualizzare il numero di classi corrotte (stato "Non Valido") in colore rosso nel report del DIP & UC-30.3 & NO \\
 \hline
-TS-134 & Verificare che l'utente possa visualizzare l'elenco delle classi corrotte indicando nome e numero di processi corrotti per ciascuna & UC-30.4 \\
+TS-134 & Verificare che l'utente possa visualizzare l'elenco delle classi corrotte indicando nome e numero di processi corrotti per ciascuna & UC-30.4 & NO \\
 \hline
-TS-135 & Verificare che l'utente possa visualizzare la classe corrotta indicando nome e numero di processi corrotti & UC-30.4.1 \\
+TS-135 & Verificare che l'utente possa visualizzare la classe corrotta indicando nome e numero di processi corrotti & UC-30.4.1 & NO \\
 \hline
-TS-136 & Verificare che l'utente possa visualizzare la data e l'ora di inizio della verifica del DIP nel formato "GG/MM/AAAA HH:MM:SS" & UC-30.5 \\
+TS-136 & Verificare che l'utente possa visualizzare la data e l'ora di inizio della verifica del DIP nel formato "GG/MM/AAAA HH:MM:SS" & UC-30.5 & NO \\
 \hline
-TS-137 & Verificare che l'utente sia informato con un messaggio nel caso in cui non vi siano classi corrotte & UC-30.6 \\
+TS-137 & Verificare che l'utente sia informato con un messaggio nel caso in cui non vi siano classi corrotte & UC-30.6 & NO \\
 \hline
-TS-138 & Verificare che l'utente possa visualizzare il report di integrità dettagliato per una singola classe documentale & UC-31 \\
+TS-138 & Verificare che l'utente possa visualizzare il report di integrità dettagliato per una singola classe documentale & UC-31 & NO \\
 \hline
-TS-139 & Verificare che l'utente possa visualizzare il conteggio dei processi verificati all'interno della classe documentale & UC-31.1 \\
+TS-139 & Verificare che l'utente possa visualizzare il conteggio dei processi verificati all'interno della classe documentale & UC-31.1 & NO \\
 \hline
-TS-140 & Verificare che l'utente possa visualizzare il numero di processi integri (stato "Valido") in colore verde nella classe documentale & UC-31.2 \\
+TS-140 & Verificare che l'utente possa visualizzare il numero di processi integri (stato "Valido") in colore verde nella classe documentale & UC-31.2 & NO \\
 \hline
-TS-141 & Verificare che l'utente possa visualizzare il numero di processi corrotti (stato "Non Valido") in colore rosso nella classe documentale & UC-31.3 \\
+TS-141 & Verificare che l'utente possa visualizzare il numero di processi corrotti (stato "Non Valido") in colore rosso nella classe documentale & UC-31.3 & NO \\
 \hline
-TS-142 & Verificare che l'utente possa visualizzare la lista dei processi corrotti con il relativo numero di documenti compromessi & UC-31.4 \\
+TS-142 & Verificare che l'utente possa visualizzare la lista dei processi corrotti con il relativo numero di documenti compromessi & UC-31.4 & NO \\
 \hline
-TS-143 & Verificare che l'utente possa visualizzare il singolo processo corrotto con il relativo numero di documenti compromessi & UC-31.4.1 \\
+TS-143 & Verificare che l'utente possa visualizzare il singolo processo corrotto con il relativo numero di documenti compromessi & UC-31.4.1 & NO \\
 \hline
-TS-144 & Verificare che l'utente possa visualizzare la data e l'ora di inizio della verifica della classe nel formato "GG/MM/AAAA HH:MM:SS" & UC-31.5 \\
+TS-144 & Verificare che l'utente possa visualizzare la data e l'ora di inizio della verifica della classe nel formato "GG/MM/AAAA HH:MM:SS" & UC-31.5 & NO \\
 \hline
-TS-145 & Verificare che l'utente sia informato che tutti i processi sono integri & UC-31.6 \\
+TS-145 & Verificare che l'utente sia informato che tutti i processi sono integri & UC-31.6 & NO \\
 \hline
-TS-146 & Verificare che l'utente possa visualizzare il report di integrità dettagliato di un singolo processo & UC-32 \\
+TS-146 & Verificare che l'utente possa visualizzare il report di integrità dettagliato di un singolo processo & UC-32 & NO \\
 \hline
-TS-147 & Verificare che l'utente possa visualizzare il conteggio dei documenti verificati all'interno del processo selezionato & UC-32.1 \\
+TS-147 & Verificare che l'utente possa visualizzare il conteggio dei documenti verificati all'interno del processo selezionato & UC-32.1 & NO \\
 \hline
-TS-148 & Verificare che l'utente possa visualizzare il numero di documenti integri (stato "Valido") in colore verde nel processo selezionato & UC-32.2 \\
+TS-148 & Verificare che l'utente possa visualizzare il numero di documenti integri (stato "Valido") in colore verde nel processo selezionato & UC-32.2 & NO \\
 \hline
-TS-149 & Verificare che l'utente possa visualizzare il numero di documenti corrotti (stato "Non Valido") in colore rosso nel processo selezionato & UC-32.3 \\
+TS-149 & Verificare che l'utente possa visualizzare il numero di documenti corrotti (stato "Non Valido") in colore rosso nel processo selezionato & UC-32.3 & NO \\
 \hline
-TS-150 & Verificare che l'utente possa visualizzare la lista dei documenti corrotti & UC-32.4 \\
+TS-150 & Verificare che l'utente possa visualizzare la lista dei documenti corrotti & UC-32.4 & NO \\
 \hline
-TS-151 & Verificare che l'utente possa visualizzare i singoli documenti corrotti della lista dei documenti corrotti, con i dettagli dell'errore & UC-32.4.1 \\
+TS-151 & Verificare che l'utente possa visualizzare i singoli documenti corrotti della lista dei documenti corrotti, con i dettagli dell'errore & UC-32.4.1 & NO \\
 \hline
-TS-152 & Verificare che l'utente possa visualizzare la data e l'ora di inizio della verifica del processo nel formato "GG/MM/AAAA HH:MM:SS" & UC-32.5 \\
+TS-152 & Verificare che l'utente possa visualizzare la data e l'ora di inizio della verifica del processo nel formato "GG/MM/AAAA HH:MM:SS" & UC-32.5 & NO \\
 \hline
-TS-153 & Verificare che l'utente sia avvisato che tutti i documenti sono integri tramite un messaggio & UC-32.6 \\
+TS-153 & Verificare che l'utente sia avvisato che tutti i documenti sono integri tramite un messaggio & UC-32.6 & NO \\
 \hline
-TS-154 & Verificare che l'utente possa visualizzare il report di integrità di un singolo documento & UC-33 \\
+TS-154 & Verificare che l'utente possa visualizzare il report di integrità di un singolo documento & UC-33 & NO \\
 \hline
-TS-155 & Verificare che l'utente possa visualizzare il nome del documento all'interno del report di integrità & UC-3.1.1 \\
+TS-155 & Verificare che l'utente possa visualizzare il nome del documento all'interno del report di integrità & UC-3.1.1  & NO \\
 \hline
-TS-156 & Verificare che l'utente possa visualizzare lo stato della verifica (Valido / Non Valido) per il documento selezionato & UC-33.1 \\
+TS-156 & Verificare che l'utente possa visualizzare lo stato della verifica (Valido / Non Valido) per il documento selezionato & UC-33.1 & NO \\
 \hline
-TS-157 & Verificare che l'utente possa visualizzare la data e l'ora di inizio della verifica del documento nel formato "GG/MM/AAAA HH:MM:SS" & UC-33.2 \\
+TS-157 & Verificare che l'utente possa visualizzare la data e l'ora di inizio della verifica del documento nel formato "GG/MM/AAAA HH:MM:SS" & UC-33.2 & NO \\
 \hline
-TS-158 & Verificare che l'utente possa visualizzare la descrizione tecnica del dettaglio dell'errore per i documenti con stato "Non Valido" & UC-33.3 \\
+TS-158 & Verificare che l'utente possa visualizzare la descrizione tecnica del dettaglio dell'errore per i documenti con stato "Non Valido" & UC-33.3  & NO \\
 \hline
-TS-159 & Verificare che l'utente possa avviare la conversione del report di verifica visualizzato in formato PDF & UC-34 \\
+TS-159 & Verificare che l'utente possa avviare la conversione del report di verifica visualizzato in formato PDF & UC-34 & NO \\
 \hline
-TS-160 & Verificare che l'utente sia informato con un messaggio di errore qualora la generazione del file PDF non vada a buon fine & UC-37 \\
+TS-160 & Verificare che l'utente sia informato con un messaggio di errore qualora la generazione del file PDF non vada a buon fine & UC-37 & NO \\
 \hline
-TS-161 & Verificare che l'utente possa scaricare un file in una cartella locale previa selezione della cartella di destinazione & UC-35 \\
+TS-161 & Verificare che l'utente possa scaricare un file in una cartella locale previa selezione della cartella di destinazione & UC-35  & NO \\
 \hline
-TS-162 & Verificare che l'utente sia informato con un messaggio di conferma indicando il percorso di destinazione al termine del salvataggio & UC-35 \\
+TS-162 & Verificare che l'utente sia informato con un messaggio di conferma indicando il percorso di destinazione al termine del salvataggio & UC-35 & NO \\
 \hline
-TS-163 & Verificare che il sistema impedisca il salvataggio di file all'interno della cartella sorgente del DIP per preservarne l'integrità & UC-35, UC-36 \\
+TS-163 & Verificare che il sistema impedisca il salvataggio di file all'interno della cartella sorgente del DIP per preservarne l'integrità & UC-35, UC-36 & NO \\
 \hline
-TS-164 & Verificare che l'utente sia informato con un errore specifico se l'utente tenta di scaricare un file nel percorso protetto del DIP & UC-36 \\
+TS-164 & Verificare che l'utente sia informato con un errore specifico se l'utente tenta di scaricare un file nel percorso protetto del DIP & UC-36 & NO \\
 \hline
-TS-165 & Verificare che l'utente possa visualizzare le informazioni dell'AiP di provenienza di un documento selezionato & UC-38 \\
+TS-165 & Verificare che l'utente possa visualizzare le informazioni dell'AiP di provenienza di un documento selezionato & UC-38 & NO \\
 \hline
-TS-166 & Verificare che l'utente possa visualizzare la classe documentale di appartenenza dell'AiP relativo al documento selezionato & UC-38.1 \\
+TS-166 & Verificare che l'utente possa visualizzare la classe documentale di appartenenza dell'AiP relativo al documento selezionato & UC-38.1 & NO \\
 \hline
-TS-167 & Verificare che l'utente possa visualizzare lo UUID dell'AiP relativo al documento selezionato & UC-38.2 \\
+TS-167 & Verificare che l'utente possa visualizzare lo UUID dell'AiP relativo al documento selezionato & UC-38.2 & NO \\
 \hline
-TS-168 & Verificare che l'utente possa visualizzare le informazioni del processo di conservazione dell'AiP & UC-39 \\
+TS-168 & Verificare che l'utente possa visualizzare le informazioni del processo di conservazione dell'AiP & UC-39 & NO \\
 \hline
-TS-169 & Verificare che l'utente possa visualizzare la data di inizio di un processo o sessione & UC-39.1 \\
+TS-169 & Verificare che l'utente possa visualizzare la data di inizio di un processo o sessione & UC-39.1 & NO \\
 \hline
-TS-170 & Verificare che l'utente possa visualizzare la data di fine di un processo o sessione & UC-39.2 \\
+TS-170 & Verificare che l'utente possa visualizzare la data di fine di un processo o sessione & UC-39.2 & NO \\
 \hline
-TS-171 & Verificare che se il processo o la sessione non è ancora terminato/a, al posto della data di fine l'utente sia informato con un messaggio che indica l'assenza della data di fine & UC-39.3 \\
+TS-171 & Verificare che se il processo o la sessione non è ancora terminato/a, al posto della data di fine l'utente sia informato con un messaggio che indica l'assenza della data di fine & UC-39.3 & NO \\
 \hline
-TS-172 & Verificare che l'utente possa visualizzare lo UUID dell'utente attivatore di un processo o sessione & UC-39.4 \\
+TS-172 & Verificare che l'utente possa visualizzare lo UUID dell'utente attivatore di un processo o sessione & UC-39.4 & NO \\
 \hline
-TS-173 & Verificare che l'utente possa visualizzare lo UUID dell'utente terminatore di un processo o sessione & UC-39.5 \\
+TS-173 & Verificare che l'utente possa visualizzare lo UUID dell'utente terminatore di un processo o sessione & UC-39.5 & NO \\
 \hline
-TS-174 & Verificare che se il processo o la sessione non è ancora terminato/a, al posto dello UUID dell'utente terminatore l'utente sia informato con un messaggio che indica l'assenza dello UUID & UC-39.6 \\
+TS-174 & Verificare che se il processo o la sessione non è ancora terminato/a, al posto dello UUID dell'utente terminatore l'utente sia informato con un messaggio che indica l'assenza dello UUID & UC-39.6 & NO \\
 \hline
-TS-175 & Verificare che l'utente possa visualizzare il nome del canale di attivazione di un processo o sessione & UC-39.7 \\
+TS-175 & Verificare che l'utente possa visualizzare il nome del canale di attivazione di un processo o sessione & UC-39.7 & NO \\
 \hline
-TS-176 & Verificare che l'utente possa visualizzare il nome del canale di terminazione di un processo o sessione & UC-39.8 \\
+TS-176 & Verificare che l'utente possa visualizzare il nome del canale di terminazione di un processo o sessione & UC-39.8 & NO \\
 \hline
-TS-177 & Verificare che se il processo o la sessione non è ancora terminato/a, al posto del nome del canale di terminazione l'utente sia informato con un messaggio che indica l'assenza del nome del canale di terminazione & UC-39.9 \\
+TS-177 & Verificare che se il processo o la sessione non è ancora terminato/a, al posto del nome del canale di terminazione l'utente sia informato con un messaggio che indica l'assenza del nome del canale di terminazione & UC-39.9 & NO \\
 \hline
-TS-178 & Verificare che l'utente possa visualizzare lo stato di un processo o sessione & UC-39.10 \\
+TS-178 & Verificare che l'utente possa visualizzare lo stato di un processo o sessione & UC-39.10 & NO \\
 \hline
-TS-179 & Verificare che l'utente possa visualizzare le informazioni della sessione di versamento del processo di conservazione selezionato & UC-40 \\
+TS-179 & Verificare che l'utente possa visualizzare le informazioni della sessione di versamento del processo di conservazione selezionato & UC-40 & NO \\
 \hline
-TS-180 & Verificare che l'utente possa visualizzare la data di inizio della sessione di versamento & UC-39.1 \\
+TS-180 & Verificare che l'utente possa visualizzare la data di inizio della sessione di versamento & UC-39.1 & NO \\
 \hline
-TS-181 & Verificare che l'utente possa visualizzare la data di fine della sessione di versamento & UC-39.2 \\
+TS-181 & Verificare che l'utente possa visualizzare la data di fine della sessione di versamento & UC-39.2 & NO \\
 \hline
-TS-182 & Verificare che se la sessione di versamento non è ancora terminata, al posto della data di fine l'utente sia informato con un messaggio che indica l'assenza della data di fine & UC-39.3 \\
+TS-182 & Verificare che se la sessione di versamento non è ancora terminata, al posto della data di fine l'utente sia informato con un messaggio che indica l'assenza della data di fine & UC-39.3 & NO \\
 \hline
-TS-183 & Verificare che l'utente possa visualizzare lo UUID dell'utente attivatore della sessione di versamento & UC-39.4 \\
+TS-183 & Verificare che l'utente possa visualizzare lo UUID dell'utente attivatore della sessione di versamento & UC-39.4 & NO \\
 \hline
-TS-184 & Verificare che l'utente possa visualizzare lo UUID dell'utente terminatore della sessione di versamento & UC-39.5 \\
+TS-184 & Verificare che l'utente possa visualizzare lo UUID dell'utente terminatore della sessione di versamento & UC-39.5 & NO \\
 \hline
-TS-185 & Verificare che se la sessione di versamento non è ancora terminata, al posto dello UUID dell'utente terminatore l'utente sia informato con un messaggio che indica l'assenza dello UUID & UC-39.6 \\
+TS-185 & Verificare che se la sessione di versamento non è ancora terminata, al posto dello UUID dell'utente terminatore l'utente sia informato con un messaggio che indica l'assenza dello UUID & UC-39.6 & NO \\
 \hline
-TS-186 & Verificare che l'utente possa visualizzare il nome del canale di attivazione della sessione di versamento & UC-39.7 \\
+TS-186 & Verificare che l'utente possa visualizzare il nome del canale di attivazione della sessione di versamento & UC-39.7 & NO \\
 \hline
-TS-187 & Verificare che l'utente possa visualizzare il nome del canale di terminazione della sessione di versamento & UC-39.8 \\
+TS-187 & Verificare che l'utente possa visualizzare il nome del canale di terminazione della sessione di versamento & UC-39.8 & NO \\
 \hline
-TS-188 & Verificare che se la sessione di versamento non è ancora terminata, al posto del nome del canale di terminazione l'utente sia informato con un messaggio che indica l'assenza del nome del canale di terminazione & UC-39.9 \\
+TS-188 & Verificare che se la sessione di versamento non è ancora terminata, al posto del nome del canale di terminazione l'utente sia informato con un messaggio che indica l'assenza del nome del canale di terminazione & UC-39.9 & NO \\
 \hline
-TS-189 & Verificare che l'utente possa visualizzare lo stato della sessione di versamento & UC-39.10 \\
+TS-189 & Verificare che l'utente possa visualizzare lo stato della sessione di versamento & UC-39.10 & NO \\
 \hline
-TS-190 & Verificare che l'utente possa visualizzare le informazioni della sessione di conservazione del processo di conservazione selezionato & UC-41 \\
+TS-190 & Verificare che l'utente possa visualizzare le informazioni della sessione di conservazione del processo di conservazione selezionato & UC-41 & NO \\
 \hline
-TS-191 & Verificare che l'utente possa visualizzare la data di inizio della sessione di conservazione & UC-39.1 \\
+TS-191 & Verificare che l'utente possa visualizzare la data di inizio della sessione di conservazione & UC-39.1 & NO \\
 \hline
-TS-192 & Verificare che l'utente possa visualizzare la data di fine della sessione di conservazione & UC-39.2 \\
+TS-192 & Verificare che l'utente possa visualizzare la data di fine della sessione di conservazione & UC-39.2 & NO \\
 \hline
-TS-193 & Verificare che se la sessione di conservazione non è ancora terminata, al posto della data di fine l'utente sia informato con un messaggio che indica l'assenza della data di fine & UC-39.3 \\
+TS-193 & Verificare che se la sessione di conservazione non è ancora terminata, al posto della data di fine l'utente sia informato con un messaggio che indica l'assenza della data di fine & UC-39.3 & NO \\
 \hline
-TS-194 & Verificare che l'utente possa visualizzare lo UUID dell'utente attivatore della sessione di conservazione & UC-39.4 \\
+TS-194 & Verificare che l'utente possa visualizzare lo UUID dell'utente attivatore della sessione di conservazione & UC-39.4 & NO \\
 \hline
-TS-195 & Verificare che l'utente possa visualizzare lo UUID dell'utente terminatore della sessione di conservazione & UC-39.5 \\
+TS-195 & Verificare che l'utente possa visualizzare lo UUID dell'utente terminatore della sessione di conservazione & UC-39.5 & NO \\
 \hline
-TS-196 & Verificare che se la sessione di conservazione non è ancora terminata, al posto dello UUID dell'utente terminatore l'utente sia informato con un messaggio che indica l'assenza dello UUID & UC-39.6 \\
+TS-196 & Verificare che se la sessione di conservazione non è ancora terminata, al posto dello UUID dell'utente terminatore l'utente sia informato con un messaggio che indica l'assenza dello UUID & UC-39.6 & NO \\
 \hline
-TS-197 & Verificare che l'utente possa visualizzare il nome del canale di attivazione della sessione di conservazione & UC-39.7 \\
+TS-197 & Verificare che l'utente possa visualizzare il nome del canale di attivazione della sessione di conservazione & UC-39.7 & NO \\
 \hline
-TS-198 & Verificare che l'utente possa visualizzare il nome del canale di terminazione della sessione di conservazione & UC-39.8 \\
+TS-198 & Verificare che l'utente possa visualizzare il nome del canale di terminazione della sessione di conservazione & UC-39.8 & NO \\
 \hline
-TS-199 & Verificare che se la sessione di conservazione non è ancora terminata, al posto del nome del canale di terminazione l'utente sia informato con un messaggio che indica l'assenza del nome del canale di terminazione & UC-39.9 \\
+TS-199 & Verificare che se la sessione di conservazione non è ancora terminata, al posto del nome del canale di terminazione l'utente sia informato con un messaggio che indica l'assenza del nome del canale di terminazione & UC-39.9 & NO \\
 \hline
-TS-200 & Verificare che l'utente possa visualizzare lo stato della sessione di conservazione & UC-39.10 \\
+TS-200 & Verificare che l'utente possa visualizzare lo stato della sessione di conservazione & UC-39.10 & NO \\
 \hline
-TS-201 & Verificare che l'utente possa visualizzare la descrizione del documento selezionato & UC-42 \\
+TS-201 & Verificare che l'utente possa visualizzare la descrizione del documento selezionato & UC-42 & NO \\
 \hline
-TS-202 & Verificare che l'utente possa visualizzare la lista dei soggetti coinvolti nel documento selezionato & UC-43 \\
+TS-202 & Verificare che l'utente possa visualizzare la lista dei soggetti coinvolti nel documento selezionato & UC-43 & NO \\
 \hline
-TS-203 & Verificare che per ogni soggetto coinvolto nel documento, l'utente possa visualizzare il ruolo del soggetto nel documento & UC-43.2 \\
+TS-203 & Verificare che per ogni soggetto coinvolto nel documento, l'utente possa visualizzare il ruolo del soggetto nel documento & UC-43.2 & NO \\
 \hline
-TS-204 & Verificare che per ogni soggetto coinvolto nel documento, l'utente possa visualizzare il tipo di soggetto & UC-43.3 \\
+TS-204 & Verificare che per ogni soggetto coinvolto nel documento, l'utente possa visualizzare il tipo di soggetto & UC-43.3 & NO \\
 \hline
-TS-205 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente possa visualizzare tutti i dati legati a questo tipo di soggetto & UC-43.1.1 \\
+TS-205 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente possa visualizzare tutti i dati legati a questo tipo di soggetto & UC-43.1.1 & NO \\
 \hline
-TS-206 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente possa visualizzare il nome del soggetto & UC-43.1.1.1 \\
+TS-206 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente possa visualizzare il nome del soggetto & UC-43.1.1.1 & NO \\
 \hline
-TS-207 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente possa visualizzare il cognome del soggetto & UC-43.1.1.2 \\
+TS-207 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente possa visualizzare il cognome del soggetto & UC-43.1.1.2 & NO \\
 \hline
-TS-208 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente possa visualizzare il codice fiscale del soggetto & UC-43.1.1.3 \\
+TS-208 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente possa visualizzare il codice fiscale del soggetto & UC-43.1.1.3 & NO \\
 \hline
-TS-209 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente possa visualizzare gli indirizzi digitali di riferimento del soggetto & UC-43.1.1.4 \\
+TS-209 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente possa visualizzare gli indirizzi digitali di riferimento del soggetto & UC-43.1.1.4 & NO \\
 \hline
-TS-210 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente possa visualizzare tutti i dati legati a questo tipo di soggetto & UC-43.1.2 \\
+TS-210 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente possa visualizzare tutti i dati legati a questo tipo di soggetto & UC-43.1.2 & NO \\
 \hline
-TS-211 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente possa visualizzare la denominazione dell'organizzazione del soggetto & UC-43.1.2.1 \\
+TS-211 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente possa visualizzare la denominazione dell'organizzazione del soggetto & UC-43.1.2.1 & NO \\
 \hline
-TS-212 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente possa visualizzare la partita IVA del soggetto & UC-43.1.2.2 \\
+TS-212 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente possa visualizzare la partita IVA del soggetto & UC-43.1.2.2 & NO \\
 \hline
-TS-213 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente possa visualizzare il codice fiscale del soggetto & UC-43.1.1.3 \\
+TS-213 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente possa visualizzare il codice fiscale del soggetto & UC-43.1.1.3 & NO \\
 \hline
-TS-214 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente possa visualizzare la denominazione dell'ufficio del soggetto & UC-43.1.2.3 \\
+TS-214 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente possa visualizzare la denominazione dell'ufficio del soggetto & UC-43.1.2.3 & NO \\
 \hline
-TS-215 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente possa visualizzare gli indirizzi digitali di riferimento del soggetto & UC-43.1.1.4 \\
+TS-215 & Verificare che se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente possa visualizzare gli indirizzi digitali di riferimento del soggetto & UC-43.1.1.4 & NO \\
 \hline
-TS-216 & Verificare che se il soggetto coinvolto nel documento è di tipo AS, l'utente possa visualizzare tutti i dati legati a questo tipo di soggetto & UC-43.1.3 \\
+TS-216 & Verificare che se il soggetto coinvolto nel documento è di tipo AS, l'utente possa visualizzare tutti i dati legati a questo tipo di soggetto & UC-43.1.3 & NO \\
 \hline
-TS-217 & Verificare che se il soggetto coinvolto nel documento è di tipo AS, l'utente possa visualizzare il cognome del soggetto & UC-43.1.1.2 \\
+TS-217 & Verificare che se il soggetto coinvolto nel documento è di tipo AS, l'utente possa visualizzare il cognome del soggetto & UC-43.1.1.2 & NO \\
 \hline
-TS-218 & Verificare che se il soggetto coinvolto nel documento è di tipo AS, l'utente possa visualizzare il nome del soggetto & UC-43.1.1.1 \\
+TS-218 & Verificare che se il soggetto coinvolto nel documento è di tipo AS, l'utente possa visualizzare il nome del soggetto & UC-43.1.1.1 & NO \\
 \hline
-TS-219 & Verificare che se il soggetto coinvolto nel documento è di tipo AS, l'utente possa visualizzare il codice fiscale del soggetto & UC-43.1.1.3 \\
+TS-219 & Verificare che se il soggetto coinvolto nel documento è di tipo AS, l'utente possa visualizzare il codice fiscale del soggetto & UC-43.1.1.3 & NO \\
 \hline
-TS-220 & Verificare che se il soggetto coinvolto nel documento è di tipo AS, l'utente possa visualizzare la denominazione dell'organizzazione del soggetto & UC-43.1.2.1 \\
+TS-220 & Verificare che se il soggetto coinvolto nel documento è di tipo AS, l'utente possa visualizzare la denominazione dell'organizzazione del soggetto & UC-43.1.2.1 & NO \\
 \hline
-TS-221 & Verificare che se il soggetto coinvolto nel documento è di tipo AS, l'utente possa visualizzare la denominazione dell'ufficio del soggetto & UC-43.1.2.3 \\
+TS-221 & Verificare che se il soggetto coinvolto nel documento è di tipo AS, l'utente possa visualizzare la denominazione dell'ufficio del soggetto & UC-43.1.2.3 & NO \\
 \hline
-TS-222 & Verificare che se il soggetto coinvolto nel documento è di tipo AS, l'utente possa visualizzare gli indirizzi digitali di riferimento del soggetto & UC-43.1.1.4 \\
+TS-222 & Verificare che se il soggetto coinvolto nel documento è di tipo AS, l'utente possa visualizzare gli indirizzi digitali di riferimento del soggetto & UC-43.1.1.4 & NO \\
 \hline
-TS-223 & Verificare che se il soggetto coinvolto nel documento è di tipo PAI, l'utente possa visualizzare tutti i dati legati a questo tipo di soggetto & UC-43.1.4 \\
+TS-223 & Verificare che se il soggetto coinvolto nel documento è di tipo PAI, l'utente possa visualizzare tutti i dati legati a questo tipo di soggetto & UC-43.1.4 & NO \\
 \hline
-TS-224 & Verificare che se il soggetto coinvolto nel documento è di tipo PAI, l'utente possa visualizzare la denominazione dell'amministrazione e il codice IPA del soggetto & UC-43.1.4.1 \\
+TS-224 & Verificare che se il soggetto coinvolto nel documento è di tipo PAI, l'utente possa visualizzare la denominazione dell'amministrazione e il codice IPA del soggetto & UC-43.1.4.1 & NO \\
 \hline
-TS-225 & Verificare che se il soggetto coinvolto nel documento è di tipo PAI, l'utente possa visualizzare la denominazione dell'amministrazione AOO e il codice IPA AOO del soggetto & UC-43.1.4.2 \\
+TS-225 & Verificare che se il soggetto coinvolto nel documento è di tipo PAI, l'utente possa visualizzare la denominazione dell'amministrazione AOO e il codice IPA AOO del soggetto & UC-43.1.4.2 & NO \\
 \hline
-TS-226 & Verificare che se il soggetto coinvolto nel documento è di tipo PAI, l'utente possa visualizzare la denominazione dell'amministrazione UOR e il codice IPA UOR del soggetto & UC-43.1.4.3 \\
+TS-226 & Verificare che se il soggetto coinvolto nel documento è di tipo PAI, l'utente possa visualizzare la denominazione dell'amministrazione UOR e il codice IPA UOR del soggetto & UC-43.1.4.3 & NO \\
 \hline
-TS-227 & Verificare che se il soggetto coinvolto nel documento è di tipo PAI, l'utente possa visualizzare gli indirizzi digitali di riferimento del soggetto & UC-43.1.1.4 \\
+TS-227 & Verificare che se il soggetto coinvolto nel documento è di tipo PAI, l'utente possa visualizzare gli indirizzi digitali di riferimento del soggetto & UC-43.1.1.4 & NO \\
 \hline
-TS-228 & Verificare che se il soggetto coinvolto nel documento è di tipo PAE, l'utente possa visualizzare tutti i dati legati a questo tipo di soggetto & UC-43.1.5 \\
+TS-228 & Verificare che se il soggetto coinvolto nel documento è di tipo PAE, l'utente possa visualizzare tutti i dati legati a questo tipo di soggetto & UC-43.1.5 & NO \\
 \hline
-TS-229 & Verificare che se il soggetto coinvolto nel documento è di tipo PAE, l'utente possa visualizzare la denominazione dell'amministrazione del soggetto & UC-43.1.5.1 \\
+TS-229 & Verificare che se il soggetto coinvolto nel documento è di tipo PAE, l'utente possa visualizzare la denominazione dell'amministrazione del soggetto & UC-43.1.5.1 & NO \\
 \hline
-TS-230 & Verificare che se il soggetto coinvolto nel documento è di tipo PAE, l'utente possa visualizzare la denominazione dell'ufficio del soggetto & UC-43.1.2.3 \\
+TS-230 & Verificare che se il soggetto coinvolto nel documento è di tipo PAE, l'utente possa visualizzare la denominazione dell'ufficio del soggetto & UC-43.1.2.3 & NO \\
 \hline
-TS-231 & Verificare che se il soggetto coinvolto nel documento è di tipo PAE, l'utente possa visualizzare gli indirizzi digitali di riferimento del soggetto & UC-43.1.1.4 \\
+TS-231 & Verificare che se il soggetto coinvolto nel documento è di tipo PAE, l'utente possa visualizzare gli indirizzi digitali di riferimento del soggetto & UC-43.1.1.4 & NO \\
 \hline
-TS-232 & Verificare che se il soggetto coinvolto nel documento è di tipo SW, l'utente possa visualizzare tutti i dati legati a questo tipo di soggetto & UC-43.1.6 \\
+TS-232 & Verificare che se il soggetto coinvolto nel documento è di tipo SW, l'utente possa visualizzare tutti i dati legati a questo tipo di soggetto & UC-43.1.6 & NO \\
 \hline
-TS-233 & Verificare che se il soggetto coinvolto nel documento è di tipo SW, l'utente possa visualizzare la denominazione del sistema del soggetto & UC-43.1.6.1 \\
+TS-233 & Verificare che se il soggetto coinvolto nel documento è di tipo SW, l'utente possa visualizzare la denominazione del sistema del soggetto & UC-43.1.6.1 & NO \\
 \hline
-TS-234 & Verificare che l'utente possa visualizzare l'indice di classificazione del documento selezionato & UC-44.1 \\
+TS-234 & Verificare che l'utente possa visualizzare l'indice di classificazione del documento selezionato & UC-44.1 & NO \\
 \hline
-TS-235 & Verificare che l'utente possa visualizzare la descrizione dell'indice di classificazione del documento selezionato & UC-44.2 \\
+TS-235 & Verificare che l'utente possa visualizzare la descrizione dell'indice di classificazione del documento selezionato & UC-44.2 & NO \\
 \hline
-TS-236 & Verificare che l'utente possa visualizzare l'URI del piano di classificazione del documento selezionato & UC-44.3 \\
+TS-236 & Verificare che l'utente possa visualizzare l'URI del piano di classificazione del documento selezionato & UC-44.3 & NO \\
 \hline
-TS-237 & Verificare che se il documento selezionato ha un tempo di conservazione diverso da quello assegnato all'aggregazione documentale informatica a cui appartiene, l'utente possa visualizzare il tempo di conservazione effettivo del documento & UC-45 \\
+TS-237 & Verificare che se il documento selezionato ha un tempo di conservazione diverso da quello assegnato all'aggregazione documentale informatica a cui appartiene, l'utente possa visualizzare il tempo di conservazione effettivo del documento & UC-45  & NO \\
 \hline
-TS-238 & Verificare che se il tempo di conservazione del documento coincide con quello assegnato all'aggregazione documentale a cui appartiene, l'utente sia informato con un messaggio che indica questa coincidenza & UC-46 \\
+TS-238 & Verificare che se il tempo di conservazione del documento coincide con quello assegnato all'aggregazione documentale a cui appartiene, l'utente sia informato con un messaggio che indica questa coincidenza & UC-46 & NO \\
 \hline
-TS-239 & Verificare che l'utente possa visualizzare le note relative al documento selezionato & UC-47 \\
+TS-239 & Verificare che l'utente possa visualizzare le note relative al documento selezionato & UC-47 & NO \\
 \hline
-TS-240 & Verificare che se le note del documento sono assenti o vuote, l'utente sia informato con un messaggio che indica l'assenza delle note & UC-48 \\
+TS-240 & Verificare che se le note del documento sono assenti o vuote, l'utente sia informato con un messaggio che indica l'assenza delle note & UC-48 & NO \\
 \hline
-TS-241 & Verificare che l'utente possa visualizzare la tipologia di flusso del documento selezionato & UC-49.1 \\
+TS-241 & Verificare che l'utente possa visualizzare la tipologia di flusso del documento selezionato & UC-49.1 & NO \\
 \hline
-TS-242 & Verificare che l'utente possa visualizzare il tipo di registro del documento selezionato & UC-49.2 \\
+TS-242 & Verificare che l'utente possa visualizzare il tipo di registro del documento selezionato & UC-49.2 & NO \\
 \hline
-TS-243 & Verificare che l'utente possa visualizzare la data di registrazione del documento selezionato & UC-49.3 \\
+TS-243 & Verificare che l'utente possa visualizzare la data di registrazione del documento selezionato & UC-49.3 & NO \\
 \hline
-TS-244 & Verificare che l'utente possa visualizzare la data di registrazione del documento non protocollato selezionato & UC-49.3.1 \\
+TS-244 & Verificare che l'utente possa visualizzare la data di registrazione del documento non protocollato selezionato & UC-49.3.1 & NO \\
 \hline
-TS-245 & Verificare che l'utente possa visualizzare la data di protocollazione del documento protocollato selezionato & UC-49.3.2 \\
+TS-245 & Verificare che l'utente possa visualizzare la data di protocollazione del documento protocollato selezionato & UC-49.3.2 & NO \\
 \hline
-TS-246 & Verificare che l'utente possa visualizzare il numero del documento selezionato & UC-49.4 \\
+TS-246 & Verificare che l'utente possa visualizzare il numero del documento selezionato & UC-49.4 & NO \\
 \hline
-TS-247 & Verificare che l'utente possa visualizzare il numero di registrazione del documento non protocollato selezionato & UC-49.4.1 \\
+TS-247 & Verificare che l'utente possa visualizzare il numero di registrazione del documento non protocollato selezionato & UC-49.4.1 & NO \\
 \hline
-TS-248 & Verificare che l'utente possa visualizzare il numero di protocollo del documento protocollato selezionato & UC-49.4.2 \\
+TS-248 & Verificare che l'utente possa visualizzare il numero di protocollo del documento protocollato selezionato & UC-49.4.2 & NO \\
 \hline
-TS-249 & Verificare che l'utente possa visualizzare il codice identificativo del registro di appartenenza del documento selezionato & UC-49.5 \\
+TS-249 & Verificare che l'utente possa visualizzare il codice identificativo del registro di appartenenza del documento selezionato & UC-49.5 & NO \\
 \hline
-TS-250 & Verificare che l'utente possa visualizzare la tipologia documentale del documento selezionato & UC-50 \\
+TS-250 & Verificare che l'utente possa visualizzare la tipologia documentale del documento selezionato & UC-50  & NO \\
 \hline
-TS-251 & Verificare che l'utente possa visualizzare la modalità di formazione del documento selezionato & UC-51 \\
+TS-251 & Verificare che l'utente possa visualizzare la modalità di formazione del documento selezionato & UC-51 & NO \\
 \hline
-TS-252 & Verificare che l'utente possa visualizzare lo stato di riservatezza del documento selezionato & UC-52 \\
+TS-252 & Verificare che l'utente possa visualizzare lo stato di riservatezza del documento selezionato & UC-52 & NO \\
 \hline
-TS-253 & Verificare che l'utente possa visualizzare il tipo di formato del documento selezionato & UC-53.1 \\
+TS-253 & Verificare che l'utente possa visualizzare il tipo di formato del documento selezionato & UC-53.1 & NO \\
 \hline
-TS-254 & Verificare che l'utente possa visualizzare il nome del prodotto software che ha generato il documento selezionato & UC-53.2 \\
+TS-254 & Verificare che l'utente possa visualizzare il nome del prodotto software che ha generato il documento selezionato & UC-53.2 & NO \\
 \hline
-TS-255 & Verificare che l'utente possa visualizzare la versione del prodotto software che ha generato il documento selezionato & UC-53.3 \\
+TS-255 & Verificare che l'utente possa visualizzare la versione del prodotto software che ha generato il documento selezionato & UC-53.3 & NO \\
 \hline
-TS-256 & Verificare che l'utente possa visualizzare il produttore del software che ha generato il documento selezionato & UC-53.4 \\
+TS-256 & Verificare che l'utente possa visualizzare il produttore del software che ha generato il documento selezionato & UC-53.4 & NO \\
 \hline
-TS-257 & Verificare che l'utente possa visualizzare le informazioni di verifica del documento selezionato & UC-54 \\
+TS-257 & Verificare che l'utente possa visualizzare le informazioni di verifica del documento selezionato & UC-54 & NO \\
 \hline
-TS-258 & Verificare che l'utente possa visualizzare se il documento selezionato è firmato digitalmente & UC-54.1 \\
+TS-258 & Verificare che l'utente possa visualizzare se il documento selezionato è firmato digitalmente & UC-54.1 & NO \\
 \hline
-TS-259 & Verificare che l'utente possa visualizzare se il documento selezionato è sigillato elettronicamente & UC-54.2 \\
+TS-259 & Verificare che l'utente possa visualizzare se il documento selezionato è sigillato elettronicamente & UC-54.2 & NO \\
 \hline
-TS-260 & Verificare che l'utente possa visualizzare se il documento selezionato è dotato di marcatura temporale & UC-54.3 \\
+TS-260 & Verificare che l'utente possa visualizzare se il documento selezionato è dotato di marcatura temporale & UC-54.3 & NO \\
 \hline
-TS-261 & Verificare che l'utente possa visualizzare se vi è conformità alle copie immagine su supporto informatico del documento selezionato & UC-54.4 \\
+TS-261 & Verificare che l'utente possa visualizzare se vi è conformità alle copie immagine su supporto informatico del documento selezionato & UC-54.4 & NO \\
 \hline
-TS-262 & Verificare che l'utente possa visualizzare la versione del documento selezionato & UC-55 \\
+TS-262 & Verificare che l'utente possa visualizzare la versione del documento selezionato & UC-55 & NO \\
 \hline
-TS-263 & Verificare che l'utente possa visualizzare il nome del documento selezionato & UC-56 \\
+TS-263 & Verificare che l'utente possa visualizzare il nome del documento selezionato & UC-56 & NO \\
 \hline
-TS-264 & Verificare che l'utente possa visualizzare le informazioni degli allegati del documento selezionato & UC-57 \\
+TS-264 & Verificare che l'utente possa visualizzare le informazioni degli allegati del documento selezionato & UC-57 & NO \\
 \hline
-TS-265 & Verificare che l'utente possa visualizzare il numero di allegati del documento selezionato & UC-57.1 \\
+TS-265 & Verificare che l'utente possa visualizzare il numero di allegati del documento selezionato & UC-57.1 & NO \\
 \hline
-TS-266 & Verificare che l'utente possa visualizzare il singolo allegato & UC-57.2 \\
+TS-266 & Verificare che l'utente possa visualizzare il singolo allegato & UC-57.2 & NO \\
 \hline
-TS-267 & Verificare che se il documento ha almeno un allegato, l'utente possa visualizzare l'identificativo di ciascun allegato & UC-57.2.1 \\
+TS-267 & Verificare che se il documento ha almeno un allegato, l'utente possa visualizzare l'identificativo di ciascun allegato & UC-57.2.1 & NO \\
 \hline
-TS-268 & Verificare che se l'informazione sull'identificativo dell'allegato non è disponibile, l'utente sia informato con un messaggio di errore & UC-57.2.2 \\
+TS-268 & Verificare che se l'informazione sull'identificativo dell'allegato non è disponibile, l'utente sia informato con un messaggio di errore & UC-57.2.2 & NO \\
 \hline
-TS-269 & Verificare che se il documento ha almeno un allegato, l'utente possa visualizzare la descrizione di ciascun allegato & UC-57.2.3 \\
+TS-269 & Verificare che se il documento ha almeno un allegato, l'utente possa visualizzare la descrizione di ciascun allegato & UC-57.2.3 & NO \\
 \hline
-TS-270 & Verificare che se l'informazione sulla descrizione dell'allegato non è disponibile, l'utente sia informato con un messaggio di errore & UC-57.2.4 \\
+TS-270 & Verificare che se l'informazione sulla descrizione dell'allegato non è disponibile, l'utente sia informato con un messaggio di errore & UC-57.2.4 & NO \\
 \hline
-TS-271 & Verificare che se il documento non ha allegati, l'utente sia informato con un messaggio che indica l'assenza degli allegati & UC-57.3 \\
+TS-271 & Verificare che se il documento non ha allegati, l'utente sia informato con un messaggio che indica l'assenza degli allegati & UC-57.3 & NO \\
 \hline
-TS-272 & Verificare che l'utente possa visualizzare tutte le informazioni sulle modifiche di un documento & UC-58 \\
+TS-272 & Verificare che l'utente possa visualizzare tutte le informazioni sulle modifiche di un documento & UC-58 & NO \\
 \hline
-TS-273 & Verificare che l'utente possa visualizzare il tipo di modifica per ogni modifica del documento selezionato tra: Annullamento, Rettifica, Integrazione e Annotazione & UC-58.1 \\
+TS-273 & Verificare che l'utente possa visualizzare il tipo di modifica per ogni modifica del documento selezionato tra: Annullamento, Rettifica, Integrazione e Annotazione & UC-58.1 & NO \\
 \hline
-TS-274 & Verificare che l'utente possa visualizzare le informazioni del soggetto autore di ogni modifica del documento selezionato & UC-58.2 \\
+TS-274 & Verificare che l'utente possa visualizzare le informazioni del soggetto autore di ogni modifica del documento selezionato & UC-58.2 & NO \\
 \hline
-TS-275 & Verificare che l'utente possa visualizzare la data e l'ora di ogni modifica del documento selezionato & UC-58.3 \\
+TS-275 & Verificare che l'utente possa visualizzare la data e l'ora di ogni modifica del documento selezionato & UC-58.3 & NO \\
 \hline
-TS-276 & Verificare che l'utente possa visualizzare l'identificativo del documento alla versione precedente alla modifica & UC-58.4 \\
+TS-276 & Verificare che l'utente possa visualizzare l'identificativo del documento alla versione precedente alla modifica & UC-58.4 & NO \\
 \hline
-TS-277 & Verificare che l'utente possa visualizzare il tipo di aggregazione dell'aggregazione documentale selezionata tra: Fascicolo, Serie Documentale e Serie di Fascicoli & UC-59 \\
+TS-277 & Verificare che l'utente possa visualizzare il tipo di aggregazione dell'aggregazione documentale selezionata tra: Fascicolo, Serie Documentale e Serie di Fascicoli & UC-59 & NO \\
 \hline
-TS-278 & Verificare che l'utente possa visualizzare l'identificativo dell'aggregazione documentale selezionata & UC-60 \\
+TS-278 & Verificare che l'utente possa visualizzare l'identificativo dell'aggregazione documentale selezionata & UC-60 & NO \\
 \hline
-TS-279 & Verificare che l'utente possa visualizzare la tipologia di fascicolo dell'aggregazione documentale selezionata tra: Affare, Attività, Persona Fisica, Persona Giuridica e Procedimento Amministrativo & UC-61 \\
+TS-279 & Verificare che l'utente possa visualizzare la tipologia di fascicolo dell'aggregazione documentale selezionata tra: Affare, Attività, Persona Fisica, Persona Giuridica e Procedimento Amministrativo & UC-61 & NO \\
 \hline
-TS-280 & Verificare che l'utente possa visualizzare il tipo di assegnazione dell'aggregazione documentale selezionata tra: Per competenza e Per conoscenza & UC-62.1 \\
+TS-280 & Verificare che l'utente possa visualizzare il tipo di assegnazione dell'aggregazione documentale selezionata tra: Per competenza e Per conoscenza & UC-62.1 & NO \\
 \hline
-TS-281 & Verificare che l'utente possa visualizzare le informazioni del soggetto assegnatario dell'aggregazione documentale selezionata & \begin{tabular}[t]{@{}l} UC-62 \\ UC-43.1 \end{tabular} \\
+TS-281 & Verificare che l'utente possa visualizzare le informazioni del soggetto assegnatario dell'aggregazione documentale selezionata & \begin{tabular}[t]{@{}l} UC-62 \\ UC-43.1 \end{tabular} & NO \\
 \hline
-TS-282 & Verificare che l'utente possa visualizzare la data e l'ora di inizio dell'assegnazione dell'aggregazione documentale selezionata & UC-62.2 \\
+TS-282 & Verificare che l'utente possa visualizzare la data e l'ora di inizio dell'assegnazione dell'aggregazione documentale selezionata & UC-62.2 & NO \\
 \hline
-TS-283 & Verificare che l'utente possa visualizzare la data e l'ora di fine dell'assegnazione dell'aggregazione documentale selezionata & UC-62.3 \\
+TS-283 & Verificare che l'utente possa visualizzare la data e l'ora di fine dell'assegnazione dell'aggregazione documentale selezionata & UC-62.3 & NO \\
 \hline
-TS-284 & Verificare che l'utente possa visualizzare la data di apertura dell'aggregazione documentale selezionata & UC-63 \\
+TS-284 & Verificare che l'utente possa visualizzare la data di apertura dell'aggregazione documentale selezionata & UC-63 & NO \\
 \hline
-TS-285 & Verificare che l'utente possa visualizzare la data di chiusura dell'aggregazione documentale selezionata & UC-64 \\
+TS-285 & Verificare che l'utente possa visualizzare la data di chiusura dell'aggregazione documentale selezionata & UC-64 & NO \\
 \hline
-TS-286 & Verificare che l'utente possa visualizzare il progressivo dell'aggregazione documentale selezionata & UC-65 \\
+TS-286 & Verificare che l'utente possa visualizzare il progressivo dell'aggregazione documentale selezionata & UC-65 & NO \\
 \hline
-TS-287 & Verificare che l'utente possa visualizzare le informazioni del procedimento amministrativo dell'aggregazione documentale selezionata & UC-66 \\
+TS-287 & Verificare che l'utente possa visualizzare le informazioni del procedimento amministrativo dell'aggregazione documentale selezionata & UC-66 & NO \\
 \hline
-TS-288 & Verificare che l'utente possa visualizzare l'indice della materia/argomento/struttura per la quale sono catalogati i procedimenti dell'aggregazione documentale selezionata & UC-66.1 \\
+TS-288 & Verificare che l'utente possa visualizzare l'indice della materia/argomento/struttura per la quale sono catalogati i procedimenti dell'aggregazione documentale selezionata & UC-66.1 & NO \\
 \hline
-TS-289 & Verificare che l'utente possa visualizzare la denominazione del procedimento amministrativo dell'aggregazione documentale selezionata & UC-66.2 \\
+TS-289 & Verificare che l'utente possa visualizzare la denominazione del procedimento amministrativo dell'aggregazione documentale selezionata & UC-66.2 & NO \\
 \hline
-TS-290 & Verificare che l'utente possa visualizzare il catalogo dei procedimenti come URI di pubblicazione dell'aggregazione documentale selezionata & UC-66.3 \\
+TS-290 & Verificare che l'utente possa visualizzare il catalogo dei procedimenti come URI di pubblicazione dell'aggregazione documentale selezionata & UC-66.3 & NO \\
 \hline
-TS-291 & Verificare che l'utente possa visualizzare la lista delle fasi del procedimento amministrativo dell'aggregazione documentale selezionata & UC-66.4 \\
+TS-291 & Verificare che l'utente possa visualizzare la lista delle fasi del procedimento amministrativo dell'aggregazione documentale selezionata & UC-66.4 & NO \\
 \hline
-TS-292 & Verificare che l'utente possa visualizzare le singole fasi della lista delle fasi del procedimento amministrativo dell'aggregazione documentale selezionata complete di dati della fase & UC-66.4.1 \\
+TS-292 & Verificare che l'utente possa visualizzare le singole fasi della lista delle fasi del procedimento amministrativo dell'aggregazione documentale selezionata complete di dati della fase & UC-66.4.1 & NO \\
 \hline
-TS-293 & Verificare che per ogni fase del procedimento amministrativo, l'utente possa visualizzare il tipo di fase tra: Preparatoria, Istruttoria, Consultiva, Decisoria o deliberativa e Integrazione dell'efficacia & UC-66.4.1.1 \\
+TS-293 & Verificare che per ogni fase del procedimento amministrativo, l'utente possa visualizzare il tipo di fase tra: Preparatoria, Istruttoria, Consultiva, Decisoria o deliberativa e Integrazione dell'efficacia & UC-66.4.1.1 & NO \\
 \hline
-TS-294 & Verificare che per ogni fase del procedimento amministrativo, l'utente possa visualizzare la data e l'ora di inizio della fase & UC-66.4.1.2 \\
+TS-294 & Verificare che per ogni fase del procedimento amministrativo, l'utente possa visualizzare la data e l'ora di inizio della fase & UC-66.4.1.2 & NO \\
 \hline
-TS-295 & Verificare che per ogni fase del procedimento amministrativo, l'utente possa visualizzare la data e l'ora di fine della fase & UC-66.4.1.3 \\
+TS-295 & Verificare che per ogni fase del procedimento amministrativo, l'utente possa visualizzare la data e l'ora di fine della fase & UC-66.4.1.3 & NO \\
 \hline
-TS-296 & Verificare che l'utente possa visualizzare l'indice dei documenti contenuti nell'aggregazione documentale selezionata & UC-67 \\
+TS-296 & Verificare che l'utente possa visualizzare l'indice dei documenti contenuti nell'aggregazione documentale selezionata & UC-67 & NO \\
 \hline
-TS-297 & Verificare che l'utente possa visualizzare ogni voce dell'indice dei documenti dell'aggregazione documentale selezionata & UC-67.1 \\
+TS-297 & Verificare che l'utente possa visualizzare ogni voce dell'indice dei documenti dell'aggregazione documentale selezionata & UC-67.1 & NO \\
 \hline
-TS-298 & Verificare che per ogni voce dell'indice dei documenti dell'aggregazione, l'utente possa visualizzare il tipo di documento contenuto & UC-67.1.1 \\
+TS-298 & Verificare che per ogni voce dell'indice dei documenti dell'aggregazione, l'utente possa visualizzare il tipo di documento contenuto & UC-67.1.1 & NO \\
 \hline
-TS-299 & Verificare che per ogni voce dell'indice dei documenti dell'aggregazione, l'utente possa visualizzare l'identificativo del documento contenuto & UC-67.1.2 \\
+TS-299 & Verificare che per ogni voce dell'indice dei documenti dell'aggregazione, l'utente possa visualizzare l'identificativo del documento contenuto & UC-67.1.2 & NO \\
 \hline
-TS-300 & Verificare che l'utente possa visualizzare la posizione fisica dell'aggregazione documentale selezionata & UC-68 \\
+TS-300 & Verificare che l'utente possa visualizzare la posizione fisica dell'aggregazione documentale selezionata & UC-68 & NO \\
 \hline
-TS-301 & Verificare che l'utente possa visualizzare l'identificativo dell'aggregazione primaria dell'aggregazione documentale selezionata & UC-69 \\
+TS-301 & Verificare che l'utente possa visualizzare l'identificativo dell'aggregazione primaria dell'aggregazione documentale selezionata & UC-69 & NO \\
 \hline
-TS-302 & Verificare che l'utente possa visualizzare il tempo di conservazione dell'aggregazione documentale selezionata & UC-70 \\
+TS-302 & Verificare che l'utente possa visualizzare il tempo di conservazione dell'aggregazione documentale selezionata & UC-70 & NO \\
 \hline
-TS-303 & Verificare che l'utente possa visualizzare le informazioni di ciascun metadato custom del documento selezionato & UC-71 \\
+TS-303 & Verificare che l'utente possa visualizzare le informazioni di ciascun metadato custom del documento selezionato & UC-71 & NO \\
 \hline
-TS-304 & Verificare che l'utente possa visualizzare il nome di ciascun metadato custom del documento selezionato & UC-71.1 \\
+TS-304 & Verificare che l'utente possa visualizzare il nome di ciascun metadato custom del documento selezionato & UC-71.1 & NO \\
 \hline
-TS-305 & Verificare che l'utente possa visualizzare il valore di ciascun metadato custom del documento selezionato & UC-71.2 \\
+TS-305 & Verificare che l'utente possa visualizzare il valore di ciascun metadato custom del documento selezionato & UC-71.2 & NO \\
 \hline
-TS-306 & Verificare che se il documento selezionato non dispone di metadati custom, l'utente sia informato con un messaggio che indica l'assenza dei metadati custom & UC-71.3 \\
+TS-306 & Verificare che se il documento selezionato non dispone di metadati custom, l'utente sia informato con un messaggio che indica l'assenza dei metadati custom & UC-71.3 & NO \\
 \hline
-TS-307 & Verificare che l'utente possa visualizzare i dati di registrazione del documento selezionato & UC-49 \\
+TS-307 & Verificare che l'utente possa visualizzare i dati di registrazione del documento selezionato & UC-49 & NO \\
 \hline
-TS-308 & Verificare che l'utente possa visualizzare informazioni di classificazione del documento selezionato & UC-44 \\
+TS-308 & Verificare che l'utente possa visualizzare informazioni di classificazione del documento selezionato & UC-44 & NO \\
 \hline
-TS-309 & Verificare che l'utente possa visualizzare informazioni e informazioni sul formato del documento e sul prodotto software che lo ha generato & UC-53 \\
+TS-309 & Verificare che l'utente possa visualizzare informazioni e informazioni sul formato del documento e sul prodotto software che lo ha generato & UC-53 & NO \\
 \hline
 \rowcolor{white}
 \caption{Test di sistema}
@@ -1139,37 +1152,96 @@ TA-12 & Verificare che l'utente possa effettuare una ricerca semantica basata su
 
 \section{Cruscotto di valutazione e miglioramento}
 
-Il cruscotto di valutazione è strumento fondamentale per la corretta gestione di progetto. Permette di avere un visione oggettiva dell'andamento, e di identificare eventuali problemi o criticità. Nei grafici seguenti sono riportati i dati per ogni settimana. Questo perché un monitoraggio solamente a termine di periodo è una scelta miope e di marginale utilità. Si preferisce invece avere un monitoraggio costante. Si fa notare come nel primo periodo
-il gruppo, non disponendo ancora del cruscotto, non abbia attivamente monitorato le metriche. Nonostante ciò, essendo esse ricavabili vengono riportate per completezza.
+Il Cruscotto di Valutazione della qualità costituisce lo strumento operativo fondamentale per il monitoraggio e il controllo del progetto. Esso traduce la strategia di verifica e gli obiettivi quantitativi attesi in misurazioni effettive, permettendo di valutare due dimensioni distinte:
+\begin{itemize}
+    \item Qualità di Processo: per misurare l'efficienza (uso delle risorse) e l'aderenza al \textit{Way of Working} attraverso le metriche di processo (MPC).
+    \item Qualità di Prodotto: per verificare l'efficacia (conformità ai requisiti) del software prodotto attraverso le metriche di prodotto (MPD).
+\end{itemize}
+
+L'obiettivo non è la semplice rendicontazione, ma l'attuazione del ciclo di miglioramento continuo \glossario{PDCA} (\textit{Plan-Do-Check-Act}). Per questo motivo, i grafici seguenti riportano misurazioni a cadenza settimanale: un monitoraggio limitato al solo termine di periodo risulterebbe una scelta miope, mentre un'analisi costante permette di individuare tempestivamente criticità e intervenire proattivamente sui rischi.\\
+
+\noindent \ul{Nota}: Si segnala che nel primo periodo, in fase di definizione del \textit{Way of Working}, il gruppo non disponeva ancora del cruscotto operativo. Tuttavia, le metriche relative sono state calcolate retroattivamente e riportate per garantire la completezza storica e l'analisi dei trend.
 
 \subsection{MPC-1, MPC-2, MPC-3: Earned Value, Planned Value, Actual Cost}
-\includegraphics[width=\textwidth]{../assets/pdq/ev_pv_ac.png}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../assets/pdq/ev_pv_ac.png}
+    \caption{MPC-1, MPC-2, MPC-3: Earned Value, Planned Value, Actual Cost}
+    \label{ev_pv_ac}
+\end{figure}
 Dal grafico si può apprezzare come il progetto sia partito lentamente durante le prime due settimane, dovuto ovviamente alle fasi iniziali di organizzazione del gruppo. Successivamente durante il terzo e il quarto sprint si può notare una differenza importante tr PV ed EV. Questo, come riportato nelle retrospettive, è dovuto ad una stima delle attività troppo ottimistica. Il gruppo ha intrapreso dunque un approccio più conservativo che ha portato al ricongiungersi dei due valori alla settimana 10-11. \\
+
+
 \subsection{MPC-4, MPC-5: CPI, SPI}
-\includegraphics[width=\textwidth]{../assets/pdq/cpi_spi.png}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../assets/pdq/cpi_spi.png}
+    \caption{MPC-4, MPC-5: CPI, SPI}
+    \label{cpi_spi}
+\end{figure}
 Possiamo notare anche da CPI e SPI la pianificazione troppo ottimistica con un calo dello SPI.
 Nonostante il rallentamento, il gruppo ha completato le attività con costi inferiori al previsto.
 Successivamente invece si è riusciti a recuperare il ritardo. Lo SPI è tornato sopra 1, dovuto al fatto che si sono dovute recuperare le task in ritardo, tuttavia spendendo più del previsto. Il CPI si è stabilizzato nelle ultime settimane, dovuto al fatto che il gruppo ha familiarizzato e accumulato esperienza nello stimare task simili. \\
+
+
 \subsection{MPC-7: EAC confrontato con BAC}
-\includegraphics[width=\textwidth]{../assets/pdq/eac_bac.png}
-Strettamente collegato, e conseguenza del CPI, è l'andamento di EAC e BAC. Tra le settimane 3 e 5 si osserva una diminuzione. Tale diminuzione non tiene conto della sottostima delle attività: nelle attività completate il costo reale è risultato inferiore. Successivamente l'EAC aumenta, segnalando un incremento dei costi. Questo aumento è dovuto alle numerose iterazioni, a volte molto distruttive, sul documento di Analisi dei Requisiti. Dopo gli incontri con il prof. Cardin il gruppo ha dovuto rivedere quasi completamente la struttura degli Use Case\textsubscript{\textit{G}}. \\
-\subsection{MPC-1, MPC-2, MPC-3, MPC-6, MPC-7: EV, PV, AC, ETC, EAC}
-\includegraphics[width=\textwidth]{../assets/pdq/ev_pv_ac_eac_etc.png}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../assets/pdq/eac_bac.png}
+    \caption{MPC-7: EAC confrontato con BAC}
+    \label{eac_bac}
+\end{figure}
+Strettamente collegato, e conseguenza del CPI, è l'andamento di EAC e BAC. Tra le settimane 3 e 5 si osserva una diminuzione. Tale diminuzione non tiene conto della sottostima delle attività: nelle attività completate il costo reale è risultato inferiore. Successivamente l'EAC aumenta, segnalando un incremento dei costi. Questo aumento è dovuto alle numerose iterazioni, a volte molto distruttive, sul documento di Analisi dei Requisiti. Dopo gli incontri con il prof. Cardin il gruppo ha dovuto rivedere quasi completamente la struttura degli \glossario{Use Case}. \\
+
+
+\subsection{MPC-1, MPC-2, MPC-3, MPC-6, MPC-7: EV, PV, AC, EAC, ETC}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../assets/pdq/ev_pv_ac_eac_etc.png}
+    \caption{MPC-1, MPC-2, MPC-3, MPC-6, MPC-7: EV, PV, AC, EAC, ETC}
+    \label{ev_pv_ac_eac_etcs}
+\end{figure}
 Si può apprezzare dal grafico quanto detto fino ad ora. Si osserva un aumento dell EAC nella fase iniziale, con un suo successivo rientro. \\
+
+
 \subsection{MPC-10: Indice di Gulpease}
-\includegraphics[width=\textwidth]{../assets/pdq/gfi.png}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../assets/pdq/gfi.png}
+    \caption{MPC-10: Indice di Gulpease}
+    \label{gfi}
+\end{figure}
 Il gruppo misura l'Indice di Gulpease per garantire la leggibilità, soprattutto dei documenti rivolti ad esterni. Nelle fasi iniziali non è stata posta particolare attenzione, ma i risultati sono stati comunque buoni. Un'eccezione sono le Norme di Progetto: più descrittive e con pochi elenchi, mostrano valori inferiori. Per garantire un limite minimo, nelle settimane 7--10 (SPRINT 4) è stato introdotto un controllo automatico che accetta in repository solo documenti con Gulpease $\geq$ 60. \\
+
+
 \subsection{MPC-11: Correttezza ortografica}
-\includegraphics[width=\textwidth]{../assets/pdq/eo.png}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../assets/pdq/eo.png}
+    \caption{MPC-11: Correttezza ortografica}
+    \label{eo}
+\end{figure}
 Gli errori ortografici sono stati gestiti in maniera analoga e parallela al Gulpease Index. Il gruppo ha deciso di non accettare documenti con errori ortografici, implementando un controllo automatico. \\
+
+
 \subsection{MPC-15: Rischi non previsti}
-\includegraphics[width=\textwidth]{../assets/pdq/rnp.png}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../assets/pdq/rnp.png}
+    \caption{MPC-15: Rischi non previsti}
+    \label{rnp}
+\end{figure}
 Il gruppo ha registrato due rischi imprevisti in due sprint diversi. Il primo, coerente con i dati mostrati, è stato causato dalla sottostima delle attività. Nel secondo sprint si è verificato un rischio imprevedibile: un membro del gruppo è stato indisposto. \\
+
+
 \subsection{MPC-9: Requirements Stability Index}
-\includegraphics[width=\textwidth]{../assets/pdq/rsi.png}
-Dal grafico si osserva che, all'inizio, la stabilità dei requisiti è rimasta costante mentre il gruppo definiva le Norme di Progetto e i requisiti non erano ancora esplorati. Successivamente si è verificato un calo significativo: l'attenzione si è spostata sullo studio del dominio applicativo e sulle aspettative della proponente. La scarsa conoscenza del dominio e la continua selezione e revisione dei requisiti, anche per motivi di fattibilità, hanno generato instabilità. La proponente non ha imposto vincoli rigidi sulle funzionalità; di conseguenza i requisiti sono stati proposti e discussi in modo progressivo. Questo ha fatto sì che non si sia reso spesso necessario modificare, aggiungere o eliminare requisiti, e l'indice si è stabilizzato nella fase finale.
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../assets/pdq/rsi.png}
+    \caption{MPC-9: Requirements Stability Index}
+    \label{rsi}
+\end{figure}
+Dal grafico si osserva che, all'inizio, la stabilità dei requisiti è rimasta costante mentre il gruppo definiva le Norme di Progetto e i requisiti non erano ancora esplorati. Successivamente si è verificato un calo significativo: l'attenzione si è spostata sullo studio del dominio applicativo e sulle aspettative della proponente. La scarsa conoscenza del dominio e la continua selezione e revisione dei requisiti, anche per motivi di fattibilità, hanno generato instabilità. La proponente non ha imposto vincoli rigidi sulle funzionalità; di conseguenza i requisiti sono stati proposti e discussi in modo progressivo. Questo ha fatto sì che non si sia reso spesso necessario modificare, aggiungere o eliminare requisiti, e l'indice si è stabilizzato nella fase finale. \\
+
+
 \subsection{MPC-16: Metriche soddisfatte}
-\includegraphics[width=\textwidth]{../assets/pdq/ms.png}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../assets/pdq/ms.png}
+    \caption{MPC-16: Metriche soddisfatte}
+    \label{ms}
+\end{figure}
 Si nota un calo iniziale, corrispondentemente al periodo di instabilità generale del progetto. Successivamente, grazie a misure correttive e ai controlli automatici di alcune metriche si è raggiunta la stabilità. Questo anche grazie alla crescente attenzione rivolta al soddisfacimento delle metriche di qualità.
 
 \vfill
