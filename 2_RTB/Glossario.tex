@@ -41,7 +41,14 @@
 \titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
 
+% Rimuove i numeri dall'indice
+\cftsetindents{section}{0em}{0em}
+\renewcommand{\cftsecpresnum}{\begin{lrbox}{\@tempboxa}}
+\renewcommand{\cftsecaftersnum}{\end{lrbox}}
+
 \begin{document}
+
+\setcounter{secnumdepth}{0}
 
 \begin{center}
     \includegraphics[width=9.5cm]{../assets/logo7ZPUs.jpg}\\
@@ -164,6 +171,7 @@
     \item \textbf{Progettista}: Ruolo che si occupa di creare un progetto basandosi sullo studio dei requisiti degli analisti.
     \item \textbf{Proof of Concept (PoC)}: Prodotto software che dimostra la fattibilità di un'idea o di una tecnologia specifica. Il PoC è spesso utilizzato per testare concetti, validare ipotesi o dimostrare la funzionalità di una soluzione prima di investire risorse significative nello sviluppo completo del prodotto.
     \item \textbf{Piano di Qualifica}: Organizzazione di attività di V\&V durante lo sviluppo, periodico per arrivare alla Validazione finale garantendo la Validità di tutto il lavoro (Lavorare sempre nel modo giusto per essere nel giusto).
+    \item \textbf{Pipeline CI/CD}: Una pipeline CI/CD è un insieme di processi automatizzati che consentono di integrare, testare e distribuire il software in modo continuo.
     \item \textbf{PostCondizioni}: Stato in cui si deve trovare il sistema dopo che l'attore ha utilizzato una funzionalità.
     \item \textbf{PreCondizioni}: Stato in cui si deve trovare il sistema per permettere all'attore di compiere un'azione.
     \item \textbf{Proponente}: Soggetto (azienda, ente o privato) che presenta un capitolato d'appalto e manifesta l'esigenza di un prodotto software.
@@ -193,6 +201,7 @@
     \item \textbf{SCIs}: (Software Configuration Items) Componenti software che sono soggetti a controllo di versione e gestione delle configurazioni. Gli SCIs possono includere codice sorgente, documentazione, script di build e altri artefatti correlati al progetto software.
     \item \textbf{Scrum}: Un framework di sviluppo software Agile che si basa su iterazioni brevi e incrementali chiamate sprint. Scrum enfatizza la collaborazione, la trasparenza e l'adattabilità, con ruoli specifici.
     \item \textbf{Slack Time}: Margine tra due attività (sempre maggiore di zero) che attutisce l'impatto di ritardi, in modo da non propagare il ritardo sulle attività successive. Concetto alla base dei diagrammi PERT. Per la valutazione di questi Slack, è necessaria una Gestione dei Rischi accurata formata da Identificazione, Analisi, Pianificazione, Controllo.
+    \item \textbf{Smart-commit}: Un commit formattato in modo specifico che include un riferimento a una issue Jira, lo stato della issue, il tempo per completarla e un messaggio descrittivo. Gli smart-commit sono fondamentali per automatizzare il tracciamento delle issue e migliorare la gestione del progetto in Jira.
     \item \textbf{Sprint}: Un periodo di tempo definito (di solito da 1 a 4 settimane) durante il quale un team di sviluppo software lavora per completare un insieme specifico di attività. Gli sprint sono una componente chiave della metodologia Agile, in cui il lavoro viene suddiviso in iterazioni brevi e focalizzate per facilitare la pianificazione, l'esecuzione e la revisione del lavoro.
     \item \textbf{Stato di Avanzamento dei Lavori (SAL)}: Controllo dei progressi effettuati in un determinato frangente di tempo. La progressione dei lavori viene comunicata in riunioni periodiche tra il gruppo e la proponente.
     \item \textbf{Stakeholder}: Una persona, gruppo o organizzazione che ha un interesse diretto o indiretto in un progetto o in un sistema software. Gli stakeholder possono includere clienti, utenti finali, sviluppatori, manager e altre parti interessate che influenzano o sono influenzate dal progetto.
