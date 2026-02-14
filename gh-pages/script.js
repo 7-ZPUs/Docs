@@ -1,11 +1,11 @@
 const tabButtons = document.querySelectorAll('#documentation .content-selector');
 const tabPanels = document.querySelectorAll('#documentation [role="tabpanel"]');
 const pdfBaseUrls = {
-    'verbali-interni-candidatura': 'assets/pdf/',
-    'verbali-esterni-candidatura': 'assets/pdf/',
+    'verbali-interni-candidatura': 'assets/pdf/Verbali/Verbali%20Interni/',
+    'verbali-esterni-candidatura': 'assets/pdf/Verbali/Verbali%20Esterni/',
     candidatura: 'assets/pdf/',
-    'verbali-interni-RTB': 'assets/pdf/',
-    'verbali-esterni-RTB': 'assets/pdf/',
+    'verbali-interni-RTB': 'assets/pdf/Verbali/Verbali%20Interni/',
+    'verbali-esterni-RTB': 'assets/pdf/Verbali/Verbali%20Esterni/',
     RTB: 'assets/pdf/',
 };
 
