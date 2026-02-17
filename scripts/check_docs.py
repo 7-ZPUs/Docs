@@ -5,23 +5,66 @@ import os
 import glob
 
 def calculate_gulpease(text):
-    # Rimuove i comandi LaTeX per analizzare solo il testo "pulito"
-    # Rimuove il contenuto delle tabelle LaTeX (da \begin{tabular} a \end{tabular})
-    clean_text = re.sub(r'\\begin\{tabular\}.*?\\end\{tabular\}', '', text, flags=re.DOTALL)
-    clean_text = re.sub(r'\\begin\{table\}.*?\\end\{table\}', '', clean_text, flags=re.DOTALL)
-    clean_text = re.sub(r'[0-9]*/[0-9]*/[0-9]*','', clean_text) # Rimuove date
-    clean_text = re.sub(r'[\[\{\<].*?[\]\}\>]', '', clean_text, flags=re.DOTALL) # Rimuove contenuto tra parentesi quadre, graffe e angolari
-    clean_text = re.sub(r'(\\item\s+.*?)([\.])(?=\s*\\item|\s*\\end)',r'\1', clean_text, flags=re.DOTALL) # Rimuove punto a fine item se presente
-    clean_text = re.sub(r'(\\item\s+.*?)(?=\s*\\item|\s*\\end)', r'\1.', clean_text, flags=re.DOTALL) # Aggiunge punto a fine item se non presente
-    clean_text = re.sub(r'\\[a-zA-Z]+(\{.*?\})?|%.*', '', clean_text) # Rimuove comandi e commenti
-    clean_text = re.sub(r'7zpus\.swe@gmail\.com', '', clean_text) # Rimuove email
-    #clean_text = re.sub(r'\s+', ' ', clean_text) # Sostituisce spazi multipli con uno singolo
-    #clean_text = re.sub(r'\n{2,}', '', clean_text) # Rimuove nuove linee
-    #clean_text = re.sub(r'\?{2,}', '', clean_text) # Rimuove sequenze di punti interrogativi
-    # Mantiene solo lettere (inclusi accenti), numeri, spazi e punteggiatura base
-    clean_text = re.sub(r'[^\w\s\.\,\!\?\'\’]', '', clean_text, flags=re.UNICODE) # Rimuove caratteri speciali
-    #print(clean_text)
+    # 1. ANALISI SOLO DEL CONTENUTO (Ignora il preambolo)
+    if "\\begin{document}" in text:
+        text = text.split("\\begin{document}")[1]
+    if "\\end{document}" in text:
+        text = text.split("\\end{document}")[0]
+
+    # 2. RIMOZIONE SEZIONE RIFERIMENTI (Come richiesto)
+    text = re.sub(r'\\subsection\{Riferimenti\}.*?(?=\\section|$)', '', text, flags=re.DOTALL)
+
+    # 3. TRATTAMENTO LINK E URL (Prima che vengano "smontati")
+    # Estrae il testo visibile dai link ed elimina l'URL
+    text = re.sub(r'\\href\{.*?\}\{([\s\S]*?)\}', r'\1', text)
+    text = re.sub(r'https?://\S+|www\.\S+', '', text)
+    text = re.sub(r'7zpus\.swe@gmail\.com', '', text)
+
+    # 4. GESTIONE PUNTI ELENCO E DUE PUNTI (Richiesta specifica)
+    # Sostituisce i ":" con "." nella frase che precede un elenco 
+    text = re.sub(r':\s*(?=\\begin\{(?:itemize|enumerate)\})', '. ', text)
     
+    # Gestione interna agli \item: trasforma i ":" in "." e aggiunge il punto finale
+    def clean_items(match):
+        item_content = match.group(1)
+        # Sostituisce i due punti con punti fermi all'interno del punto elenco
+        item_content = item_content.replace(':', '.')
+        # Assicura che il punto elenco termini con un punto
+        if not item_content.strip().endswith('.'):
+            item_content = item_content.strip() + '.'
+        return item_content + ' '
+
+    text = re.sub(r'\\item\s+([\s\S]*?)(?=\\item|\\end\{itemize\}|\\end\{enumerate\})', clean_items, text)
+
+    # 5. ESTRAZIONE TITOLI CON PUNTO (Fondamentale per il punteggio)
+    # Aggiunge un punto dopo ogni titolo [cite: 66, 74]
+    text = re.sub(r'\\(?:section|subsection|subsubsection|subsubsubsection|paragraph|caption)\*?(?:\[.*?\])?\{([\s\S]*?)\}', r'\1. ', text)
+
+    # 6. RIMOZIONE COMMENTI E AMBIENTI NON TESTUALI
+    text = re.sub(r'(?<!\\)%.*', '', text)
+    for env in ['tabular', 'table', 'figure', 'adjustwidth', 'spacing', 'center', 'tcolorbox', 'longtable']:
+        text = re.sub(r'\\begin\{' + env + r'\}.*?\\end\{' + env + r'\}', '', text, flags=re.DOTALL)
+
+    # 7. ESTRAZIONE TESTO DA COMANDI NIDIFICATI (ul, textbf, glossario)
+    # Rimuove il comando ma salva il contenuto 
+    text = re.sub(r'\\(?:textbf|textit|glossario|ul|ped)\{([\s\S]*?)\}', r'\1', text)
+
+    # 8. RIMOZIONE COMANDI LATEX RESIDUI E PULIZIA CARATTERI
+    text = re.sub(r'\\[a-zA-Z]+\*?(?:\[.*?\])?(?:\{.*?\})?', ' ', text)
+    text = re.sub(r'\\[a-zA-Z]+', ' ', text)
+
+    # Sostituisce trattini e parentesi con spazi per non incollare le parole [cite: 104]
+    text = re.sub(r'[\\/()\[\]\-_]', ' ', text)
+    text = re.sub(r'[0-9]*/[0-9]*/[0-9]*','', text)
+    
+    # Mantieni solo lettere, numeri e punteggiatura terminativa
+    clean_text = re.sub(r'[^\w\s\.\,\!\?\'\’]', '', text, flags=re.UNICODE)
+    clean_text = re.sub(r'\s+', ' ', clean_text).strip()
+    print(clean_text)
+
+    # 9. CALCOLO METRICHE
+    words_list = re.findall(r'\w+', clean_text)
+    words = len(words_list) or 1
     sentences = len(re.findall(r'[.!?]+', clean_text)) or 1
     words = len(re.findall(r'\w+', clean_text)) or 1
     letters = len(re.findall(r'[a-zA-Z]', clean_text))
