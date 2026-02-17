@@ -20,7 +20,7 @@
         \hline        
         \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
         \hline
-        1.0.0 & 2026/02/13 & Laoud Zakaria & Fattoni Antonio & \begin{tabular}[c]{@{}c@{}} Controlli finali e approvazione \end{tabular} \\
+        1.0.0 & 2026/02/13 & Laoud Zakaria & Fattoni Antonio & \begin{tabular}[c]{@{}c@{}} Approvazione per baseline RTB \end{tabular} \\
         \hline
         0.14.0 & 2026/02/08 & Gingillino Aaron & Rocco Matteo A. & \begin{tabular}[c]{@{}c@{}} Stesura requisiti, \\tracciamento e \\diagrammi UC24-UC36 \end{tabular} \\
         \hline
@@ -72,7 +72,7 @@
 
 \subsection{Scopo}
 Questo documento si pone l'obiettivo di delineare in modo chiaro le caratteristiche del software da realizzare, partendo dall'analisi dei bisogni e delle aspettative della \glossario{proponente}.
-L'elaborazione dei requisiti trae origine dallo studio preliminare del \glossario{capitolato}, al fine di individuare gli \glossario{attori} coinvolti e le funzionalità attese.\\
+L'elaborazione dei requisiti trae origine dallo studio preliminare del capitolato, al fine di individuare gli \glossario{attori} coinvolti e le funzionalità attese.\\
  
 \noindent Il presente documento sarà utilizzato come punto di riferimento per tutto l'arco dello sviluppo del prodotto, dalla \glossario{progettazione} alla \glossario{validazione}, e permetterà il tracciamento di ogni decisione progettuale, consentendoci di soddisfare le aspettative della proponente.\\
 
@@ -84,21 +84,21 @@ Il documento sarà inoltre disponibile per \glossario{amministratori} e \glossar
 Data la natura incrementale del processo di sviluppo, questo documento verrà aggiornato periodicamente per riflettere eventuali modifiche o integrazioni ai requisiti.
 
 \subsection{Glossario}
-Per una corretta comprensione del documento, si rimanda al documento di \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Glossario.pdf}{\ul{Glossario}\setulcolor{black}} contenente la definizione dei termini contrassegnati dalla \textit{G} a pedice (\glossario{Glossario}).
+Per una corretta comprensione del documento, si rimanda al documento di \href{https://7-zpus.github.io/Docs/assets/pdf/Glossario.pdf}{\ul{Glossario}\setulcolor{black}} contenente la definizione dei termini contrassegnati dalla \textit{G} a pedice (\glossario{Glossario}).
 
 \subsection{Riferimenti}
-Il documento cerca di aderire il più possibile, seppur non in modo vincolante, alla struttura e ai contenuti previsti dallo standard \glossario{IEEE 830:1998} per la specifica dei requisiti software e di rispettare le indicazioni fornite dalle dispense didattiche del corso di Ingegneria del Software dell'Università di Padova.
+Il documento cerca di aderire il più possibile, seppur non in modo vincolante, alla struttura e ai contenuti previsti dallo standard IEEE 830:1998 per la specifica dei requisiti software e di rispettare le indicazioni fornite dalle dispense didattiche del corso di Ingegneria del Software dell'Università di Padova.
 
 \subsubsection{Riferimenti Normativi}
 \begin{itemize}
     \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{\ul{Capitolato C3: DIPReader}\setulcolor{black}} \ped{(ultimo accesso: 13/11/2025)}
     \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/PD1.pdf}{\ul{Regolamento di Progetto Didattico a.a. 2025/2026}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
-    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/NormeDiProgetto.pdf}{\ul{Norme di Progetto}\setulcolor{black}} \ped{(ultimo accesso: 11/02/2026)}
+    \item \href{https://7-zpus.github.io/Docs/assets/pdf/NormeDiProgetto.pdf}{\ul{Norme di Progetto}\setulcolor{black}} \ped{(ultimo accesso: 11/02/2026)}
 \end{itemize}
 
 \subsubsection{Riferimenti Informativi}
 \begin{itemize}
-    \item \href{https://cdn.jsdelivr.net/gh/7-zpus/Docs@main/2_RTB/Glossario.pdf}{\ul{Glossario di progetto}\setulcolor{black}} \ped{(ultimo accesso: 11/02/2026)}
+    \item \href{https://7-zpus.github.io/Docs/assets/pdf/Glossario.pdf}{\ul{Glossario di progetto}\setulcolor{black}} \ped{(ultimo accesso: 11/02/2026)}
     \item \href{https://ieeexplore.ieee.org/document/720574}{\ul{Standard IEEE 830:1998}\setulcolor{black}} \ped{(ultimo accesso: 24/11/2025)}
     \item Dispense del corso di Ingegneria del Software 2025/2026:
     \begin{itemize}
@@ -113,7 +113,7 @@ Il documento cerca di aderire il più possibile, seppur non in modo vincolante, 
 \section{Descrizione del Prodotto}
 
 \subsection{Panoramica}
-Il software oggetto di sviluppo è \textbf{DIPReader}, un'applicazione per l'accesso e la visualizzazione di documenti informatici all'interno di un Distribution Information Package (\glossario{DIP}), ovvero un archivio compresso distribuito da un sistema di conservazione centralizzato. \\
+Il software oggetto di sviluppo è \textbf{DIPReader}, un'applicazione per l'accesso e la visualizzazione di \glossario{documenti} informatici all'interno di un Dissemination Information Package (\glossario{DIP}), ovvero un archivio compresso distribuito da un sistema di conservazione centralizzato. \\
 
 \noindent Un DIP contiene un insieme di cartelle e documenti tecnici con valore legale, strutturati secondo specifiche normative che ne garantiscono autenticità, integrità e ottimizzazione dello spazio di archiviazione.
 I pacchetti DIP sono generalmente distribuiti come archivi compressi in formato .zip e possono includere una grande quantità di documenti eterogenei tra loro.
@@ -125,14 +125,14 @@ Il prodotto da realizzare deve offrire le seguenti funzionalità fondamentali:
 \begin{itemize}
     \item Possibilità di navigare in modo intuitivo all'interno di un DIP.
     \item Possibilità di visualizzare alcuni formati di documenti tramite anteprima.
-    \item Possibilità di ricercare i documenti per attributi significativi (\glossario{metadata}).
+    \item Possibilità di ricercare i documenti per attributi significativi (\glossario{metadati}).
     \item Possibilità di salvare uno o più documenti nel computer dell'utente.
     \item Possibilità di verificare l'integrità di un file.
     \item Possibilità di visualizzare le informazioni riguardanti il \glossario{processo di conservazione}.
     \item Mantenere la portabilità senza necessitare installazioni su disco.
     \item Possibilità di stampare i documenti selezionati.
     \item \glossario{Ricerca semantica} dei documenti mediante algoritmi di intelligenza artificiale.
-    \item Possibilità di visualizzare lo stato dell'eventuale firma digitale associata al file.
+    \item Possibilità di visualizzare lo stato dell'eventuale \glossario{firma digitale} associata al file.
 \end{itemize}
 Il prodotto deve inoltre operare in modo fluido durante le attività di navigazione, ricerca e visualizzazione anche in presenza di grandi quantità di dati, scenario molto probabile per natura stessa del contesto in cui opera.
 

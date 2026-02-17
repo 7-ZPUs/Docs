@@ -8,7 +8,7 @@
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
-    \item \textbf{Postcondizioni}: L'Utente visualizza l'elenco delle classi documentali.
+    \item \textbf{Postcondizioni}: L'Utente visualizza l'elenco delle \glossario{classi documentali}.
     \item \textbf{Flusso Principale}:
     \begin{enumerate}
         \item Il sistema mostra a video l'elenco delle classi documentali presenti nel DIP.
@@ -37,7 +37,7 @@
         \item L'Utente ha avviato l'applicazione.
         \item L'Utente sta visualizzando l'elenco delle classi documentali.
     \end{itemize}
-    \item \textbf{Postcondizioni}: L'Utente visualizza una classe documentale.
+    \item \textbf{Postcondizioni}: L'Utente visualizza un elemento della lista delle classi documentali.
     \item \textbf{Flusso Principale}:
     \begin{enumerate}
         \item Per ogni classe documentale viene mostrato:
@@ -58,15 +58,16 @@
 \subsubusecase{nomeClasseDocumentale}{Visualizza nome classe documentale}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
+    \item \textbf{Precondizioni}: \begin{itemize}
+        \item L'Utente ha avviato l'applicazione.
+        \item L'Utente sta visualizzando una classe documentale in elenco o i dettagli di una classe documentale.
+    \end{itemize}
     \item \textbf{Postcondizioni}: L'Utente visualizza il nome della classe documentale.
     \item \textbf{Flusso Principale}:
           \begin{enumerate}
               \item Il sistema mostra a video il nome della classe documentale.
           \end{enumerate}
 \end{itemize}
-
-
 
 \usecase{processiClasseDocumentale}{Visualizza elenco dei processi di una classe documentale}
 \begin{figure}[H]
@@ -81,7 +82,7 @@
         \item L'utente ha avviato l'applicazione
         \item L'Utente ha selezionato una delle Classi Documentali del DIP
     \end{itemize}
-    \item \textbf{Postcondizioni}: L'Utente visualizza i processi associati alla classe selezionata.
+    \item \textbf{Postcondizioni}: L'Utente visualizza la lista dei processi associati alla classe selezionata.
     \item \textbf{Flusso Principale}: 
           \begin{enumerate}
               \item Il sistema mostra a video l'elenco dei processi della classe documentale selezionata.
@@ -108,7 +109,7 @@
         \item L'utente ha avviato l'applicazione
         \item L'Utente ha selezionato una delle Classi Documentali del DIP
     \end{itemize}
-    \item \textbf{Postcondizioni}: L'Utente visualizza l'elenco dei processi .
+    \item \textbf{Postcondizioni}: L'Utente visualizza un elemento della lista dei processi della classe documentale selezionata.
     \item \textbf{Flusso Principale}:
     \begin{enumerate}
         \item Per ogni singolo processo presente nell'elenco viene mostrato:
@@ -132,6 +133,7 @@
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: \begin{itemize}
         \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando un processo in elenco o i dettagli di un processo
     \end{itemize}
     \item \textbf{Postcondizioni}: L'Utente visualizza l'id del processo.
     \item \textbf{Flusso Principale}:
@@ -152,14 +154,14 @@
     \item \textbf{Attore Primario}: Utente
     \item \textbf{Precondizioni}: 
     \begin{itemize}
-        \item L'utente ha avviato l'applicazione
+        \item L'Utente ha avviato l'applicazione
         \item L'Utente ha selezionato una delle Classi Documentali del DIP
         \item L'Utente ha selezionato un processo associato alla classe documentale selezionata
     \end{itemize}
     \item \textbf{Postcondizioni}: L'Utente visualizza l'elenco dei documenti associati al processo selezionato.
     \item \textbf{Flusso Principale}:
     \begin{enumerate}
-        \item Il sistema mostra a video l'elenco dei documenti della classe documentale selezionata.
+        \item Il sistema mostra a video l'elenco dei documenti del processo selezionato.
     \end{enumerate}
     \item \textbf{Flusso Alternativo}:
     \begin{itemize}
@@ -184,7 +186,7 @@
         \item L'Utente ha selezionato una delle Classi Documentali del DIP
         \item L'Utente ha selezionato un processo associato alla classe documentale selezionata
     \end{itemize}
-    \item \textbf{Postcondizioni}: L'Utente visualizza l'elenco delle classi documentali.
+    \item \textbf{Postcondizioni}: L'Utente visualizza un elemento della lista dei documenti del processo selezionato.
     \item \textbf{Flusso Principale}:
     \item Per ogni documento presente nell'elenco viene mostrato:
         \begin{itemize}
@@ -204,7 +206,10 @@
 \subsubusecase{nomeDocumentoProcesso}{Visualizza nome documento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha avviato l'applicazione.
+    \item \textbf{Precondizioni}: \begin{itemize}
+        \item L'utente ha avviato l'applicazione
+        \item L'Utente sta visualizzando un documento in elenco o i dettagli di un documento
+    \end{itemize}
     \item \textbf{Postcondizioni}: L'Utente visualizza il nome del documento.
     \item \textbf{Flusso Principale}:
     \begin{enumerate}
@@ -215,7 +220,10 @@
 \usecase{statoVerificaElemento}{Visualizza stato di verifica elemento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento.
+    \item \textbf{Precondizioni}: \begin{itemize}
+        \item L'Utente ha avviato l'applicazione
+        \item L'Utente ha selezionato un elemento.
+    \end{itemize}
     \item \textbf{Postcondizioni}: L'utente visualizza lo stato di verifica dell' elemento selezionato.
     \item \textbf{Flusso Principale}:
     \begin{enumerate}
@@ -226,7 +234,10 @@
 \usecase{marcaturaTemporaleElemento}{Visualizza marcatura temporale elemento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
-    \item \textbf{Precondizioni}: L'Utente ha selezionato un elemento.
+    \item \textbf{Precondizioni}: \begin{itemize}
+        \item L'Utente ha avviato l'applicazione
+        \item L'Utente ha selezionato un elemento.
+    \end{itemize}
     \item \textbf{Postcondizioni}: L'utente visualizza la marcatura temporale dell' elemento selezionato.
     \item \textbf{Flusso Principale}:
     \begin{enumerate}
@@ -262,7 +273,7 @@
     \item \textbf{Precondizioni}: 
     \begin{itemize}
         \item L'utente ha avviato l'applicazione
-        \item L'Utente ha selezionato un documento dalla struttura del DIP.
+        \item L'Utente ha selezionato un \glossario{documento}.
     \end{itemize}
     \item \textbf{Postcondizioni}: L'Utente visualizza un'anteprima del documento selezionato.
     \item \textbf{Flusso Principale}:
