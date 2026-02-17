@@ -1,20 +1,27 @@
 \documentclass[a4paper,12pt]{article}
-
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
 \usepackage[italian]{babel}
-\renewcommand{\rmdefault}{lmss}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
 \usepackage{float}
 \usepackage{microtype}
 \usepackage{geometry}
 \usepackage{setspace}
 \usepackage{enumitem}
 \usepackage{titlesec}
+\usepackage{chngpage}
 \usepackage{tocloft}
+\usepackage{longtable}
+\usepackage{ltablex}
+\usepackage{array}
 \usepackage{graphicx}
-\usepackage{hyperref}
 \usepackage{fancyhdr}
+\usepackage[table]{xcolor}
+\usepackage{color,soul}
+\usepackage[most]{tcolorbox}
+\usepackage{nameref}
+\usepackage[colorlinks=true]{hyperref}
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
@@ -38,7 +45,7 @@
 \geometry{margin=2.5cm}
 \setstretch{1.2}
 
-\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\section}{\large\bfseries}{}{0em}{}
 \titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
 
 \begin{document}
@@ -59,116 +66,208 @@
 \newpage
 
 \section*{Tabella di Versionamento}
-\begin{tabular}{|c|c|c|c|c|}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
     \hline
-    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
-    \hline
-    1.0 & 31/10/2025 & Vigolo Davide & Gingilino Aaron & Stesura iniziale \\
-    \hline
-
-\end{tabular}
+        \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+        \hline
+        1.0.0 & 2025/02/17 & Laoud Zakaria & Vigolo Davide & \begin{tabular}[t]{@{}l@{}} Approvazione per \\ baseline RTB \end{tabular} \\
+        \hline
+        0.4.0 & 2025/12/28 & Vigolo Davide & Soligo Lorenzo & \begin{tabular}[t]{@{}l@{}} Aggiunta termini \\ Analisi dei Requisiti \end{tabular} \\
+        \hline
+        0.3.0 & 2025/12/28 & Fattoni Antonio & Vigolo Davide & \begin{tabular}[t]{@{}l@{}} Aggiunta termini \\ Analisi dei Requisiti \end{tabular} \\
+        \hline
+        0.2.0 & 2025/12/28 & Soligo Lorenzo & Fattoni Antonio & \begin{tabular}[t]{@{}l@{}} Aggiunta termini \\ Analisi dei Requisiti \end{tabular} \\
+        \hline
+        0.1.0 & 2025/10/31 & Vigolo Davide & Gingilino Aaron & \begin{tabular}[t]{@{}l@{}} Stesura iniziale \end{tabular} \\
+        \hline
+    \end{tabular}
+    \end{adjustwidth}
+\end{table}
 
 \section{A}
 \begin{itemize}
-    \item \textbf{Action}: Una GitHub Action è una componente eseguibile (definita tramite metadati action.yml) che implementa una singola funzione di automazione e che può essere richiamata in un workflow GitHub Actions per automatizzare operazioni come unit testing.
+    \item \textbf{Action}: una GitHub Action è una componente eseguibile (definita tramite metadati action.yml) che implementa una singola funzione di automazione e che può essere richiamata in un workflow GitHub Actions per automatizzare operazioni come unit testing.
+    \item \textbf{Aggregazione documentale}: tipologia di documento, rappresenta un insieme di documenti correlati tra loro.
+    \item \textbf{AiP}: dall'inglese Archival Information Package, è il fulcro di un sistema di archiviazione OAIS. L'AiP è l'entità dalla quale vengono poi estratte le informazioni che comporranno il DiP. Un DiP può contenere informazioni provenienti da più AiP.  
+    \item \textbf{Amministratore}: ruolo del team che si occupa della gestione dell'infrastruttura, della configurazione degli ambienti di sviluppo e produzione e degli strumenti di sviluppo.
     \item \textbf{Analisi dei Requisiti}: Fase del processo di sviluppo software in cui vengono raccolti, documentati e analizzati i requisiti, funzionali e non, del sistema da sviluppare. Questa fase è fondamentale per comprendere le esigenze degli utenti e tradurle in un linguaggio tecnico non ambiguo, che permetta e favorisca lo sviluppo successivo del design del sistema software.
-    \item \textbf{As Is}: Tecnica per l'Analisi dei Requisiti. Prevede di immaginare il mondo senza la risorsa, con le sue conseguenti limitazioni.
-    \item \textbf{Attività di Progetto}: Azioni che portano allo sviluppo del progetto. Componenti dei Processi di progetto.
-    \item \textbf{Attore Principale}: Colui che attivamente interagisce con il sistema.
-    \item \textbf{Attore Secondario}: Interagisce in modo passivo, viene invocato dal sistema in aiuto per offrire una funzionalità.
+    \item \textbf{Analista}: ruolo del team di progetto che si occupa di raccogliere, documentare e analizzare i requisiti del sistema software, interfacciandosi con il committente e gli altri stakeholder per garantire una comprensione chiara e condivisa delle esigenze del progetto.
+    \item \textbf{Anteprima}: nell'ambito dell'analisi dei requisiti coincide con la visualizzazione del file specifico.
+    \item \textbf{AOO}: Area Organizzativa Omogenea.
+    \item \textbf{AS}: per Assegnatario
+    \item \textbf{As Is}: tecnica per l'Analisi dei Requisiti. Prevede di immaginare il mondo senza la risorsa, con le sue conseguenti limitazioni.
+    \item \textbf{Attività di Progetto}: azioni che portano allo sviluppo del progetto. Componenti dei Processi di progetto.
+    \item \textbf{Attori}: entità che interagiscono con il sistema software.
+    \item \textbf{Attore Principale}: colui che attivamente interagisce con il sistema.
+    \item \textbf{Attore Secondario}: colui che interagisce in modo passivo, viene invocato dal sistema in aiuto per offrire una funzionalità.
 \end{itemize}
 \section{B}
 \begin{itemize}
-    \item \textbf{Baseline}: Prodotto che soddisfa i vincoli di una Milestone, non solo per Efficacia ma anche per Efficienza. Una baseline è una versione specifica di un prodotto software che è stata formalmente revisionata e approvata, servendo come punto di riferimento per lo sviluppo futuro. Le baseline sono utilizzate per tracciare le modifiche e garantire la coerenza del progetto nel tempo.
-    \item \textbf{Branch}: Un ramo in Git è una versione parallela del codice sorgente che consente di lavorare su funzionalità o correzioni senza influenzare il ramo principale (di solito chiamato "main" o "master"). I branch possono essere uniti (merged) per incorporare le modifiche nel ramo principale.
-    \item \textbf{Brainstorming}: Attività che aiuta a estrarre i requisiti. Necessita di un metodo, una struttura organizzata e quindi è una Cerimonia. È quindi una discussione tra pari che, a partire da una agenda chiara e vigilata da un Maestro di Cerimonia, permette la libera espressione delle idee. Ogni membro però ha un tempo limitato per esprimere le proprie idee. È inoltre necessaria la figura di colui che colleziona i punti salienti che emergono dalla discussione. Risultano utili le Mappe Mentali per schematizzare in modo più comodo i punti di un BrainStorming.
+    \item \textbf{Baseline}: prodotto che soddisfa i vincoli di una Milestone, non solo per Efficacia ma anche per Efficienza. Una baseline è una versione specifica di un prodotto software che è stata formalmente revisionata e approvata, servendo come punto di riferimento per lo sviluppo futuro. Le baseline sono utilizzate per tracciare le modifiche e garantire la coerenza del progetto nel tempo.
+    \item \textbf{Branch}: Un branch (o ramo) in Git è una versione parallela del codice sorgente che consente di lavorare su funzionalità o correzioni senza influenzare il ramo principale (di solito chiamato "main" o "master"). I branch possono essere uniti (merged) per incorporare le modifiche nel ramo principale.
+    \item \textbf{Brainstorming}: attività che aiuta a estrarre i requisiti. Necessita di un metodo, una struttura organizzata e quindi è una Cerimonia. È quindi una discussione tra pari che, a partire da una agenda chiara e vigilata da un Maestro di Cerimonia, permette la libera espressione delle idee. Ogni membro però ha un tempo limitato per esprimere le proprie idee. È inoltre necessaria la figura di colui che colleziona i punti salienti che emergono dalla discussione. Risultano utili le Mappe Mentali per schematizzare in modo più comodo i punti di un BrainStorming.
 \end{itemize}
 \section{C}
 \begin{itemize}
-    \item \textbf{Classificazione dei Requisiti}: Organizzazione dei requisiti a "cassetti". Un esempio è la classificazione ad albero, distinguendo tra requisiti di Prodotto (System Requirement), sui Processi (Process Requirement) e sul Contratto (Project Requirement).
-    \item \textbf{Commit}: Un'operazione in Git che salva le modifiche apportate ai file nel repository locale. Ogni commit rappresenta un'istantanea del progetto in un determinato momento e include un messaggio descrittivo delle modifiche effettuate.
-    \item \textbf{Consuntivo di Progetto}: Elenco quantitativo di ciò che è stato fatto nel periodo.
+    \item \textbf{Campi comuni}: campi che sono presenti in qualsiasi tipo di documento all'interno del DiP.
+    \item \textbf{Canale di attivazione}: canale attraverso cui un processo (di conservazione) è stato attivato.
+    \item \textbf{Canale di terminazione}: canale attraverso cui un processo (di conservazione) è stato terminato.
+    \item \textbf{Classe documentale}: insieme di documenti che condividono caratteristiche comuni (e.g. "Fatture").
+    \item \textbf{Classificazione dei Requisiti}: organizzazione dei requisiti a "cassetti". Un esempio è la classificazione ad albero, distinguendo tra requisiti di Prodotto (System Requirement), sui Processi (Process Requirement) e sul Contratto (Project Requirement).
+    \item \textbf{Commit}: un'operazione in Git che salva le modifiche apportate ai file nel repository locale. Ogni commit rappresenta un'istantanea del progetto in un determinato momento e include un messaggio descrittivo delle modifiche effettuate.
+    \item \textbf{Committente}: lo stakeholder che acquisisce o procura il prodotto o servizio dal fornitore, finanzia il progetto e ha l'ultima parola sulla validazione (collaudo) per accettare il prodotto finale.
+    \item \textbf{Conservazione}: nell'ambito OAIS, la conservazione è il processo di mantenimento a lungo termine dei contenuti digitali, garantendo che rimangano accessibili e utilizzabili nel tempo.
+    \item \textbf{Consuntivo di Progetto}: elenco quantitativo di ciò che è stato fatto nel periodo.
+    \item \textbf{Custom metadata}: metadati specificati dall'implementazione specifica dello standard OAIS, e dunque non regolati da esso.
     % \item \textbf{Continuous Integration (CI)}: Una pratica di sviluppo software in cui le modifiche al codice vengono automaticamente testate e integrate nel repository principale tramite l'uso di strumenti di automazione come GitHub Actions. Questo processo aiuta a identificare e risolvere rapidamente i problemi, migliorando la qualità del software.
     % \item \textbf{Continuous Delivery (CD)}: Una pratica di sviluppo software che estende la Continuous Integration, automatizzando il processo di rilascio del software in ambienti di produzione o staging. La Continuous Delivery garantisce che il codice sia sempre in uno stato pronto per il rilascio, riducendo i tempi di consegna delle nuove funzionalità agli utenti finali.
 \end{itemize}
 \section{D}
+\begin{itemize}
+    \item \textbf{DAI}: Documento Amministrativo Informatico
+    \item \textbf{Dati di registrazione}: dati che descrivono le informazioni riguardanti la registrazione di un documento comprendenti la tipologia di flusso (e.g. "Uscita") e la tipologia di registro (e.g. "protocollo ordinario").
+    \item \textbf{Dati di verifica}: insieme di informazioni che rappresentano lo stato di verifica del documento quali: "firmato digitalmente", "sigillato elettronicamente", "marcato temporalmente", "conformità copie immagine su supporto informatico".
+    \item \textbf{DI}: Documento Informatico
+    \item \textbf{DIP}: Dissemination Information Package, pacchetto informativo che rispetta lo standard OAIS (Open Archival Information System) per la conservazione digitale. Il DIP contiene dati e informazioni estratte dall'archivio digitale, organizzati per essere distribuiti a utenti o sistemi esterni.
+    \item \textbf{Documento}: aggregato di file, rispettivamente uno principale e zero o più allegati.
+    \item \textbf{Documento Primario}: documento che è identificato come primario all'interno di un insieme di documenti collegati.
+    \item \textbf{Driver}: componente software che consente al sistema operativo di comunicare con un dispositivo hardware, come una stampante.
+\end{itemize}
 \section{E}
 \begin{itemize}
-    \item \textbf{Efficacia}: Raggiungere gli obiettivi prefissati.
-    \item \textbf{Efficienza}: Raggiungere gli obiettivi consumando solo le risorse previste per tali obiettivi.
-    \item \textbf{Epic}: Un epic è una grande unità di lavoro che può essere suddivisa in più user story o task più piccoli. Gli epic rappresentano funzionalità o obiettivi significativi all'interno di un progetto di sviluppo software e aiutano a organizzare e pianificare il lavoro in modo più efficiente.
+    \item \textbf{Efficacia}: raggiungere gli obiettivi prefissati.
+    \item \textbf{Efficienza}: raggiungere gli obiettivi consumando solo le risorse previste per tali obiettivi.
+    \item \textbf{Epic}: tipologia di work item Jira che rappresenta un obiettivo di alto livello.
 \end{itemize}
 \section{F}
 \begin{itemize}
-    \item \textbf{Feature}: Una funzionalità o caratteristica specifica di un sistema software che fornisce valore agli utenti finali. Le feature possono essere descritte in termini di requisiti funzionali e sono spesso suddivise in task più piccoli.
+    \item \textbf{Fascicolo}: aggregazione documentale informatica strutturata e univocamente identificata contenente atti, documenti o dati informatici prodotti e funzionali all'esercizio di una attività o allo svolgimento di uno specifico procedimento.
+    \item \textbf{Feature}: funzionalità o caratteristica specifica di un sistema software che fornisce valore agli utenti finali. Le feature possono essere descritte in termini di requisiti funzionali e sono spesso suddivise in task più piccoli.
+    \item \textbf{Filtro}: meccanismo che consente di restringere i risultati di una ricerca in base a criteri specifici, valorizzati dall'utente.
+    \item \textbf{Firma digitale}: parte di un documento che consente di identificare in modo univoco il firmatario e di garantire l'autenticità e il non ripudio del documento stesso.
+    \item \textbf{Formato}: specifica tecnica che definisce la struttura e la rappresentazione dei dati all'interno di un documento o di un file.
 \end{itemize}
 \section{G}
 \begin{itemize}
-    \item \textbf{Git}: Sistema di controllo di versione distribuito, utilizzato per tracciare le modifiche nel codice sorgente durante lo sviluppo del software. Permette a più sviluppatori di collaborare su un progetto in modo efficiente.
-    \item \textbf{GitHub}: Piattaforma di hosting per il controllo di versione e la collaborazione che utilizza Git. Consente agli sviluppatori di ospitare i loro repository Git online, facilitando la condivisione del codice, la gestione delle versioni e la collaborazione tra team.
-    \item \textbf{Good Practice}: Una buona pratica è una metodologia o tecnica riconosciuta come efficace e raccomandata, basata sull'esperienza e sui risultati ottenuti in progetti precedenti.
+    \item \textbf{Garanzia della qualità}: insieme di attività pianificate e sistematiche implementate all'interno di un sistema di qualità per fornire fiducia che un prodotto o servizio soddisferà i requisiti di qualità specificati. La garanzia della qualità si concentra sulla prevenzione dei difetti attraverso processi ben definiti, standard e procedure, piuttosto che sulla rilevazione dei difetti dopo che si sono verificati.
+    \item \textbf{Git}: sistema di controllo di versione distribuito, utilizzato per tracciare le modifiche nel codice sorgente durante lo sviluppo del software. Permette a più sviluppatori di collaborare su un progetto in modo efficiente.
+    \item \textbf{GitHub}: piattaforma di hosting per il controllo di versione e la collaborazione che utilizza Git. Consente agli sviluppatori di ospitare i loro repository Git online, facilitando la condivisione del codice, la gestione delle versioni e la collaborazione tra team.
+    \item \textbf{Good Practice}: una buona pratica è una metodologia o tecnica riconosciuta come efficace e raccomandata, basata sull'esperienza e sui risultati ottenuti in progetti precedenti.
 \end{itemize}
 \section{H}
 \section{I}
 \begin{itemize}
-    \item \textbf{Issue}: Un problema, bug o richiesta di funzionalità presente e tracciabile in un sistema di Issue Tracking. Un commit può essere associato a una o più issue.
-    \item \textbf{Issue Tracking System (ITS)}: Un sistema software utilizzato per gestire e tracciare i problemi, i bug e le richieste di funzionalità durante lo sviluppo del software. Gli ITS aiutano i team di sviluppo a organizzare, assegnare e monitorare lo stato delle issue, migliorando la comunicazione e la collaborazione tra i membri del team.
+    \item \textbf{Id aggregazione primario}: identificativo univoco e persistente del livello superiore di fascicolazione nel caso in cui si stia definendo un sottofascicolo o una sottoserie.
+    \item \textbf{Identificativo di formato}: sequenza di caratteri che specifica il formato del documento in questione, ad esempio "PDF", "DOCX", "JPEG", ecc.
+    \item \textbf{Indice di classificazione}: codifica del documento secondo il Piano di classificazione utilizzato
+    \item \textbf{Indicizzazione}: processo di catalogazione e organizzazione degli elementi presenti all'interno del DiP, predisponendoli per una ricerca efficiente.
+    \item \textbf{Indirizzi digitali}: informazioni di contatto digitale come email o altri canali di comunicazioni.
+    \item \textbf{Ingegneria del Software}: approccio sistematico, disciplinato e quantificabile allo sviluppo, all'uso, alla manutenzione e al ritiro del software.
+    \item \textbf{Integrità}: proprietà che garantisce che i dati non vengano alterati o corrotti durante la loro elaborazione o trasmissione.
+    \item \textbf{IPA}: Indice delle Pubbliche Amministrazioni
+    \item \textbf{Issue}: problema, bug o richiesta di funzionalità presente e tracciabile in un sistema di Issue Tracking. Un commit può essere associato a una o più issue.
+    \item \textbf{Issue Tracking System (ITS)}: sistema software utilizzato per gestire e tracciare i problemi, i bug e le richieste di funzionalità durante lo sviluppo del software. Gli ITS aiutano i team di sviluppo a organizzare, assegnare e monitorare lo stato delle issue, migliorando la comunicazione e la collaborazione tra i membri del team.
 \end{itemize}
 \section{J}
 \begin{itemize}
-    \item \textbf{Jira}: Strumento di gestione di progetto sviluppato da Atlassian, utilizzato principalmente come Issue Tracking System (ITS), la gestione dei progetti Agile e la pianificazione delle attività di sviluppo software.
+    \item \textbf{Jira}: strumento di gestione di progetto sviluppato da Atlassian, utilizzato principalmente come Issue Tracking System (ITS), la gestione dei progetti Agile e la pianificazione delle attività di sviluppo software.
 \end{itemize}
 \section{K}
 \section{L}
 \section{M}
 \begin{itemize}
-    \item \textbf{Milestone}: Punti nel tempo e nelle risorse che traccia l'avanzamento del progetto, posizionate a partire dagli obiettivi finali, incrementali ma per piccoli passi, quantitativi e misurabili. Un punto di riferimento significativo in un progetto di sviluppo software che rappresenta il completamento di una fase importante o il raggiungimento di un obiettivo specifico. I milestone aiutano a monitorare i progressi del progetto e a pianificare le attività future.
+    \item \textbf{Marcatura temporale}: attributo rappresentato tramite timestamp
     \item \textbf{Merge}: L'operazione di unione di due rami (branch) in Git. Quando si esegue un merge, le modifiche apportate in un ramo vengono integrate nel ramo di destinazione, combinando il lavoro di più sviluppatori.
+    \item \textbf{Metadati}: Dati che descrivono altri dati, nel caso dei pacchetti DiP, i metadati descrivono gli elementi contenuti in esso e sono quindi di primario interesse.
+    \item \textbf{Metriche}: Strumenti di misurazione quantitativa che forniscono informazioni oggettive sullo stato e sulle prestazioni di un progetto. Le metriche aiutano a monitorare l'avanzamento, identificare problemi e prendere decisioni informate durante lo sviluppo del software.
+    \item \textbf{Milestone}: Punti nel tempo e nelle risorse che traccia l'avanzamento del progetto, posizionate a partire dagli obiettivi finali, incrementali ma per piccoli passi, quantitativi e misurabili. Un punto di riferimento significativo in un progetto di sviluppo software che rappresenta il completamento di una fase importante o il raggiungimento di un obiettivo specifico. I milestone aiutano a monitorare i progressi del progetto e a pianificare le attività future.
 \end{itemize}
 \section{N}
 \section{O}
 \section{P}
 \begin{itemize}
-    \item \textbf{PB}: (Project Baseline) un’istantanea (snapshot) del progetto al termine delle attività di pianificazione con il progetto approvato dal committente.
+    \item \textbf{PAE}: per le Amministrazioni Pubbliche Estere
+    \item \textbf{PAI}: per le Amministrazioni Pubbliche Italiane
+    \item \textbf{Partita IVA}: Codice identificativo univoco per le imprese e i professionisti in Italia, utilizzato per scopi fiscali e amministrativi.
+    \item \textbf{PB}: (Project Baseline) un'istantanea (snapshot) del progetto al termine delle attività di pianificazione con il progetto approvato dal committente.
+    \item \textbf{PF}: per Persona Fisica
+    \item \textbf{PG}: per Organizzazione
+    \item \textbf{Piano di classificazione}: URI del Piano di classificazione pubblicato.
     \item \textbf{Piano di Qualifica}: Organizzazione di attività di V\&V durante lo sviluppo, periodico per arrivare alla Validazione finale garantendo la Validità di tutto il lavoro (Lavorare sempre nel modo giusto per essere nel giusto).
+    \item \textbf{Plan-Do-Check-Act}: Ciclo di miglioramento continuo che prevede quattro fasi: Pianificare (Plan), Eseguire (Do), Verificare (Check) e Agire (Act). Questo ciclo aiuta a identificare e risolvere problemi, migliorare processi e garantire la qualità del prodotto.
     \item \textbf{PostCondizioni}: Stato in cui si deve trovare il sistema dopo che l'attore ha utilizzato una funzionalità.
     \item \textbf{PreCondizioni}: Stato in cui si deve trovare il sistema per permettere all'attore di compiere un'azione.
+    \item \textbf{Procedimento amministrativo}: Metadato funzionale volto ad indicare il procedimento a cui il fascicolo afferisce, nonché lo stato di avanzamento e le relative fasi.
+    \item \textbf{Processo}: insieme di attività correlate e coese che trasformano ingressi (bisogni) in uscite (prodotti) secondo regole date, consumando risorse nel farlo.
+    \item \textbf{Processo di conservazione}: nel nostro caso specifico, ogni AiP ha un processo di conservazione di riferimento. Questo processo permette di tracciare il ciclo di vita e la conservazione dell'AiP nel sistema di conservazione.
+    \item \textbf{Progettazione}: Fase del processo di sviluppo software in cui vengono definiti l'architettura, i componenti e le interfacce del sistema software, basandosi sui requisiti raccolti durante l'analisi dei requisiti.
+    \item \textbf{Progettista}: ruolo del team che si occupa della progettazione (vedi "Progettazione")
+    \item \textbf{Progetto}: Insieme di attività che:
+    \begin{itemize}
+        \item Devono raggiungere dati obiettivi a partire da date specifiche
+        \item Hanno un inizio e una fine fissate in calendario
+        \item Dispongono di risorse limitate (persone, tempo, denaro, strumenti)
+        \item Consumano risorse nel loro svolgersi
+    \end{itemize}
+    \item \textbf{Programmatore}: ruolo del team che si occupa della realizzazione del software (implementazione) e dei test automatici.
+    \item \textbf{Proponente}: È colui che esprime le aspettative iniziali ("requisiti utente") che il sistema deve soddisfare. Il proponente soddisfa le condizioni di aver posto i requisiti e aver generato l'opportunità, ma non è necessariamente l'utente finale che userà il software.
     \item \textbf{Pull request (PR)}: Una richiesta di pull è una funzionalità di GitHub che consente agli sviluppatori di proporre modifiche al codice sorgente di un progetto. Quando un sviluppatore crea una pull request, sta chiedendo al team di revisione del progetto di esaminare le modifiche apportate e, se approvate, di unirle (merging) nel ramo principale del repository.
 \end{itemize}
 \section{Q}
+\begin{itemize}
+    \item \textbf{Query}: Nell'ambito di ricerca semantica, descrizione delle informazioni che si vogliono ottenere formulata in linguaggio naturale (e.g. "fatture salotto").
+\end{itemize}
 \section{R}
 \begin{itemize}
-    \item \textbf{Requisiti}: Bisogni, Needs di un progetto.
-    \item \textbf{Requisiti Obbligatori}: Grado di Urgenza di un Requisito che lo etichetta. Irrinunciabili per i committenti. Conviene che sia un numero limitato per evitare di rimanere vincolati.
+    \item \textbf{Report}: Documento che riporta i risultati di un'attività o di un processo, spesso accompagnato da analisi e commenti.
+    \item \textbf{Requisiti}: Bisogni, needs di un progetto. Possono essere lato utente o lato software.
     \item \textbf{Requisiti Desiderabili}: Grado di Urgenza di un Requisito che lo etichetta. Non necessari ma con valore aggiunto che può essere avanzato a Obbligatorio se possibile.
+    \item \textbf{Requisiti Obbligatori}: Grado di Urgenza di un Requisito che lo etichetta. Irrinunciabili per i committenti. Conviene che sia un numero limitato per evitare di rimanere vincolati.
     \item \textbf{Requisiti Opzionali}: Grado di Urgenza di un Requisito che lo etichetta. Relativamente utili e contrattabili più avanti nel progetto.
+    \item \textbf{Responsabile}: ruolo del team che si occupa della gestione del progetto, della pianificazione delle attività e della comunicazione con il committente e gli stakeholder.
     \item \textbf{Retrospettiva}: Analisi di ciò che è stato fatto in precedenza con maggiore esperienza e consapevolezza in modo da ottimizzare, crescere in comprensione oltre che nella crescita del prodotto. È ciò che chiude un periodo e prepara al successivo, con l'Ideazione di Misure Correttive e la pianificazione (Consultivo a Finire).
+    \item \textbf{Ricerca semantica}: tipo di ricerca che si basa sulla comprensione del significato delle parole e delle frasi, piuttosto che sulla semplice corrispondenza di parole chiave. La ricerca semantica mira a fornire risultati più pertinenti, tenendo conto del contesto e delle relazioni tra i concetti.
     \item \textbf{RTB}: (Requirement and Technical Baseline) Converge l'Analisi dei Requisiti con la risposta Tecnica. Una volta compresi i vincoli tecnologici emerge la necessità che le tecnologie rispecchiano tali vincoli, pesando la scelta in base all'impatto che tali tecnologie hanno sul design (1° Compito della RTB). L'uso di più tecnologie pretende anche che queste eterogenicità possano convivere in un Proof Of Concept (2° Compito della RTB).
+    \item \textbf{RUP}: Responsabile Unico Progetto
 \end{itemize}
 \section{S}
 \begin{itemize}
     \item \textbf{Scenario Alternativo}: Insieme di passi che descrive un Path che porta a PostCondizioni diverse da quelle dello Scenario Principale.
     \item \textbf{Scenario Principale}: L'insieme di passi che descrive l'Happy Path di una funzione (passi per arrivare al risultato).
+    \item \textbf{Sessione di versamento}: Si intende la sessione entro la quale i documenti, che successivamente compongono un AiP, vengono versati nel sistema di conservazione.
     \item \textbf{Slack Time}: Margine tra due attività (sempre maggiore di zero) che attutisce l'impatto di ritardi, in modo da non propagare il ritardo sulle attività successive. Concetto alla base dei diagrammi PERT. Per la valutazione di questi Slack, è necessaria una Gestione dei Rischi accurata formata da Identificazione, Analisi, Pianificazione, Controllo.
+    \item \textbf{Soggetto}: persona fisica o giuridica che viene riferita nei metadati di un documento per indicarne un ruolo specifico o una relazione ad esso (e.g. "assegnatario").
+    \item \textbf{Sprint}: Un periodo di tempo definito durante il quale un team di sviluppo software lavora per completare un insieme specifico di attività o obiettivi. Gli sprint sono una componente chiave della metodologia Agile, in particolare di Scrum, e aiutano a organizzare il lavoro in iterazioni brevi e gestibili.
     \item \textbf{Stakeholder}: Una persona, gruppo o organizzazione che ha un interesse diretto o indiretto in un progetto o in un sistema software. Gli stakeholder possono includere clienti, utenti finali, sviluppatori, manager e altre parti interessate che influenzano o sono influenzate dal progetto.
     \item \textbf{Subtask}: Un'unità di lavoro più piccola e specifica all'interno di un task più grande. I subtask aiutano a suddividere il lavoro in parti gestibili e facilitano la pianificazione e l'assegnazione delle attività.
+    \item \textbf{SW}: per Software
     \item \textbf{System Requirement}: Possiamo suddividere i requisiti di sistema: - Constraint (Vincoli legali, fisici, culturale, di design, implementativi, ecc) - Functional Requirement (Funzioni da svolgere del prodotto) - Attribute (Performance Requirement e Specific quality Requirement, aka *-lities*). Questa suddivisione ci permette più agilmente di trovare questi requisiti.
 \end{itemize}
 \section{T}
 \begin{itemize}
+    \item \textbf{Tempo di conservazione}: periodo di tempo per il quale il documento è conservato nel sistema di conservazione.
+    \item \textbf{Task}: Un'unità di lavoro specifica e ben definita all'interno di un progetto di sviluppo software. I task rappresentano attività piccole e gestibili che contribuiscono al completamento di funzionalità o obiettivi più ampi.
+    \item \textbf{Test}: Attività che verifica che il software funzioni come previsto, spesso e per quanto possibile automatizzata.
+    \item \textbf{Test di Sistema}: Test che verifica la conformità del sistema alle specifiche, con l'obiettivo di identificare eventuali difetti o problemi prima del rilascio. I test di sistema sono eseguiti in un ambiente che simula le condizioni reali di utilizzo del software.
     \item \textbf{To Be}: Tecnica per l'Analisi dei Requisiti. Prevede di immaginare il mondo con la risorsa, valutando i miglioramenti e le nuove prospettive che si aprono.
     \item \textbf{Tracciabilità}: Serve che i requisiti abbiano un Identificativo unico, che debba anche renderli modificabili in modo semplice, per far fronte a possbbili aggiunte e/o cancellazioni.
-    \item \textbf{Task}: Un'unità di lavoro specifica e ben definita all'interno di un progetto di sviluppo software. I task rappresentano attività piccole e gestibili che contribuiscono al completamento di funzionalità o obiettivi più ampi.
 \end{itemize}
 \section{U}
 \begin{itemize}
+    \item \textbf{UOR}: Unità Organizzativa Responsabile.
     \item \textbf{Use Case}: Funzionalità di un sistema, che non descrivono però la loro implementazione.
     \item \textbf{User Story}: Tecnica per l'Analisi dei Requisiti che è più immaginatvia. È una descrizione breve e semplice di una funzionalità del sistema desiderata dall'utente. La User Story può essere anche interna al gruppo di lavoro.
+    \item \textbf{UUID}: Universally Unique Identifier, identificatore univoco globale utilizzato per identificare univocamente risorse all'interno di un sistema software.
 \end{itemize}
 \section{V}
 \begin{itemize}
     \item \textbf{Validazione}: Controllo della soddisfazione delle aspettative (Finale).
     \item \textbf{Verifica}: Controllo che lo sviluppo non introduca errori.
+    \item \textbf{Verificatori}: ruolo del team che si occupa della verifica.
+    \item \textbf{Versamento}: Azione di conferimento di un documento ad un sistema di conservazione.
 \end{itemize}
 \section{W}
 \begin{itemize}
