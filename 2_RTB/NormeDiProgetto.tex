@@ -1,9 +1,9 @@
 \documentclass[a4paper,12pt]{article}
-
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[italian, provide=*]{babel}
+\usepackage[italian]{babel}
 \usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
 \usepackage{float}
 \usepackage{microtype}
 \usepackage{geometry}
@@ -12,11 +12,15 @@
 \usepackage{titlesec}
 \usepackage{chngpage}
 \usepackage{tocloft}
+\usepackage{longtable}
+\usepackage{ltablex}
+\usepackage{array}
 \usepackage{graphicx}
 \usepackage{fancyhdr}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
 \usepackage{color,soul}
 \usepackage[most]{tcolorbox}
+\usepackage{nameref}
 \usepackage[colorlinks=true]{hyperref}
 
 \usepackage{titlesec}
@@ -86,64 +90,64 @@
     \includegraphics[width=9.5cm]{../assets/logo7ZPUs.jpg}\\
     \small\hspace{10cm} 7zpus.swe@gmail.com\\
     \vspace{0.5cm}
-    \Large \textbf{Norme di Progetto}\\
+    \LARGE \textbf{Norme di Progetto}\\
+    \vspace{0.3cm}
+    \normalsize \textbf{Versione:} 1.0.0\\
+    \textbf{Responsabile:} Laoud Zakaria \\
+    \textbf{Destinatari:} Sanmarco Informatica S.p.A., Prof. Tullio Vardanega, Prof. Riccardo Cardin, Team 7-ZPUs \\
 \end{center}
 
 \vspace{0.3cm}
 \hrule
 \vspace{0.5cm}
 
+\section*{Tabella di Versionamento}
+\setlength{\LTleft}{-0.8cm}
+
+\begin{spacing}{1.1}
+\begin{longtable}{|c|c|p{3.2cm}|p{3.2cm}|p{5cm}|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    0.14 & 2026/02/11 & Vigolo Davide & Soligo Lorenzo & Definizione metriche di qualità \\
+    \hline
+    0.13 & 2026/02/09 & Fattoni Antonio & Vigolo Davide & Correzione processo di documentazione e controllo della configurazione \\
+    \hline
+    0.12 & 2026/02/08 & Vigolo Davide & Soligo Lorenzo & Definizione metriche di qualità \\
+    \hline
+    0.11 & 2026/02/06 & Laoud Zakaria & Soligo Lorenzo & Stesura paragrafi 3.6, 3.7, 3.8 \\
+    \hline
+    0.10 & 2025/01/25 & Aaron Gingillino & Georgescu Diana & Scrittura paragrafi 2.2, 4.1 \\
+    \hline
+    0.9 & 2025/01/25 & Aaron Gingillino & Fattoni Antonio & Scrittura paragrafi 3.3, 3.4 \\
+    \hline
+    0.8.1 & 2026/01/19 & Soligo Lorenzo & Laoud Zakaria & Fine scrittura paragrafi 4.2, 4.3, 4.4 \\
+    \hline
+    0.8 & 2026/01/11 & Soligo Lorenzo & Laoud Zakaria & Stesura paragrafi 4.2, 4.3, 4.4 \\
+    \hline
+    0.7 & 2025/12/15 & Rocco Matteo A. & Georgescu Diana & Stesura paragrafo 5 \\
+    \hline
+    0.6 & 2025/12/10 & Georgescu Diana & Soligo Lorenzo & Stesura sottosezioni 2.3, 2.4 \\
+    \hline
+    0.5 & 2025/12/01 & Soligo Lorenzo & Rocco Matteo A. & Aggiornamento nuovo standard per gestione branch, convenzioni sui nomi, date e versioni. Sezioni 3.1.2, 3.3, 3.2.1.1.1, 3.2.4, 4.2.3.2.1 \\
+    \hline
+    0.4.1 & 2025/11/28 & Soligo Lorenzo & Fattoni Antonio & Correzione nella Procedura di Revisione Paragrafo 3.1.3.1 e aggiornamento immagini \\
+    \hline
+    0.4 & 2025/11/26 & Soligo Lorenzo & Fattoni Antonio & Ristrutturazione completa Processi (ISO 12207: Attività-Procedure-Strumenti) \\
+    \hline
+    0.3 & 2025/11/25 & Soligo Lorenzo & Fattoni Antonio & Creazione e stesura sezioni Processi di Infrastruttura e sottosezioni 4.2.1-4.3. Nuova struttura Paragrafi sottoParagrafi \\
+    \hline
+    0.2 & 2025/11/22 & Soligo Lorenzo & Fattoni Antonio & Creazione e stesura sezioni Documentazione e sottosezioni 3.1-3.1.5 \\
+    \hline
+    0.1 & 2025/11/16 & Rocco Matteo A. & Soligo Lorenzo & Creazione e stesura sezioni Introduzione e Processo di fornitura \\
+    \hline
+\end{longtable}
+\end{spacing}
+\newpage
+
 \tableofcontents
 \listoffigures
-\listoftables
 
-\newpage
-\section*{Tabella di Versionamento}
-\begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-        \centering
-        \begin{spacing}{1.1}
-        \begin{tabular}{|c|c|p{3.2cm}|p{3.2cm}|p{5cm}|}
-            \hline
-            \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione} \\
-           \hline
-            0.14 & 2026/02/11 & Vigolo Davide & Soligo Lorenzo & Definizione metriche di qualità \\
-            \hline
-            0.13 & 2026/02/09 & Fattoni Antonio & Vigolo Davide & Correzione processo di documentazione e controllo della configurazione \\
-            \hline
-            0.12 & 2026/02/08 & Vigolo Davide & Soligo Lorenzo & Definizione metriche di qualità \\
-            \hline
-            0.11 & 2026/02/06 & Laoud Zakaria & Soligo Lorenzo & Stesura paragrafi 3.6, 3.7, 3.8 \\
-            \hline
-            0.10 & 2025/01/25 & Aaron Gingillino & Georgescu Diana & Scrittura paragrafi 2.2, 4.1 \\
-            \hline
-            0.9 & 2025/01/25 & Aaron Gingillino & Fattoni Antonio & Scrittura paragrafi 3.3, 3.4 \\
-            \hline
-            0.8.1 & 2026/01/19 & Soligo Lorenzo & Laoud Zakaria & Fine scrittura paragrafi 4.2, 4.3, 4.4 \\
-            \hline
-            0.8 & 2026/01/11 & Soligo Lorenzo & Laoud Zakaria & Stesura paragrafi 4.2, 4.3, 4.4 \\
-            \hline
-            0.7 & 2025/12/15 & Rocco Matteo A. & Georgescu Diana & Stesura paragrafo 5 \\
-            \hline
-            0.6 & 2025/12/10 & Georgescu Diana & Soligo Lorenzo & Stesura sottosezioni 2.3, 2.4 \\
-            \hline
-            0.5 & 2025/12/01 & Soligo Lorenzo & Rocco Matteo A. & Aggiornamento nuovo standard per gestione branch, convenzioni sui nomi, date e versioni. Sezioni 3.1.2, 3.1.3, 3.2.1.1.1, 3.2.4, 4.2.3.2.1 \\
-            \hline
-            0.4.1 & 2025/11/28 & Soligo Lorenzo & Fattoni Antonio & Correzione nella Procedura di Revisione Paragrafo 3.1.3.1 e aggiornamento immagini \\
-            \hline
-            0.4 & 2025/11/26 & Soligo Lorenzo & Fattoni Antonio & Ristrutturazione completa Processi (ISO 12207: Attività-Procedure-Strumenti) \\
-            \hline
-            0.3 & 2025/11/25 & Soligo Lorenzo & Fattoni Antonio & Creazione e stesura sezioni Processi di Infrastruttura e sottosezioni 4.2.1-4.3. Nuova struttura Paragrafi e sottoParagrafi \\
-            \hline
-            0.2 & 2025/11/22 & Soligo Lorenzo & Fattoni Antonio & Creazione e stesura sezioni Documentazione e sottosezioni 3.1-3.1.5 \\
-            \hline
-            0.1 & 2025/11/16 & Rocco Matteo A. & Soligo Lorenzo & Creazione e stesura sezioni Introduzione e Processo di fornitura \\
-            \hline
-        \end{tabular}
-        \end{spacing}
-    \end{adjustwidth}
-\end{table}
-\newpage
 
 \section{Introduzione}
 
@@ -1448,7 +1452,7 @@ questo strumento è dovuta alla sua facilità d'uso e alla possibilità di
 collaborare in tempo reale tra i membri del gruppo.
 Cosi è possibile tracciare le problematiche e i dubbi emersi durante lo
 svolgimento delle attività di progetto.
-Per i DIari di Bordo è stato impostato un template presente nel Google Drive di gruppo.
+Per i Diari di Bordo è stato impostato un template presente nel Google Drive di gruppo.
 
 \paragraph{Google Drive}
 Strumento di archiviazione e condivisione dei file con l'azienda proponente e per la condivisione rapida dei Diari di Bordo.
@@ -1456,7 +1460,7 @@ Strumento di archiviazione e condivisione dei file con l'azienda proponente e pe
 Sempre tramite Google Drive vengono condivisi i verbali esterni con l'azienda proponente, in modo da poter essere approvati e archiviati in modo sicuro.
 
 \paragraph{Google Mail}
-Strumento di comunicazione formale con l'azienda proponente e per la gestione delle comunicazioni ufficiali del gruppo.\\
+Strumento di comunicazione formale con l'azienda proponente, con i Professori committenti e per la gestione delle restanti comunicazioni ufficiali del gruppo.\\
 Tutti i membri del gruppo devono utilizzare l'account di posta elettronica ufficiale del gruppo per le comunicazioni formali, garantendo così la tracciabilità e 
 la professionalità nelle interazioni esterne.\\
 Le comunicazioni esterne sono gestite dal responsabile salvo diverse indicazioni, il quale deve ricordare che parla a nome di tutto il gruppo.
@@ -1683,7 +1687,7 @@ In questa sezione vengono definite le metriche utilizzate per valutare l'efficie
 
 \subsubsection{Processi Organizzativi}
 
-\paragraph{Processo di Gestione dei Rischi}
+\paragraph{Processo di Gestione dei Rischi} \label{gestione_rischi_operativi}
 
 \metricdef{MPC-15}{Rischi non previsti}{Numero di rischi non previsti ad inizio periodo, per ciascun periodo di progetto.}
 \metricformula{RNP = \#\text{Rischi non previsti}}
