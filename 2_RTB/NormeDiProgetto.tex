@@ -782,8 +782,9 @@ risultato di una discussione e successiva decisione presa in tale sede.
 \paragraph{Procedura: Identificazione della documentazione}\label{procedurePianificaDocs}
 Durante la pianificazione di ogni Sprint, il responsabile identifica le
 necessità di documentazione in base agli obiettivi dello Sprint e alle attività
-previste. Ad ogni documento principale è legata una branch \texttt{in\_lavorazione} che
-mantiene le versioni aggiornate pronte alla verifica finale di periodo.
+previste. Ad ogni documento principale è legata una branch
+\texttt{in\_lavorazione} che mantiene le versioni aggiornate pronte alla
+verifica finale di periodo.
 
 \paragraph{Procedura: Creazione delle attività}
 Il responsabile assegna le attività di documentazione ai membri del gruppo,
@@ -858,12 +859,11 @@ La denominazione dei file sul sito segue anch'essa la datazione usata per il nom
 \paragraph{Procedura: Revisione e approvazione} \label{revisione_approvazione}
 
 Una volta ricevuta la notifica della PR da revisionare, il responsabile dovrà
-          controllare l'aderenza ai modelli approvati, la correttezza formale e
-          sostanziale del documento. Per velocizzare, oltre alla lettura attenta, si
-          consiglia l'uso di LLM, in particolare per l'analisi grammaticale e stilistica.
+controllare l'aderenza ai modelli approvati, la correttezza formale e
+sostanziale del documento. Per velocizzare, oltre alla lettura attenta, si
+consiglia l'uso di LLM, in particolare per l'analisi grammaticale e stilistica.
 \\Completata la revisione, procede come descritto in \ref{controlloConfig} con
-          l'approvazione o la richiesta di modifiche.
-
+l'approvazione o la richiesta di modifiche.
 
 Lo stesso effettua il merge da "\textit{in\_lavorazione}" nel ramo principale
 \textit{main} come definito in \ref{controlloConfig}, base per la versione
@@ -902,8 +902,8 @@ creazione deve seguire i seguenti passaggi:
     \item Identificazione della versione di correzione corrispondente alla milestone RTB
           o PB.
     \item Aggiunta di label specifici per facilitare la ricerca, la categorizzazione dei
-          CIs e la raccolta dei dati per le metriche di qualità. Per esempio:
-          , per esempio \textit{DOCS}, \textit{Formazione}, \textit{Code} etc.
+          CIs e la raccolta dei dati per le metriche di qualità. Per esempio: , per
+          esempio \textit{DOCS}, \textit{Formazione}, \textit{Code} etc.
 \end{enumerate}
 \paragraph{Strumenti}
 \begin{itemize}
@@ -1098,7 +1098,7 @@ grammatica e leggibilità tramite Aspell e Textstat.\\
 
 \paragraph{Strumenti}
 \begin{itemize}
-     \item \textbf{LLM} per il supporto alla verifica del contenuto, in particolare per l'analisi di coerenza, completezza e aderenza alle linee guida.
+    \item \textbf{LLM} per il supporto alla verifica del contenuto, in particolare per l'analisi di coerenza, completezza e aderenza alle linee guida.
     \item \textbf{Aspell} per il controllo ortografico, utilizzato negli script automatizzati (Github Action).
     \item \textbf{Textstat} per il controllo di leggibilità, utilizzato negli script automatizzati (Github Action).
 \end{itemize}
@@ -1182,89 +1182,72 @@ Per eseguire i test di accettazione, il Team segue i seguenti passaggi:
     \item \textbf{Piano di Qualifica:} Per la registrazione degli esiti dei test e l'aggiornamento delle metriche di validazione.
 \end{itemize}
 
+
 \subsection{Processo di revisione congiunta}\label{proc_revisione_congiunta}
-Il processo di revisione congiunta regola le attività di verifica periodica
-svolte congiuntamente con la proponente per verificare l'allineamento rispetto
-ai requisiti e agli obiettivi concordati. Questo processo garantisce che lo
-sviluppo del prodotto proceda in conformità con le aspettative della proponente
-e permette di identificare tempestivamente eventuali problemi.
+Il processo di revisione congiunta è un'attività sincrona tra i membri del gruppo, finalizzata al terminare un'insieme di sviluppo o di documentazione coese tra loro.
+Questa attività risulta particolarmente utile se eseguita in concomitanza del raggiungimento di una milestone. Verosimilmente, oggetti della revisione congiunta coincideranno
+con dei Configuration Items. Il processo di revisione congiunta prevede la partecipazione di un sottoinsieme dei membri del gruppo, selezionati in base al loro coinvolgimento
+nelle attività che hanno contribuito alle modifiche del suddetto Configuration Item.
 
-I ruoli coinvolti in questo processo sono:
-\begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-        \centering
-        \begin{spacing}{1.1}
-            \begin{tabular}{|c|c|}
-                \hline
-                \textbf{Ruolo}          & \textbf{Specifica}                                                                                                                      \\
-                \hline
-                Responsabile            & \begin{tabular}[c]{@{}c@{}} Coordina gli incontri preparando i materiali e gestendo \\ la comunicazione con la proponente \end{tabular} \\
-                \hline
-                Tutti i membri del team & \begin{tabular}[c]{@{}c@{}} Partecipano attivamente alle revisioni ponendo \\ quesiti quando necessario \end{tabular}                   \\
-                \hline
-            \end{tabular}
-        \end{spacing}
-    \end{adjustwidth}
-\end{table}
+\subsubsection{Attività: Pianificazione}
+La pianificazione della revisione congiunta è stabilita dal responsabile in collaborazione con i membri del team che si sono occupati dello sviluppo del Configuration Item. L'attività viene pianificata secondo quanto scritto in §\ref{gestione_processi_organizzativi}.
 
-\subsubsection{Attività: Pianificazione delle revisioni}\label{pianificazione_revisioni}
-
-\paragraph{Procedura: Revisione}
-Come concordato con la proponente (\ref{processoDiFornitura}), con cadenza
-bisettimanale il gruppo di lavoro si incontra con l'azienda tramite Google Meet
-per discutere lo stato di avanzamento del progetto.\\ L'amministratore si
-occupa della creazione della task Jira relativa all'incontro, assegnando anche
-la scrittura e verifica del verbale.
-
-\subsubsection{Attività: Preparazione dei materiali}\label{preparazione_materiali}
-Prima della revisione con la proponente vengono preparati i materiali oggetto della discussione, partendo ovviamente dalle attività di progetto pianificate per il periodo e dal loro stato di avanzamento.
-\paragraph{Procedura: Preparazione}
-Al fine di garantire un'organizzazione efficace degli incontri, vengono
-adottate le seguenti modalità operative:
+\paragraph{Procedura: Identificazione dei partecipanti}
+Il responsabile identifica i membri del team che parteciperanno alla revisione congiunta, tenendo conto dei seguenti criteri:
 \begin{enumerate}
-    \item È già stato fornito alla proponente un link alla dashboard per il monitoraggio continuo dell'avanzamento dei lavori.
-    \item Prima di ogni incontro si svolge un meeting su Discord per definire l'ordine di
-          esposizione degli argomenti.
-    \item Prima di ogni incontro viene concordato il materiale da mostrare durante la
-          revisione. Vengono, inoltre, raccolte e organizzate le domande, provenienti da
-          tutti i membri del gruppo, da sottoporre alla proponente.
+    \item \textbf{Coinvolgimento diretto}: priorità ai membri che hanno contribuito direttamente allo sviluppo del Configuration Item.
+    \item \textbf{Competenza tecnica}: includere membri con conoscenze specifiche dell'area di revisione (architetturale, documentale, etc.).
+\end{enumerate}
+Una volta identificati, i partecipanti vengono formalmente comunicati tramite i canali asincroni.
+
+\paragraph{Procedura: Identificazione del materiale oggetto di revisione}
+Il responsabile, in collaborazione con il team, identifica e documenta il materiale da sottoporre a revisione congiunta:
+\begin{enumerate}
+    \item \textbf{Determinazione del Configuration Item}: viene identificato il CI (documento, componente software, set di test, etc.) che ha raggiunto una milestone o uno stato di maturità sufficiente per la revisione congiunta.
+    \item \textbf{Comunicazione degli obiettivi di revisione}: vengono stabiliti chiaramente gli obiettivi della revisione.
 \end{enumerate}
 
-\subsubsection{Attività: Conduzione della revisione}\label{conduzione_revisione}
-Ogni revisione deve seguire una struttura standard per ruoli e prassi.
-\paragraph{Procedura: Contenuti della revisione}
-Durante l'incontro di revisione congiunta:
+\paragraph{Procedura: Pianificazione della sessione di revisione}
+Il responsabile pianifica la sessione di revisione congiunta seguendo i seguenti passaggi:
 \begin{enumerate}
-    \item Il responsabile presenta lo stato di avanzamento rispetto alla pianificazione
-    \item Vengono mostrate, se presenti, le demo delle nuove funzionalità implementate. In questo caso è necessario che ad esporre le funzionalità sia il personale più esperto, in modo da garantire la maggior completezza nell'esposizione.
-    \item Si discutono eventuali problematiche emerse e si raccolgono feedback dalla
-          proponente chiarendo eventuali dubbi
+    \item \textbf{Definizione della data e dell'ora}: viene stabilita una data e un'ora che sia compatibile con la disponibilità di tutti i partecipanti identificati. Si preferisce una sessione sincrona in modo da favorire discussioni approfondite e chiarimenti immediati.
+    \item \textbf{Durata stimata}: viene stimata la durata della sessione in base alla complessità del CI e al numero di partecipanti, con una media di 1-2 ore.
+    \item \textbf{Modalità di conduzione}: viene stabilito il formato della revisione:
+    \begin{itemize}
+        \item \textbf{In presenza}: se possibile, per favorire una comunicazione più naturale e una collaborazione più stretta.
+        \item \textbf{Remota tramite Discord}: utilizzando il server Discord del gruppo con canale dedicato per la sessione.
+        \item \textbf{Ibrida}: combinazione di partecipanti in presenza e remoti, utilizzando Discord e uno schermo condiviso.
+    \end{itemize}
 \end{enumerate}
 
-\subsubsection{Attività: Post incontro}\label{post_incontro}
-Un incontro non può essere vissuto pasivamente ma è necessario sempre stilare un bilancio al fine di ricercare un miglioramento continuo e adeguarsi all'evolversi delle richieste degli stakeholder.
-\paragraph{Procedura: Gestione post incontro}
-Al termine di ogni revisione congiunta quindi:
-\begin{enumerate}
-    \item Viene completato il verbale esterno riportante le tematiche trattate e i dubbi
-          discussi
-    \item Il verbale viene condiviso con la proponente tramite Google Drive per
-          approvazione e firma
-    \item Eventuali variazioni rispetto alla visione iniziale del gruppo vengono
-          formalizzate tramite la creazione di apposite Issue Jira e assegnate al membro
-          del team competente.
-    \item Il verbale approvato viene archiviato nel repository secondo le procedure di
-          documentazione (\ref{produzioneDocs})
-\end{enumerate}
-
-\subsubsection{Strumenti}\label{strumenti_revisione_congiunta}
+\paragraph{Strumenti}
 \begin{itemize}
-    \item \textbf{Google Drive:} Per la condivisione dei verbali esterni e dei materiali di revisione con la proponente
-    \item \textbf{Gmail:} Per la comunicazione formale con la proponente
-    \item \textbf{Discord:} Per il coordinamento interno del team in preparazione alle revisioni
-    \item \textbf{Jira:} Per il tracciamento delle Issue emerse dalle revisioni
-    \item \textbf{Google Meet:} Per lo svolgimento delle revisioni in modalità sincrona con la proponente
+    \item \textbf{Jira}: Per la creazione di task dedicate alle revisioni congiunte e il tracciamento delle attività correlate.
+    \item \textbf{Discord}: Per la comunicazione dei dettagli della revisione e la condivisione di aggiornamenti in tempo reale.
+    \item \textbf{GitHub}: Per l'accesso rapido al materiale di revisione (documenti, codice, branch).
 \end{itemize}
+
+\subsubsection{Attività: Esecuzione della revisione congiunta}
+\paragraph{Procedure: Definizione dell'ordine di revisione del materiale}
+La fase iniziale della revisione prevede una piccola pianificazione dell'ordine di revisione del materiale, che tenga conto della complessità e delle relazioni tra le varie parti che lo compongono.
+Si lascia la libertà a chi conduce la revisione di stabilire l'ordine e la logica più adatta al caso specifico, tenendo conto dei seguenti criteri:
+\begin{enumerate}
+    \item \textbf{Logica di sviluppo}: seguire l'ordine in cui le parti sono state sviluppate o documentate, per facilitare la comprensione del processo di sviluppo e delle scelte progettuali.
+    \item \textbf{Relazioni tra le parti}: iniziare con le parti più generali o di alto livello (ad esempio, l'architettura generale) per poi passare a quelle più specifiche (ad esempio, dettagli di implementazione o sezioni di documentazione).
+    \item \textbf{Punti critici}: dare priorità alla revisione di parti che sono state identificate come potenzialmente problematiche o che hanno subito modifiche significative, per garantire che eventuali problemi vengano individuati e risolti tempestivamente.
+\end{enumerate}
+
+\paragraph{Procedur: Revisione del materiale}
+Durante la revisione ai partecipanti esaminano attentamente il materiale, discutendo eventuali dubbi, criticità o proposte di miglioramento.
+Ogni problema emerso durante la revisione viene comunicato al responsabile, che si occupa poi di pianificare le attività di risoluzione assieme ai revisori.
+
+\paragraph{Strumenti}
+\begin{itemize}
+    \item \textbf{Discord}: Per la comunicazione durante la sessione di revisione, con canale dedicato e possibilità di condividere schermi e documenti in tempo reale.
+    \item \textbf{GitHub}: Per l'accesso al materiale di revisione.
+    \item \textbf{LiveShare}: Per la condivisione degli ambienti di lavoro e l'editing collaborativo in tempo reale.
+\end{itemize}
+
 
 \subsection{Processo di risoluzione dei problemi}\label{proc_risoluzione_problemi}
 Il processo di risoluzione dei problemi definisce le modalità sistematiche per
@@ -1298,6 +1281,10 @@ I ruoli coinvolti in questo processo sono:
 \end{table}
 
 \subsubsection{Attività: Identificazione del problema}\label{identificazione_problema}
+Una identificazione precoce e accurata dei problemi consente al gruppo di
+intervenire proattivamente, minimizzando gli impatti sulle attività di progetto
+e prevenendo l'accumularsi di criticità che potrebbero compromettere la qualità
+del prodotto finale o il rispetto delle scadenze pianificate.
 
 \paragraph{Procedura: Identificazione}
 Qualsiasi membro del team può identificare e segnalare un problema utilizzando
@@ -1322,7 +1309,9 @@ informazioni:
 \end{itemize}
 
 \subsubsection{Attività: Analisi e classificazione}\label{analisi_classificazione}
-
+L'analisi e la classificazione sistematica dei problemi permettono di stabilire priorità di
+intervento, allocare risorse in modo efficiente e prevenire che criticità
+minori si trasformino in blocchi significativi per il progetto.
 \paragraph{Procedura: Analisi e classificazione}
 Una volta identificato, il problema viene analizzato dal responsabile insieme
 ai membri competenti per:
@@ -1345,7 +1334,8 @@ ai membri competenti per:
 \end{enumerate}
 
 \subsubsection{Attività: Sviluppo della soluzione}\label{sviluppo_soluzione}
-
+Una volta completata l'analisi e la classificazione del problema, il team procede con lo sviluppo di una soluzione strutturata. 
+Questa fase richiede un approccio metodico che coinvolga i membri più competenti nella ricerca di alternative e nella valutazione delle possibili conseguenze.
 \paragraph{Procedura: Sviluppo della soluzione}
 In base alla classificazione e all'analisi effettuata:
 \begin{enumerate}
@@ -1361,7 +1351,10 @@ In base alla classificazione e all'analisi effettuata:
 \end{enumerate}
 
 \subsubsection{Attività: Implementazione e verifica}\label{implementazione_verifica}
-
+Una volta completata l'analisi e la classificazione del problema, il team procede con l'implementazione sistematica della soluzione identificata. 
+Questa fase è critica poiché trasforma l'analisi teorica in azioni concrete che risolvono il problema alla radice. 
+L'implementazione deve essere accompagnata da una verifica rigorosa per assicurare che la soluzione sia efficace, non introduca nuove problematiche e sia conforme agli standard di qualità del progetto. 
+Solo attraverso una verifica accurata è possibile garantire che il problema sia effettivamente risolto e che il sistema rimanga stabile e affidabile.
 \paragraph{Procedura: Implementazione e verifica}
 La soluzione viene implementata seguendo le normali procedure di sviluppo:
 \begin{enumerate}
@@ -1375,7 +1368,6 @@ La soluzione viene implementata seguendo le normali procedure di sviluppo:
     \item Merge della soluzione secondo le procedure di revisione
           (\ref{revisione_approvazione})
 \end{enumerate}
-
 
 \subsubsection{Integrazione con altri processi}\label{integrazione_risoluzione_problemi}
 Il processo di risoluzione dei problemi si integra con:
@@ -1395,7 +1387,7 @@ Il processo di risoluzione dei problemi si integra con:
     \item \textbf{GitHub:} Per la gestione dei branch di lavoro e il merge delle soluzioni implementate
 \end{itemize}
 
-\subsection{Gestione della qualità}\label{gestione_qualita}
+\subsection{Processo di gestione della qualità}\label{gestione_qualita}
 Il processo di gestione della qualità sovrintende all'applicazione sistematica
 delle metriche definite e all'integrazione tra i processi di garanzia della
 qualità, verifica, validazione e miglioramento per garantire la qualità
@@ -1427,14 +1419,13 @@ I ruoli coinvolti in questo processo sono:
 
 \subsubsection{Attività: Pianificazione della qualità}\label{pianificazione_qualita}
 
-\paragraph{Procedure di pianificazione}
-All'inizio di ogni Sprint, il responsabile coordina la pianificazione degli
+\paragraph{Procedura: Definizione di metriche e soglie}
+Per ogni milestone, il responsabile coordina la pianificazione degli
 obiettivi di qualità:
 \begin{enumerate}
-    \item \textbf{Definizione degli obiettivi di Sprint:} In base alle attività pianificate, vengono identificati gli obiettivi specifici di qualità da raggiungere
-    \item \textbf{Selezione delle metriche applicabili:} Tra quelle definite nella sezione \ref{metriche_qualita}, vengono scelte le metriche più rilevanti per lo Sprint corrente
+    \item \textbf{Definizione degli obiettivi della milestone:} In base alle attività pianificate, vengono identificati gli obiettivi specifici di qualità da raggiungere
+    \item \textbf{Selezione delle metriche applicabili:} Tra quelle definite nella sezione \ref{metriche_qualita}, vengono scelte le metriche più rilevanti per le aspettative della milestone
     \item \textbf{Definizione delle soglie:} Per ogni metrica selezionata, vengono stabilite le soglie minime accettabili e quelle target, in conformità con il Piano di Qualifica
-    \item \textbf{Assegnazione delle responsabilità:} I verificatori vengono assegnati alle diverse attività di controllo
 \end{enumerate}
 
 Gli obiettivi di qualità vengono documentati e comunicati a tutto il team
@@ -1442,18 +1433,14 @@ durante la riunione di pianificazione dello Sprint.
 
 \subsubsection{Attività: Monitoraggio continuo}\label{monitoraggio_continuo}
 
-\paragraph{Procedure di monitoraggio}
-Durante lo svolgimento dello Sprint, la qualità viene monitorata costantemente
+\paragraph{Procedura: Monitoraggio}
+Durante lo svolgimento dei periodi, la qualità viene monitorata costantemente
 attraverso:
 \begin{enumerate}
     \item \textbf{Controllo automatizzato:}
           \begin{itemize}
               \item Le GitHub Actions eseguono verifiche automatiche ad ogni commit (indice
                     Gulpease, build success rate)
-              \item La \glossario{pipeline di CI/CD} monitora le metriche di processo come
-                    \glossario{build} time e test coverage
-              \item Gli strumenti di analisi statica verificano la complessità ciclomatica e altre
-                    metriche di codice
           \end{itemize}
     \item \textbf{Controllo manuale:}
           \begin{itemize}
@@ -1472,47 +1459,42 @@ attraverso:
 \end{enumerate}
 
 \subsubsection{Attività: Valutazione periodica}\label{valutazione_periodica}
-
-\paragraph{Procedure di valutazione}
-A cadenza regolare vengono effettuate valutazioni approfondite della qualità:
-\begin{enumerate}
-    \item \textbf{Review settimanale:} Durante le riunioni di team, vengono discusse brevemente le metriche principali e le eventuali criticità emerse
-    \item \textbf{Review di fine Sprint:} Al termine di ogni Sprint:
+La valutazione periodica al fine del miglioramento continuo. Esistono però diverse forme di valutazione periodica.
+\paragraph{Procedura: Review settimanale}
+ Durante le riunioni di team, vengono discusse brevemente le metriche principali e le eventuali criticità emerse. Questa review è scaturita dalla analisi del cruscotto e delle sue metriche. 
+\paragraph{Procedura: Review di fine Sprint:} 
+Al termine di ogni Sprint:
           \begin{itemize}
               \item Si confrontano le metriche ottenute con gli obiettivi pianificati
               \item Si analizzano le cause di eventuali scostamenti significativi
               \item Si valuta l'efficacia delle azioni correttive implementate
               \item Si aggiorna il cruscotto di qualità nel Piano di Qualifica
           \end{itemize}
-    \item \textbf{Review di milestone:} In preparazione delle milestone:
+\paragraph{Procedura: Review di milestone:} 
+In preparazione delle milestone:
           \begin{itemize}
               \item Si effettua una valutazione complessiva della qualità raggiunta
               \item Si verifica il rispetto di tutti i requisiti di qualità obbligatori
                     % \item Si producono report dettagliati per committente e proponente
           \end{itemize}
-\end{enumerate}
 
 \subsubsection{Attività: Azioni correttive}\label{azioni_correttive}
 
-\paragraph{Procedure per azioni correttive}
-Quando il monitoraggio evidenzia deviazioni dagli standard di qualità:
-\begin{enumerate}
-    \item \textbf{Identificazione della deviazione:} Attraverso il monitoraggio continuo o le review periodiche
-    \item \textbf{Analisi della causa:} Si applica il processo di risoluzione dei problemi (\ref{proc_risoluzione_problemi}) per identificare le cause radice
-    \item \textbf{Pianificazione dell'intervento:}
+\paragraph{Procedura: Identificazione della deviazione e analisi delle cause} 
+Attraverso il monitoraggio continuo o le review periodiche è possibile identificare eventuali deviazioni dagli standard di qualità imposti.
+Pe l'analisi si applica il processo di risoluzione dei problemi (\ref{proc_risoluzione_problemi}) in modo da identificare le cause radice
+\paragraph{Procedura: Pianificazione dell'intervento}
+La pianificazione del piano di intervento correttivo si differenzia in in base al grado di importanza, complessità ed estensione delle deviazioni delle pre.
           \begin{itemize}
               \item Per deviazioni minori: si assegna una issue correttiva al membro responsabile
               \item Per deviazioni significative: il responsabile convoca una sessione dedicata per
                     pianificare l'intervento
           \end{itemize}
-    \item \textbf{Implementazione e verifica:} L'azione correttiva viene implementata e verificata secondo le normali procedure
-    \item \textbf{Monitoraggio dell'efficacia:} Si verifica che l'azione correttiva abbia effettivamente risolto il problema senza introdurre nuove criticità
-\end{enumerate}
+\paragraph{Procedura: Implementazione e verifica} 
+L'azione correttiva viene implementata in modo specifico alla deviazione
 
-\subsubsection{Attività: Procedure generali di gestione della qualità}\label{procedure_gestione_qualita}
-
-\paragraph{Procedure di gestione della qualità}
-Le seguenti procedure guidano il Team nella gestione sistematica della qualità:
+\paragraph{Linee guida di gestione della qualità}
+Le seguenti linee guida orientano il Team nella gestione sistematica della qualità:
 \begin{enumerate}
     \item \textbf{Prevenzione > Correzione:} Si privilegia l'adozione di pratiche preventive (code review, test automatici, standard di codifica) rispetto alla correzione a posteriori
     \item \textbf{Automazione quando possibile:} Le verifiche ripetitive vengono automatizzate per ridurre errori umani e liberare tempo per attività a maggior valore aggiunto
@@ -1657,12 +1639,15 @@ Il processo di Infrastruttura fornisce il supporto tecnico necessario per lo
 sviluppo e la gestione del progetto.
 
 \subsubsection{Attività: Implementazione}\label{ImplementazioneInfrastruttura}
-Per una gestione efficiente delle attività di progetto è necessario che la scelta degli strumenti infrastrutturali a sostegno dei processi sia ben ponderata. 
-L'attività di implementazione di occupa di questo aspetto.
+Per una gestione efficiente delle attività di progetto è necessario che la
+scelta degli strumenti infrastrutturali a sostegno dei processi sia ben
+ponderata. L'attività di implementazione di occupa di questo aspetto.
 
 \subsubsection{Procedura: Analisi degli strumenti}
-Uno strumento per essere incluso tra gli strumenti del team deve prima di tutto rispondere ai requisiti del processo nel quale viene implementato. 
-È necessario poi considerare una serie di variabili che non possono essere tralasciati. Tra questi:  
+Uno strumento per essere incluso tra gli strumenti del team deve prima di tutto
+rispondere ai requisiti del processo nel quale viene implementato. È necessario
+poi considerare una serie di variabili che non possono essere tralasciati. Tra
+questi:
 \begin{itemize}
     \item \textbf{Costo:} Valutare il rapporto costo-beneficio e la sostenibilità economica a lungo termine, in ore produttive soprattutto.
     \item \textbf{Scalabilità:} Verificare la capacità dello strumento di adattarsi alle crescenti esigenze del progetto.
@@ -1672,26 +1657,35 @@ Uno strumento per essere incluso tra gli strumenti del team deve prima di tutto 
 \end{itemize}
 
 \subsubsection{Procedura: Documentazione degli strumenti scelti}
-Una volta che è stato scelto uno strumento è necessario che venga aggiornato il documento delle norme con l'inserimento all'interno del processo interessato del riferimento alle procedure di utilizzo ddel nuovo strumento. \\Ci si aspetta inoltre che maggiori informazioni siano disponibili alla sezione specifica dello strumento nella \textit{Knowladge Base} del team (\ref{knowladge_base})
+Una volta che è stato scelto uno strumento è necessario che venga aggiornato il
+documento delle norme con l'inserimento all'interno del processo interessato
+del riferimento alle procedure di utilizzo ddel nuovo strumento. \\Ci si
+aspetta inoltre che maggiori informazioni siano disponibili alla sezione
+specifica dello strumento nella \textit{Knowladge Base} del team
+(\ref{knowladge_base})
 
 \paragraph{Strumenti}
 \begin{itemize}
     \item \textbf{Jira:} Come descritto in \ref{pianificazioneDocs}, è necessaria la creazione di una
-issue concordata in fase di pianificazione per ogni nuovo strumento da 
-adottare. In questo modo si garantisce la tracciabilità della decisione e la
-documentazione delle motivazioni alla base della scelta.
+          issue concordata in fase di pianificazione per ogni nuovo strumento da
+          adottare. In questo modo si garantisce la tracciabilità della decisione e la
+          documentazione delle motivazioni alla base della scelta.
     \item \textbf{GitHub:} Strumento per l'hosting utilizzato per il testing delle nuove tecnologie. Ogni
-nuova tecnologia deve essere testata nell'apposita repository o branch, per
-evitare di compromettere l'infrastruttura esistente. Per gli standard di
-versionamento e gestione delle branch si rimanda a \ref{stdBranch}.
+          nuova tecnologia deve essere testata nell'apposita repository o branch, per
+          evitare di compromettere l'infrastruttura esistente. Per gli standard di
+          versionamento e gestione delle branch si rimanda a \ref{stdBranch}.
 \end{itemize}
 
 \subsubsection{Attività: Costituzione dell'infrastruttura}
-La realizzazione dell'infrastruttura è tale solo se gli strumenti e le loro procedure vengono applicati dai membri del team in modo coerente con quanto descritto dalle Norme di Progetto.
+La realizzazione dell'infrastruttura è tale solo se gli strumenti e le loro
+procedure vengono applicati dai membri del team in modo coerente con quanto
+descritto dalle Norme di Progetto.
 \paragraph{Procedura: Studio e allineamento}
-Per favorire un uso coerente degli strumenti opportuno che ogni membro del team rimanga aggiornato sull'evoluzione dell'infrastruttura. 
-L'allineamento parte dallo studio personale delle spiegazioni delle Norme di Progetto e sfocia nell'applicazione sul campo. 
-\\Questo non esclude la possibilità in organizzare incontri sincroni di aggiornamento per chiarimenti aggiuntivi.
+Per favorire un uso coerente degli strumenti opportuno che ogni membro del team
+rimanga aggiornato sull'evoluzione dell'infrastruttura. L'allineamento parte
+dallo studio personale delle spiegazioni delle Norme di Progetto e sfocia
+nell'applicazione sul campo. \\Questo non esclude la possibilità in organizzare
+incontri sincroni di aggiornamento per chiarimenti aggiuntivi.
 \paragraph{Strumenti}
 Gli strumenti adottati per il monitoraggio e la manutenzione
 dell'infrastruttura sono i seguenti.
@@ -1706,11 +1700,19 @@ risoluzione di eventuali problemi legati agli strumenti e alle tecnologie
 utilizzati nel progetto.
 
 \paragraph{Procedura: Monitoraggio}
-Viene effettuato un monitoraggio costante delle prestazioni degli strumenti per identificare eventuali problemi o inefficienze. Tale monitoraggio è più efficacie se non è limitato al solo ruolo del amminsitratore.
-Tutti i membri del team dovrebbero segnalare funzionamenti non ottimali all'amministratore in modo che quest'ultimo possa indagare sulle origini di questi malfunzionamenti e in caso valutare la modifica dell'infrastruttura.
+Viene effettuato un monitoraggio costante delle prestazioni degli strumenti per
+identificare eventuali problemi o inefficienze. Tale monitoraggio è più
+efficacie se non è limitato al solo ruolo del amminsitratore. Tutti i membri
+del team dovrebbero segnalare funzionamenti non ottimali all'amministratore in
+modo che quest'ultimo possa indagare sulle origini di questi malfunzionamenti e
+in caso valutare la modifica dell'infrastruttura.
 \paragraph{Procedura: Segnalazione}
-Nel caso in cui ci sia da investigare un funzionamento anomalo, è bene che in seguito ad una pronta comunicazione tramite i canali sincroni del gruppo, l'amministratore crei un task Jira. 
-\\Una volta fatto ciò viene analizzato il malfunzionamento e nel caso sia un evento non ignorabile come "caso isolato", viene riaperta la ricerca di nuovi strumenti che sostituiscano quello corrente con le stesse modalità descritte qui \ref{ImplementazioneInfrastruttura}
+Nel caso in cui ci sia da investigare un funzionamento anomalo, è bene che in
+seguito ad una pronta comunicazione tramite i canali sincroni del gruppo,
+l'amministratore crei un task Jira. \\Una volta fatto ciò viene analizzato il
+malfunzionamento e nel caso sia un evento non ignorabile come "caso isolato",
+viene riaperta la ricerca di nuovi strumenti che sostituiscano quello corrente
+con le stesse modalità descritte qui \ref{ImplementazioneInfrastruttura}
 
 \paragraph{Strumenti}
 Gli strumenti adottati per il monitoraggio e la manutenzione
@@ -1818,8 +1820,9 @@ informazioni urgenti.\\ Si raccomanda di essere particolarmente responsivi su
 questo canale, in quanto spesso viene utilizzato per comunicazioni che
 richiedono una risposta tempestiva.
 
-In vista dell'attività di produzione di codice, l'infrastruttura verrà aggiornata e ampliata per poter rimanere al passo con le nuove necessità.
-Sono in particolare previste le seguenti aggiunte:
+In vista dell'attività di produzione di codice, l'infrastruttura verrà
+aggiornata e ampliata per poter rimanere al passo con le nuove necessità. Sono
+in particolare previste le seguenti aggiunte:
 \begin{itemize}
     \item \textbf{Tracciamento dei requisiti:} Deploy di uno strumento automatico per il tracciamento dei requisiti che ammetta codice solo se i requisiti sono stati tracciati correttamente.\\ Tale codice è in fase di scrittura e verrà integrato non appena testato.
     \item \textbf{Integrazioni di Analisi Statica e Dinamica:} Deploy di strumenti di analisi statica e dinamica del codice per garantire la qualità del software prodotto.
@@ -1916,11 +1919,17 @@ La pianificazione della formazione è un'attività fondamentale per garantire
 un'efficace trasmissione delle conoscenze. La pianificazione di queste attività
 segue la pianificazione generale del progetto, in modo da integrare la
 formazione con le altre attività di progetto.
-\paragraph{Procedura: Identificazione delle necessità formative} 
-Vengono identificate le necessità formative dei membri del team, in base alle competenze richieste per le attività di progetto. 
-Se queste non possono essere colmate dalle nozioni presenti nelle Norme di Progetto o risultano particolarmente delicate per complessità e/o importanza è necessaria una pianificazione approfondita.
-\paragraph{Pianificazione delle attività formative} 
-Vengono pianificate le attività formative, definendo gli obiettivi, i contenuti, le risorse necessarie e i tempi di erogazione. Queste attività formative devono svolgersi il prima possibile per garantire la continuazione delle attività produttive.
+\paragraph{Procedura: Identificazione delle necessità formative}
+Vengono identificate le necessità formative dei membri del team, in base alle
+competenze richieste per le attività di progetto. Se queste non possono essere
+colmate dalle nozioni presenti nelle Norme di Progetto o risultano
+particolarmente delicate per complessità e/o importanza è necessaria una
+pianificazione approfondita.
+\paragraph{Procedura: Pianificazione delle attività formative}
+Vengono pianificate le attività formative, definendo gli obiettivi, i
+contenuti, le risorse necessarie e i tempi di erogazione. Queste attività
+formative devono svolgersi il prima possibile per garantire la continuazione
+delle attività produttive.
 \paragraph{Strumenti}
 \begin{itemize}
     \item \textbf{Jira:} Utilizzato per tracciare le attività di modifica e monitorare lo stato di avanzamento.
@@ -1930,22 +1939,31 @@ Vengono pianificate le attività formative, definendo gli obiettivi, i contenuti
 L'erogazione della formazione si implementa attraverso sessioni di formazione.
 In particolare, sono identificabili due tipologie di sessioni:
 
-\paragraph{Procedura: Formazione Autonoma} 
-Sessioni individuali di studio e pratica, al fine di comprendere il funzionamento e le strategie per l'utilizzo ottimale di uno strumento. 
-\\La formazione risulta completa quando è dimostrabile concretamente con l'utilizzo dello strumento.
-\paragraph{Procedura: Confronto} 
-Sessioni di formazione condotte da tutti i membri coinvolti su un argomento specifico, con l'obiettivo di condividere conoscenze, best practice e formulare soluzioni comuni. Utili soprattutto per quegli strumenti che necessitano di gestioni particolarmente attente, poco intuitive o particolarmente vasti come funzionalità.
-\paragraph{Procedura: Archiviazione} 
-I materiali e le note della formazione vengono salvati nelle Norme di Progetto per rendere disponibili a tutti i materiali di Formazione.
-
+\paragraph{Procedura: Formazione Autonoma}
+Sessioni individuali di studio e pratica, al fine di comprendere il
+funzionamento e le strategie per l'utilizzo ottimale di uno strumento. \\La
+formazione risulta completa quando è dimostrabile concretamente con l'utilizzo
+dello strumento.
+\paragraph{Procedura: Confronto}
+Sessioni di formazione condotte da tutti i membri coinvolti su un argomento
+specifico, con l'obiettivo di condividere conoscenze, best practice e formulare
+soluzioni comuni. Utili soprattutto per quegli strumenti che necessitano di
+gestioni particolarmente attente, poco intuitive o particolarmente vasti come
+funzionalità.
+\paragraph{Procedura: Archiviazione}
+I materiali e le note della formazione vengono salvati nelle Norme di Progetto
+per rendere disponibili a tutti i materiali di Formazione.
 
 \subsubsection{Attività: Valutazione della Formazione}
 L'attività di Valutazione della Formazione serve a verificare l'efficacia delle
 sessioni di formazione e l'acquisizione delle competenze da parte dei
 partecipanti.
-\paragraph{Procedura: Verifica pratica} 
-Nei giorni successivi alla formazione, vengono assegnati esercizi pratici o task che richiedono l'applicazione delle conoscenze apprese. 
-Nel caso in cui questa attività faccia emergere dubbi sarà quindi necessaria una sessione di formazione e confronto con i membri del team che abbiamo una visione più chiara e possano indirizzare in modo mirato verso una più completa comprensione.
+\paragraph{Procedura: Verifica pratica}
+Nei giorni successivi alla formazione, vengono assegnati esercizi pratici o
+task che richiedono l'applicazione delle conoscenze apprese. Nel caso in cui
+questa attività faccia emergere dubbi sarà quindi necessaria una sessione di
+formazione e confronto con i membri del team che abbiamo una visione più chiara
+e possano indirizzare in modo mirato verso una più completa comprensione.
 
 \paragraph{Strumenti di Valutazione}
 Gli strumenti utilizzati per la valutazione della formazione includono:
