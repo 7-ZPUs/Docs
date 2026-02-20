@@ -1,0 +1,216 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Esterno Gruppo di Progetto e Sanmarco Informatica}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 2026/2/19 \\
+\textbf{Durata:} 20 minuti \\
+\textbf{Luogo:} Incontro online (Meet)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+\newpage
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione} \\
+\hline
+0.1 & 2026/2/19 & Georgescu Diana & Soligo Lorenzo & Creazione del verbale e stesura iniziale \\
+\hline
+\end{tabular}
+\end{table}
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Gingillino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+    \item Rossi Andrea
+    \item Sarra Luca
+\end{itemize}
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Presentazione stato avanzamento Proof of Concept
+    \item Analisi performance e indicizzazione
+    \item Ricerca semantica e scelta modello
+    \item Interfaccia utente e usabilità
+    \item Definizione prossimi passi
+\end{enumerate}
+
+\section{Svolgimento e Discussione}
+
+\subsection{Presentazione Proof of Concept}
+
+Il gruppo ha presentato una versione funzionante del Proof of Concept sviluppato come applicazione desktop tramite Electron e Angular.  
+L’applicativo è distribuibile tramite pacchetti portabili senza necessità di installazione, in linea con i requisiti aziendali.
+
+Sono state mostrate le funzionalità principali:
+\begin{itemize}
+    \item Indicizzazione del contenuto del DIP;
+    \item Strutturazione gerarchica: classe documentale, documento, file e allegati;
+    \item Visualizzazione, apertura e download dei documenti;
+    \item Verifica integrità dei file;
+    \item Ricerca filtrata per metadati.
+\end{itemize}
+
+\subsection{Performance e Indicizzazione}
+
+È stato evidenziato un miglioramento significativo delle performance:
+\begin{itemize}
+    \item Riduzione tempo di indicizzazione di un DIP da circa 1GB da 1,5 minuti a 25-30 secondi;
+    \item Riduzione tempo di risposta delle query da 70ms a 2ms.
+\end{itemize}
+
+Si è discusso della possibilità di ottimizzare ulteriormente l’indicizzazione tramite:
+\begin{itemize}
+    \item Separazione tra metadati comuni e metadati personalizzati;
+    \item Indicizzazione parziale iniziale e completamento in background;
+    \item Introduzione di una barra di progresso non bloccante.
+\end{itemize}
+
+L’azienda ha confermato che l’indicizzazione in background rappresenta una soluzione valida purché non impatti sull’operatività dell’utente.
+
+\subsection{Ricerca Semantica}
+
+È stata presentata la ricerca semantica implementata tramite Transformers.js con modelli quantizzati eseguiti interamente in locale, senza necessità di connessione.
+
+Attualmente è utilizzato un modello multilingua leggero.  
+È emersa la necessità di selezionare un modello con miglior rapporto tra peso e accuratezza, al fine di ottenere risultati più coerenti.
+
+\subsection{Interfaccia Utente}
+
+L’interfaccia attuale è stata presentata come versione dimostrativa.  
+L’azienda ha suggerito di migliorare la leggibilità dei risultati, preferibilmente tramite visualizzazione tabellare, rendendo il documento facilmente consultabile prima di accedere ai dettagli.
+
+Il gruppo ha confermato che nella versione definitiva verrà adottata un’interfaccia più user-friendly, in linea con il mockup precedentemente condiviso.
+
+\section{Domande e Risposte}
+
+Non sono emerse criticità particolari.  
+L’azienda ha confermato che il lavoro risulta in linea con quanto concordato e ha invitato il gruppo a richiedere ulteriori confronti qualora emergessero dubbi nelle prossime fasi di sviluppo.
+
+
+\section{Decisioni e Conclusione}
+
+Al termine dell’incontro il Team ha stabilito che:
+\begin{itemize}
+    \item si procederà con l’ottimizzazione dell’indicizzazione;
+    \item si valuterà un modello semantico più performante;
+    \item verrà migliorata la visualizzazione dei risultati in ottica di usabilità.
+\end{itemize}
+
+\vfill
+
+\begin{flushleft}
+\begin{tabular}{@{}p{0.5in}p{2in}@{}}
+Data: & \hrulefill \\
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{@{}p{0.5in}p{2in}@{}}
+Firma: & \hrulefill \\
+& [Sanmarco Informatica SPA] \\
+\end{tabular}
+\end{flushleft}
+
+\begin{flushright}
+\textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
