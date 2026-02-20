@@ -1,27 +1,38 @@
 \documentclass[a4paper,12pt]{article}
-
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
 \usepackage[italian]{babel}
 \usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
 \usepackage{float}
 \usepackage{microtype}
 \usepackage{geometry}
 \usepackage{setspace}
 \usepackage{enumitem}
 \usepackage{titlesec}
+\usepackage{chngpage}
 \usepackage{tocloft}
+\usepackage{longtable}
+\usepackage{ltablex}
+\usepackage{array}
 \usepackage{graphicx}
-\usepackage{hyperref}
-\usepackage{xcolor,soul}
 \usepackage{fancyhdr}
-\usepackage{changepage}
+\usepackage[table]{xcolor}
+\usepackage{color,soul}
+\usepackage[most]{tcolorbox}
+\usepackage{nameref}
+\usepackage[colorlinks=true]{hyperref}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
 \hypersetup{
-    colorlinks=true,
     linkcolor=black,
-    filecolor=magenta,      
-    urlcolor=cyan,
+    urlcolor=blue
 }
 
 \pagestyle{fancy}
@@ -52,7 +63,11 @@
     \includegraphics[width=9.5cm]{../assets/logo7ZPUs.jpg}\\
     \small\hspace{10cm} 7zpus.swe@gmail.com\\
     \vspace{0.5cm}
-    \Large \textbf{Piano di Progetto}\\
+    \LARGE \textbf{Piano di Progetto}\\
+    \vspace{0.3cm}
+    \normalsize \textbf{Versione:} 1.0.0\\
+    \textbf{Responsabile:} Laoud Zakaria \\
+    \textbf{Destinatari:} Sanmarco Informatica S.p.A., Prof. Tullio Vardanega, Prof. Riccardo Cardin, Team 7-ZPUs \\
 \end{center}
 
 \vspace{0.3cm}
@@ -343,7 +358,33 @@ Completamento dello studio sulla progettazione: 2026/02/28
 \subsubsection*{Milestone PB}
 Prevista candidatura RTB: 2026/04/10 \ped{(Deciso in sede di candidatura al Capitolato)}
 
+\renewcommand{\arraystretch}{1.2}
 
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \rowcolors{2}{gray!15}{white}
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        \rowcolor{zpusgreen!30}
+        \textbf{Attività} & \textbf{2025/12/15} & \textbf{2026/01/12} & \textbf{\begin{tabular}[c]{@{}c@{}} @RTB\\ 2026/02/06 \end{tabular}} & \textbf{2026/02/28} & \textbf{@PB} \\
+        \hline
+        \textbf{\begin{tabular}[c]{@{}c@{}} Analisi dei \\ Requisiti \end{tabular}} & \begin{tabular}[c]{@{}c@{}} Identificati casi\\ d'uso principali \end{tabular} & \begin{tabular}[c]{@{}c@{}} Identificati tutti\\ i casi d'uso e i\\ requisiti \\associati \end{tabular} & \begin{tabular}[c]{@{}c@{}} Completato \end{tabular} & &  \\
+        \hline
+        \textbf{\begin{tabular}[c]{@{}c@{}} Piano di\\ Progetto \end{tabular}} & \begin{tabular}[c]{@{}c@{}} Aggiornato\\ allo Sprint 4 \end{tabular} & \begin{tabular}[c]{@{}c@{}} Aggiornato\\ allo Sprint 5 \end{tabular} & \begin{tabular}[c]{@{}c@{}} Aggiornato \\ allo Sprint 6 \end{tabular} & & \begin{tabular}[c]{@{}c@{}} Completato \end{tabular} \\
+        \hline
+        \textbf{\begin{tabular}[c]{@{}c@{}} Norme di\\ Progetto \end{tabular}} & \begin{tabular}[c]{@{}c@{}} Definiti\\ processi \\primari e di \\organizzativi \end{tabular} & \begin{tabular}[c]{@{}c@{}} Definiti\\ processi \\di sviluppo\\ (parte Analisi \\ dei Requisiti) e di \\documentazione \end{tabular} & & \begin{tabular}[c]{@{}c@{}} Definite\\ norme di \\progettazione \end{tabular} & \begin{tabular}[c]{@{}c@{}} Completato \end{tabular} \\
+        \hline
+        \textbf{\begin{tabular}[c]{@{}c@{}} Proof of\\ Concept \end{tabular}} & & \begin{tabular}[c]{@{}c@{}} Implementate \\le funzionalità\\ minime\\ necessarie \end{tabular} & \begin{tabular}[c]{@{}c@{}} Completato \end{tabular} & &  \\
+        \hline
+        \textbf{\begin{tabular}[c]{@{}c@{}} Piano di\\ Qualifica \end{tabular}} & \begin{tabular}[c]{@{}c@{}} Definite tutte \\le metriche da \\misurare \end{tabular} & \begin{tabular}[c]{@{}c@{}} Individuati i \\test di sistema \end{tabular} & & & \begin{tabular}[c]{@{}c@{}} Completato \end{tabular} \\
+        \hline
+        \textbf{Glossario} & & & & & \begin{tabular}[c]{@{}c@{}} Completato \end{tabular} \\
+        \hline
+    \end{tabular}
+    \caption{Attività previste per la RTB e la PB}
+    \end{adjustwidth}
+\end{table}
 
 
 \section{Pianificazione a breve termine}
