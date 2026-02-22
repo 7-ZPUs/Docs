@@ -1531,8 +1531,8 @@ ciascuno.
     \end{adjustwidth}
 \end{table}
 
-\subsection{Processo di gestione della qualità}\label{gestione_qualita}
-Il processo di gestione della qualità sovrintende all'applicazione sistematica
+\subsection{Processo di garanzia della qualità}\label{gestione_qualita}
+Il processo di garanzia della qualità sovrintende all'applicazione sistematica
 delle metriche definite e all'integrazione tra i processi di garanzia della
 qualità, verifica, validazione e miglioramento per garantire la qualità
 complessiva del prodotto finale e dei processi. \\Questo processo coordina
@@ -1716,7 +1716,7 @@ responsabile sulla piattaforma Jira.
     \item \textbf{Discord:} Per le discussioni interne durante la fase di pianificazione e per il coordinamento del team.
 \end{itemize}
 
-\paragraph{Attività: Esecuzione e Controllo}
+\subsubsection{Attività: Esecuzione e Controllo}
 L'attività di esecuzione e controllo riguarda tutti i membri del team. Ognuno a
 questo punto ha compiti chiari e ben definiti da svolgere entro determinate
 scadenze.
@@ -1734,7 +1734,7 @@ continua misura degli indici di qualità di processo definiti in
     \item \textbf{Cruscotto di controllo:} per la visualizzazione degli indici di qualità stabiliti.
 \end{itemize}
 
-\paragraph{Attività: Retrospettiva}
+\subsubsection{Attività: Retrospettiva}
 L'attività di retrospettiva riguarda tutti i membri del team e si svolge
 durante le riunioni interne di gruppo di progetto.
 \paragraph{Procedura: Retrospettiva di periodo}
@@ -1789,7 +1789,7 @@ Vengono qui raccolti per praticità i ruoli coinvolti del processo di gestione, 
 \subsection{Processo di Infrastruttura}
 Il processo di Infrastruttura fornisce e mantiene il supporto tecnico, hardware e software, necessario per lo sviluppo e la gestione del progetto.
 
-\subsubsection{Attività: Implementazione (Criteri di Scelta)}\label{ImplementazioneInfrastruttura}
+\subsubsection{Attività: Implementazione}\label{ImplementazioneInfrastruttura}
 Per garantire un ambiente di lavoro efficiente, il Team definisce e documenta l'infrastruttura valutando ogni strumento e tecnologia in base ai seguenti vincoli normativi:
 \begin{itemize}
     \item \textbf{Funzionalità e Prestazioni:} Lo strumento deve coprire esattamente le necessità del task senza appesantire il flusso di lavoro.
@@ -1797,9 +1797,7 @@ Per garantire un ambiente di lavoro efficiente, il Team definisce e documenta l'
     \item \textbf{Sicurezza e Disponibilità:} I servizi devono garantire alta affidabilità (preferibilmente in Cloud) e permettere una gestione sicura dei permessi e dei dati sensibili (es. credenziali, documenti aziendali).
     \item \textbf{Equipment:} Gli strumenti devono essere multipiattaforma e sufficientemente leggeri da poter essere eseguiti sull'hardware personale di tutti i membri.
 \end{itemize}
-
-\subsubsection{Attività: Creazione e Configurazione}\label{creazioneInfrastruttura}
-Sulla base dei criteri descritti, il Team ha configurato e documentato la seguente infrastruttura operativa:
+Vengono elencati a seguire gli strumenti adottati dal Team per lo svolgimento del progetto.
 
 \paragraph{Jira} \label{Jira}
 \begin{itemize}
@@ -1809,7 +1807,7 @@ Sulla base dei criteri descritti, il Team ha configurato e documentato la seguen
 
 \paragraph{VSCode} \label{vscode}
 \begin{itemize}
-    \item \textbf{Giustificazione (Costi ed Equipment):} IDE gratuito, leggero e standard de facto, garantisce che tutti i membri operino in un ambiente omogeneo indipendentemente dal proprio sistema operativo.
+    \item \textbf{Giustificazione (Costi ed Equipment):} IDE gratuito, leggero e standard de facto, garantisce che tutti i membri operino in un ambiente omogeneo.
     \item \textbf{Configurazione (Estensioni):} Per uniformare lo sviluppo, l'ambiente richiede le estensioni: Atlassian (Jira, Rovo Dev, Bitbucket) per la gestione delle issue integrata, GitHub Pull Requests and Issues, GitHub Actions, e LaTeX Workshop. GitHub Copilot è autorizzato a discrezione del singolo per ottimizzare i tempi di codifica o documentazione.
 \end{itemize}
 
@@ -1825,49 +1823,37 @@ Sulla base dei criteri descritti, il Team ha configurato e documentato la seguen
     \item \textbf{Configurazione:} Discord è designato come ambiente di lavoro ufficiale e obbligatorio per le riunioni operative e la collaborazione sincrona. Whatsapp è riservato alle comunicazioni di servizio urgenti.
 \end{itemize}
 
-\subsubsection{Attività: Manutenzione dell'Infrastruttura}
-L'infrastruttura non è statica ma viene manutenuta, monitorata e aggiornata per soddisfare le esigenze delle diverse fasi di progetto.
+\subsubsection{Attività: Acquisizione degli strumenti}\label{creazioneInfrastruttura}
+La seguente attività espone come replicare e configurare l'infrastruttura di progetto, garantendo che ogni membro possa accedere agli strumenti necessari e che questi siano configurati in modo coerente per supportare le attività di sviluppo e gestione.
+\paragraph{Procedura: registrazione degli account}
+Il responsabile, con supporto dell'amministratore, si occupa di:
+\begin{enumerate}
+    \item Creare un account per ogni strumento adottato (es. Jira, Google Drive) utilizzando l'email ufficiale del gruppo.
+    \item Configurare i permessi di accesso in modo che ogni membro abbia i diritti necessari per svolgere le proprie attività (es. permessi di scrittura su Drive, accesso a Jira).
+    \item Supporta i membri nell'installazione e configurazione degli strumenti locali (es. VSCode con le estensioni necessarie).
+\end{enumerate}
 
-\paragraph{Monitoraggio degli Strumenti}
-Il Team raccoglie costantemente feedback sull'efficacia degli strumenti (tramite Discord e le retrospettive su Jira). Se vengono identificate inefficienze (es. colli di bottiglia nelle automazioni), il Responsabile valuta un intervento correttivo.
+\paragraph{Procedura: Configurazione degli strumenti}
+Viene riportato in seguito quanto necessario per configurare gli strumenti adottati replicando la configurazione ottimale per la gestione delle attività di progetto.
 
-\paragraph{Modifiche e Ampliamenti Pianificati}
-In vista dell'ingresso nella fase di produzione del codice, l'infrastruttura verrà modificata seguendo le medesime procedure di selezione iniziali. Sono già pianificati i seguenti ampliamenti:
+\subparagraph{Github}
+Per la configurazione di GitHub è necessario creare una GitHub Organization, in questo modo tutte le repository di progetto
+verranno centralizzate e inoltre permette di gestire più facilmente permessi di più persone che vi lavorano contemporaneamente.
+Successivamente andranno implementate le seguenti configurazioni:
 \begin{itemize}
-    \item \textbf{Tracciamento dei requisiti:} Deploy di uno strumento automatico per il tracciamento dei requisiti che ammetta codice solo se i requisiti sono stati tracciati correttamente.\\ Tale codice è in fase di scrittura e verrà integrato non appena testato.
-    \item \textbf{Integrazioni di Analisi Statica e Dinamica:} Deploy di strumenti di analisi statica e dinamica del codice per garantire la qualità del software prodotto.
-    \item \textbf{CI/CD:} Implementazione di pipeline di integrazione continua e distribuzione continua per automatizzare il processo di build, test e rilascio del software.
+    \item GitHub Actions: all'interno della directory \texttt{.github/workflows} si trovano le definizioni in formato \texttt{.yml} delle automazioni che vengono eseguite ad ogni commit o PR.
+    \item Branch Protection: per garantire l'integrità del repository, è stata configurata la protezione del branch \texttt{main} richiedendo l'esecuzione con successo delle GitHub Actions. \`E necessario proteggere i branch di sviluppo "x\_in\_lavorazione" e "main".
+    \item Email pubbliche: è necessario che ogni membro del team imposti l'email pubblica del proprio account GitHub e che questa sia l'email utilizzata poi anche nella piattaforma Jira. Questo serve per garantire agli smart commit di funzionare correttamente.
 \end{itemize}
 
-% \subsubsection{Attività: Modifiche all'Infrastruttura}
-% L'attività di Modifiche all'Infrastruttura riguarda l'implementazione di
-% modifiche agli strumenti e alle tecnologie utilizzate nel progetto, al fine di
-% migliorarne l'efficienza e l'affidabilità.
-% \paragraph{Procedure di Modifica}
-% Le seguenti procedure guidano il Team nell'implementazione delle modifiche
-% all'infrastruttura di progetto, garantendo un uso coerente ed efficiente delle
-% risorse disponibili.
-% \begin{enumerate}
-%     \item \textbf{Pianificazione delle modifiche:} viene pianificata l'implementazione delle modifiche, definendo gli obiettivi, le risorse necessarie e i tempi di esecuzione.
-%     \item \textbf{Implementazione delle modifiche:} le modifiche vengono implementate secondo la pianificazione stabilita e seguendo le stesse norme descritte in \ref{implementazioneInfrastruttura} e \ref{creazioneInfrastruttura}.
-%     \item \textbf{Verifica delle modifiche:} viene effettuata una verifica delle modifiche per garantire che siano state implementate correttamente e che abbiano raggiunto gli obiettivi prefissati.
-% \end{enumerate}
+\subparagraph{Git}
+Per la configurazione di Git è necessario che ogni membro del team configuri il proprio ambiente locale, impostando nome e email con i comandi appositi.
+Identicamente a quanto detto per GitHub, l'email utilizzata per Git deve essere la stessa dell'account GitHub e di Jira, al fine di garantire il corretto funzionamento degli smart commit.
 
-% \paragraph{Strumenti}
-% Gli strumenti adottati per l'implementazione delle modifiche all'infrastruttura
-% di progetto sono i seguenti.
-% \begin{itemize}
-%     \item \textbf{Jira:} Utilizzato per tracciare le attività di modifica e monitorare lo stato di avanzamento.
-%     \item \textbf{GitHub:} Utilizzato per gestire i branch o repository di testing degli strumenti e per la documentazione di questi ultimi.
-% \end{itemize}
+\subparagraph{Jira} \label{conf_jira}
+Per configurare lo spazio di lavoro Jira correttamente è necessario configurare diverse funzionalità: \\
 
-\paragraph{Jira} \label{Jira}
-Strumento di gestione delle attività di progetto adottato per potenzialità e
-flessibilità del sistema. Permette di tracciare le attività di progetto,
-assegnarle ai membri del gruppo, monitorare lo stato di avanzamento e gestire
-le scadenze.\\
-
-\subparagraph{Automation}\label{JiraAutomation}
+\textbf{Automazioni}\label{JiraAutomation}
 Il Team ha deciso di adottare alcune automazioni per facilitare la gestione
 delle attività di progetto. Le automazioni attualmente implementate sono:
 \begin{itemize}
@@ -1880,7 +1866,9 @@ delle attività di progetto. Le automazioni attualmente implementate sono:
     \item Riunione Assegnata → Creo Scrittura Verbale
 \end{itemize}
 
-\paragraph{VSCode} \label{vscode}
+%Continua...%
+
+\subparagraph{VSCode} \label{vscode}
 Ambiente di sviluppo integrato (IDE) utilizzato per la scrittura del codice e
 la gestione della documentazione di progetto. Grazie all'estensione Atlassian
 per \textbf{Jira} e \textbf{GitHub}, il Team può integrare direttamente le
@@ -1903,20 +1891,14 @@ Estensione per l'integrazione di Jira e GitHub in VSCode. Permette di
 visualizzare e gestire le issue Jira direttamente dall'IDE, creare branch di
 lavoro basati sulle issue e monitorare lo stato di avanzamento delle
 attività.\\
-\subparagraph{GitHub Pull Requests and Issues}
-Estensione per la gestione delle Pull Request e delle issue GitHub. Permette di
-creare, revisionare e gestire le Pull Request direttamente dall'IDE,
-migliorando l'efficienza del processo di revisione del codice.\\
 
-\paragraph{Google Presentazioni}
-Strumento utilizzato per la creazione dei Diari di Bordo. La scelta di questo
+\subparagraph{Google Presentazioni}
+Strumento utilizzato per la creazione delle presentazioni (diari di bordo, ecc...). La scelta di questo
 strumento è dovuta alla sua facilità d'uso e alla possibilità di collaborare in
-tempo reale tra i membri del gruppo. Cosi è possibile tracciare le
-problematiche e i dubbi emersi durante lo svolgimento delle attività di
-progetto. Per i Diari di Bordo è stato impostato un template presente nel
-Google Drive di gruppo.
+tempo reale tra i membri del gruppo. Per i Diari di Bordo è stato impostato un
+template presente nel Google Drive di gruppo.
 
-\paragraph{Google Drive}
+\subparagraph{Google Drive}
 Strumento di archiviazione e condivisione dei file con l'azienda proponente e
 per la condivisione rapida dei Diari di Bordo. \\ Questo strumento è inoltre
 utilizzato come mezzo di condivisione dei file con \textbf{Sanmarco
@@ -1925,7 +1907,7 @@ aziendali. Sempre tramite Google Drive vengono condivisi i verbali esterni con
 l'azienda proponente, in modo da poter essere approvati e archiviati in modo
 sicuro.
 
-\paragraph{Google Mail}
+\subparagraph{Gmail}
 Strumento di comunicazione formale con l'azienda proponente, con i Professori
 committenti e per la gestione delle restanti comunicazioni ufficiali del
 gruppo.\\ Tutti i membri del gruppo devono utilizzare l'account di posta
@@ -1934,33 +1916,41 @@ la tracciabilità e la professionalità nelle interazioni esterne.\\ Le
 comunicazioni esterne sono gestite dal responsabile salvo diverse indicazioni,
 il quale deve ricordare che parla a nome di tutto il gruppo.
 
-\paragraph{Discord}
+\subparagraph{Discord}
 Strumento di comunicazione principale del gruppo, utilizzato per la
 coordinazione delle attività, la condivisione di informazioni e la
 collaborazione tra i membri del team.\\ L'accesso al server Discord del gruppo
 è obbligatorio per tutti i membri, in quanto rappresenta il canale ufficiale di
 comunicazione e supporto.
 
-\paragraph{Whatsapp}
+\subparagraph{Whatsapp}
 Strumento di comunicazione informale e sincrono tra i membri del gruppo,
 utilizzato per la coordinazione rapida delle attività e la condivisione di
 informazioni urgenti.\\ Si raccomanda di essere particolarmente responsivi su
 questo canale, in quanto spesso viene utilizzato per comunicazioni che
 richiedono una risposta tempestiva.
 
-In vista dell'attività di produzione di codice, l'infrastruttura verrà
-aggiornata e ampliata per poter rimanere al passo con le nuove necessità. Sono
-in particolare previste le seguenti aggiunte:
-\begin{itemize}
-    \item \textbf{Tracciamento dei requisiti:} Deploy di uno strumento automatico per il tracciamento dei requisiti che ammetta codice solo se i requisiti sono stati tracciati correttamente.\\ Tale codice è in fase di scrittura e verrà integrato non appena testato.
-    \item \textbf{Integrazioni di Analisi Statica e Dinamica:} Deploy di strumenti di analisi statica e dinamica del codice per garantire la qualità del software prodotto.
-    \item \textbf{CI/CD:} Implementazione di pipeline di integrazione continua e distribuzione continua per automatizzare il processo di build, test e rilascio del software.
-\end{itemize}
+\subsubsection{Attività: Modifiche all'Infrastruttura}
+L'attività di Modifiche all'Infrastruttura riguarda l'implementazione di
+modifiche agli strumenti e alle tecnologie utilizzate nel progetto, al fine di
+migliorarne l'efficienza e l'affidabilità.
+\paragraph{Procedure di Modifica}
+Le seguenti procedure guidano il Team nell'implementazione delle modifiche
+all'infrastruttura di progetto, garantendo un uso coerente ed efficiente delle
+risorse disponibili.
+\begin{enumerate}
+    \item \textbf{Pianificazione delle modifiche:} viene pianificata l'implementazione delle modifiche, definendo gli obiettivi, le risorse necessarie e i tempi di esecuzione.
+    \item \textbf{Implementazione delle modifiche:} le modifiche vengono implementate secondo la pianificazione stabilita e seguendo le stesse norme descritte in \ref{implementazioneInfrastruttura} e \ref{creazioneInfrastruttura}.
+    \item \textbf{Verifica delle modifiche:} viene effettuata una verifica delle modifiche per garantire che siano state implementate correttamente e che abbiano raggiunto gli obiettivi prefissati.
+\end{enumerate}
 
-% \subsection{Processo di Miglioramento} \label{processo_miglioramento}
-% Il processo di miglioramento continuo mira a identificare e implementare
-% modifiche ai processi e alle pratiche di progetto per aumentare l'efficienza e
-% la qualità del lavoro svolto.
+\paragraph{Strumenti}
+Gli strumenti adottati per l'implementazione delle modifiche all'infrastruttura
+di progetto sono i seguenti.
+\begin{itemize}
+    \item \textbf{Jira:} Utilizzato per tracciare le attività di modifica e monitorare lo stato di avanzamento.
+    \item \textbf{GitHub:} Utilizzato per gestire i branch o repository di testing degli strumenti e per la documentazione di questi ultimi.
+\end{itemize}
 
 \subsection{Processo di Formazione}
 Il processo di formazione mira a garantire che tutti i membri del gruppo
