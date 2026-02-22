@@ -1811,6 +1811,12 @@ Vengono elencati a seguire gli strumenti adottati dal Team per lo svolgimento de
     \item \textbf{Configurazione (Estensioni):} Per uniformare lo sviluppo, l'ambiente richiede le estensioni: Atlassian (Jira, Rovo Dev, Bitbucket) per la gestione delle issue integrata, GitHub Pull Requests and Issues, GitHub Actions, e LaTeX Workshop. GitHub Copilot è autorizzato a discrezione del singolo per ottimizzare i tempi di codifica o documentazione.
 \end{itemize}
 
+\paragraph{\LaTeX} \label{LaTeX}
+\begin{itemize}
+    \item \textbf{Giustificazione (Funzionalità e Prestazioni):} Scelto per la sua potenza nella gestione di documenti complessi, garantisce un output professionale ed è ampiamente adottato.
+    \item \textbf{Configurazione:} Utilizzo di template standardizzati per i documenti di progetto (es. verbali, report) e integrazione con GitHub per il versionamento.
+\end{itemize}
+
 \paragraph{Ecosistema Google (Drive, Presentazioni, Mail)}
 \begin{itemize}
     \item \textbf{Giustificazione (Sicurezza e Disponibilità):} Garantisce un uptime pressoché totale e permette una gestione centralizzata e sicura degli accessi ai documenti condivisi con l'azienda proponente (Sanmarco Informatica) e i docenti.
@@ -1853,7 +1859,7 @@ Identicamente a quanto detto per GitHub, l'email utilizzata per Git deve essere 
 \subparagraph{Jira} \label{conf_jira}
 Per configurare lo spazio di lavoro Jira correttamente è necessario configurare diverse funzionalità: \\
 
-\textbf{Automazioni}\label{JiraAutomation}
+\textbf{Automazioni}:\label{JiraAutomation}\\
 Il Team ha deciso di adottare alcune automazioni per facilitare la gestione
 delle attività di progetto. Le automazioni attualmente implementate sono:
 \begin{itemize}
@@ -1866,9 +1872,12 @@ delle attività di progetto. Le automazioni attualmente implementate sono:
     \item Riunione Assegnata → Creo Scrittura Verbale
 \end{itemize}
 
+\textbf{Smart Commit}:\label{conf_smart_commit}\\
+E' necessario abilitare gli smart commit dal pannello admin di Jira per collegare le modifiche al codice alle issue Jira. Gli smart commit permettono di automatizzare la transizione delle issue in Jira, migliorando la tracciabilità e l'efficienza del flusso di lavoro. Per esempio, un commit con il messaggio "PROJ-123 \#in-progress Implementazione della funzionalità X" sposterà automaticamente l'issue PROJ-123 nello stato "In Progress".
+
 %Continua...%
 
-\subparagraph{VSCode} \label{vscode}
+\subparagraph{VSCode} \label{conf_vscode}
 Ambiente di sviluppo integrato (IDE) utilizzato per la scrittura del codice e
 la gestione della documentazione di progetto. Grazie all'estensione Atlassian
 per \textbf{Jira} e \textbf{GitHub}, il Team può integrare direttamente le
@@ -1886,11 +1895,13 @@ adattino allo standard comune. Le estensioni attualmente utilizzate sono:
 Altre estensioni come GitHub Copilot possono essere utilizzate a discrezione del
 membro del gruppo, al fine di velocizzare, per esempio, il processo di Documentazione \ref{documentazione}.
 
-\subparagraph{Atlassian: Jira, Rovo Dev, Bitbucket}
-Estensione per l'integrazione di Jira e GitHub in VSCode. Permette di
-visualizzare e gestire le issue Jira direttamente dall'IDE, creare branch di
-lavoro basati sulle issue e monitorare lo stato di avanzamento delle
-attività.\\
+\subparagraph{\LaTeX}
+Per l'utilizzo di \LaTeX è necessario che ogni membro del gruppo installi i seguenti strumenti:
+\begin{itemize}
+    \item \textbf{TeX Live}: distribuzione completa di \LaTeX che include tutti i pacchetti necessari per la compilazione dei documenti di progetto.
+    \item \textbf{VSCode}: IDE per la scrittura dei documenti
+    \item \textbf{Latex Workshop}: estensione che fornisce funzionalità avanzate per la scrittura e la compilazione di documenti \LaTeX all'interno di VSCode.
+\end{itemize}
 
 \subparagraph{Google Presentazioni}
 Strumento utilizzato per la creazione delle presentazioni (diari di bordo, ecc...). La scelta di questo
@@ -1940,7 +1951,7 @@ all'infrastruttura di progetto, garantendo un uso coerente ed efficiente delle
 risorse disponibili.
 \begin{enumerate}
     \item \textbf{Pianificazione delle modifiche:} viene pianificata l'implementazione delle modifiche, definendo gli obiettivi, le risorse necessarie e i tempi di esecuzione.
-    \item \textbf{Implementazione delle modifiche:} le modifiche vengono implementate secondo la pianificazione stabilita e seguendo le stesse norme descritte in \ref{implementazioneInfrastruttura} e \ref{creazioneInfrastruttura}.
+    \item \textbf{Implementazione delle modifiche:} le modifiche vengono implementate secondo la pianificazione stabilita e seguendo le stesse norme descritte in \ref{ImplementazioneInfrastruttura} e \ref{creazioneInfrastruttura}.
     \item \textbf{Verifica delle modifiche:} viene effettuata una verifica delle modifiche per garantire che siano state implementate correttamente e che abbiano raggiunto gli obiettivi prefissati.
 \end{enumerate}
 
