@@ -1116,7 +1116,7 @@ ciascuno.
 \end{table}
 
 \subsection{Processo di verifica}
-Il processo di verifica ha lo scopo di accertare che i prodotti realizzati
+Il processo di verifica è oggettivo e tecnico; ha lo scopo di accertare che i prodotti realizzati
 (documenti e codice) siano conformi ai requisiti specificati e corretti nella loro implementazione.
 La verifica viene svolta non solo su elementi software ma anche documentali.
 A tal proposito, la parte di verifica riguardante gli artefatti software verrà affrontata successivamente al
@@ -1144,8 +1144,12 @@ efficienza.
 
 \subsubsection{Attività: Verifica documentale}
 La verifica documentale consiste nel controllo dei documenti prodotti prima
-della loro approvazione. Le modalità operative per l'approvazione dei documenti
-sono definite nella sezione \ref{produzioneDocs}.
+della loro approvazione. La verifica avviene su più fronti:
+\begin{itemize}
+    \item \textbf{Contenuto}: correttezza dei contenuti, che devono soddisfare le aspettative definite per la task di riferimento
+    \item \textbf{Correttezza grammaticale e leggibilità}: i documenti devono essere scritti in modo chiaro, con una grammatica corretta e un livello di leggibilità adeguato al pubblico di riferimento.
+    \item \textbf{Aderenza alle linee guida}: i documenti devono rispettare le linee guida stabilite per la produzione della documentazione, come descritto in \ref{lineeGuidaProduzioneDocs}.
+\end{itemize}
 
 \paragraph{Procedura: Verifica del contenuto documentale}
 La verifica del contenuto documentale avviene tramite \textbf{walkthrough}, con
@@ -1162,6 +1166,9 @@ automatizzati. Lo script è contenuto nella directory \texttt{scripts}. Oltre al
 controllo locale, una volta aperta la Pull Request per candidare le modifiche,
 vengono eseguiti dei workflow automatizzati che prevedono un controllo di
 grammatica e leggibilità tramite Aspell e Textstat.\\
+
+\paragraph{Procedura: Verifica di aderenza alle linee guida}
+La verifica di aderenza è attuata in forma di checklist. Il verificatore, durante la revisione del documento, si assicura che sia conforme a quanto specificato in \ref{lineeGuidaProduzioneDocs}
 
 \paragraph{Strumenti}
 \begin{itemize}
@@ -1192,27 +1199,27 @@ con una breve descrizione delle responsabilità di ciascuno.
 \end{table}
 
 \subsection{Processo di validazione}
-La validazione è il processo con cui si verifica che il prodotto sviluppato
+La validazione è un processo soggettivo e orientato all'utente, con cui si verifica che il prodotto sviluppato
 soddisfi i requisiti e le aspettative della proponente. La validazione si
-focalizza sull'adeguatezza del prodotto rispetto alle esigenze del cliente.
+focalizza sull'adeguatezza del prodotto rispetto alle esigenze del cliente. Serve a capire
+se il software soddisfa effettivamente i requisiti lato utente.
 
 \subsubsection{Attività: Pianificazione della validazione}
 Questa attività prevede la definizione delle strategie e dei criteri di
 validazione, nonché la pianificazione delle attività correlate. La
 pianificazione della validazione avviene contestualmente alla pianificazione
 dello sviluppo, in modo da garantire che le attività di validazione siano
-integrate nel ciclo di sviluppo e che i risultati possano essere utilizzati per
-guidare le decisioni di progetto.
+integrate nel ciclo di sviluppo.
 
 \paragraph{Procedura: Pianificazione della validazione}
 Per pianificare efficacemente la validazione, il Team segue i seguenti
 passaggi:
 \begin{enumerate}
-    \item Identificazione dei requisiti chiave da validare, in collaborazione con la
+    \item Identificazione dei requisiti utente chiave da validare, in collaborazione con la
           proponente, per garantire che le aspettative del cliente siano chiaramente
           comprese e integrate nella pianificazione.
-    \item Definizione dei criteri di accettazione per ogni requisito, specificando i
-          risultati attesi e le condizioni di successo per la validazione.
+    \item Definizione dei criteri di accettazione, specificando i
+          risultati attesi e le condizioni di successo per la validazione attraverso i test di accettazione.
     \item Assegnazione delle responsabilità per le attività di validazione, identificando
           i membri del team che si occuperanno della progettazione e dell'esecuzione dei
           test di validazione.
@@ -1220,8 +1227,8 @@ passaggi:
 
 \paragraph{Strumenti}
 \begin{itemize}
-    \item \textbf{Jira:} Per la gestione delle attività di validazione, con la creazione di task specifici per la progettazione e l'esecuzione dei test.
-    \item \textbf{Piano di Qualifica:} Per la definizione dei criteri di accettazione e delle metriche di validazione.
+    \item \textbf{Jira:} per la gestione delle attività di validazione, con la creazione di task specifici per la pianificazione e l'esecuzione dei test.
+    \item \textbf{\LaTeX:} per la definizione dei test di accettazione nel documento Piano di Qualifica.
 \end{itemize}
 
 \subsubsection{Attività: Definizione dei test di accettazione}
@@ -1231,7 +1238,7 @@ che il sistema soddisfi le esigenze della proponente.
 \paragraph{Procedura: Definizione dei test di accettazione}
 Per definire i test di accettazione, il Team segue i seguenti passaggi:
 \begin{enumerate}
-    \item Raccolta dei requisiti chiave identificati durante l'analisi dei requisiti per
+    \item Raccolta dei requisiti (utente) chiave identificati durante la fase di analisi per
           comprendere le funzionalità e i comportamenti attesi del sistema.
     \item Progettazione dei casi di test di accettazione, specificando le condizioni di
           test, i dati di input, i risultati attesi e i criteri di successo per ogni
@@ -1242,8 +1249,8 @@ Per definire i test di accettazione, il Team segue i seguenti passaggi:
 
 \paragraph{Strumenti}
 \begin{itemize}
-    \item \textbf{Jira:} Per la creazione e la gestione dei casi di test di accettazione, con la possibilità di tracciare l'esecuzione e i risultati dei test.
-    \item \textbf{Analisi dei Requisiti:} Come riferimento per i requisiti da validare.
+    \item \textbf{Jira:} per la creazione e la gestione delle attività di test di accettazione, con la possibilità di tracciare l'esecuzione e i risultati dei test.
+    \item \textbf{Analisi dei Requisiti:} come riferimento per i requisiti da validare.
 \end{itemize}
 
 \subsubsection{Attività: Esecuzione dei test di accettazione}
@@ -1260,14 +1267,14 @@ Per eseguire i test di accettazione, il Team segue i seguenti passaggi:
     \item Esecuzione dei casi di test di accettazione, seguendo le condizioni e i dati di
           input specificati, e registrando i risultati ottenuti.
     \item Analisi dei risultati dei test, confrontando i risultati ottenuti con quelli
-          attesi per determinare se il prodotto soddisfa i requisiti e identificare
+          attesi per determinare se il prodotto soddisfa i requisiti (utente) e identificare
           eventuali problemi o aree di miglioramento.
 \end{enumerate}
 
 \paragraph{Strumenti}
 \begin{itemize}
-    \item \textbf{Jira:} Per tracciare l'esecuzione dei test di accettazione e registrare i risultati, con la possibilità di collegare i risultati ai requisiti specifici.
-    \item \textbf{Piano di Qualifica:} Per la registrazione degli esiti dei test e l'aggiornamento delle metriche di validazione.
+    \item \textbf{Jira:} Per tracciare l'avanzamento delle attività di validazione.
+    \item \textbf{Piano di Qualifica:} Per la registrazione degli esiti dei test.
 \end{itemize}
 
 \subsubsection{Ruoli}
@@ -1342,7 +1349,7 @@ seguenti passaggi:
 \begin{itemize}
     \item \textbf{Jira}: Per la creazione di task dedicate alle revisioni congiunte e il tracciamento delle attività correlate.
     \item \textbf{Discord}: Per la comunicazione dei dettagli della revisione e la condivisione di aggiornamenti in tempo reale.
-    \item \textbf{GitHub}: Per l'accesso rapido al materiale di revisione (documenti, codice, branch).
+    \item \textbf{GitHub}: Per l'accesso al materiale di revisione (documenti, codice, branch).
 \end{itemize}
 
 \subsubsection{Attività: Esecuzione della revisione congiunta}
@@ -1379,159 +1386,15 @@ congiunta, con una breve descrizione delle responsabilità di ciascuno.
     \begin{adjustwidth}{-4cm}{-4cm}
         \centering
         \begin{spacing}{1.1}
-            \begin{tabular}{|c|c|}
+            \begin{tabular}{|p{5cm}|p{10cm}|}
                 \hline
                 \textbf{Ruolo}                                      & \textbf{Specifica}                                                                                                                                                                                                                  \\
                 \hline
-                Responsabile di progetto                            & \begin{tabular}[c]{@{}p{10cm}@{}}Coordinatore dell'attività di revisione congiunta. Regola il ritmo e la struttura della sessione di revisione. Si assicura che i materiali di discussione siano pronti e accessibili.\end{tabular} \\
+                Responsabile di progetto                            & \begin{tabular}[c]{@{}p{10cm}@{}}Coordinatore dell'attività di revisione congiunta\end{tabular} \\
                 \hline
-                Tutti i membri del gruppo coinvolti nella revisione & \begin{tabular}[c]{@{}p{10cm}@{}}Partecipano attivamente alla revisione congiunta, esaminando i materiali e contribuendo alle discussioni.\end{tabular}                                                                             \\
+                Tutti i membri del gruppo coinvolti nella revisione & \begin{tabular}[c]{@{}p{10cm}@{}}Partecipano attivamente alla revisione congiunta, esaminando i materiali e contribuendo alle discussioni\end{tabular}                                                                             \\
                 \hline
-            \end{tabular}
-        \end{spacing}
-    \end{adjustwidth}
-\end{table}
-
-\subsection{Processo di risoluzione dei problemi}\label{proc_risoluzione_problemi}
-Il processo di risoluzione dei problemi definisce le modalità sistematiche per
-identificare, analizzare e risolvere problematiche tecniche oppure
-organizzative che emergono durante lo sviluppo. \\Questo processo garantisce
-che i problemi vengano gestiti in modo strutturato, documentato e tempestivo,
-minimizzando l'impatto sulle attività di progetto.
-
-\subsubsection{Attività: Identificazione del problema}\label{identificazione_problema}
-Una identificazione precoce e accurata dei problemi consente al gruppo di
-intervenire proattivamente, minimizzando gli impatti sulle attività di progetto
-e prevenendo l'accumularsi di criticità che potrebbero compromettere la qualità
-del prodotto finale o il rispetto delle scadenze pianificate.
-
-\paragraph{Procedura: Identificazione}
-Qualsiasi membro del team può identificare e segnalare un problema utilizzando
-uno dei seguenti canali di comunicazione:
-\begin{enumerate}
-    \item Gruppo WhatsApp, per segnalazioni rapide e comunicazioni immediate.
-    \item Server Discord, per discussioni strutturate e confronti approfonditi.
-    \item Chiamate straordinarie tra sottogruppi di membri, in caso di problematiche che
-          richiedano un confronto diretto.
-    \item Riunione settimanale del team, per l'analisi condivisa di problematiche di
-          carattere organizzativo, tecnico o progettuale
-    \item Stand-up meeting periodici
-\end{enumerate}
-
-La segnalazione di un problema deve includere, ove possibile, le seguenti
-informazioni:
-\begin{itemize}
-    \item Descrizione chiara e dettagliata del problema riscontrato.
-    \item Indicazione del livello di urgenza e della priorità suggerita.
-    \item Eventuali tentativi di risoluzione già effettuati o possibili soluzioni
-          proposte.
-\end{itemize}
-
-\subsubsection{Attività: Analisi e classificazione}\label{analisi_classificazione}
-L'analisi e la classificazione sistematica dei problemi permettono di stabilire
-priorità di intervento, allocare risorse in modo efficiente e prevenire che
-criticità minori si trasformino in blocchi significativi per il progetto.
-\paragraph{Procedura: Analisi e classificazione}
-Una volta identificato, il problema viene analizzato dal responsabile insieme
-ai membri competenti per:
-\begin{enumerate}
-    \item \textbf{Classificare la tipologia:}
-          \begin{itemize}
-              \item Problema tecnico
-              \item Problema di processo
-              \item Problema organizzativo
-          \end{itemize}
-    \item \textbf{Valutare la priorità:}
-          \begin{itemize}
-              \item \textit{Critica:} Blocca completamente le attività, richiede risoluzione immediata
-              \item \textit{Alta:} Impatta significativamente il progresso
-              \item \textit{Media:} Causa rallentamenti, da risolvere entro lo Sprint corrente
-              \item \textit{Bassa:} Impatto minimo, da risolvere quando possibile
-          \end{itemize}
-    \item \textbf{Identificare le cause radice:} Attraverso tecniche di analisi
-    \item \textbf{Stimare risorse da allocare:} Per la risoluzione del problema
-\end{enumerate}
-
-\subsubsection{Attività: Sviluppo della soluzione}\label{sviluppo_soluzione}
-Una volta completata l'analisi e la classificazione del problema, il team
-procede con lo sviluppo di una soluzione strutturata. Questa fase richiede un
-approccio metodico che coinvolga i membri più competenti nella ricerca di
-alternative e nella valutazione delle possibili conseguenze.
-\paragraph{Procedura: Sviluppo della soluzione}
-In base alla classificazione e all'analisi effettuata:
-\begin{enumerate}
-    \item Il responsabile assegna il problema al membro o ai membri più competenti
-    \item Viene creata una issue Jira collegata al problema
-    \item Il team propone una o più soluzioni alternative, valutando:
-          \begin{itemize}
-              \item Efficacia nel risolvere il problema
-              \item Impatto su altre componenti o processi
-              \item Tempo e risorse necessarie
-              \item Rischi associati all'implementazione
-          \end{itemize}
-\end{enumerate}
-
-\subsubsection{Attività: Implementazione e verifica}\label{implementazione_verifica}
-Una volta completata l'analisi e la classificazione del problema, il team
-procede con l'implementazione sistematica della soluzione identificata. Questa
-fase è critica poiché trasforma l'analisi teorica in azioni concrete che
-risolvono il problema alla radice. L'implementazione deve essere accompagnata
-da una verifica rigorosa per assicurare che la soluzione sia efficace, non
-introduca nuove problematiche e sia conforme agli standard di qualità del
-progetto. Solo attraverso una verifica accurata è possibile garantire che il
-problema sia effettivamente risolto e che il sistema rimanga stabile e
-affidabile.
-\paragraph{Procedura: Implementazione e verifica}
-La soluzione viene implementata seguendo le normali procedure di sviluppo:
-\begin{enumerate}
-    \item Creazione del branch di lavoro secondo gli standard
-          (\ref{versionamento_identificazione})
-    \item Implementazione della soluzione con commit e smart commit
-          (\ref{processi_supporto})
-    \item Verifica della soluzione da parte di un verificatore diverso
-          dall'implementatore, mediante l'esecuzione di test volti ad accertare che la
-          soluzione risolva effettivamente il problema.
-    \item Merge della soluzione secondo le procedure di revisione
-          (\ref{revisione_approvazione})
-\end{enumerate}
-
-\subsubsection{Integrazione con altri processi}\label{integrazione_risoluzione_problemi}
-Il processo di risoluzione dei problemi si integra con:
-\begin{itemize}
-    \item \textbf{Gestione dei rischi operativi (\ref{gestione_rischi_operativi}):} I problemi ricorrenti vengono aggiunti al registro dei rischi
-     \item \textbf{Metriche di qualità:} Le metriche aiutano a identificare aree problematiche in modo proattivo
-\end{itemize}
-
-\subsubsection{Strumenti}\label{strumenti_risoluzione_problemi}
-\begin{itemize}
-    \item \textbf{Jira:} Per il tracciamento formale dei problemi, della loro classificazione e risoluzione
-    \item \textbf{Discord:} Per la comunicazione immediata di problemi urgenti e per sessioni di problem solving sincrone
-    \item \textbf{Whatsapp:} Per notifiche urgenti di problemi critici che richiedono attenzione immediata
-    \item \textbf{Dashboard Jira:} Per il monitoraggio dello stato dei problemi aperti e delle tendenze nel tempo
-    \item \textbf{GitHub:} Per la gestione dei branch di lavoro e il merge delle soluzioni implementate
-\end{itemize}
-
-\subsubsection{Ruoli}
-Vengono qui raccolti per praticità i ruoli coinvolti del processo di
-risoluzione dei problemi, con una breve descrizione delle responsabilità di
-ciascuno.
-\begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-        \centering
-        \begin{spacing}{1.1}
-            \begin{tabular}{|c|c|}
-                \hline
-                \textbf{Ruolo}       & \textbf{Specifica}                                                                                                                                                   \\
-                \hline
-                Responsabile         & \begin{tabular}[c]{@{}c@{}} Coordina l'analisi dei problemi critici e decide l'allocazione \\ delle risorse per la risoluzione \end{tabular}                         \\
-                \hline
-                Amministratore       & \begin{tabular}[c]{@{}c@{}} Gestisce i problemi legati all'infrastruttura e agli strumenti, \\ come descritto in \ref{gestione_processi_organizzativi} \end{tabular} \\
-                \hline
-                Analista/Progettista & \begin{tabular}[c]{@{}c@{}} Risolve problemi legati a requisiti ambigui o \\ scelte architetturali \end{tabular}                                                     \\
-                \hline
-                Programmatore        & \begin{tabular}[c]{@{}c@{}} Risolve problemi tecnici nel codice e implementa \\ le soluzioni concordate \end{tabular}                                                \\
-                \hline
-                Verificatore         & \begin{tabular}[c]{@{}c@{}} Verifica che le soluzioni implementate risolvano\\ effettivamente il problema \end{tabular}                                              \\
+                Amministratore & \begin{tabular}[c]{@{}p{10cm}@{}}Garantisce l'accesso al materiale soggetto a revisione\end{tabular} \\
                 \hline
             \end{tabular}
         \end{spacing}
@@ -1549,16 +1412,20 @@ durante l'intero ciclo di vita del progetto.
 \subsubsection{Attività: Pianificazione della qualità}\label{pianificazione_qualita}
 
 \paragraph{Procedura: Definizione di metriche e soglie}
-Per ogni milestone, il responsabile coordina la pianificazione degli obiettivi
-di qualità:
+Il responsabile coordina la pianificazione degli obiettivi di qualità:
 \begin{enumerate}
-    \item \textbf{Definizione degli obiettivi della milestone:} In base alle attività pianificate, vengono identificati gli obiettivi specifici di qualità da raggiungere
-    \item \textbf{Selezione delle metriche applicabili:} Tra quelle definite nella sezione \ref{metriche_qualita}, vengono scelte le metriche più rilevanti per le aspettative della milestone
-    \item \textbf{Definizione delle soglie:} Per ogni metrica selezionata, vengono stabilite le soglie minime accettabili e quelle target, in conformità con il Piano di Qualifica
+    \item \textbf{Definizione delle metriche di processo}: vengono stabilite le metriche chiave da monitorare per ciascun processo implementato. La scelta deve tenere conto di: grado di automazione, facilità di raccolta, valore aggiunto nella sua misurazione. La misurazione di una metrica comporta sempre, benché talvolta minimo, un costo. Per questo motivo va fatta una selezione attenta e accurata. Per la definizione è bene attenersi a metriche riconosciute e consolidate, prevenendo l'introduzione di errori di definizione o di interpretazione.
+    \item \textbf{Definizione delle metriche di prodotto}: vengono stabilite le metriche chiave da monitorare per il prodotto software finale. La selezione avviene con gli stessi criteri delle metriche di processo; in aggiunta si sottolinea come la metrica debba essere pertinente al dominio applicativo.
+    \item \textbf{Definizione delle soglie di accettabilità}: per ogni metrica definita, vengono stabilite le soglie di accettabilità che indicano i livelli minimi di qualità da raggiungere. Le soglie devono essere realistiche e basate su dati storici o benchmark di settore, per garantire che siano sfidanti ma raggiungibili.
+    \item \textbf{Definizione dei valori di ottimalità}: per ogni metrica, vengono stabiliti i valori di ottimalità che rappresentano i livelli di qualità ideali da raggiungere. Questi valori servono come riferimento per il miglioramento continuo e per motivare il team a superare gli standard minimi.
 \end{enumerate}
 
-Gli obiettivi di qualità vengono documentati e comunicati a tutto il team
-durante la riunione di pianificazione dello Sprint.
+Gli obiettivi di qualità vengono documentati e comunicati a tutto il team nel documento Piano di Qualifica.
+La definizione delle metriche è presente rispettivamente:
+\begin{itemize}
+    \item Per le metriche di processo, nella sezione \ref{qualita_processo}.
+    \item Per le metriche di prodotto, nella sezione \ref{qualita_prodotto}.
+\end{itemize}
 
 \subsubsection{Attività: Monitoraggio continuo}\label{monitoraggio_continuo}
 
@@ -1569,14 +1436,14 @@ attraverso:
     \item \textbf{Controllo automatizzato:}
           \begin{itemize}
               \item Le GitHub Actions eseguono verifiche automatiche ad ogni commit (indice
-                    Gulpease, build success rate)
+                    Gulpease, build success rate, etc.)
           \end{itemize}
     \item \textbf{Controllo manuale:}
           \begin{itemize}
               \item I verificatori eseguono revisioni del codice e della documentazione secondo le
                     procedure definite
               \item Vengono eseguiti test manuali per verificare usabilità e funzionalità
-              \item Si monitora l'aderenza alle norme di progetto
+              \item Si monitora l'aderenza alle soglie stabilite
           \end{itemize}
     \item \textbf{Utilizzo del Cruscotto di Qualità:}
           \begin{itemize}
@@ -1614,12 +1481,10 @@ In preparazione delle milestone:
 
 \paragraph{Procedura: Identificazione della deviazione e analisi delle cause}
 Attraverso il monitoraggio continuo o le review periodiche è possibile
-identificare eventuali deviazioni dagli standard di qualità imposti. Pe
-l'analisi si applica il processo di risoluzione dei problemi
-(\ref{proc_risoluzione_problemi}) in modo da identificare le cause radice
+identificare eventuali deviazioni dagli standard di qualità imposti.
 \paragraph{Procedura: Pianificazione dell'intervento}
 La pianificazione del piano di intervento correttivo si differenzia in in base
-al grado di importanza, complessità ed estensione delle deviazioni delle pre.
+al grado di importanza, complessità ed estensione delle deviazioni.
 \begin{itemize}
     \item Per deviazioni minori: si assegna una issue correttiva al membro responsabile
     \item Per deviazioni significative: il responsabile convoca una sessione dedicata per
@@ -1650,11 +1515,11 @@ metriche di processo e prodotto definite nella sezione \ref{metriche_qualita}.
 
 \subsubsection{Strumenti}\label{strumenti_gestione_qualita}
 \begin{itemize}
-    \item \textbf{Piano di Qualifica:} Documento di riferimento per obiettivi, metriche e soglie di qualità
-    \item \textbf{Jira e Dashboard Jira (\ref{knowladge_base}):} Per il monitoraggio in tempo reale dello stato delle metriche,
+    \item \textbf{Piano di Qualifica}: Documento di riferimento per obiettivi, metriche e soglie di qualità
+    \item \textbf{Jira} Per il monitoraggio in tempo reale dello stato delle metriche,
           il tracciamento delle non conformità, le azioni correttive e la condivisione di report di qualità con la proponente
-    \item \textbf{GitHub Actions (\ref{knowladge_base}):} Per l'automazione delle verifiche di qualità (Gulpease, build, test)
-    \item \textbf{Strumenti di analisi statica:} Per il calcolo automatico di metriche di codice (complessità, coverage, accoppiamento)
+    \item \textbf{GitHub Actions}: Per l'automazione delle verifiche di qualità (Gulpease, build, test)
+    \item \textbf{Strumenti di analisi statica}: Per il calcolo automatico di metriche di codice (complessità, coverage, accoppiamento)
 \end{itemize}
 
 \subsubsection{Ruoli}
@@ -1668,11 +1533,11 @@ della qualità, con una breve descrizione delle responsabilità di ciascuno.
                 \hline
                 \textbf{Ruolo} & \textbf{Specifica}                                                                                                                                                       \\
                 \hline
-                Responsabile   & \begin{tabular}[c]{@{}c@{}} Coordina le attività di gestione della qualità e garantisce \\ il rispetto degli obiettivi definiti nel Piano di Qualifica \end{tabular}     \\
+                Responsabile   & \begin{tabular}[c]{@{}c@{}} Coordina le attività di gestione della qualità e garantisce \\ il rispetto degli obiettivi definiti nel Piano di Qualifica, \\ verificando periodicamente le metriche riportate a cruscotto \end{tabular}     \\
                 \hline
-                Verificatori   & \begin{tabular}[c]{@{}c@{}} Eseguono le verifiche secondo le procedure definite e monitorano \\ le metriche di qualità di processo e prodotto \end{tabular}              \\
+                Verificatori   & \begin{tabular}[c]{@{}c@{}} Eseguono le verifiche secondo le procedure definite e misurano \\ (se necessario manualmente) le metriche di \\ qualità di processo e prodotto \end{tabular}              \\
                 \hline
-                Amministratore & \begin{tabular}[c]{@{}c@{}} Configura e mantiene gli strumenti di automazione per il monitoraggio\\ della qualità (GitHub Actions, Dashboard e Issue Jira) \end{tabular} \\
+                Amministratore & \begin{tabular}[c]{@{}c@{}} Configura e mantiene gli strumenti di automazione per il monitoraggio\\ della qualità (GitHub Actions, Jira) \end{tabular} \\
                 \hline
                 Tutti i membri & \begin{tabular}[c]{@{}c@{}} Contribuiscono al mantenimento della qualità seguendo \\ le norme e segnalando deviazioni dagli standard \end{tabular}                       \\
                 \hline
@@ -2079,7 +1944,7 @@ interconnesse tra loro secondo il Modello a V\hyperref[fig:vmodel]{\ped{(Figura
 Di seguito vengono indicate le metriche utilizzate per valutare la qualità del
 prodotto e dei processi di sviluppo.
 
-\subsection{Qualità di Processo}
+\subsection{Qualità di Processo} \label{qualita_processo}
 In questa sezione vengono definite le metriche utilizzate per valutare
 l'efficienza e l'efficacia dei processi del ciclo di vita del software, in
 conformità con lo standard ISO/IEC 12207.
@@ -2109,63 +1974,49 @@ conformità con lo standard ISO/IEC 12207.
 \metricdef{MPC-7}{Estimate at Completion (EAC)}{Stima totale dei costi alla fine del progetto, basata sulle performance attuali.}
 \metricformula{EAC = \frac{BAC}{CPI}}
 
-\metricdef{MPC-6}{Estimate to Complete}{Rappresenta l'ammontare rimanente stimato per completare il progetto}
-\metricformula{ETC = EAC-AC}
-
-\metricdef{MPC-7}{Estimate at Completion (EAC)}{Stima totale dei costi alla fine del progetto, basata sulle performance attuali.}
-\metricformula{EAC = \frac{BAC}{CPI}}
-
 \paragraph{Processo di Sviluppo}
 
-\metricdef{MPC-8}{Deployment Frequency}{Frequenza con cui il team rilascia nuove versioni del software, potenzialmente trasportabili in produzione.}
-\metricformula{DF = \frac{\text{Numero di deployment}}{\text{Periodo di tempo}}}
 \metricdef{MPC-8}{Deployment Frequency}{Frequenza con cui il team rilascia nuove versioni del software, potenzialmente trasportabili in produzione.}
 \metricformula{DF = \frac{\text{Numero di deployment}}{\text{Periodo di tempo}}}
 
 \metricdef{MPC-9}{Requirements Stability Index}{Rappresenta la stabilità dei requisiti del prodotto software nel tempo.}
 \metricformula{RSI = \frac{\#\text{Req originali} - (\#\text{Req modificati} + \#\text{Req eliminati} + \#\text{Req aggiunti})}{\#\text{Req originali}} \cdot 100}
 
-\paragraph{Processo di Integrazione}
-
-\metricdef{MPC-12}{Average Build Time}{Tempo medio impiegato per completare il processo di build e test automatici.}
+\metricdef{MPC-10}{Average Build Time}{Tempo medio impiegato per completare il processo di build e test automatici.}
 \metricformula{T_{avg} = \frac{\sum_{i=1}^{n} T_{build\_i}}{n}}
-
-\metricdef{MPC-15}{Correttezza Ortografica}{Misura la densità di errori ortografici presenti nella documentazione.}
-\metricformula{C = 1 - \left( \frac{\text{Numero errori ortografici}}{\text{Numero parole totali}} \right)}
 
 \paragraph{Processo di Documentazione}
 
-\metricdef{MPC-10}{Indice di Gulpease}{Indice che valuta la leggibilità di un testo in lingua italiana. Valori bassi indicano bassa leggibilità.}
+\metricdef{MPC-11}{Indice di Gulpease}{Indice che valuta la leggibilità di un testo in lingua italiana. Valori bassi indicano bassa leggibilità.}
 \metricformula{G = 89 + \frac{300 \times (\#\text{Frasi}) - 10 \times (\#\text{Lettere})}{\#\text{Parole}}}
 
-\metricdef{MPC-11}{Correttezza Ortografica}{Misura la densità di errori ortografici presenti nella documentazione.}
+\metricdef{MPC-12}{Correttezza Ortografica}{Misura la densità di errori ortografici presenti nella documentazione.}
 \metricformula{C = \#\text{errori ortografici}}
 
 \paragraph{Processo di Verifica}
 
 \metricdef{MPC-13}{Code review turnaround time}{Tempo medio impiegato per completare una revisione del codice in vista di una Pull Request.}
-\metricformula{CRT = \frac{\sum_{i=1}^{n} T_{review\_i}}{n}}
-\metricdef{MPC-13}{Code review turnaround time}{Tempo medio impiegato per completare una revisione del codice in vista di una Pull Request.}
-\metricformula{CRT = \frac{\sum_{i=1}^{n} T_{review\_i}}{n}}
+\metricformula{CRT = \frac{\sum_{i=1}^{n} T_{review\_i}}{n}} $T_{review\_i}$ tempo impiegato per completare la revisione della PR $i$.
 
 \metricdef{MPC-14}{Test success rate}{Percentuale di test superati rispetto al totale dei test eseguiti.}
 \metricformula{TSR = \left( \frac{\#\text{Test superati}}{\#\text{Test eseguiti}} \right) \times 100}
-\metricdef{MPC-14}{Test success rate}{Percentuale di test superati rispetto al totale dei test eseguiti.}
-\metricformula{TSR = \left( \frac{\#\text{Test superati}}{\#\text{Test eseguiti}} \right) \times 100}
+
+\metricdef{MPC-15}{Code Coverage}{Percentuale di codice coperta da test}
+\metricformula{CC = \frac{\#\text{LOC testate}}{\#\text{LOC totali}} \times 100}
 
 \subsubsection{Processi Organizzativi}
 
 \paragraph{Processo di Gestione dei Rischi} \label{gestione_rischi_operativi}
 
-\metricdef{MPC-15}{Rischi non previsti}{Numero di rischi non previsti ad inizio periodo, per ciascun periodo di progetto.}
-\metricformula{RNP = \#\text{Rischi non previsti}}
+\metricdef{MPC-16}{Rischi non previsti}{Numero di rischi non previsti ad inizio periodo, per ciascun periodo di progetto.}
+\metricformula{RNP_i = \#\text{Rischi non previsti nel periodo } i}
 
 \paragraph{Processo di Gestione della qualità}
 
-\metricdef{MPC-16}{Metriche soddisfatte}{Percentuale di metriche di qualità che vengono soddisfatte in un determinato istante di tempo.}
+\metricdef{MPC-17}{Metriche soddisfatte}{Percentuale di metriche di qualità che vengono soddisfatte in un determinato istante di tempo.}
 \metricformula{MS = \left( \frac{\#\text{Metriche soddisfatte}}{\#\text{Metriche totali}} \right) \times 100}
 
-\subsection{Qualità di Prodotto}
+\subsection{Qualità di Prodotto} \label{qualita_prodotto}
 In questa sezione vengono definite le metriche per valutare la qualità
 intrinseca del prodotto software, basandosi sul modello ISO/IEC 9126.
 
@@ -2176,94 +2027,68 @@ intrinseca del prodotto software, basandosi sul modello ISO/IEC 9126.
 
 \metricdef{MPD-2}{Requisiti opzionali soddisfatti}{Percentuale di requisiti funzionali opzionali implementati e testati.}
 \metricformula{R\textsubscript{op} = \left( \frac{\text{Requisiti opzionali soddisfatti}}{\text{Requisiti opzionali totali}} \right) \times 100}
-\metricdef{MPD-1}{Requisiti obbligatori soddisfatti}{Percentuale di requisiti funzionali obbligatori implementati e testati.}
-\metricformula{R\textsubscript{ob} = \left( \frac{\text{Requisiti obbligatori soddisfatti}}{\text{Requisiti obbligatori totali}} \right) \times 100}
 
-\metricdef{MPD-2}{Requisiti opzionali soddisfatti}{Percentuale di requisiti funzionali opzionali implementati e testati.}
-\metricformula{R\textsubscript{op} = \left( \frac{\text{Requisiti opzionali soddisfatti}}{\text{Requisiti opzionali totali}} \right) \times 100}
-
-\metricdef{MPD-3}{Requisiti desiderabili soddisfatti}{Percentuale di requisiti funzionali desiderabili implementati e testati.}
-\metricformula{R\textsubscript{de} = \left( \frac{\text{Requisiti desiderabili soddisfatti}}{\text{Requisiti desiderabili totali}} \right) \times 100}
 \metricdef{MPD-3}{Requisiti desiderabili soddisfatti}{Percentuale di requisiti funzionali desiderabili implementati e testati.}
 \metricformula{R\textsubscript{de} = \left( \frac{\text{Requisiti desiderabili soddisfatti}}{\text{Requisiti desiderabili totali}} \right) \times 100}
 
 \paragraph{Affidabilità}
 
-\metricdef{MPD-5}{Broken links}{Numero di riferimenti ipertestuali all'interno dell'applicazione che non portano alla risorsa corretta o non portano ad alcuna risorsa.}
+\metricdef{MPD-4}{Broken links}{Numero di riferimenti ipertestuali all'interno dell'applicazione che non portano alla risorsa corretta o non portano ad alcuna risorsa.}
 \metricformula{BL = \#\text{Broken Links}}
 
-\metricdef{MPD-6}{Statement Coverage}{Percentuale di istruzioni (statements) del codice sorgente eseguite durante i test automatici.}
-\metricformula{SC = \left( \frac{\text{Linee di codice eseguite}}{\text{Linee di codice totali}} \right) \times 100}
-\metricdef{MPD-5}{Broken links}{Numero di riferimenti ipertestuali all'interno dell'applicazione che non portano alla risorsa corretta o non portano ad alcuna risorsa.}
-\metricformula{BL = \#\text{Broken Links}}
+\metricdef{MPD-5}{Branch Coverage}{Percentuale di rami decisionali (if, switch, loop) percorsi durante i test.}
+\metricformula{BC = \left( \frac{\text{Rami testati}}{\text{Rami totali}} \right) \times 100}
 
 \metricdef{MPD-6}{Statement Coverage}{Percentuale di istruzioni (statements) del codice sorgente eseguite durante i test automatici.}
-\metricformula{SC = \left( \frac{\text{Linee di codice eseguite}}{\text{Linee di codice totali}} \right) \times 100}
-
-\metricdef{MPD-7}{Branch Coverage}{Percentuale di rami decisionali (if, switch, loop) percorsi durante i test.}
-\metricformula{BC = \left( \frac{\text{Rami percorsi}}{\text{Rami totali}} \right) \times 100}
-\metricdef{MPD-7}{Branch Coverage}{Percentuale di rami decisionali (if, switch, loop) percorsi durante i test.}
-\metricformula{BC = \left( \frac{\text{Rami percorsi}}{\text{Rami totali}} \right) \times 100}
+\metricformula{SC = \left( \frac{\text{Istruzioni testate}}{\text{Istruzioni totali}} \right) \times 100}
 
 \paragraph{Usabilità}
 
-\metricdef{MPD-8}{Profondità di Navigazione}{Numero massimo di click necessari per raggiungere una qualsiasi pagina di contenuto partendo dalla Home Page.}
-\metricformula{\sum_{i=1}^{n} \frac{\text{Click}_i}{n} \quad \begin{array}{l} (\text{dove } n = \text{numero di pagine}) \\ (\text{dove } \text{Click}_i = \text{numero di click per raggiungere la pagina } i) \end{array}}
-\metricdef{MPD-8}{Profondità di Navigazione}{Numero massimo di click necessari per raggiungere una qualsiasi pagina di contenuto partendo dalla Home Page.}
-\metricformula{\sum_{i=1}^{n} \frac{\text{Click}_i}{n} \quad \begin{array}{l} (\text{dove } n = \text{numero di pagine}) \\ (\text{dove } \text{Click}_i = \text{numero di click per raggiungere la pagina } i) \end{array}}
+\metricdef{MPD-7}{Profondità di Navigazione}{Numero massimo di click necessari per raggiungere una qualsiasi pagina di contenuto partendo dalla vista principale.}
+\metricformula{\max_{i \in I} \text{Click}_i \quad \begin{array}{l} (\text{dove } I = \text{insieme delle pagine}) \\ (\text{dove } \text{Click}_i = \text{numero di click per raggiungere la pagina } i) \end{array}}
 
 \paragraph{Efficienza}
 
-\metricdef{MPD-9}{Indexing time}{Tempo di \glossario{indicizzazione} per un DiP di dimensioni standard (1-4GB).}
+\metricdef{MPD-8}{Indexing time}{Tempo di \glossario{indicizzazione} per un DiP di dimensioni standard (1-4GB).}
 \metricformula{IT = \text{Tempo di indicizzazione (secondi)}}
 
-\metricdef{MPD-10}{Search Time}{Tempo medio di risposta per un set di query predefinite.}
+\metricdef{MPD-9}{Search Time}{Tempo medio di risposta per un set di query predefinite.}
 \metricformula{ST = \sum_{i=1}^{n} \frac{\text{Tempo di risposta}_i}{n} \quad \begin{array}{l} (\text{dove } n = \text{numero di query}) \\ (\text{dove }i = \text{indice della query}) \end{array}}
 
-\metricdef{MPD-11}{Average CPU usage}{Percentuale media di utilizzo della CPU durante l'esecuzione del software. Si considera un campione di misurazioni effettuate in condizioni di carico (durante l'indicizzazione o la ricerca) nonché in idle. Quest'ultimo per assicurare che il software non consumi risorse inutilmente quando non è in uso.}
+\metricdef{MPD-10}{Average CPU usage}{Percentuale media di utilizzo della CPU durante l'esecuzione del software. Si considera un campione di misurazioni effettuate in condizioni di carico (durante l'indicizzazione o la ricerca) nonché in idle. Quest'ultimo per assicurare che il software non consumi risorse inutilmente quando non è in uso.}
 \metricformula{CPU_{avg} = \sum_{i=1}^{n} \frac{\text{Utilizzo CPU}_i}{n} \quad (\text{dove }n = \text{numero di misurazioni})}
 
-\newpage
-
-\metricdef{MPD-12}{Peak memory usage}{Massima quantità di memoria RAM utilizzata durante l'esecuzione del software. Permette di individuare eventuali memory leak o scarsa gestione delle risorse.}
-\metricformula{MEM_{peak} = \max(\text{Utilizzo RAM}_i) \quad (\text{dove }i = 1, \dots, n, \text{istante di tempo } i-\text{esimo})}
+\metricdef{MPD-11}{Peak memory usage}{Massima quantità di memoria RAM utilizzata durante l'esecuzione del software. Permette di individuare eventuale scarsa gestione delle risorse.}
+\metricformula{MEM_{peak} = \max(\text{Utilizzo RAM}_i) \quad (\text{dove }i = 1, \dots, n, \text{istante di tempo } i)}
 
 \paragraph{Manutenibilità}
 
-\metricdef{MPD-13}{Complessità Ciclomatica}{Misura la complessità del flusso di controllo del codice. Valori superiori a 15 indicano codice difficile da testare e manutenere.}
-\metricdef{MPD-13}{Complessità Ciclomatica}{Misura la complessità del flusso di controllo del codice. Valori superiori a 15 indicano codice difficile da testare e manutenere.}
+\metricdef{MPD-12}{Complessità Ciclomatica}{Misura la complessità del flusso di controllo del codice. Valori superiori a 15 indicano codice difficile da testare e manutenere.}
 \metricformula{M = E - N + 2P \quad (\text{dove } E=\text{archi}, N=\text{nodi}, P=\text{componenti connessi})}
 
-\metricdef{MPD-14}{Accoppiamento tra Classi (CBO)}{Numero di classi a cui una determinata classe è accoppiata (usa o è usata da). Un valore alto indica scarsa modularità.}
-\metricformula{CBO = \frac{\#\text{Dipendenze}}{\#\text{Componenti}}}
-\metricdef{MPD-14}{Accoppiamento tra Classi (CBO)}{Numero di classi a cui una determinata classe è accoppiata (usa o è usata da). Un valore alto indica scarsa modularità.}
+\metricdef{MPD-13}{Accoppiamento tra Classi (CBO)}{Numero di classi a cui una determinata classe è accoppiata (usa o è usata da). Un valore alto indica scarsa modularità.}
 \metricformula{CBO = \frac{\#\text{Dipendenze}}{\#\text{Componenti}}}
 
-\metricdef{MPD-15}{Code smells}{Numero di code smells, misurato ogni 1000 righe di codice (KLOC). I code smells sono indicatori di potenziali problemi di design o implementazione.}
-\metricdef{MPD-15}{Code smells}{Numero di code smells, misurato ogni 1000 righe di codice (KLOC). I code smells sono indicatori di potenziali problemi di design o implementazione.}
+\metricdef{MPD-14}{Code smells}{Numero di code smells, misurato ogni 1000 righe di codice (KLOC). I code smells sono indicatori di potenziali problemi di design o implementazione.}
 
 \paragraph{Portabilità}
 
-\metricdef{MPD-16}{SO Compatibility}{Numero di sistemi operativi supportati dal software. Un valore alto indica una maggiore portabilità.}
-\metricformula{SO_{comp} = \#\text{Sistemi operativi supportati}}
-\paragraph{Portabilità}
-
-\metricdef{MPD-16}{SO Compatibility}{Numero di sistemi operativi supportati dal software. Un valore alto indica una maggiore portabilità.}
+\metricdef{MPD-15}{SO Compatibility}{Numero di sistemi operativi supportati dal software. Un valore alto indica una maggiore portabilità.}
 \metricformula{SO_{comp} = \#\text{Sistemi operativi supportati}}
 
 \subsection{Strumenti}
-\paragraph{Jira Software}
+\subsubsection{Jira Software}
 Utilizzato come strumento di Project Management per il tracciamento dei
 requisiti e la gestione del workflow.
 \begin{itemize}
-    \item \textbf{Metriche associate:} MPC-1 \dots MPC-7 (Earned Value Management), MPC-16 (Metriche soddisfatte), MPD-1 \dots MPD-3 (Requisiti).
+    \item \textbf{Metriche associate:} MPC-1 \dots MPC-7 (Earned Value Management), MPC-17 (Metriche soddisfatte), MPD-1 \dots MPD-3 (Requisiti).
     \item \textbf{Utilizzo:} Attraverso la funzione di esportazione \glossario{JQL} $\rightarrow$ csv, e uno script python appositamente sviluppato, vengono estratti i dati necessari per il calcolo delle metriche di Earned Value e dei requisiti soddisfatti, permettendo un monitoraggio costante dell'andamento del progetto.
 \end{itemize}
 
-\paragraph{GitHub \& GitHub Actions}
+\subsubsection{GitHub \& GitHub Actions}
 Viene utilizzato per il controllo di versione e l'automazione della CI/CD.
 \begin{itemize}
-    \item \textbf{Metriche associate:} MPC-8 (Deployment Frequency), MPC-12 (Build Time), MPC-13 (Code Review Turnaround Time), MPC-14 (Test success rate).
+    \item \textbf{Metriche associate:} MPC-8 (Deployment Frequency), MPC-10 (Avg Build Time), MPC-13 (Code Review Turnaround Time), MPC-14 (Test success rate).
     \item \textbf{Utilizzo:} I workflow di GitHub Actions oltre che garantire la metrica MPC-14 (Test success rate) attraverso l'esecuzione di test automatici, permettono di tracciare i tempi di build e code review, fornendo dati utili per il calcolo delle metriche di processo.
 \end{itemize}
 
@@ -2273,7 +2098,7 @@ Viene utilizzato per il controllo di versione e l'automazione della CI/CD.
 Piattaforma centrale per la \textit{Continuous Inspection} del codice
 TypeScript (Angular) e JavaScript (Electron).
 \begin{itemize}
-    \item \textbf{Metriche associate:} MPD-6 (Statement Coverage), MPD-7 (Branch Coverage), MPD-13 (Complessità Ciclomatica), MPD-14 (CBO), MPD-15 (Code Smells).
+    \item \textbf{Metriche associate:} MPD-6 (Statement Coverage), MPD-5 (Branch Coverage), MPD-12 (Complessità Ciclomatica), MPD-13 (CBO), MPD-14 (Code Smells).
     \item \textbf{Utilizzo:} Analizza staticamente il codice ad ogni \glossario{Push}, verificando che il superamento dei \glossario{Quality Gates} stabiliti sia coerente con le soglie definite nelle metriche di manutenibilità.
 \end{itemize}
 
@@ -2281,7 +2106,7 @@ TypeScript (Angular) e JavaScript (Electron).
 Data la natura della documentazione in lingua italiana, si rende necessario uno
 strumento specifico per l'analisi testuale.
 \begin{itemize}
-    \item \textbf{Metriche associate:} MPC-10 (Indice di Gulpease), MPC-11 (Correttezza Ortografica).
+    \item \textbf{Metriche associate:} MPC-11 (Indice di Gulpease), MPC-12 (Correttezza Ortografica).
     \item \textbf{Utilizzo:} Uno script Python che utilizza la libreria \texttt{textstat} per il calcolo dell'indice di Gulpease e le API di \textit{Aspell} per il conteggio degli errori ortografici nei file Markdown/\glossario{LaTeX}.
 \end{itemize}
 
@@ -2291,7 +2116,7 @@ strumento specifico per l'analisi testuale.
 Framework di testing End-to-End utilizzato per simulare l'interazione utente
 all'interno dell'ambiente Electron.
 \begin{itemize}
-    \item \textbf{Metriche associate:} MPD-8 (Profondità di Navigazione).
+    \item \textbf{Metriche associate:} MPD-7 (Profondità di Navigazione).
     \item \textbf{Utilizzo:} Viene configurato un \glossario{crawler} automatizzato che percorre l'albero di navigazione dell'applicazione Angular, validando la raggiungibilità dei link e calcolando il numero di interazioni (click) necessarie per raggiungere i nodi foglia.
 \end{itemize}
 
@@ -2299,7 +2124,7 @@ all'interno dell'ambiente Electron.
 Per misurare l'efficienza di un'applicazione Electron, è necessario monitorare
 l'istanza di Chromium sottostante.
 \begin{itemize}
-    \item \textbf{Metriche associate:} MPD-11 (Average CPU usage), MPD-12 (Peak memory usage).
+    \item \textbf{Metriche associate:} MPD-10 (Average CPU usage), MPD-11 (Peak memory usage).
     \item \textbf{Utilizzo:} Durante le sessioni di test automatizzati con Cypress, vengono invocati script Node.js che interrogano le API \texttt{process.getProcessMemoryInfo()} e \texttt{process.getCPUUsage()} di Electron per campionare il consumo di risorse in idle e sotto carico.
 \end{itemize}
 
@@ -2307,14 +2132,14 @@ l'istanza di Chromium sottostante.
 Integrato nei tool di sviluppo, viene utilizzato per profilare i tempi di
 risposta dell'interfaccia Angular.
 \begin{itemize}
-    \item \textbf{Metriche associate:} MPD-5 (Broken links).
+    \item \textbf{Metriche associate:} MPD-4 (Broken links).
     \item \textbf{Utilizzo:} Controllo formale di consistenza e correttezza della struttura dell'interfaccia utente Angular.
 \end{itemize}
 
 \paragraph{Funzioni interne di misurazione performance}
 Integrate direttamente nel codice sorgente, queste funzioni permettono di
 misurare i tempi di indicizzazione e risposta alle query, fornendo dati precisi
-per le metriche MPD-9 (Indexing time) e MPD-10 (Search Time).
+per le metriche MPD-8 (Indexing time) e MPD-9 (Search Time).
 
 \vfill
 \begin{flushright}
