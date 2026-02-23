@@ -224,7 +224,7 @@ qualità. Questa attività è condotta da tutti i membri del gruppo, al fine di
 ottenere una analisi completa e condivisa del documento. Le considerazioni
 fatte confluiscono nel documento di
 \href{https://7-zpus.github.io/Docs/assets/pdf/AnalisiCapitolati.pdf}{\ul{Analisi
-        dei capitolati}\setulcolor{black}} \ped{(ultimo accesso: 17/11/2025)}
+        dei capitolati}\setulcolor{black}}
 (§\ref{analisiDeiCapitolati}). I punti da analizzare sono i seguenti:
 \begin{itemize}
     \item \textbf{Obiettivo}: identificare l'obiettivo di massima del progetto e le funzionalità richieste.
@@ -399,17 +399,16 @@ accettazione.
 \end{itemize}
 
 \subsubsection{Attività: Consegna e terminazione}
-Il fornitore consegna il prodotto finale alla proponente, assicurandosi che sia
-completo, funzionante e conforme ai requisiti stabiliti.
 \paragraph{Procedura: consegna del prodotto finale}
 Il fornitore deve assicurarsi che il prodotto sia completo, funzionante e
 conforme ai requisiti stabiliti, e fornire tutta la documentazione necessaria
-per l'utilizzo del prodotto.
+per l'utilizzo del prodotto. Per fare ciò si utilizza la funzione \textit{releases} di GitHub.
 
 \paragraph{Procedura: esposizione delle funzionalità}
 Il fornitore presenta alla proponente le funzionalità del prodotto, illustrando
 come soddisfa i requisiti e rispondendo a eventuali domande o dubbi da parte
-della proponente.
+della proponente. Vengono mostrati assieme alla demo i risultati dei test, prova della
+correttezza di quanto sviluppato.
 
 \paragraph{Procedura: esposizione del processo di sviluppo}
 Il fornitore fornisce una panoramica dettagliata del processo di sviluppo
@@ -508,7 +507,7 @@ Il
 documento che espone all'esterno il lavoro di sviluppo svolto seguendo le
 procedure delineate all'interno di questo documento. Fornisce una guida
 dettagliata alla pianificazione, esecuzione e consuntivo delle attività
-completate in ciascuna Sprint. Il documento è diviso nelle seguenti sezioni:
+completate in ciascuna Sprint e funge da guida per l'esecuzione del progetto. Il documento è diviso nelle seguenti sezioni:
 \begin{enumerate}
     \item Introduzione
     \item Analisi dei rischi e mitigazione
@@ -876,7 +875,7 @@ l'approvazione o la richiesta di modifiche.
 
 Lo stesso effettua il merge da "\textit{in\_lavorazione}" nel ramo principale
 \textit{main} come definito in \ref{controlloConfig}, base per la versione
-ufficiale di rilascio corrispondente allamilestone. Questo passaggio dovrebbe
+ufficiale di rilascio corrispondente alla milestone. Questo passaggio dovrebbe
 risultare puramente formale se la documentazione è stata gestita fino a quel
 momento rispettando le norme definite. Non di meno il responsabile è il garante
 delle qualità del documento quindi deve impiegare il proprio tempo, il minimo
@@ -927,7 +926,11 @@ garantendo la tracciabilità delle modifiche e l'integrità dei rilasci.
 Questa attività prevede la definizione degli elementi della configurazione
 (CIs) e la loro identificazione univoca.
 \paragraph{Procedura: Identificazione dei CIs} \label{identificazioneCIs}
-Gli CIs sono sempre associati ad un Epic di Jira, che ne garantisce la
+Si identificano come CIs ciascun artefatto che concorre a costituire una qualsiasi baseline di progetto.
+Nel caso di documenti si racchiudono gruppi di documenti omogenei con un unico CI.
+Nel caso di codice si identificano le componenti principali, non rendendo dunque ogni unità uno CI.
+Si lascia libertà di identificazione in modo da permettere una gestione flessibile in base al caso specifico e alle esigenze del team.
+I CIs sono sempre associati ad un Epic di Jira, che ne garantisce la
 tracciabilità e la gestione delle modifiche. In particolare il processo di
 creazione deve seguire i seguenti passaggi:
 \begin{enumerate}
@@ -1029,7 +1032,7 @@ documentazione, il Team adotta il seguente standard per la denominazione dei
 branch in GitHub:
 \begin{itemize}
     \item La creazione del branch deve avvenire preferibilmente in modo automatico
-          tramite l'integrazione Jira-VSCode \ref{vscode}.
+          tramite l'integrazione Jira-VSCode (vedi §\ref{vscode}).
     \item Il formato obbligatorio è:
           \begin{verbatim}
     DIPR-<numero issue>-<descrizione-breve>
@@ -1064,7 +1067,7 @@ situata all'inizio di ogni documento.\\Al suo interno vi sono:
 \end{itemize}
 Per la numerazione delle versioni si adotta lo standard che segue:
 \begin{itemize}
-    \item \textbf{MAJOR} viene incrementato per modifiche sostanziali che introducono cambiamenti significativi o incompatibili con le versioni precedenti. Viene modificato in vista delle milestone.
+    \item \textbf{MAJOR} viene incrementato per modifiche sostanziali che introducono cambiamenti significativi o incompatibili con le versioni precedenti.
     \item \textbf{MINOR} viene incrementato per l'aggiunta di nuove funzionalità o miglioramenti che non compromettono la compatibilità con le versioni precedenti.
     \item \textbf{PATCH} viene incrementato per correzioni di bug, miglioramenti minori o modifiche che non influenzano le funzionalità principali del documento.
 \end{itemize}
