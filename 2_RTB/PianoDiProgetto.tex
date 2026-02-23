@@ -1,27 +1,38 @@
 \documentclass[a4paper,12pt]{article}
-
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
 \usepackage[italian]{babel}
 \usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
 \usepackage{float}
 \usepackage{microtype}
 \usepackage{geometry}
 \usepackage{setspace}
 \usepackage{enumitem}
 \usepackage{titlesec}
+\usepackage{chngpage}
 \usepackage{tocloft}
+\usepackage{longtable}
+\usepackage{ltablex}
+\usepackage{array}
 \usepackage{graphicx}
-\usepackage{hyperref}
-\usepackage{xcolor,soul}
 \usepackage{fancyhdr}
-\usepackage{changepage}
+\usepackage[table]{xcolor}
+\usepackage{color,soul}
+\usepackage[most]{tcolorbox}
+\usepackage{nameref}
+\usepackage[colorlinks=true]{hyperref}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
 \hypersetup{
-    colorlinks=true,
     linkcolor=black,
-    filecolor=magenta,      
-    urlcolor=cyan,
+    urlcolor=blue
 }
 
 \pagestyle{fancy}
@@ -46,13 +57,20 @@
 \titleformat{\paragraph}{\normalsize\bfseries}{\theparagraph}{1em}{}
 \titleformat{\subparagraph}{\normalsize\bfseries}{\thesubparagraph}{1em}{}
 
+\definecolor{lightblack}{gray}{0.35}
+\newcommand{\glossario}[1]{\textit{#1}\textsubscript{\textbf{\textit{\textcolor{lightblack}{G}}}}}
+
 \begin{document}
 
 \begin{center}
     \includegraphics[width=9.5cm]{../assets/logo7ZPUs.jpg}\\
     \small\hspace{10cm} 7zpus.swe@gmail.com\\
     \vspace{0.5cm}
-    \Large \textbf{Piano di Progetto}\\
+    \LARGE \textbf{Piano di Progetto}\\
+    \vspace{0.3cm}
+    \normalsize \textbf{Versione:} 1.0.0\\
+    \textbf{Responsabile:} Laoud Zakaria \\
+    \textbf{Destinatari:} Sanmarco Informatica S.p.A., Prof. Tullio Vardanega, Prof. Riccardo Cardin, Team 7-ZPUs \\
 \end{center}
 
 \vspace{0.3cm}
@@ -66,6 +84,8 @@
         \begin{tabular}{|c|c|c|c|c|}
         \hline
         \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+        \hline
+        1.0.0 & 2026/04/13 & Laoud Zakaria & Georgescu Diana & \begin{tabular}[c]{@{}c@{}} Approvazione per \\ candidatura RTB \end{tabular} \\
         \hline
         0.7.0 & 2026/02/13 & Laoud Zakaria & Georgescu Diana & Consuntivo sprint 6 \\
         \hline
@@ -81,7 +101,7 @@
         \hline
         0.2.0 & 2025/12/04 & Gingillino Aaron & Rocco Matteo A. & Redazione sprint 1 \\
         \hline
-        0.1.0 & 2025/11/23 & Vigolo Davide & - & Creazione e stesura sezioni \\
+        0.1.0 & 2025/11/23 & Vigolo Davide & - & \begin{tabular}[c]{@{}c@{}} Creazione e \\stesura sezioni \end{tabular} \\
         \hline
         \end{tabular}
     \end{adjustwidth}
@@ -94,7 +114,7 @@
 
 \section{Introduzione}
 \subsection{Scopo del documento}
-Il piano di progetto è un documento il cui obbiettivo è descrivere lo svolgimento del progetto, questo tramite le apposite sezioni: 
+Il piano di progetto è un \glossario{documento} il cui obbiettivo è descrivere lo svolgimento del \glossario{progetto} tramite le apposite sezioni: 
 \begin{itemize}
     \item Analisi dei rischi
     \item Modello di sviluppo
@@ -102,9 +122,9 @@ Il piano di progetto è un documento il cui obbiettivo è descrivere lo svolgime
     \item Pianificazione a breve termine
 \end{itemize}
 \subsection{Scopo del prodotto}
-Il progetto riguarda lo sviluppo di un software "DIPReader". Il software, tramite una interfaccia utente munita di filtri impostabili dall'utente, permette di poter trovare agilmente informazioni all'interno dei file DIP.
+Il progetto riguarda lo sviluppo di un \glossario{software} "DIPReader". Il software, tramite una interfaccia utente munita di \glossario{filtri} impostabili dall'utente, permette di poter trovare agilmente informazioni all'interno dei file \glossario{DIP}.
 \subsection{Glossario}
-Al fine di ovviare ad ambiguità linguistiche è stato adottato un Glossario. Ogni qualvolta che un termine tecnico viene segnato con "\textsuperscript{G}" la sua definizione è disponibile nel glossario.
+Al fine di ovviare ad ambiguità linguistiche è stato adottato un Glossario. Ogni qualvolta che un termine tecnico viene segnato con "\glossario{termine}" la sua definizione è disponibile nel glossario.
 
 \subsection{Riferimenti}
 \subsubsection{Riferimenti normativi}
@@ -135,7 +155,7 @@ Ogni rischio presentato in questa sezione è caratterizzato da:
     \begin{itemize}
         \item Evitare il rischio, nel caso fosse possibile
         \item Mitigare il rischio, riducendone gli effetti sul progetto nel caso non fosse stato possibile evitarlo
-        \item Gestire il rischio, nel caso in cui si verifichi il \textit{Worst Case Scenario}\textsuperscript{G}
+        \item Gestire il rischio, nel caso in cui si verifichi il \glossario{Worst Case Scenario}
     \end{itemize}
     \item \textbf{Indicatori}
 \end{itemize}
@@ -145,14 +165,14 @@ Ogni rischio presentato in questa sezione è caratterizzato da:
 \subsection{Rischi Tecnologici}
 
 \subsubsection{Definizione}
-Il rischio tecnologico riguarda tutto ciò che concerne le tecnologie parte del prodotto software, possono includere database, framework, linguaggi di programmazione, ecc... Viene inclusi per convenienza anche gli strumenti di amministrazione del progetto (e.g. GitHub).
+Il rischio tecnologico riguarda tutto ciò che concerne le tecnologie parte del prodotto software, possono includere database, framework, linguaggi di programmazione, ecc... Viene inclusi per convenienza anche gli strumenti di amministrazione del progetto (e.g. \glossario{GitHub}).
 
 \subsubsection{RT01 - Problemi tecnici con gli strumenti di sviluppo}
 \label{RT01}
 \textbf{Probabilità di occorrenza}: Moderata (50\%)\\
 \textbf{Effetti}: Grave\\
 \textbf{Descrizione}: L'inesperienza del gruppo con le tecnologie da utilizzare potrebbe portare a difficoltà tecniche e rallentamenti nello sviluppo.\\
-\textbf{Strategia}: Prevedere sessioni di formazione iniziali con il supporto occasionale dell'azienda proponente per familiarizzare con gli strumenti e le tecnologie.\\
+\textbf{Strategia}: Prevedere sessioni di formazione iniziali con il supporto occasionale dell'azienda \glossario{proponente} per familiarizzare con gli strumenti e le tecnologie.\\
 \textbf{Indicatori}: Ritardi nell'implementazione, errori tecnici frequenti, richieste di aiuto ripetute.
 
 
@@ -194,7 +214,7 @@ Il rischio organizzativo riguarda tutto ciò che concerne l'organizzazione del p
 \textbf{Effetti}: Grave\\
 \textbf{Descrizione}: Il superamento del budget preventivato potrebbe compromettere la fattibilità del progetto, portando a ritardi nella consegna o alla necessità di ridurre alcune funzionalità previste.\\
 \textbf{Strategia}: Monitorare costantemente l'allocazione delle ore rispetto alla pianificazione iniziale, effettuare stand-up meetings periodici e prevedere margini temporali per imprevisti.\\
-\textbf{Indicatori}: Superamento del 10\% delle ore preventivate per attività, ritardi accumulati nelle milestone.
+\textbf{Indicatori}: Superamento del 10\% delle ore preventivate per attività, ritardi accumulati nelle \glossario{milestone}.
 
 \subsubsection{RO02 - Mancata comunicazione e collaborazione tra i membri del team}
 \label{RO02}
@@ -233,7 +253,7 @@ Il rischio organizzativo riguarda tutto ciò che concerne l'organizzazione del p
 \subsection{Rischi legati ai requisiti}
 
 \subsubsection{Definizione}
-Il rischio che può derivare per esempio da una errata analisi di un requisito, o dal cambiamento di esso.
+Il rischio che può derivare per esempio da una errata analisi di un \glossario{requisito}, o dal cambiamento di esso.
 
 
 
@@ -247,12 +267,11 @@ Il metodo di sviluppo che il gruppo ha ritenuto più adatto per il progetto, vis
 \subsection{Motivazioni}
 Le motivazioni che hanno portato alla scelta di questo modello sono:
 \begin{itemize}
-    \item Principio Fail Fast: il gruppo vuole essere in grado di ottenere feedback frequenti e rapidi in modo tale da identificare e correggere eventuali non conformità a ciò che la proponente si aspetta. Questo principio è generalizzabile a qualsiasi elemento del progetto (requisiti, Way of Working...).
-    \item Rotazione dei ruoli: con Agile i periodi sono divisi in Sprint, elemento che si integra in modo ottimale con la rotazione dei ruoli, che coinciderà naturalmente con l'inizio e la fine di uno sprint (non per forza lo stesso).
-    \item Retrospettive: a differenza di altri modelli, Agile dedica un momento specifico alla riflessione sul come si è lavorato, rendendo più strutturato e disciplinato il miglioramento continuo del Way of Working.
+    \item Principio Fail Fast: il gruppo vuole essere in grado di ottenere feedback frequenti e rapidi in modo tale da identificare e correggere eventuali non conformità a ciò che la proponente si aspetta. Questo principio è generalizzabile a qualsiasi elemento del progetto (requisiti, \glossario{Way of Working}...).
+    \item Rotazione dei ruoli: con Agile i periodi sono divisi in \glossario{Sprint}, elemento che si integra in modo ottimale con la rotazione dei ruoli, che coinciderà naturalmente con l'inizio e la fine di uno sprint (non per forza lo stesso).
+    \item \glossario{Retrospettive}: a differenza di altri modelli, Agile dedica un momento specifico alla riflessione sul come si è lavorato, rendendo più strutturato e disciplinato il miglioramento continuo del \textit{Way of Working}.
     \item Pianificazione delle attività: con Agile le attività sono pianificate per periodi brevi, questo permette di adattarsi più facilmente a cambiamenti nei requisiti o nelle priorità del progetto.
 \end{itemize}
-
 
 
 
@@ -290,7 +309,7 @@ Viene di seguito riportata la tabella già esposta nel documento di \href{https:
 \newpage
 
 
-Partendo da questa stima di ripartizione oraria, comprensiva sia delle ore relative alla RTB, che alla PB, si stimano i costi riportati di seguito.
+Partendo da questa stima di ripartizione oraria, comprensiva sia delle ore relative alla \glossario{RTB}, che alla \glossario{PB}, si stimano i costi riportati di seguito.
 \begin{table}[H]
     \label{tab:preventivo_complessivo}
     \begin{adjustwidth}{-4cm}{-4cm}
@@ -323,18 +342,51 @@ Al termine di ogni periodo di lavoro (sprint), sarà sottratto di volta in volta
 
 \subsection{Attività previste per la RTB}
 
-\subsubsection{Milestone X}
+\subsubsection*{Milestone 1}
+Completamento documento di Analisi dei Requisiti: 2025/12/15 \ped{(Decisione del 2025/11/28)}
 
-\subsubsection{Milestone X+1}
+\subsubsection*{Milestone 2}
+Completamento Proof of Concept: 2026/01/12 \ped{(Decisione del 2025/11/28)}
+
+\subsubsection*{Milestone RTB}
+Prevista candidatura RTB: 2026/02/06 \ped{(Decisione del 2025/12/27)}
 
 
 \subsection{Attività previste per la PB}
 
-\subsubsection{Milestone X}
+\subsubsection*{Milestone 1}
+Completamento dello studio sulla progettazione: 2026/02/28
 
-\subsubsection{Milestone X+1}
+\subsubsection*{Milestone PB}
+Prevista candidatura RTB: 2026/04/10 \ped{(Deciso in sede di candidatura al Capitolato)}
 
+\renewcommand{\arraystretch}{1.2}
 
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+    \rowcolors{2}{gray!15}{white}
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        \rowcolor{zpusgreen!30}
+        \textbf{Attività} & \textbf{2025/12/15} & \textbf{2026/01/12} & \textbf{\begin{tabular}[c]{@{}c@{}} @RTB\\ 2026/02/06 \end{tabular}} & \textbf{2026/02/28} & \textbf{@PB} \\
+        \hline
+        \textbf{\begin{tabular}[c]{@{}c@{}} Analisi dei \\ Requisiti \end{tabular}} & \begin{tabular}[c]{@{}c@{}} Identificati casi\\ d'uso principali \end{tabular} & \begin{tabular}[c]{@{}c@{}} Identificati tutti\\ i casi d'uso e i\\ requisiti \\associati \end{tabular} & \begin{tabular}[c]{@{}c@{}} Completato \end{tabular} & &  \\
+        \hline
+        \textbf{\begin{tabular}[c]{@{}c@{}} Piano di\\ Progetto \end{tabular}} & \begin{tabular}[c]{@{}c@{}} Aggiornato\\ allo Sprint 4 \end{tabular} & \begin{tabular}[c]{@{}c@{}} Aggiornato\\ allo Sprint 5 \end{tabular} & \begin{tabular}[c]{@{}c@{}} Aggiornato \\ allo Sprint 6 \end{tabular} & & \begin{tabular}[c]{@{}c@{}} Completato \end{tabular} \\
+        \hline
+        \textbf{\begin{tabular}[c]{@{}c@{}} Norme di\\ Progetto \end{tabular}} & \begin{tabular}[c]{@{}c@{}} Definiti\\ processi \\primari e di \\organizzativi \end{tabular} & \begin{tabular}[c]{@{}c@{}} Definiti\\ processi \\di sviluppo\\ (parte Analisi \\ dei Requisiti) e di \\documentazione \end{tabular} & & \begin{tabular}[c]{@{}c@{}} Definite\\ norme di \\progettazione \end{tabular} & \begin{tabular}[c]{@{}c@{}} Completato \end{tabular} \\
+        \hline
+        \textbf{\begin{tabular}[c]{@{}c@{}} Proof of\\ Concept \end{tabular}} & & \begin{tabular}[c]{@{}c@{}} Implementate \\le funzionalità\\ minime\\ necessarie \end{tabular} & \begin{tabular}[c]{@{}c@{}} Completato \end{tabular} & &  \\
+        \hline
+        \textbf{\begin{tabular}[c]{@{}c@{}} Piano di\\ Qualifica \end{tabular}} & \begin{tabular}[c]{@{}c@{}} Definite tutte \\le metriche da \\misurare \end{tabular} & \begin{tabular}[c]{@{}c@{}} Individuati i \\test di sistema \end{tabular} & & & \begin{tabular}[c]{@{}c@{}} Completato \end{tabular} \\
+        \hline
+        \textbf{Glossario} & & & & & \begin{tabular}[c]{@{}c@{}} Completato \end{tabular} \\
+        \hline
+    \end{tabular}
+    \caption{Attività previste per la RTB e la PB}
+    \end{adjustwidth}
+\end{table}
 
 
 \section{Pianificazione a breve termine}
@@ -348,13 +400,13 @@ Data fine attesa: 2025/11/21\\
 Data fine effettiva: 2025/11/21
 
 \subsubsection{Attività previste}
-\begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-    \centering
+
     \begin{spacing}{1}
     \small
-    \begin{tabular}{|p{4cm}|c|c|c|c|c|}
+    \rowcolors{2}{gray!15}{white}
+    \begin{longtable}{|p{4cm}|c|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Attività} & \textbf{Jira Issue} & \textbf{Data Inizio} & \textbf{Data Fine} & \textbf{Ruoli Assegnati} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore} \\ \textbf{previste} \end{tabular} \\
         \hline
         Aggiornamento Norme di Progetto & \href{https://7zpus.atlassian.net/browse/DIPR-84}{DIPR-84} & 2025/11/14 & 2025/11/19 & Responsabile & 3h \\
@@ -374,11 +426,12 @@ Data fine effettiva: 2025/11/21
         Test di opzioni di merge & \href{https://7zpus.atlassian.net/browse/DIPR-89}{DIPR-89} & 2025/11/14 & 2025/11/19 & N/A & N/A \\
         \hline
         Test di Convenzione di Branching & \href{https://7zpus.atlassian.net/browse/DIPR-92}{DIPR-92} & 2025/11/14 & 2025/11/21 & N/A & N/A \\\hline
-    \end{tabular}
+        \rowcolor{white}
+        \caption{Attività previste per lo Sprint 1}
+    \end{longtable}
     \end{spacing}
-    \caption{Attività previste per lo Sprint 1}
-    \end{adjustwidth}
-\end{table}
+    
+
 
 \subsubsection{Rischi attesi}
 Nessuno
@@ -415,13 +468,13 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
 
 
 \subsubsection{Consuntivo di periodo}
-\begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-    \centering
+
     \small
     \begin{spacing}{1}
-        \begin{tabular}{|p{4cm}|c|c|c|c|c|}
+        \rowcolors{2}{gray!15}{white}
+        \begin{longtable}{|p{4cm}|c|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Attività} & \textbf{Jira Issue} & \textbf{Data Inizio} & \textbf{Data Fine} & \textbf{Ruoli Assegnati} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore} \\ \textbf{effettive} \end{tabular} \\
         \hline
         Aggiornamento Norme di Progetto & \href{https://7zpus.atlassian.net/browse/DIPR-84}{DIPR-84} & 2025/11/14 & 2025/11/19 & Responsabile & 4h \\
@@ -441,11 +494,12 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
         Test di opzioni di merge & \href{https://7zpus.atlassian.net/browse/DIPR-89}{DIPR-89} & 2025/11/14 & 2025/11/19 & N/A & N/A \\
         \hline
         Test di Convenzione di Branching & \href{https://7zpus.atlassian.net/browse/DIPR-92}{DIPR-92} & 2025/11/14 & 2025/11/21 & N/A & N/A \\\hline
-        \end{tabular}
+        \rowcolor{white}
+        \caption{Consuntivo delle attività dello Sprint 1}
+    
+    \end{longtable}
     \end{spacing}
-    \caption{Consuntivo delle attività dello Sprint 1}
-    \end{adjustwidth}
-\end{table}
+
 
 
 
@@ -515,14 +569,16 @@ Nessuno
 Data inizio: 2025/11/22\\
 Data fine attesa: 2025/12/05\\
 Data fine effettiva: 2025/12/05
+
+
 \subsubsection{Attività previste}
-\begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-    \centering
+
     \small
     \begin{spacing}{1}
-        \begin{tabular}{|p{4cm}|c|c|c|c|c|}
+        \rowcolors{2}{gray!15}{white}
+        \begin{longtable}{|p{4cm}|c|c|c|c|c|}
             \hline
+            \rowcolor{zpusgreen!30}
             \textbf{Attività} & \textbf{Jira Issue} & \textbf{Data Inizio} & \textbf{Data Fine} & \textbf{Ruoli Assegnati} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore} \\ \textbf{previste} \end{tabular} \\
             \hline
             Aggiornamento Task & \href{https://7zpus.atlassian.net/browse/DIPR-104}{DIPR-104} & 2025/11/21 & 2025/12/01 & Amministratore & 30m \\
@@ -545,11 +601,11 @@ Data fine effettiva: 2025/12/05
             \hline
             Aggiornamento norme di branching & \href{https://7zpus.atlassian.net/browse/DIPR-116}{DIPR-116} & 2025/11/21 & 2025/12/05 & \begin{tabular}[c]{@{}c@{}} Amministratore \end{tabular} & \begin{tabular}[c]{@{}c@{}} 45m \end{tabular} \\ %2 dic
             \hline
-    \end{tabular}
-    \end{spacing}
     \caption{Attività previste per lo Sprint 2}
-    \end{adjustwidth}
-\end{table}
+
+    \end{longtable}
+    \end{spacing}
+
 
 \subsubsection{Rischi attesi}
 Nessuno
@@ -575,7 +631,7 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
         \hline
         Soligo Lorenzo& 0.5h & 3.25h & 5h & - & - & - & 8.75h\\
         \hline
-        Vigolo Davide & 5.5h & - & 2h & - & - & 30m & 10h \\
+        Vigolo Davide & 5.5h & - & 2h & - & - & 30m & 8h \\
         \hline
         \textbf{Totale} & \textbf{8.25h}& \textbf{3.25h} & \textbf{17h}& \textbf{-}& \textbf{-}& \textbf{2.5h}& \textbf{31h}\\
         \hline
@@ -586,13 +642,13 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
 
 
 \subsubsection{Consuntivo di periodo}
-\begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-    \centering
+
     \small
     \begin{spacing}{1}
-        \begin{tabular}{|p{4cm}|c|c|c|c|c|}
+        \rowcolors{2}{gray!15}{white}
+        \begin{longtable}{|p{4cm}|c|c|c|c|c|}
             \hline
+            \rowcolor{zpusgreen!30}
             \textbf{Attività} & \textbf{Jira Issue} & \textbf{Data Inizio} & \textbf{Data Fine} & \textbf{Ruoli Assegnati} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore} \\ \textbf{effettive} \end{tabular} \\
             \hline
             Aggiornamento Task & \href{https://7zpus.atlassian.net/browse/DIPR-104}{DIPR-104} & 2025/11/21 & 2025/12/01 & Amministratore & 30m \\
@@ -615,11 +671,11 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
             \hline
             Aggiornamento norme di branching & \href{https://7zpus.atlassian.net/browse/DIPR-116}{DIPR-116} & 2025/11/21 & 2025/12/02 & \begin{tabular}[c]{@{}c@{}} Amministratore \end{tabular} & \begin{tabular}[c]{@{}c@{}} 45m \end{tabular} \\ %2 dic
             \hline
-        \end{tabular}
+            \caption{Attività previste per lo Sprint 2}
+        \end{longtable}
     \end{spacing}
-    \caption{Attività previste per lo Sprint 2}
-    \end{adjustwidth}
-\end{table}
+
+
 \begin{table}[H]
     \begin{adjustwidth}{-4cm}{-4cm}
     \centering
@@ -652,10 +708,10 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
 \subsubsection{Rischi incontrati}
 Durante questo sprint sono stati incontrati i seguenti rischi:
 \begin{itemize}
-    \item \hyperref[RO04]{RO04} - Mancato rispetto delle norme e documenti di progetto interni: questo rischio si è manifestato a causa del cambiamento delle norme di branching e la gestione delle task jira associate. Questo a portato al rapido cambiamento delle norme e alla poca uniformità del lavoro svolto. E' stata applicata la misura preventiva, in particolare fornendo supporto ai membri del team non ancora allineati alle nuove norme.
+    \item \hyperref[RO04]{RO04} - Mancato rispetto delle norme e documenti di progetto interni: questo rischio si è manifestato a causa del cambiamento delle norme di branching e la gestione delle \glossario{task} \glossario{Jira} associate. Questo a portato al rapido cambiamento delle norme e alla poca uniformità del lavoro svolto. E' stata applicata la misura preventiva, in particolare fornendo supporto ai membri del team non ancora allineati alle nuove norme.
     \begin{itemize}
         \item Il rischio non è stato previsto a causa della sottostima del problema, in quanto si pensava che il cambiamento non sempre ben definito delle norme di branching non avrebbe avuto un impatto così significativo sul lavoro del team.
-        \item La strategia di contenimento/prevenzione ha funzionato, in particolare è stato efficace il supporto dagli autori delle norme verso gli altri membri del gruppo tramite un video esplicativo. Si ritiene tuttavia necessario stabilire da ora in poi una data di entrata in vigore delle norme, tenendo conto il tempo di adattamento e apprendimento del team.
+        \item La strategia di contenimento/prevenzione ha funzionato, in particolare è stato efficace il supporto dagli autori delle norme verso gli altri membri del gruppo tramite un video esplicativo. Si ritiene tuttavia necessario stabilire da ora in poi una data di entrata in vigore delle norme, tenendo conto del tempo di adattamento e apprendimento del team.
     \end{itemize}
 \end{itemize}
 
@@ -698,13 +754,12 @@ Data fine attesa: 2025/12/19\\
 Data fine effettiva: 2025/12/19
 
 \subsubsection{Attività previste}
-\begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-    \centering
-    \small
-    \begin{spacing}{1}
-        \begin{tabular}{|p{4cm}|c|c|c|c|c|}
+
+\small
+\rowcolors{2}{gray!15}{white}
+\begin{longtable}{|p{4cm}|c|c|c|c|c|}
             \hline
+            \rowcolor{zpusgreen!30}
             \textbf{Attività} & \textbf{Jira Issue} & \textbf{Data Inizio} & \textbf{Data Fine} & \textbf{Ruoli Assegnati} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore} \\ \textbf{previste} \end{tabular} \\
             \hline
             Verbale Interno 2025/12/05 & \begin{tabular}[c]{@{}c@{}} \href{https://7zpus.atlassian.net/browse/DIPR-121}{DIPR-121} \\\href{https://7zpus.atlassian.net/browse/DIPR-37}{DIPR-37} \end{tabular} & 2025/12/06 & 2025/12/11 & \begin{tabular}[c]{@{}c@{}} Analista \end{tabular} & \begin{tabular}[c]{@{}c@{}} 1h \end{tabular} \\
@@ -739,11 +794,9 @@ Data fine effettiva: 2025/12/19
             \hline
             Paragrafo 5 & \begin{tabular}[c]{@{}c@{}} \href{https://7zpus.atlassian.net/browse/DIPR-147}{DIPR-147} \\\href{https://7zpus.atlassian.net/browse/DIPR-143}{DIPR-143} \end{tabular} & 2025/12/06 & 2025/12/12 & \begin{tabular}[c]{@{}c@{}} Amministratore \end{tabular} & \begin{tabular}[c]{@{}c@{}} 4h \end{tabular} \\
             \hline
-    \end{tabular}
-    \end{spacing}
     \caption{Attività previste per lo Sprint 3}
-    \end{adjustwidth}
-\end{table}
+\end{longtable}
+
 
 
 \subsubsection{Rischi attesi}
@@ -757,6 +810,7 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
 \begin{table}[H]
     \begin{adjustwidth}{-4cm}{-4cm}
     \centering
+    \rowcolors{2}{white}{white}
     \begin{tabular}{|c|c|c|c|c|c|c|c|}
         \hline
         \textbf{Membro}         & \textbf{Re}   & \textbf{Am}   & \textbf{An}   & \textbf{Pg}   & \textbf{Pr}   & \textbf{Ve}   & \textbf{Totale} \\
@@ -785,12 +839,12 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
 
 \subsubsection{Consuntivo di periodo}
 \begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-    \centering
     \small
     \begin{spacing}{1}
-        \begin{tabular}{|p{4cm}|c|c|c|c|c|}
+        \rowcolors{2}{gray!15}{white}
+        \begin{longtable}{|p{4cm}|c|c|c|c|c|}
             \hline
+            \rowcolor{zpusgreen!30}
             \textbf{Attività} & \textbf{Jira Issue} & \textbf{Data Inizio} & \textbf{Data Fine} & \textbf{Ruoli Assegnati} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore} \\ \textbf{effettive} \end{tabular} \\
             \hline
             Riunione Settimanale 2025/12/05 & \href{https://7zpus.atlassian.net/browse/DIPR-37}{DIPR-37} & 2025/12/05 & 2025/12/05 & Responsabile & 1h\\
@@ -817,11 +871,12 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
             \hline
             Paragrafo 5 & \begin{tabular}[c]{@{}c@{}} \href{https://7zpus.atlassian.net/browse/DIPR-147}{DIPR-147} \\\href{https://7zpus.atlassian.net/browse/DIPR-143}{DIPR-143} \end{tabular} & 2025/12/06 & 2025/12/12 & \begin{tabular}[c]{@{}c@{}} Amministratore \end{tabular} & \begin{tabular}[c]{@{}c@{}} \textcolor{green!50!black}{2h} \end{tabular} \\
             \hline
-    \end{tabular}
+                \caption{Attività svolte Sprint 3}
+
+    \end{longtable}
     \end{spacing}
-    \caption{Attività svolte Sprint 3}
-    \end{adjustwidth}
 \end{table}
+
 
 Le attività:
 \begin{itemize}
@@ -831,12 +886,13 @@ Le attività:
     \item Analisi UC5, UC6, UC7, UC8, UC9 (\href{https://7zpus.atlassian.net/browse/DIPR-135}{DIPR-135})
     \item Analisi UC10, UC11, UC12 (\href{https://7zpus.atlassian.net/browse/DIPR-132}{DIPR-132})
 \end{itemize}
-Non sono state portate a termine e reinserite nel backlog, dunque riassegnate allo sprint successivo.\\
+Non sono state portate a termine o reinserite nel backlog, dunque riassegnate allo sprint successivo.\\
 
 
 \begin{table}[H]
     \begin{adjustwidth}{-4cm}{-4cm}
     \centering
+    \rowcolors{2}{white}{white}
     \begin{tabular}{|c|c|c|c|c|c|c|c|}
         \hline
         \textbf{Membro}         & \textbf{Re}   & \textbf{Am}   & \textbf{An}   & \textbf{Pg}   & \textbf{Pr}   & \textbf{Ve}   & \textbf{Totale} \\
@@ -867,7 +923,7 @@ Non sono state portate a termine e reinserite nel backlog, dunque riassegnate al
 \subsubsection{Rischi incontrati}
 Durante questo sprint sono stati incontrati i seguenti rischi:
 \begin{itemize}
-    \item \hyperref[RO05]{RO05} - Mancato completamento delle attività entro le date stabilite: questo rischio si è manifestato a causa del cambio di assegnamento dei ruoli e il reindirizzamento del tempo produttivo verso le attività di analisi dei requisiti.
+    \item \hyperref[RO05]{RO05} - Mancato completamento delle attività entro le date stabilite: questo rischio si è manifestato a causa del cambio di assegnamento dei ruoli e il reindirizzamento del tempo produttivo verso le attività di \glossario{Analisi dei Requisiti}.
     \item \hyperref[RI02]{RI02} - Indisposizione dei membri del team: il rischio si è verificato contemporaneamente per due membri del team, nonostante ciò le attività sono proseguite a ritmo di poco rallentato.
 \end{itemize}
 
@@ -876,6 +932,7 @@ Durante questo sprint sono stati incontrati i seguenti rischi:
 \begin{table}[H]
     \begin{adjustwidth}{-4cm}{-4cm}
     \centering
+    \rowcolors{2}{white}{white}
     \begin{tabular}{|c|c|c|c|c|}
         \hline
         \textbf{Ruolo} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore/costo}\\\textbf{preventivati} \end{tabular} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore/costo}\\\textbf{consuntivo} \end{tabular} & \textbf{Differenza} & \textbf{Preventivo a finire} \\
@@ -907,13 +964,13 @@ Data fine attesa: 2026/01/09\\
 Data fine effettiva: 2026/01/09
 
 \subsubsection{Attività previste}
-\begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-    \centering
+
     \small
     \begin{spacing}{1}
-    \begin{tabular}{|p{4cm}|c|c|c|c|c|}
+        \rowcolors{2}{gray!15}{white}
+    \begin{longtable}{|p{4cm}|c|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Attività} & \textbf{Jira Issue} & \textbf{Data Inizio} & \textbf{Data Fine} & \textbf{Ruoli Assegnati} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore} \\ \textbf{previste} \end{tabular} \\
         \hline
         Verbale Interno 2025/12/19 & \href{https://7zpus.atlassian.net/browse/DIPR-152}{DIPR-152}& 2025/12/20 & 2025/12/26 & Responsabile & 1h \\
@@ -926,9 +983,16 @@ Data fine effettiva: 2026/01/09
         \hline
         Aggiunta pipeline CI per controllo Indice Gulpease & \href{https://7zpus.atlassian.net/browse/DIPR-163}{DIPR-163} & 2026/01/03 & 2026/01/09 & Amministratore & 1.5h \\
         \hline
-        Consuntivo sprint 3 & \href{}{} & 2026/01/03 & 2026/01/09 & Responsabile & 1h \\
+        Consuntivo sprint 3 & \href{https://7zpus.atlassian.net/browse/DIPR-165}{DIPR-165} & 2026/01/03 & 2026/01/09 & Responsabile & 1h \\
         \hline
-        preventivo sprint 4 & \href{}{} & 2026/01/03 & 2026/01/09 & Responsabile & 1h\\
+        Preventivo sprint 4 & \href{https://7zpus.atlassian.net/browse/DIPR-164}{DIPR-164} & 2026/01/03 & 2026/01/09 & Responsabile & 1h\\
+        \hline
+
+        Riunione Interfestiva 2025/12/27 & \href{https://7zpus.atlassian.net/browse/DIPR-158}{DIPR-158} & 2025/12/27 & 2025/01/09 & Responsabile & 1h \\
+        \hline
+        Verbale Interno 2025/12/27 & \href{https://7zpus.atlassian.net/browse/DIPR-159}{DIPR-159} & 2025/12/27 & 2026/01/09 & Responsabile & 1h \\
+
+
         \hline
         Use Case 1-4 & \href{https://7zpus.atlassian.net/browse/DIPR-134}{DIPR-134} & 2025/12/20 & 2026/01/09 & Analista & 5h\\
         \hline
@@ -956,11 +1020,12 @@ Data fine effettiva: 2026/01/09
         \hline
         Scrittura Paragrafi 3.3,3.4,3.5 & \href{https://7zpus.atlassian.net/browse/DIPR-145}{DIPR-145} & 2025/12/20 & 2026/01/09 & Analista & 2h \\
         \hline
-    \end{tabular}
+        \caption{Attività previste per lo Sprint 4}
+
+    \end{longtable}
+
     \end{spacing}
-    \caption{Attività previste per lo Sprint 4}
-    \end{adjustwidth}
-\end{table}
+
 
 \subsubsection{Rischi attesi}
 \begin{itemize}
@@ -972,25 +1037,26 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
 \begin{table}[H]
     \begin{adjustwidth}{-4cm}{-4cm}
     \centering
+    \rowcolors{2}{white}{white}
     \begin{tabular}{|c|c|c|c|c|c|c|c|}
         \hline
         \textbf{Membro}& \textbf{Re} & \textbf{Am} & \textbf{An} & \textbf{Pg} & \textbf{Pr} & \textbf{Ve} & \textbf{Totale} \\
         \hline
         Fattoni Antonio & 1h & - & 5h & - & - & 2h & 8h \\
         \hline
-        Georgescu Diana& - & - & 2h & - & - & 2h & 4h \\
+        Georgescu Diana & 0.5h & - & 2h & - & - & 2h & 4.5h \\
         \hline
-        Gingillino Aaron& 1.5h & 4h & 4h & - & - & 1.5h & 11h \\
+        Gingillino Aaron& 2.5h & 4h & 4h & - & - & 1.5h & 12h \\
         \hline
         Laoud Zakaria& - & 4h & 2h & - & - & 2h & 7.5h \\
         \hline
         Rocco Matteo Alberto & 1h & - & 2h & - & - & 1.5h & 4.5h \\
         \hline
-        Soligo Lorenzo& 1h & - & 9h & - & - & 2.5h & 12.5h \\
+        Soligo Lorenzo& 1h & - & 9h & - & - & 3h & 13h \\
         \hline
         Vigolo Davide & 1h & 1.5h & 8h & - & - & 2h & 12.5h \\
         \hline
-        \textbf{Totale} & \textbf{5.5h} & \textbf{9.5h} & \textbf{32h} & \textbf{-} & \textbf{-} & \textbf{13h} & \textbf{60h} \\
+        \textbf{Totale} & \textbf{7h} & \textbf{9.5h} & \textbf{32h} & \textbf{-} & \textbf{-} & \textbf{13.5h} & \textbf{62h} \\
         \hline
     \end{tabular}
     \caption{Preventivo di periodo per lo Sprint 4}
@@ -998,13 +1064,13 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
 \end{table}
 
 \subsubsection{Consuntivo di periodo}
-\begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-    \centering
+
     \small
     \begin{spacing}{1}
-        \begin{tabular}{|p{4cm}|c|c|c|c|c|}
+            \rowcolors{2}{gray!15}{white}
+        \begin{longtable}{|p{4cm}|c|c|c|c|c|}
             \hline
+            \rowcolor{zpusgreen!30}
             \textbf{Attività} & \textbf{Jira Issue} & \textbf{Data Inizio} & \textbf{Data Fine} & \textbf{Ruoli Assegnati} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore} \\ \textbf{effettive} \end{tabular} \\
             \hline
             Verbale Interno 2025/12/19 & \href{https://7zpus.atlassian.net/browse/DIPR-152}{DIPR-152}& 2025/12/20 & 2025/12/26 & Responsabile & 1h \\
@@ -1017,9 +1083,13 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
             \hline
             Aggiunta pipeline CI per controllo Indice Gulpease & \href{https://7zpus.atlassian.net/browse/DIPR-163}{DIPR-163} & 2026/01/03 & 2026/01/09 & Amministratore & 1.5h \\
             \hline
-            Consuntivo sprint 3 & \href{}{} & 2026/01/03 & 2026/01/09 & Responsabile & \textcolor{green!50!black}{30m} \\
+            Consuntivo sprint 3 & \href{https://7zpus.atlassian.net/browse/DIPR-165}{DIPR-165} & 2026/01/03 & 2026/01/09 & Responsabile & \textcolor{green!50!black}{30m} \\
             \hline
-            preventivo sprint 4 & \href{}{} & 2026/01/03 & 2026/01/09 & Responsabile & \textcolor{red}{2h}\\
+            Preventivo sprint 4 & \href{https://7zpus.atlassian.net/browse/DIPR-164}{DIPR-164} & 2026/01/03 & 2026/01/09 & Responsabile & \textcolor{red}{2h}\\
+            \hline
+            Riunione Interfestiva 2025/12/27 & \href{https://7zpus.atlassian.net/browse/DIPR-158}{DIPR-158} & 2025/12/27 & 2025/01/09 & Responsabile & 1h \\
+            \hline
+            Verbale Interno 2025/12/27 & \href{https://7zpus.atlassian.net/browse/DIPR-159}{DIPR-159} & 2025/12/27 & 2026/01/09 & Responsabile & 1h \\
             \hline
             Use Case 1-4 & \href{https://7zpus.atlassian.net/browse/DIPR-134}{DIPR-134} & 2025/12/20 & 2026/01/09 & Analista & \textcolor{red}{6h}\\
             \hline
@@ -1031,11 +1101,11 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
             \hline
             Use Case 27-42& \href{https://7zpus.atlassian.net/browse/DIPR-170}{DIPR-170} & 2025/12/20 & 2026/01/09 & Analista & \textcolor{red}{5h} \\
             \hline
-        \end{tabular}
-    \end{spacing}
     \caption{Consuntivo delle attività dello Sprint 4}
-    \end{adjustwidth}
-\end{table}
+
+        \end{longtable}
+    \end{spacing}
+
 
 Le attività:
     \begin{itemize}
@@ -1053,25 +1123,26 @@ Le attività:
 \begin{table}[H]
     \begin{adjustwidth}{-4cm}{-4cm}
     \centering
+    \rowcolors{2}{white}{white}
     \begin{tabular}{|c|c|c|c|c|c|c|c|}
         \hline
         \textbf{Membro} & \textbf{Re} & \textbf{Am}  & \textbf{An} & \textbf{Pg} & \textbf{Pr} & \textbf{Ve} & \textbf{Totale} \\
         \hline
-        Fattoni Antonio & 2h & - & 5h & - & - & 1,5h & 8,5h \\
+        Fattoni Antonio & 2h & - & 5h & - & - & 1.5h & 8.5h \\
         \hline
-        Georgescu Diana & - & - & - & - & - & 0,25h & 0,25h \\
+        Georgescu Diana & 0.5h & - & - & - & - & 0.25h & 0.75h \\
         \hline
-        Gingillino Aaron & 1,5h & - & - & - & - & 0,5h & 2h \\
+        Gingillino Aaron & 2.5h & - & - & - & - & 0.5h & 3h \\
         \hline
         Laoud Zakaria & - & - & - & - & - & - & - \\
         \hline
-        Rocco Matteo Alberto & 0,5h & - & - & - & - & 0,5h & 1h \\
+        Rocco Matteo Alberto & 0.5h & - & - & - & - & 0.5h & 1h \\
         \hline
-        Soligo Lorenzo & 1,25h & - & 11h & - & - & 2h & 14,25h \\
+        Soligo Lorenzo & 1.25h & - & 11h & - & - & 2.5h & 14.75h \\
         \hline
-        Vigolo Davide & 1h & 1,5h & 10h & - & - & 2h & 14,5h \\
+        Vigolo Davide & 1h & 1.5h & 10h & - & - & 2h & 14.5h \\
         \hline
-        \textbf{Totale} & \textbf{6,25h} & \textbf{1,5h} & \textbf{26h} & \textbf{-} & \textbf{-} & \textbf{6,75h} & \textbf{40,5h} \\
+        \textbf{Totale} & \textbf{7.75h} & \textbf{1.5h} & \textbf{26h} & \textbf{-} & \textbf{-} & \textbf{7.25h} & \textbf{42.5h} \\
         \hline
     \end{tabular}
     \caption{Consuntivo delle ore per membro dello Sprint 4}
@@ -1081,41 +1152,38 @@ Le attività:
 \subsubsection{Rischi incontrati}
 Durante questo sprint sono stati incontrati i seguenti rischi:
 \begin{itemize}
-    \item \hyperref[RO05]{RO05} - Mancato completamento delle attività entro le date stabilite: questo rischio si è manifestato a causa del ritardo del completamento delle task relative alla stesura degli use case e l'elevata complessità, mal preventivata, delle task relative ai diagrammi UML dei suddetti.
+    \item \hyperref[RO05]{RO05} - Mancato completamento delle attività entro le date stabilite: questo rischio si è manifestato a causa del ritardo del completamento delle task relative alla stesura degli \glossario{use case} e l'elevata complessità, mal preventivata, delle task relative ai diagrammi UML dei suddetti.
 \end{itemize}
 
 \subsubsection{Aggiornamento del preventivo a finire e dei rischi}
 \begin{table}[H]
     \begin{adjustwidth}{-4cm}{-4cm}
     \centering
+    \rowcolors{2}{white}{white}
     \begin{tabular}{|c|c|c|c|c|}
         \hline
         \textbf{Ruolo} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore/costo}\\\textbf{preventivati} \end{tabular} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore/costo}\\\textbf{consuntivo} \end{tabular} & \textbf{Differenza} & \textbf{Preventivo a finire} \\
         \hline
-        Responsabile    & 5,5h / 165€ & 6,25h / 187,5€ & \textcolor{red}{+0,75h / +22,5€} & 46,5h / 1.395€\\
+        Responsabile    & 7h / 210€ & 7.75h / 232,5€ & \textcolor{red}{+0.75h / +22,5€} & 46h / 1.380€\\
         \hline
-        Amministratore  & 9,5h / 190€ & 1,5h / 30€ & \textcolor{green!50!black}{-8h / -160€} & 51,25h / 1.025€\\
+        Amministratore  & 9.5h / 190€ & 1.5h / 30€ & \textcolor{green!50!black}{-8h / -160€} & 51.25h / 1.025€\\
         \hline
-        Analista        & 32h / 800€ & 26h / 650€ & \textcolor{green!50!black}{-6h / -150€} & 49,5h / 1.237,5€\\
+        Analista        & 32h / 800€ & 26h / 650€ & \textcolor{green!50!black}{-6h / -150€} & 51.5h / 1.237,5€\\
         \hline
-        Progettista     & - & - & - & 125h / 3.125€\\
+        Progettista     & - & - & - & 121h / 3.125€\\
         \hline
         Programmatore   & - & - & - & 153h / 2.295€\\
         \hline
-        Verificatore    & 13h / 195€ & 6,75h / 101,25€ & \textcolor{green!50!black}{-6,25h / -93,75€} & 145,25h / 2.178,75€\\
+        Verificatore    & 13.5h / 202,5€ & 7.25h / 108.75€ & \textcolor{green!50!black}{-6.25h / -93,75€} & 144.75h / 2.171,25€\\
         \hline
-        \textbf{Totale} & \textbf{60h / 1.350€} & \textbf{40,5h / 968,75€} & \textbf{\textcolor{green!50!black}{-19,5h / -381,25€}} & \textbf{570,5h / 11.256,25€}\\
+        \textbf{Totale} & \textbf{62h / 1.402,5€} & \textbf{42.5h / 1021,25€} & \textbf{\textcolor{green!50!black}{-19.5h / -381,25€}} & \textbf{567,5h / 11.183,75€}\\
         \hline
     \end{tabular}
     \caption{Aggiornamento del preventivo a finire}
     \end{adjustwidth}
 \end{table}
 
-
-\vfill
-\begin{flushright}
-    \textit{7-ZPUs}
-\end{flushright}
+\newpage
 
 \subsection{Sprint 5}
 Data inizio: 2026/01/09\\
@@ -1123,71 +1191,67 @@ Data fine attesa: 2026/01/23\\
 Data fine effettiva: 2026/01/30
 
 \subsubsection{Attività previste}
-\begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-    \centering
-    \small
-    \begin{spacing}{1}
-    \begin{tabular}{|p{4cm}|c|c|c|c|c|}
-        \hline
-        \textbf{Attività} & \textbf{Jira Issue} & \textbf{Data Inizio} & \textbf{Data Fine} & \textbf{Ruoli Assegnati} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore} \\ \textbf{previste} \end{tabular} \\
-        \hline
-        Riunione Aziendale 2026/01/08 & \href{https://7zpus.atlassian.net/browse/DIPR-187}{DIPR-187}& 2026/01/08 & 2026/01/08 & Responsabile & 1h \\
-        \hline
-        Verbale Esterno 2026/01/08 & \href{https://7zpus.atlassian.net/browse/DIPR-188}{DIPR-188}& 2026/01/08 & 2026/01/12 & Responsabile & 1h \\
-        \hline
-        Verbale Interno 2026/01/09 & \href{https://7zpus.atlassian.net/browse/DIPR-185}{DIPR-185}& 2026/01/09 & 2026/01/13 & Responsabile & 1h \\
-        \hline
-        Riunione Settimanale 2026/01/09 & \href{https://7zpus.atlassian.net/browse/DIPR-41}{DIPR-41}& 2026/01/09 & 2026/01/09 & Responsabile & 1h \\
-        \hline
-        Verbale Interno 2026/01/16 & \href{https://7zpus.atlassian.net/browse/DIPR-198}{DIPR-198}& 2026/01/16 & 2026/01/20 & Responsabile & 1h \\
-        \hline
-        Riunione Settimanale 2026/01/16 & \href{https://7zpus.atlassian.net/browse/DIPR-190}{DIPR-190}& 2026/01/16 & 2026/01/16 & Responsabile & 1h \\
-        \hline
-        Verbale Interno 2026/01/23 & \href{https://7zpus.atlassian.net/browse/DIPR-185}{DIPR-204}& 2026/01/23 & 2026/01/27 & Responsabile & 1h \\
-        \hline
-        Riunione Settimanale 2026/01/23 & & 2026/01/23 & 2026/01/23 & Responsabile & 1h \\
-        \hline
-        Diagrammi Use Case 1-23 & \href{https://7zpus.atlassian.net/browse/DIPR-157}{DIPR-157} & 2025/12/26 & 2026/01/23 & Analista & 2h \\
-        \hline
-        Diagrammi Use Case 24-36 & \href{https://7zpus.atlassian.net/browse/DIPR-171}{DIPR-171} & 2025/12/26 & 2026/01/23 & Analista & 2h \\
-        \hline
-        Diagrammi Use Case 37-46 & \href{https://7zpus.atlassian.net/browse/DIPR-162}{DIPR-162} & 2025/12/26 & 2026/01/23 & Analista & 2h \\
-        \hline
-        Diagrammi Use Case 47-79 & \href{https://7zpus.atlassian.net/browse/DIPR-161}{DIPR-161} & 2025/12/26 & 2026/01/23 & Analista & 2h \\
-        \hline
-        Analisi Requisiti parte 1 & \href{https://7zpus.atlassian.net/browse/DIPR-172}{DIPR-172} & 2026/01/03 & 2026/01/23 & Analista & 5h \\
-        \hline
-        Analisi Requisiti parte 2 & \href{https://7zpus.atlassian.net/browse/DIPR-173}{DIPR-173} & 2026/01/03 & 2026/01/30 & Analista & 5h \\
-        \hline
-        Analisi Requisiti parte 3 & \href{https://7zpus.atlassian.net/browse/DIPR-174}{DIPR-174} & 2026/01/03 & 2026/01/30 & Analista & 5h \\
-        \hline
-        Analisi Requisiti parte 4 & \href{https://7zpus.atlassian.net/browse/DIPR-175}{DIPR-175} & 2026/01/03 & 2026/01/30 & Analista & 5h \\
-        \hline
-        Consuntivo sprint 4 &  & 2026/01/09 & 2026/01/30 & Responsabile & 1h \\
-        \hline
-        Preventivo sprint 5 &  & 2026/01/09 & 2026/01/30 & Responsabile & 1h \\
-        \hline
-        Sviluppo PoC parte 1 & \href{https://7zpus.atlassian.net/browse/DIPR-182}{DIPR-182} & 2026/01/09 & 2026/01/30 & Programmatore & 4h \\
-        \hline
-        Sviluppo PoC parte 2 & \href{https://7zpus.atlassian.net/browse/DIPR-183}{DIPR-183} & 2026/01/09 & 2026/01/30 & Programmatore & 2h \\
-        \hline
-        Sviluppo PoC parte 3 & \href{https://7zpus.atlassian.net/browse/DIPR-184}{DIPR-184} & 2026/01/09 & 2026/01/30 & Programmatore & 4h \\
-        \hline
-        Scrittura Paragrafi 2.2, 2.3, 4.1 & \href{https://7zpus.atlassian.net/browse/DIPR-178}{DIPR-178} & 2026/01/09 & 2026/01/23 & Analista & 2h \\
-        \hline
-        Scrittura Paragrafi 4.2.2, 4.3, 4.4 & \href{https://7zpus.atlassian.net/browse/DIPR-180}{DIPR-180} & 2026/01/09 & 2026/01/23 & Analista & 2h \\
-        \hline
-        Scrittura Paragrafi 3.6,3.7,3.8& \href{https://7zpus.atlassian.net/browse/DIPR-146}{DIPR-146} & 2026/01/09 & 2026/01/23 & Analista & 4h \\
-        \hline
-        Scrittura Paragrafi 3.3,3.4,3.5 & \href{https://7zpus.atlassian.net/browse/DIPR-145}{DIPR-145} & 2026/01/09 & 2026/01/23 & Analista & 4h \\
-        \hline
-
-    \end{tabular}
-    \end{spacing}
+\small
+\rowcolors{2}{gray!15}{white}
+\begin{longtable}{|p{4cm}|c|c|c|c|c|}
+    \hline
+    \rowcolor{zpusgreen!30}
+    \textbf{Attività} & \textbf{Jira Issue} & \textbf{Data Inizio} & \textbf{Data Fine} & \textbf{Ruoli Assegnati} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore} \\ \textbf{previste} \end{tabular} \\
+    \hline
+    Riunione Aziendale 2026/01/08 & \href{https://7zpus.atlassian.net/browse/DIPR-187}{DIPR-187}& 2026/01/08 & 2026/01/08 & Responsabile & 1h \\
+    \hline
+    Verbale Esterno 2026/01/08 & \href{https://7zpus.atlassian.net/browse/DIPR-188}{DIPR-188}& 2026/01/08 & 2026/01/12 & Responsabile & 1h \\
+    \hline
+    Verbale Interno 2026/01/09 & \href{https://7zpus.atlassian.net/browse/DIPR-185}{DIPR-185}& 2026/01/09 & 2026/01/13 & Responsabile & 1h \\
+    \hline
+    Riunione Settimanale 2026/01/09 & \href{https://7zpus.atlassian.net/browse/DIPR-41}{DIPR-41}& 2026/01/09 & 2026/01/09 & Responsabile & 1h \\
+    \hline
+    Verbale Interno 2026/01/16 & \href{https://7zpus.atlassian.net/browse/DIPR-198}{DIPR-198}& 2026/01/16 & 2026/01/20 & Responsabile & 1h \\
+    \hline
+    Riunione Settimanale 2026/01/16 & \href{https://7zpus.atlassian.net/browse/DIPR-190}{DIPR-190}& 2026/01/16 & 2026/01/16 & Responsabile & 1h \\
+    \hline
+    Verbale Interno 2026/01/23 & \href{https://7zpus.atlassian.net/browse/DIPR-204}{DIPR-204}& 2026/01/23 & 2026/01/27 & Responsabile & 1h \\
+    \hline
+    Riunione Settimanale 2026/01/23 & \href{https://7zpus.atlassian.net/browse/DIPR-191}{DIPR-191} & 2026/01/23 & 2026/01/23 & Responsabile & 1h \\
+    \hline
+    Diagrammi Use Case 1-23 & \href{https://7zpus.atlassian.net/browse/DIPR-157}{DIPR-157} & 2025/12/26 & 2026/01/23 & Analista & 2h \\
+    \hline
+    Diagrammi Use Case 24-36 & \href{https://7zpus.atlassian.net/browse/DIPR-171}{DIPR-171} & 2025/12/26 & 2026/01/23 & Analista & 2h \\
+    \hline
+    Diagrammi Use Case 37-46 & \href{https://7zpus.atlassian.net/browse/DIPR-162}{DIPR-162} & 2025/12/26 & 2026/01/23 & Analista & 2h \\
+    \hline
+    Diagrammi Use Case 47-79 & \href{https://7zpus.atlassian.net/browse/DIPR-161}{DIPR-161} & 2025/12/26 & 2026/01/23 & Analista & 2h \\
+    \hline
+    Analisi Requisiti parte 1 & \href{https://7zpus.atlassian.net/browse/DIPR-172}{DIPR-172} & 2026/01/03 & 2026/01/23 & Analista & 5h \\
+    \hline
+    Analisi Requisiti parte 2 & \href{https://7zpus.atlassian.net/browse/DIPR-173}{DIPR-173} & 2026/01/03 & 2026/01/30 & Analista & 5h \\
+    \hline
+    Analisi Requisiti parte 3 & \href{https://7zpus.atlassian.net/browse/DIPR-174}{DIPR-174} & 2026/01/03 & 2026/01/30 & Analista & 5h \\
+    \hline
+    Analisi Requisiti parte 4 & \href{https://7zpus.atlassian.net/browse/DIPR-175}{DIPR-175} & 2026/01/03 & 2026/01/30 & Analista & 5h \\
+    \hline
+    Consuntivo sprint 4 & \href{https://7zpus.atlassian.net/browse/DIPR-194}{DIPR-194} & 2026/01/09 & 2026/01/30 & Responsabile & 1h \\
+    \hline
+    Preventivo sprint 5 & \href{https://7zpus.atlassian.net/browse/DIPR-195}{DIPR-195} & 2026/01/09 & 2026/01/30 & Responsabile & 1h \\
+    \hline
+    Sviluppo PoC parte 1 & \href{https://7zpus.atlassian.net/browse/DIPR-182}{DIPR-182} & 2026/01/09 & 2026/01/30 & Programmatore & 4h \\
+    \hline
+    Sviluppo PoC parte 2 & \href{https://7zpus.atlassian.net/browse/DIPR-183}{DIPR-183} & 2026/01/09 & 2026/01/30 & Programmatore & 2h \\
+    \hline
+    Sviluppo PoC parte 3 & \href{https://7zpus.atlassian.net/browse/DIPR-184}{DIPR-184} & 2026/01/09 & 2026/01/30 & Programmatore & 4h \\
+    \hline
+    Scrittura Paragrafi 2.2, 2.3, 4.1 & \href{https://7zpus.atlassian.net/browse/DIPR-178}{DIPR-178} & 2026/01/09 & 2026/01/23 & Analista & 2h \\
+    \hline
+    Scrittura Paragrafi 4.2.2, 4.3, 4.4 & \href{https://7zpus.atlassian.net/browse/DIPR-180}{DIPR-180} & 2026/01/09 & 2026/01/23 & Analista & 2h \\
+    \hline
+    Scrittura Paragrafi 3.6,3.7,3.8& \href{https://7zpus.atlassian.net/browse/DIPR-146}{DIPR-146} & 2026/01/09 & 2026/01/23 & Analista & 4h \\
+    \hline
+    Scrittura Paragrafi 3.3,3.4,3.5 & \href{https://7zpus.atlassian.net/browse/DIPR-145}{DIPR-145} & 2026/01/09 & 2026/01/23 & Analista & 4h \\
+    \hline
+    \rowcolor{white}
     \caption{Attività previste per lo Sprint 5}
-    \end{adjustwidth}
-\end{table}
+
+\end{longtable}
 
 \subsubsection{Rischi attesi}
 \begin{itemize}
@@ -1198,6 +1262,7 @@ Data fine effettiva: 2026/01/30
 \subsubsection{Preventivo di periodo}
 Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
 \begin{table}[H]
+    \rowcolors{2}{white}{white}
     \begin{adjustwidth}{-4cm}{-4cm}
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|c|}
@@ -1226,13 +1291,11 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
 \end{table}
 
 \subsubsection{Consuntivo di periodo}
-\begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-    \centering
-    \small
-    \begin{spacing}{1}
-        \begin{tabular}{|p{4cm}|c|c|c|c|c|}
+\small
+\rowcolors{2}{gray!15}{white}
+        \begin{longtable}{|p{4cm}|c|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Attività} & \textbf{Jira Issue} & \textbf{Data Inizio} & \textbf{Data Fine} & \textbf{Ruoli Assegnati} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore} \\ \textbf{effettive} \end{tabular} \\
         \hline
         Riunione Aziendale 2026/01/08 & \href{https://7zpus.atlassian.net/browse/DIPR-187}{DIPR-187}& 2026/01/08 & 2026/01/08 & Responsabile & 1h \\
@@ -1247,9 +1310,9 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
         \hline
         Riunione Settimanale 2026/01/16 & \href{https://7zpus.atlassian.net/browse/DIPR-190}{DIPR-190}& 2026/01/16 & 2026/01/16 & Responsabile & 1h \\
         \hline
-        Verbale Interno 2026/01/23 & \href{https://7zpus.atlassian.net/browse/DIPR-185}{DIPR-204}& 2026/01/23 & 2026/01/27 & Responsabile & 1h \\
+        Verbale Interno 2026/01/23 & \href{https://7zpus.atlassian.net/browse/DIPR-204}{DIPR-204}& 2026/01/23 & 2026/01/27 & Responsabile & 1h \\
         \hline
-        Riunione Settimanale 2026/01/23 & & 2026/01/23 & 2026/01/23 & Responsabile & 1h \\
+        Riunione Settimanale 2026/01/23 & \href{https://7zpus.atlassian.net/browse/DIPR-191}{DIPR-191} & 2026/01/23 & 2026/01/23 & Responsabile & 1h \\
         \hline
         Diagrammi Use Case 1-23 & \href{https://7zpus.atlassian.net/browse/DIPR-157}{DIPR-157} & 2025/12/26 & 2026/01/23 & Analista & 2h \\
         \hline
@@ -1267,9 +1330,9 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
         \hline
         Analisi Requisiti parte 4 & \href{https://7zpus.atlassian.net/browse/DIPR-175}{DIPR-175} & 2026/01/03 & 2026/01/30 & Analista & \textcolor{green!50!black}{3h}\\
         \hline
-        Consuntivo sprint 4 &  & 2026/01/09 & 2026/01/30 & Responsabile & 1h \\
+        Consuntivo sprint 4 & \href{https://7zpus.atlassian.net/browse/DIPR-194}{DIPR-194} & 2026/01/09 & 2026/01/30 & Responsabile & 1h \\
         \hline
-        Preventivo sprint 5 &  & 2026/01/09 & 2026/01/30 & Responsabile & 1h \\
+        Preventivo sprint 5 & \href{https://7zpus.atlassian.net/browse/DIPR-195}{DIPR-195} & 2026/01/09 & 2026/01/30 & Responsabile & 1h \\
         \hline
         Sviluppo PoC parte 1 & \href{https://7zpus.atlassian.net/browse/DIPR-182}{DIPR-182} & 2026/01/09 & 2026/01/30 & Programmatore & \textcolor{red}{4h}\\
         \hline
@@ -1285,17 +1348,17 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
         \hline
         Scrittura Paragrafi 3.3,3.4,3.5 & \href{https://7zpus.atlassian.net/browse/DIPR-145}{DIPR-145} & 2026/01/09 & 2026/01/23 & Analista & \textcolor{green!50!black}{2h}\\
         \hline
-        \end{tabular}
-    \end{spacing}
-    \caption{Consuntivo delle attività dello Sprint 5}
-    \end{adjustwidth}
-\end{table}
+        \rowcolor{white}
+        \caption{Consuntivo delle attività dello Sprint 5}
+\end{longtable}
+
 
 Non ci sono attività non completate in questo sprint.
 
 \begin{table}[H]
     \begin{adjustwidth}{-4cm}{-4cm}
     \centering
+    \rowcolors{2}{white}{white}
     \begin{tabular}{|c|c|c|c|c|c|c|c|}
         \hline
         \textbf{Membro} & \textbf{Re} & \textbf{Am}  & \textbf{An} & \textbf{Pg} & \textbf{Pr} & \textbf{Ve} & \textbf{Totale} \\
@@ -1332,23 +1395,24 @@ Durante questo sprint sono stati incontrati i seguenti rischi:
 \begin{table}[H]
     \begin{adjustwidth}{-4cm}{-4cm}
     \centering
+    \rowcolors{2}{white}{white}
     \begin{tabular}{|c|c|c|c|c|}
         \hline
         \textbf{Ruolo} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore/costo}\\\textbf{preventivati} \end{tabular} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore/costo}\\\textbf{consuntivo} \end{tabular} & \textbf{Differenza} & \textbf{Preventivo a finire} \\
         \hline
-        Responsabile    & 8,5h / 255€ & 10,5h / 315€ & \textcolor{red}{+2h / +60€} & 36h / 1.080€\\
+        Responsabile    & 8,5h / 255€ & 10,5h / 315€ & \textcolor{red}{+2h / +60€} & 35,5h / 1.065€\\
         \hline
         Amministratore  & 8h / 160€ & 6h / 120€ & \textcolor{green!50!black}{-2h / -40€} & 45,25h / 905€\\
         \hline
-        Analista        & 32h / 800€ & 30h / 750€ & \textcolor{green!50!black}{-2h / -50€} & 19,5h / 487,5€\\
+        Analista        & 32h / 800€ & 30h / 750€ & \textcolor{green!50!black}{-2h / -50€} & 21,5h / 121€\\
         \hline
-        Progettista     & - & - & - & 125h / 3.125€\\
+        Progettista     & - & - & - & 121h / 3.025€\\
         \hline
         Programmatore   & 6h / 90€ & 10h / 150€ & \textcolor{red}{+4h / +60€} & 143h / 2.145€\\
         \hline
-        Verificatore    & 12,25h / 183,75€ & 14,25h / 213,75€ & \textcolor{red}{+2h / +30€} & 131h / 1.965€\\
+        Verificatore    & 12,25h / 183,75€ & 14,25h / 213,75€ & \textcolor{red}{+2h / +30€} & 130.5h / 1.957,5€\\
         \hline
-        \textbf{Totale} & \textbf{66,75h / 1.488,75€} & \textbf{70,75h / 1.548,75€} & \textbf{\textcolor{red}{+4h / +60€}} & \textbf{499,75h / 9.707,5€}\\
+        \textbf{Totale} & \textbf{67h / 1.488,75€} & \textbf{70,75h / 1.548,75€} & \textbf{\textcolor{red}{+4h / +60€}} & \textbf{496,75h / 9.635€}\\
         \hline
     \end{tabular}
     \caption{Aggiornamento del preventivo a finire}
@@ -1363,13 +1427,11 @@ Data fine attesa: 2026/02/13\\
 Data fine effettiva: 2026/02/13
 
 \subsubsection{Attività previste}
-\begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-    \centering
-    \small
-    \begin{spacing}{1}
-    \begin{tabular}{|p{4cm}|c|c|c|c|c|}
+\small
+\rowcolors{2}{gray!15}{white}
+    \begin{longtable}{|p{4cm}|c|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Attività} & \textbf{Jira Issue} & \textbf{Data Inizio} & \textbf{Data Fine} & \textbf{Ruoli Assegnati} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore} \\ \textbf{previste} \end{tabular} \\
         \hline
         Requisiti di qualità e vincolo AdR & \href{https://7zpus.atlassian.net/browse/DIPR-215}{DIPR-215} & 2026/01/31 & 2026/02/13 & Analista & 2h \\
@@ -1416,11 +1478,9 @@ Data fine effettiva: 2026/02/13
         \hline
         Gestione Automatica del Glossario & \href{https://7zpus.atlassian.net/browse/DIPR-245}{DIPR-245} & 2026/01/31 & 2026/02/13 & Programmatore & 1h \\
         \hline
-    \end{tabular}
-    \end{spacing}
     \caption{Attività previste per lo Sprint 6}
-    \end{adjustwidth}
-\end{table}
+    \end{longtable}
+
 
 \subsubsection{Rischi attesi}
 \begin{itemize}
@@ -1432,6 +1492,7 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
 \begin{table}[H]
     \begin{adjustwidth}{-4cm}{-4cm}
     \centering
+    \rowcolors{2}{white}{white}
     \begin{tabular}{|c|c|c|c|c|c|c|c|}
         \hline
         \textbf{Membro}& \textbf{Re} & \textbf{Am} & \textbf{An} & \textbf{Pg} & \textbf{Pr} & \textbf{Ve} & \textbf{Totale} \\
@@ -1464,8 +1525,11 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
     \centering
     \small
     \begin{spacing}{1}
+        \rowcolors{2}{gray!15}{white}
+        
         \begin{tabular}{|p{4cm}|c|c|c|c|c|}
         \hline
+        \rowcolor{zpusgreen!30}
         \textbf{Attività} & \textbf{Jira Issue} & \textbf{Data Inizio} & \textbf{Data Fine} & \textbf{Ruoli Assegnati} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore} \\ \textbf{previste} \end{tabular} \\
         \hline
         Requisiti di qualità e vincolo AdR & \href{https://7zpus.atlassian.net/browse/DIPR-215}{DIPR-215} & 2026/01/31 & 2026/02/13 & Analista & 2h \\
@@ -1523,6 +1587,7 @@ Non ci sono attività non completate in questo sprint.
 \begin{table}[H]
     \begin{adjustwidth}{-4cm}{-4cm}
     \centering
+    \rowcolors{2}{white}{white}
     \begin{tabular}{|c|c|c|c|c|c|c|c|}
         \hline
         \textbf{Membro}& \textbf{Re} & \textbf{Am} & \textbf{An} & \textbf{Pg} & \textbf{Pr} & \textbf{Ve} & \textbf{Totale} \\
@@ -1558,23 +1623,24 @@ Non ci sono attività non completate in questo sprint.
 \begin{table}[H]
     \begin{adjustwidth}{-4cm}{-4cm}
     \centering
+    \rowcolors{2}{white}{white}
     \begin{tabular}{|c|c|c|c|c|}
         \hline
         \textbf{Ruolo} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore/costo}\\\textbf{preventivati} \end{tabular} & \begin{tabular}[c]{@{}c@{}} \textbf{Ore/costo}\\\textbf{consuntivo} \end{tabular} & \textbf{Differenza} & \textbf{Preventivo a finire} \\
         \hline
-        Responsabile    & 5h / 150€ & 6,5h / 195€ & \textcolor{red}{+1,5h / +45€} & 29,5h / 885€\\
+        Responsabile    & 5h / 150€ & 6,5h / 195€ & \textcolor{red}{+1,5h / +45€} & 29h / 870€\\
         \hline
         Amministratore  & - & - & - & 45,25h / 905€\\
         \hline
         Analista        & 5h / 125€ & 5h / 125€ & - & 14,5h / 360,5€\\
         \hline
-        Progettista     & - & - & - & 125h / 3.125€\\
+        Progettista     & - & - & - & 121h / 3.025€\\
         \hline
         Programmatore   & 4h / 60€ & 5,5h / 82,5€ & \textcolor{red}{+1,5h / +22,5€} & 137,5h / 2.062,5€\\
         \hline
-        Verificatore    & 8,25h / 123,75€ & 8h / 120€ & \textcolor{green!50!black}{-0,25h / -3,75€} & 123h / 1.843€\\
+        Verificatore    & 8,25h / 123,75€ & 8h / 120€ & \textcolor{green!50!black}{-0,25h / -3,75€} & 122.5h / 1.837,5€\\
         \hline
-        \textbf{Totale} & \textbf{22,25h / 458,75€} & \textbf{25h / 522,5€} & \textbf{\textcolor{red}{+2,75h / +63,75€}} & \textbf{474,75h / 9.181€}\\
+        \textbf{Totale} & \textbf{22,25h / 458,75€} & \textbf{25h / 522,5€} & \textbf{\textcolor{red}{+2,75h / +63,75€}} & \textbf{471,75h / 9.112,5€}\\
         \hline
     \end{tabular}
     \caption{Aggiornamento del preventivo a finire}
