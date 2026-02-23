@@ -57,6 +57,9 @@
 \titleformat{\paragraph}{\normalsize\bfseries}{\theparagraph}{1em}{}
 \titleformat{\subparagraph}{\normalsize\bfseries}{\thesubparagraph}{1em}{}
 
+\definecolor{lightblack}{gray}{0.35}
+\newcommand{\glossario}[1]{\textit{#1}\textsubscript{\textbf{\textit{\textcolor{lightblack}{G}}}}}
+
 \begin{document}
 
 \begin{center}
@@ -111,7 +114,7 @@
 
 \section{Introduzione}
 \subsection{Scopo del documento}
-Il piano di progetto è un documento il cui obbiettivo è descrivere lo svolgimento del progetto, questo tramite le apposite sezioni: 
+Il piano di progetto è un \glossario{documento} il cui obbiettivo è descrivere lo svolgimento del \glossario{progetto} tramite le apposite sezioni: 
 \begin{itemize}
     \item Analisi dei rischi
     \item Modello di sviluppo
@@ -119,9 +122,9 @@ Il piano di progetto è un documento il cui obbiettivo è descrivere lo svolgime
     \item Pianificazione a breve termine
 \end{itemize}
 \subsection{Scopo del prodotto}
-Il progetto riguarda lo sviluppo di un software "DIPReader". Il software, tramite una interfaccia utente munita di filtri impostabili dall'utente, permette di poter trovare agilmente informazioni all'interno dei file DIP.
+Il progetto riguarda lo sviluppo di un \glossario{software} "DIPReader". Il software, tramite una interfaccia utente munita di \glossario{filtri} impostabili dall'utente, permette di poter trovare agilmente informazioni all'interno dei file \glossario{DIP}.
 \subsection{Glossario}
-Al fine di ovviare ad ambiguità linguistiche è stato adottato un Glossario. Ogni qualvolta che un termine tecnico viene segnato con "\textsuperscript{G}" la sua definizione è disponibile nel glossario.
+Al fine di ovviare ad ambiguità linguistiche è stato adottato un Glossario. Ogni qualvolta che un termine tecnico viene segnato con "\glossario{termine}" la sua definizione è disponibile nel glossario.
 
 \subsection{Riferimenti}
 \subsubsection{Riferimenti normativi}
@@ -152,7 +155,7 @@ Ogni rischio presentato in questa sezione è caratterizzato da:
     \begin{itemize}
         \item Evitare il rischio, nel caso fosse possibile
         \item Mitigare il rischio, riducendone gli effetti sul progetto nel caso non fosse stato possibile evitarlo
-        \item Gestire il rischio, nel caso in cui si verifichi il \textit{Worst Case Scenario}\textsuperscript{G}
+        \item Gestire il rischio, nel caso in cui si verifichi il \glossario{Worst Case Scenario}
     \end{itemize}
     \item \textbf{Indicatori}
 \end{itemize}
@@ -162,14 +165,14 @@ Ogni rischio presentato in questa sezione è caratterizzato da:
 \subsection{Rischi Tecnologici}
 
 \subsubsection{Definizione}
-Il rischio tecnologico riguarda tutto ciò che concerne le tecnologie parte del prodotto software, possono includere database, framework, linguaggi di programmazione, ecc... Viene inclusi per convenienza anche gli strumenti di amministrazione del progetto (e.g. GitHub).
+Il rischio tecnologico riguarda tutto ciò che concerne le tecnologie parte del prodotto software, possono includere database, framework, linguaggi di programmazione, ecc... Viene inclusi per convenienza anche gli strumenti di amministrazione del progetto (e.g. \glossario{GitHub}).
 
 \subsubsection{RT01 - Problemi tecnici con gli strumenti di sviluppo}
 \label{RT01}
 \textbf{Probabilità di occorrenza}: Moderata (50\%)\\
 \textbf{Effetti}: Grave\\
 \textbf{Descrizione}: L'inesperienza del gruppo con le tecnologie da utilizzare potrebbe portare a difficoltà tecniche e rallentamenti nello sviluppo.\\
-\textbf{Strategia}: Prevedere sessioni di formazione iniziali con il supporto occasionale dell'azienda proponente per familiarizzare con gli strumenti e le tecnologie.\\
+\textbf{Strategia}: Prevedere sessioni di formazione iniziali con il supporto occasionale dell'azienda \glossario{proponente} per familiarizzare con gli strumenti e le tecnologie.\\
 \textbf{Indicatori}: Ritardi nell'implementazione, errori tecnici frequenti, richieste di aiuto ripetute.
 
 
@@ -211,7 +214,7 @@ Il rischio organizzativo riguarda tutto ciò che concerne l'organizzazione del p
 \textbf{Effetti}: Grave\\
 \textbf{Descrizione}: Il superamento del budget preventivato potrebbe compromettere la fattibilità del progetto, portando a ritardi nella consegna o alla necessità di ridurre alcune funzionalità previste.\\
 \textbf{Strategia}: Monitorare costantemente l'allocazione delle ore rispetto alla pianificazione iniziale, effettuare stand-up meetings periodici e prevedere margini temporali per imprevisti.\\
-\textbf{Indicatori}: Superamento del 10\% delle ore preventivate per attività, ritardi accumulati nelle milestone.
+\textbf{Indicatori}: Superamento del 10\% delle ore preventivate per attività, ritardi accumulati nelle \glossario{milestone}.
 
 \subsubsection{RO02 - Mancata comunicazione e collaborazione tra i membri del team}
 \label{RO02}
@@ -250,7 +253,7 @@ Il rischio organizzativo riguarda tutto ciò che concerne l'organizzazione del p
 \subsection{Rischi legati ai requisiti}
 
 \subsubsection{Definizione}
-Il rischio che può derivare per esempio da una errata analisi di un requisito, o dal cambiamento di esso.
+Il rischio che può derivare per esempio da una errata analisi di un \glossario{requisito}, o dal cambiamento di esso.
 
 
 
@@ -264,12 +267,11 @@ Il metodo di sviluppo che il gruppo ha ritenuto più adatto per il progetto, vis
 \subsection{Motivazioni}
 Le motivazioni che hanno portato alla scelta di questo modello sono:
 \begin{itemize}
-    \item Principio Fail Fast: il gruppo vuole essere in grado di ottenere feedback frequenti e rapidi in modo tale da identificare e correggere eventuali non conformità a ciò che la proponente si aspetta. Questo principio è generalizzabile a qualsiasi elemento del progetto (requisiti, Way of Working...).
-    \item Rotazione dei ruoli: con Agile i periodi sono divisi in Sprint, elemento che si integra in modo ottimale con la rotazione dei ruoli, che coinciderà naturalmente con l'inizio e la fine di uno sprint (non per forza lo stesso).
-    \item Retrospettive: a differenza di altri modelli, Agile dedica un momento specifico alla riflessione sul come si è lavorato, rendendo più strutturato e disciplinato il miglioramento continuo del Way of Working.
+    \item Principio Fail Fast: il gruppo vuole essere in grado di ottenere feedback frequenti e rapidi in modo tale da identificare e correggere eventuali non conformità a ciò che la proponente si aspetta. Questo principio è generalizzabile a qualsiasi elemento del progetto (requisiti, \glossario{Way of Working}...).
+    \item Rotazione dei ruoli: con Agile i periodi sono divisi in \glossario{Sprint}, elemento che si integra in modo ottimale con la rotazione dei ruoli, che coinciderà naturalmente con l'inizio e la fine di uno sprint (non per forza lo stesso).
+    \item \glossario{Retrospettive}: a differenza di altri modelli, Agile dedica un momento specifico alla riflessione sul come si è lavorato, rendendo più strutturato e disciplinato il miglioramento continuo del \textit{Way of Working}.
     \item Pianificazione delle attività: con Agile le attività sono pianificate per periodi brevi, questo permette di adattarsi più facilmente a cambiamenti nei requisiti o nelle priorità del progetto.
 \end{itemize}
-
 
 
 
@@ -307,7 +309,7 @@ Viene di seguito riportata la tabella già esposta nel documento di \href{https:
 \newpage
 
 
-Partendo da questa stima di ripartizione oraria, comprensiva sia delle ore relative alla RTB, che alla PB, si stimano i costi riportati di seguito.
+Partendo da questa stima di ripartizione oraria, comprensiva sia delle ore relative alla \glossario{RTB}, che alla \glossario{PB}, si stimano i costi riportati di seguito.
 \begin{table}[H]
     \label{tab:preventivo_complessivo}
     \begin{adjustwidth}{-4cm}{-4cm}
@@ -628,7 +630,7 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
         \hline
         Soligo Lorenzo& 0.5h & 3.25h & 5h & - & - & - & 8.75h\\
         \hline
-        Vigolo Davide & 5.5h & - & 2h & - & - & 30m & 10h \\
+        Vigolo Davide & 5.5h & - & 2h & - & - & 30m & 8h \\
         \hline
         \textbf{Totale} & \textbf{8.25h}& \textbf{3.25h} & \textbf{17h}& \textbf{-}& \textbf{-}& \textbf{2.5h}& \textbf{31h}\\
         \hline
@@ -705,10 +707,10 @@ Qui viene indicato, tramite tabella, il preventivo delle ore per ogni ruolo.
 \subsubsection{Rischi incontrati}
 Durante questo sprint sono stati incontrati i seguenti rischi:
 \begin{itemize}
-    \item \hyperref[RO04]{RO04} - Mancato rispetto delle norme e documenti di progetto interni: questo rischio si è manifestato a causa del cambiamento delle norme di branching e la gestione delle task jira associate. Questo a portato al rapido cambiamento delle norme e alla poca uniformità del lavoro svolto. E' stata applicata la misura preventiva, in particolare fornendo supporto ai membri del team non ancora allineati alle nuove norme.
+    \item \hyperref[RO04]{RO04} - Mancato rispetto delle norme e documenti di progetto interni: questo rischio si è manifestato a causa del cambiamento delle norme di branching e la gestione delle \glossario{task} \glossario{Jira} associate. Questo a portato al rapido cambiamento delle norme e alla poca uniformità del lavoro svolto. E' stata applicata la misura preventiva, in particolare fornendo supporto ai membri del team non ancora allineati alle nuove norme.
     \begin{itemize}
         \item Il rischio non è stato previsto a causa della sottostima del problema, in quanto si pensava che il cambiamento non sempre ben definito delle norme di branching non avrebbe avuto un impatto così significativo sul lavoro del team.
-        \item La strategia di contenimento/prevenzione ha funzionato, in particolare è stato efficace il supporto dagli autori delle norme verso gli altri membri del gruppo tramite un video esplicativo. Si ritiene tuttavia necessario stabilire da ora in poi una data di entrata in vigore delle norme, tenendo conto il tempo di adattamento e apprendimento del team.
+        \item La strategia di contenimento/prevenzione ha funzionato, in particolare è stato efficace il supporto dagli autori delle norme verso gli altri membri del gruppo tramite un video esplicativo. Si ritiene tuttavia necessario stabilire da ora in poi una data di entrata in vigore delle norme, tenendo conto del tempo di adattamento e apprendimento del team.
     \end{itemize}
 \end{itemize}
 
@@ -883,7 +885,7 @@ Le attività:
     \item Analisi UC5, UC6, UC7, UC8, UC9 (\href{https://7zpus.atlassian.net/browse/DIPR-135}{DIPR-135})
     \item Analisi UC10, UC11, UC12 (\href{https://7zpus.atlassian.net/browse/DIPR-132}{DIPR-132})
 \end{itemize}
-Non sono state portate a termine e reinserite nel backlog, dunque riassegnate allo sprint successivo.\\
+Non sono state portate a termine o reinserite nel backlog, dunque riassegnate allo sprint successivo.\\
 
 
 \begin{table}[H]
@@ -919,7 +921,7 @@ Non sono state portate a termine e reinserite nel backlog, dunque riassegnate al
 \subsubsection{Rischi incontrati}
 Durante questo sprint sono stati incontrati i seguenti rischi:
 \begin{itemize}
-    \item \hyperref[RO05]{RO05} - Mancato completamento delle attività entro le date stabilite: questo rischio si è manifestato a causa del cambio di assegnamento dei ruoli e il reindirizzamento del tempo produttivo verso le attività di analisi dei requisiti.
+    \item \hyperref[RO05]{RO05} - Mancato completamento delle attività entro le date stabilite: questo rischio si è manifestato a causa del cambio di assegnamento dei ruoli e il reindirizzamento del tempo produttivo verso le attività di \glossario{Analisi dei Requisiti}.
     \item \hyperref[RI02]{RI02} - Indisposizione dei membri del team: il rischio si è verificato contemporaneamente per due membri del team, nonostante ciò le attività sono proseguite a ritmo di poco rallentato.
 \end{itemize}
 
@@ -1134,7 +1136,7 @@ Le attività:
 \subsubsection{Rischi incontrati}
 Durante questo sprint sono stati incontrati i seguenti rischi:
 \begin{itemize}
-    \item \hyperref[RO05]{RO05} - Mancato completamento delle attività entro le date stabilite: questo rischio si è manifestato a causa del ritardo del completamento delle task relative alla stesura degli use case e l'elevata complessità, mal preventivata, delle task relative ai diagrammi UML dei suddetti.
+    \item \hyperref[RO05]{RO05} - Mancato completamento delle attività entro le date stabilite: questo rischio si è manifestato a causa del ritardo del completamento delle task relative alla stesura degli \glossario{use case} e l'elevata complessità, mal preventivata, delle task relative ai diagrammi UML dei suddetti.
 \end{itemize}
 
 \subsubsection{Aggiornamento del preventivo a finire e dei rischi}
