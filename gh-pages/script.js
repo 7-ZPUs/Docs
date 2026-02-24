@@ -4,9 +4,13 @@ const pdfBaseUrls = {
     'verbali-interni-candidatura': 'assets/pdf/Verbali/Verbali%20Interni/',
     'verbali-esterni-candidatura': 'assets/pdf/Verbali/Verbali%20Esterni/',
     candidatura: 'assets/pdf/',
-    'verbali-interni-RTB': 'assets/pdf/Verbali/Verbali%20Interni/',
-    'verbali-esterni-RTB': 'assets/pdf/Verbali/Verbali%20Esterni/',
-    RTB: 'assets/pdf/',
+
+
+
+    'verbali-interni-RTB': 'assets/pdf/DocumentiInterni/Verbali/',
+    'verbali-esterni-RTB': 'assets/pdf/Verbali/Verbali/',
+    'documenti-interni-RTB': 'assets/pdf/DocumentiInterni/',
+    'documenti-esterni-RTB': 'assets/pdf/DocumentiEsterni/'
 };
 
 if (tabButtons.length && tabPanels.length) {
