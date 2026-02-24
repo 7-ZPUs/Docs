@@ -35,9 +35,10 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Copy PDFs
         run: |
-          mkdir -p gh-pages/assets
+          mkdir -p gh-pages/assets/1_Candidatura/
+          mkdir -p gh-pages/assets/2_RTB/
           cp -r 1_Candidatura/** gh-pages/assets/1_Candidatura/
-          cp -r 2_RTB/** gh-pages/assets/assets/2_RTB/
+          cp -r 2_RTB/** gh-pages/assets/2_RTB/
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
