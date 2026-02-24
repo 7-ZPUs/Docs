@@ -5,10 +5,10 @@ const pdfBaseUrls = {
     'verbali-esterni-candidatura': 'assets/1_Candidatura/',
     candidatura: 'assets/',
 
-    'verbali-interni-RTB': 'assets/2_RTB/',
-    'verbali-esterni-RTB': 'assets/2_RTB/',
-    'documenti-interni-RTB': 'assets/2_RTB/',
-    'documenti-esterni-RTB': 'assets/2_RTB/'
+    'verbali-interni-RTB': 'assets/2_RTB/DocumentiInterni/Verbali/',
+    'verbali-esterni-RTB': 'assets/2_RTB/DocumentiEsterni/Verbali/',
+    'documenti-interni-RTB': 'assets/2_RTB/DocumentiInterni/',
+    'documenti-esterni-RTB': 'assets/2_RTB/DocumentiEsterni/'
 };
 
 if (tabButtons.length && tabPanels.length) {
