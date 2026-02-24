@@ -107,7 +107,9 @@
 \begin{spacing}{1.1}
     \begin{longtable}{|c|c|p{3.2cm}|p{3.2cm}|p{5cm}|}
         \hline
-        \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione}                                                                                                                     \\
+        \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+        \hline
+        1.0.0             & 2026/02/24    & Laoud Zakaria    & Soligo Lorenzo        & Approvazione per baseline RTB \\
         \hline
         0.14              & 2026/02/11    & Vigolo Davide    & Soligo Lorenzo        & Definizione metriche di qualità                                                                                                          \\
         \hline
@@ -698,7 +700,7 @@ Questa procedura non ha una definizione rigida, per questo si lascia libertà ne
 Il fornitore sviluppa un Proof of Concept (PoC) che dimostri la corretta integrazione delle tecnologie scelte e la loro capacità di soddisfare i requisiti individuati.
 Per questo artefatto si lascia ampio margine di manovra, in quanto non è richiesto che sia garantita lo stesso livello di qualità del prodotto finale. Per la sua produzioni ci sono forti limiti di risorse e l'obiettivo non è la consegna, ma piuttosto una dimostrazione di fattibilità.
 
-\paragraph{Strumenti}
+\subsubsection{Strumenti}
 \begin{itemize}
     \item \textbf{GitHub}: per la gestione della documentazione di progetto e mezzo comunicativo
           nella fase di fornitura
@@ -2020,7 +2022,7 @@ conformità con lo standard ISO/IEC 12207.
 In questa sezione vengono definite le metriche per valutare la qualità
 intrinseca del prodotto software, basandosi sul modello ISO/IEC 9126.
 
-\paragraph{Funzionalità}
+\subsubsection{Funzionalità}
 
 \metricdef{MPD-1}{Requisiti obbligatori soddisfatti}{Percentuale di requisiti funzionali obbligatori implementati e testati.}
 \metricformula{R\textsubscript{ob} = \left( \frac{\text{Requisiti obbligatori soddisfatti}}{\text{Requisiti obbligatori totali}} \right) \times 100}
@@ -2031,7 +2033,7 @@ intrinseca del prodotto software, basandosi sul modello ISO/IEC 9126.
 \metricdef{MPD-3}{Requisiti desiderabili soddisfatti}{Percentuale di requisiti funzionali desiderabili implementati e testati.}
 \metricformula{R\textsubscript{de} = \left( \frac{\text{Requisiti desiderabili soddisfatti}}{\text{Requisiti desiderabili totali}} \right) \times 100}
 
-\paragraph{Affidabilità}
+\subsubsection{Affidabilità}
 
 \metricdef{MPD-4}{Broken links}{Numero di riferimenti ipertestuali all'interno dell'applicazione che non portano alla risorsa corretta o non portano ad alcuna risorsa.}
 \metricformula{BL = \#\text{Broken Links}}
@@ -2042,12 +2044,12 @@ intrinseca del prodotto software, basandosi sul modello ISO/IEC 9126.
 \metricdef{MPD-6}{Statement Coverage}{Percentuale di istruzioni (statements) del codice sorgente eseguite durante i test automatici.}
 \metricformula{SC = \left( \frac{\text{Istruzioni testate}}{\text{Istruzioni totali}} \right) \times 100}
 
-\paragraph{Usabilità}
+\subsubsection{Usabilità}
 
 \metricdef{MPD-7}{Profondità di Navigazione}{Numero massimo di click necessari per raggiungere una qualsiasi pagina di contenuto partendo dalla vista principale.}
 \metricformula{\max_{i \in I} \text{Click}_i \quad \begin{array}{l} (\text{dove } I = \text{insieme delle pagine}) \\ (\text{dove } \text{Click}_i = \text{numero di click per raggiungere la pagina } i) \end{array}}
 
-\paragraph{Efficienza}
+\subsubsection{Efficienza}
 
 \metricdef{MPD-8}{Indexing time}{Tempo di \glossario{indicizzazione} per un DiP di dimensioni standard (1-4GB).}
 \metricformula{IT = \text{Tempo di indicizzazione (secondi)}}
@@ -2061,7 +2063,7 @@ intrinseca del prodotto software, basandosi sul modello ISO/IEC 9126.
 \metricdef{MPD-11}{Peak memory usage}{Massima quantità di memoria RAM utilizzata durante l'esecuzione del software. Permette di individuare eventuale scarsa gestione delle risorse.}
 \metricformula{MEM_{peak} = \max(\text{Utilizzo RAM}_i) \quad (\text{dove }i = 1, \dots, n, \text{istante di tempo } i)}
 
-\paragraph{Manutenibilità}
+\subsubsection{Manutenibilità}
 
 \metricdef{MPD-12}{Complessità Ciclomatica}{Misura la complessità del flusso di controllo del codice. Valori superiori a 15 indicano codice difficile da testare e manutenere.}
 \metricformula{M = E - N + 2P \quad (\text{dove } E=\text{archi}, N=\text{nodi}, P=\text{componenti connessi})}
@@ -2071,7 +2073,7 @@ intrinseca del prodotto software, basandosi sul modello ISO/IEC 9126.
 
 \metricdef{MPD-14}{Code smells}{Numero di code smells, misurato ogni 1000 righe di codice (KLOC). I code smells sono indicatori di potenziali problemi di design o implementazione.}
 
-\paragraph{Portabilità}
+\subsubsection{Portabilità}
 
 \metricdef{MPD-15}{SO Compatibility}{Numero di sistemi operativi supportati dal software. Un valore alto indica una maggiore portabilità.}
 \metricformula{SO_{comp} = \#\text{Sistemi operativi supportati}}
