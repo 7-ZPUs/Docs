@@ -3,7 +3,7 @@ const tabPanels = document.querySelectorAll('#documentation [role="tabpanel"]');
 const pdfBaseUrls = {
     'verbali-interni-candidatura': 'assets/1_Candidatura/',
     'verbali-esterni-candidatura': 'assets/1_Candidatura/',
-    candidatura: 'assets/',
+    candidatura: 'assets/1_Candidatura/',
 
     'verbali-interni-RTB': 'assets/2_RTB/DocumentiInterni/Verbali/',
     'verbali-esterni-RTB': 'assets/2_RTB/DocumentiEsterni/Verbali/',
