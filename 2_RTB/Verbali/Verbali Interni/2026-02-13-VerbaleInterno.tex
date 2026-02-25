@@ -1,0 +1,256 @@
+\documentclass[a4paper,12pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\definecolor{lightblack}{gray}{0.35}
+\newcommand{\glossario}[1]{\textit{#1}\textsubscript{\textbf{\textit{\textcolor{lightblack}{G}}}}}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 2026/02/13 \\
+\textbf{Durata:} 1 ora\\
+\textbf{Luogo:} Incontro online (Discord)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+    \hline
+    1.0 & 2026/02/13 & Laoud Zakaria & Rocco Matteo A. & \begin{tabular}[c]{@{}c@{}} Approvazione finale \\ per RTB \end{tabular} \\
+    \hline
+    0.1 & 2026/02/13 & Laoud Zakaria &  & \begin{tabular}[c]{@{}l@{}}Creazione del verbale\\ e stesura iniziale\end{tabular} \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+\end{itemize}
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Retrospettiva dello sprint 
+    \item Definizione dei ruoli
+    \item Test sul PoC per la Ricerca Semantica
+    \item Pulizia della repository del PoC
+    \item Controllo dell'Analisi dei Requisiti
+    \item Candidatura RTB e prossimi passi
+\end{enumerate}
+
+
+\section{Svolgimento e Discussione}
+
+\subsection{Retrospettiva dello sprint}
+In vista della fine del periodo di lavoro previsto per la RTB baseline, il gruppo ha effettuato una retrospettiva generale sui problemi riscontrati durante tutti gli Sprint precedenti e non risolti in modo soddisfacente.
+
+\subsubsection{Pianificazione}
+Le attività pianificate per questo sprint sono state completate con successo, rispettando le scadenze stabilite. Lo scostamento dei costi è stato minimo, con una leggera deviazione dovuta al tempo di completamento maggiore per l'implementazione della funzionalità di Ricerca Semantica.
+
+\subsubsection{Organizzazione}
+\begin{itemize}
+    \item C'è un forte bisogno che i membri del gruppo siano al passo con le norme di progetto attualmente in vigore, il mancato rispetto ha portato spesso a disallineamenti e ritardi nel completamento delle attività
+    \item In vista della Product Baseline il concetto di Configuration Item per Jira è stato rivisto: ogni Epic costituirà un Configuration Item, le issue definite per ogni Epic devono avere massimo un livello di profondità; non potranno esistere issue annidate per evitare problemi tecnici di eventuale slittamento all'interno degli Sprint Jira. Esclusi da questa regola sono i verbali e le attività di riunione
+    \item I verbali devono essere completati entro due giorni lavorativi dalla data della riunione
+    \item Il responsabile deve completare la pianificazione delle task entro due giorni lavorativi dalla data della riunione e allo stesso modo l'amministratore deve completare la creazione delle issue su Jira entro due giorni lavorativi dalla data della riunione
+    \item Le attività di palestra per la PB verranno eseguite per la maggior parte in maniera sincrona, rivelatasi nel tempo più efficace
+    \item La scelta dei verificatori deve essere effettuata con maggiore attenzione, cercando di assegnare membri che abbiano una conoscenza approfondita dell'argomento trattato per garantire una verifica più accurata e costruttiva.
+\end{itemize}
+
+
+\subsection{Definizione dei ruoli}
+I ruoli principali assegnati a ciascun membro per questo Sprint sono i seguenti:
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm}
+    \centering
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Membro} & \textbf{Ruolo} \\
+    \hline
+    Georgescu Diana & Responsabile \\
+    \hline
+    Rocco Matteo A. & Amministratore \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\subsection{Test sul PoC per la Ricerca Semantica}
+Sono stati eseguiti test approfonditi sul \glossario{PoC} relativi alla funzionalità di Ricerca Semantica. I test hanno permesso di valutare le prestazioni e l'efficacia della soluzione implementata, identificando eventuali criticità e aree di miglioramento.\\
+
+\subsection{Pulizia della repository del PoC}
+È stata effettuata una pulizia approfondita della \glossario{repository} del PoC. Sono stati rimossi file residui da test precedenti, codice non più utilizzato e altri elementi superflui. L'obiettivo è mantenere la repository ordinata e contenente solo il codice e i file necessari per il funzionamento del PoC, facilitando la manutenzione e la comprensione del progetto.\\
+
+\subsection{Controllo dell'Analisi dei Requisiti}
+Il gruppo ha eseguito un controllo finale sull'Analisi dei Requisiti. È stata verificata la completezza per garantire che il documento sia pronto per la presentazione alla RTB.\\
+
+\subsection{Candidatura RTB}
+Il gruppo ha completato e inviato la mail di candidatura alla RTB, allegando la lettera di candidatura formale.\\
+Considerando che la RTB costituisce un punto di verifica importante, il gruppo ha deciso di sospendere temporaneamente la creazione di nuove \glossario{issue} su Jira. Le attività future dipenderanno infatti dall'esito della revisione. Una volta ricevuto il feedback, il gruppo potrà pianificare con maggiore chiarezza le azioni successive e definire le priorità per gli \glossario{Sprint} futuri.\\
+
+
+\section{Pianificazione delle prossime attività e decisioni}
+In attesa dell'esito della RTB, il gruppo si concentrerà su:
+\begin{enumerate}[noitemsep]
+    \item Monitoraggio della mail e preparazione per eventuali richieste di chiarimenti per la RTB.
+    \item Studio e approfondimenti riguardo le tecnologie utilizzate e le future attività di progettazione e sviluppo.
+\end{enumerate}
+
+
+\section*{Tabella delle decisioni}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
+    \hline
+    \#0 & \begin{tabular}[c]{@{}c@{}} Redazione del verbale\\ interno \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-211}{DIPR-211} & Laoud Zakaria & Rocco Matteo A. \\
+    \hline
+    \#0 & \begin{tabular}[c]{@{}c@{}} Preventivo Sprint 7 \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-233}{DIPR-233} & Georgescu Diana & Gingillino Aaron \\
+    \hline
+    \#0 & \begin{tabular}[c]{@{}c@{}} Consuntivo Sprint 7 \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-236}{DIPR-236} & Georgescu Diana & Solgio Lorenzo \\
+    \hline
+    \#0 & \begin{tabular}[c]{@{}c@{}} Redazione del verbale\\ intermedio \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-215}{DIPR-215} & Georgescu Diana & Rocco Matteo A. \\
+    \hline
+    \#0 & \begin{tabular}[c]{@{}c@{}} Redazione del verbale\\ esterno 2026/02/19  \end{tabular}&  \href{https://7zpus.atlassian.net/browse/DIPR-200}{DIPR-200} & Georgescu Diana & Soligo Lorenzo \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
