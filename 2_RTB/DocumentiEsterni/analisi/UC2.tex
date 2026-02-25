@@ -1228,7 +1228,7 @@
 \end{itemize}
 \begin{figure}[H]
       \centering
-      \includegraphics[width=1\textwidth]{../../assets/uml/UC13INC.png}
+      \includegraphics[width=0.4\textwidth]{../../assets/uml/UC13INC.png}
       \caption{Inclusioni \ref{addSoggetto} - Aggiunta Soggetto ad un filtro}
       \label{fig:inclusioniAggiuntaSoggetto}
 \end{figure}
@@ -1246,45 +1246,9 @@
       \item \textbf{Postcondizioni}: Viene specificato il ruolo del soggetto che l'utente sta aggiungendo, in base alla specifica del filtro Tipo di Documento.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente visualizza i ruoli disponibili in base alla specifica del filtro Tipo di Documento. (\ref{visualizzaRuoliPerTipoDocumento}).
                   \item L'Utente seleziona il Ruolo tra quelli disponibili per il tipo di documento selezionato.
                   \item Il sistema salva il ruolo selezionato per il soggetto che l'Utente sta aggiungendo.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{visualizzaRuoliPerTipoDocumento} Visualizza ruoli disponibili per tipo di documento
-\end{itemize}
-
-\subsubusecase{visualizzaRuoliPerTipoDocumento}{Visualizza ruoli disponibili per tipo di documento}
-\begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: 
-      \begin{itemize}
-            \item L'Utente ha avviato l'applicazione
-            \item L'Utente ha specificato il filtro Tipo di Documento
-      \end{itemize}
-      \item \textbf{Postcondizioni}: Vengono mostrati i ruoli disponibili in base alla specifica del filtro Tipo di Documento.
-      \item \textbf{Flusso Principale}:
-            \begin{enumerate}
-                  \item Il sistema mostra per ogni ruolo disponibile in base alla specifica del filtro Tipo di Documento:
-                        \begin{itemize}
-                              \item Nome del Ruolo (\ref{visualizzaNomeRuolo})
-                        \end{itemize}
-            \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{visualizzaNomeRuolo} Visualizza nome del ruolo
-\end{itemize}
-
-\deepusecase{visualizzaNomeRuolo}{Visualizza nome del ruolo}
-\begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-      \item \begin{itemize}
-            \item L'Utente ha avviato l'applicazione
-            \item L'Utente sta visualizzando una lista di ruoli.
-      \end{itemize}
-      \item \textbf{Postcondizioni}: L'Utente visualizza il nome del ruolo.
-      \item \textbf{Flusso Principale}:
-      \item \begin{enumerate}
-            \item Il sistema mostra a video il nome del ruolo.
-      \end{enumerate}
 \end{itemize}
 
 \subusecase{specificaTipoSoggetto}{Specifica tipo di soggetto}
@@ -1300,42 +1264,9 @@
       \item \textbf{Postcondizioni}: Viene specificato il tipo del soggetto che l'utente sta aggiungendo, in base al ruolo selezionato per il soggetto che l'Utente sta aggiungendo.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente visualizza i tipi di soggetto disponibili in base al ruolo selezionato per il soggetto che l'Utente sta aggiungendo (\ref{visualizzaTipiSoggettoPerRuolo}).
                   \item L'Utente seleziona il Tipo di Soggetto tra quelli disponibili per il ruolo selezionato (per il soggetto che l'Utente sta aggiungendo).
                   \item Il sistema salva il tipo di soggetto selezionato per il soggetto che l'Utente sta aggiungendo.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{visualizzaTipiSoggettoPerRuolo} Visualizza tipi di soggetto disponibili per ruolo
-\end{itemize}
-
-\subsubusecase{visualizzaTipiSoggettoPerRuolo}{Visualizza tipi di soggetto disponibili per ruolo}
-\begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: 
-      \begin{itemize}
-            \item L'Utente ha avviato l'applicazione
-            \item L'Utente sta aggiungendo un soggetto ad un filtro, di cui ne ha specificato il ruolo (\ref{specificaRuoloSoggetto})
-      \end{itemize}
-      \item \textbf{Postcondizioni}: Vengono mostrati i tipi di soggetto disponibili per il ruolo selezionato.
-      \item \textbf{Flusso Principale}:
-            \begin{enumerate}
-                  \item Il sistema mostra, per ogni tipo di soggetto disponibile per il ruolo selezionato, il Nome del Tipo di Soggetto (\ref{visualizzaNomeTipoSoggetto})
-            \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{visualizzaNomeTipoSoggetto} Visualizza nome del tipo di soggetto
-\end{itemize}
-
-\deepusecase{visualizzaNomeTipoSoggetto}{Visualizza nome del tipo di soggetto}
-\begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}:
-      \item \begin{itemize}
-            \item L'Utente ha avviato l'applicazione
-            \item L'Utente sta visualizzando una lista di tipi di soggetto.
-      \end{itemize}
-      \item \textbf{Postcondizioni}: L'Utente visualizza il nome del tipo di soggetto.
-      \item \textbf{Flusso Principale}:
-      \item \begin{enumerate}
-            \item Il sistema mostra a video il nome del tipo di soggetto.
-      \end{enumerate}
 \end{itemize}
 
 \subusecase{addDettagliSoggetto}{Specifica dettagli soggetto}
