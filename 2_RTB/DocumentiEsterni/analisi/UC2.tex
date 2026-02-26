@@ -128,10 +128,9 @@
       \item \textbf{Postcondizioni}: Il sistema riceve il nome della Classe Documentale che l'Utente vuole ricercare.
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente inserisce il nome della Classe Documentale da ricercare (\ref{compilaValoreFiltro})
+            \item L'Utente inserisce il nome della Classe Documentale da ricercare
             \item Il sistema riceve il nome della Classe Documentale
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila Valore Filtro
 \end{itemize}
 
 \subusecase{ricercaProcesso}{Ricerca processo per Id}
@@ -171,10 +170,9 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente inserisce l'Id del Processo da ricercare (\ref{compilaValoreFiltro})
+            \item L'Utente inserisce l'Id del Processo da ricercare
             \item Il sistema riceve l'Id del Processo
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila Valore Filtro
 \end{itemize}
 
 \usecase{campoNonValido}{Uno o più valori dei filtri di ricerca non validi}
@@ -192,9 +190,6 @@
             \item Il sistema mostra a video un messaggio di errore che indica quali campi non rispettano i formati previsti
       \end{enumerate}
 \end{itemize}
-
-
-
 
 
 \usecase{StatoIndicizzazione}{Visualizza stato indicizzazione semantica}
@@ -324,13 +319,46 @@
             \begin{enumerate}
                   \item L'Utente compila i valori di Chiave Descrittiva quali:
                         \begin{itemize}
-                              \item Chiave Descrittiva (\ref{compilaValoreFiltro})
-                              \item Oggetto (\ref{compilaValoreFiltro})
-                              \item Parole Chiave (\ref{compilaValoreFiltro})
+                              \item Oggetto (\ref{addValoreOggetto})
+                              \item Parole Chiave (\ref{addValoreParoleChiave})
                         \end{itemize}
                   \item Il sistema imposta i valori del filtro come parametri di ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compilazione Valore Filtro
+      \item \textbf{Inclusioni}: \ref{addValoreOggetto} - Specifica valore Oggetto, \ref{addValoreParoleChiave} - Specifica valore Parole Chiave
+\end{itemize}
+
+\deepusecase{addValoreOggetto}{Specifica valore Oggetto}\label{addValoreOggetto}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Chiave Descrittiva tra i campi comuni
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore del campo Oggetto e lo salva per il filtro Chiave Descrittiva.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente compila il valore del campo Oggetto (alfanumerico).
+            \item Il sistema riceve il valore del campo Oggetto e lo salva per il filtro Chiave Descrittiva.
+      \end{enumerate}
+\end{itemize}
+
+\deepusecase{addValoreParoleChiave}{Specifica valore Parole Chiave}\label{addValoreParoleChiave}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Chiave Descrittiva tra i campi comuni
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore del campo Parole Chiave e lo salva per il filtro Chiave Descrittiva.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente compila il valore del campo Parole Chiave (alfanumerico).
+            \item Il sistema riceve il valore del campo Parole Chiave e lo salva per il filtro Chiave Descrittiva.
+      \end{enumerate}
 \end{itemize}
 
 \subsubusecase{addClassificazione}{Specifica filtro Classificazione}
@@ -347,7 +375,7 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente compila i valori di Classificazione (\ref{compilaValoreFiltro}) tra:
+                  \item L'Utente compila i valori di Classificazione (\ref{compilaValoreFiltroStringa}) tra:
                         \begin{itemize}
                               \item \glossario{Indice di Classificazione}
                               \item Descrizione
@@ -355,7 +383,7 @@
                         \end{itemize}
                   \item Il sistema imposta i valori del filtro come parametri di ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compilazione Valore Filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compilazione Valore Filtro: stringa
 \end{itemize}
 
 \subsubusecase{addTempoConserva}{Specifica filtro Tempo di Conservazione}
@@ -373,10 +401,46 @@
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente inserisce il valore numerico del tempo di conservazione o seleziona
-                        "Perenne" (\ref{compilaValoreFiltro})
+                        "Perenne".
                   \item Il sistema imposta il valore come parametro per la ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compilazione Valore Filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroTempoDiConservazione} Compilazione Valore Filtro: tempo di conservazione
+\end{itemize}
+
+\deepusecase{addValoreTempoConservazione}{Specifica valore Tempo di Conservazione}\label{compilaValoreFiltroTempoDiConservazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Tempo di Conservazione tra i campi comuni
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore del campo Tempo di Conservazione e lo salva per il filtro Tempo di Conservazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente inserisce il valore numerico del tempo di conservazione.
+            \item Il sistema riceve il valore del campo Tempo di Conservazione e lo salva per il filtro Tempo di Conservazione.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addTempoConserva} Specifica filtro Tempo di Conservazione
+\end{itemize}
+
+\deepusecase{addValoreTempoConservazionePerenne}{Specifica valore Tempo di Conservazione perenne}\label{compilaValoreFiltroTempoDiConservazionePerenne}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Tempo di Conservazione tra i campi comuni
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve l'indicazione che il tempo di conservazione è perenne e lo salva per il filtro Tempo di Conservazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente seleziona l'opzione "Perenne" per il tempo di conservazione.
+            \item Il sistema riceve l'indicazione che il tempo di conservazione è perenne e lo salva per il filtro Tempo di Conservazione.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addTempoConserva} Specifica filtro Tempo di Conservazione
 \end{itemize}
 
 \subsubusecase{addNote}{Specifica filtro Note}
@@ -393,10 +457,9 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce il testo della Nota (\ref{compilaValoreFiltro})
+                  \item L'Utente inserisce il testo della Nota.
                   \item Il sistema imposta il valore come parametro per la ricerca
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compilazione Valore Filtro
 \end{itemize}
 
 \subsubusecase{addTipoDocumento}{Specifica filtro Tipo documento}
@@ -418,9 +481,60 @@
                 \item Documento Amministrativo Informatico
                 \item Aggregazione Documentale
             \end{itemize}
-            \item Il sistema imposta il valore come parametro per la ricerca (\ref{compilaValoreFiltro})
+            \item Il sistema imposta il valore come parametro per la ricerca
       \end{enumerate}
       \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compilazione Valore Filtro
+\end{itemize}
+
+\deepusecase{addTipoDocumentoDI}{Specifica filtro Tipo documento: Documento Informatico}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Tipo documento tra i campi comuni
+      \end{itemize}
+      \item \textbf{Postcondizioni}: L'Utente ha specificato il filtro Tipo documento con valore Documento Informatico e il filtro è parametro per la ricerca con filtri e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente sceglie il tipo di documento "Documento Informatico"
+            \item Il sistema imposta il valore come parametro per la ricerca.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addTipoDocumento} Specifica filtro Tipo documento
+\end{itemize}
+
+\deepusecase{addTipoDocumentoDAI}{Specifica filtro Tipo documento: Documento Amministrativo Informatico}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Tipo documento tra i campi comuni
+      \end{itemize}
+      \item \textbf{Postcondizioni}: L'Utente ha specificato il filtro Tipo documento con valore Documento Amministrativo Informatico e il filtro è parametro per la ricerca con filtri e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente sceglie il tipo di documento "Documento Amministrativo Informatico"
+            \item Il sistema imposta il valore come parametro per la ricerca.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addTipoDocumento} Specifica filtro Tipo documento
+\end{itemize}
+
+\deepusecase{addTipoDocumentoAgg}{Specifica filtro Tipo documento: Aggregazione Documentale}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Tipo documento tra i campi comuni
+      \end{itemize}
+      \item \textbf{Postcondizioni}: L'Utente ha specificato il filtro Tipo documento con valore Aggregazione Documentale e il filtro è parametro per la ricerca con filtri e per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente sceglie il tipo di documento "Aggregazione Documentale"
+            \item Il sistema imposta il valore come parametro per la ricerca.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addTipoDocumento} Specifica filtro Tipo documento
 \end{itemize}
 
 \subsubusecase{addSoggetti}{Specifica filtro soggetti}
@@ -1033,16 +1147,16 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente specifica la Materia, Argomento e Struttura per i procedimenti. (\ref{compilaValoreFiltro})
-            \item L'Utente specifica il Procedimento come denominazione. (\ref{compilaValoreFiltro})
-            \item L'Utente specifica il Catalogo dei Procedimenti come URI di pubblicazione del catalogo. (\ref{compilaValoreFiltro})
+            \item L'Utente specifica la Materia, Argomento e Struttura per i procedimenti. (\ref{compilaValoreFiltroStringa})
+            \item L'Utente specifica il Procedimento come denominazione. (\ref{compilaValoreFiltroStringa})
+            \item L'Utente specifica il Catalogo dei Procedimenti come URI di pubblicazione del catalogo. (\ref{compilaValoreFiltroStringa})
             \item L'Utente aggiunge una o più Fasi (\ref{addFasiProcedimentoAmministrativo})(0...n).
             \item Il sistema imposta i valori del filtro come parametri di ricerca.
       \end{enumerate}
       \item \textbf{Inclusioni}: 
       \begin{itemize}
             \item \ref{addFasiProcedimentoAmministrativo} Aggiunta Fase del Procedimento Amministrativo
-            \item \ref{compilaValoreFiltro} Compila valore filtro
+            \item \ref{compilaValoreFiltroStringa} Compila valore filtro: stringa
       \end{itemize}
 \end{itemize}
       
@@ -1062,13 +1176,13 @@
             \item L'utente specifica, per ogni fase da aggiungere, i dati specifici:
             \begin{itemize}
                   \item Tipo Fase (Preparatoria, Istruttoria, Consultiva, Decisoria o deliberativa,
-                  Integrazione dell'efficacia). (\ref{compilaValoreFiltro})
-                  \item Data di inizio. (\ref{compilaValoreFiltro})
-                  \item Data di fine. (\ref{compilaValoreFiltro})
+                  Integrazione dell'efficacia). (\ref{compilaValoreFiltroTipoFase})
+                  \item Data di inizio. (\ref{compilaValoreFiltroData})
+                  \item Data di fine. (\ref{compilaValoreFiltroData})
             \end{itemize}
             \item Il sistema salva la fase come parte del filtro Procedimento Amministrativo.
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroTipoFase} Compila valore filtro tipo fase, \ref{compilaValoreFiltroData} Compila valore filtro data
 \end{itemize}
 
 \subdeepusecase{addAssegnazione}{Specifica filtro Assegnazione}
@@ -1131,7 +1245,7 @@
       \end{itemize}
       \item \textbf{Postcondizioni}: 
       \begin{itemize}
-            \item L'Utente ha specificato i valori del filtro Progressivo dell'Aggregazione (\ref{compilaValoreFiltro})
+            \item L'Utente ha specificato i valori del filtro Progressivo dell'Aggregazione (\ref{compilaValoreFiltroNumero})
             \item Il filtro Progressivo dell'Aggregazione è parametro per la ricerca con filtri e per la generazione del risultato
       \end{itemize}
       \item \textbf{Flusso Principale}:
@@ -1139,9 +1253,8 @@
             \item L'Utente specifica il numero Progressivo dell'Aggregazione.
             \item Il sistema imposta questo valore come parametro per la ricerca.
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroNumero} Compila valore filtro numero
 \end{itemize}
-
 
 
 \subusecase{addCustomMetadata}{Specifica filtri per Custom Metadata}
@@ -1176,11 +1289,11 @@
       \item \textbf{Postcondizioni}: Il filtro aggiunto dall'Utente è parametro per la ricerca con filtri e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente specifica il nome del metadato custom. (\ref{compilaValoreFiltro}).
-            \item L'Utente specifica il valore del metadato custom per cui ricercare. (\ref{compilaValoreFiltro}).
+            \item L'Utente specifica il nome del metadato custom. (\ref{compilaValoreFiltroStringa}).
+            \item L'Utente specifica il valore del metadato custom per cui ricercare. (\ref{compilaValoreFiltroStringa}).
             \item Il sistema imposta questi valori come parametro per la ricerca.
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro stringa
 \end{itemize}
 
 \usecase{addSoggetto}{Aggiunta Soggetto ad un filtro}
@@ -1287,14 +1400,14 @@
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Denominazione Amministrazione/ Codice \glossario{IPA} (\ref{compilaValoreFiltro})
-                              \item Denominazione Amministrazione \glossario{AOO}/ Codice IPA AOO (\ref{compilaValoreFiltro})
-                              \item Denominazione Amministrazione \glossario{UOR}/ Codice IPA UOR (\ref{compilaValoreFiltro})
-                              \item Indirizzi Digitali di Riferimento (\ref{compilaValoreFiltro})
+                              \item Denominazione Amministrazione/ Codice \glossario{IPA} (\ref{compilaValoreFiltroStringa})
+                              \item Denominazione Amministrazione \glossario{AOO}/ Codice IPA AOO (\ref{compilaValoreFiltroStringa})
+                              \item Denominazione Amministrazione \glossario{UOR}/ Codice IPA UOR (\ref{compilaValoreFiltroStringa})
+                              \item Indirizzi Digitali di Riferimento (\ref{compilaValoreFiltroStringa})
                         \end{itemize}
                   \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro stringa
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
 
@@ -1311,13 +1424,13 @@
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Denominazione Amministrazione (\ref{compilaValoreFiltro})
-                              \item Denominazione Ufficio (\ref{compilaValoreFiltro})
-                              \item \glossario{Indirizzi Digitali} di Riferimento (\ref{compilaValoreFiltro})
+                              \item Denominazione Amministrazione (\ref{compilaValoreFiltroStringa})
+                              \item Denominazione Ufficio (\ref{compilaValoreFiltroStringa})
+                              \item \glossario{Indirizzi Digitali} di Riferimento (\ref{compilaValoreFiltroStringa})
                         \end{itemize}
                   \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro stringa
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
 
@@ -1334,17 +1447,17 @@
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Cognome (\ref{compilaValoreFiltro})
-                              \item Nome (\ref{compilaValoreFiltro})
-                              \item Codice Fiscale (\ref{compilaValoreFiltro})
-                              \item Denominazione Amministrazione/ Codice IPA (\ref{compilaValoreFiltro})
-                              \item Denominazione Amministrazione AOO/ Codice IPA AOO (\ref{compilaValoreFiltro})
-                              \item Denominazione Amministrazione UOR/ Codice IPA UOR (\ref{compilaValoreFiltro})
-                              \item Indirizzi Digitali di Riferimento (\ref{compilaValoreFiltro})
+                              \item Cognome (\ref{compilaValoreFiltroStringa})
+                              \item Nome (\ref{compilaValoreFiltroStringa})
+                              \item Codice Fiscale (\ref{compilaValoreFiltroStringa})
+                              \item Denominazione Amministrazione/ Codice IPA (\ref{compilaValoreFiltroStringa})
+                              \item Denominazione Amministrazione AOO/ Codice IPA AOO (\ref{compilaValoreFiltroStringa})
+                              \item Denominazione Amministrazione UOR/ Codice IPA UOR (\ref{compilaValoreFiltroStringa})
+                              \item Indirizzi Digitali di Riferimento (\ref{compilaValoreFiltroStringa})
                         \end{itemize}
                   \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
-            \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+            </end{enumerate}
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro: stringa
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
 
@@ -1361,14 +1474,14 @@
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Denominazione Organizzazione (\ref{compilaValoreFiltro})
-                              \item Codice fiscale / Partita Iva (\ref{compilaValoreFiltro})
-                              \item Denominazione Ufficio (\ref{compilaValoreFiltro})
-                              \item Indirizzi Digitali di Riferimento (\ref{compilaValoreFiltro})
+                              \item Denominazione Organizzazione (\ref{compilaValoreFiltroStringa})
+                              \item Codice fiscale / Partita Iva (\ref{compilaValoreFiltroStringa})
+                              \item Denominazione Ufficio (\ref{compilaValoreFiltroStringa})
+                              \item Indirizzi Digitali di Riferimento (\ref{compilaValoreFiltroStringa})
                         \end{itemize}
                   \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro: stringa
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
 
@@ -1385,13 +1498,13 @@
             \begin{enumerate}
                   \item  L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Cognome (\ref{compilaValoreFiltro})
-                              \item Nome (\ref{compilaValoreFiltro})
-                              \item Indirizzi Digitali di Riferimento (\ref{compilaValoreFiltro})
+                              \item Cognome (\ref{compilaValoreFiltroStringa})
+                              \item Nome (\ref{compilaValoreFiltroStringa})
+                              \item Indirizzi Digitali di Riferimento (\ref{compilaValoreFiltroStringa})
                         \end{itemize}
                   \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro: stringa
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
 
@@ -1408,17 +1521,17 @@
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Cognome (\ref{compilaValoreFiltro})
-                              \item Nome (\ref{compilaValoreFiltro})
-                              \item Codice Fiscale (\ref{compilaValoreFiltro})
-                              \item Denominazione Amministrazione/ Codice IPA (\ref{compilaValoreFiltro})
-                              \item Denominazione Amministrazione AOO/Denominazione Amministrazione UOR (\ref{compilaValoreFiltro})
-                              \item  Denominazione Amministrazione UOR/ Codice IPA UOR (\ref{compilaValoreFiltro})
-                              \item Indirizzi Digitali di Riferimento (\ref{compilaValoreFiltro})
+                              \item Cognome (\ref{compilaValoreFiltroStringa})
+                              \item Nome (\ref{compilaValoreFiltroStringa})
+                              \item Codice Fiscale (\ref{compilaValoreFiltroStringa})
+                              \item Denominazione Amministrazione/ Codice IPA (\ref{compilaValoreFiltroStringa})
+                              \item Denominazione Amministrazione AOO/Denominazione Amministrazione UOR (\ref{compilaValoreFiltroStringa})
+                              \item  Denominazione Amministrazione UOR/ Codice IPA UOR (\ref{compilaValoreFiltroStringa})
+                              \item Indirizzi Digitali di Riferimento (\ref{compilaValoreFiltroStringa})
                         \end{itemize}
                   \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro: stringa
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
 
@@ -1433,10 +1546,10 @@
       \item \textbf{Postcondizioni}:  Le specifiche aggiunte dall'Utente sono salvate per il soggetto che sta aggiungendo.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce la Denominazione Sistema. (\ref{compilaValoreFiltro})
+                  \item L'Utente inserisce la Denominazione Sistema. (\ref{compilaValoreFiltroStringa})
                   \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro: stringa
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
 

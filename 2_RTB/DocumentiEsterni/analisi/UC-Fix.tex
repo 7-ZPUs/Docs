@@ -332,3 +332,88 @@
       \end{enumerate}
 \end{itemize}
 
+\usecase{compilaValoreFiltroTipoFase}{Compila Valore Filtro: tipo fase}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{../../assets/uml/UC75.png}
+      \caption{\ref{compilaValoreFiltroTipoFase} - Compila valore filtro: tipo fase}
+      \label{fig:uc_compilaValoreFiltroTipoFase}
+\end{figure}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando il valore del tipo di fase.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il valore inserito dall'Utente viene salvato come parte del filtro tipologia di fase.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente sceglie il valore del tipo di fase tra quelli disponibili.
+            \item Il sistema salva il valore inserito come parte del filtro fase.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item Il valore non rispetta il formato corretto (\ref{formatoNonCorrettoTipoFase}).
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoTipoFase} Formato Non Corretto: tipo fase
+\end{itemize}
+
+\usecase{formatoNonCorrettoTipoFase}{Formato Non Corretto: tipo fase}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando il valore del tipo di fase.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema informa l'Utente che il valore inserito non è un tipo di fase valido.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item Il sistema ritorna un messaggio che indica che il valore inserito deve essere un tipo di fase valido.
+      \end{enumerate}
+\end{itemize}
+
+\usecase{compilaValoreFiltroTempoDiConservazione}{Compila Valore Filtro: tempo di conservazione}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{../../assets/uml/UC75.png}
+      \caption{\ref{compilaValoreFiltroTempoDiConservazione} - Compila valore filtro: tempo di conservazione}
+      \label{fig:uc_compilaValoreFiltroTempoDiConservazione}
+\end{figure}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando il valore del tempo di conservazione.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il valore inserito dall'Utente viene salvato come parte del filtro tempo di conservazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente sceglie il valore del tempo di conservazione tra quelli disponibili o imposta il valore predefinito: "perenne".
+            \item Il sistema salva il valore inserito come parte del filtro tempo di conservazione.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item Il valore non rispetta il formato corretto (\ref{formatoNonCorrettoTempoDiConservazione}).
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoTempoDiConservazione} Formato Non Corretto: tempo di conservazione
+\end{itemize}
+
+\usecase{formatoNonCorrettoTempoDiConservazione}{Formato Non Corretto: tempo di conservazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando il valore del tempo di conservazione.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema informa l'Utente che il valore inserito non è un tempo di conservazione valido.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item Il sistema ritorna un messaggio che indica che il valore inserito deve essere un tempo di conservazione valido.
+      \end{enumerate}
+\end{itemize}
