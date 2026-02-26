@@ -86,3 +86,249 @@
             \item Il sistema mostra a video il nome del tipo di soggetto.
       \end{enumerate}
 \end{itemize}
+
+\usecase{visualizzaListaCampiAggregazioneDocumentale}{Visualizza lista campi Aggregazione Documentale}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth]{../../assets/uml/UC74.png}
+      \caption{\ref{visualizzaListaCampiAggregazioneDocumentale} - Visualizza lista campi Aggregazione Documentale}
+      \label{fig:uc_visualizzaListaCampiAggregazioneDocumentale}
+\end{figure}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro per il Tipo di Documento come Aggregazione Documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}:  L'Utente visualizza l'elenco dei campi specifici per Aggregazione Documentale disponibili per la ricerca.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item Il sistema mostra a video l'elenco dei campi specifici per Aggregazione Documentale disponibili per la ricerca e il nome corrispondente. (\ref{visualizzaNomeCampo})
+      \end{enumerate}
+      \item \textbf{Inclusioni}: \ref{visualizzaNomeCampo} Visualizza nome campo
+\end{itemize}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth]{../../assets/uml/UC74INC.png}
+      \caption{Inclusioni \ref{visualizzaListaCampiAggregazioneDocumentale} - Visualizza lista campi Aggregazione Documentale}
+      \label{fig:inclusioniVisualizzaListaCampiAggregazioneDocumentale}
+\end{figure}
+
+\usecase{compilaValoreFiltroNumero}{Compila Valore Filtro: numero}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{../../assets/uml/UC75.png}
+      \caption{\ref{compilaValoreFiltroNumero} - Compila valore filtro: numero}
+      \label{fig:uc_compilaValoreFiltroNumero}
+\end{figure}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando il valore per un metadato di tipo numerico di un filtro selezionato.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il valore inserito dall'Utente viene salvato come parte del filtro selezionato.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente inserisce il valore numerico per il metadato di cui vuole specificare il valore.
+            \item Il sistema salva il valore inserito come parte del filtro selezionato.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item Il valore non rispetta il formato corretto (\ref{formatoNonCorrettoNumero}).
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoNumero} Formato Non Corretto: numero
+\end{itemize}
+
+\usecase{formatoNonCorrettoNumero}{Formato Non Corretto: numero}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando il valore numerico per un metadato del filtro selezionato.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema informa l'Utente che il valore inserito non è numerico.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item Il sistema ritorna un messaggio che indica che il valore inserito deve essere numerico.
+      \end{enumerate}
+\end{itemize}
+
+\usecase{compilaValoreFiltroData}{Compila Valore Filtro: data}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{../../assets/uml/UC77.png}
+      \caption{\ref{compilaValoreFiltroData} - Compila valore filtro: data}
+      \label{fig:uc_compilaValoreFiltroData}
+\end{figure}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando il valore per un metadato di tipo data di un filtro selezionato.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il valore inserito dall'Utente viene salvato come parte del filtro selezionato.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente inserisce il valore data per il metadato di cui vuole specificare il valore.
+            \item Il sistema salva il valore inserito come parte del filtro selezionato.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item Il valore non rispetta il formato corretto (\ref{formatoNonCorrettoData}).
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoData} Formato Non Corretto: data
+\end{itemize}
+
+\usecase{formatoNonCorrettoData}{Formato Non Corretto: data}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando il valore data per un metadato del filtro selezionato.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema informa l'Utente che il valore inserito non è una data valida.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item Il sistema ritorna un messaggio che indica che il valore inserito deve essere una data valida.
+      \end{enumerate}
+\end{itemize}
+
+\usecase{compilaValoreFiltroAssegnazione}{Compila Valore Filtro: tipo assegnazione}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{../../assets/uml/UC75.png}
+      \caption{\ref{compilaValoreFiltroAssegnazione} - Compila valore filtro: tipo assegnazione}
+      \label{fig:uc_compilaValoreFiltroAssegnazione}
+\end{figure}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando il valore del tipo di assegnazione.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il valore inserito dall'Utente viene salvato come parte del filtro assegnazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente sceglie il valore del tipo di assegnazione tra quelli disponibili.
+            \item Il sistema salva il valore inserito come parte del filtro assegnazione.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item Il valore non rispetta il formato corretto (\ref{formatoNonCorrettoAssegnazione}).
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoAssegnazione} Formato Non Corretto: tipo assegnazione
+\end{itemize}
+
+\usecase{formatoNonCorrettoAssegnazione}{Formato Non Corretto: tipo assegnazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando il valore del tipo di assegnazione.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema informa l'Utente che il valore inserito non è un tipo di assegnazione valido.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item Il sistema ritorna un messaggio che indica che il valore inserito deve essere un tipo di assegnazione valido.
+      \end{enumerate}
+\end{itemize}
+
+\usecase{compilaValoreFiltroTipoAggregazione}{Compila Valore Filtro: tipo aggregazione}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{../../assets/uml/UC75.png}
+      \caption{\ref{compilaValoreFiltroTipoAggregazione} - Compila valore filtro: tipo aggregazione}
+      \label{fig:uc_compilaValoreFiltroTipoAggregazione}
+\end{figure}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando il valore del tipo di aggregazione.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il valore inserito dall'Utente viene salvato come parte del filtro aggregazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente sceglie il valore del tipo di aggregazione tra quelli disponibili.
+            \item Il sistema salva il valore inserito come parte del filtro aggregazione.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item Il valore non rispetta il formato corretto (\ref{formatoNonCorrettoAggregazione}).
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoAggregazione} Formato Non Corretto: tipo aggregazione
+\end{itemize}
+
+\usecase{formatoNonCorrettoTipoAggregazione}{Formato Non Corretto: tipo aggregazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando il valore del tipo di aggregazione.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema informa l'Utente che il valore inserito non è un tipo di aggregazione valido.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item Il sistema ritorna un messaggio che indica che il valore inserito deve essere un tipo di aggregazione valido.
+      \end{enumerate}
+\end{itemize}
+
+
+\usecase{compilaValoreFiltroTipoFascicolo}{Compila Valore Filtro: tipo fascicolo}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{../../assets/uml/UC75.png}
+      \caption{\ref{compilaValoreFiltroTipoFascicolo} - Compila valore filtro: tipo fascicolo}
+      \label{fig:uc_compilaValoreFiltroTipoFascicolo}
+\end{figure}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando il valore del tipo di fascicolo.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il valore inserito dall'Utente viene salvato come parte del filtro tipologia di fascicolo.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente sceglie il valore del tipo di fascicolo tra quelli disponibili.
+            \item Il sistema salva il valore inserito come parte del filtro fascicolo.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item Il valore non rispetta il formato corretto (\ref{formatoNonCorrettoTipoFascicolo}).
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoTipoFascicolo} Formato Non Corretto: tipo fascicolo
+\end{itemize}
+
+\usecase{formatoNonCorrettoTipoFascicolo}{Formato Non Corretto: tipo fascicolo}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando il valore del tipo di fascicolo.
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema informa l'Utente che il valore inserito non è un tipo di fascicolo valido.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item Il sistema ritorna un messaggio che indica che il valore inserito deve essere un tipo di fascicolo valido.
+      \end{enumerate}
+\end{itemize}
+

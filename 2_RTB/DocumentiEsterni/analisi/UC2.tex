@@ -867,28 +867,9 @@
       \item \textbf{Postcondizioni}:  I campi selezionati dall'Utente sono aggiunti ai campi selezionati per la ricerca.
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente visualizza l'elenco dei campi specifici per Aggregazione Documentale disponibili per la ricerca. (\ref{visualizzaListaCampiAggregazioneDocumentale})
             \item L'Utente sceglie uno o più campi tra quelli disponibili.
             \item Il sistema aggiunge gli elementi selezionati ai campi selezionati per la ricerca.
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{visualizzaListaCampiAggregazioneDocumentale} Visualizza lista campi Aggregazione Documentale
-\end{itemize}
-
-\subdeepusecase{visualizzaListaCampiAggregazioneDocumentale}{Visualizza lista campi Aggregazione Documentale}
-\begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: 
-      \begin{itemize}
-            \item L'Utente ha avviato l'applicazione
-            \item L'Utente sta effettuando una ricerca nel DIP con filtri
-            \item L'Utente ha selezionato il filtro per il Tipo di Documento come Aggregazione Documentale
-      \end{itemize}
-      \item \textbf{Postcondizioni}:  L'Utente visualizza l'elenco dei campi specifici per Aggregazione Documentale disponibili per la ricerca.
-      \item \textbf{Flusso Principale}:
-      \begin{enumerate}
-            \item Il sistema mostra a video l'elenco dei campi specifici per Aggregazione Documentale disponibili per la ricerca e il nome corrispondente. (\ref{visualizzaNomeCampo})
-      \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{visualizzaNomeCampo} Visualizza nome campo
 \end{itemize}
 
 \deepusecase{addTipoAggregazione}{Specifica filtro Tipo di Aggregazione}
@@ -908,7 +889,7 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente specifica il tipo di aggregazione (\ref{compilaValoreFiltro}) tra:
+            \item L'Utente specifica il tipo di aggregazione (\ref{compilaValoreFiltroTipoAggregazione}) tra:
             \begin{itemize}
                   \item Fascicolo,
                   \item Serie Documentale,
@@ -916,7 +897,7 @@
             \end{itemize}
             \item Il sistema imposta questo valore come parametro per la ricerca.
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroTipoAggregazione} Compila valore filtro: tipo aggregazione
 \end{itemize}
 
 \deepusecase{addIdAggregazione}{Specifica filtro Id dell'Aggregazione}
@@ -935,10 +916,10 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente specifica l'Id dell'Aggregazione. (\ref{compilaValoreFiltro})
+                  \item L'Utente specifica l'Id dell'Aggregazione. (\ref{compilaValoreFiltroStringa})
                   \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro: stringa
 \end{itemize}
 
 \deepusecase{addTipologiaFascicolo}{Specifica filtro Tipologia di Fascicolo}
@@ -957,7 +938,7 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente specifica il tipo di fascicolo (\ref{compilaValoreFiltro}) tra: \begin{itemize}
+                  \item L'Utente specifica il tipo di fascicolo (\ref{compilaValoreFiltroTipoFascicolo}) tra: \begin{itemize}
                               \item Affare,
                               \item Attività,
                               \item Persona Fisica,
@@ -966,7 +947,7 @@
                         \end{itemize}
                   \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroTipoFascicolo} Compila valore filtro: tipo fascicolo
 \end{itemize}
 
 \deepusecase{addIdAggregazionePrimario}{Specifica filtro Id Aggregazione Primario}
@@ -985,10 +966,10 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente specifica l'Id Primario dell'Aggregazione. (\ref{compilaValoreFiltro})
+                  \item L'Utente specifica l'Id Primario dell'Aggregazione. (\ref{compilaValoreFiltroStringa})
                   \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro: stringa
 \end{itemize}
 
 \deepusecase{addDataApertura}{Specifica filtro Data Apertura}
@@ -1007,10 +988,10 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente specifica la Data di Apertura. (\ref{compilaValoreFiltro})
+                  \item L'Utente specifica la Data di Apertura. (\ref{compilaValoreFiltroData})
                   \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroData} Compila valore filtro: data
 \end{itemize}
 
 \deepusecase{addDataChiusura}{Specifica filtro Data Chiusura}
@@ -1029,10 +1010,10 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente specifica la Data di Chiusura. (\ref{compilaValoreFiltro})
+                  \item L'Utente specifica la Data di Chiusura. (\ref{compilaValoreFiltroData})
                   \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroData} Compila valore filtro: data
 \end{itemize}
 
 \deepusecase{addProcedimentoAmministrativo}{Specifica filtro Procedimento Amministrativo}
@@ -1128,14 +1109,14 @@
       \begin{enumerate}
             \item L'utente specifica:
             \begin{itemize}
-                  \item Tipo Assegnazione. (\ref{compilaValoreFiltro})
-                  \item Soggetto Assegnatario. (\ref{compilaValoreFiltro})
-                  \item Data di Inizio. (\ref{compilaValoreFiltro})
-                  \item Data di Fine. (\ref{compilaValoreFiltro})
+                  \item Tipo Assegnazione. (\ref{compilaValoreFiltroAssegnazione})
+                  \item Soggetto Assegnatario (Codice Fiscale). (\ref{compilaValoreFiltroStringa})
+                  \item Data di Inizio. (\ref{compilaValoreFiltroData})
+                  \item Data di Fine. (\ref{compilaValoreFiltroData})
             \end{itemize}
             \item Il sistema salva il valore di assegnazione come parte del filtro Assegnazione.
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroAssegnazione} Compila valore filtro tipo assegnazione, \ref{compilaValoreFiltroStringa} Compila valore filtro stringa, \ref{compilaValoreFiltroData} Compila valore filtro data
 \end{itemize}
       
 \deepusecase{addProgressivoAggregazione}{Specifica filtro Progressivo Aggregazione}
@@ -1574,12 +1555,12 @@
       \end{enumerate}
 \end{itemize}
       
-\usecase{compilaValoreFiltro}{Compila Valore Filtro}
+\usecase{compilaValoreFiltroStringa}{Compila Valore Filtro: stringa}
 \begin{figure}[H]
       \centering
       \includegraphics[width=0.9\textwidth]{../../assets/uml/UC17.png}
-      \caption{\ref{compilaValoreFiltro} - Compila valore filtro}
-      \label{fig:uc_compilaValoreFiltro}
+      \caption{\ref{compilaValoreFiltroStringa} - Compila valore filtro: stringa}
+      \label{fig:uc_compilaValoreFiltroStringa}
 \end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
@@ -1587,32 +1568,32 @@
       \begin{itemize}
             \item L'Utente ha avviato l'applicazione
             \item L'Utente sta effettuando una ricerca nel DIP con filtri
-            \item L'Utente sta specificando il valore per un metadato di un filtro selezionato.
+            \item L'Utente sta specificando il valore per un metadato di tipo alfanumerico di un filtro selezionato.
       \end{itemize}
       \item \textbf{Postcondizioni}: Il valore inserito dall'Utente viene salvato come parte del filtro selezionato.
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente inserisce il valore per il metadato di cui vuole specificare il valore.
+            \item L'Utente inserisce il valore alfanumerico per il metadato di cui vuole specificare il valore.
             \item Il sistema salva il valore inserito come parte del filtro selezionato.
       \end{enumerate}
       \item \textbf{Flusso Alternativo}:
       \begin{itemize}
-            \item Il valore non rispetta il formato corretto (\ref{formatoNonCorretto}).
+            \item Il valore non rispetta il formato corretto (\ref{formatoNonCorrettoStringa}).
       \end{itemize}
-      \item \textbf{Estensioni}: \ref{formatoNonCorretto} Formato Non Corretto
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato Non Corretto: stringa
 \end{itemize}
 
-\usecase{formatoNonCorretto}{Formato Non Corretto}
+\usecase{formatoNonCorrettoStringa}{Formato Non Corretto: stringa}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
             \item L'Utente ha avviato l'applicazione
             \item L'Utente sta effettuando una ricerca nel DIP con filtri
-            \item L'Utente sta specificando il valore per un metadato del filtro selezionato.
+            \item L'Utente sta specificando il valore alfanumerico per un metadato del filtro selezionato.
       \end{itemize}
-      \item \textbf{Postcondizioni}: Il sistema informa l'Utente che il valore inserito non rispetta il formato corretto.
+      \item \textbf{Postcondizioni}: Il sistema informa l'Utente che il valore inserito non è alfanumerico.
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item Il sistema ritorna un messaggio che indica che il valore inserito non rispetta il formato corretto.
+            \item Il sistema ritorna un messaggio che indica che il valore inserito deve essere alfanumerico.
       \end{enumerate}
 \end{itemize}
