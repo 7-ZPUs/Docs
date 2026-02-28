@@ -217,7 +217,53 @@
     \end{itemize}
     \item \textbf{Flusso principale}:
     \begin{enumerate}
-        \item L'Utente visualizza un messaggio di notifica che indica che la Ricerca Semantica è disponibile.
+        \item L'Utente visualizza un messaggio di notifica lo stato della Ricerca Semantica.
+    \end{enumerate}
+\end{itemize}
+
+\subusecase{StatoIndicizzazioneCompletata}{Visualizza stato indicizzazione semantica "Completata"}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{itemize}
+      \item L'Utente ha avviato l'applicazione
+      \item L'Utente ha selezionato l'opzione di \glossario{indicizzazione} semantica
+      \item L'indicizzazione semantica è stata completata
+    \end{itemize}
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item L'Utente vede lo stato di indicizzazione per la ricerca semantica "Completata"
+    \end{itemize}
+    \item \textbf{Flusso principale}:
+    \begin{enumerate}
+        \item L'Utente visualizza un messaggio di notifica lo stato della Ricerca Semantica "Completata".
+    \end{enumerate}
+    \item \textbf{Specializza}:
+    \begin{enumerate}
+              \item \ref{StatoIndicizzazione} Visualizza stato indicizzazione semantica
+    \end{enumerate}
+\end{itemize}
+
+\subusecase{StatoIndicizzazioneNonCompletata}{Visualizza stato indicizzazione semantica "Non completata"}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{itemize}
+      \item L'Utente ha avviato l'applicazione
+      \item L'Utente ha selezionato l'opzione di \glossario{indicizzazione} semantica
+      \item L'indicizzazione semantica non è stata completata
+    \end{itemize}
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item L'Utente vede lo stato di indicizzazione per la ricerca semantica "Non completata"
+    \end{itemize}
+    \item \textbf{Flusso principale}:
+    \begin{enumerate}
+        \item L'Utente visualizza un messaggio di notifica lo stato della Ricerca Semantica "Non completata".
+    \end{enumerate}
+    \item \textbf{Specializza}:
+    \begin{enumerate}
+              \item \ref{StatoIndicizzazione} Visualizza stato indicizzazione semantica
     \end{enumerate}
 \end{itemize}
 
@@ -292,22 +338,6 @@
       \item \textbf{Inclusioni}: \ref{visualizzaListaCampiComuni} Visualizza lista campi comuni
 \end{itemize}
 
-\deepusecase{visualizzaListaCampiComuni}{Visualizza lista campi comuni}
-\begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: 
-      \begin{itemize}
-            \item L'Utente ha avviato l'applicazione
-            \item L'Utente sta effettuando una ricerca nel DIP con filtri
-      \end{itemize}
-      \item \textbf{Postcondizioni}:  L'Utente visualizza l'elenco dei campi comuni disponibili per la ricerca
-      \item \textbf{Flusso Principale}:
-      \begin{enumerate}
-            \item Il sistema mostra a video l'elenco dei campi comuni disponibili per la ricerca e il nome corrispondente (\ref{visualizzaNomeCampo})
-      \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{visualizzaNomeCampo} Visualizza nome del campo
-\end{itemize}
-
 \subsubusecase{addChiaveDescrittiva}{Specifica filtro Chiave Descrittiva}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
@@ -357,6 +387,76 @@
             \end{enumerate}
       \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compilazione Valore Filtro
 \end{itemize}
+
+\deepusecase{CompilaIndiceClassificazione}{Compila filtro indice di classificazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}:  \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Classificazione tra i campi comuni
+            \item L'Utente ha selezionato di compilare l'Indice di Classificazione come valore del filtro Classificazione
+      \end{itemize}
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Classificazione con l'Indice di Classificazione
+            \item Il filtro Classificazione con l'Indice di Classificazione è parametro per la ricerca con filtri e per la generazione del risultato
+            \item Il sistema riceve i valori dell'Indice di Classificazione come parametri di ricerca
+            \item Il sistema produce i risultati di ricerca in base ai valori dell'Indice di Classificazione specificati                                   
+      \end{itemize}
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente compila i valori di Classificazione (\ref{compilaValoreFiltro}) con l'Indice di Classificazione
+                  \item Il sistema imposta i valori del filtro come parametri di ricerca.
+            \end{enumerate}
+      \item \textbf{Specifica}: \ref{addClassificazione} Specifica filtro Classificazione
+\end{itemize}
+
+\deepusecase{CompilaDescrizione}{Compila filtro descrizione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}:  \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Classificazione tra i campi comuni
+            \item L'Utente ha selezionato di compilare Descrizione come valore del filtro Classificazione
+      \end{itemize}
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Classificazione con Descrizione
+            \item Il filtro Classificazione  Descrizione è parametro per la ricerca con filtri e per la generazione del risultato
+            \item Il sistema riceve i valori Descrizione come parametri di ricerca
+            \item Il sistema produce i risultati di ricerca in base ai valori di Descrizione specificati                                   
+      \end{itemize}
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente compila i valori di Classificazione (\ref{compilaValoreFiltro}) con Descrizione
+                  \item Il sistema imposta i valori del filtro come parametri di ricerca.
+            \end{enumerate}
+      \item \textbf{Specifica}: \ref{addClassificazione} Specifica filtro Classificazione
+\end{itemize}
+
+\deepusecase{CompilaPianoClassificazione}{Compila Piano di classificazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}:  \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Classificazione tra i campi comuni
+            \item L'Utente ha selezionato di compilare Piano di Classificazione come valore del filtro Classificazione
+      \end{itemize}
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Classificazione con Piano di Classificazione
+            \item Il filtro Classificazione con Piano di Classificazione è parametro per la ricerca con filtri e per la generazione del risultato
+            \item Il sistema riceve i valori Piano di Classificazione come parametri di ricerca
+            \item Il sistema produce i risultati di ricerca in base ai valori Piano di Classificazione specificati                                   
+      \end{itemize}
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente compila i valori di Classificazione (\ref{compilaValoreFiltro}) con Piano di Classificazione
+                  \item Il sistema imposta i valori del filtro come parametri di ricerca.
+            \end{enumerate}
+      \item \textbf{Specifica}: \ref{addClassificazione} Specifica filtro Classificazione
+\end{itemize}
+
 
 \subsubusecase{addTempoConserva}{Specifica filtro Tempo di Conservazione}
 \begin{itemize}
@@ -421,6 +521,75 @@
             \item Il sistema imposta il valore come parametro per la ricerca (\ref{compilaValoreFiltro})
       \end{enumerate}
       \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compilazione Valore Filtro
+\end{itemize}
+
+\deepusecase{CompilaDocumentoInformatico}{Compila documento informatico}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}:  \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Tipo documento tra i campi comuni
+            \item L'Utente ha selezionato di compilare Documento informatico come valore del filtro Tipo documento
+      \end{itemize}
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Tipo Documento con i campi specifici per il Documento Informatico
+            \item Il filtro Documento informatico con Documento informatico è parametro per la ricerca con filtri e per la generazione del risultato
+            \item Il sistema riceve i valori Documento informatico come parametri di ricerca
+            \item Il sistema produce i risultati di ricerca in base ai valori di Documento informatico specificati                                   
+      \end{itemize}
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente compila i valori di Tipo Documento (\ref{compilaValoreFiltro}) con Documento informatico
+                  \item Il sistema imposta i valori del filtro come parametri di ricerca.
+            \end{enumerate}
+      \item \textbf{Specifica}: \ref{addTipoDocumento} Specifica filtro Tipo documento
+\end{itemize}
+
+\deepusecase{CompilaDocumentoAmministrativoInformatico}{Compila documento amministrativo informatico}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}:  \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Tipo documento tra i campi comuni
+            \item L'Utente ha selezionato di compilare Documento amministrativo informatico come valore del filtro Tipo documento
+      \end{itemize}
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Tipo Documento con i campi specifici per il Documento Amministrativo Informatico
+            \item Il filtro Documento amministrativo informatico con Documento amministrativo informatico è parametro per la ricerca con filtri e per la generazione del risultato
+            \item Il sistema riceve i valori Documento amministrativo informatico come parametri di ricerca
+            \item Il sistema produce i risultati di ricerca in base ai valori di Documento amministrativo informatico specificati                                   
+      \end{itemize}
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente compila i valori di Tipo Documento (\ref{compilaValoreFiltro}) con Documento amministrativo informatico
+                  \item Il sistema imposta i valori del filtro come parametri di ricerca.
+            \end{enumerate}
+      \item \textbf{Specifica}: \ref{addTipoDocumento} Specifica filtro Tipo documento
+\end{itemize}
+
+\deepusecase{CompilaAggregazioneDocumentale}{Compila aggregazione documentale}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}:  \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Tipo documento tra i campi comuni
+            \item L'Utente ha selezionato di compilare Aggregazione documentale come valore del filtro Tipo documento
+      \end{itemize}
+      \item \textbf{Postcondizioni}: \begin{itemize}
+            \item L'Utente ha specificato i valori del filtro Tipo Documento con i campi specifici per l'Aggregazione Documentale
+            \item Il filtro Aggregazione documentale con Aggregazione documentale è parametro per la ricerca con filtri e per la generazione del risultato
+            \item Il sistema riceve i valori Aggregazione documentale come parametri di ricerca
+            \item Il sistema produce i risultati di ricerca in base ai valori di Aggregazione documentale specificati                                   
+      \end{itemize}
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente compila i valori di Tipo Documento (\ref{compilaValoreFiltro}) con Aggregazione documentale
+                  \item Il sistema imposta i valori del filtro come parametri di ricerca.
+            \end{enumerate}
+      \item \textbf{Specifica}: \ref{addTipoDocumento} Specifica filtro Tipo documento
 \end{itemize}
 
 \subsubusecase{addSoggetti}{Specifica filtro soggetti}
@@ -1528,7 +1697,30 @@
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
 
-\usecase{visualizzaNomeCampo}{Visualizza nome del campo}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=1\textwidth]{../../assets/uml/UC14.png}
+      \caption{\ref{visualizzaListaCampiComuni} - Visualizza lista campi comuni}
+      \label{fig:uc_visualizzaListaCampiComuni}
+\end{figure}
+
+\usecase{visualizzaListaCampiComuni}{Visualizza lista campi comuni}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+      \end{itemize}
+      \item \textbf{Postcondizioni}:  L'Utente visualizza l'elenco dei campi comuni disponibili per la ricerca
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item Il sistema mostra a video l'elenco dei campi comuni disponibili per la ricerca e il nome corrispondente (\ref{visualizzaNomeCampo})
+      \end{enumerate}
+      \item \textbf{Inclusioni}: \ref{visualizzaNomeCampo} Visualizza nome del campo
+\end{itemize}
+
+\subusecase{visualizzaNomeCampo}{Visualizza nome del campo}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -1668,7 +1860,6 @@
       \begin{itemize}
             \item Il valore non rispetta il formato corretto (\ref{formatoNonCorretto}).
       \end{itemize}
-      \item \textbf{Estensioni}: \ref{formatoNonCorretto} Formato Non Corretto
 \end{itemize}
 
 \usecase{formatoNonCorretto}{Formato Non Corretto}
