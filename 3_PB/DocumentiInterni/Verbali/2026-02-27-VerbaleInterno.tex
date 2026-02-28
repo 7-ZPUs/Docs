@@ -1,0 +1,260 @@
+\documentclass[a4paper,12pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\definecolor{lightblack}{gray}{0.35}
+\newcommand{\glossario}[1]{\textit{#1}\textsubscript{\textbf{\textit{\textcolor{lightblack}{G}}}}}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 2026/02/27 \\
+\textbf{Durata:} 1 ora\\
+\textbf{Luogo:} Incontro online (Discord)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+\end{itemize}
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Retrospettiva dello sprint 
+    \item Definizione dei ruoli
+    \item Riorganizzazione oraria
+    \item Definizione delle milestone per la PB
+    \item Nuova task di monitoraggio
+\end{enumerate}
+
+
+\section{Svolgimento e Discussione}
+
+\subsection{Retrospettiva dello sprint}
+Per quanto riguarda lo sprint appena concluso, il gruppo ha notato che le due presentazioni per la RTB sono state completate con particolare livello di soddisfazione. In particolare le esposizioni sono state chiare e ben strutturate. È quindi utile tenere a mente in vista delle future presentazioni che è importante l'organizzazione del discorso e la simulazione di gruppo per testare la preparazione. \\
+\subsubsection{Pianificazione}
+Le attività pianificate per questo sprint sono state completate con successo, rispettando le scadenze stabilite. Lo scostamento dei costi è stato minimo, con una leggera deviazione dovuta al tempo di completamento maggiore per l'implementazione della funzionalità di Ricerca Semantica.
+
+\subsubsection{Organizzazione}
+\begin{itemize}
+    \item Tutto il gruppo deve impegnarsi a rispettare le scadenze visti i tempi stretti per la PB.
+    \item Per la progettazione e sviluppo, come consigliato dal professor Tullio, è preferibile svolgere attività di progetto in contesto di prodotto ovvero ragionando già in maniera concreta sulla progettazione del DIPReader.
+    \\ A riguardo le attività di progettazione partono con un primo studio degli strumenti e del modello C4 per la progettazione architetturale. In seguito alla infarinatura, per lunedì 2 marzo è fissato un incontro di gruppo per ragionare sula progettazione di sistema (\glossario{\textit{Software system}}) e \glossario{\textit{Container}}. I livelli successivi di progettazione verranno affrontati dai singoli membri in autonomia.
+    \item È stato nuovamente posto l'accento su un'utilizzo attento di Jira al fine di mantenere il sistema automatico di contabilizzazione e monitoraggio del lavoro il più preciso possibile. 
+\end{itemize}
+
+
+\subsection{Definizione dei ruoli}
+I ruoli principali assegnati a ciascun membro per questo Sprint sono i seguenti:
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm}
+    \centering
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Membro} & \textbf{Ruolo} \\
+    \hline
+    Soligo Lorenzo & Responsabile \\
+    \hline
+    Vigolo Davide & Amministratore \\
+    \hline
+    Rocco Matteo A., Fattoni Antonio e Vigolo Davide & Analisti \\
+    \hline
+    \begin{tabular}[c]{@{}p{10cm}@{}}Georgescu Diana, Gingillino Aaron, \\ Laoud Zakaria, Soligo Lorenzo \end{tabular} & Progettisti \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+
+\subsection{Riorganizzazione oraria}
+Per completare le attività di sistemazione dei requisiti nel documento di Analisi dei Requisiti, è stata effettuata una riorganizzazione dell'orario di lavoro. Per Rocco Matteo A. sono state scambiate due ore da progettista con due ore da analista al fine di completare la task. \\
+Inoltre visto che le attività di responsabile hanno consumato più ore del previsto, si è deciso per Fattoni Antonio di spostare 3 ore da analista e una da progettista a 3 ore da responsabile per completare le attività di monitoraggio e gestione del progetto.
+\\ Tutti i cambiamenti sono tracciati  nel Piano di Progetto.
+
+\subsection{Definizione delle milestone per la PB}
+Sono state definite le seguenti milestone intermedie per la PB:
+\begin{itemize}
+    \item 2026/03/08: Progettazione di Component e Code, almeno per i componenti principali del sistema (Indicizzatore, Motore di Ricerca, Interfaccia Utente)
+    \item 2026/03/15: Progettazione completata per tutti i componenti e codifica iniziata per almeno i componenti principali del sistema (Milestone del 2026/03/08)
+\end{itemize}
+
+\subsection{Progettazione}
+In vista dell'incontro di gruppo, i progettisti sono invitati a studiare il modello C4 e i tool di progettazione associati, riflettendo a come applicare tale modello al nostro caso d'uso.\\
+Come per altri documenti di progetto è inoltre prevista la redazione del documento di Specifica tecnica, basato sull'ISO IEEE 1016:2009, caricato nella cartella condivisa dello spazio Google Drive. Il documento di Specifica tecnica ha un branch "\textit{\_in\_lavorazione}" apposito e un suo modello è in redazione in concomitanza della riunione di gruppo dei 2026/03/02.
+
+\subsection{Nuova task di monitoraggio}
+Vista l'automatizzazione completa della contabilità, il tempo prima impiegato in questa task può essere utilizzato per l'analisi più approfondita. È quindi stato deciso di aggiungere una colonna "Note" nel cruscotto di qualità, in cui appuntare ogni settimana osservazioni e riflessioni sull'andamento del progetto. 
+
+\section{Pianificazione delle prossime attività e decisioni}
+Durante questo Sprint, le attività principali da svolgere sono le seguenti:
+\begin{enumerate}[noitemsep]
+    \item Studio e svolgimento della progettazione.
+    \item Aggiornamento delle rispettive sezioni delle Norme di Progetto.
+    \item Correzione dei requisiti non funzionali.
+    \item Inizio codifica dei componenti principali del sistema.
+\end{enumerate}
+
+
+\section*{Tabella delle decisioni}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
+    \hline
+    \#0 & \begin{tabular}[c]{@{}c@{}} Redazione del verbale\\ interno \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-277}{DIPR-277} & Soligo Lorenzo & Diana Georgescu \\
+    \hline
+    \#0 & \begin{tabular}[c]{@{}c@{}} Preventivo Sprint 8 \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-279}{DIPR-279} & Soligo Lorenzo & Gingillino Aaron \\
+    \hline
+    \#0 & \begin{tabular}[c]{@{}c@{}} Consuntivo Sprint 8 \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-281}{DIPR-281} & Soligo Lorenzo & Laoud Zakaria \\
+    \hline
+    \#0 & \begin{tabular}[c]{@{}c@{}} Redazione del verbale\\ intermedio \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-290}{DIPR-290} & Soligo Lorenzo & Rocco Matteo A. \\
+    \hline
+    \#0 & \begin{tabular}[c]{@{}c@{}} Redazione del verbale\\ esterno 2026/03/05  \end{tabular}&  \href{https://7zpus.atlassian.net/browse/DIPR-285}{DIPR-285} & Soligo Lorenzo & \\
+    \hline
+    \#1 & \begin{tabular}[c]{@{}c@{}} Progettazione\\ autonoma  \end{tabular}&  \href{https://7zpus.atlassian.net/browse/DIPR-283}{DIPR-} & Progettisti & Progettisti \\
+    \hline
+    \#1 & \begin{tabular}[c]{@{}c@{}} Redazione modello \\Specifica tecnica \end{tabular}&  \href{https://7zpus.atlassian.net/browse/DIPR-202}{DIPR-} & Laoud Zakaria &  \\
+     \hline
+    \#2 & \begin{tabular}[c]{@{}c@{}} Aggiornamento Norme\\ (Report x Ogni Sprint)  \end{tabular}&  \href{https://7zpus.atlassian.net/browse/DIPR-2}{DIPR-} & Gingillino Aaron &  \\
+    \hline
+    \#2 & \begin{tabular}[c]{@{}c@{}} Aggiornamento Norme\\ (Progettazione)  \end{tabular}&  \href{https://7zpus.atlassian.net/browse/DIPR-201}{DIPR-} & Laoud Zakaria & Soligo Lorenzo \\
+     \hline
+    \#2 & \begin{tabular}[c]{@{}c@{}} Aggiornamento Norme\\ (Codifica)  \end{tabular}&  \href{https://7zpus.atlassian.net/browse/DIPR-201}{DIPR-} & Gingillino Aaron &  \\
+      \hline
+    \#3 & \begin{tabular}[c]{@{}c@{}} Correzione requisiti\\ non funzionali  \end{tabular}&  \href{https://7zpus.atlassian.net/browse/DIPR-283}{DIPR-283} & Rocco Matteo A. & Vigolo Davide \\
+      \hline    
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
