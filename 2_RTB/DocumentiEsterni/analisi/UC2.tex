@@ -212,7 +212,53 @@
     \end{itemize}
     \item \textbf{Flusso principale}:
     \begin{enumerate}
-        \item L'Utente visualizza un messaggio di notifica che indica che la Ricerca Semantica è disponibile.
+        \item L'Utente visualizza un messaggio di notifica lo stato della Ricerca Semantica.
+    \end{enumerate}
+\end{itemize}
+
+\subusecase{StatoIndicizzazioneCompletata}{Visualizza stato indicizzazione semantica "Completata"}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{itemize}
+      \item L'Utente ha avviato l'applicazione
+      \item L'Utente ha selezionato l'opzione di \glossario{indicizzazione} semantica
+      \item L'indicizzazione semantica è stata completata
+    \end{itemize}
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item L'Utente vede lo stato di indicizzazione per la ricerca semantica "Completata"
+    \end{itemize}
+    \item \textbf{Flusso principale}:
+    \begin{enumerate}
+        \item L'Utente visualizza un messaggio di notifica lo stato della Ricerca Semantica "Completata".
+    \end{enumerate}
+    \item \textbf{Specializza}:
+    \begin{enumerate}
+              \item \ref{StatoIndicizzazione} Visualizza stato indicizzazione semantica
+    \end{enumerate}
+\end{itemize}
+
+\subusecase{StatoIndicizzazioneNonCompletata}{Visualizza stato indicizzazione semantica "Non completata"}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{itemize}
+      \item L'Utente ha avviato l'applicazione
+      \item L'Utente ha selezionato l'opzione di \glossario{indicizzazione} semantica
+      \item L'indicizzazione semantica non è stata completata
+    \end{itemize}
+    \item \textbf{Postcondizioni}:
+    \begin{itemize}
+        \item L'Utente vede lo stato di indicizzazione per la ricerca semantica "Non completata"
+    \end{itemize}
+    \item \textbf{Flusso principale}:
+    \begin{enumerate}
+        \item L'Utente visualizza un messaggio di notifica lo stato della Ricerca Semantica "Non completata".
+    \end{enumerate}
+    \item \textbf{Specializza}:
+    \begin{enumerate}
+              \item \ref{StatoIndicizzazione} Visualizza stato indicizzazione semantica
     \end{enumerate}
 \end{itemize}
 
@@ -280,27 +326,9 @@
       \item \textbf{Postcondizioni}:  I campi selezionati dall'Utente sono aggiunti ai campi selezionati per la ricerca.
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente visualizza l'elenco dei campi comuni disponibili per la ricerca (\ref{visualizzaListaCampiComuni})
             \item L'Utente sceglie uno o più campi tra quelli disponibili
             \item Il sistema aggiunge gli elementi selezionati ai campi selezionati per la ricerca
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{visualizzaListaCampiComuni} Visualizza lista campi comuni
-\end{itemize}
-
-\deepusecase{visualizzaListaCampiComuni}{Visualizza lista campi comuni}
-\begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: 
-      \begin{itemize}
-            \item L'Utente ha avviato l'applicazione
-            \item L'Utente sta effettuando una ricerca nel DIP con filtri
-      \end{itemize}
-      \item \textbf{Postcondizioni}:  L'Utente visualizza l'elenco dei campi comuni disponibili per la ricerca
-      \item \textbf{Flusso Principale}:
-      \begin{enumerate}
-            \item Il sistema mostra a video l'elenco dei campi comuni disponibili per la ricerca e il nome corrispondente (\ref{visualizzaNomeCampo})
-      \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{visualizzaNomeCampo} Visualizza nome del campo
 \end{itemize}
 
 \subsubusecase{addChiaveDescrittiva}{Specifica filtro Chiave Descrittiva}
@@ -3034,7 +3062,29 @@
       \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
-\usecase{visualizzaNomeCampo}{Visualizza nome del campo}
+\usecase{visualizzaListaCampiComuni}{Visualizza lista campi comuni}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=1\textwidth]{../../assets/uml/UC14.png}
+      \caption{\ref{visualizzaListaCampiComuni} - Visualizza lista campi comuni}
+      \label{fig:uc_visualizzaListaCampiComuni}
+\end{figure}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+      \end{itemize}
+      \item \textbf{Postcondizioni}:  L'Utente visualizza l'elenco dei campi comuni disponibili per la ricerca
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item Il sistema mostra a video l'elenco dei campi comuni disponibili per la ricerca e il nome corrispondente (\ref{visualizzaNomeCampo})
+      \end{enumerate}
+      \item \textbf{Inclusioni}: \ref{visualizzaNomeCampo} Visualizza nome del campo
+\end{itemize}
+
+\subusecase{visualizzaNomeCampo}{Visualizza nome del campo}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 

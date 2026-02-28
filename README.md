@@ -9,7 +9,7 @@ Il sito web di documentazione è accessibile al seguente [link](https://7-zpus.g
 |-----------------|-----------|
 | Fattoni Antonio | 2008650 |
 | Georgescu Diana | 2075549 |
-| Gingillino Aaron| 2113182 |
+| Gingilino Aaron| 2113182 |
 | Laoud Zakaria| 2113196 |
 | Rocco Matteo Alberto| 2042354 |
 | Soligo Lorenzo| 2101057 |

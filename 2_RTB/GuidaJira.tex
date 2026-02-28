@@ -1,0 +1,267 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage[explicit]{titlesec}
+\usepackage{fancyhdr}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+% Stili per le sezioni
+\titleformat{\section}
+  {\normalfont\LARGE\bfseries\color{zpusgreen}}
+  {}
+  {0em}
+  {#1 \titlerule[2pt]}
+
+\titleformat{\subsection}
+  {\normalfont\Large\bfseries\color{zpusdarkgreen}}
+  {}
+  {0em}
+  {#1}
+
+% Intestazione e piè di pagina
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\color{zpusgreen}\textbf{ZPUS Engineering Team}}
+\fancyhead[R]{\color{zpusgreen}\textbf{Guida Jira}}
+\fancyfoot[C]{\color{zpusgreen}\thepage}
+\renewcommand{\headrule}{\color{zpusgreen}\hrule width\hsize height 2pt}
+
+% Simboli compatibili senza fontawesome
+\newcommand{\info}{\textcolor{zpusgreen}{\textbf{\textbullet}}}
+\newcommand{\task}{\textcolor{zpusgreen}{\textbf{>>}}}
+\newcommand{\workflow}{\textcolor{zpusgreen}{\textbf{$\rightleftarrows$}}}
+\newcommand{\commit}{\textcolor{zpusgreen}{\textbf{>}}}
+\newcommand{\timeicon}{\textcolor{zpusgreen}{\textbf{\clock}}}
+\newcommand{\plus}{\textcolor{zpusgreen}{\textbf{+}}}
+\newcommand{\search}{\textcolor{zpusgreen}{\textbf{$\bigcirc$}}}
+\newcommand{\play}{\textcolor{zpusgreen}{\textbf{$\blacktriangleright$}}}
+\newcommand{\checkmarkicon}{\textcolor{zpusgreen}{\textbf{$\checkmark$}}}
+\newcommand{\bulb}{\textcolor{zpusgreen}{\textbf{!}}}
+\newcommand{\rocket}{\textcolor{zpusgreen}{\textbf{$\blacktriangle$}}}
+\newcommand{\email}{\textcolor{zpusgreen}{\textbf{@}}}
+\newcommand{\github}{\textcolor{zpusgreen}{\textbf{\#}}}
+
+% Impostazioni generali
+\geometry{margin=1.2in}
+\setlength{\parindent}{0pt}
+\setlist[itemize]{leftmargin=*,noitemsep}
+\setlist[enumerate]{leftmargin=*,noitemsep}
+
+\begin{document}
+
+% Intestazione
+\begin{headerbox}
+    {\Huge \textbf{GUIDA JIRA}} \\
+    \vspace{0.3cm}
+    {\Large ZPUS Engineering Team}
+\end{headerbox}
+
+\vspace{1cm}
+
+\begin{infobox}
+    \textbf{Informazione}: Questa guida ti accompagnerà nell'utilizzo quotidiano di Jira con focus su gestione work item, workflow, smart commit e work log. Segui le indicazioni per ottimizzare il tuo workflow!
+    Si presuppone la visione del Video Tutorial e l'utilizzo dell'estensione VSCode per Jira.
+\end{infobox}
+
+\section{\task~Amministrazione Work Item}
+
+\begin{stepbox}
+    \subsection{\textbf{\color{zpusgreen}Crea e Gestisci Ticket:}}
+    \begin{itemize}
+        \item \plus{} \textbf{Creazione}: Usa il pulsante ``Crea'' in alto a destra
+        \item \task{} \textbf{Tipologia}: Seleziona il tipo appropriato (Task/Bug/Story)
+        \item \textbf{\color{zpusgreen}Descrizione}: Compila i campi obbligatori con descrizione chiara
+        \item \textbf{\color{zpusgreen}Assegnazione}: Assegna al membro del team corretto
+        \item \textbf{\color{zpusgreen}Gerarchia}: Imposta la Gerarchia con il campo Linked Issues, selezionando child of o parent of in base alla situazione.
+        \item \textbf{\color{zpusgreen}Altri Link}: Aggiungi ulteriori Linked Issues se necessario (relates to, blocks, ecc.)
+    \end{itemize}
+    I campi Linked Issues sono automatizzati, una volta impostata una relazione da un lato viene creata in automatico nell'altro Work Item.
+\end{stepbox}
+
+\vspace{0.5cm}
+
+\begin{stepbox}
+    \subsection{\textbf{\color{zpusgreen}Organizzazione Avanzata:}}
+    \begin{itemize}
+        \item \search{} \textbf{Ricerca}: Usa i filtri per trovare ticket specifici
+        \item \textbf{\color{zpusgreen}Board}: Trascina tra le colonne per aggiornare lo stato
+        \item \textbf{\color{zpusgreen}Allegati}: Allega file con drag-and-drop o Ctrl+V
+        \item \textbf{\color{zpusgreen}Commenti}: Usa i commenti per aggiornamenti in tempo reale
+        \item \textbf{\color{zpusgreen}Hierarchy Board}: Visualizza la gerarchia dei work item tramite la board dedicata. Le relazioni devono essere unicamente tra Relatives (Parent of/Child of) diretti.
+        \item \textbf{\color{zpusgreen}Integrazione con VSCode}: Utilizza l'estensione per una gestione più fluida dei ticket direttamente dall'editor. Qui vedrai direttamente i work item assegnati a te.
+    \end{itemize}
+\end{stepbox}
+
+\section{\workflow~Workflow dei Work Item}
+
+\begin{highlightbox}
+       \includegraphics[width=14cm]{../assets/workflowWorkItem.png}\\
+\end{highlightbox}
+
+\begin{stepbox}
+    \textbf{\color{zpusgreen}Best Practices del Workflow:}
+    \begin{itemize}
+        \item \play{} \textbf{Inizia solo quando lavori}: Al primo commit di un Work Item, un'Automazione lo sposta da To DO a In Progress
+        \item \commit{} \textbf{Code Review obbligatoria}: Usa questa fase per revisioni codice.
+        \item \checkmarkicon{} \textbf{Completa tutto}: Segna ``Done'' solo quando tutto è completato e testato. La chiusura spetta al Verificatore.
+        \item \textbf{Aggiornamenti giornalieri}: Aggiorna lo stato man mano che avanzi.
+    \end{itemize}
+\end{stepbox}
+
+\section*{\commit~Smart Commit}
+
+\begin{stepbox}
+    \textbf{\color{zpusgreen}Sintassi Smart Commit:}
+    \begin{verbatim}
+# Chiudi ticket con commento:
+[DIPR-123] #comment Messaggio commit
+
+# Log tempo lavoro:
+[DIPR-123] #time 2h 30m #comment Implementazione feature
+
+# Transizione automatica:
+[DIPR-123] #in-progress #comment Fix bug critico
+\end{verbatim}
+\end{stepbox}
+
+\vspace{0.5cm}
+
+\begin{stepbox}
+    \textbf{\color{zpusgreen}Comandi Principali:}
+    \begin{itemize}
+        \item \timeicon{} \texttt{\#time Xh Ym} -- Registra tempo lavoro
+        \item \texttt{\#comment} -- Aggiungi commento automatico
+        \item \textbf{\color{zpusgreen} Transizioni}
+              \begin{itemize}
+                  \item \texttt{\#nome-transizione} -- Cambia stato del ticket seguendo la transizione
+                  \item \texttt{\#done}, \texttt{\#in-progress}, \texttt{\#in-review} -- Transizioni rapide.\\ \textbf{\color{zpusgreen}NON CONSIGLIATE}
+              \end{itemize}
+    \end{itemize}
+\end{stepbox}
+
+\section*{\timeicon~Work Log}
+
+\begin{stepbox}
+    \textbf{\color{zpusgreen}Registrazione Professionale:}
+    \begin{itemize}
+        \item \textbf{\color{zpusgreen}Log Work}: Clicca sull'icona ``Log Work'' nel ticket
+        \item \textbf{\color{zpusgreen}Data/Ora}: Inserisci data e ora spesa accuratamente
+        \item \textbf{\color{zpusgreen}Note Descrittive}: Aggiungi note dettagliate sul lavoro svolto
+        \item \textbf{\color{zpusgreen}Unità Consistenti}: Usa la stessa unità di misura (ore/giorni)
+    \end{itemize}
+\end{stepbox}
+
+\vspace{0.5cm}
+
+\begin{stepbox}
+    \textbf{\color{zpusgreen}Suggerimenti Avanzati:}
+    \begin{itemize}
+        \item \textbf{\color{zpusgreen}Regolarità}: Logga il tempo giornalmente per maggiore accuratezza
+        \item \textbf{\color{zpusgreen}Suddivisione}: Dividi attività complesse in più log
+        \item \textbf{\color{zpusgreen}Report}: Rivedi i report sotto ``Tempo di Lavoro'' in progetti
+        \item \textbf{\color{zpusgreen}Mobile}: Usa l'app mobile per log rapidi
+    \end{itemize}
+\end{stepbox}
+
+\begin{infobox}
+    \textbf{\bulb{} Pro Tip}: Integra Jira con gli strumenti di sviluppo (Git, VS Code) per un workflow più fluido e automatico! Massimizza l'efficienza con le integrazioni.
+\end{infobox}
+
+% Sezione finale
+\begin{center}
+    \begin{tcolorbox}[
+            width=0.8\textwidth,
+            colback=zpusgreen,
+            colframe=zpusdarkgreen,
+            arc=6pt,
+            boxrule=0pt,
+            left=12pt,
+            right=12pt,
+            top=12pt,
+            bottom=12pt,
+            fontupper=\color{zpuswhite}\bfseries\large
+        ]
+        {\Huge \rocket} \\
+        \textbf{Ready to Jira?} \\
+        Inizia ora a ottimizzare il tuo workflow!
+    \end{tcolorbox}
+\end{center}
+
+\vspace{1cm}
+
+\begin{center}
+    \color{zpusgreen}
+    \rule{0.3\textwidth}{1pt} \\
+    \textbf{ZPUS Engineering Team} \\
+    \vspace{0.2cm}
+    \email{} \texttt{7-zpus.swe@gmail.com} \\
+    \github{} \texttt{github.com/7-ZPUs} \\
+\end{center}
+
+\end{document}
