@@ -324,7 +324,11 @@
                         \end{itemize}
                   \item Il sistema imposta i valori del filtro come parametri di ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{addValoreOggetto} - Specifica valore Oggetto, \ref{addValoreParoleChiave} - Specifica valore Parole Chiave
+      \item \textbf{Inclusioni}: 
+      \begin{itemize} 
+            \item \ref{addValoreOggetto} - Specifica valore Oggetto
+            \item \ref{addValoreParoleChiave} - Specifica valore Parole Chiave
+      \end{itemize}
 \end{itemize}
 
 \deepusecase{addValoreOggetto}{Specifica valore Oggetto}\label{addValoreOggetto}
@@ -342,6 +346,11 @@
             \item L'Utente compila il valore del campo Oggetto (alfanumerico).
             \item Il sistema riceve il valore del campo Oggetto e lo salva per il filtro Chiave Descrittiva.
       \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item La stringa inserita è vuota o composta da soli spazi (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \deepusecase{addValoreParoleChiave}{Specifica valore Parole Chiave}\label{addValoreParoleChiave}
@@ -359,6 +368,11 @@
             \item L'Utente compila il valore del campo Parole Chiave (alfanumerico).
             \item Il sistema riceve il valore del campo Parole Chiave e lo salva per il filtro Chiave Descrittiva.
       \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item La stringa inserita è vuota o composta da soli spazi (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \subsubusecase{addClassificazione}{Specifica filtro Classificazione}
@@ -375,15 +389,85 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente compila i valori di Classificazione (\ref{compilaValoreFiltroStringa}) tra:
+                  \item L'Utente compila i valori di Classificazione tra:
                         \begin{itemize}
                               \item \glossario{Indice di Classificazione}
                               \item Descrizione
-                              \item \glossario{Piano di Classificazione}
+                              \item \glossario{URI Piano di Classificazione}
                         \end{itemize}
                   \item Il sistema imposta i valori del filtro come parametri di ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compilazione Valore Filtro: stringa
+      \item \textbf{Inclusioni}: \begin{itemize}
+            \item \ref{addValoreIndiceDiClassificazione} Specifica valore Indice di Classificazione
+            \item \ref{addValoreDescrizione} Specifica valore Descrizione
+            \item \ref{addValoreURIPianoDiClassificazione} Specifica valore URI Piano di Classificazione
+      \end{itemize} 
+\end{itemize}
+
+\deepusecase{addValoreIndiceDiClassificazione}{Specifica valore Indice di Classificazione}\label{compilaValoreFiltroIndiceDiClassificazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Classificazione tra i campi comuni
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore del campo Indice di Classificazione e lo salva per il filtro Classificazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente compila il valore del campo Indice di Classificazione (alfanumerico).
+            \item Il sistema riceve il valore del campo Indice di Classificazione e lo salva per il filtro Classificazione.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item La stringa inserita è vuota o composta da soli spazi (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
+\end{itemize}
+
+\deepusecase{addValoreDescrizione}{Specifica valore Descrizione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}:
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Classificazione tra i campi comuni
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore del campo Descrizione e lo salva per il filtro Classificazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente compila il valore del campo Descrizione (alfanumerico).
+            \item Il sistema riceve il valore del campo Descrizione e lo salva per il filtro Classificazione.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item La stringa inserita è vuota o composta da soli spazi (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
+\end{itemize}
+
+\deepusecase{addValoreURIPianoDiClassificazione}{Specifica valore URI Piano di Classificazione}\label{compilaValoreFiltroURIPianoDiClassificazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}:
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha selezionato il filtro Classificazione tra i campi comuni
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore del campo URI Piano di Classificazione e lo salva per il filtro Classificazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente compila il valore del campo URI Piano di Classificazione (alfanumerico).
+            \item Il sistema riceve il valore del campo URI Piano di Classificazione e lo salva per il filtro Classificazione.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item La stringa inserita è vuota o composta da soli spazi (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \subsubusecase{addTempoConserva}{Specifica filtro Tempo di Conservazione}
@@ -404,7 +488,6 @@
                         "Perenne".
                   \item Il sistema imposta il valore come parametro per la ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroTempoDiConservazione} Compilazione Valore Filtro: tempo di conservazione
 \end{itemize}
 
 \deepusecase{addValoreTempoConservazione}{Specifica valore Tempo di Conservazione}\label{compilaValoreFiltroTempoDiConservazione}
@@ -422,6 +505,11 @@
             \item L'Utente inserisce il valore numerico del tempo di conservazione.
             \item Il sistema riceve il valore del campo Tempo di Conservazione e lo salva per il filtro Tempo di Conservazione.
       \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item Il valore inserito non è un numero intero positivo (\ref{formatoNonCorrettoNumeroInteroPositivo})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoNumeroInteroPositivo} Formato non corretto: numero intero positivo
       \item \textbf{Specializza}: \ref{addTempoConserva} Specifica filtro Tempo di Conservazione
 \end{itemize}
 
@@ -460,6 +548,11 @@
                   \item L'Utente inserisce il testo della Nota.
                   \item Il sistema imposta il valore come parametro per la ricerca
             \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce una stringa non valida per il filtro Note (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \subsubusecase{addTipoDocumento}{Specifica filtro Tipo documento}
@@ -476,14 +569,9 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente sceglie il tipo di documento tra: \begin{itemize}
-                \item Documento Informatico
-                \item Documento Amministrativo Informatico
-                \item Aggregazione Documentale
-            \end{itemize}
+            \item L'Utente sceglie il tipo di documento.
             \item Il sistema imposta il valore come parametro per la ricerca
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compilazione Valore Filtro
 \end{itemize}
 
 \deepusecase{addTipoDocumentoDI}{Specifica filtro Tipo documento: Documento Informatico}
@@ -559,9 +647,7 @@
       \item \textbf{Inclusioni}: \ref{addSoggetto} Aggiunta Soggetto ad un filtro
 \end{itemize}
 
-
-
-\subusecase{addFiltriTipoDocumento}{Specifica filtri per tipo di documento}
+\subusecase{addFiltriTipoDocumento}{Specifica filtri per tipo di documento}\label{addFiltriTipoDocumento}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{../../assets/uml/UC12.2.png}
@@ -638,11 +724,9 @@
       \item \textbf{Postcondizioni}:  I campi selezionati dall'Utente sono aggiunti ai campi selezionati per la ricerca.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente visualizza l'elenco dei campi specifici per DI/DAI disponibili per la ricerca (\ref{visualizzaNomeCampo})
                   \item L'Utente sceglie uno o più campi tra quelli disponibili.
                   \item Il sistema aggiunge gli elementi selezionati ai campi selezionati per la ricerca
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{visualizzaListaCampiDIDAI} Visualizza lista campi DI/DAI
 \end{itemize}
 
 \subdeepusecase{visualizzaListaCampiDIDAI}{Visualizza lista campi DI/DAI}
@@ -678,24 +762,241 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente specifica la Tipologia di Flusso (\ref{compilaValoreFiltro}) tra: \begin{itemize}
-                  \item In uscita
-                  \item In entrata
-                  \item Interno
-            \end{itemize}
-            \item L'Utente specifica il Tipo di Registro (\ref{compilaValoreFiltro}) tra: 
-            \begin{itemize}
-                  \item Nessuno
-                  \item Protocollo Ordinario/Protocollo di Emergenza
-                  \item Repertorio/Registro
-            \end{itemize}
+            \item L'Utente specifica la Tipologia di Flusso. (\ref{addValoreTipologiaDiFlusso})
+            \item L'Utente specifica il Tipo di Registro. (\ref{addValoreTipologiaDiRegistro})
             \item L'Utente specifica la Data/Ora di Registrazione (nel caso di un documento
-            protocollato tali parametri fanno riferimento alla protocollazione) (\ref{compilaValoreFiltro})
-            \item L'Utente specifica il Numero Documento (di Registrazione del Documento o di Protocollo) (\ref{compilaValoreFiltro})
-            \item L'Utente specifica il Codice Registro (\ref{compilaValoreFiltro})
+            protocollato tali parametri fanno riferimento alla protocollazione) 
+            \item L'Utente specifica il Numero Documento (di Registrazione del Documento o di Protocollo)
+            \item L'Utente specifica il Codice Registro
             \item Il sistema imposta i valori del filtro come parametri per la ricerca
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}:
+      \begin{itemize}
+            \item \ref{addValoreTipologiaDiFlusso} Specifica valore Tipologia di Flusso
+            \item \ref{addValoreTipologiaDiRegistro} Specifica valore Tipo di Registro
+            \item \ref{addValoreDataOraRegistrazione} Specifica valore Data/Ora di Registrazione
+            \item \ref{addValoreNumeroDocumento} Specifica valore Numero Documento
+            \item \ref{addValoreCodiceRegistro} Specifica valore Codice Registro
+      \end{itemize}
+\end{itemize}
+
+\subdeepusecase{addValoreTipologiaDiFlusso}{Specifica valore Tipologia di Flusso}\label{compilaValoreFiltroTipologiaDiFlusso}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come Tipo di Documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'Utente ha selezionato il filtro Dati di Registrazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore del campo Tipologia di Flusso e lo salva per il filtro Dati di Registrazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Tipologia di Flusso.
+            \item Il sistema riceve il valore del campo Tipologia di Flusso e lo salva per il filtro Dati di Registrazione.
+      \end{enumerate}
+\end{itemize}
+
+\subsubdeepusecase{addValoreTipologiaDiFlussoEntrata}{Specifica valore Tipologia di Flusso: Entrata}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come Tipo di Documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'Utente ha selezionato il filtro Dati di Registrazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore "Entrata" per il campo Tipologia di Flusso e lo salva per il filtro Dati di Registrazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Tipologia di Flusso "Entrata".
+            \item Il sistema riceve il valore "Entrata" per il campo Tipologia di Flusso e lo salva per il filtro Dati di Registrazione.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addValoreTipologiaDiFlusso} Specifica valore Tipologia di Flusso
+\end{itemize}
+
+\subsubdeepusecase{addValoreTipologiaDiFlussoUscita}{Specifica valore Tipologia di Flusso: Uscita}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come Tipo di Documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'Utente ha selezionato il filtro Dati di Registrazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore "Uscita" per il campo Tipologia di Flusso e lo salva per il filtro Dati di Registrazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Tipologia di Flusso "Uscita".
+            \item Il sistema riceve il valore "Uscita" per il campo Tipologia di Flusso e lo salva per il filtro Dati di Registrazione.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addValoreTipologiaDiFlusso} Specifica valore Tipologia di Flusso
+\end{itemize}
+
+\subsubdeepusecase{addValoreTipologiaDiFlussoInterno}{Specifica valore Tipologia di Flusso: Interno}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come Tipo di Documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'Utente ha selezionato il filtro Dati di Registrazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore "Interno" per il campo Tipologia di Flusso e lo salva per il filtro Dati di Registrazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Tipologia di Flusso "Interno".
+            \item Il sistema riceve il valore "Interno" per il campo Tipologia di Flusso e lo salva per il filtro Dati di Registrazione.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addValoreTipologiaDiFlusso} Specifica valore Tipologia di Flusso
+\end{itemize}
+
+\subdeepusecase{addValoreTipologiaDiRegistro}{Specifica valore Tipologia di Registro}\label{compilaValoreFiltroTipologiaDiRegistro}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come Tipo di Documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'Utente ha selezionato il filtro Dati di Registrazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore del campo Tipologia di Registro e lo salva per il filtro Dati di Registrazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Tipologia di Registro.
+            \item Il sistema riceve il valore del campo Tipologia di Registro e lo salva per il filtro Dati di Registrazione.
+      \end{enumerate}
+\end{itemize}
+
+\subsubdeepusecase{addValoreTipologiaDiRegistroNessuno}{Specifica valore Tipologia di Registro: Nessuno}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come Tipo di Documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'Utente ha selezionato il filtro Dati di Registrazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore "Nessuno" per il campo Tipologia di Registro e lo salva per il filtro Dati di Registrazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Tipologia di Registro "Nessuno".
+            \item Il sistema riceve il valore "Nessuno" per il campo Tipologia di Registro e lo salva per il filtro Dati di Registrazione.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addValoreTipologiaDiRegistro} Specifica valore Tipologia di Registro
+\end{itemize}
+
+\subsubdeepusecase{addValoreTipologiaDiRegistroProtocollo}{Specifica valore Tipologia di Registro: Protocollo Ordinario/Protocollo Emergenza}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come Tipo di Documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'Utente ha selezionato il filtro Dati di Registrazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore "Protocollo Ordinario/Protocollo Emergenza" per il campo Tipologia di Registro e lo salva per il filtro Dati di Registrazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Tipologia di Registro "Protocollo Ordinario/Protocollo Emergenza".
+            \item Il sistema riceve il valore "Protocollo Ordinario/Protocollo Emergenza" per il campo Tipologia di Registro e lo salva per il filtro Dati di Registrazione.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addValoreTipologiaDiRegistro} Specifica valore Tipologia di Registro
+\end{itemize}
+
+\subsubdeepusecase{addValoreTipologiaDiRegistroRepertorio}{Specifica valore Tipologia di Registro: Repertorio/Registro}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come Tipo di Documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'Utente ha selezionato il filtro Dati di Registrazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore "Repertorio/Registro" per il campo Tipologia di Registro e lo salva per il filtro Dati di Registrazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Tipologia di Registro "Repertorio/Registro".
+            \item Il sistema riceve il valore "Repertorio/Registro" per il campo Tipologia di Registro e lo salva per il filtro Dati di Registrazione.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addValoreTipologiaDiRegistro} Specifica valore Tipologia di Registro
+\end{itemize}
+
+\subdeepusecase{addValoreDataRegistrazione}{Specifica valore Data di Registrazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come Tipo di Documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'Utente ha selezionato il filtro Dati di Registrazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore della Data di Registrazione e lo salva per il filtro Dati di Registrazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Data di Registrazione.
+            \item Il sistema riceve il valore della Data di Registrazione e lo salva per il filtro Dati di Registrazione.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce una data non valida per il filtro Data di Registrazione (\ref{formatoNonCorrettoData})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoData} Formato non corretto: data
+\end{itemize}
+
+\subdeepusecase{addValoreNumeroDocumento}{Specifica valore Numero Documento}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come Tipo di Documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'Utente ha selezionato il filtro Dati di Registrazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore del Numero Documento e lo salva per il filtro Dati di Registrazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il Numero Documento.
+            \item Il sistema riceve il valore del Numero Documento e lo salva per il filtro Dati di Registrazione.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce un numero non valido per il filtro Numero Documento (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
+\end{itemize}
+
+\subdeepusecase{addValoreCodiceRegistro}{Specifica valore Codice Registro}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come Tipo di Documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'Utente ha selezionato il filtro Dati di Registrazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore del Codice Registro e lo salva per il filtro Dati di Registrazione.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il Codice Registro.
+            \item Il sistema riceve il valore del Codice Registro e lo salva per il filtro Dati di Registrazione.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce un codice non valido per il filtro Codice Registro (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \deepusecase{addTipologiaDocumentale}{Specifica filtro Tipologia Documentale}
@@ -716,10 +1017,14 @@
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
             \item L'Utente specifica il nome della Tipologia Documentale (fatture, delibere,
-            determine) (\ref{compilaValoreFiltro})
+            determine,...)
             \item Il sistema imposta questo valore come parametro per la ricerca
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce un nome non valido per il filtro Tipologia Documentale (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \deepusecase{addModalitaFormazione}{Specifica filtro Modalità di Formazione}
@@ -739,16 +1044,85 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente specifica la Modalità di Formazione (\ref{compilaValoreFiltro}) tra:
-            \begin{itemize}
-                  \item Creazione di un documento informatico ex novo
-                  \item Acquisizione di un documento informatico da altro documento informatico o da supporto informatico
-                  \item Memorizzazione su supporto informatico in formato digitale
-                  \item Generazione o raggruppamento in forma statica
-            \end{itemize}
+            \item L'Utente specifica la Modalità di Formazione.
             \item Il sistema imposta questo valore come parametro per la ricerca
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+\end{itemize}
+
+\subdeepusecase{addModalitaFormazioneExNovo}{Specifica valore Modalità di Formazione: Creazione ex novo}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Modalità di Formazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore "Creazione di un documento informatico ex novo" per il filtro Modalità di Formazione ed è parametro per la ricerca.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Modalità di Formazione "Creazione di un documento informatico ex novo".
+            \item Il sistema riceve il valore "Creazione di un documento informatico ex novo" per il filtro Modalità di Formazione e lo imposta come parametro per la ricerca.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addModalitaFormazione}
+\end{itemize}
+
+\subdeepusecase{addModalitaFormazioneAcquisizione}{Specifica valore Modalità di Formazione: Acquisizione da altro documento o supporto informatico}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Modalità di Formazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore "Acquisizione di un documento informatico da altro documento informatico o da supporto informatico" per il filtro Modalità di Formazione ed è parametro per la ricerca.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Modalità di Formazione "Acquisizione di un documento informatico da altro documento informatico o da supporto informatico".
+            \item Il sistema riceve il valore "Acquisizione di un documento informatico da altro documento informatico o da supporto informatico" per il filtro Modalità di Formazione e lo imposta come parametro per la ricerca.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addModalitaFormazione}
+\end{itemize}
+
+\subdeepusecase{addModalitaFormazioneMemorizzazione}{Specifica valore Modalità di Formazione: Memorizzazione su supporto informatico in formato digitale}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Modalità di Formazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore "Memorizzazione su supporto informatico in formato digitale" per il filtro Modalità di Formazione ed è parametro per la ricerca.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Modalità di Formazione "Memorizzazione su supporto informatico in formato digitale".
+            \item Il sistema riceve il valore "Memorizzazione su supporto informatico in formato digitale" per il filtro Modalità di Formazione e lo imposta come parametro per la ricerca.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addModalitaFormazione}
+\end{itemize}
+
+\subdeepusecase{addModalitaFormazioneGenerazione}{Specifica valore Modalità di Formazione: Generazione o raggruppamento in forma statica}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Modalità di Formazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il valore "Generazione o raggruppamento in forma statica" per il filtro Modalità di Formazione ed è parametro per la ricerca.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Modalità di Formazione "Generazione o raggruppamento in forma statica".
+            \item Il sistema riceve il valore "Generazione o raggruppamento in forma statica" per il filtro Modalità di Formazione e lo imposta come parametro per la ricerca.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addModalitaFormazione}
 \end{itemize}
 
 \deepusecase{addRiservato}{Specifica filtro campo Riservato}
@@ -768,10 +1142,9 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente specifica se il file è Riservato o meno (\ref{compilaValoreFiltro})
-            \item Il sistema imposta questo valore come parametro per la ricerca
+            \item L'Utente specifica se il file è Riservato o meno (si/no).
+            \item Il sistema imposta questo valore come parametro per la ricerca.
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
 \end{itemize}
 
 \deepusecase{addIdentificativoFormato}{Specifica filtro Identificativo di Formato}
@@ -792,16 +1165,113 @@
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
                   \item L'Utente specifica la Tipologia di Formato all'interno di quelli Previsti dalle
-                        linee Guida (.pdf, .xml, .docx, ecc.) (\ref{compilaValoreFiltro})
+                        linee Guida (.pdf, .xml, .docx, ecc.)
                   \item L'Utente specifica il Nome del Prodotto utilizzato per la creazione del
-                        Documento (\ref{compilaValoreFiltro})
+                        Documento
                   \item L'Utente specifica il numero della Versione del Prodotto utilizzato per la
-                        creazione del Documento (\ref{compilaValoreFiltro})
+                        creazione del Documento
                   \item L'Utente specifica il nome il Produttore del Prodotto utilizzato per la
-                        creazione del Documento (\ref{compilaValoreFiltro})
+                        creazione del Documento
                   \item Il sistema imposta i valori del filtro come parametri di ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: \begin{itemize}
+            \item \ref{addValoreTipologiaFormato} Specifica tipologia di Formato
+            \item \ref{addValoreNomeProdotto} Specifica nome del Prodotto utilizzato per la creazione del Documento
+            \item \ref{addValoreNumeroVersione} Specifica numero della Versione del Prodotto utilizzato per la creazione del Documento
+            \item \ref{addValoreNomeProduttore} Specifica nome del Produttore del Prodotto utilizzato per la creazione del Documento
+      \end{itemize}
+\end{itemize}
+
+\subdeepusecase{addValoreTipologiaFormato}{Specifica tipologia di Formato}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Identificativo di Formato tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve la tipologia di Formato e la salva per il filtro Identificativo di Formato.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Tipologia di Formato all'interno di quelli Previsti dalle linee Guida (.pdf, .xml, .docx, ecc.)
+            \item Il sistema riceve la tipologia di Formato e la salva per il filtro Identificativo di Formato.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce una tipologia di Formato non valida per il filtro Identificativo di Formato (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
+\end{itemize}
+
+\subdeepusecase{addValoreNomeProdotto}{Specifica nome del Prodotto utilizzato per la creazione del Documento}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Identificativo di Formato tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il nome del Prodotto utilizzato per la creazione del Documento e lo salva per il filtro Identificativo di Formato.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il Nome del Prodotto utilizzato per la creazione del Documento.
+            \item Il sistema riceve il nome del Prodotto utilizzato per la creazione del Documento e lo salva per il filtro Identificativo di Formato.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce un nome non valido per il filtro Identificativo di Formato (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
+\end{itemize}
+
+\subdeepusecase{addValoreNumeroVersione}{Specifica numero della Versione del Prodotto utilizzato per la creazione del Documento}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Identificativo di Formato tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il numero della Versione del Prodotto utilizzato per la creazione del Documento e lo salva per il filtro Identificativo di Formato.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il numero della Versione del Prodotto utilizzato per la creazione del Documento.
+            \item Il sistema riceve il numero della Versione del Prodotto utilizzato per la creazione del Documento e lo salva per il filtro Identificativo di Formato.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce un numero non valido per il filtro Identificativo di Formato (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
+\end{itemize}
+
+\subdeepusecase{addValoreNomeProduttore}{Specifica nome del Produttore del Prodotto utilizzato per la creazione del Documento}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Identificativo di Formato tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve il nome del Produttore del Prodotto utilizzato per la creazione del Documento e lo salva per il filtro Identificativo di Formato.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il nome del Produttore del Prodotto utilizzato per la creazione del Documento.
+            \item Il sistema riceve il nome del Produttore del Prodotto utilizzato per la creazione del Documento e lo salva per il filtro Identificativo di Formato.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce un nome non valido per il filtro Identificativo di Formato (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \deepusecase{addDatiVerifica}{Specifica filtro Dati di Verifica}
@@ -820,14 +1290,91 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente specifica se il file è Firmato Digitalmente o meno (\ref{compilaValoreFiltro})
-            \item L'Utente specifica se il file è Sigillato Elettronicamente o meno (\ref{compilaValoreFiltro})
-            \item L'Utente specifica se il file ha una Marcatura Temporale o meno (\ref{compilaValoreFiltro})
-            \item L'Utente specifica se vi è conformità copie immagine su supporto informatico o
-                  meno (\ref{compilaValoreFiltro})
+            \item L'Utente specifica se il file è Firmato Digitalmente o meno (\ref{addValoreFirmaDigitalePresente})
+            \item L'Utente specifica se il file è Sigillato Elettronicamente o meno (\ref{addValoreSigilloElettronicoPresente})
+            \item L'Utente specifica se il file ha una Marcatura Temporale o meno (\ref{addValoreMarcaturaTemporalePresente})
+            \item L'Utente specifica se vi è conformità copie immagine su supporto informatico o meno (\ref{addValoreConformitaCopieImmagine})
             \item Il sistema imposta i valori del filtro come parametri di ricerca
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: 
+      \begin{itemize} 
+            \item \ref{addValoreFirmaDigitalePresente} - Specifica se il file è Firmato Digitalmente o meno
+            \item \ref{addValoreSigilloElettronicoPresente} - Specifica se il file è Sigillato Elettronicamente o meno
+            \item \ref{addValoreMarcaturaTemporalePresente} - Specifica se il file ha una Marcatura Temporale o meno
+            \item \ref{addValoreConformitaCopieImmagine} - Specifica se vi è conformità copie immagine su supporto informatico o meno
+      \end{itemize}
+\end{itemize}
+
+\subdeepusecase{addValoreFirmaDigitalePresente}{Specifica se il file è Firmato Digitalmente o meno}\label{addValoreFirmaDigitalePresente}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Dati di Verifica tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve se il file è Firmato Digitalmente o meno e lo salva per il filtro Dati di Verifica.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica se il file è Firmato Digitalmente o meno (sì/no).
+            \item Il sistema riceve se il file è Firmato Digitalmente o meno e lo salva per il filtro Dati di Verifica.
+      \end{enumerate}
+\end{itemize}
+
+\subdeepusecase{addValoreSigilloElettronicoPresente}{Specifica se il file è Sigillato Elettronicamente o meno}\label{addValoreSigilloElettronicoPresente}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Dati di Verifica tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve se il file è Sigillato Elettronicamente o meno e lo salva per il filtro Dati di Verifica.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica se il file è Sigillato Elettronicamente o meno (sì/no).
+            \item Il sistema riceve se il file è Sigillato Elettronicamente o meno e lo salva per il filtro Dati di Verifica.
+      \end{enumerate}
+\end{itemize}
+
+\subdeepusecase{addValoreMarcaturaTemporalePresente}{Specifica se il file ha una Marcatura Temporale o meno}\label{addValoreMarcaturaTemporalePresente}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Dati di Verifica tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve se il file ha una Marcatura Temporale o meno e lo salva per il filtro Dati di Verifica.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica se il file ha una Marcatura Temporale o meno (sì/no).
+            \item Il sistema riceve se il file ha una Marcatura Temporale o meno e lo salva per il filtro Dati di Verifica.
+      \end{enumerate}
+\end{itemize}
+
+\subdeepusecase{addValoreConformitaCopieImmagine}{Specifica se vi è conformità copie immagine su supporto informatico o meno}\label{addValoreConformitaCopieImmagine}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Dati di Verifica tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Il sistema riceve se vi è conformità copie immagine su supporto informatico o meno e lo salva per il filtro Dati di Verifica.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica se vi è conformità copie immagine su supporto informatico o meno (sì/no).
+            \item Il sistema riceve se vi è conformità copie immagine su supporto informatico o meno e lo salva per il filtro Dati di Verifica.
+      \end{enumerate}
 \end{itemize}
 
 \deepusecase{addNomeDocumento}{Specifica filtro Nome del Documento}
@@ -846,10 +1393,14 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente specifica il Nome del Documento (\ref{compilaValoreFiltro})
+                  \item L'Utente specifica il Nome del Documento
                   \item Il sistema imposta questo valore come parametro per la ricerca
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce un nome non valido per il filtro Nome del Documento (stringa vuota) (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \deepusecase{addVersioneDocumento}{Specifica filtro Versione del Documento}
@@ -868,10 +1419,14 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente specifica il numero che rappresenta la Versione del Documento. (\ref{compilaValoreFiltro})
+                  \item L'Utente specifica il numero che rappresenta la Versione del Documento.
                   \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce una versione non valida per il filtro Versione del Documento (stringa vuota) (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \deepusecase{addIdentificativoDocumentoPrimario}{Specifica filtro Identificativo del Documento Primario}
@@ -890,10 +1445,14 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente specifica l'Identificativo del Documento Primario. (\ref{compilaValoreFiltro})
+                  \item L'Utente specifica l'Identificativo del Documento Primario.
                   \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce un identificativo non valido per il filtro Identificativo del Documento Primario (stringa vuota) (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \deepusecase{addTracciatureModificheDocumento}{Specifica filtro Tracciature Modifiche di Documento}
@@ -912,19 +1471,159 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente sceglie il Tipo di modifica (\ref{compilaValoreFiltro}) tra:
-                        \begin{itemize}
-                              \item Annullamento
-                              \item Registrazione
-                              \item Integrazione
-                              \item Annotazione
-                        \end{itemize}
-                  \item L'Utente specifica il Soggetto che ha effettuato la modifica. (\ref{compilaValoreFiltro})
-                  \item L'Utente specifica la Data/Ora della Modifica. (\ref{compilaValoreFiltro})
-                  \item L'Utente specifica l'identificativo documento versione precedente. (\ref{compilaValoreFiltro})
+                  \item L'Utente sceglie il Tipo di modifica. (\ref{addValoreTipoModifica})
+                  \item L'Utente specifica il Soggetto che ha effettuato la modifica. (\ref{addSoggetto})
+                  \item L'Utente specifica la Data/Ora della Modifica.
+                  \item L'Utente specifica l'identificativo documento versione precedente.
                   \item Il sistema imposta i valori del filtro come parametri di ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltro} Compila valore filtro
+      \item \textbf{Inclusioni}: 
+      \begin{itemize}
+            \item \ref{addValoreTipoModifica} - Specifica tipo di modifica per filtro Tracciature Modifiche di Documento
+            \item \ref{addSoggetto} - Specifica soggetto che ha effettuato la modifica per filtro Tracciature Modifiche di Documento
+            \item \ref{addDataOraModifica} - Specifica data/ora della modifica per filtro Tracciature Modifiche di Documento
+            \item \ref{addIdentificativoDocumentoVersionePrecedente} - Specifica identificativo documento versione precedente per filtro Tracciature Modifiche di Documento
+      \end{itemize}
+\end{itemize}
+
+\subdeepusecase{addValoreTipoModifica}{Specifica tipo di modifica per filtro Tracciature Modifiche di Documento}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Tracciature Modifiche di Documento tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Vengono specificati i valori del Tipo di Modifica e salvati per il filtro Tracciature Modifiche di Documento.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente specifica il tipo di modifica.
+                  \item Il sistema salva il valore del tipo di modifica per il filtro Tracciature Modifiche di Documento.
+            \end{enumerate}
+\end{itemize}
+
+\subsubdeepusecase{addValoreTipoModificaAnnullamento}{Specifica valore tipo di modifica: "Annullamento"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Tracciature Modifiche di Documento tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Annullamento" come valore del tipo di modifica e salvato per il filtro Tracciature Modifiche di Documento.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente specifica il valore del tipo di modifica: "Annullamento".
+                  \item Il sistema salva il valore del tipo di modifica per il filtro Tracciature Modifiche di Documento.
+            \end{enumerate}
+      \item \textbf{Specializza}: \ref{addValoreTipoModifica}
+\end{itemize}
+
+\subsubdeepusecase{addValoreTipoModificaRegistrazione}{Specifica valore tipo di modifica: "Registrazione"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Tracciature Modifiche di Documento tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Registrazione" come valore del tipo di modifica e salvato per il filtro Tracciature Modifiche di Documento.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente specifica il valore del tipo di modifica: "Registrazione".
+                  \item Il sistema salva il valore del tipo di modifica per il filtro Tracciature Modifiche di Documento.
+            \end{enumerate}
+      \item \textbf{Specializza}: \ref{addValoreTipoModifica}
+\end{itemize}
+
+\subsubdeepusecase{addValoreTipoModificaIntegrazione}{Specifica valore tipo di modifica: "Integrazione"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Tracciature Modifiche di Documento tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Integrazione" come valore del tipo di modifica e salvato per il filtro Tracciature Modifiche di Documento.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente specifica il valore del tipo di modifica: "Integrazione".
+                  \item Il sistema salva il valore del tipo di modifica per il filtro Tracciature Modifiche di Documento.
+            \end{enumerate}
+      \item \textbf{Specializza}: \ref{addValoreTipoModifica}
+\end{itemize}
+
+\subsubdeepusecase{addValoreTipoModificaAnnotazione}{Specifica valore tipo di modifica: "Annotazione"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Tracciature Modifiche di Documento tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Annotazione" come valore del tipo di modifica e salvato per il filtro Tracciature Modifiche di Documento.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente specifica il valore del tipo di modifica: "Annotazione".
+                  \item Il sistema salva il valore del tipo di modifica per il filtro Tracciature Modifiche di Documento.
+            \end{enumerate}
+      \item \textbf{Specializza}: \ref{addValoreTipoModifica}
+\end{itemize}
+
+\subsubdeepusecase{addValoreDataOraModifica}{Specifica Data/Ora della Modifica per filtro Tracciature Modifiche di Documento}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Tracciature Modifiche di Documento tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificata la Data/Ora della Modifica e salvata per il filtro Tracciature Modifiche di Documento.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente specifica la Data/Ora della Modifica.
+                  \item Il sistema salva il valore del filtro Data/Ora della Modifica.
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce una data non valida per il filtro Data/Ora della Modifica (formato data errato) (\ref{formatoNonCorrettoData})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoData} Formato non corretto: data
+\end{itemize}
+
+\subsubdeepusecase{addValoreIdVersionePrecedente}{Specifica identificativo documento versione precedente per filtro Tracciature Modifiche di Documento}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Documento Informatico o Documento Amministrativo Informatico
+            \item L'utente ha selezionato il filtro Tracciature Modifiche di Documento tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificato l'identificativo documento versione precedente e salvato per il filtro Tracciature Modifiche di Documento.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente specifica l'identificativo documento versione precedente.
+                  \item Il sistema salva il valore del filtro Identificativo documento versione precedente.
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce un identificativo non valido per il filtro Identificativo documento versione precedente (stringa vuota) (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \subsubusecase{specificaFiltriAggregazione}{Specifica filtri per Aggregazione Documentale Informatica}
@@ -1003,15 +1702,66 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente specifica il tipo di aggregazione (\ref{compilaValoreFiltroTipoAggregazione}) tra:
-            \begin{itemize}
-                  \item Fascicolo,
-                  \item Serie Documentale,
-                  \item Serie di Fascicoli.
-            \end{itemize}
+            \item L'Utente specifica il tipo di aggregazione.
             \item Il sistema imposta questo valore come parametro per la ricerca.
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroTipoAggregazione} Compila valore filtro: tipo aggregazione
+\end{itemize}
+
+\subdeepusecase{addValoreTipoAggregazioneFascicolo}{Specifica valore tipo di aggregazione: "Fascicolo"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Tipo di Aggregazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Fascicolo" come valore del tipo di aggregazione e usato come parametro per la ricerca.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il valore del tipo di aggregazione: "Fascicolo".
+            \item Il sistema imposta questo valore come parametro per la ricerca.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addTipoAggregazione}
+\end{itemize}
+
+\subdeepusecase{addValoreTipoAggregazioneSerieDocumentale}{Specifica valore tipo di aggregazione: "Serie Documentale"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Tipo di Aggregazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Serie Documentale" come valore del tipo di aggregazione e usato come parametro per la ricerca.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il valore del tipo di aggregazione: "Serie Documentale".
+            \item Il sistema imposta questo valore come parametro per la ricerca.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addTipoAggregazione}
+\end{itemize}
+
+\subdeepusecase{addValoreTipoAggregazioneSerieFascicoli}{Specifica valore tipo di aggregazione: "Serie di Fascicoli"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Tipo di Aggregazione tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Serie di Fascicoli" come valore del tipo di aggregazione e usato come parametro per la ricerca.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il valore del tipo di aggregazione: "Serie di Fascicoli".
+            \item Il sistema imposta questo valore come parametro per la ricerca.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addTipoAggregazione}
 \end{itemize}
 
 \deepusecase{addIdAggregazione}{Specifica filtro Id dell'Aggregazione}
@@ -1030,10 +1780,14 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente specifica l'Id dell'Aggregazione. (\ref{compilaValoreFiltroStringa})
+                  \item L'Utente specifica l'Id dell'Aggregazione.
                   \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro: stringa
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce un identificativo non valido per il filtro Id dell'Aggregazione (stringa vuota) (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \deepusecase{addTipologiaFascicolo}{Specifica filtro Tipologia di Fascicolo}
@@ -1052,16 +1806,104 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente specifica il tipo di fascicolo (\ref{compilaValoreFiltroTipoFascicolo}) tra: \begin{itemize}
-                              \item Affare,
-                              \item Attività,
-                              \item Persona Fisica,
-                              \item Persona Giuridica,
-                              \item Procedimento Amministrativo.
-                        \end{itemize}
+                  \item L'Utente specifica il tipo di fascicolo.
                   \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroTipoFascicolo} Compila valore filtro: tipo fascicolo
+\end{itemize}
+
+\subdeepusecase{addValoreTipologiaFascicoloAffare}{Specifica valore tipologia di fascicolo: "Affare"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Tipologia di Fascicolo tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Affare" come valore della tipologia di fascicolo e il filtro è parametro per la ricerca.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente specifica il valore della tipologia di fascicolo: "Affare".
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
+            \end{enumerate}
+      \item \textbf{Specializza}: \ref{addTipologiaFascicolo}
+\end{itemize}
+
+\subdeepusecase{addValoreTipologiaFascicoloAttivita}{Specifica valore tipologia di fascicolo: "Attività"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Tipologia di Fascicolo tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Attività" come valore della tipologia di fascicolo e il filtro è parametro per la ricerca.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente specifica il valore della tipologia di fascicolo: "Attività".
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
+            \end{enumerate}
+      \item \textbf{Specializza}: \ref{addTipologiaFascicolo}
+\end{itemize}
+
+\subdeepusecase{addValoreTipologiaFascicoloPersonaFisica}{Specifica valore tipologia di fascicolo: "Persona Fisica"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Tipologia di Fascicolo tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Persona Fisica" come valore della tipologia di fascicolo e il filtro è parametro per la ricerca.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente specifica il valore della tipologia di fascicolo: "Persona Fisica".
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
+            \end{enumerate}
+      \item \textbf{Specializza}: \ref{addTipologiaFascicolo}
+\end{itemize}
+
+\subdeepusecase{addValoreTipologiaFascicoloPersonaGiuridica}{Specifica valore tipologia di fascicolo: "Persona Giuridica"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Tipologia di Fascicolo tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Persona Giuridica" come valore della tipologia di fascicolo e il filtro è parametro per la ricerca.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente specifica il valore della tipologia di fascicolo: "Persona Giuridica".
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
+            \end{enumerate}
+      \item \textbf{Specializza}: \ref{addTipologiaFascicolo}
+\end{itemize}
+
+\subdeepusecase{addValoreTipologiaFascicoloProcedimentoAmministrativo}{Specifica valore tipologia di fascicolo: "Procedimento Amministrativo"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Tipologia di Fascicolo tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Procedimento Amministrativo" come valore della tipologia di fascicolo e il filtro è parametro per la ricerca.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente specifica il valore della tipologia di fascicolo: "Procedimento Amministrativo".
+                  \item Il sistema imposta questo valore come parametro per la ricerca.
+            \end{enumerate}
+      \item \textbf{Specializza}: \ref{addTipologiaFascicolo}
 \end{itemize}
 
 \deepusecase{addIdAggregazionePrimario}{Specifica filtro Id Aggregazione Primario}
@@ -1080,10 +1922,14 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente specifica l'Id Primario dell'Aggregazione. (\ref{compilaValoreFiltroStringa})
+                  \item L'Utente specifica l'Id Primario dell'Aggregazione.
                   \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro: stringa
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce un Id Primario non valido per il filtro Id dell'Aggregazione Primario (stringa vuota) (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \deepusecase{addDataApertura}{Specifica filtro Data Apertura}
@@ -1102,10 +1948,14 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente specifica la Data di Apertura. (\ref{compilaValoreFiltroData})
+                  \item L'Utente specifica la Data di Apertura.
                   \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroData} Compila valore filtro: data
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce una data non valida per il filtro Data di Apertura (formato data errato) (\ref{formatoNonCorrettoData})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoData} Formato non corretto: data
 \end{itemize}
 
 \deepusecase{addDataChiusura}{Specifica filtro Data Chiusura}
@@ -1124,10 +1974,14 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente specifica la Data di Chiusura. (\ref{compilaValoreFiltroData})
+                  \item L'Utente specifica la Data di Chiusura.
                   \item Il sistema imposta questo valore come parametro per la ricerca.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroData} Compila valore filtro: data
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce una data non valida per il filtro Data di Chiusura (formato data errato) (\ref{formatoNonCorrettoData})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoData} Formato non corretto: data
 \end{itemize}
 
 \deepusecase{addProcedimentoAmministrativo}{Specifica filtro Procedimento Amministrativo}
@@ -1147,17 +2001,88 @@
       \end{itemize}
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente specifica la Materia, Argomento e Struttura per i procedimenti. (\ref{compilaValoreFiltroStringa})
-            \item L'Utente specifica il Procedimento come denominazione. (\ref{compilaValoreFiltroStringa})
-            \item L'Utente specifica il Catalogo dei Procedimenti come URI di pubblicazione del catalogo. (\ref{compilaValoreFiltroStringa})
+            \item L'Utente specifica la Materia, Argomento e Struttura per i procedimenti.
+            \item L'Utente specifica il Procedimento come denominazione.
+            \item L'Utente specifica il Catalogo dei Procedimenti come URI di pubblicazione del catalogo.
             \item L'Utente aggiunge una o più Fasi (\ref{addFasiProcedimentoAmministrativo})(0...n).
             \item Il sistema imposta i valori del filtro come parametri di ricerca.
       \end{enumerate}
       \item \textbf{Inclusioni}: 
       \begin{itemize}
             \item \ref{addFasiProcedimentoAmministrativo} Aggiunta Fase del Procedimento Amministrativo
-            \item \ref{compilaValoreFiltroStringa} Compila valore filtro: stringa
+            \item \ref{addValoreMateriaArgomentoStrutturaProcedimentoAmministrativo} Specifica valore Materia/Argomento/Struttura per filtro Procedimento Amministrativo
+            \item \ref{addValoreDenominazioneProcedimentoAmministrativo} Specifica valore Denominazione per filtro Procedimento Amministrativo
+            \item \ref{addValoreURICatalogoProcedimenti} Specifica valore URI Catalogo per filtro Procedimento Amministrativo
       \end{itemize}
+\end{itemize}
+
+\subdeepusecase{addValoreMateriaArgomentoStrutturaProcedimentoAmministrativo}{Specifica valore Materia/Argomento/Struttura per filtro Procedimento Amministrativo}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Procedimento Amministrativo tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificata la Materia/Argomento/Struttura per il filtro Procedimento Amministrativo e utilizzata per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Materia/Argomento/Struttura per il filtro Procedimento Amministrativo.
+            \item Il sistema imposta questo valore come parametro per la ricerca.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce un valore non valido per il filtro Materia, Argomento e Struttura del Procedimento Amministrativo (stringa vuota) (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
+\end{itemize}
+
+\subdeepusecase{addValoreDenominazioneProcedimentoAmministrativo}{Specifica valore Denominazione per filtro Procedimento Amministrativo}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Procedimento Amministrativo tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificata la Denominazione per il filtro Procedimento Amministrativo e utilizzata per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Denominazione per il filtro Procedimento Amministrativo.
+            \item Il sistema imposta questo valore come parametro per la ricerca.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce un valore non valido per il filtro Denominazione del Procedimento Amministrativo (stringa vuota) (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
+\end{itemize}
+
+\subdeepusecase{addValoreURICatalogoProcedimenti}{Specifica valore URI Catalogo per filtro Procedimento Amministrativo}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'utente ha selezionato il filtro Procedimento Amministrativo tra i campi specifici per tipo documentale
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificata la URI del Catalogo dei Procedimenti per il filtro Procedimento Amministrativo e utilizzata per la generazione del risultato.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la URI del Catalogo dei Procedimenti per il filtro Procedimento Amministrativo.
+            \item Il sistema imposta questo valore come parametro per la ricerca.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce un valore non valido per il filtro URI del Catalogo dei Procedimenti (stringa vuota) (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
       
 \subdeepusecase{addFasiProcedimentoAmministrativo}{Aggiunta Fase del Procedimento Amministrativo}
@@ -1176,13 +2101,177 @@
             \item L'utente specifica, per ogni fase da aggiungere, i dati specifici:
             \begin{itemize}
                   \item Tipo Fase (Preparatoria, Istruttoria, Consultiva, Decisoria o deliberativa,
-                  Integrazione dell'efficacia). (\ref{compilaValoreFiltroTipoFase})
-                  \item Data di inizio. (\ref{compilaValoreFiltroData})
-                  \item Data di fine. (\ref{compilaValoreFiltroData})
+                  Integrazione dell'efficacia).
+                  \item Data di inizio.
+                  \item Data di fine.
             \end{itemize}
             \item Il sistema salva la fase come parte del filtro Procedimento Amministrativo.
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroTipoFase} Compila valore filtro tipo fase, \ref{compilaValoreFiltroData} Compila valore filtro data
+      \item \textbf{Inclusioni}: 
+      \begin{itemize}
+            \item \ref{addValoreTipoFase} Specifica Valore Tipo Fase per Fase del Procedimento Amministrativo
+            \item \ref{addDataInizioFase} Specifica Valore Data di Inizio per Fase del Procedimento Amministrativo
+            \item \ref{addDataFineFase} Specifica Valore Data di Fine per Fase del Procedimento Amministrativo
+      \end{itemize}
+\end{itemize}
+
+\subsubdeepusecase{addValoreTipoFase}{Specifica Valore Tipo Fase per Fase del Procedimento Amministrativo}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'Utente sta specificando una Fase del Procedimento Amministrativo come parte del filtro Procedimento Amministrativo
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificato il Tipo Fase per la Fase del Procedimento Amministrativo che si sta specificando.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il Tipo Fase per la Fase del Procedimento Amministrativo.
+            \item Il sistema salva il valore del Tipo Fase per la fase che si sta specificando.
+      \end{enumerate}
+\end{itemize}
+
+\abyssalusecase{addValoreTipoFasePreparatoria}{Specifica Valore Tipo Fase:  "Preparatoria"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'Utente sta specificando una Fase del Procedimento Amministrativo come parte del filtro Procedimento Amministrativo
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Preparatoria" come valore del Tipo Fase per la fase che si sta specificando.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il valore del Tipo Fase: "Preparatoria".
+            \item Il sistema salva il valore del Tipo Fase per la fase che si sta specificando.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addValoreTipoFase}
+\end{itemize}
+
+\abyssalusecase{addValoreTipoFaseIstruttoria}{Specifica Valore Tipo Fase: "Istruttoria"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'Utente sta specificando una Fase del Procedimento Amministrativo come parte del filtro Procedimento Amministrativo
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Istruttoria" come valore del Tipo Fase per la fase che si sta specificando.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il valore del Tipo Fase: "Istruttoria".
+            \item Il sistema salva il valore del Tipo Fase per la fase che si sta specificando.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addValoreTipoFase}
+\end{itemize}
+
+\abyssalusecase{addValoreTipoFaseConsultiva}{Specifica Valore Tipo Fase: "Consultiva"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'Utente sta specificando una Fase del Procedimento Amministrativo come parte del filtro Procedimento Amministrativo
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Consultiva" come valore del Tipo Fase per la fase che si sta specificando.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il valore del Tipo Fase: "Consultiva".
+            \item Il sistema salva il valore del Tipo Fase per la fase che si sta specificando.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addValoreTipoFase}
+\end{itemize}
+
+\abyssalusecase{addValoreTipoFaseDecisoria}{Specifica Valore Tipo Fase: "Decisoria o Deliberativa"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'Utente sta specificando una Fase del Procedimento Amministrativo come parte del filtro Procedimento Amministrativo
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Decisoria o Deliberativa" come valore del Tipo Fase per la fase che si sta specificando.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il valore del Tipo Fase: "Decisoria o Deliberativa".
+            \item Il sistema salva il valore del Tipo Fase per la fase che si sta specificando.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addValoreTipoFase}
+\end{itemize}
+
+\abyssalusecase{addValoreTipoFaseIntegrazione}{Specifica Valore Tipo Fase: "Integrazione dell'efficacia"}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'Utente sta specificando una Fase del Procedimento Amministrativo come parte del filtro Procedimento Amministrativo
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Integrazione dell'efficacia" come valore del Tipo Fase per la fase che si sta specificando.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il valore del Tipo Fase: "Integrazione dell'efficacia".
+            \item Il sistema salva il valore del Tipo Fase per la fase che si sta specificando.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{addValoreTipoFase}
+\end{itemize}
+
+\subsubdeepusecase{addDataInizioFase}{Specifica valore Data di Inizio per Fase del Procedimento Amministrativo}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'Utente sta specificando una Fase del Procedimento Amministrativo come parte del filtro Procedimento Amministrativo
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificata la Data di Inizio per la Fase del Procedimento Amministrativo che si sta specificando.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Data di Inizio per la Fase del Procedimento Amministrativo.
+            \item Il sistema salva il valore della Data di Inizio per la fase che si sta specificando.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce una data non valida per il filtro Data di Inizio della Fase del Procedimento Amministrativo (formato data errato) (\ref{formatoNonCorrettoData})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoData} Formato non corretto: data
+\end{itemize}
+
+\subsubdeepusecase{addDataFineFase}{Specifica valore Data di Fine per Fase del Procedimento Amministrativo}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'Utente sta specificando una Fase del Procedimento Amministrativo come parte del filtro Procedimento Amministrativo
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificata la Data di Fine per la Fase del Procedimento Amministrativo che si sta specificando.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Data di Fine per la Fase del Procedimento Amministrativo.
+            \item Il sistema salva il valore della Data di Fine per la fase che si sta specificando.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce una data non valida per il filtro Data di Fine della Fase del Procedimento Amministrativo (formato data errato) (\ref{formatoNonCorrettoData})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoData} Formato non corretto: data
 \end{itemize}
 
 \subdeepusecase{addAssegnazione}{Specifica filtro Assegnazione}
@@ -1223,14 +2312,121 @@
       \begin{enumerate}
             \item L'utente specifica:
             \begin{itemize}
-                  \item Tipo Assegnazione. (\ref{compilaValoreFiltroAssegnazione})
-                  \item Soggetto Assegnatario (Codice Fiscale). (\ref{compilaValoreFiltroStringa})
-                  \item Data di Inizio. (\ref{compilaValoreFiltroData})
-                  \item Data di Fine. (\ref{compilaValoreFiltroData})
+                  \item Tipo Assegnazione.
+                  \item Soggetto Assegnatario. (\ref{addSoggetto})
+                  \item Data di Inizio.
+                  \item Data di Fine.
             \end{itemize}
             \item Il sistema salva il valore di assegnazione come parte del filtro Assegnazione.
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroAssegnazione} Compila valore filtro tipo assegnazione, \ref{compilaValoreFiltroStringa} Compila valore filtro stringa, \ref{compilaValoreFiltroData} Compila valore filtro data
+      \item \textbf{Inclusioni}: \begin{itemize}
+            \item \ref{addValoreTipoAssegnazione} Compila valore filtro tipo assegnazione
+            \item \ref{addSoggetto} Specifica Soggetto per filtro Assegnazione
+            \item \ref{addDataInizioAssegnazione} Specifica Data di Inizio per filtro Assegnazione
+            \item \ref{addDataFineAssegnazione} Specifica Data di Fine per filtro Assegnazione
+      \end{itemize}
+\end{itemize}
+
+\subsubdeepusecase{addValoreTipoAssegnazione}{Specifica valore Tipo Assegnazione per filtro Assegnazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'Utente sta specificando un valore di Assegnazione come parte dei filtri per la ricerca
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificato un valore per il Tipo Assegnazione per l'assegnazione che si sta specificando.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il valore del Tipo Assegnazione per il filtro Assegnazione.
+            \item Il sistema salva il valore del Tipo Assegnazione per l'assegnazione che si sta specificando.
+      \end{enumerate}
+\end{itemize}
+
+\abyssalusecase{addValoreTipoAssegnazionePerCompetenza}{Specifica valore Tipo Assegnazione "Per Competenza" per filtro Assegnazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'Utente sta specificando un valore di Assegnazione come parte dei filtri per la ricerca
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Per Competenza" come valore del Tipo Assegnazione per l'assegnazione che si sta specificando.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il valore del Tipo Assegnazione: "Per Competenza".
+            \item Il sistema salva il valore del Tipo Assegnazione per l'assegnazione che si sta specificando.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{compilaValoreFiltroAssegnazione} Compila valore filtro tipo assegnazione
+\end{itemize}
+
+\abyssalusecase{addValoreTipoAssegnazionePerConoscenza}{Specifica valore Tipo Assegnazione "Per Conoscenza" per filtro Assegnazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'Utente sta specificando un valore di Assegnazione come parte dei filtri per la ricerca
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene selezionato "Per Conoscenza" come valore del Tipo Assegnazione per l'assegnazione che si sta specificando.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il valore del Tipo Assegnazione: "Per Conoscenza".
+            \item Il sistema salva il valore del Tipo Assegnazione per l'assegnazione che si sta specificando.
+      \end{enumerate}
+      \item \textbf{Specializza}: \ref{compilaValoreFiltroAssegnazione} Compila valore filtro tipo assegnazione
+\end{itemize}
+
+\subsubdeepusecase{addValoreDataInizioAssegnazione}{Specifica valore Data di Inizio per filtro Assegnazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'Utente sta specificando un valore di Assegnazione come parte dei filtri per la ricerca
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificata la Data di Inizio per il valore di Assegnazione e salvata per l'assegnazione che si sta specificando.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Data di Inizio per il valore di Assegnazione.
+            \item Il sistema salva il valore della Data di Inizio per l'assegnazione che si sta specificando.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce una data non valida per il filtro Data di Inizio dell'Assegnazione (formato data errato) (\ref{formatoNonCorrettoData})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoData} Formato non corretto: data
+\end{itemize}
+
+\subsubdeepusecase{addValoreDataFineAssegnazione}{Specifica valore Data di Fine per filtro Assegnazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente ha specificato come tipo di documento: Aggregazione Documentale
+            \item L'Utente sta specificando un valore di Assegnazione come parte dei filtri per la ricerca
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificata la Data di Fine per il valore di Assegnazione e salvata per l'assegnazione che si sta specificando.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica la Data di Fine per il valore di Assegnazione.
+            \item Il sistema salva il valore della Data di Fine per l'assegnazione che si sta specificando.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce una data non valida per il filtro Data di Fine dell'Assegnazione (formato data errato) (\ref{formatoNonCorrettoData})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoData} Formato non corretto: data
 \end{itemize}
       
 \deepusecase{addProgressivoAggregazione}{Specifica filtro Progressivo Aggregazione}
@@ -1253,7 +2449,11 @@
             \item L'Utente specifica il numero Progressivo dell'Aggregazione.
             \item Il sistema imposta questo valore come parametro per la ricerca.
       \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroNumero} Compila valore filtro numero
+      \item \textbf{Flusso Alternativo}:
+      \begin{enumerate}
+            \item L'Utente inserisce un valore non valido per il filtro Progressivo dell'Aggregazione (formato numero errato) (\ref{formatoNonCorrettoNumero})
+      \end{enumerate}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoNumero} Formato non corretto: numero
 \end{itemize}
 
 
@@ -1293,7 +2493,12 @@
             \item L'Utente specifica il valore del metadato custom per cui ricercare. (\ref{compilaValoreFiltroStringa}).
             \item Il sistema imposta questi valori come parametro per la ricerca.
       \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}
+            \item L'Utente inserisce un valore non valido per il filtro del metadato custom (stringa vuota) (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
       \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro stringa
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \usecase{addSoggetto}{Aggiunta Soggetto ad un filtro}
@@ -1400,15 +2605,108 @@
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Denominazione Amministrazione/ Codice \glossario{IPA} (\ref{compilaValoreFiltroStringa})
-                              \item Denominazione Amministrazione \glossario{AOO}/ Codice IPA AOO (\ref{compilaValoreFiltroStringa})
-                              \item Denominazione Amministrazione \glossario{UOR}/ Codice IPA UOR (\ref{compilaValoreFiltroStringa})
-                              \item Indirizzi Digitali di Riferimento (\ref{compilaValoreFiltroStringa})
+                              \item Denominazione Amministrazione/ Codice \glossario{IPA}
+                              \item Denominazione Amministrazione \glossario{AOO}/ Codice IPA AOO
+                              \item Denominazione Amministrazione \glossario{UOR}/ Codice IPA UOR
+                              \item Indirizzi Digitali di Riferimento
                         \end{itemize}
                   \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro stringa
+      \item \textbf{Inclusioni}: \begin{itemize}
+            \item \ref{addValoreDenominazioneAmmIPA}
+            \item \ref{addValoreDenominazioneAmmAOO}
+            \item \ref{addValoreDenominazioneAmmUOR}
+            \item \ref{addValoreIndirizziDigitali}
+      \end{itemize}
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
+\end{itemize}
+
+\deepusecase{addValoreDenominazioneAmmIPA}{Specifica valore Denominazione Amministrazione/ Codice IPA} \label{addValoreDenominazioneAmmIPA}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando i dettagli di un soggetto di tipo PAI o AS
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificato un valore per il campo Denominazione Amministrazione/ Codice IPA e associato al soggetto che l'Utente sta aggiungendo.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il valore per il campo Denominazione Amministrazione/ Codice IPA.
+                  \item Il sistema salva il valore inserito per il campo Denominazione Amministrazione/ Codice IPA e lo associa al soggetto che l'Utente sta aggiungendo.
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item L'Utente inserisce un valore non valido per il campo Denominazione Amministrazione/ Codice IPA (stringa vuota) (\ref{formatoNonCorrettoStringa})
+            \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
+\end{itemize}
+
+\deepusecase{addValoreDenominazioneAmmAOO}{Specifica valore Denominazione Amministrazione AOO/ Codice IPA AOO} \label{addValoreDenominazioneAmmAOO}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando i dettagli di un soggetto di tipo PAI o AS
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificato un valore per il campo Denominazione Amministrazione AOO/ Codice IPA AOO e associato al soggetto che l'Utente sta aggiungendo.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il valore per il campo Denominazione Amministrazione AOO/ Codice IPA AOO.
+                  \item Il sistema salva il valore inserito per il campo Denominazione Amministrazione AOO/ Codice IPA AOO e lo associa al soggetto che l'Utente sta aggiungendo.
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item L'Utente inserisce un valore non valido per il campo Denominazione Amministrazione AOO/ Codice IPA AOO (stringa vuota) (\ref{formatoNonCorrettoStringa})
+            \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
+\end{itemize}
+
+\deepusecase{addValoreDenominazioneAmmUOR}{Specifica valore Denominazione Amministrazione UOR/ Codice IPA UOR} \label{addValoreDenominazioneAmmUOR}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando i dettagli di un soggetto di tipo PAI o AS
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificato un valore per il campo Denominazione Amministrazione UOR/ Codice IPA UOR e associato al soggetto che l'Utente sta aggiungendo.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il valore per il campo Denominazione Amministrazione UOR/ Codice IPA UOR.
+                  \item Il sistema salva il valore inserito per il campo Denominazione Amministrazione UOR/ Codice IPA UOR e lo associa al soggetto che l'Utente sta aggiungendo.
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item L'Utente inserisce un valore non valido per il campo Denominazione Amministrazione UOR/ Codice IPA UOR (stringa vuota) (\ref{formatoNonCorrettoStringa})
+            \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
+\end{itemize}
+
+\deepusecase{addValoreIndirizziDigitali}{Specifica valore Indirizzi Digitali di Riferimento} \label{addValoreIndirizziDigitali}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando i dettagli di un soggetto di tipo PAI, AS o PG
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificato un valore per il campo Indirizzi Digitali di Riferimento e associato al soggetto che l'Utente sta aggiungendo.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il valore per il campo Indirizzi Digitali di Riferimento.
+                  \item Il sistema salva il valore inserito per il campo Indirizzi Digitali di Riferimento e lo associa al soggetto che l'Utente sta aggiungendo.
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item L'Utente inserisce un valore non valido per il campo Indirizzi Digitali di Riferimento (stringa vuota) (\ref{formatoNonCorrettoStringa})
+            \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \subsubusecase{addDettagliPAE}{Specifica dettagli soggetto tipo: PAE}
@@ -1424,14 +2722,62 @@
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Denominazione Amministrazione (\ref{compilaValoreFiltroStringa})
-                              \item Denominazione Ufficio (\ref{compilaValoreFiltroStringa})
-                              \item \glossario{Indirizzi Digitali} di Riferimento (\ref{compilaValoreFiltroStringa})
+                              \item Denominazione Amministrazione
+                              \item Denominazione Ufficio
+                              \item \glossario{Indirizzi Digitali} di Riferimento
                         \end{itemize}
                   \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro stringa
+      \item \textbf{Inclusioni}: \begin{itemize}
+            \item \ref{addValoreDenominazioneAmministrazione} Specifica valore Denominazione Amministrazione
+            \item \ref{addValoreDenominazioneUfficio} Specifica valore Denominazione Ufficio
+            \item \ref{addValoreIndirizziDigitali} Specifica valore Indirizzi Digitali di Riferimento
+      \end{itemize}
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
+\end{itemize}
+
+\deepusecase{addValoreDenominazioneAmministrazione}{Specifica valore Denominazione Amministrazione} \label{addValoreDenominazioneAmministrazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando i dettagli di un soggetto di tipo PAE
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificato un valore per il campo Denominazione Amministrazione e associato al soggetto che l'Utente sta aggiungendo.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il valore per il campo Denominazione Amministrazione.
+                  \item Il sistema salva il valore inserito per il campo Denominazione Amministrazione e lo associa al soggetto che l'Utente sta aggiungendo.
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item L'Utente inserisce un valore non valido per il campo Denominazione Amministrazione (stringa vuota) (\ref{formatoNonCorrettoStringa})
+            \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
+\end{itemize}
+
+\deepusecase{addValoreDenominazioneUfficio}{Specifica valore Denominazione Ufficio} \label{addValoreDenominazioneUfficio}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando i dettagli di un soggetto di tipo PAE
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificato un valore per il campo Denominazione Ufficio e associato al soggetto che l'Utente sta aggiungendo.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il valore per il campo Denominazione Ufficio.
+                  \item Il sistema salva il valore inserito per il campo Denominazione Ufficio e lo associa al soggetto che l'Utente sta aggiungendo.
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item L'Utente inserisce un valore non valido per il campo Denominazione Ufficio (stringa vuota) (\ref{formatoNonCorrettoStringa})
+            \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \subsubusecase{addDettagliAS}{Specifica dettagli soggetto tipo: AS}
@@ -1447,18 +2793,92 @@
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Cognome (\ref{compilaValoreFiltroStringa})
-                              \item Nome (\ref{compilaValoreFiltroStringa})
-                              \item Codice Fiscale (\ref{compilaValoreFiltroStringa})
-                              \item Denominazione Amministrazione/ Codice IPA (\ref{compilaValoreFiltroStringa})
-                              \item Denominazione Amministrazione AOO/ Codice IPA AOO (\ref{compilaValoreFiltroStringa})
-                              \item Denominazione Amministrazione UOR/ Codice IPA UOR (\ref{compilaValoreFiltroStringa})
-                              \item Indirizzi Digitali di Riferimento (\ref{compilaValoreFiltroStringa})
+                              \item Cognome
+                              \item Nome
+                              \item Codice Fiscale
+                              \item Denominazione Amministrazione\ Codice IPA
+                              \item Denominazione Amministrazione AOO\ Codice IPA AOO
+                              \item Denominazione Amministrazione UOR\ Codice IPA UOR
+                              \item Indirizzi Digitali di Riferimento
                         \end{itemize}
                   \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
-            </end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro: stringa
+            \end{enumerate}
+      \item \textbf{Inclusioni}: \begin{itemize}
+            \item \ref{addValoreCognome} Specifica valore Cognome
+            \item \ref{addValoreNome} Specifica valore Nome
+            \item \ref{addValoreCF} Specifica valore Codice Fiscale
+            \item \ref{addValoreDenominazioneAmmIPA} Specifica valore Denominazione Amministrazione/ Codice IPA
+            \item \ref{addValoreDenominazioneAmmAOO} Specifica valore Denominazione Amministrazione AOO/ Codice IPA AOO
+            \item \ref{addValoreDenominazioneAmmUOR} Specifica valore Denominazione Amministrazione UOR/ Codice IPA UOR
+            \item \ref{addValoreIndirizziDigitali} Specifica valore Indirizzi Digitali di Riferimento
+      \end{itemize}
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
+\end{itemize}
+
+\deepusecase{addValoreCognome}{Specifica valore Cognome} \label{addValoreCognome}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando i dettagli di un soggetto di tipo AS, RUP o PG
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificato un valore per il campo Cognome e associato al soggetto che l'Utente sta aggiungendo.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il valore per il campo Cognome.
+                  \item Il sistema salva il valore inserito per il campo Cognome e lo associa al soggetto che l'Utente sta aggiungendo.
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item L'Utente inserisce un valore non valido per il campo Cognome (stringa vuota) (\ref{formatoNonCorrettoStringa})
+            \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
+\end{itemize}
+
+\deepusecase{addValoreNome}{Specifica valore Nome} \label{addValoreNome}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando i dettagli di un soggetto di tipo AS, RUP o PG
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificato un valore per il campo Nome e associato al soggetto che l'Utente sta aggiungendo.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il valore per il campo Nome.
+                  \item Il sistema salva il valore inserito per il campo Nome e lo associa al soggetto che l'Utente sta aggiungendo.
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item L'Utente inserisce un valore non valido per il campo Nome (stringa vuota) (\ref{formatoNonCorrettoStringa})
+            \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
+\end{itemize}
+
+\deepusecase{addValoreCF}{Specifica valore Codice Fiscale / Partita Iva} \label{addValoreCF}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando i dettagli di un soggetto di tipo AS, RUP o PG
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificato un valore per il campo Codice Fiscale / Partita Iva e associato al soggetto che l'Utente sta aggiungendo.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il valore per il campo Codice Fiscale / Partita Iva.
+                  \item Il sistema salva il valore inserito per il campo Codice Fiscale / Partita Iva e lo associa al soggetto che l'Utente sta aggiungendo.
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item L'Utente inserisce un valore non valido per il campo Codice Fiscale / Partita Iva (stringa vuota) (\ref{formatoNonCorrettoStringa})
+            \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \subsubusecase{addDettagliPG}{Specifica dettagli soggetto tipo: PG}
@@ -1474,15 +2894,42 @@
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Denominazione Organizzazione (\ref{compilaValoreFiltroStringa})
-                              \item Codice fiscale / Partita Iva (\ref{compilaValoreFiltroStringa})
-                              \item Denominazione Ufficio (\ref{compilaValoreFiltroStringa})
-                              \item Indirizzi Digitali di Riferimento (\ref{compilaValoreFiltroStringa})
+                              \item Denominazione Organizzazione
+                              \item Codice fiscale / Partita Iva
+                              \item Denominazione Ufficio
+                              \item Indirizzi Digitali di Riferimento
                         \end{itemize}
                   \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro: stringa
+      \item \textbf{Inclusioni}: \begin{itemize}
+            \item \ref{addValoreDenominazioneOrganizzazione}
+            \item \ref{addValoreCF} Specifica valore Codice Fiscale / Partita Iva
+            \item \ref{addValoreDenominazioneUfficio} Specifica valore Denominazione Ufficio
+            \item \ref{addValoreIndirizziDigitali} Specifica valore Indirizzi Digitali di Riferimento
+      \end{itemize}
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
+\end{itemize}
+
+\deepusecase{addValoreDenominazioneOrganizzazione}{Specifica valore Denominazione Organizzazione} \label{addValoreDenominazioneOrganizzazione}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando i dettagli di un soggetto di tipo PG
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificato un valore per il campo Denominazione Organizzazione e associato al soggetto che l'Utente sta aggiungendo.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il valore per il campo Denominazione Organizzazione.
+                  \item Il sistema salva il valore inserito per il campo Denominazione Organizzazione e lo associa al soggetto che l'Utente sta aggiungendo.
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item L'Utente inserisce un valore non valido per il campo Denominazione Organizzazione (stringa vuota) (\ref{formatoNonCorrettoStringa})
+            \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \subsubusecase{addDettagliPF}{Specifica dettagli soggetto tipo: PF}
@@ -1498,13 +2945,17 @@
             \begin{enumerate}
                   \item  L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Cognome (\ref{compilaValoreFiltroStringa})
-                              \item Nome (\ref{compilaValoreFiltroStringa})
-                              \item Indirizzi Digitali di Riferimento (\ref{compilaValoreFiltroStringa})
+                              \item Cognome
+                              \item Nome
+                              \item Indirizzi Digitali di Riferimento
                         \end{itemize}
                   \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro: stringa
+      \item \textbf{Inclusioni}: \begin{itemize}
+            \item \ref{addValoreCognome} Specifica valore Cognome
+            \item \ref{addValoreNome} Specifica valore Nome
+            \item \ref{addValoreIndirizziDigitali} Specifica valore Indirizzi Digitali di Riferimento
+      \end{itemize}
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
 
@@ -1521,17 +2972,25 @@
             \begin{enumerate}
                   \item L'Utente inserisce i valori per i campi:
                         \begin{itemize}
-                              \item Cognome (\ref{compilaValoreFiltroStringa})
-                              \item Nome (\ref{compilaValoreFiltroStringa})
-                              \item Codice Fiscale (\ref{compilaValoreFiltroStringa})
-                              \item Denominazione Amministrazione/ Codice IPA (\ref{compilaValoreFiltroStringa})
-                              \item Denominazione Amministrazione AOO/Denominazione Amministrazione UOR (\ref{compilaValoreFiltroStringa})
-                              \item  Denominazione Amministrazione UOR/ Codice IPA UOR (\ref{compilaValoreFiltroStringa})
-                              \item Indirizzi Digitali di Riferimento (\ref{compilaValoreFiltroStringa})
+                              \item Cognome
+                              \item Nome
+                              \item Codice Fiscale
+                              \item Denominazione Amministrazione/ Codice IPA
+                              \item Denominazione Amministrazione AOO/Denominazione Amministrazione UOR
+                              \item Denominazione Amministrazione UOR/ Codice IPA UOR
+                              \item Indirizzi Digitali di Riferimento
                         \end{itemize}
                   \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro: stringa
+      \item \textbf{Inclusioni}: \begin{itemize}
+            \item \ref{addValoreCognome} Specifica valore Cognome
+            \item \ref{addValoreNome} Specifica valore Nome
+            \item \ref{addValoreCF} Specifica valore Codice Fiscale / Partita Iva
+            \item \ref{addValoreDenominazioneAmministrazione} Specifica valore Denominazione Amministrazione/ Codice IPA
+            \item \ref{addValoreDenominazioneAmministrazioneAOO} Specifica valore Denominazione Amministrazione AOO/Denominazione Amministrazione UOR
+            \item \ref{addValoreDenominazioneUfficio} Specifica valore Denominazione Ufficio
+            \item \ref{addValoreIndirizziDigitali} Specifica valore Indirizzi Digitali di Riferimento
+      \end{itemize}
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
 
@@ -1546,11 +3005,33 @@
       \item \textbf{Postcondizioni}:  Le specifiche aggiunte dall'Utente sono salvate per il soggetto che sta aggiungendo.
       \item \textbf{Flusso Principale}:
             \begin{enumerate}
-                  \item L'Utente inserisce la Denominazione Sistema. (\ref{compilaValoreFiltroStringa})
+                  \item L'Utente inserisce la Denominazione Sistema.
                   \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro: stringa
+      \item \textbf{Inclusioni}: \ref{addValoreDenominazioneSistema} Specifica valore Denominazione Sistema
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
+\end{itemize}
+
+\deepusecase{addValoreDenominazioneSistema}{Specifica valore Denominazione Sistema} \label{addValoreDenominazioneSistema}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            
+            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando i dettagli di un soggetto di tipo SW
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificato un valore per il campo Denominazione Sistema e associato al soggetto che l'Utente sta aggiungendo.
+      \item \textbf{Flusso Principale}:
+            \begin{enumerate}
+                  \item L'Utente inserisce il valore per il campo Denominazione Sistema.
+                  \item Il sistema salva il valore inserito per il campo Denominazione Sistema e lo associa al soggetto che l'Utente sta aggiungendo.
+            \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+            \begin{itemize}
+                  \item L'Utente inserisce un valore non valido per il campo Denominazione Sistema (stringa vuota) (\ref{formatoNonCorrettoStringa})
+            \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \usecase{visualizzaNomeCampo}{Visualizza nome del campo}
@@ -1666,34 +3147,6 @@
       \begin{enumerate}
             \item Il sistema visualizza un messaggio che indica che la ricerca non ha prodotto alcun risultato.
       \end{enumerate}
-\end{itemize}
-      
-\usecase{compilaValoreFiltroStringa}{Compila Valore Filtro: stringa}
-\begin{figure}[H]
-      \centering
-      \includegraphics[width=0.9\textwidth]{../../assets/uml/UC17.png}
-      \caption{\ref{compilaValoreFiltroStringa} - Compila valore filtro: stringa}
-      \label{fig:uc_compilaValoreFiltroStringa}
-\end{figure}
-\begin{itemize}
-      \item \textbf{Attore Primario}: Utente
-      \item \textbf{Precondizioni}: 
-      \begin{itemize}
-            \item L'Utente ha avviato l'applicazione
-            \item L'Utente sta effettuando una ricerca nel DIP con filtri
-            \item L'Utente sta specificando il valore per un metadato di tipo alfanumerico di un filtro selezionato.
-      \end{itemize}
-      \item \textbf{Postcondizioni}: Il valore inserito dall'Utente viene salvato come parte del filtro selezionato.
-      \item \textbf{Flusso Principale}:
-      \begin{enumerate}
-            \item L'Utente inserisce il valore alfanumerico per il metadato di cui vuole specificare il valore.
-            \item Il sistema salva il valore inserito come parte del filtro selezionato.
-      \end{enumerate}
-      \item \textbf{Flusso Alternativo}:
-      \begin{itemize}
-            \item Il valore non rispetta il formato corretto (\ref{formatoNonCorrettoStringa}).
-      \end{itemize}
-      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato Non Corretto: stringa
 \end{itemize}
 
 \usecase{formatoNonCorrettoStringa}{Formato Non Corretto: stringa}
