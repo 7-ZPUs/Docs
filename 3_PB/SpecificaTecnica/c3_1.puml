@@ -8,7 +8,8 @@ Component_Ext(renderer, "Renderer UI", "Angular, TypeScript", "Fornisce l'interf
 
 Container_Boundary(main, "Main Process") {
     Component(ipc_handler, "IPC Handler", "Node.js, TypeScript", "Gestisce tutte le comunicazioni IPC con il frontend Angular.")
-    Component(dip_uploader, "DIP Uploader", "Node.js, TypeScript", "Gestisce l'importazione dei pacchetti DIP, estraendo i file XML e preparando i dati per l'indicizzazione.")
+    Component(dip_importer, "DIP Importer", "Node.js, TypeScript", "Gestisce l'accesso al disco e l'estrazione dei file fisici e XML dal pacchetto DIP.")
+    Component(metadata_parser, "Metadata Parser", "Node.js, TypeScript", "Effettua il parsing e la validazione dei file XML, preparando i dati per l'indicizzazione.")
     Component(indexer, "Indexer", "Node.js, TypeScript", "Indicizza i metadati estratti e li memorizza nel database SQLite.")
     Component(semantic_indexer, "Semantic Indexer", "Node.js, TypeScript", "Genera vettori semantici dai metadati e li memorizza nel database SQLite.")
     Component(search_engine, "Search Engine", "Node.js, TypeScript", "Gestisce le query di ricerca testuale utilizzando il database SQLite.")
@@ -20,15 +21,15 @@ Container_Boundary(main, "Main Process") {
     Component(llm_inference, "LLM Inference Engine", "transformers.js, TypeScript", "Gestisce l'inferenza con modelli LLM locali per la ricerca semantica.")
 }
 
-Rel(ipc_handler, dip_uploader, "Richieste di importazione DIP")
+Rel(ipc_handler, dip_importer, "Richieste di importazione DIP")
 Rel(ipc_handler, search_engine, "Query di ricerca testuale")
 Rel(ipc_handler, sema_search_engine, "Query di ricerca semantica")
 Rel(ipc_handler, verification_engine, "Richieste di verifica integrità")
 Rel(ipc_handler, export_manager, "Richieste di esportazione file")
 Rel(ipc_handler, renderer, "Risposte al frontend via IPC")
-Rel(dip_uploader, filesystem, "Legge i pacchetti DIP")
-Rel(dip_uploader, indexer, "Invia dati per l'indicizzazione")
-Rel(dip_uploader, semantic_indexer, "Invia dati per la generazione di vettori")
+Rel(dip_importer, metadata_parser, "Invia i file XML grezzi estratti")
+Rel(metadata_parser, indexer, "Invia dati strutturati per l'indicizzazione")
+Rel(metadata_parser, semantic_indexer, "Invia dati strutturati per la vettorizzazione")
 Rel(indexer, dbManager, "Memorizza i metadati indicizzati")
 Rel(semantic_indexer, sema_dbManager, "Memorizza i vettori semantici")
 Rel(search_engine, dbManager, "Legge i metadati")
@@ -38,5 +39,7 @@ Rel(dbManager, sqlite, "Lettura/scrittura")
 Rel(sema_dbManager, sqlite_vss, "Lettura/scrittura")
 Rel(verification_engine, dbManager, "Accede ai metadati per la verifica")
 Rel(export_manager, filesystem, "Accede ai file DIP per l'esportazione")
+Rel(verification_engine, filesystem, "Legge i file DIP per il ricalcolo degli hash e la verifica")
+
 
 @enduml

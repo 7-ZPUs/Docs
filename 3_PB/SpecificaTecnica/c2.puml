@@ -1,12 +1,13 @@
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
-title System Context Diagram per DipReader
+title Container Context Diagram per DipReader
+
 Person(user, "Utente", "Revisore, archivista o cittadino che necessita di consultare e verificare l'archivio.")
 System_Ext(filesystem, "File System Locale", "Fornisce il pacchetto DIP originario e funge da destinazione per i file esportati/scaricati.")
 System_Ext(printer, "Stampante", "Dispositivo di output per la stampa dei documenti.")
 
-System_Boundary(dipreader_app, "DipReader App (Electron)") {
+System_Boundary(dipreader_app, "DIPReader App (Electron)") {
     Container(renderer, "Renderer UI", "Angular, TypeScript", "Fornisce l'interfaccia visiva per la navigazione, la ricerca e la visualizzazione dei documenti.")
     Container(main, "Main", "Node.js, TypeScript", "Processo principale che gestisce la logica di business pesante, l'indicizzazione e l'accesso diretto alle risorse locali.")
     ContainerDb(sqlite, "Relational Database", "SQLite3 + sqlite-vss", "Memorizza i metadati XML indicizzati")
