@@ -28,7 +28,7 @@ Dove:
 \renewcommand{\arraystretch}{1.3}
 
 \rowcolors{2}{gray!15}{white}
-\begin{longtable}{|p{2.5cm}|p{9.5cm}|p{2.5cm}|}
+\begin{longtable}{|p{2.5cm}|p{8.5cm}|p{4cm}|}
 \hline
 \rowcolor{zpusgreen!30}
 \textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
@@ -46,9 +46,9 @@ R-3-F-Ob & Quando viene selezionata una classe documentale, l'utente deve poter 
 \hline
 R-4-F-Ob & L'utente deve poter visualizzare il nome della classe documentale & \ref{nomeClasseDocumentale} \\
 \hline
-R-5-F-Ob & L'utente deve poter visualizzare lo stato di verifica della classe documentale & \ref{statoVerificaElemento} \\
+R-5-F-Ob & L'utente deve poter visualizzare lo stato di verifica della classe documentale & \begin{tabular}[t]{@{}l} \ref{statoVerificaElemento} \\ \ref{statoVerificaElementoNonIntegro} \\ \ref{statoVerificaElementoIntegro} \\ \ref{statoVerificaElementoNonVerificato} \end{tabular} \\
 \hline
-R-6-F-Ob & L'utente deve poter visualizzare lo stato di verifica della classe documentale & \ref{statoVerificaElemento} \\
+R-6-F-Ob & L'utente deve poter visualizzare lo stato di verifica della classe documentale & \begin{tabular}[t]{@{}l} \ref{statoVerificaElemento} \\ \ref{statoVerificaElementoNonIntegro} \\ \ref{statoVerificaElementoIntegro} \\ \ref{statoVerificaElementoNonVerificato} \end{tabular} \\
 \hline
 R-7-F-Ob & L'utente deve poter visualizzare la marcatura temporale della classe documentale & \ref{marcaturaTemporaleElemento} \\
 \hline
@@ -68,7 +68,7 @@ R-14-F-Ob & Quando viene selezionato un documento, l'utente deve poter visualizz
 \hline
 R-15-F-Ob & L'utente deve poter visualizzare il nome del documento & \ref{nomeDocumentoProcesso} \\
 \hline
-R-16-F-Ob & L'utente deve poter visualizzare lo stato di verifica del documento & \ref{statoVerificaElemento} \\
+R-16-F-Ob & L'utente deve poter visualizzare lo stato di verifica del documento & \begin{tabular}[t]{@{}l} \ref{statoVerificaElemento} \\ \ref{statoVerificaElementoNonIntegro} \\ \ref{statoVerificaElementoIntegro} \\ \ref{statoVerificaElementoNonVerificato} \end{tabular} \\
 \hline
 R-17-F-Ob & L'utente deve poter visualizzare la marcatura temporale del documento & \ref{marcaturaTemporaleElemento} \\
 \hline
@@ -80,13 +80,13 @@ R-20-F-Ob & Se il documento selezionato non è visualizzabile in anteprima, l'ut
 \hline
 R-21-F-Ob & L'utente deve poter ricercare un documento, un processo, o una classe documentale & \ref{ricercaDIP} \\
 \hline
-R-22-F-Ob & L'utente può cercare una classe documentale esclusivamente per nome & \begin{tabular}[t]{@{}l} \ref{ricercaClasse} \\ \ref{inserimentoNomeClasseDocumentale} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-22-F-Ob & L'utente può cercare una classe documentale esclusivamente per nome & \begin{tabular}[t]{@{}l} \ref{ricercaClasse} \\ \ref{inserimentoNomeClasseDocumentale} \end{tabular} \\
 \hline
-R-23-F-Ob & L'utente può cercare un processo esclusivamente per uuid & \begin{tabular}[t]{@{}l} \ref{ricercaProcesso} \\ \ref{inserimentoIdProcesso} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-23-F-Ob & L'utente può cercare un processo esclusivamente per uuid & \begin{tabular}[t]{@{}l} \ref{ricercaProcesso} \\ \ref{inserimentoIdProcesso} \end{tabular} \\
 \hline
 R-24-F-Op & L'utente deve poter effettuare una ricerca semantica basata sui metadati dei documenti presenti nel DIP & \ref{ricercaDIPSemantica} \\
 \hline
-R-25-F-Op & L'utente deve poter visualizzare lo stato dell'indicizzazione semantica & \ref{StatoIndicizzazione} \\
+R-25-F-Op & L'utente deve poter visualizzare lo stato dell'indicizzazione semantica & \begin{tabular}[t]{@{}l} \ref{StatoIndicizzazione} \\ \ref{StatoIndicizzazioneCompletata} \\ \ref{StatoIndicizzazioneNonCompletata} \end{tabular} \\
 \hline
 R-26-F-Ob & Il sistema deve rendere disponibile un campo di ricerca & \ref{ricercaDIP} \\
 \hline
@@ -128,25 +128,25 @@ R-44-F-Ob & Il sistema deve permettere di selezionare per la compilazione e l'ag
 \hline
 R-45-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Chiave Descrittiva" & \ref{addChiaveDescrittiva} \\
 \hline
-R-46-F-Ob & L'utente deve poter inserire il valore per i campi "Chiave Descrittiva", "Oggetto" e "Parole chiave" & \begin{tabular}[t]{@{}l} \ref{addChiaveDescrittiva} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-46-F-Ob & L'utente deve poter inserire il valore per i campi "Chiave Descrittiva", "Oggetto" e "Parole chiave" & \begin{tabular}[t]{@{}l} \ref{addChiaveDescrittiva}  \end{tabular} \\
 \hline
 R-47-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Classificazione" & \ref{addClassificazione} \\
 \hline
-R-48-F-Ob & L'utente deve poter inserire il valore per i campi "Indice di classificazione", "Descrizione" e "Piano di fascicolo" & \begin{tabular}[t]{@{}l} \ref{addClassificazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-48-F-Ob & L'utente deve poter inserire il valore per i campi "Indice di classificazione", "Descrizione" e "Piano di fascicolo" & \begin{tabular}[t]{@{}l} \ref{addClassificazione} \\ \ref{addValoreIndiceDiClassificazione} \\ \ref{addValoreDescrizione} \\ \ref{addValoreURIPianoDiClassificazione} \end{tabular} \\
 \hline
 R-49-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Tempo di conservazione" & \ref{addTempoConserva} \\
 \hline
-R-50-F-Ob & L'utente deve poter inserire il valore per il filtro "Tempo di conservazione" & \begin{tabular}[t]{@{}l} \ref{addTempoConserva} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-50-F-Ob & L'utente deve poter inserire il valore per il filtro "Tempo di conservazione" & \begin{tabular}[t]{@{}l} \ref{addTempoConserva}  \end{tabular} \\
 \hline
 R-51-F-Ob & L'utente deve poter selezionare l'opzione "Perenne" per il filtro "Tempo di conservazione" & \ref{addTempoConserva} \\
 \hline
 R-52-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Note" & \ref{addNote} \\
 \hline
-R-53-F-Ob & L'utente deve poter inserire il valore per il filtro "Note" & \begin{tabular}[t]{@{}l} \ref{addNote} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-53-F-Ob & L'utente deve poter inserire il valore per il filtro "Note" & \begin{tabular}[t]{@{}l} \ref{addNote}  \end{tabular} \\
 \hline
 R-54-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Tipo di documento" & \ref{addTipoDocumento} \\
 \hline
-R-55-F-Ob & L'utente deve poter selezionare il valore per il filtro "Tipo di documento" tra "Documento informatico", "Documento amministrativo informatico", "Aggregazione documentale" & \begin{tabular}[t]{@{}l} \ref{addTipoDocumento} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-55-F-Ob & L'utente deve poter selezionare il valore per il filtro "Tipo di documento" tra "Documento informatico", "Documento amministrativo informatico", "Aggregazione documentale" & \begin{tabular}[t]{@{}l} \ref{addTipoDocumento}  \\ \ref{addTipoDocumentoDI} \\ \ref{addTipoDocumentoDAI} \\ \ref{addTipoDocumentoAgg} \end{tabular} \\
 \hline
 R-56-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Soggetto" & \ref{addSoggetti} \\
 \hline
@@ -166,19 +166,19 @@ R-63-F-Ob & All'interno della sezione del filtro del Tipo di Soggetto, l'utente 
 \hline
 R-64-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro "Dettagli" del Soggetto & \ref{addDettagliSoggetto} \\
 \hline
-R-65-F-Ob & Se il soggetto selezionato è di tipo "PAI", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Denominazione Amministrazione/Codice IPA", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliPAI} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-65-F-Ob & Se il soggetto selezionato è di tipo "PAI", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Denominazione Amministrazione/Codice IPA", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliPAI}  \\ \ref{addValoreDenominazioneAmmIPA} \\ \ref{addValoreDenominazioneAmmAOO} \\ \ref{addValoreDenominazioneAmmUOR} \\ \ref{addValoreIndirizziDigitali} \end{tabular} \\
 \hline
-R-66-F-Ob & Se il soggetto selezionato è di tipo "PAE", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Denominazione Amministrazione", "Denominazione Ufficio" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliPAE} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-66-F-Ob & Se il soggetto selezionato è di tipo "PAE", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Denominazione Amministrazione", "Denominazione Ufficio" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliPAE}  \\ \ref{addValoreDenominazioneAmministrazione} \\ \ref{addValoreDenominazioneUfficio} \\ \ref{addValoreIndirizziDigitali} \end{tabular} \\
 \hline
-R-67-F-Ob & Se il soggetto selezionato è di tipo "AS", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Cognome", "Nome", "Codice Fiscale", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliAS} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-67-F-Ob & Se il soggetto selezionato è di tipo "AS", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Cognome", "Nome", "Codice Fiscale", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliAS}  \\ \ref{addValoreCognome} \\ \ref{addValoreNome} \\ \ref{addValoreCF} \\ \ref{addValoreDenominazioneAmmAOO} \\ \ref{addValoreDenominazioneAmmUOR} \\ \ref{addValoreIndirizziDigitali} \end{tabular} \\
 \hline
-R-68-F-Ob & Se il soggetto selezionato è di tipo "PG", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Denominazione Organizzazione", "Codice Fiscale/Partita IVA", "Denominazione Ufficio" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliPG} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-68-F-Ob & Se il soggetto selezionato è di tipo "PG", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Denominazione Organizzazione", "Codice Fiscale/Partita IVA", "Denominazione Ufficio" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliPG}  \\ \ref{addValoreDenominazioneOrganizzazione} \\ \ref{addValoreCF} \\ \ref{addValoreDenominazioneUfficio} \\ \ref{addValoreIndirizziDigitali} \end{tabular} \\
 \hline
-R-69-F-Ob & Se il soggetto selezionato è di tipo "PF", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Cognome", "Nome" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliPF} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-69-F-Ob & Se il soggetto selezionato è di tipo "PF", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Cognome", "Nome" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliPF}  \\ \ref{addValoreCognome} \\ \ref{addValoreNome} \\ \ref{addValoreIndirizziDigitali} \end{tabular} \\
 \hline
-R-70-F-Ob & Se il soggetto selezionato è di tipo "RUP", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Cognome", "Nome", "Codice Fiscale" "Denominazione Amministrazione/Codice IPA", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliRUP} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-70-F-Ob & Se il soggetto selezionato è di tipo "RUP", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Cognome", "Nome", "Codice Fiscale" "Denominazione Amministrazione/Codice IPA", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & \begin{tabular}[t]{@{}l} \ref{addDettagliRUP}  \\ \ref{addValoreCognome} \\ \ref{addValoreNome} \\ \ref{addValoreCF} \\ \ref{addValoreDenominazioneAmmIPA} \\ \ref{addValoreDenominazioneAmmAOO} \\ \ref{addValoreDenominazioneAmmUOR} \\ \ref{addValoreIndirizziDigitali} \end{tabular} \\
 \hline
-R-71-F-Ob & Se il soggetto selezionato è di tipo "SW", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per il campo "Denominazione Sistema" & \begin{tabular}[t]{@{}l} \ref{addDettagliSW} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-71-F-Ob & Se il soggetto selezionato è di tipo "SW", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per il campo "Denominazione Sistema" & \begin{tabular}[t]{@{}l} \ref{addDettagliSW}  \\ \ref{addValoreDenominazioneSistema} \end{tabular} \\
 \hline
 R-72-F-Ob & All'interno di una ricerca con filtri, l'utente deve poter visualizzare il nome del campo in una lista & \ref{visualizzaNomeCampo} \\
 \hline
@@ -188,9 +188,9 @@ R-74-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente 
 \hline
 R-75-F-Ob & Per il Documento Informatico e Amministrativo Informatico, il sistema deve rendere disponibile una sezione per il filtro "Dati di Registrazione" & \ref{addDatiRegistrazione} \\
 \hline
-R-76-F-Ob & Per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Dati di Registrazione", l'utente deve poter inserire il valore per i campi "Tipologia di Flusso", "Tipo di Registro", "Data/Ora di Registrazione", "Numero Documento" e "Codice Registro" & \begin{tabular}[t]{@{}l} \ref{addDatiRegistrazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-76-F-Ob & Per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Dati di Registrazione", l'utente deve poter inserire il valore per i campi "Tipologia di Flusso", "Tipo di Registro", "Data/Ora di Registrazione", "Numero Documento" e "Codice Registro" & \begin{tabular}[t]{@{}l} \ref{addDatiRegistrazione}  \\ \ref{addValoreTipologiaDiFlusso} \\ \ref{addValoreTipologiaDiFlussoEntrata} \\ \ref{addValoreTipologiaDiFlussoUscita} \\ \ref{addValoreTipologiaDiFlussoInterno} \\ \ref{addValoreTipologiaDiRegistro} \\ \ref{addValoreTipologiaDiRegistroNessuno} \\ \ref{addValoreTipologiaDiRegistroProtocollo} \\ \ref{addValoreTipologiaDiRegistroRepertorio} \\ \ref{addValoreDataRegistrazione} \\ \ref{addValoreNumeroDocumento} \\ \ref{addValoreCodiceRegistro} \end{tabular} \\
 \hline
-R-77-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Tipologia Documentale" & \begin{tabular}[t]{@{}l} \ref{addTipologiaDocumentale} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-77-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Tipologia Documentale" & \begin{tabular}[t]{@{}l} \ref{addTipologiaDocumentale}  \end{tabular} \\
 \hline
 R-78-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Modalità di Formazione" tra:
 \begin{itemize}
@@ -198,27 +198,27 @@ R-78-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente 
     \item Acquisizione di un documento informatico per via telematica o su supporto informatico, acquisizione della copia per immagine su supporto informatico di un documento analogico, acquisizione della copia informatica di un documento analogico;
     \item Memorizzazione su supporto informatico in formato digitale delle informazioni risultanti da transazioni o processi informatici o dalla presentazione telematica di dati attraverso moduli o formulari resi disponibili all'utente;
     \item Generazione o raggruppamento anche in via automatica di un insieme di dati o registrazioni, provenienti da una o più banche dati, anche appartenenti a più soggetti interoperanti, secondo una struttura logica predeterminata e memorizzata in forma statica;
-\end{itemize} & \begin{tabular}[t]{@{}l} \ref{addModalitaFormazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+\end{itemize} & \begin{tabular}[t]{@{}l} \ref{addModalitaFormazione}  \\ \ref{addModalitaFormazioneExNovo} \\ \ref{addModalitaFormazioneAcquisizione} \\ \ref{addModalitaFormazioneMemorizzazione} \\ \ref{addModalitaFormazioneGenerazione} \end{tabular} \\
 \hline
-R-79-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Campo Riservato" tra "Vero" o "Falso" & \begin{tabular}[t]{@{}l} \ref{addRiservato} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-79-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Campo Riservato" tra "Vero" o "Falso" & \begin{tabular}[t]{@{}l} \ref{addRiservato}  \end{tabular} \\
 \hline
 R-80-F-Ob & Per il Documento Informatico e Amministrativo Informatico, il sistema deve rendere disponibile una sezione per il filtro "Identificativo del Formato" & \ref{addIdentificativoFormato} \\
 \hline
-R-81-F-Ob & Per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Identificativo del Formato", l'utente deve poter inserire il valore per i campi "Formato" e "Prodotto Software" & \begin{tabular}[t]{@{}l} \ref{addIdentificativoFormato} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-81-F-Ob & Per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Identificativo del Formato", l'utente deve poter inserire il valore per i campi "Formato" e "Prodotto Software" & \begin{tabular}[t]{@{}l} \ref{addIdentificativoFormato}  \\ \ref{addValoreTipologiaFormato} \\ \ref{addValoreNomeProdotto} \\ \ref{addValoreNumeroVersione} \\ \ref{addValoreNomeProduttore} \end{tabular} \\
 \hline
 R-82-F-Ob & Per il Documento Informatico e Amministrativo Informatico, il sistema deve rendere disponibile una sezione per il filtro "Dati di Verifica" & \ref{addDatiVerifica} \\
 \hline
-R-83-F-Ob & Per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Dati di Verifica", l'utente deve poter inserire il valore booleano per i campi "Firmato Digitalmente", "Sigillato Elettronicamente", "Marcatura Temporale" e "conformità copie immagine su supporto informatico" & \begin{tabular}[t]{@{}l} \ref{addDatiVerifica} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-83-F-Ob & Per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Dati di Verifica", l'utente deve poter inserire il valore booleano per i campi "Firmato Digitalmente", "Sigillato Elettronicamente", "Marcatura Temporale" e "conformità copie immagine su supporto informatico" & \begin{tabular}[t]{@{}l} \ref{addDatiVerifica}  \\ \ref{addValoreFirmaDigitalePresente} \\ \ref{addValoreSigilloElettronicoPresente} \\ \ref{addValoreMarcaturaTemporalePresente} \\ \ref{addValoreConformitaCopieImmagine} \end{tabular} \\
 \hline
-R-84-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Nome del Documento" & \begin{tabular}[t]{@{}l} \ref{addNomeDocumento} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-84-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Nome del Documento" & \begin{tabular}[t]{@{}l} \ref{addNomeDocumento}  \end{tabular} \\
 \hline
-R-85-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Versione del Documento" & \begin{tabular}[t]{@{}l} \ref{addVersioneDocumento} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-85-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Versione del Documento" & \begin{tabular}[t]{@{}l} \ref{addVersioneDocumento}  \end{tabular} \\
 \hline
-R-86-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Identificativo del Documento Primario" & \begin{tabular}[t]{@{}l} \ref{addIdentificativoDocumentoPrimario} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-86-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Identificativo del Documento Primario" & \begin{tabular}[t]{@{}l} \ref{addIdentificativoDocumentoPrimario}  \end{tabular} \\
 \hline
 R-87-F-Ob & Per il Documento Informatico e Amministrativo Informatico, il sistema deve rendere disponibile una sezione per il filtro "Tracciatura Modifiche di Documento" & \ref{addTracciatureModificheDocumento} \\
 \hline
-R-88-F-Ob & Per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Tracciatura Modifiche di Documento", l'utente deve poter inserire il valore per i campi "Tipo di Modifica", "Soggetto Autore della Modifica", "Data/Ora della Modifica" e "IdDoc versione precedente" & \begin{tabular}[t]{@{}l} \ref{addTracciatureModificheDocumento} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-88-F-Ob & Per il Documento Informatico e Amministrativo Informatico, all'interno della sezione del filtro "Tracciatura Modifiche di Documento", l'utente deve poter inserire il valore per i campi "Tipo di Modifica", "Soggetto Autore della Modifica", "Data/Ora della Modifica" e "IdDoc versione precedente" & \begin{tabular}[t]{@{}l} \ref{addTracciatureModificheDocumento}  \\ \ref{addValoreTipoModifica} \\ \ref{addValoreTipoModificaAnnullamento} \\ \ref{addValoreTipoModificaRegistrazione} \\ \ref{addValoreTipoModificaIntegrazione} \\ \ref{addValoreTipoModificaAnnotazione} \\ \ref{addValoreDataOraModifica} \\ \ref{addValoreIdVersionePrecedente} \end{tabular} \\
 \hline
 R-89-F-Ob & All'interno della sezione di filtri per tipo documentale, il sistema deve permettere di selezionare i filtri specifici per il tipo "Aggregazione Documentale Informatica" & \ref{specificaFiltriAggregazione} \\
 \hline
@@ -228,33 +228,33 @@ R-91-F-Ob & Per l'Aggregazione Documentale Informatica, il sistema deve rendere 
 \hline
 R-92-F-Ob & Per l'Aggregazione Documentale Informatica, il sistema deve rendere disponibile una sezione per il filtro "Tipo di Aggregazione" & \ref{addTipoAggregazione} \\
 \hline
-R-93-F-Ob & Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Tipo di Aggregazione", l'utente deve poter inserire il valore per il campo "Tipo di Aggregazione" tra "Fascicolo", "Serie Documentale" o "Serie di Fascicoli" & \begin{tabular}[t]{@{}l} \ref{addTipoAggregazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-93-F-Ob & Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Tipo di Aggregazione", l'utente deve poter inserire il valore per il campo "Tipo di Aggregazione" tra "Fascicolo", "Serie Documentale" o "Serie di Fascicoli" & \begin{tabular}[t]{@{}l} \ref{addTipoAggregazione}  \\ \ref{addValoreTipoAggregazioneSerieDocumentale} \\ \ref{addValoreTipoAggregazioneSerieFascicoli} \end{tabular} \\
 \hline
-R-94-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Identificativo dell'Aggreagazione Documentale" & \begin{tabular}[t]{@{}l} \ref{addIdAggregazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-94-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Identificativo dell'Aggreagazione Documentale" & \begin{tabular}[t]{@{}l} \ref{addIdAggregazione}  \end{tabular} \\
 \hline
-R-95-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Tipologia di Fascicolo" tra "Affare", "Attività", "Persona Fisica", "Persona Giuridica" e "Procedimento Amministrativo" & \begin{tabular}[t]{@{}l} \ref{addTipologiaFascicolo} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-95-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Tipologia di Fascicolo" tra "Affare", "Attività", "Persona Fisica", "Persona Giuridica" e "Procedimento Amministrativo" & \begin{tabular}[t]{@{}l} \ref{addTipologiaFascicolo}  \\ \ref{addValoreTipologiaFascicoloAffare} \\ \ref{addValoreTipologiaFascicoloAttivita} \\ \ref{addValoreTipologiaFascicoloPersonaFisica} \\ \ref{addValoreTipologiaFascicoloPersonaGiuridica} \\ \ref{addValoreTipologiaFascicoloProcedimentoAmministrativo} \end{tabular} \\
 \hline
-R-96-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Id Aggregazione Primario" & \begin{tabular}[t]{@{}l} \ref{addIdAggregazionePrimario} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-96-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Id Aggregazione Primario" & \begin{tabular}[t]{@{}l} \ref{addIdAggregazionePrimario}  \end{tabular} \\
 \hline
-R-97-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Data Apertura" & \begin{tabular}[t]{@{}l} \ref{addDataApertura} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-97-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Data Apertura" & \begin{tabular}[t]{@{}l} \ref{addDataApertura}  \end{tabular} \\
 \hline
-R-98-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Data Chiusura" & \begin{tabular}[t]{@{}l} \ref{addDataChiusura} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-98-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Data Chiusura" & \begin{tabular}[t]{@{}l} \ref{addDataChiusura}  \end{tabular} \\
 \hline
 R-99-F-Ob & Per l'Aggregazione Documentale Informatica, il sistema deve rendere disponibile una sezione per il filtro "Procedimento Amministrativo" & \ref{addProcedimentoAmministrativo} \\
 \hline
-R-100-F-Ob & Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Procedimento Amministrativo", l'utente deve poter inserire il valore per i campi "Materia/Argomento/Struttura", "Procedimento", "Catalogo Procedimenti" e "Fasi" & \begin{tabular}[t]{@{}l} \ref{addProcedimentoAmministrativo} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-100-F-Ob & Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Procedimento Amministrativo", l'utente deve poter inserire il valore per i campi "Materia/Argomento/Struttura", "Procedimento", "Catalogo Procedimenti" e "Fasi" & \begin{tabular}[t]{@{}l} \ref{addProcedimentoAmministrativo}  \\ \ref{addValoreMateriaArgomentoStrutturaProcedimentoAmministrativo} \\ \ref{addValoreDenominazioneProcedimentoAmministrativo} \\ \ref{addValoreURICatalogoProcedimenti} \end{tabular} \\
 \hline
-R-101-F-Ob & Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Procedimento Amministrativo" per il campo "Fasi", l'utente deve poter inserire il valore per il campo "Tipo Fase" tra "Preparatoria", "Istruttoria", "Consultiva", "Decisoria o Deliberativa" o "Integrazione dell'efficacia", il campo "Data Inizio Fase" e "Data Fine Fase" se presente & \begin{tabular}[t]{@{}l} \ref{addFasiProcedimentoAmministrativo} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-101-F-Ob & Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Procedimento Amministrativo" per il campo "Fasi", l'utente deve poter inserire il valore per il campo "Tipo Fase" tra "Preparatoria", "Istruttoria", "Consultiva", "Decisoria o Deliberativa" o "Integrazione dell'efficacia", il campo "Data Inizio Fase" e "Data Fine Fase" se presente & \begin{tabular}[t]{@{}l} \ref{addFasiProcedimentoAmministrativo}  \\ \ref{addValoreTipoFase} \\ \ref{addValoreTipoFasePreparatoria} \\ \ref{addValoreTipoFaseIstruttoria} \\ \ref{addValoreTipoFaseConsultiva} \\ \ref{addValoreTipoFaseDecisoria} \\ \ref{addValoreTipoFaseIntegrazione} \\ \ref{addDataInizioFase} \\ \ref{addDataFineFase} \end{tabular} \\
 \hline
 R-102-F-Ob & Per l'Aggregazione Documentale Informatica, il sistema deve rendere disponibile una sezione per il filtro "Assegnazione" & \ref{addAssegnazione} \\
 \hline
-R-103-F-Ob & Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Assegnazione", l'utente deve poter inserire una o più volte il valore per i campi "Tipo Assegnazione", "Soggetto Assegnatario", "Data Inizio Assegnazione" e "Data Fine Assegnazione" & \begin{tabular}[t]{@{}l} \ref{addAssegnazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-103-F-Ob & Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Assegnazione", l'utente deve poter inserire una o più volte il valore per i campi "Tipo Assegnazione", "Soggetto Assegnatario", "Data Inizio Assegnazione" e "Data Fine Assegnazione" & \begin{tabular}[t]{@{}l} \ref{addAssegnazione}  \\ \ref{addValoreTipoAssegnazione} \\ \ref{addValoreTipoAssegnazionePerCompetenza} \\ \ref{addValoreTipoAssegnazionePerConoscenza} \\ \ref{addValoreDataInizioAssegnazione} \\ \ref{addValoreDataFineAssegnazione} \end{tabular} \\
 \hline
-R-104-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Progressivo Aggregazione" & \begin{tabular}[t]{@{}l} \ref{addProgressivoAggregazione} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-104-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Progressivo Aggregazione" & \begin{tabular}[t]{@{}l} \ref{addProgressivoAggregazione}  \end{tabular} \\
 \hline
 R-105-F-Ob & All'interno della sezione di filtri per custom metadata, il sistema deve permettere di selezionare i filtri specifici per i metadata presenti & \ref{addCustomMetadata} \\
 \hline
-R-106-F-Ob & Per ciascun custom metadata, l'utente deve poter inserire il nome del metadato e il relativo valore & \begin{tabular}[t]{@{}l} \ref{addFiltroMetadatoCustom} \\ \ref{compilaValoreFiltro} \end{tabular} \\
+R-106-F-Ob & Per ciascun custom metadata, l'utente deve poter inserire il nome del metadato e il relativo valore & \begin{tabular}[t]{@{}l} \ref{addFiltroMetadatoCustom}  \end{tabular} \\
 \hline
 R-107-F-Ob & Quando viene eseguita una ricerca, l'utente deve poter visualizzare i risultati della ricerca & \ref{visualizzaRisultati} \\
 \hline
@@ -266,11 +266,11 @@ R-110-F-Ob & L'utente deve poter visualizzare il tipo del documento o aggregazio
 \hline
 R-111-F-Ob & Se la ricerca non produce risultati, l'utente deve poter visualizzare un messaggio di errore & \ref{nessunRisultato} \\
 \hline
-R-112-F-Ob & L'utente deve essere informato quando il formato del valore inserito non è valido & \ref{formatoNonCorretto} \\
+R-112-F-Ob & L'utente deve essere informato quando il formato del valore inserito non è valido & \begin{tabular}[t]{@{}l} \ref{formatoNonCorrettoStringa} \\ \ref{formatoNonCorrettoData} \\ \ref{formatoNonCorrettoNumeroInteroPositivo} \\ \ref{formatoNonCorrettoNumero} \end{tabular} \\
 \hline
-R-113-F-Ob & L'utente deve poter compilare il filtro selezionato con un valore & \ref{compilaValoreFiltro} \\
+R-113-F-Ob & L'utente deve poter compilare il filtro selezionato con un valore & \begin{tabular}[t]{@{}l} \ref{compilaValoreFiltroIndiceDiClassificazione} \\ \ref{compilaValoreFiltroURIPianoDiClassificazione} \\ \ref{compilaValoreFiltroTempoDiConservazione} \\ \ref{compilaValoreFiltroTempoDiConservazionePerenne} \\ \ref{compilaValoreFiltroTipologiaDiFlusso} \\ \ref{compilaValoreFiltroTipologiaDiRegistro} \end{tabular} \\
 \hline
-R-114-F-Ob & Se il valore inserito in un filtro non è corretto l'utente deve poter visualizzare un messaggio di errore & \ref{formatoNonCorretto} \\
+R-114-F-Ob & Se il valore inserito in un filtro non è corretto l'utente deve poter visualizzare un messaggio di errore & \begin{tabular}[t]{@{}l} \ref{formatoNonCorrettoStringa} \\ \ref{formatoNonCorrettoData} \\ \ref{formatoNonCorrettoNumeroInteroPositivo} \\ \ref{formatoNonCorrettoNumero} \end{tabular} \\
 \hline
 R-115-F-Ob & L'utente deve poter salvare il documento in locale in una cartella selezionata & \ref{salvaDocumento} \\
 \hline
@@ -670,7 +670,7 @@ prodotto software che lo ha generato & \ref{visualizzaInformazioniIdentificativo
 \subsection{Requisiti di Qualità}
 
 \rowcolors{2}{gray!15}{white}
-\begin{longtable}{|p{2.5cm}|p{9.5cm}|p{2.5cm}|}
+\begin{longtable}{|p{2.5cm}|p{7.5cm}|p{4.5cm}|}
 \hline
 \rowcolor{zpusgreen!30}
 \textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
@@ -704,7 +704,7 @@ R-8-Q-De & L'interfaccia utente deve rispettare i criteri di accessibilità defi
 \subsection{Requisiti di Vincolo}
 
 \rowcolors{2}{gray!15}{white}
-\begin{longtable}{|p{2.5cm}|p{9.5cm}|p{2.5cm}|}
+\begin{longtable}{|p{2.5cm}|p{7.5cm}|p{4.5cm}|}
 \hline
 \rowcolor{zpusgreen!30}
 \textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
@@ -920,9 +920,25 @@ R-11-V-Ob & Il sistema deve supportare rigorosamente la struttura dei metadati d
 \hline
 \ref{nessunRisultato} & R-111-F-Ob \\
 \hline
-\ref{compilaValoreFiltro} & R-113-F-Ob \\
+\ref{compilaValoreFiltroIndiceDiClassificazione} & R-113-F-Ob \\
 \hline
-\ref{formatoNonCorretto} & R-112-F-Ob, R-114-F-Ob \\
+\ref{compilaValoreFiltroURIPianoDiClassificazione} & R-113-F-Ob \\
+\hline
+\ref{compilaValoreFiltroTempoDiConservazione} & R-113-F-Ob \\
+\hline
+\ref{compilaValoreFiltroTempoDiConservazionePerenne} & R-113-F-Ob \\
+\hline
+\ref{compilaValoreFiltroTipologiaDiFlusso} & R-113-F-Ob \\
+\hline
+\ref{compilaValoreFiltroTipologiaDiRegistro} & R-113-F-Ob \\
+\hline
+\ref{formatoNonCorrettoStringa} & R-112-F-Ob, R-114-F-Ob \\
+\hline
+\ref{formatoNonCorrettoData} & R-112-F-Ob, R-114-F-Ob \\
+\hline
+\ref{formatoNonCorrettoNumeroInteroPositivo} & R-112-F-Ob, R-114-F-Ob \\
+\hline
+\ref{formatoNonCorrettoNumero} & R-112-F-Ob, R-114-F-Ob \\
 \hline
 \ref{salvaDocumento} & R-115-F-Ob \\
 \hline
@@ -1238,6 +1254,156 @@ R-11-V-Ob & Il sistema deve supportare rigorosamente la struttura dei metadati d
 \hline
 \ref{visualizzaInformazioniVerifica} & R-257-F-Ob \\
 \hline
+\ref{statoVerificaElementoNonIntegro} & R-5-F-Ob, R-6-F-Ob, R-16-F-Ob \\
+\hline
+\ref{statoVerificaElementoIntegro} & R-5-F-Ob, R-6-F-Ob, R-16-F-Ob \\
+\hline
+\ref{statoVerificaElementoNonVerificato} & R-5-F-Ob, R-6-F-Ob, R-16-F-Ob \\
+\hline
+\ref{StatoIndicizzazioneCompletata} & R-25-F-Op \\
+\hline
+\ref{StatoIndicizzazioneNonCompletata} & R-25-F-Op \\
+\hline
+\ref{addValoreIndiceDiClassificazione} & R-48-F-Ob \\
+\hline
+\ref{addValoreDescrizione} & R-48-F-Ob \\
+\hline
+\ref{addValoreURIPianoDiClassificazione} & R-48-F-Ob \\
+\hline
+\ref{addTipoDocumentoDI} & R-55-F-Ob \\
+\hline
+\ref{addTipoDocumentoDAI} & R-55-F-Ob \\
+\hline
+\ref{addTipoDocumentoAgg} & R-55-F-Ob \\
+\hline
+\ref{addValoreDenominazioneAmmIPA} & R-65-F-Ob, R-70-F-Ob \\
+\hline
+\ref{addValoreDenominazioneAmmAOO} & R-65-F-Ob, R-67-F-Ob, R-70-F-Ob \\
+\hline
+\ref{addValoreDenominazioneAmmUOR} & R-65-F-Ob, R-67-F-Ob, R-70-F-Ob \\
+\hline
+\ref{addValoreIndirizziDigitali} & R-65-F-Ob, R-66-F-Ob, R-67-F-Ob, R-68-F-Ob, R-69-F-Ob, R-70-F-Ob \\
+\hline
+\ref{addValoreDenominazioneAmministrazione} & R-66-F-Ob \\
+\hline
+\ref{addValoreDenominazioneUfficio} & R-66-F-Ob, R-68-F-Ob \\
+\hline
+\ref{addValoreCognome} & R-67-F-Ob, R-69-F-Ob, R-70-F-Ob \\
+\hline
+\ref{addValoreNome} & R-67-F-Ob, R-69-F-Ob, R-70-F-Ob \\
+\hline
+\ref{addValoreCF} & R-67-F-Ob, R-68-F-Ob, R-70-F-Ob \\
+\hline
+\ref{addValoreDenominazioneOrganizzazione} & R-68-F-Ob \\
+\hline
+\ref{addValoreDenominazioneSistema} & R-71-F-Ob \\
+\hline
+\ref{addValoreTipologiaDiFlusso} & R-76-F-Ob \\
+\hline
+\ref{addValoreTipologiaDiFlussoEntrata} & R-76-F-Ob \\
+\hline
+\ref{addValoreTipologiaDiFlussoUscita} & R-76-F-Ob \\
+\hline
+\ref{addValoreTipologiaDiFlussoInterno} & R-76-F-Ob \\
+\hline
+\ref{addValoreTipologiaDiRegistro} & R-76-F-Ob \\
+\hline
+\ref{addValoreTipologiaDiRegistroNessuno} & R-76-F-Ob \\
+\hline
+\ref{addValoreTipologiaDiRegistroProtocollo} & R-76-F-Ob \\
+\hline
+\ref{addValoreTipologiaDiRegistroRepertorio} & R-76-F-Ob \\
+\hline
+\ref{addValoreDataRegistrazione} & R-76-F-Ob \\
+\hline
+\ref{addValoreNumeroDocumento} & R-76-F-Ob \\
+\hline
+\ref{addValoreCodiceRegistro} & R-76-F-Ob \\
+\hline
+\ref{addModalitaFormazioneExNovo} & R-78-F-Ob \\
+\hline
+\ref{addModalitaFormazioneAcquisizione} & R-78-F-Ob \\
+\hline
+\ref{addModalitaFormazioneMemorizzazione} & R-78-F-Ob \\
+\hline
+\ref{addModalitaFormazioneGenerazione} & R-78-F-Ob \\
+\hline
+\ref{addValoreTipologiaFormato} & R-81-F-Ob \\
+\hline
+\ref{addValoreNomeProdotto} & R-81-F-Ob \\
+\hline
+\ref{addValoreNumeroVersione} & R-81-F-Ob \\
+\hline
+\ref{addValoreNomeProduttore} & R-81-F-Ob \\
+\hline
+\ref{addValoreFirmaDigitalePresente} & R-83-F-Ob \\
+\hline
+\ref{addValoreSigilloElettronicoPresente} & R-83-F-Ob \\
+\hline
+\ref{addValoreMarcaturaTemporalePresente} & R-83-F-Ob \\
+\hline
+\ref{addValoreConformitaCopieImmagine} & R-83-F-Ob \\
+\hline
+\ref{addValoreTipoModifica} & R-88-F-Ob \\
+\hline
+\ref{addValoreTipoModificaAnnullamento} & R-88-F-Ob \\
+\hline
+\ref{addValoreTipoModificaRegistrazione} & R-88-F-Ob \\
+\hline
+\ref{addValoreTipoModificaIntegrazione} & R-88-F-Ob \\
+\hline
+\ref{addValoreTipoModificaAnnotazione} & R-88-F-Ob \\
+\hline
+\ref{addValoreDataOraModifica} & R-88-F-Ob \\
+\hline
+\ref{addValoreIdVersionePrecedente} & R-88-F-Ob \\
+\hline
+\ref{addValoreTipoAggregazioneSerieDocumentale} & R-93-F-Ob \\
+\hline
+\ref{addValoreTipoAggregazioneSerieFascicoli} & R-93-F-Ob \\
+\hline
+\ref{addValoreTipologiaFascicoloAffare} & R-95-F-Ob \\
+\hline
+\ref{addValoreTipologiaFascicoloAttivita} & R-95-F-Ob \\
+\hline
+\ref{addValoreTipologiaFascicoloPersonaFisica} & R-95-F-Ob \\
+\hline
+\ref{addValoreTipologiaFascicoloPersonaGiuridica} & R-95-F-Ob \\
+\hline
+\ref{addValoreTipologiaFascicoloProcedimentoAmministrativo} & R-95-F-Ob \\
+\hline
+\ref{addValoreMateriaArgomentoStrutturaProcedimentoAmministrativo} & R-100-F-Ob \\
+\hline
+\ref{addValoreDenominazioneProcedimentoAmministrativo} & R-100-F-Ob \\
+\hline
+\ref{addValoreURICatalogoProcedimenti} & R-100-F-Ob \\
+\hline
+\ref{addValoreTipoFase} & R-101-F-Ob \\
+\hline
+\ref{addValoreTipoFasePreparatoria} & R-101-F-Ob \\
+\hline
+\ref{addValoreTipoFaseIstruttoria} & R-101-F-Ob \\
+\hline
+\ref{addValoreTipoFaseConsultiva} & R-101-F-Ob \\
+\hline
+\ref{addValoreTipoFaseDecisoria} & R-101-F-Ob \\
+\hline
+\ref{addValoreTipoFaseIntegrazione} & R-101-F-Ob \\
+\hline
+\ref{addDataInizioFase} & R-101-F-Ob \\
+\hline
+\ref{addDataFineFase} & R-101-F-Ob \\
+\hline
+\ref{addValoreTipoAssegnazione} & R-103-F-Ob \\
+\hline
+\ref{addValoreTipoAssegnazionePerCompetenza} & R-103-F-Ob \\
+\hline
+\ref{addValoreTipoAssegnazionePerConoscenza} & R-103-F-Ob \\
+\hline
+\ref{addValoreDataInizioAssegnazione} & R-103-F-Ob \\
+\hline
+\ref{addValoreDataFineAssegnazione} & R-103-F-Ob \\
+\hline
 \href{https://7-zpus.github.io/Docs/assets/2_RTB/DocumentiEsterni/Verbali/2025-12-23-VerbaleEsterno.pdf}{\ul{Verbale Esterno 2025-12-23}\setulcolor{black}} & R-4-Q-Ob \\
 \hline
 \href{https://7-zpus.github.io/Docs/assets/2_RTB/DocumentiInterni/NormeDiProgetto.pdf}{\ul{Norme di Progetto}\setulcolor{black}\ped{(v1.0.0)}} & R-6-Q-Ob \\
@@ -1275,9 +1441,9 @@ R-3-F-Ob & \ref{classiDocumentali}, \ref{classeDocumentale} \\
 \hline
 R-4-F-Ob & \ref{classiDocumentali}, \ref{classeDocumentale}, \ref{nomeClasseDocumentale} \\
 \hline
-R-5-F-Ob & \ref{statoVerificaElemento} \\
+R-5-F-Ob & \ref{statoVerificaElemento}, \ref{statoVerificaElementoNonIntegro}, \ref{statoVerificaElementoIntegro}, \ref{statoVerificaElementoNonVerificato} \\
 \hline
-R-6-F-Ob & \ref{statoVerificaElemento} \\
+R-6-F-Ob & \ref{statoVerificaElemento}, \ref{statoVerificaElementoNonIntegro}, \ref{statoVerificaElementoIntegro}, \ref{statoVerificaElementoNonVerificato} \\
 \hline
 R-7-F-Ob & \ref{marcaturaTemporaleElemento} \\
 \hline
@@ -1297,7 +1463,7 @@ R-14-F-Ob & \ref{documentiProcesso}, \ref{documentoProcesso} \\
 \hline
 R-15-F-Ob & \ref{documentiProcesso}, \ref{documentoProcesso}, \ref{nomeDocumentoProcesso} \\
 \hline
-R-16-F-Ob & \ref{statoVerificaElemento} \\
+R-16-F-Ob & \ref{statoVerificaElemento}, \ref{statoVerificaElementoNonIntegro}, \ref{statoVerificaElementoIntegro}, \ref{statoVerificaElementoNonVerificato} \\
 \hline
 R-17-F-Ob & \ref{marcaturaTemporaleElemento} \\
 \hline
@@ -1309,13 +1475,13 @@ R-20-F-Ob & \ref{formatoDocumentoNonSupportato} \\
 \hline
 R-21-F-Ob & \ref{ricercaDIP} \\
 \hline
-R-22-F-Ob & \ref{ricercaClasse}, \ref{inserimentoNomeClasseDocumentale}, \ref{compilaValoreFiltro} \\
+R-22-F-Ob & \ref{ricercaClasse}, \ref{inserimentoNomeClasseDocumentale}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro} \\
 \hline
-R-23-F-Ob & \ref{ricercaProcesso}, \ref{inserimentoIdProcesso}, \ref{compilaValoreFiltro}\\
+R-23-F-Ob & \ref{ricercaProcesso}, \ref{inserimentoIdProcesso}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}\\
 \hline
 R-24-F-Op & \ref{ricercaDIP}, \ref{ricercaDIPSemantica} \\
 \hline
-R-25-F-Op & \ref{StatoIndicizzazione} \\
+R-25-F-Op & \ref{StatoIndicizzazione}, \ref{StatoIndicizzazioneCompletata}, \ref{StatoIndicizzazioneNonCompletata} \\
 \hline
 R-26-F-Ob & \ref{ricercaDIP} \\
 \hline
@@ -1357,25 +1523,25 @@ R-44-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, 
 \hline
 R-45-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addChiaveDescrittiva} \\
 \hline
-R-46-F-Ob & \ref{addChiaveDescrittiva}, \ref{compilaValoreFiltro} \\
+R-46-F-Ob & \ref{addChiaveDescrittiva}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro} \\
 \hline
 R-47-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addClassificazione} \\
 \hline
-R-48-F-Ob & \ref{addClassificazione}, \ref{compilaValoreFiltro} \\
+R-48-F-Ob & \ref{addClassificazione}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreIndiceDiClassificazione}, \ref{addValoreDescrizione}, \ref{addValoreURIPianoDiClassificazione} \\
 \hline
 R-49-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addTempoConserva} \\
 \hline
-R-50-F-Ob & \ref{addTempoConserva}, \ref{compilaValoreFiltro} \\
+R-50-F-Ob & \ref{addTempoConserva}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro} \\
 \hline
 R-51-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addTempoConserva} \\
 \hline
 R-52-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addNote} \\
 \hline
-R-53-F-Ob & \ref{addNote}, \ref{compilaValoreFiltro} \\
+R-53-F-Ob & \ref{addNote}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro} \\
 \hline
 R-54-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addTipoDocumento} \\
 \hline
-R-55-F-Ob & \ref{addTipoDocumento}, \ref{compilaValoreFiltro} \\
+R-55-F-Ob & \ref{addTipoDocumento}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addTipoDocumentoDI}, \ref{addTipoDocumentoDAI}, \ref{addTipoDocumentoAgg} \\
 \hline
 R-56-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{specificaFiltriComuni}, \ref{addSoggetti} \\
 \hline
@@ -1395,19 +1561,19 @@ R-63-F-Ob & \ref{addSoggetto}, \ref{specificaTipoSoggetto}, \ref{visualizzaTipiS
 \hline
 R-64-F-Ob & \ref{addSoggetto}, \ref{addDettagliSoggetto} \\
 \hline
-R-65-F-Ob & \ref{addDettagliPAI}, \ref{compilaValoreFiltro} \\
+R-65-F-Ob & \ref{addDettagliPAI}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreDenominazioneAmmIPA}, \ref{addValoreDenominazioneAmmAOO}, \ref{addValoreDenominazioneAmmUOR}, \ref{addValoreIndirizziDigitali} \\
 \hline
-R-66-F-Ob & \ref{addDettagliPAE}, \ref{compilaValoreFiltro} \\
+R-66-F-Ob & \ref{addDettagliPAE}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreDenominazioneAmministrazione}, \ref{addValoreDenominazioneUfficio}, \ref{addValoreIndirizziDigitali} \\
 \hline
-R-67-F-Ob & \ref{addDettagliAS}, \ref{compilaValoreFiltro} \\
+R-67-F-Ob & \ref{addDettagliAS}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreCognome}, \ref{addValoreNome}, \ref{addValoreCF}, \ref{addValoreDenominazioneAmmAOO}, \ref{addValoreDenominazioneAmmUOR}, \ref{addValoreIndirizziDigitali} \\
 \hline
-R-68-F-Ob & \ref{addDettagliPG}, \ref{compilaValoreFiltro} \\
+R-68-F-Ob & \ref{addDettagliPG}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreDenominazioneOrganizzazione}, \ref{addValoreCF}, \ref{addValoreDenominazioneUfficio}, \ref{addValoreIndirizziDigitali} \\
 \hline
-R-69-F-Ob & \ref{addDettagliPF}, \ref{compilaValoreFiltro} \\
+R-69-F-Ob & \ref{addDettagliPF}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreCognome}, \ref{addValoreNome}, \ref{addValoreIndirizziDigitali} \\
 \hline
-R-70-F-Ob & \ref{addDettagliRUP}, \ref{compilaValoreFiltro} \\
+R-70-F-Ob & \ref{addDettagliRUP}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreCognome}, \ref{addValoreNome}, \ref{addValoreCF}, \ref{addValoreDenominazioneAmmIPA}, \ref{addValoreDenominazioneAmmAOO}, \ref{addValoreDenominazioneAmmUOR}, \ref{addValoreIndirizziDigitali} \\
 \hline
-R-71-F-Ob & \ref{addDettagliSW}, \ref{compilaValoreFiltro} \\
+R-71-F-Ob & \ref{addDettagliSW}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreDenominazioneSistema} \\
 \hline
 R-72-F-Ob & \ref{visualizzaNomeCampo} \\
 \hline
@@ -1417,31 +1583,31 @@ R-74-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento},
 \hline
 R-75-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriDI-DAI}, \ref{addDatiRegistrazione} \\
 \hline
-R-76-F-Ob & \ref{addDatiRegistrazione}, \ref{compilaValoreFiltro} \\
+R-76-F-Ob & \ref{addDatiRegistrazione}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreTipologiaDiFlusso}, \ref{addValoreTipologiaDiFlussoEntrata}, \ref{addValoreTipologiaDiFlussoUscita}, \ref{addValoreTipologiaDiFlussoInterno}, \ref{addValoreTipologiaDiRegistro}, \ref{addValoreTipologiaDiRegistroNessuno}, \ref{addValoreTipologiaDiRegistroProtocollo}, \ref{addValoreTipologiaDiRegistroRepertorio}, \ref{addValoreDataRegistrazione}, \ref{addValoreNumeroDocumento}, \ref{addValoreCodiceRegistro} \\
 \hline
-R-77-F-Ob & \ref{addTipologiaDocumentale}, \ref{compilaValoreFiltro} \\
+R-77-F-Ob & \ref{addTipologiaDocumentale}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro} \\
 \hline
-R-78-F-Ob & \ref{addModalitaFormazione}, \ref{compilaValoreFiltro} \\
+R-78-F-Ob & \ref{addModalitaFormazione}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addModalitaFormazioneExNovo}, \ref{addModalitaFormazioneAcquisizione}, \ref{addModalitaFormazioneMemorizzazione}, \ref{addModalitaFormazioneGenerazione} \\
 \hline
-R-79-F-Ob & \ref{addRiservato}, \ref{compilaValoreFiltro} \\
+R-79-F-Ob & \ref{addRiservato}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro} \\
 \hline
 R-80-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriDI-DAI}, \ref{addIdentificativoFormato} \\
 \hline
-R-81-F-Ob & \ref{addIdentificativoFormato}, \ref{compilaValoreFiltro} \\
+R-81-F-Ob & \ref{addIdentificativoFormato}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreTipologiaFormato}, \ref{addValoreNomeProdotto}, \ref{addValoreNumeroVersione}, \ref{addValoreNomeProduttore} \\
 \hline
 R-82-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriDI-DAI}, \ref{addDatiVerifica} \\
 \hline
-R-83-F-Ob & \ref{addDatiVerifica}, \ref{compilaValoreFiltro} \\
+R-83-F-Ob & \ref{addDatiVerifica}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreFirmaDigitalePresente}, \ref{addValoreSigilloElettronicoPresente}, \ref{addValoreMarcaturaTemporalePresente}, \ref{addValoreConformitaCopieImmagine} \\
 \hline
-R-84-F-Ob & \ref{addNomeDocumento}, \ref{compilaValoreFiltro} \\
+R-84-F-Ob & \ref{addNomeDocumento}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro} \\
 \hline
-R-85-F-Ob & \ref{addVersioneDocumento}, \ref{compilaValoreFiltro} \\
+R-85-F-Ob & \ref{addVersioneDocumento}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro} \\
 \hline
-R-86-F-Ob & \ref{addIdentificativoDocumentoPrimario}, \ref{compilaValoreFiltro} \\
+R-86-F-Ob & \ref{addIdentificativoDocumentoPrimario}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro} \\
 \hline
 R-87-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriDI-DAI}, \ref{addTracciatureModificheDocumento} \\
 \hline
-R-88-F-Ob & \ref{addTracciatureModificheDocumento}, \ref{compilaValoreFiltro} \\
+R-88-F-Ob & \ref{addTracciatureModificheDocumento}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreTipoModifica}, \ref{addValoreTipoModificaAnnullamento}, \ref{addValoreTipoModificaRegistrazione}, \ref{addValoreTipoModificaIntegrazione}, \ref{addValoreTipoModificaAnnotazione}, \ref{addValoreDataOraModifica}, \ref{addValoreIdVersionePrecedente} \\
 \hline
 R-89-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriAggregazione} \\
 \hline
@@ -1451,33 +1617,33 @@ R-91-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento},
 \hline
 R-92-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriAggregazione}, \ref{addTipoAggregazione} \\
 \hline
-R-93-F-Ob & \ref{addTipoAggregazione}, \ref{compilaValoreFiltro} \\
+R-93-F-Ob & \ref{addTipoAggregazione}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreTipoAggregazioneSerieDocumentale}, \ref{addValoreTipoAggregazioneSerieFascicoli} \\
 \hline
-R-94-F-Ob & \ref{addIdAggregazione}, \ref{compilaValoreFiltro} \\
+R-94-F-Ob & \ref{addIdAggregazione}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro} \\
 \hline
-R-95-F-Ob & \ref{addTipologiaFascicolo}, \ref{compilaValoreFiltro} \\
+R-95-F-Ob & \ref{addTipologiaFascicolo}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreTipologiaFascicoloAffare}, \ref{addValoreTipologiaFascicoloAttivita}, \ref{addValoreTipologiaFascicoloPersonaFisica}, \ref{addValoreTipologiaFascicoloPersonaGiuridica}, \ref{addValoreTipologiaFascicoloProcedimentoAmministrativo} \\
 \hline
-R-96-F-Ob & \ref{addIdAggregazionePrimario}, \ref{compilaValoreFiltro} \\
+R-96-F-Ob & \ref{addIdAggregazionePrimario}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro} \\
 \hline
-R-97-F-Ob & \ref{addDataApertura}, \ref{compilaValoreFiltro} \\
+R-97-F-Ob & \ref{addDataApertura}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro} \\
 \hline
-R-98-F-Ob & \ref{addDataChiusura}, \ref{compilaValoreFiltro} \\
+R-98-F-Ob & \ref{addDataChiusura}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro} \\
 \hline
 R-99-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriAggregazione}, \ref{addProcedimentoAmministrativo} \\
 \hline
-R-100-F-Ob & \ref{addProcedimentoAmministrativo}, \ref{compilaValoreFiltro} \\
+R-100-F-Ob & \ref{addProcedimentoAmministrativo}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreMateriaArgomentoStrutturaProcedimentoAmministrativo}, \ref{addValoreDenominazioneProcedimentoAmministrativo}, \ref{addValoreURICatalogoProcedimenti} \\
 \hline
-R-101-F-Ob & \ref{addFasiProcedimentoAmministrativo}, \ref{compilaValoreFiltro} \\
+R-101-F-Ob & \ref{addFasiProcedimentoAmministrativo}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreTipoFase}, \ref{addValoreTipoFasePreparatoria}, \ref{addValoreTipoFaseIstruttoria}, \ref{addValoreTipoFaseConsultiva}, \ref{addValoreTipoFaseDecisoria}, \ref{addValoreTipoFaseIntegrazione}, \ref{addDataInizioFase}, \ref{addDataFineFase} \\
 \hline
 R-102-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addFiltriTipoDocumento}, \ref{specificaFiltriAggregazione}, \ref{addProcedimentoAmministrativo}, \ref{addAssegnazione} \\
 \hline
-R-103-F-Ob & \ref{addAssegnazione}, \ref{compilaValoreFiltro} \\
+R-103-F-Ob & \ref{addAssegnazione}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro}, \ref{addValoreTipoAssegnazione}, \ref{addValoreTipoAssegnazionePerCompetenza}, \ref{addValoreTipoAssegnazionePerConoscenza}, \ref{addValoreDataInizioAssegnazione}, \ref{addValoreDataFineAssegnazione} \\
 \hline
-R-104-F-Ob & \ref{addProgressivoAggregazione}, \ref{compilaValoreFiltro} \\
+R-104-F-Ob & \ref{addProgressivoAggregazione}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro} \\
 \hline
 R-105-F-Ob & \ref{specificaFiltriRicercaDocumento}, \ref{addCustomMetadata} \\
 \hline
-R-106-F-Ob & \ref{addFiltroMetadatoCustom}, \ref{compilaValoreFiltro} \\
+R-106-F-Ob & \ref{addFiltroMetadatoCustom}, \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro} \\
 \hline
 R-107-F-Ob & \ref{visualizzaRisultati} \\
 \hline
@@ -1489,11 +1655,11 @@ R-110-F-Ob & \ref{visualizzaRisultati}, \ref{infoRisultatiRicerca}, \ref{visuali
 \hline
 R-111-F-Ob & \ref{nessunRisultato} \\
 \hline
-R-112-F-Ob & \ref{formatoNonCorretto} \\
+R-112-F-Ob & \ref{formatoNonCorrettoStringa}, \ref{formatoNonCorrettoData}, \ref{formatoNonCorrettoNumeroInteroPositivo}, \ref{formatoNonCorrettoNumero} \\
 \hline
-R-113-F-Ob & \ref{compilaValoreFiltro} \\
+R-113-F-Ob & \ref{compilaValoreFiltroIndiceDiClassificazione}, \ref{compilaValoreFiltroURIPianoDiClassificazione}, \ref{compilaValoreFiltroTempoDiConservazione}, \ref{compilaValoreFiltroTempoDiConservazionePerenne}, \ref{compilaValoreFiltroTipologiaDiFlusso}, \ref{compilaValoreFiltroTipologiaDiRegistro} \\
 \hline
-R-114-F-Ob & \ref{formatoNonCorretto} \\
+R-114-F-Ob & \ref{formatoNonCorrettoStringa}, \ref{formatoNonCorrettoData}, \ref{formatoNonCorrettoNumeroInteroPositivo}, \ref{formatoNonCorrettoNumero} \\
 \hline
 R-115-F-Ob & \ref{salvaDocumento} \\
 \hline
