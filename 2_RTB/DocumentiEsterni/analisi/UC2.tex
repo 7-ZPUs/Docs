@@ -358,6 +358,12 @@
             \item \ref{addValoreParoleChiave} - Specifica valore Parole Chiave
       \end{itemize}
 \end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC12.1.2INC.png}
+    \caption{Inclusioni \ref{addChiaveDescrittiva} - Specifica filtro Chiave Descrittiva}
+    \label{fig:addChiaveDescrittiva}
+\end{figure}
 
 \deepusecase{addValoreOggetto}{Specifica valore Oggetto}\label{addValoreOggetto}
 \begin{itemize}
@@ -431,6 +437,12 @@
             \item \ref{addValoreURIPianoDiClassificazione} Specifica valore URI Piano di Classificazione
       \end{itemize} 
 \end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC12.1.3INC.png}
+    \caption{Inclusioni \ref{addClassificazione} - Specifica filtro Classificazione}
+    \label{fig:addClassificazione}
+\end{figure}
 
 \deepusecase{addValoreIndiceDiClassificazione}{Specifica valore Indice di Classificazione}\label{compilaValoreFiltroIndiceDiClassificazione}
 \begin{itemize}
@@ -499,6 +511,12 @@
 \end{itemize}
 
 \subsubusecase{addTempoConserva}{Specifica filtro Tempo di Conservazione}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC12.1.4.png}
+    \caption{\ref{addTempoConserva} - Specifica filtro Tempo di Conservazione}
+    \label{fig:addTempoConserva}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
@@ -560,6 +578,12 @@
 \end{itemize}
 
 \subsubusecase{addNote}{Specifica filtro Note}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC12.1.5.png}
+    \caption{\ref{addNote} - Specifica filtro Note}
+    \label{fig:addNote}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
@@ -584,6 +608,12 @@
 \end{itemize}
 
 \subsubusecase{addTipoDocumento}{Specifica filtro Tipo documento}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC12.1.6.png}
+    \caption{\ref{addTipoDocumento} - Specifica filtro Tipo documento}
+    \label{fig:addTipoDocumento}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{itemize}
@@ -786,7 +816,7 @@
       \begin{itemize}
             \item \ref{addValoreTipologiaDiFlusso} Specifica valore Tipologia di Flusso
             \item \ref{addValoreTipologiaDiRegistro} Specifica valore Tipo di Registro
-            \item \ref{addValoreDataOraRegistrazione} Specifica valore Data/Ora di Registrazione
+            \item \ref{addValoreDataRegistrazione} Specifica valore Data/Ora di Registrazione
             \item \ref{addValoreNumeroDocumento} Specifica valore Numero Documento
             \item \ref{addValoreCodiceRegistro} Specifica valore Codice Registro
       \end{itemize}
@@ -2364,7 +2394,7 @@
 \end{itemize}
 \begin{figure}[H]
       \centering
-      \includegraphics[width=1\textwidth]{../../assets/uml/UC12.2.2.9INC.png}
+      \includegraphics[width=1.1\textwidth]{../../assets/uml/UC12.2.2.9INC.png}
       \caption{Inclusioni \ref{addAssegnazione} - Specifica filtro Assegnazione}
       \label{fig:inclusioniSpecificaFiltriAssegnazione}
 \end{figure}
@@ -2433,7 +2463,7 @@
             \item L'Utente specifica il valore del Tipo Assegnazione: "Per Competenza".
             \item Il sistema salva il valore del Tipo Assegnazione per l'assegnazione che si sta specificando.
       \end{enumerate}
-      \item \textbf{Specializza}: \ref{compilaValoreFiltroAssegnazione} Compila valore filtro tipo assegnazione
+      \item \textbf{Specializza}: \ref{addValoreTipoAssegnazione} Compila valore filtro tipo assegnazione
 \end{itemize}
 
 \abyssalusecase{addValoreTipoAssegnazionePerConoscenza}{Specifica valore Tipo Assegnazione "Per Conoscenza" per filtro Assegnazione}
@@ -2452,7 +2482,7 @@
             \item L'Utente specifica il valore del Tipo Assegnazione: "Per Conoscenza".
             \item Il sistema salva il valore del Tipo Assegnazione per l'assegnazione che si sta specificando.
       \end{enumerate}
-      \item \textbf{Specializza}: \ref{compilaValoreFiltroAssegnazione} Compila valore filtro tipo assegnazione
+      \item \textbf{Specializza}: \ref{addValoreTipoAssegnazione} Compila valore filtro tipo assegnazione
 \end{itemize}
 
 \subsubdeepusecase{addValoreDataInizioAssegnazione}{Specifica valore Data di Inizio per filtro Assegnazione}
@@ -2513,7 +2543,7 @@
       \end{itemize}
       \item \textbf{Postcondizioni}: 
       \begin{itemize}
-            \item L'Utente ha specificato i valori del filtro Progressivo dell'Aggregazione (\ref{compilaValoreFiltroNumero})
+            \item L'Utente ha specificato i valori del filtro Progressivo dell'Aggregazione
             \item Il filtro Progressivo dell'Aggregazione è parametro per la ricerca con filtri e per la generazione del risultato
       \end{itemize}
       \item \textbf{Flusso Principale}:
@@ -2561,15 +2591,14 @@
       \item \textbf{Postcondizioni}: Il filtro aggiunto dall'Utente è parametro per la ricerca con filtri e per la generazione del risultato.
       \item \textbf{Flusso Principale}:
       \begin{enumerate}
-            \item L'Utente specifica il nome del metadato custom. (\ref{compilaValoreFiltroStringa}).
-            \item L'Utente specifica il valore del metadato custom per cui ricercare. (\ref{compilaValoreFiltroStringa}).
+            \item L'Utente specifica il nome del metadato custom.
+            \item L'Utente specifica il valore del metadato custom per cui ricercare.
             \item Il sistema imposta questi valori come parametro per la ricerca.
       \end{enumerate}
       \item \textbf{Flusso Alternativo}:
       \begin{itemize}
             \item L'Utente inserisce un valore non valido per il filtro del metadato custom (stringa vuota) (\ref{formatoNonCorrettoStringa})
       \end{itemize}
-      \item \textbf{Inclusioni}: \ref{compilaValoreFiltroStringa} Compila valore filtro stringa
       \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
@@ -2692,8 +2721,20 @@
       \end{itemize}
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC13.3.1INC.png}
+    \caption{Inclusioni \ref{addDettagliPAI} - Specifica dettagli soggetto tipo: PAI}
+    \label{fig:addDettagliPAI}
+\end{figure}
 
 \deepusecase{addValoreDenominazioneAmmIPA}{Specifica valore Denominazione Amministrazione/ Codice IPA} \label{addValoreDenominazioneAmmIPA}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC13.3.1.1.png}
+    \caption{\ref{addValoreDenominazioneAmmIPA} - Specifica valore Denominazione Amministrazione/ Codice IPA}
+    \label{fig:addValoreDenominazioneAmmIPA}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -2716,6 +2757,12 @@
 \end{itemize}
 
 \deepusecase{addValoreDenominazioneAmmAOO}{Specifica valore Denominazione Amministrazione AOO/ Codice IPA AOO} \label{addValoreDenominazioneAmmAOO}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC13.3.1.2.png}
+    \caption{\ref{addValoreDenominazioneAmmAOO} - Specifica valore Denominazione Amministrazione AOO/ Codice IPA AOO}
+    \label{fig:addValoreDenominazioneAmmAOO}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -2738,6 +2785,12 @@
 \end{itemize}
 
 \deepusecase{addValoreDenominazioneAmmUOR}{Specifica valore Denominazione Amministrazione UOR/ Codice IPA UOR} \label{addValoreDenominazioneAmmUOR}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC13.3.1.3.png}
+    \caption{\ref{addValoreDenominazioneAmmUOR} - Specifica valore Denominazione Amministrazione UOR/ Codice IPA UOR}
+    \label{fig:addValoreDenominazioneAmmUOR}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -2760,6 +2813,12 @@
 \end{itemize}
 
 \deepusecase{addValoreIndirizziDigitali}{Specifica valore Indirizzi Digitali di Riferimento} \label{addValoreIndirizziDigitali}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC13.3.1.4.png}
+    \caption{\ref{addValoreIndirizziDigitali} - Specifica valore Indirizzi Digitali di Riferimento}
+    \label{fig:addValoreIndirizziDigitali}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -2807,8 +2866,20 @@
       \end{itemize}
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../assets/uml/UC13.3.2INC.png}
+    \caption{Inclusioni \ref{addDettagliPAE} - Specifica dettagli soggetto tipo: PAE}
+    \label{fig:addDettagliPAE}
+\end{figure}
 
 \deepusecase{addValoreDenominazioneAmministrazione}{Specifica valore Denominazione Amministrazione} \label{addValoreDenominazioneAmministrazione}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC13.3.2.1.png}
+    \caption{\ref{addValoreDenominazioneAmministrazione} - Specifica valore Denominazione Amministrazione}
+    \label{fig:addValoreDenominazioneAmministrazione}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -2831,6 +2902,12 @@
 \end{itemize}
 
 \deepusecase{addValoreDenominazioneUfficio}{Specifica valore Denominazione Ufficio} \label{addValoreDenominazioneUfficio}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC13.3.2.2.png}
+    \caption{\ref{addValoreDenominazioneUfficio} - Specifica valore Denominazione Ufficio}
+    \label{fig:addValoreDenominazioneUfficio}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -2886,8 +2963,20 @@
       \end{itemize}
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC13.3.3INC.png}
+    \caption{Inclusioni \ref{addDettagliAS} - Specifica dettagli soggetto tipo: AS}
+    \label{fig:addDettagliAS}
+\end{figure}
 
 \deepusecase{addValoreCognome}{Specifica valore Cognome} \label{addValoreCognome}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC13.3.3.1.png}
+    \caption{\ref{addValoreCognome} - Specifica valore Cognome}
+    \label{fig:addValoreCognome}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -2910,6 +2999,12 @@
 \end{itemize}
 
 \deepusecase{addValoreNome}{Specifica valore Nome} \label{addValoreNome}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC13.3.3.2.png}
+    \caption{\ref{addValoreNome} - Specifica valore Nome}
+    \label{fig:addValoreNome}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -2932,6 +3027,12 @@
 \end{itemize}
 
 \deepusecase{addValoreCF}{Specifica valore Codice Fiscale / Partita Iva} \label{addValoreCF}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC13.3.3.3.png}
+    \caption{\ref{addValoreCF} - Specifica valore Codice Fiscale / Partita Iva}
+    \label{fig:addValoreCF}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -2974,15 +3075,27 @@
                   \item Il sistema salva i dettagli inseriti per il soggetto che l'utente sta aggiungendo.
             \end{enumerate}
       \item \textbf{Inclusioni}: \begin{itemize}
-            \item \ref{addValoreDenominazioneOrganizzazione}
+            \item \ref{addValoreDenominazioneOrganizzazione} Specifica valore Denominazione Organizzazione
             \item \ref{addValoreCF} Specifica valore Codice Fiscale / Partita Iva
             \item \ref{addValoreDenominazioneUfficio} Specifica valore Denominazione Ufficio
             \item \ref{addValoreIndirizziDigitali} Specifica valore Indirizzi Digitali di Riferimento
       \end{itemize}
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../assets/uml/UC13.3.4INC.png}
+    \caption{Inclusioni \ref{addDettagliPG} - Specifica dettagli soggetto tipo: PG}
+    \label{fig:addDettagliPG}
+\end{figure}
 
 \deepusecase{addValoreDenominazioneOrganizzazione}{Specifica valore Denominazione Organizzazione} \label{addValoreDenominazioneOrganizzazione}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC13.3.4.1.png}
+    \caption{\ref{addValoreDenominazioneOrganizzazione} - Specifica valore Denominazione Organizzazione}
+    \label{fig:addValoreDenominazioneOrganizzazione}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -3030,6 +3143,12 @@
       \end{itemize}
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../assets/uml/UC13.3.5INC.png}
+    \caption{Inclusioni \ref{addDettagliPF} - Specifica dettagli soggetto tipo: PF}
+    \label{fig:addDettagliPF}
+\end{figure}
 
 \subsubusecase{addDettagliRUP}{Specifica dettagli soggetto tipo: RUP}
 \begin{itemize}
@@ -3058,13 +3177,18 @@
             \item \ref{addValoreCognome} Specifica valore Cognome
             \item \ref{addValoreNome} Specifica valore Nome
             \item \ref{addValoreCF} Specifica valore Codice Fiscale / Partita Iva
-            \item \ref{addValoreDenominazioneAmministrazione} Specifica valore Denominazione Amministrazione/ Codice IPA
-            \item \ref{addValoreDenominazioneAmministrazioneAOO} Specifica valore Denominazione Amministrazione AOO/Denominazione Amministrazione UOR
-            \item \ref{addValoreDenominazioneUfficio} Specifica valore Denominazione Ufficio
+            \item \ref{addValoreDenominazioneAmmIPA} Specifica valore Denominazione Amministrazione/ Codice IPA
+            \item \ref{addValoreDenominazioneAmmAOO} Specifica valore Denominazione Amministrazione AOO/Denominazione Amministrazione UOR
             \item \ref{addValoreIndirizziDigitali} Specifica valore Indirizzi Digitali di Riferimento
       \end{itemize}
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC13.3.6INC.png}
+    \caption{Inclusioni \ref{addDettagliRUP} - Specifica dettagli soggetto tipo: RUP}
+    \label{fig:addDettagliRUP}
+\end{figure}
 
 \subsubusecase{addDettagliSW}{Specifica dettagli soggetto tipo: SW}
 \begin{itemize}
@@ -3083,8 +3207,20 @@
       \item \textbf{Inclusioni}: \ref{addValoreDenominazioneSistema} Specifica valore Denominazione Sistema
       \item \textbf{Specializza}: \ref{addDettagliSoggetto} Specifica dettagli soggetto
 \end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../assets/uml/UC13.3.7INC.png}
+    \caption{Inclusioni \ref{addDettagliSW} - Specifica dettagli soggetto tipo: SW}
+    \label{fig:addDettagliSW}
+\end{figure}
 
 \deepusecase{addValoreDenominazioneSistema}{Specifica valore Denominazione Sistema} \label{addValoreDenominazioneSistema}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC13.3.7.1.png}
+    \caption{\ref{addValoreDenominazioneSistema} - Specifica valore Denominazione Sistema}
+    \label{fig:addValoreDenominazioneSistema}
+\end{figure}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
