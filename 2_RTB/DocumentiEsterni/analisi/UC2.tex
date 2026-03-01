@@ -131,6 +131,10 @@
             \item L'Utente inserisce il nome della Classe Documentale da ricercare
             \item Il sistema riceve il nome della Classe Documentale
       \end{enumerate}
+      \item \textbf{Flusso Alternativo}: \begin{itemize}
+            \item La stringa inserita è vuota o composta da soli spazi (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \subusecase{ricercaProcesso}{Ricerca processo per Id}
@@ -173,6 +177,10 @@
             \item L'Utente inserisce l'Id del Processo da ricercare
             \item Il sistema riceve l'Id del Processo
       \end{enumerate}
+      \item \textbf{Flusso Alternativo}: \begin{itemize}
+            \item La stringa inserita è vuota o composta da soli spazi (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
 \usecase{campoNonValido}{Uno o più valori dei filtri di ricerca non validi}
@@ -195,7 +203,7 @@
 \usecase{StatoIndicizzazione}{Visualizza stato indicizzazione semantica}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../../assets/uml/UC11.png}
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC11.png}
     \caption{\ref{StatoIndicizzazione} - Visualizza stato indicizzazione semantica}
     \label{fig:uc_statoIndicizzazione}
 \end{figure}
@@ -1675,7 +1683,7 @@
       \item \textbf{Specializza}: \ref{addValoreTipoModifica}
 \end{itemize}
 
-\subsubdeepusecase{addValoreDataOraModifica}{Specifica Data/Ora della Modifica per filtro Tracciature Modifiche di Documento}
+\subdeepusecase{addValoreDataOraModifica}{Specifica Data/Ora della Modifica per filtro Tracciature Modifiche di Documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -1698,7 +1706,7 @@
       \item \textbf{Estensioni}: \ref{formatoNonCorrettoData} Formato non corretto: data
 \end{itemize}
 
-\subsubdeepusecase{addValoreIdVersionePrecedente}{Specifica identificativo documento versione precedente per filtro Tracciature Modifiche di Documento}
+\subdeepusecase{addValoreIdVersionePrecedente}{Specifica identificativo documento versione precedente per filtro Tracciature Modifiche di Documento}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: 
@@ -2118,7 +2126,7 @@
 \deepusecase{addProcedimentoAmministrativo}{Specifica filtro Procedimento Amministrativo}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{../../assets/uml/UC12.2.2.8.png}
+    \includegraphics[width=1\textwidth]{../../assets/uml/UC12.2.2.8.png}
     \caption{\ref{addProcedimentoAmministrativo} - Specifica filtro Procedimento Amministrativo}
     \label{fig:addProcedimentoAmministrativo}
 \end{figure}
@@ -2259,7 +2267,7 @@
 \end{itemize}
 \begin{figure}[H]
       \centering
-      \includegraphics[width=1\textwidth]{../../assets/uml/UC12.2.2.8.4INC.png}
+      \includegraphics[width=1.1\textwidth]{../../assets/uml/UC12.2.2.8.4INC.png}
       \caption{Inclusioni \ref{addProcedimentoAmministrativo} - Specifica filtro Procedimento Amministrativo}
       \label{fig:addFasiProcedimentoAmministrativoInclusioni}
 \end{figure}
@@ -2655,6 +2663,58 @@
       \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
 \end{itemize}
 
+\deepusecase{addValoreNomeMetadatoCustom}{Specifica valore Nome del Metadato Custom per filtro del Metadato Custom}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{../../assets/uml/UC12.3.1.1.png}
+      \caption{\ref{addValoreNomeMetadatoCustom} - Specifica valore Nome del Metadato Custom per filtro del Metadato Custom}
+      \label{fig:addValoreNomeMetadatoCustom}
+\end{figure}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando un filtro per un metadato custom
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificato il nome del metadato custom per il filtro del metadato custom che si sta specificando.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il nome del metadato custom per il filtro del metadato custom.
+            \item Il sistema salva il nome del metadato custom per il filtro del metadato custom che si sta specificando.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}            \item L'Utente inserisce un valore non valido per il nome del metadato custom (stringa vuota) (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
+\end{itemize}
+
+\deepusecase{addValoreValoreMetadatoCustom}{Specifica valore del Metadato Custom per filtro del Metadato Custom}
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{../../assets/uml/UC12.3.1.2.png}
+      \caption{\ref{addValoreValoreMetadatoCustom} - Specifica valore del Metadato Custom per filtro del Metadato Custom}
+      \label{fig:addValoreValoreMetadatoCustom}
+\end{figure}
+\begin{itemize}
+      \item \textbf{Attore Primario}: Utente
+      \item \textbf{Precondizioni}: 
+      \begin{itemize}            \item L'Utente ha avviato l'applicazione
+            \item L'Utente sta effettuando una ricerca nel DIP con filtri
+            \item L'Utente sta specificando un filtro per un metadato custom
+      \end{itemize}
+      \item \textbf{Postcondizioni}: Viene specificato il valore del metadato custom per il filtro del metadato custom che si sta specificando.
+      \item \textbf{Flusso Principale}:
+      \begin{enumerate}
+            \item L'Utente specifica il valore del metadato custom per il filtro del metadato custom.
+            \item Il sistema salva il valore del metadato custom per il filtro del metadato custom che si sta specificando.
+      \end{enumerate}
+      \item \textbf{Flusso Alternativo}:
+      \begin{itemize}            \item L'Utente inserisce un valore non valido per il valore del metadato custom (stringa vuota) (\ref{formatoNonCorrettoStringa})
+      \end{itemize}
+      \item \textbf{Estensioni}: \ref{formatoNonCorrettoStringa} Formato non corretto: stringa
+\end{itemize}
+
 \usecase{addSoggetto}{Aggiunta Soggetto ad un filtro}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
@@ -2776,7 +2836,7 @@
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../../assets/uml/UC13.3.1INC.png}
+    \includegraphics[width=0.8\textwidth]{../../assets/uml/UC13.3.1INC.png}
     \caption{Inclusioni \ref{addDettagliPAI} - Specifica dettagli soggetto tipo: PAI}
     \label{fig:addDettagliPAI}
 \end{figure}
