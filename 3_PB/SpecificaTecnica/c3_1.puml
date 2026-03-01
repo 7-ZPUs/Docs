@@ -1,21 +1,42 @@
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-Component_Boundary(main,"Main", "Node.js, TypeScript", "Processo principale che gestisce la logica di business pesante, l'indicizzazione e l'accesso diretto alle risorse locali."){
-    Component(dip_uploader, "DIP Uploader", "Node.js, TypeScript", "Componente che gestisce l'importazione dei pacchetti DIP, estraendo i file XML e preparando i dati per l'indicizzazione.")
-    Component(file_parser, "File Parser", "Node.js, TypeScript", "Componente responsabile dell'analisi e dell'estrazione dei dati dai file XML all'interno del pacchetto DIP.")
-    Component(indexer, "Indexer", "Node.js, TypeScript", "Componente che indicizza i metadati estratti e li memorizza nel database SQLite.")
-    Component(semantic_indexer, "Semantic Indexer", "Node.js, TypeScript", "Componente che genera vettori semantici dai metadati indicizzati e li memorizza nel database SQLite.")
-    Component(search_engine, "Search Engine", "Node.js, TypeScript", "Componente che gestisce le query di ricerca, sia testuali che semantiche, utilizzando il database SQLite e i modelli LLM.")
-    Component(sema_search_engine, "Semantic Search Engine", "Node.js, TypeScript", "Componente che gestisce le query di ricerca semantica, utilizzando i vettori memorizzati e i modelli LLM per restituire risultati pertinenti.")
-    Component(verification_engine, "Verification Engine", "Node.js, TypeScript", "Componente che verifica l'integrità e l'autenticità dei file all'interno del DIP, calcolando hash e verificando firme digitali.")
-    Component(export_manager, "Export Manager", "Node.js, TypeScript", "Componente che gestisce l'estrazione fisica dei file dal DIP per la stampa o il download.")
-    Component(ipc_handler, "IPC Handler", "Node.js, TypeScript", "Componente che gestisce tutte le comunicazioni IPC con il frontend Angular, fungendo da intermediario tra le richieste dell'interfaccia utente e i servizi di backend.")
-    Component(dbManager, "Database Manager", "Node.js, TypeScript", "Componente che gestisce tutte le operazioni di lettura/scrittura sui database SQLite, sia per i metadati che per i vettori semantici.")
-    Component(sema_dbManager, "Semantic Database Manager", "Node.js, TypeScript", "Componente specializzato nella gestione dei vettori semantici all'interno del database SQLite, ottimizzato per le operazioni di ricerca semantica.")
-   
-    Component(llm_inference, "LLM Inference Engine", "transformers.js, TypeScript", "Componente che gestisce l'inferenza utilizzando i modelli LLM locali per migliorare la pertinenza dei risultati di ricerca e fornire funzionalità avanzate come il completamento automatico e la generazione di suggerimenti.")
+Component_Ext(filesystem, "File System Locale", "File System", "Fornisce il pacchetto DIP originario e funge da destinazione per i file esportati/scaricati.")
+Component_Ext(sqlite, "Relational Database", "SQLite3", "Memorizza i metadati XML indicizzati.")
+Component_Ext(sqlite_vss, "Vector Database", "SQLite3 + sqlite-vss", "Memorizza i vettori generati per la ricerca semantica.")
+Component_Ext(renderer, "Renderer UI", "Angular, TypeScript", "Fornisce l'interfaccia visiva per la navigazione, la ricerca e la visualizzazione dei documenti.")
+
+Container_Boundary(main, "Main Process") {
+    Component(ipc_handler, "IPC Handler", "Node.js, TypeScript", "Gestisce tutte le comunicazioni IPC con il frontend Angular.")
+    Component(dip_uploader, "DIP Uploader", "Node.js, TypeScript", "Gestisce l'importazione dei pacchetti DIP, estraendo i file XML e preparando i dati per l'indicizzazione.")
+    Component(indexer, "Indexer", "Node.js, TypeScript", "Indicizza i metadati estratti e li memorizza nel database SQLite.")
+    Component(semantic_indexer, "Semantic Indexer", "Node.js, TypeScript", "Genera vettori semantici dai metadati e li memorizza nel database SQLite.")
+    Component(search_engine, "Search Engine", "Node.js, TypeScript", "Gestisce le query di ricerca testuale utilizzando il database SQLite.")
+    Component(sema_search_engine, "Semantic Search Engine", "Node.js, TypeScript", "Gestisce le query di ricerca semantica utilizzando i vettori e i modelli LLM.")
+    Component(verification_engine, "Verification Engine", "Node.js, TypeScript", "Verifica l'integrità e l'autenticità dei file nel DIP.")
+    Component(export_manager, "Export Manager", "Node.js, TypeScript", "Gestisce l'estrazione dei file dal DIP per la stampa o il download.")
+    Component(dbManager, "Database Manager", "Node.js, TypeScript", "Gestisce le operazioni di lettura/scrittura sui metadati nel database SQLite.")
+    Component(sema_dbManager, "Semantic DB Manager", "Node.js, TypeScript", "Gestisce i vettori semantici nel database SQLite-VSS.")
+    Component(llm_inference, "LLM Inference Engine", "transformers.js, TypeScript", "Gestisce l'inferenza con modelli LLM locali per la ricerca semantica.")
 }
 
-Rel()
-@endluml
+Rel(ipc_handler, dip_uploader, "Richieste di importazione DIP")
+Rel(ipc_handler, search_engine, "Query di ricerca testuale")
+Rel(ipc_handler, sema_search_engine, "Query di ricerca semantica")
+Rel(ipc_handler, verification_engine, "Richieste di verifica integrità")
+Rel(ipc_handler, export_manager, "Richieste di esportazione file")
+Rel(ipc_handler, renderer, "Risposte al frontend via IPC")
+Rel(dip_uploader, filesystem, "Legge i pacchetti DIP")
+Rel(dip_uploader, indexer, "Invia dati per l'indicizzazione")
+Rel(dip_uploader, semantic_indexer, "Invia dati per la generazione di vettori")
+Rel(indexer, dbManager, "Memorizza i metadati indicizzati")
+Rel(semantic_indexer, sema_dbManager, "Memorizza i vettori semantici")
+Rel(search_engine, dbManager, "Legge i metadati")
+Rel(sema_search_engine, sema_dbManager, "Legge i vettori semantici")
+Rel(sema_search_engine, llm_inference, "Utilizza i modelli LLM")
+Rel(dbManager, sqlite, "Lettura/scrittura")
+Rel(sema_dbManager, sqlite_vss, "Lettura/scrittura")
+Rel(verification_engine, dbManager, "Accede ai metadati per la verifica")
+Rel(export_manager, filesystem, "Accede ai file DIP per l'esportazione")
+
+@enduml
