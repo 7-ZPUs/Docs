@@ -1,0 +1,35 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Main Process - Export & Print Service
+
+Component_Ext(filesystem,  "File System Locale", "File System",         "Destinazione per i file estratti/esportati dal DIP.")
+Component_Ext(printer,     "Stampante",          "OS Print API",        "Dispositivo di output per la stampa dei documenti.")
+Component_Ext(export_ipc,  "Export IPC Handler", "Node.js, TypeScript", "Dispatcher IPC che avvia esportazione o stampa.")
+
+Container_Boundary(export_svc, "Export & Print Service") {
+
+    Component(export_manager, "Export Manager", "Node.js, TypeScript","Orchestratore: riceve la richiesta (export o print),\nrecupera il file dal DIP tramite IFileReader\ne lo instrada al canale corretto\n(FileExporter o PrintSender).")
+
+    Component(file_reader, "DIP File Reader", "Node.js, TypeScript","<<IFileReader>>\nAccesso I/O puro al pacchetto DIP.\nStessa interfaccia usata da Import e Verification Service.\nNessuna dipendenza da logica di esportazione.")
+
+    Component(file_exporter, "File Exporter", "Node.js, TypeScript","SRP: unica responsabilità di scrittura\ndei file estratti nel filesystem locale.\nNon conosce la stampante.")
+
+    Component(print_sender, "Print Sender", "Node.js, TypeScript","SRP: unica responsabilità di invio\ndei documenti alla stampante tramite OS Print API.\nNon conosce il filesystem di destinazione.")
+
+    note as ocp_note
+      OCP: aggiungere un nuovo canale di output (es. invio via email, upload cloud) 
+      significa aggiungere un nuovo componente senza modificare Export Manager, File 
+      Exporter o Print Sender.
+    end note
+}
+
+Rel(export_ipc,    export_manager, "Richiesta export o stampa")
+Rel(export_manager, file_reader,   "Legge file dal DIP", "IFileReader")
+Rel(export_manager, file_exporter, "Instrada per esportazione locale")
+Rel(export_manager, print_sender,  "Instrada per stampa")
+
+Rel(file_reader,   filesystem, "Legge il pacchetto DIP", "Node.js fs")
+Rel(file_exporter, filesystem, "Scrive file estratti",   "Node.js fs")
+Rel(print_sender,  printer,    "Invia documento",        "OS Print API")
+
+@enduml

@@ -1,0 +1,78 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Component Diagram – Renderer Process (corrected)
+
+Component_Ext(main, "Main Process", "Node.js, TypeScript", "Processo principale che gestisce la logica di business, l'indicizzazione e l'accesso al File System.")
+
+Container_Boundary(renderer, "Renderer Process (Angular)") {
+
+    ' ── Navigation Shell ──────────────────────────────────────
+    Component(nav_bar,  "Navigation Bar", "Angular, TypeScript", "Barra di navigazione. Delega tutta la logica di routing al NavigationService, non interagisce direttamente con il Router.")
+    Component(side_bar, "Sidebar",        "Angular, TypeScript", "Pannello laterale. Delega tutta la logica di routing al NavigationService, non interagisce direttamente con il Router.")
+
+    Component(nav_service, "Navigation Service", "Angular Service, TypeScript", "SRP Fix: unico punto di controllo della navigazione. Incapsula Angular Router. Nav Bar e Sidebar lo iniettano e non dipendono dal Router direttamente.")
+    Component(router,      "Angular Router",     "Angular",                     "Gestisce la navigazione tra le diverse viste dell'applicazione.")
+
+    ' ── Feature: Import ───────────────────────────────────────
+    Component(workspace_ui, "Workspace UI", "Angular, TypeScript", "Interfaccia per la selezione e il caricamento del pacchetto DIP. Inietta ImportService.")
+
+    ' ── Feature: Search ───────────────────────────────────────
+    Component(search_ui,       "Search UI",       "Angular, TypeScript", "Interfaccia per la ricerca testuale e strutturata. Inietta SearchService.")
+    Component(sema_search_ui,  "Semantic Search UI", "Angular, TypeScript", "Interfaccia per la ricerca semantica AI. Inietta SearchService.")
+    Component(query_validation, "Query Validation", "Angular Service, TypeScript", "ISP Fix: validazione condivisa per tutte le query (testuale e semantica). Unica istanza iniettata da entrambe le Search UI.")
+
+    ' ── Feature: Viewer ───────────────────────────────────────
+    Component(dip_tree_view,    "DIP Tree View",        "Angular, TypeScript", "Visualizza la struttura ad albero del DIP. Inietta ImportService per aggiornamenti.")
+    Component(document_viewer,  "Document Viewer",      "Angular, TypeScript", "SRP Fix: responsabilità unica di rendering e preview del documento. Non gestisce export.")
+    Component(document_actions, "Document Actions Bar", "Angular, TypeScript", "SRP Fix: gestisce esclusivamente le azioni sul documento (esporta, stampa). Inietta ExportService.")
+
+    ' ── Feature: Verification ─────────────────────────────────
+    Component(verification_ui, "Verification UI", "Angular, TypeScript", "Avvia e mostra i risultati della verifica integrità. Inietta VerificationService.")
+
+    ' ── IPC Services (ISP: un servizio per feature) ──────────
+    note as isp_note
+      ISP Fix: ogni Angular Service espone
+      solo i metodi IPC rilevanti per la feature.
+      I componenti iniettano solo il servizio
+      di cui hanno bisogno.
+    end note
+
+    Component(import_service,       "Import Service",       "Angular Service, TypeScript", "<<IImportService>>\nWrap dei canali IPC per importazione DIP e navigazione alberatura.")
+    Component(search_service,       "Search Service",       "Angular Service, TypeScript", "<<ISearchService>>\nWrap dei canali IPC per ricerca testuale e semantica. Interfaccia uniforme per entrambe le UI.")
+    Component(verification_service, "Verification Service", "Angular Service, TypeScript", "<<IVerificationService>>\nWrap dei canali IPC per verifica integrità, firme e sigilli.")
+    Component(export_service,       "Export Service",       "Angular Service, TypeScript", "<<IExportService>>\nWrap dei canali IPC per esportazione file e stampa.")
+
+    Component(ipc_client, "IPC Client", "Angular Service, TypeScript", "Layer infrastrutturale di basso livello. Unico componente che usa il Context Bridge. I Service di feature lo iniettano e non dipendono da Electron direttamente.")
+}
+
+' ── Navigation ──────────────────────────────────────────────────
+Rel(nav_bar,  nav_service, "Richiede cambio vista")
+Rel(side_bar, nav_service, "Richiede cambio vista")
+Rel(nav_service, router,   "Naviga tramite")
+
+' ── Feature: Import ─────────────────────────────────────────────
+Rel(workspace_ui,   import_service, "Richiede caricamento DIP")
+Rel(dip_tree_view,  import_service, "Richiede alberatura aggiornata")
+
+' ── Feature: Search ─────────────────────────────────────────────
+Rel(search_ui,      query_validation, "Valida input testuale")
+Rel(sema_search_ui, query_validation, "Valida input semantico")
+Rel(search_ui,      search_service,   "Invia query testuale")
+Rel(sema_search_ui, search_service,   "Invia query semantica")
+
+' ── Feature: Viewer ─────────────────────────────────────────────
+Rel(document_actions, export_service, "Richiede esportazione/stampa")
+
+' ── Feature: Verification ───────────────────────────────────────
+Rel(verification_ui, verification_service, "Richiede verifica e riceve report")
+
+' ── Services → IPC Client ───────────────────────────────────────
+Rel(import_service,       ipc_client, "Usa canali IPC import")
+Rel(search_service,       ipc_client, "Usa canali IPC search")
+Rel(verification_service, ipc_client, "Usa canali IPC verification")
+Rel(export_service,       ipc_client, "Usa canali IPC export")
+
+' ── IPC Client → Main ───────────────────────────────────────────
+Rel(ipc_client, main, "Scambia payload e comandi", "Electron IPC / Context Bridge")
+
+@enduml

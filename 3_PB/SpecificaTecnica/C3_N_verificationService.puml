@@ -1,0 +1,37 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Main Process – Verification Service
+
+Component_Ext(filesystem,        "File System Locale",      "File System",         "Sorgente dei file fisici del DIP per il ricalcolo degli hash.")
+Component_Ext(sqlite_db,         "SQLite Database",         "SQLite3",             "Ospita i metadati indicizzati, inclusi hash attesi e informazioni sulle firme.")
+Component_Ext(verification_ipc,  "Verification IPC Handler","Node.js, TypeScript", "Dispatcher IPC che avvia la verifica e restituisce il report.")
+
+Container_Boundary(verification_svc, "Verification Service") {
+
+    Component(verification_engine, "Verification Engine", "Node.js, TypeScript","Orchestratore della verifica. Coordina:\n- Verifica integrità (hash)\n- Validità firme digitali\n- Validità sigilli elettronici\nDipende solo da interfacce (DIP):\nnessun accoppiamento a SQLite o fs direttamente.")
+
+    Component(integrity_checker, "Integrity Checker", "Node.js, TypeScript","SRP: ricalcola gli hash dei file fisici e\nli confronta con i valori attesi nei metadati.\nUtilizza IFileReader e IMetadataRepository.")
+
+    Component(signature_checker, "Signature Checker", "Node.js, TypeScript","SRP: verifica la validità crittografica\ndelle firme digitali e dei sigilli elettronici\nsecondo le specifiche AGID.")
+
+    Component(file_reader, "DIP File Reader", "Node.js, TypeScript","<<IFileReader>>\nAccesso I/O puro al pacchetto DIP.\nCondiviso con Import Service (stessa interfaccia,\nstessa implementazione iniettata).")
+
+    Component(metadata_repo, "Metadata Repository", "Node.js, TypeScript","<<IMetadataRepository>>\nDIP: astrazione CRUD relazionale.\nFornice hash attesi, info firme e metadati\nsenza esporre SQLite ai checker.")
+
+    note as dip_note
+      DIP: Verification Engine, Integrity Checker e Signature Checker non importano mai SQLite o Node.js fs direttamente. Dipendono solo da IMetadataRepository e IFileReader. Cambiare DB o storage non richiede modifiche alla logica di verifica.
+    end note
+}
+
+Rel(verification_ipc,    verification_engine, "Avvia verifica, riceve report")
+Rel(verification_engine, integrity_checker,   "Delega verifica hash")
+Rel(verification_engine, signature_checker,   "Delega verifica firme/sigilli")
+
+Rel(integrity_checker, file_reader,    "Legge file fisici per hash",    "IFileReader")
+Rel(integrity_checker, metadata_repo,  "Legge hash attesi",             "IMetadataRepository")
+Rel(signature_checker, metadata_repo,  "Legge info firme e certificati","IMetadataRepository")
+
+Rel(file_reader,   filesystem, "Accesso I/O al DIP", "Node.js fs")
+Rel(metadata_repo, sqlite_db,  "Legge tabelle relazionali", "SQLite Driver")
+
+@enduml

@@ -1,0 +1,39 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Main Process – Query Service
+
+Component_Ext(sqlite_db,  "SQLite Database",    "SQLite3 + sqlite-vss", "Ospita tabelle relazionali (metadati) e tabelle VSS (vettori).")
+Component_Ext(search_ipc, "Search IPC Handler", "Node.js, TypeScript",  "Dispatcher IPC che invia query via ISearchEngine.")
+
+Container_Boundary(query_svc, "Query Service") {
+
+    note as dip_note
+      DIP: il Search IPC Handler dipende solo da
+      ISearchEngine. Non conosce Text o Semantic
+      Search Engine. Aggiungere una strategia
+      (es. ricerca ibrida) = nuova classe, zero
+      modifiche all'handler.
+    end note
+
+    Component(text_search, "Text Search Engine", "Node.js, TypeScript","<<ISearchEngine>>\nEsegue query testuali e filtrate per attributo\nsu metadati AGID. Dipende solo da IMetadataRepository.")
+
+    Component(sema_search, "Semantic Search Engine", "Node.js, TypeScript","<<ISearchEngine>>\nEsegue ricerca per similarità vettoriale.\nDipende da IVectorRepository e LLM Inference Engine.")
+
+    Component(llm_inference, "LLM Inference Engine", "ONNX Runtime, TypeScript","Servizio condiviso e iniettabile.\nCarica modelli .onnx locali in memoria.\nUsato sia da Semantic Search che da Semantic Indexer.\nNessuna dipendenza da rete: completamente offline.")
+
+    Component(metadata_repo, "Metadata Repository", "Node.js, TypeScript","<<IMetadataRepository>>\nDIP: astrazione CRUD relazionale.\nIsola il Text Search Engine da SQLite.")
+
+    Component(vector_repo, "Vector Repository", "Node.js, TypeScript","<<IVectorRepository>>\nDIP: astrazione CRUD vettoriale.\nIsola il Semantic Search Engine da sqlite-vss.")
+}
+
+Rel(search_ipc, text_search,  "Query testuale",   "ISearchEngine")
+Rel(search_ipc, sema_search,  "Query semantica",  "ISearchEngine")
+
+Rel(text_search,  metadata_repo, "Legge metadati",  "IMetadataRepository")
+Rel(sema_search,  vector_repo,   "Legge vettori",   "IVectorRepository")
+Rel(sema_search,  llm_inference, "Genera embedding della query")
+
+Rel(metadata_repo, sqlite_db, "Legge tabelle relazionali", "SQLite Driver")
+Rel(vector_repo,   sqlite_db, "Legge tabelle VSS",         "SQLite Driver")
+
+@enduml

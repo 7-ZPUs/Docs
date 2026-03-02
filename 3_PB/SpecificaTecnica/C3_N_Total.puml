@@ -1,0 +1,97 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Component Diagram – Main Process (corrected)
+
+' ── External elements ──────────────────────────────────────────
+Component_Ext(filesystem, "File System Locale", "File System", "Fornisce il pacchetto DIP e funge da destinazione per i file esportati.")
+Component_Ext(sqlite_db, "SQLite Database", "SQLite3 + sqlite-vss", "Unico file DB che ospita tabelle relazionali (metadati) e tabelle virtuali VSS (vettori).")
+Component_Ext(renderer, "Renderer Process", "Angular, TypeScript", "Interfaccia utente che invia comandi e riceve risposte via IPC.")
+Component_Ext(printer, "Stampante", "OS Print API", "Dispositivo di output per la stampa.")
+
+Container_Boundary(main, "Main Process") {
+
+    ' ── IPC Layer ─────────────────────────────────────────────
+    note as ipc_note
+      OCP Fix: ogni feature registra il proprio
+      canale IPC separato. Aggiungere una feature
+      non modifica gli handler esistenti.
+    end note
+
+    Component(import_ipc,       "Import IPC Handler",       "Node.js, TypeScript", "Gestisce i canali IPC relativi all'importazione del DIP.")
+    Component(search_ipc,       "Search IPC Handler",       "Node.js, TypeScript", "Gestisce i canali IPC per la ricerca testuale e semantica.")
+    Component(verification_ipc, "Verification IPC Handler", "Node.js, TypeScript", "Gestisce i canali IPC per la verifica integrità e firme.")
+    Component(export_ipc,       "Export IPC Handler",       "Node.js, TypeScript", "Gestisce i canali IPC per esportazione e stampa.")
+
+    ' ── Import & Indexing Pipeline ────────────────────────────
+    Component(file_reader,       "DIP File Reader",    "Node.js, TypeScript", "<<IFileReader>>\nResponsabilità unica: accesso I/O al pacchetto DIP (lettura byte/stream). Non conosce la struttura XML.")
+    Component(dip_importer,      "DIP Importer",       "Node.js, TypeScript", "Orchestratore del pipeline di importazione: coordina FileReader → MetadataParser → Indexers. Non contiene logica di business.")
+    Component(metadata_parser,   "Metadata Parser",    "Node.js, TypeScript", "Parsing e validazione dei file XML AGID. Produce strutture dati normalizzate. Non dipende da nessun DB.")
+    Component(indexer,           "Metadata Indexer",   "Node.js, TypeScript", "<<IIndexer>>\nImplementazione concreta: indicizza i metadati nel repository relazionale.")
+    Component(semantic_indexer,  "Semantic Indexer",   "Node.js, TypeScript", "<<IIndexer>>\nImplementazione concreta: genera embeddings via LLM Inference e li salva nel repository vettoriale.")
+
+    ' ── Query Layer ───────────────────────────────────────────
+    note as search_note
+      DIP Fix: ISearchEngine è l'astrazione comune.
+      Il Search IPC Handler dipende solo dall'interfaccia,
+      non dalle implementazioni concrete.
+    end note
+
+    Component(search_engine,      "Text Search Engine",     "Node.js, TypeScript", "<<ISearchEngine>>\nEsegue query testuali/filtrate sui metadati relazionali.")
+    Component(sema_search_engine, "Semantic Search Engine", "Node.js, TypeScript", "<<ISearchEngine>>\nEsegue ricerca per similarità vettoriale. Dipende da IVectorRepository e LLM Inference Engine.")
+
+    ' ── Verification ──────────────────────────────────────────
+    Component(verification_engine, "Verification Engine", "Node.js, TypeScript", "Verifica hash, firme digitali e sigilli. Dipende solo da interfacce: IMetadataRepository e IFileReader.")
+
+    ' ── Export & Print ────────────────────────────────────────
+    Component(export_manager, "Export Manager", "Node.js, TypeScript", "Estrae file dal DIP e li salva in locale o li invia alla stampante. Dipende da IFileReader.")
+
+    ' ── Shared Infrastructure (Dependency Inversion) ──────────
+    Component(metadata_repo, "Metadata Repository",  "Node.js, TypeScript", "<<IMetadataRepository>>\nAstrazione CRUD per i metadati relazionali. Isola tutti i componenti da SQLite.")
+    Component(vector_repo,   "Vector Repository",    "Node.js, TypeScript", "<<IVectorRepository>>\nAstrazione CRUD per i vettori semantici. Isola i componenti da sqlite-vss.")
+    Component(llm_inference, "LLM Inference Engine", "ONNX Runtime, TypeScript", "Servizio condiviso e iniettabile per l'inferenza con modelli .onnx locali. Usato sia in indicizzazione che in ricerca.")
+}
+
+' ── IPC Layer → Business Services ──────────────────────────────
+Rel(import_ipc,       dip_importer,       "Avvia pipeline di importazione")
+Rel(import_ipc,       renderer,           "Risponde con stato avanzamento", "IPC")
+Rel(search_ipc,       search_engine,      "Query testuale via ISearchEngine")
+Rel(search_ipc,       sema_search_engine, "Query semantica via ISearchEngine")
+Rel(search_ipc,       renderer,           "Restituisce risultati", "IPC")
+Rel(verification_ipc, verification_engine,"Avvia verifica")
+Rel(verification_ipc, renderer,           "Restituisce report", "IPC")
+Rel(export_ipc,       export_manager,     "Avvia esportazione/stampa")
+Rel(export_ipc,       renderer,           "Notifica completamento", "IPC")
+
+' ── Import Pipeline ─────────────────────────────────────────────
+Rel(dip_importer, file_reader,      "Legge file fisici dal DIP", "IFileReader")
+Rel(dip_importer, metadata_parser,  "Invia bytes XML grezzi")
+Rel(metadata_parser, indexer,       "Invia metadati strutturati", "IIndexer")
+Rel(metadata_parser, semantic_indexer, "Invia metadati strutturati", "IIndexer")
+
+' ── Indexers → Repositories ─────────────────────────────────────
+Rel(indexer,          metadata_repo, "Persiste metadati",   "IMetadataRepository")
+Rel(semantic_indexer, vector_repo,   "Persiste vettori",    "IVectorRepository")
+Rel(semantic_indexer, llm_inference, "Genera embeddings")
+
+' ── Query → Repositories ────────────────────────────────────────
+Rel(search_engine,      metadata_repo, "Legge metadati",  "IMetadataRepository")
+Rel(sema_search_engine, vector_repo,   "Legge vettori",   "IVectorRepository")
+Rel(sema_search_engine, llm_inference, "Genera embedding query")
+
+' ── Verification → Abstractions ─────────────────────────────────
+Rel(verification_engine, metadata_repo, "Legge metadati per verifica", "IMetadataRepository")
+Rel(verification_engine, file_reader,   "Legge file per hash",         "IFileReader")
+
+' ── Export → Abstractions ───────────────────────────────────────
+Rel(export_manager, file_reader, "Legge file dal DIP", "IFileReader")
+Rel(export_manager, filesystem,  "Salva file esportati")
+Rel(export_manager, printer,     "Invia alla stampante")
+
+' ── Repositories → DB ───────────────────────────────────────────
+Rel(metadata_repo, sqlite_db, "Lettura/Scrittura tabelle relazionali", "SQLite Driver")
+Rel(vector_repo,   sqlite_db, "Lettura/Scrittura tabelle VSS",         "SQLite Driver")
+
+' ── FileReader → FS ─────────────────────────────────────────────
+Rel(file_reader, filesystem, "Accesso I/O al DIP", "Node.js fs")
+
+@enduml
