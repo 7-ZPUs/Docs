@@ -1,48 +1,39 @@
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
-title Component Diagram per il Renderer di DipReader
+title Component Diagram per il Renderer di DIPReader
 
-
-Container_Boundary(renderer, "Renderer Process") {
+Container_Boundary(renderer, "Renderer Process (Angular)") {
     Component(nav_bar, "Navigation Bar", "Angular, TypeScript", "Barra di navigazione per accedere alle diverse funzionalità dell'applicazione.")
     Component(side_bar, "Sidebar", "Angular, TypeScript", "Pannello laterale per la navigazione tra i documenti e le sezioni dell'app.")
 
-    Component(search_ui, "Search UI", "Angular, TypeScript", "Interfaccia utente per la ricerca testuale e semantica.")
+    Component(dip_loader_ui, "Workspace UI", "Angular, TypeScript", "Interfaccia per la selezione, il caricamento e la configurazione del pacchetto DIP da analizzare.")
+
+    Component(search_ui, "Search UI", "Angular, TypeScript", "Interfaccia utente per la ricerca testuale e strutturata.")
     Component(search_validation, "Search Validation", "Angular, TypeScript", "Componente per la validazione e il feedback delle query di ricerca.")
     Component(sema_search_ui, "Semantic Search UI", "Angular, TypeScript", "Interfaccia utente dedicata alla ricerca semantica con modelli LLM.")
     
-    Component(document_viewer, "Document Viewer", "Angular, TypeScript", "Componente per la visualizzazione dei documenti e dei metadati.")
-    Component(ipc_client, "IPC Client", "Node.js, TypeScript", "Gestisce la comunicazione IPC con il processo Main per inviare comandi e ricevere dati.")
-    Component(verification_ui, "Verification UI", "Angular, TypeScript", "Interfaccia utente per visualizzare i risultati della verifica dell'integrità dei file.")
-    Component(dip_tree_view, "DIP Tree View", "Angular, TypeScript", "Componente per visualizzare la struttura ad albero del pacchetto DIP e navigare tra i file.")
-    Component(sema_search_ui, "Semantic Search UI", "Angular, TypeScript", "Interfaccia utente dedicata alla ricerca semantica con modelli LLM.")
-
+    Component(document_viewer, "Document Viewer", "Angular, TypeScript", "Componente per la visualizzazione dei documenti e l'attivazione dell'esportazione.")
+    Component(dip_tree_view, "DIP Tree View", "Angular, TypeScript", "Visualizza la struttura ad albero del pacchetto DIP e permette di navigare tra i file.")
+    Component(verification_ui, "Verification UI", "Angular, TypeScript", "Interfaccia per avviare e visualizzare i risultati della verifica dell'integrità dei file.")
+    
+    Component(ipc_client, "IPC Service", "Angular Service, TypeScript", "Wrapper che utilizza il Context Bridge per inviare in sicurezza comandi IPC al processo Main.")
     Component(router, "Angular Router", "Angular", "Gestisce la navigazione tra le diverse viste dell'applicazione.")
 }
 
-Component_Ext(main, "Main process", "Node.js, TypeScript", "Processo principale che gestisce la logica di business, l'indicizzazione, la ricerca e l'accesso diretto alle risorse locali.")
+Component_Ext(main, "Main process", "Node.js, TypeScript", "Processo principale che gestisce la logica di business, l'indicizzazione e l'accesso al File System.")
 
+Rel(nav_bar, router, "Avvia il cambio vista tramite")
+Rel(side_bar, router, "Avvia il cambio vista tramite")
 
-Rel(renderer, nav_bar, "Contiene")
-Rel(renderer, side_bar, "Contiene")
-Rel(renderer, search_ui, "Contiene")
-Rel(renderer, sema_search_ui, "Contiene")
-Rel(renderer, document_viewer, "Contiene")
-Rel(renderer, ipc_client, "Contiene")
-Rel(renderer, verification_ui, "Contiene")
-Rel(renderer, dip_tree_view, "Contiene")
-Rel(renderer, sema_search_ui, "Contiene")
+Rel(search_ui, search_validation, "Valida l'input utente tramite")
 
-Rel(nav_bar, router, "Utilizza")
-Rel(side_bar, router, "Utilizza")
+Rel(dip_loader_ui, ipc_client, "Invia richiesta di caricamento DIP")
+Rel(search_ui, ipc_client, "Invia query testuale e riceve i metadati")
+Rel(sema_search_ui, ipc_client, "Invia query semantica e riceve i risultati affini")
+Rel(document_viewer, ipc_client, "Richiede l'esportazione o la visualizzazione dei file")
+Rel(dip_tree_view, ipc_client, "Richiede l'alberatura del DIP aggiornata")
+Rel(verification_ui, ipc_client, "Richiede la validazione e ne riceve i report")
 
-Rel(search_ui, search_validation, "Utilizza per validare le query di ricerca")
-
-Rel(ipc_client, main, "Comunica con il processo Main")
-Rel(search_ui, ipc_client, "Invia query di ricerca e riceve risultati")
-Rel(document_viewer, ipc_client, "Richiede i dati dei documenti e dei metadati da visualizzare")
-Rel(verification_ui, ipc_client, "Riceve i risultati della verifica dell'integrità dei file")
-Rel(dip_tree_view, ipc_client, "Richiede la struttura del pacchetto DIP e i file da visualizzare")
-Rel(sema_search_ui, ipc_client, "Invia query semantica e riceve risultati")
+Rel(ipc_client, main, "Scambia payload e comandi tramite Electron IPC", "Context Bridge")
 
 @enduml
