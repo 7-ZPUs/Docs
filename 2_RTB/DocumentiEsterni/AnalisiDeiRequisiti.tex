@@ -29,7 +29,6 @@
     urlcolor=blue
 }
 
-
 \setlength{\LTleft}{-1.4cm}
 
 % Colori ZPUS - Verde, Nero, Bianco
@@ -179,19 +178,40 @@
 \newcommand{\deepusecase}[2]{%
     \refstepcounter{ucDeep}%
     \paragraph*{\theucDeep\ - #2}%
-    \addcontentsline{toc}{subparagraph}{\protect\hspace{2em}\theucDeep\ - #2}%
+    \addcontentsline{toc}{subparagraph}{\protect\hspace{1em}\theucDeep\ - #2}%
     \ifx&#1&\else\label{#1}\fi%
 }
 
 % 6. Contatore 5 (es. UC-3.2.1.1.5)
-\newcounter{ucSubDeep}[ucSubSub] % NOTA: Nel tuo originale era su ucSubSub, forse intendevi su ucDeep?
-% Ho corretto ipotizzando erediti da ucDeep per coerenza
+\newcounter{ucSubDeep}[ucDeep]
 \renewcommand{\theucSubDeep}{\theucDeep.\arabic{ucSubDeep}}
 
 \newcommand{\subdeepusecase}[2]{%
     \refstepcounter{ucSubDeep}%
     \paragraph*{\theucSubDeep\ - #2}%
-    \addcontentsline{toc}{subparagraph}{\protect\hspace{4em}\theucSubDeep\ - #2}%
+    \addcontentsline{toc}{subparagraph}{\protect\hspace{2em}\theucSubDeep\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
+}
+
+% 7. Contatore 6 (es. UC-3.2.1.1.5.1)
+\newcounter{ucSubSubDeep}[ucSubDeep]
+\renewcommand{\theucSubSubDeep}{\theucSubDeep.\arabic{ucSubSubDeep}}
+
+\newcommand{\subsubdeepusecase}[2]{%
+    \refstepcounter{ucSubSubDeep}%
+    \paragraph*{\theucSubSubDeep\ - #2}%
+    \addcontentsline{toc}{subparagraph}{\protect\hspace{3em}\theucSubSubDeep\ - #2}%
+    \ifx&#1&\else\label{#1}\fi%
+}
+
+% 8. Contatore 7 (es. UC-3.2.1.1.5.1.1)
+\newcounter{ucAbyssal}[ucSubSubDeep]
+\renewcommand{\theucAbyssal}{\theucSubSubDeep.\arabic{ucAbyssal}}
+
+\newcommand{\abyssalusecase}[2]{%
+    \refstepcounter{ucAbyssal}%
+    \paragraph*{\theucAbyssal\ - #2}%
+    \addcontentsline{toc}{subparagraph}{\protect\hspace{3em}\theucAbyssal\ - #2}%
     \ifx&#1&\else\label{#1}\fi%
 }
 
@@ -211,7 +231,7 @@
 
 % 3. Livello Nipote (Sub Sub Use Case) -> Mappato su subparagraph
 % Rientro progressivo ridotto (es. 3em)
-\setlength{\cftsubparaindent}{3em} 
+\setlength{\cftsubparaindent}{2.5em} 
 \setlength{\cftsubparanumwidth}{4em}
 
 \setlength\parindent{0pt}
@@ -232,6 +252,7 @@
 \input{analisi/UC10-13.tex}
 \input{analisi/UC14-26.tex}
 \input{analisi/UC27-42.tex}
+\input{analisi/UC-Fix.tex}
 \input{analisi/Requisiti.tex}
 
 \end{document}
