@@ -1,0 +1,47 @@
+name: Aggiorna Glossario HTML
+
+on:
+  push:
+    paths:
+      - '2_RTB/Glossario.tex'
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-glossary:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Generate GitHub App Token
+      id: generate-token
+      uses: actions/create-github-app-token@v1
+      with:
+        app-id: ${{ secrets.ID_APP }}
+        private-key: ${{ secrets.APP_PRIVATE_KEY }}
+        
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ steps.generate-token.outputs.token }}
+    
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Installa dipendenze
+      run: |
+        pip install beautifulsoup4
+        
+    - name: Esegui script di conversione
+      run: python .github/scripts/glossario.py
+      
+    - name: Commit e push del file HTML
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add -A
+        git diff --quiet && git diff --staged --quiet || git commit -m "🔄 Aggiornamento automatico glossario HTML"
+        git push
