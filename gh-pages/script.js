@@ -1,16 +1,14 @@
 const tabButtons = document.querySelectorAll('#documentation .content-selector');
 const tabPanels = document.querySelectorAll('#documentation [role="tabpanel"]');
 const pdfBaseUrls = {
-    'verbali-interni-candidatura': 'assets/pdf/Verbali/Verbali%20Interni/',
-    'verbali-esterni-candidatura': 'assets/pdf/Verbali/Verbali%20Esterni/',
-    candidatura: 'assets/pdf/',
+    'verbali-interni-candidatura': 'assets/1_Candidatura/',
+    'verbali-esterni-candidatura': 'assets/1_Candidatura/',
+    candidatura: 'assets/1_Candidatura/',
 
-
-
-    'verbali-interni-RTB': 'assets/pdf/DocumentiInterni/Verbali/',
-    'verbali-esterni-RTB': 'assets/pdf/Verbali/Verbali/',
-    'documenti-interni-RTB': 'assets/pdf/DocumentiInterni/',
-    'documenti-esterni-RTB': 'assets/pdf/DocumentiEsterni/'
+    'verbali-interni-RTB': 'assets/2_RTB/DocumentiInterni/Verbali/',
+    'verbali-esterni-RTB': 'assets/2_RTB/DocumentiEsterni/Verbali/',
+    'documenti-interni-RTB': 'assets/2_RTB/DocumentiInterni/',
+    'documenti-esterni-RTB': 'assets/2_RTB/DocumentiEsterni/'
 };
 
 if (tabButtons.length && tabPanels.length) {

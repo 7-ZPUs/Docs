@@ -1,7 +1,7 @@
 \usecase{classiDocumentali}{Visualizza elenco classi documentali}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../assets/uml/UC1.png}
+    \includegraphics[width=0.9\textwidth]{../../assets/uml/UC1.png}
     \caption{\ref{classiDocumentali} - Visualizza elenco classi documentali}
     \label{fig:uc_classiDocumentali}
 \end{figure}
@@ -22,7 +22,7 @@
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../assets/uml/UC1INC.png}
+    \includegraphics[width=0.9\textwidth]{../../assets/uml/UC1INC.png}
     \caption{Inclusioni \ref{classiDocumentali} - Visualizza elenco classi documentali}
     \label{fig:inclusioniClassiDocumentali}
 \end{figure}
@@ -72,7 +72,7 @@
 \usecase{processiClasseDocumentale}{Visualizza elenco dei processi di una classe documentale}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../assets/uml/UC2.png}
+    \includegraphics[width=0.9\textwidth]{../../assets/uml/UC2.png}
     \caption{\ref{processiClasseDocumentale} - Visualizza elenco dei processi di una classe documentale}
     \label{fig:uc_processiClasseDocumentale}
 \end{figure}
@@ -96,7 +96,7 @@
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../assets/uml/UC2INC.png}
+    \includegraphics[width=0.9\textwidth]{../../assets/uml/UC2INC.png}
     \caption{Inclusioni \ref{processiClasseDocumentale} - Visualizza elenco dei processi di una classe documentale}
     \label{fig:inclusioniProcessiClasseDocumentale}
 \end{figure}
@@ -146,7 +146,7 @@
 \usecase{documentiProcesso}{Visualizza elenco dei documenti di un processo}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../assets/uml/UC3.png}
+    \includegraphics[width=0.9\textwidth]{../../assets/uml/UC3.png}
     \caption{\ref{documentiProcesso} - Visualizza elenco dei documenti di un processo}
     \label{fig:uc_documentiProcesso}
 \end{figure}
@@ -172,7 +172,7 @@
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../assets/uml/UC3INC.png}
+    \includegraphics[width=0.9\textwidth]{../../assets/uml/UC3INC.png}
     \caption{Inclusioni \ref{documentiProcesso} - Visualizza elenco dei documenti di un processo}
     \label{fig:inclusioniDocumentiProcesso}
 \end{figure}
@@ -231,6 +231,60 @@
     \end{enumerate}
 \end{itemize}
 
+\subusecase{statoVerificaElementoNonIntegro}{Visualizza stato di verifica elemento "Non integro"}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: \begin{itemize}
+        \item L'Utente ha avviato l'applicazione
+        \item L'Utente ha selezionato un elemento.
+    \end{itemize}
+    \item \textbf{Postcondizioni}: L'utente visualizza lo stato di verifica "Non integro" dell' elemento selezionato.
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+              \item Il sistema mostra a video lo stato di verifica "Non integro" dell'elemento selezionato
+    \end{enumerate}
+    \item \textbf{Specializza}:
+    \begin{enumerate}
+              \item \ref{statoVerificaElemento} Visualizza stato di verifica elemento
+    \end{enumerate}
+\end{itemize}
+
+\subusecase{statoVerificaElementoIntegro}{Visualizza stato di verifica elemento "Integro"}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: \begin{itemize}
+        \item L'Utente ha avviato l'applicazione
+        \item L'Utente ha selezionato un elemento.
+    \end{itemize}
+    \item \textbf{Postcondizioni}: L'utente visualizza lo stato di verifica "Integro" dell' elemento selezionato.
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+              \item Il sistema mostra a video lo stato di verifica "Integro" dell'elemento selezionato
+    \end{enumerate}
+    \item \textbf{Specializza}:
+    \begin{enumerate}
+              \item \ref{statoVerificaElemento} Visualizza stato di verifica elemento
+    \end{enumerate}
+\end{itemize}
+
+\subusecase{statoVerificaElementoNonVerificato}{Visualizza stato di verifica elemento "Non verificato"}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}: \begin{itemize}
+        \item L'Utente ha avviato l'applicazione
+        \item L'Utente ha selezionato un elemento.
+    \end{itemize}
+    \item \textbf{Postcondizioni}: L'utente visualizza lo stato di verifica "Non verificato" dell' elemento selezionato.
+    \item \textbf{Flusso Principale}:
+    \begin{enumerate}
+              \item Il sistema mostra a video lo stato di verifica "Non verificato" dell'elemento selezionato
+    \end{enumerate}
+    \item \textbf{Specializza}:
+    \begin{enumerate}
+              \item \ref{statoVerificaElemento} Visualizza stato di verifica elemento
+    \end{enumerate}
+\end{itemize}
+
 \usecase{marcaturaTemporaleElemento}{Visualizza marcatura temporale elemento}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
@@ -264,7 +318,7 @@
 \usecase{anteprimaDocumento}{Visualizza anteprima documento}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../assets/uml/UC7.png}
+    \includegraphics[width=0.9\textwidth]{../../assets/uml/UC7.png}
     \caption{\ref{anteprimaDocumento} - Visualizza anteprima documento}
     \label{fig:uc_anteprimaDocumento}
 \end{figure}
