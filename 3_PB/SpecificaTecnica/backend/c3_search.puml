@@ -1,0 +1,75 @@
+@startuml Component Diagram – Search IPC
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Component Diagram – Search IPC (search:metadata, search:get-filter-keys, search:get-filter-options)
+
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam shadowing false
+skinparam wrapWidth 200
+skinparam nodesep 60
+skinparam ranksep 60
+
+' ══════════════════════════════════════════════════════════════
+'  SISTEMI ESTERNI
+' ══════════════════════════════════════════════════════════════
+
+Component_Ext(renderer,  "Renderer Process", "Angular, TypeScript", "Invia comandi via IPC bridge.")
+Component_Ext(sqlite_db, "SQLite Database",  "SQLite3",             "Tabelle relazionali metadati.")
+
+Container_Boundary(main, "Main Process – Electron") {
+
+    ' ── Driving Adapter ─────────────────────────────────────
+    Component(search_ipc, "Search IPC Adapter", "Node.js, TypeScript", "Canali: search:metadata, search:get-filter-keys, search:get-filter-options. Ricerca trasversale per metadati con filtri AND.")
+
+    ' ── Use Cases ────────────────────────────────────────────
+    Component(uc_search_classi,    "SearchClassiDocumentali", "Node.js, TypeScript", "Ricerca classi documentali per metadati con filtri AND.")
+    Component(uc_search_processi,  "SearchProcessi",          "Node.js, TypeScript", "Ricerca processi per metadati con filtri AND.")
+    Component(uc_search_documenti, "SearchDocumenti",         "Node.js, TypeScript", "Ricerca documenti per metadati con filtri AND.")
+
+    ' ── Repositories ─────────────────────────────────────────
+    Component(repo_classe,    "ClasseDocumentaleRepository", "TypeScript Interface", "<<Repository>> search(filters), list().")
+    Component(repo_processo,  "ProcessoRepository",          "TypeScript Interface", "<<Repository>> search(filters), list().")
+    Component(repo_documento, "DocumentoRepository",         "TypeScript Interface", "<<Repository>> searchByMetadata(filters), list().")
+    Component(repo_metadata,  "MetadataRepository",          "TypeScript Interface", "<<Repository>> getDistinctKeys(), findByKey(). Usato per recuperare chiavi/valori filtro.")
+
+    ' ── Driven Adapters ──────────────────────────────────────
+    Component(adapt_sqlite_classe,    "SQLiteClasseDocumentaleRepository", "better-sqlite3",
+        "Implementa ClasseDocumentaleRepository.")
+    Component(adapt_sqlite_processo,  "SQLiteProcessoRepository",          "better-sqlite3",
+        "Implementa ProcessoRepository.")
+    Component(adapt_sqlite_documento, "SQLiteDocumentoRepository",         "better-sqlite3",
+        "Implementa DocumentoRepository.")
+    Component(adapt_sqlite_metadata,  "SQLiteMetadataRepository",          "better-sqlite3",
+        "Implementa MetadataRepository.")
+}
+
+' ── Renderer → IPC ───────────────────────────────────────────
+Rel_D(renderer, search_ipc, "search:*", "Electron IPC")
+
+' ── IPC → Use Cases ──────────────────────────────────────────
+Rel_D(search_ipc, uc_search_classi,    "Ricerca classi")
+Rel_R(search_ipc, uc_search_processi,  "Ricerca processi")
+Rel_R(search_ipc, uc_search_documenti, "Ricerca documenti")
+
+' ── search:get-filter-keys / options vanno direttamente al repo_metadata
+Rel_R(search_ipc, repo_metadata, "search:get-filter-keys\nsearch:get-filter-options")
+
+' ── Use Cases → Repositories ─────────────────────────────────
+Rel_D(uc_search_classi,    repo_classe,    "Legge classi con filtri")
+Rel_D(uc_search_processi,  repo_processo,  "Legge processi con filtri")
+Rel_D(uc_search_documenti, repo_documento, "Legge documenti con filtri")
+Rel_R(uc_search_documenti, repo_metadata,  "Legge metadati per filtri")
+
+' ── Repositories → Adapters ──────────────────────────────────
+Rel_D(repo_classe,    adapt_sqlite_classe,    "impl.")
+Rel_D(repo_processo,  adapt_sqlite_processo,  "impl.")
+Rel_D(repo_documento, adapt_sqlite_documento, "impl.")
+Rel_D(repo_metadata,  adapt_sqlite_metadata,  "impl.")
+
+' ── Adapters → Sistemi Esterni ───────────────────────────────
+Rel_D(adapt_sqlite_classe,    sqlite_db, "CRUD")
+Rel_D(adapt_sqlite_processo,  sqlite_db, "CRUD")
+Rel_D(adapt_sqlite_documento, sqlite_db, "CRUD")
+Rel_D(adapt_sqlite_metadata,  sqlite_db, "CRUD")
+
+@enduml

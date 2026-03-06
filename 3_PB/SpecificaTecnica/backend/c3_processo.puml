@@ -1,0 +1,68 @@
+@startuml Component Diagram – Processo IPC
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Component Diagram – Processo IPC (processo:get-by-id, processo:search, processo:get-by-status, processo:check-integrity)
+
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam shadowing false
+skinparam wrapWidth 200
+skinparam nodesep 60
+skinparam ranksep 60
+
+' ══════════════════════════════════════════════════════════════
+'  SISTEMI ESTERNI
+' ══════════════════════════════════════════════════════════════
+
+Component_Ext(renderer,   "Renderer Process", "Angular, TypeScript",  "Invia comandi via IPC bridge.")
+Component_Ext(sqlite_db,  "SQLite Database",  "SQLite3",              "Tabelle relazionali metadati.")
+Component_Ext(filesystem, "File System",      "OS File System",       "Pacchetto DIP su disco.")
+
+Container_Boundary(main, "Main Process – Electron") {
+
+    ' ── Driving Adapter ─────────────────────────────────────
+    Component(processo_ipc, "Processo IPC Adapter", "Node.js, TypeScript", "Canali: processo:get-by-id, processo:search, processo:get-by-status, processo:check-integrity")
+
+    ' ── Use Cases ────────────────────────────────────────────
+    Component(uc_get_processo,       "GetProcessoById",        "Node.js, TypeScript", "Recupera un processo per ID.")
+    Component(uc_search_processi,    "SearchProcessi",         "Node.js, TypeScript", "Ricerca processi per metadati con filtri AND.")
+    Component(uc_status_processi,    "GetProcessiByStatus",    "Node.js, TypeScript", "Filtra processi per stato di integrità.")
+    Component(uc_integrity_processo, "CheckProcessoIntegrity", "Node.js, TypeScript", "Calcola SHA256 del processo e confronta con hash atteso.")
+
+    ' ── Ports ────────────────────────────────────────────────
+    Component(port_reader, "PackageReaderPort", "TypeScript Interface", "<<Port>> readFileBytes(), getPindexByUuid().")
+
+    ' ── Repository ───────────────────────────────────────────
+    Component(repo_processo, "ProcessoRepository", "TypeScript Interface", "<<Repository>> get(uuid), create(entity), list(), delete(uuid), search(filters).")
+
+    ' ── Driven Adapters ──────────────────────────────────────
+    Component(adapt_sqlite_processo, "SQLiteProcessoRepository",    "better-sqlite3", "Implementa ProcessoRepository.")
+    Component(adapt_reader,          "FileSystemPackageReaderAdapter", "Node.js fs", "Implementa PackageReaderPort.")
+}
+
+' ── Renderer → IPC ───────────────────────────────────────────
+Rel_D(renderer, processo_ipc, "processo:*", "Electron IPC")
+
+' ── IPC → Use Cases ──────────────────────────────────────────
+Rel_D(processo_ipc, uc_get_processo,       "processo:get-by-id")
+Rel_R(processo_ipc, uc_search_processi,    "processo:search")
+Rel_R(processo_ipc, uc_status_processi,    "processo:get-by-status")
+Rel_R(processo_ipc, uc_integrity_processo, "processo:check-integrity")
+
+' ── Use Cases → Repository / Port ────────────────────────────
+Rel_D(uc_get_processo,       repo_processo, "Legge processo per ID")
+Rel_D(uc_search_processi,    repo_processo, "Legge processi con filtri")
+Rel_D(uc_status_processi,    repo_processo, "Filtra per stato integrità")
+Rel_D(uc_integrity_processo, repo_processo, "Legge hash atteso")
+Rel_R(uc_integrity_processo, port_reader,   "Legge file per calcolo hash")
+
+' ── Repository → Adapter ─────────────────────────────────────
+Rel_D(repo_processo, adapt_sqlite_processo, "impl.")
+
+' ── Port → Adapter ───────────────────────────────────────────
+Rel_D(port_reader, adapt_reader, "impl.")
+
+' ── Adapters → Sistemi Esterni ───────────────────────────────
+Rel_D(adapt_sqlite_processo, sqlite_db,  "CRUD")
+Rel_D(adapt_reader,          filesystem, "Lettura DIP")
+
+@enduml

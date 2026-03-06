@@ -1,0 +1,71 @@
+@startuml Component Diagram – Documento IPC
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Component Diagram – Documento IPC (documento:get-by-id, documento:search, documento:get-metadata, documento:get-subjects, documento:get-phases)
+
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam shadowing false
+skinparam wrapWidth 200
+skinparam nodesep 60
+skinparam ranksep 60
+
+' ══════════════════════════════════════════════════════════════
+'  SISTEMI ESTERNI
+' ══════════════════════════════════════════════════════════════
+
+Component_Ext(renderer,  "Renderer Process", "Angular, TypeScript", "Invia comandi via IPC bridge.")
+Component_Ext(sqlite_db, "SQLite Database",  "SQLite3",             "Tabelle relazionali metadati.")
+
+Container_Boundary(main, "Main Process – Electron") {
+
+    ' ── Driving Adapter ─────────────────────────────────────
+    Component(documento_ipc, "Documento IPC Adapter", "Node.js, TypeScript", "Canali: documento:get-by-id, documento:search, documento:get-metadata, documento:get-subjects, documento:get-phases")
+
+    ' ── Use Cases ────────────────────────────────────────────
+    Component(uc_get_documento,    "GetDocumentoById",    "Node.js, TypeScript", "Recupera un documento per ID.")
+    Component(uc_search_documenti, "SearchDocumenti",     "Node.js, TypeScript", "Ricerca documenti per metadati con filtri AND.")
+    Component(uc_status_documenti, "GetDocumentiByStatus","Node.js, TypeScript", "Filtra documenti per stato di integrità.")
+
+    ' ── Repositories ─────────────────────────────────────────
+    Component(repo_documento, "DocumentoRepository",  "TypeScript Interface", "<<Repository>> findById(), findByAip(), save(), searchByMetadata().")
+    Component(repo_metadata,  "MetadataRepository",   "TypeScript Interface", "<<Repository>> findByFile(), findByDocument(), save(), getDistinctKeys().")
+    Component(repo_subject,   "SubjectRepository",    "TypeScript Interface", "<<Repository>> findById(), findByDocument(), save().")
+    Component(repo_phase,     "PhaseRepository",      "TypeScript Interface", "<<Repository>> findById(), findByDocument(), save().")
+
+    ' ── Driven Adapters ──────────────────────────────────────
+    Component(adapt_sqlite_documento, "SQLiteDocumentoRepository", "better-sqlite3","Implementa DocumentoRepository.")
+    Component(adapt_sqlite_metadata,  "SQLiteMetadataRepository",  "better-sqlite3","Implementa MetadataRepository.")
+    Component(adapt_sqlite_subject,   "SQLiteSubjectRepository",   "better-sqlite3","Implementa SubjectRepository.")
+    Component(adapt_sqlite_phase,     "SQLitePhaseRepository",     "better-sqlite3","Implementa PhaseRepository.")
+}
+
+' ── Renderer → IPC ───────────────────────────────────────────
+Rel_D(renderer, documento_ipc, "documento:*", "Electron IPC")
+
+' ── IPC → Use Cases ──────────────────────────────────────────
+Rel_D(documento_ipc, uc_get_documento,    "documento:get-by-id")
+Rel_R(documento_ipc, uc_search_documenti, "documento:search")
+Rel_R(documento_ipc, uc_status_documenti, "documento:get-by-status")
+
+' ── Use Cases → Repositories ─────────────────────────────────
+Rel_D(uc_get_documento,    repo_documento, "Legge documento per ID")
+Rel_R(uc_get_documento,    repo_metadata,  "Legge metadati documento")
+Rel_R(uc_get_documento,    repo_subject,   "Legge soggetti associati")
+Rel_R(uc_get_documento,    repo_phase,     "Legge fasi procedimento")
+Rel_D(uc_search_documenti, repo_documento, "Legge documenti con filtri")
+Rel_R(uc_search_documenti, repo_metadata,  "Legge metadati per filtri")
+Rel_D(uc_status_documenti, repo_documento, "Filtra per stato integrità")
+
+' ── Repositories → Adapters ──────────────────────────────────
+Rel_D(repo_documento, adapt_sqlite_documento, "impl.")
+Rel_D(repo_metadata,  adapt_sqlite_metadata,  "impl.")
+Rel_D(repo_subject,   adapt_sqlite_subject,   "impl.")
+Rel_D(repo_phase,     adapt_sqlite_phase,     "impl.")
+
+' ── Adapters → Sistemi Esterni ───────────────────────────────
+Rel_D(adapt_sqlite_documento, sqlite_db, "CRUD")
+Rel_D(adapt_sqlite_metadata,  sqlite_db, "CRUD")
+Rel_D(adapt_sqlite_subject,   sqlite_db, "CRUD")
+Rel_D(adapt_sqlite_phase,     sqlite_db, "CRUD")
+
+@enduml
