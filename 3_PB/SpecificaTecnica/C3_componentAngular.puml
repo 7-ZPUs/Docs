@@ -1,78 +1,173 @@
-@startuml Component Diagram – Renderer Process
+@startuml Component Diagram Renderer Process (SOLID-Compliant)
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
-title Component Diagram – Renderer Process
+title Component Diagram Renderer Process (SOLID-Compliant Design)
 
 Component_Ext(main, "Main Process", "Node.js, TypeScript", "Processo principale che gestisce la logica di business, l'indicizzazione e l'accesso al File System.")
 
 Container_Boundary(renderer, "Renderer Process (Angular)") {
 
-    ' ── Navigation Shell ──────────────────────────────────────
-    Component(nav_bar,  "Navigation Bar", "Angular, TypeScript", "Barra di navigazione. Delega tutta la logica di routing al NavigationService, non interagisce direttamente con il Router.")
-    Component(side_bar, "Sidebar",        "Angular, TypeScript", "Pannello laterale. Delega tutta la logica di routing al NavigationService, non interagisce direttamente con il Router.")
+    ' ╔═══════════════════════════════════════════════════════════════════════╗
+    ' ║  LAYER 1: PRESENTATION (Smart Components)                            ║
+    ' ╚═══════════════════════════════════════════════════════════════════════╝
 
-    Component(nav_service, "Navigation Service", "Angular Service, TypeScript", "SRP Fix: unico punto di controllo della navigazione. Incapsula Angular Router. Nav Bar e Sidebar lo iniettano e non dipendono dal Router direttamente.")
-    Component(router,      "Angular Router",     "Angular",                     "Gestisce la navigazione tra le diverse viste dell'applicazione.")
+    ' ── Navigation Shell ──────────────────────────────────────
+    Component(nav_bar,  "Navigation Bar", "Component, Angular", "Smart Component: Sottoscrive lo stato di navigazione da AppStore. route. Delega navigazione a NavigationService.")
+    Component(side_bar, "Sidebar",        "Component, Angular", "Smart Component: Visualizza l'albero DIP sottoscrivendo AppStore. dipTree. Delega caricamento a ImportService.")
 
     ' ── Feature: Import ───────────────────────────────────────
-    Component(workspace_ui, "Workspace UI", "Angular, TypeScript", "Interfaccia per la selezione e il caricamento del pacchetto DIP. Inietta ImportService.")
+    Component(workspace_ui, "Workspace UI", "Component, Angular", "Smart Component: Gestisce il flusso di caricamento DIP. Sottoscrive AppStore. importStatus per loading/errors.")
 
     ' ── Feature: Search ───────────────────────────────────────
-    Component(search_ui,       "Search UI",       "Angular, TypeScript", "Interfaccia per la ricerca testuale e strutturata. Inietta SearchService.")
-    Component(sema_search_ui,  "Semantic Search UI", "Angular, TypeScript", "Interfaccia per la ricerca semantica AI. Inietta SearchService.")
-    Component(query_validation, "Query Validation", "Angular Service, TypeScript", "ISP Fix: validazione condivisa per tutte le query (testuale e semantica). Unica istanza iniettata da entrambe le Search UI.")
+    Component(search_ui,      "Search UI",      "Component, Angular", "Smart Component: Sottoscrive AppStore. searchResults e AppStore. filters. Delega ricerca a SearchService.")
+    Component(sema_search_ui, "Semantic Search UI", "Component, Angular", "Smart Component: Sottoscrive AppStore. semanticResults. Delega ricerca a SearchService.")
 
     ' ── Feature: Viewer ───────────────────────────────────────
-    Component(dip_tree_view,    "DIP Tree View",        "Angular, TypeScript", "Visualizza la struttura ad albero del DIP. Inietta ImportService per aggiornamenti.")
-    Component(document_viewer,  "Document Viewer",      "Angular, TypeScript", "SRP Fix: responsabilità unica di rendering e preview del documento. Non gestisce export.")
-    Component(document_actions, "Document Actions Bar", "Angular, TypeScript", "SRP Fix: gestisce esclusivamente le azioni sul documento (esporta, stampa). Inietta ExportService.")
+   
+    Component(dip_tree_view, "DIP Tree View",        "Component, Angular", "Smart Component: Sottoscrive AppStore. dipTree. Pubblica cambio doc selezionato tramite AppStore.selectDocument().")
+    Component(document_viewer,  "Document Viewer",      "Component, Angular", "Smart Component: Sottoscrive AppStore. selectedDocument per contenuto. Delega rendering a DocumentPreviewService.")
+    Component(document_actions, "Document Actions Bar", "Component, Angular", "Smart Component: Sottoscrive AppStore. selectedDocument per abilitazione. Delega export/print a ExportService.")
 
     ' ── Feature: Verification ─────────────────────────────────
-    Component(verification_ui, "Verification UI", "Angular, TypeScript", "Avvia e mostra i risultati della verifica integrità. Inietta VerificationService.")
+    Component(verification_ui, "Verification UI", "Component, Angular", "Smart Component: Sottoscrive AppStore. verificationReport. Delega verifica a VerificationService.")
 
-    ' ── IPC Services (ISP: un servizio per feature) ──────────
-    note as isp_note
-      ISP Fix: ogni Angular Service espone
-      solo i metodi IPC rilevanti per la feature.
-      I componenti iniettano solo il servizio
-      di cui hanno bisogno.
-    end note
+    ' ╔═══════════════════════════════════════════════════════════════════════╗
+    ' ║  LAYER 2: STATE MANAGEMENT & COORDINATION (Facade + NgRx)            ║
+    ' ╚═══════════════════════════════════════════════════════════════════════╝
 
-    Component(import_service,       "Import Service",       "Angular Service, TypeScript", "<<IImportService>>\nWrap dei canali IPC per importazione DIP e navigazione alberatura.")
-    Component(search_service,       "Search Service",       "Angular Service, TypeScript", "<<ISearchService>>\nWrap dei canali IPC per ricerca testuale e semantica. Interfaccia uniforme per entrambe le UI.")
-    Component(verification_service, "Verification Service", "Angular Service, TypeScript", "<<IVerificationService>>\nWrap dei canali IPC per verifica integrità, firme e sigilli.")
-    Component(export_service,       "Export Service",       "Angular Service, TypeScript", "<<IExportService>>\nWrap dei canali IPC per esportazione file e stampa.")
+    Component(app_store, "AppStore (NgRx Store)", "NgRx, TypeScript", "<<Facade>> Single source of truth: dipTree , selectedDocument , searchResults , filters , importStatus , verificationReport , notifications . Tutti i componenti Smart sottoscrivono selectors normalizati.")
 
-    Component(ipc_client, "IPC Client", "Angular Service, TypeScript", "Layer infrastrutturale di basso livello. Unico componente che usa il Context Bridge. I Service di feature lo iniettano e non dipendono da Electron direttamente.")
+    Component(app_effects, "App Effects", "NgRx Effects, TypeScript", "<<Observer Pattern>> Ascolta azioni: loadDIP, searchDocuments, verifyIntegrity, exportDocument. Coordina side effects e dispeach azioni di successo/errore.")
+
+    ' ╔═══════════════════════════════════════════════════════════════════════╗
+    ' ║  LAYER 3: DOMAIN SERVICES (Feature-Specific, Interface Segregated)   ║
+    ' ╚═══════════════════════════════════════════════════════════════════════╝
+
+    Component(nav_service, "Navigation Service", "<<Facade>> Angular Service, TypeScript", "SRP: Unico controllo navigazione. Incapsula Router e gestisce app state tramite AppStore.route . Non conosce i dettagli dei componenti.")
+
+    Component(import_service, "Import Service", "<<IImportService>> Angular Service, TypeScript", "SRP: Solo caricamento DIP e aggiornamento AppStore. dipTree via AppStore.loadDIP(). Gestisce retry e timeout tramite ErrorHandlingService.")
+
+    Component(search_service, "Search Service", "<<ISearchService>> Angular Service, TypeScript", "ISP: Interfaccia uniforme per ricerca testuale e semantica. Cache risultati tramite CacheService. Delega validazione a QueryValidationService.")
+
+    Component(verification_service, "Verification Service", "<<IVerificationService>> Angular Service, TypeScript", "SRP: Solo verifica integrità. Monitora progresso tramite NotificationService. Dispatch risultati in AppStore. verificationReport.")
+
+    Component(export_service, "Export Service", "<<IExportService>> Angular Service, TypeScript", "SRP: Solo esportazione/stampa. Usa NotificationService per feedback utente. Nessuna logica di UI state.")
+
+    ' ╔═══════════════════════════════════════════════════════════════════════╗
+    ' ║  LAYER 4: INFRASTRUCTURE SERVICES (Cross-Cutting Concerns)            ║
+    ' ╚═══════════════════════════════════════════════════════════════════════╝
+
+    Component(ipc_client, "IPC Client", "<<IIpcClient>> Angular Service, TypeScript", "DIP: Interfaccia astratta per comunicazione IPC. Unico punto che accede al Context Bridge. Implementa retry logic e type-safe message handling.")
+
+    Component(error_handler, "Error Handling Service", "<<IErrorHandler>> Angular Service, TypeScript", "Cross-cutting: Centralizza riconoscimento errori (validation, network, user). Pubblica AppStore.reportError() e NotificationService.notify().")
+
+    Component(cache_service, "Cache Service", "<<ICache>> Angular Service, TypeScript", "Cross-cutting: Memoization con TTL per searchResults e metadati AGID. Riduce latenza per requisito < 2 secondi.")
+
+    Component(notification_service, "Notification Service", "<<INotificationService>> Angular Service, TypeScript", "Cross-cutting: Single channel per feedback utente (toast, snackbar, modal). Tutti i service la iniettano per comandi asincroni lunghi.")
+
+    Component(metadata_transformer, "Metadata Transformer", "<<IMetadataTransformer>> Angular Service, TypeScript", "Cross-cutting: Formattazione AGID metadati per visualizzazione. Centralizza logica di trasformazione.")
+
+    Component(accessibility_service, "Accessibility Service", "<<IAccessibilityService>> Angular Service, TypeScript", "WCAG 2.1 AA: Gestisce focus management, live regions, ARIA labels. Fornisce utility per componenti.")
+
+    Component(document_preview_service, "Document Preview Service", "<<IDocumentPreviewStrategy>> Angular Service, TypeScript", "Strategy Pattern: Astrazione per formati diversi (PDF, XML, TXT). Document Viewer lo inietta e delega rendering.")
+
+    Component(filter_service, "Filter Service", "<<IFilterService>> Angular Service, TypeScript", "SRP: Gestisce filtri metadati (categorie AGID, date, stadi). Coordina con SearchService per applicare filtri.")
+
+    Component(performance_monitor, "Performance Monitor", "<<IPerformanceMonitor>> Angular Service, TypeScript", "Monitoring: Misura latenza componenti e operazioni del main process. Integration con logging e diagnostica.")
+
+    ' ╔═══════════════════════════════════════════════════════════════════════╗
+    ' ║  LAYER 5: INFRASTRUCTURE (Infrastructure Abstraction)                ║
+    ' ╚═══════════════════════════════════════════════════════════════════════╝
+
+    Component(router, "Angular Router", "Angular", "Core di navigazione. Controllato esclusivamente da NavigationService.")
+
 }
 
-' ── Navigation ──────────────────────────────────────────────────
-Rel(nav_bar,  nav_service, "Richiede cambio vista")
-Rel(side_bar, nav_service, "Richiede cambio vista")
-Rel(nav_service, router,   "Naviga tramite")
+' ╔═════════════════════════════════════════════════════════════════════════════╗
+' ║  LAYER INTERACTION & DEPENDENCY FLOWS                                       ║
+' ╚═════════════════════════════════════════════════════════════════════════════╝
 
-' ── Feature: Import ─────────────────────────────────────────────
-Rel(workspace_ui,   import_service, "Richiede caricamento DIP")
-Rel(dip_tree_view,  import_service, "Richiede alberatura aggiornata")
+' Layer 1 → Layer 2 (Components subscribe to Store)
+Rel(nav_bar, app_store, "Sottoscrive  route")
+Rel(side_bar, app_store, "Sottoscrive  dipTree")
+Rel(workspace_ui, app_store, "Sottoscrive  importStatus")
+Rel(search_ui, app_store, "Sottoscrive  searchResults,  filters")
+Rel(sema_search_ui, app_store, "Sottoscrive  semanticResults")
+Rel(dip_tree_view, app_store, "Sottoscrive  dipTree")
+Rel(document_viewer, app_store, "Sottoscrive  selectedDocument")
+Rel(document_actions, app_store, "Sottoscrive  selectedDocument")
+Rel(verification_ui, app_store, "Sottoscrive  verificationReport")
 
-' ── Feature: Search ─────────────────────────────────────────────
-Rel(search_ui,      query_validation, "Valida input testuale")
-Rel(sema_search_ui, query_validation, "Valida input semantico")
-Rel(search_ui,      search_service,   "Invia query testuale")
-Rel(sema_search_ui, search_service,   "Invia query semantica")
+' Layer 2 → Layer 3 (Effects trigger Services)
+Rel(app_effects, nav_service, "Coordina azioni navigate")
+Rel(app_effects, import_service, "Coordina azioni loadDIP")
+Rel(app_effects, search_service, "Coordina azioni search")
+Rel(app_effects, verification_service, "Coordina azioni verify")
+Rel(app_effects, export_service, "Coordina azioni export")
 
-' ── Feature: Viewer ─────────────────────────────────────────────
-Rel(document_actions, export_service, "Richiede esportazione/stampa")
+' Layer 3 → Layer 4 (Services use Infrastructure)
+Rel(nav_service, router, "Naviga tramite")
+Rel(import_service, ipc_client, "Usa canali IPC")
+Rel(import_service, error_handler, "Gestisce errori")
+Rel(import_service, notification_service, "Notifica utente")
 
-' ── Feature: Verification ───────────────────────────────────────
-Rel(verification_ui, verification_service, "Richiede verifica e riceve report")
+Rel(search_service, ipc_client, "Usa canali IPC")
+Rel(search_service, cache_service, "Memoizza risultati")
+Rel(search_service, error_handler, "Gestisce errori")
+Rel(search_service, metadata_transformer, "Formatta AGID metadati")
 
-' ── Services → IPC Client ───────────────────────────────────────
-Rel(import_service,       ipc_client, "Usa canali IPC import")
-Rel(search_service,       ipc_client, "Usa canali IPC search")
-Rel(verification_service, ipc_client, "Usa canali IPC verification")
-Rel(export_service,       ipc_client, "Usa canali IPC export")
+Rel(verification_service, ipc_client, "Usa canali IPC")
+Rel(verification_service, error_handler, "Gestisce errori")
+Rel(verification_service, notification_service, "Notifica utente")
 
-' ── IPC Client → Main ───────────────────────────────────────────
-Rel(ipc_client, main, "Scambia payload e comandi", "Electron IPC / Context Bridge")
+Rel(export_service, ipc_client, "Usa canali IPC")
+Rel(export_service, notification_service, "Notifica utente")
+Rel(export_service, error_handler, "Gestisce errori")
+
+Rel(document_viewer, document_preview_service, "Delega rendering")
+Rel(document_viewer, accessibility_service, "Accesso WCAG 2.1 AA")
+
+Rel(search_ui, filter_service, "Applica filtri")
+Rel(sema_search_ui, filter_service, "Applica filtri")
+
+' Layer 3 → Layer 4 (Service Dependencies)
+Rel(error_handler, app_store, "Pubblica AppStore.reportError()")
+Rel(error_handler, notification_service, "Notifica errori")
+
+Rel(notification_service, app_store, "Pubblica AppStore.notifications ")
+Rel(performance_monitor, app_store, "Pubblica metriche")
+
+Rel(app_effects, error_handler, "Gestisce side effects")
+Rel(app_effects, performance_monitor, "Misura operazioni")
+
+' Layer 4 → Layer 5 (Infrastructure)
+Rel(ipc_client, main, "Scambia payload", "Electron IPC / Context Bridge")
+
+' ╔═════════════════════════════════════════════════════════════════════════════╗
+' ║  DESIGN PATTERNS & PRINCIPLES APPLIED                                       ║
+' ╚═════════════════════════════════════════════════════════════════════════════╝
+
+note as design_patterns
+  **DESIGN PATTERNS:**
+  • Facade: AppStore, NavigationService, domain Services
+  • Observer: AppStore (RxJS), EmailService sends notifications
+  • Strategy: DocumentPreviewService (PDF, XML, TXT handlers)
+  • Repository: CacheService (data abstraction)
+
+  **SOLID PRINCIPLES:**
+  • S: Ogni servizio una responsabilità (Import, Search, Verify, Export)
+  • O: Nuovi formati documento in DocumentPreviewService senza modificare viewer
+  • L: Tutti i service implementano interfacce; store selectors sostituibili
+  • I: Componenti iniettano solo i Service di cui hanno bisogno (non AppStore tutto)
+  • D: Dipendenza da astrazioni (IPC: IIpcClient, ErrorHandler: IErrorHandler)
+
+  **PERFORMANCE (< 2 SEC UI, < 2 MIN SEARCH):**
+  • CacheService: Memoize 50 recent searches
+  • QueryValidationService: Fail-fast prima IPC
+  • AppStore selectors: Memoized (normalization)
+
+  **ACCESSIBILITY (WCAG 2.1 AA):**
+  • AccessibilityService: Gestisce live regions, focus trap
+  • DocumentPreviewService: Supporta alternate text e ARIA
+end note
 
 @enduml

@@ -1,0 +1,67 @@
+@startuml Component Diagram - Layer 3: Domain Services (Simplified)
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Layer 3: Domain Services (Thin IPC Wrappers - Business Logic in Node.js)
+
+Container_Boundary(renderer, "Renderer Process (Angular)") {
+
+    Component(nav_service, "Navigation Service", "IPC Coordinator", "→ Angular Router → update nav_state")
+    
+    Component(import_service, "Import Service", "IPC Coordinator", "→ IPC: loadDIP command → update import_state → manage: retry, progress")
+    
+    Component(search_service, "Search Service", "IPC Coordinator", "→ IPC: query command → update search_state → manage: validation, cache")
+    
+    Component(verification_service, "Verification Service", "IPC Coordinator", "→ IPC: verify command → manage: UI feedback")
+    
+    Component(export_service, "Export Service", "IPC Coordinator", "→ IPC: export command → manage: format selection")
+    
+    Component(metadata_service, "Metadata Service", "IPC Coordinator", "→ IPC: getMetadata command → manage: caching")
+}
+
+Container_Boundary(main, "Main Process (Node.js)") {
+    Component(backend, "Business Logic", "Where work happens", "✓ Search algorithms ✓ Indexing ✓ Verification ✓ File I/O ✓ AI embeddings")
+}
+
+Rel(nav_service, backend, "Commands via IPC")
+Rel(import_service, backend, "Commands via IPC")
+Rel(search_service, backend, "Commands via IPC")
+Rel(verification_service, backend, "Commands via IPC")
+Rel(export_service, backend, "Commands via IPC")
+Rel(metadata_service, backend, "Commands via IPC")
+
+note as domain_services
+  **Layer 3: Domain Services**
+  
+  Thin Wrapper Pattern:
+  Each service:
+  ✓ Coordinates one business capability
+  ✓ Sends IPC commands to Main Process
+  ✓ Receives responses
+  ✓ Updates local state observable
+  ✓ Manages local UI/retry logic
+  ✗ Never executes algorithms
+  ✗ Never touches database
+  ✗ Never performs complex computations
+  
+  Principle: Single Responsibility
+  - NavigationService = routing only
+  - ImportService = load coordination only
+  - SearchService = query coordination only
+  - VerificationService = verify coordination only
+  - ExportService = export coordination only
+  - MetadataService = metadata coordination only
+  
+  Architecture: Command/Response Pattern
+  Component → Service.method()
+       ↓
+  Service sends IPC command
+       ↓
+  Main Process executes
+       ↓  
+  IPC response received
+       ↓
+  Service updates state
+       ↓
+  Component receives update
+end note
+
+@enduml

@@ -1,0 +1,38 @@
+@startuml Component Diagram - Layer 2: State Management (Simplified)
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Layer 2: State Management (RxJS BehaviorSubject - Single Source of Truth)
+
+Container_Boundary(renderer, "Renderer Process (Angular)") {
+
+    Component(nav_state, "Navigation State", "BehaviorSubject<T>", "route$: Current route\nactiveTab$: Active tab")
+    
+    Component(import_state, "Import State", "BehaviorSubject<T>", "dipTree$: Document tree\nselectedDocument$: Current selection\nimportStatus$: Load state")
+    
+    Component(search_state, "Search State", "BehaviorSubject<T>", "searchResults$: Text results\nsemanticResults$: Semantic results")
+}
+
+note as state_management
+  **Layer 2: State Management**
+  
+  Pattern: RxJS Observer (no NgRx/Redux)
+  
+  Each BehaviorSubject:
+  ✓ Holds current state
+  ✓ Emits changes to subscribers
+  ✓ Replays last value for new subscribers
+  ✓ Type-safe with TypeScript generics
+  
+  Components subscribe with async pipe:
+  {{ element | async }}
+  
+  Services update observables:
+  this.state.next(newValue)
+  
+  Benefits:
+  • No Redux boilerplate
+  • Smaller bundle size
+  • Simpler debugging
+  • Reactive by default
+end note
+
+@enduml
