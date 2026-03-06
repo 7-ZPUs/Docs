@@ -1,0 +1,35 @@
+@startuml Component Diagram - Layer 1: Presentation Components (Simplified)
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Layer 1: Presentation Components (Smart Components - UI Only)
+
+Container_Boundary(renderer, "Renderer Process (Angular)") {
+    Component(nav_bar,  "Navigation Bar", "Component", "Route navigation")
+    Component(side_bar, "Sidebar",        "Component", "DIP tree, document selection")
+    Component(workspace_ui, "Workspace UI", "Component", "Import status, progress")
+    Component(search_ui, "Search UI", "Component", "Text search interface")
+    Component(sema_search_ui, "Semantic Search", "Component", "Semantic search interface")
+    Component(dip_tree, "DIP Tree View", "Component", "Document tree display")
+    Component(viewer, "Document Viewer", "Component", "Document content display")
+    Component(actions, "Document Actions", "Component", "Export, print buttons")
+    Component(verification, "Verification UI", "Component", "Integrity check display")
+    Component(metadata, "Metadata Panel", "Component", "Document metadata display")
+}
+
+note as principles
+  **Layer 1: Presentation**
+  
+  Responsibility: Render UI + user interaction
+  
+  Each component:
+  ✓ Subscribes to RxJS observables
+  ✓ Updates local UI state
+  ✓ Calls service methods on user action
+  ✓ Passes data to child components
+  ✗ Does NOT contain business logic
+  ✗ Does NOT manage shared state
+  
+  Pattern: Smart/Container components
+  Characteristic: Minimal logic, maximum delegation
+end note
+
+@enduml
