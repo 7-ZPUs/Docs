@@ -1142,34 +1142,46 @@
         \item L'utente ha avviato l'applicazione
         \item L'utente ha selezionato un documento
     \end{enumerate}
-    \item \textbf{Postcondizioni}: L'utente visualizza per ogni metadato custom relativo al documento selezionato, il nome e il valore del metadato custom
+    \item \textbf{Postcondizioni}: L'utente visualizza la lista dei metadati custom del documento selezionato
     \item \textbf{Flusso Principale}:
         \begin{enumerate}
-            \item Il sistema mostra a video per ogni metadato custom: 
-            \begin{itemize}
-                \item Il nome del metadato custom (\ref{visualizzaNomeMetadatoCustom})
-                \item Il valore del metadato custom come stringa (\ref{visualizzaValoreMetadatoCustom})
-            \end{itemize}
+            \item Il sistema mostra a video la lista di metadati custom per il documento selezionato
         \end{enumerate}
     \item \textbf{Flusso Alternativo}:
     \begin{itemize}
         \item Il documento selezionato non dispone di metadati custom (\ref{metadatiCustomAssenti})
     \end{itemize}
-    \item \textbf{Inclusioni}: 
-    \begin{itemize}
-        \item \ref{visualizzaNomeMetadatoCustom} Visualizza Nome Metadato Custom
-        \item \ref{visualizzaValoreMetadatoCustom} Visualizza valore metadato custom
-    \end{itemize}
+    \item \textbf{Inclusioni}: \ref{visualizzaMetadatoInLista} Visualizza elemento lista metadati custom
     \item \textbf{Estensioni}: \ref{metadatiCustomAssenti} Metadati custom assenti
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{../../assets/uml/UC71INC.png}
+    \includegraphics[width=0.8\textwidth]{../../assets/uml/UC71INC.png}
     \caption{Inclusioni \ref{visualizzaMetadatiCustomDocumento} - Visualizza lista metadati custom documento}
     \label{fig:inclusioniVisualizzaMetadatiCustomDocumento}
 \end{figure}
 
-\subusecase{visualizzaNomeMetadatoCustom}{Visualizza Nome Metadato Custom}
+\subusecase{visualizzaMetadatoInLista}{Visualizza elemento lista metadati custom}
+\begin{itemize}
+    \item \textbf{Attore Primario}: Utente
+    \item \textbf{Precondizioni}:
+    \begin{enumerate}
+        \item L'utente ha avviato l'applicazione
+        \item L'utente sta visualizzando la lista dei metadati custom del documento selezionato
+    \end{enumerate}
+    \item \textbf{Postcondizioni}: L'utente visualizza il nome e il valore del metadato custom come stringa
+    \item \textbf{Flusso Principale}:
+        \begin{enumerate}
+            \item Il sistema mostra a video il nome del metadato custom (\ref{visualizzaNomeMetadatoCustom})
+            \item Il sistema mostra a video il valore del metadato custom come stringa (\ref{visualizzaValoreMetadatoCustom})
+        \end{enumerate}
+    \item \textbf{Inclusioni}: \begin{itemize}
+        \item \ref{visualizzaNomeMetadatoCustom} Visualizza Nome Metadato Custom
+        \item \ref{visualizzaValoreMetadatoCustom} Visualizza valore metadato custom
+    \end{itemize}
+\end{itemize}
+
+\subsubusecase{visualizzaNomeMetadatoCustom}{Visualizza Nome Metadato Custom}
 \begin{itemize}
       \item \textbf{Attore Primario}: Utente
       \item \textbf{Precondizioni}: \begin{enumerate}
@@ -1183,7 +1195,7 @@
             \end{enumerate}
 \end{itemize}
 
-\subusecase{visualizzaValoreMetadatoCustom}{Visualizza valore metadato custom}
+\subsubusecase{visualizzaValoreMetadatoCustom}{Visualizza valore metadato custom}
 \begin{itemize}
     \item \textbf{Attore Primario}: Utente
         \item \textbf{Precondizioni}:
