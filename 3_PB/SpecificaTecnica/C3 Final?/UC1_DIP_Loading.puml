@@ -1,6 +1,11 @@
 @startuml UC-1 – Caricamento e Indicizzazione DIP
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam nodesep 80
+skinparam ranksep 100
+
 title UC-1 – Caricamento e Indicizzazione DIP\nFlusso: apertura file → decompressione → parsing → indicizzazione → fase ready\nComponenti: AppShell · DipLoadingPage · DipIndexingProgress · DipFacade · IpcGateway · SemanticIndexFacade
 
 Person(user, "Utente", "Revisore, archivista o consulente")
@@ -36,36 +41,36 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
 }
 
 ' ── Utente → Shell ─────────────────────────────────────────
-Rel(user, app_shell, "Seleziona file DIP / interagisce", "Mouse / Tastiera")
+Rel_D(user, app_shell, "Seleziona file DIP / interagisce", "Mouse / Tastiera")
 
 ' ── AppShell → fasi visuali ────────────────────────────────
-Rel(app_shell, dip_facade, "legge Signal<DipState>.phase per switch visivo")
-Rel(app_shell, dip_loading_page, "mostra quando phase='idle'|'indexing'|'error'")
-Rel(app_shell, telemetry, "trackEvent(ROUTE_CHANGE) ad ogni NavigationEnd")
-Rel(app_shell, accessibility_service, "setPageTitle() ad ogni cambio rotta (WCAG 2.4.2)")
+Rel_D(app_shell, dip_facade, "legge Signal<DipState>.phase per switch visivo")
+Rel_D(app_shell, dip_loading_page, "mostra quando phase='idle'|'indexing'|'error'")
+Rel_R(app_shell, telemetry, "trackEvent(ROUTE_CHANGE) ad ogni NavigationEnd")
+Rel_R(app_shell, accessibility_service, "setPageTitle() ad ogni cambio rotta (WCAG 2.4.2)")
 
 ' ── DipLoadingPage ─────────────────────────────────────────
-Rel(dip_loading_page, dip_facade, "legge Signal<DipLoadingState>")
-Rel(dip_loading_page, dip_indexing_progress, "@Input progress: DipLoadingProgress")
-Rel(dip_loading_page, inline_error, "@Input error: AppError – errori di fase DIP\n(DIP_CORRUPT_ARCHIVE, DIP_PARSE_ERROR, DIP_INDEX_ERROR)")
-Rel(dip_loading_page, semantic_facade, "bottone 'Salta indicizzazione AI' → cancel()")
+Rel_D(dip_loading_page, dip_facade, "legge Signal<DipLoadingState>")
+Rel_D(dip_loading_page, dip_indexing_progress, "@Input progress: DipLoadingProgress")
+Rel_D(dip_loading_page, inline_error, "@Input error: AppError – errori di fase DIP\n(DIP_CORRUPT_ARCHIVE, DIP_PARSE_ERROR, DIP_INDEX_ERROR)")
+Rel_D(dip_loading_page, semantic_facade, "bottone 'Salta indicizzazione AI' → cancel()")
 
 ' ── DipFacade → IPC ────────────────────────────────────────
-Rel(dip_facade, ipc_gateway, "loadDip [no-cache], getClasses, getProcesses, getDocuments")
-Rel(dip_facade, ipc_error_handler, "DIP_* errors → AppError nel Signal<DipState>")
-Rel(dip_facade, notification_service, "feedback caricamento DIP completato")
-Rel(dip_facade, telemetry, "trackEvent(DIP_LOADED)\ntrackError(AppError)")
-Rel(dip_facade, live_announcer, "announce('Indicizzazione X%') ogni 10% [polite]")
-Rel(dip_facade, dip_indexing_progress, "Signal<loadingProgress> aggiornato in streaming via IPC")
+Rel_D(dip_facade, ipc_gateway, "loadDip [no-cache], getClasses, getProcesses, getDocuments")
+Rel_R(dip_facade, ipc_error_handler, "DIP_* errors → AppError nel Signal<DipState>")
+Rel_R(dip_facade, notification_service, "feedback caricamento DIP completato")
+Rel_R(dip_facade, telemetry, "trackEvent(DIP_LOADED)\ntrackError(AppError)")
+Rel_R(dip_facade, live_announcer, "announce('Indicizzazione X%') ogni 10% [polite]")
+Rel_R(dip_facade, dip_indexing_progress, "Signal<loadingProgress> aggiornato in streaming via IPC")
 
 ' ── SemanticFacade → IPC ───────────────────────────────────
-Rel(semantic_facade, ipc_gateway, "getIndexingStatus, semantic:cancel [no-cache]")
-Rel(semantic_facade, live_announcer, "announce('Ricerca semantica non disponibile') [assertive]\n  su status=timeout|cancelled|error")
+Rel_D(semantic_facade, ipc_gateway, "getIndexingStatus, semantic:cancel [no-cache]")
+Rel_R(semantic_facade, live_announcer, "announce('Ricerca semantica non disponibile') [assertive]\n  su status=timeout|cancelled|error")
 
 ' ── IPC Gateway → Main ─────────────────────────────────────
-Rel(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
-Rel(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
-Rel(ipc_gateway, ipc_cache, "get(key) prima di invoke [cache-first];\nset(key,val,ttl) dopo risposta IPC")
+Rel_D(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
+Rel_R(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
+Rel_R(ipc_gateway, ipc_cache, "get(key) prima di invoke [cache-first];\nset(key,val,ttl) dopo risposta IPC")
 
 note as legend
 FLUSSO PRINCIPALE

@@ -1,6 +1,11 @@
 @startuml UC-3 – Ricerca (Full-text, Avanzata e Semantica)
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam nodesep 80
+skinparam ranksep 100
+
 title UC-3 – Ricerca Full-text, Avanzata e Semantica\nUC-9..18: ricerca libera · filtri avanzati · soggetti · validazione · risultati\nComponenti: SearchPage · SearchFacade · FilterValidator · SemanticIndexFacade · IpcGateway
 
 Person(user, "Utente", "Revisore, archivista o consulente")
@@ -70,60 +75,60 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
 }
 
 ' ── Utente → Search ────────────────────────────────────────
-Rel(user, search_page, "Inserisce query / applica filtri", "Mouse / Tastiera")
+Rel_D(user, search_page, "Inserisce query / applica filtri", "Mouse / Tastiera")
 
 ' ── Router & Guard ─────────────────────────────────────────
-Rel(router, dip_ready_guard, "CanActivateFn su /search")
-Rel(router, search_page, "Lazy /search [guard: DipReadyGuard]")
+Rel_D(router, dip_ready_guard, "CanActivateFn su /search")
+Rel_D(router, search_page, "Lazy /search [guard: DipReadyGuard]")
 
 ' ── SearchPage → componenti ────────────────────────────────
-Rel(search_page, search_facade, "legge Signal<SearchState>; dispatches query")
-Rel(search_page, async_state_wrapper, "avvolge risultati [loading, error, empty]")
-Rel(async_state_wrapper, inline_error, "slot 'error' → SEARCH_ENGINE_ERROR")
-Rel(search_page, search_bar, "@Input query, @Output queryChanged – UC-9")
-Rel(search_page, advanced_filter_panel, "@Input filters, @Output filtersChanged – UC-9.1")
-Rel(search_page, search_results, "@Input results[] – UC-15, UC-16")
-Rel(search_page, semantic_status, "@Input status [Opzionale] – UC-11")
+Rel_D(search_page, search_facade, "legge Signal<SearchState>; dispatches query")
+Rel_D(search_page, async_state_wrapper, "avvolge risultati [loading, error, empty]")
+Rel_D(async_state_wrapper, inline_error, "slot 'error' → SEARCH_ENGINE_ERROR")
+Rel_D(search_page, search_bar, "@Input query, @Output queryChanged – UC-9")
+Rel_D(search_page, advanced_filter_panel, "@Input filters, @Output filtersChanged – UC-9.1")
+Rel_D(search_page, search_results, "@Input results[] – UC-15, UC-16")
+Rel_D(search_page, semantic_status, "@Input status [Opzionale] – UC-11")
 
 ' ── SearchBar → Facade ─────────────────────────────────────
-Rel(search_bar, search_facade, "queryChanged → search() con debounce 300ms")
+Rel_D(search_bar, search_facade, "queryChanged → search() con debounce 300ms")
 
 ' ── AdvancedFilterPanel → figli ────────────────────────────
-Rel(advanced_filter_panel, common_filters, "@Input – UC-12.1")
-Rel(advanced_filter_panel, di_dai_filters, "@Input – UC-12.2.1")
-Rel(advanced_filter_panel, aggregate_filters, "@Input – UC-12.2.2")
-Rel(advanced_filter_panel, custom_meta_filter, "@Input – UC-12.3")
-Rel(advanced_filter_panel, subject_filter, "@Input – UC-13")
-Rel(advanced_filter_panel, filter_validator, "validate(filters) real-time – UC-10, UC-18")
+Rel_D(advanced_filter_panel, common_filters, "@Input – UC-12.1")
+Rel_D(advanced_filter_panel, di_dai_filters, "@Input – UC-12.2.1")
+Rel_D(advanced_filter_panel, aggregate_filters, "@Input – UC-12.2.2")
+Rel_D(advanced_filter_panel, custom_meta_filter, "@Input – UC-12.3")
+Rel_D(advanced_filter_panel, subject_filter, "@Input – UC-13")
+Rel_R(advanced_filter_panel, filter_validator, "validate(filters) real-time – UC-10, UC-18")
 
 ' ── Subject Filter ─────────────────────────────────────────
-Rel(subject_filter, subject_detail_form, "@Input subjectType → campi – UC-13.3")
+Rel_D(subject_filter, subject_detail_form, "@Input subjectType → campi – UC-13.3")
 
 ' ── FilterValueInput ───────────────────────────────────────
-Rel(common_filters, filter_value_input, "ogni campo valore – UC-17, UC-18")
-Rel(di_dai_filters, filter_value_input, "ogni campo valore – UC-17, UC-18")
-Rel(aggregate_filters, filter_value_input, "ogni campo valore – UC-17, UC-18")
-Rel(filter_value_input, field_error, "@Input ValidationError – UC-18 inline sotto il campo")
+Rel_D(common_filters, filter_value_input, "ogni campo valore – UC-17, UC-18")
+Rel_D(di_dai_filters, filter_value_input, "ogni campo valore – UC-17, UC-18")
+Rel_D(aggregate_filters, filter_value_input, "ogni campo valore – UC-17, UC-18")
+Rel_D(filter_value_input, field_error, "@Input ValidationError – UC-18 inline sotto il campo")
 
 ' ── SearchResults ──────────────────────────────────────────
-Rel(search_results, empty_state, "fallback UC-16")
-Rel(search_results, document_viewer, "anteprima rapida documento selezionato – UC-7 (riuso)")
-Rel(search_results, metadata_panel, "pannello metadati rapido nel risultato – riuso")
+Rel_D(search_results, empty_state, "fallback UC-16")
+Rel_D(search_results, document_viewer, "anteprima rapida documento selezionato – UC-7 (riuso)")
+Rel_D(search_results, metadata_panel, "pannello metadati rapido nel risultato – riuso")
 
 ' ── SemanticStatus ─────────────────────────────────────────
-Rel(semantic_status, semantic_facade, "legge Signal<SemanticIndexState>.status")
+Rel_D(semantic_status, semantic_facade, "legge Signal<SemanticIndexState>.status")
 
 ' ── SearchFacade → servizi ─────────────────────────────────
-Rel(search_facade, ipc_gateway, "search, searchAdvanced [AbortController per cancel]\nsearchSemantic [no-cache se status≠ready]")
-Rel(search_facade, filter_validator, "pre-validazione filtri UC-10")
-Rel(search_facade, ipc_error_handler, "SEARCH_ENGINE_ERROR → AppError")
-Rel(search_facade, telemetry, "trackEvent(SEARCH_EXECUTED)\ntrackTiming(SEARCH_LATENCY_MS)\ntrackError(AppError)")
-Rel(search_facade, live_announcer, "announce('Trovati N risultati') – UC-15 [polite]")
+Rel_D(search_facade, ipc_gateway, "search, searchAdvanced [AbortController per cancel]\nsearchSemantic [no-cache se status≠ready]")
+Rel_R(search_facade, filter_validator, "pre-validazione filtri UC-10")
+Rel_R(search_facade, ipc_error_handler, "SEARCH_ENGINE_ERROR → AppError")
+Rel_R(search_facade, telemetry, "trackEvent(SEARCH_EXECUTED)\ntrackTiming(SEARCH_LATENCY_MS)\ntrackError(AppError)")
+Rel_R(search_facade, live_announcer, "announce('Trovati N risultati') – UC-15 [polite]")
 
 ' ── IPC Gateway ────────────────────────────────────────────
-Rel(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
-Rel(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
-Rel(ipc_gateway, ipc_cache, "get(key) cache-first, TTL 30s per search results")
+Rel_D(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
+Rel_R(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
+Rel_R(ipc_gateway, ipc_cache, "get(key) cache-first, TTL 30s per search results")
 
 note as legend
 FLUSSO RICERCA FULL-TEXT (UC-9)

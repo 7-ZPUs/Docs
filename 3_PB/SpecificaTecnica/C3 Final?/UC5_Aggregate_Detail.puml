@@ -1,6 +1,11 @@
 @startuml UC-5 – Dettaglio Aggregazione Documentale
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam nodesep 80
+skinparam ranksep 100
+
 title UC-5 – Dettaglio Aggregazione Documentale\nUC-59..70: metadati aggregazione · procedimento · indice documenti\nComponenti: AggregateDetailPage · AggregateFacade · AggregateMetadata · DocumentIndex
 
 Person(user, "Utente", "Revisore, archivista o consulente")
@@ -65,47 +70,47 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
 }
 
 ' ── Utente → AggregatePage ─────────────────────────────────
-Rel(user, aggregate_page, "Apre aggregazione", "Click nodo DipTree (tipo aggregate)")
+Rel_D(user, aggregate_page, "Apre aggregazione", "Click nodo DipTree (tipo aggregate)")
 
 ' ── Router → AggregatePage ─────────────────────────────────
-Rel(router, dip_ready_guard, "CanActivateFn su /aggregate/:id")
-Rel(router, aggregate_page, "Lazy /aggregate/:id [guard: DipReadyGuard]")
+Rel_D(router, dip_ready_guard, "CanActivateFn su /aggregate/:id")
+Rel_D(router, aggregate_page, "Lazy /aggregate/:id [guard: DipReadyGuard]")
 
 ' ── AggregatePage ──────────────────────────────────────────
-Rel(aggregate_page, aggregate_facade, "legge Signal<AggregateDetail>")
-Rel(aggregate_page, async_state_wrapper, "avvolge il contenuto [loading, error]")
-Rel(async_state_wrapper, inline_error, "slot 'error' → DOC_NOT_FOUND (aggregazione)")
-Rel(aggregate_page, aggregate_metadata, "@Input metadata – UC-59..65, UC-68..70")
-Rel(aggregate_page, admin_procedure, "@Input data – UC-66")
-Rel(aggregate_page, document_index, "@Input items[] – UC-67")
-Rel(aggregate_page, document_actions, "@Input aggregateId – riuso per azioni su aggregazione")
+Rel_D(aggregate_page, aggregate_facade, "legge Signal<AggregateDetail>")
+Rel_D(aggregate_page, async_state_wrapper, "avvolge il contenuto [loading, error]")
+Rel_D(async_state_wrapper, inline_error, "slot 'error' → DOC_NOT_FOUND (aggregazione)")
+Rel_D(aggregate_page, aggregate_metadata, "@Input metadata – UC-59..65, UC-68..70")
+Rel_D(aggregate_page, admin_procedure, "@Input data – UC-66")
+Rel_D(aggregate_page, document_index, "@Input items[] – UC-67")
+Rel_D(aggregate_page, document_actions, "@Input aggregateId – riuso per azioni su aggregazione")
 
 ' ── AggregateMetadata ──────────────────────────────────────
-Rel(aggregate_metadata, verification_badge, "stato verifica aggregazione – UC-4")
-Rel(aggregate_metadata, timestamp_label, "date aggregazione – UC-5")
+Rel_R(aggregate_metadata, verification_badge, "stato verifica aggregazione – UC-4")
+Rel_R(aggregate_metadata, timestamp_label, "date aggregazione – UC-5")
 
 ' ── AdminProcedure ─────────────────────────────────────────
-Rel(admin_procedure, procedure_phases, "@Input phases[] – UC-66.4")
+Rel_D(admin_procedure, procedure_phases, "@Input phases[] – UC-66.4")
 
 ' ── DocumentActions ────────────────────────────────────────
-Rel(document_actions, output_toolbar, "delega azioni output con context=aggregazione")
-Rel(output_toolbar, output_facade, "save, print, exportPdf, download")
-Rel(output_facade, folder_picker_dialog, "apre dialogo selezione cartella – UC-19, UC-34, UC-35")
-Rel(output_facade, error_dialog, "AppError → UC-21, UC-24, UC-25, UC-36, UC-37\nrecoverable=true → 'Riprova'")
-Rel(output_facade, notification_service, "conferma operazione output completata")
-Rel(output_facade, live_announcer, "announce('Operazione completata') [polite]")
-Rel(folder_picker_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
-Rel(error_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
+Rel_D(document_actions, output_toolbar, "delega azioni output con context=aggregazione")
+Rel_D(output_toolbar, output_facade, "save, print, exportPdf, download")
+Rel_D(output_facade, folder_picker_dialog, "apre dialogo selezione cartella – UC-19, UC-34, UC-35")
+Rel_R(output_facade, error_dialog, "AppError → UC-21, UC-24, UC-25, UC-36, UC-37\nrecoverable=true → 'Riprova'")
+Rel_R(output_facade, notification_service, "conferma operazione output completata")
+Rel_R(output_facade, live_announcer, "announce('Operazione completata') [polite]")
+Rel_R(folder_picker_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
+Rel_R(error_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
 
 ' ── AggregateFacade → IPC ──────────────────────────────────
-Rel(aggregate_facade, ipc_gateway, "getAggregateMetadata [cache-first, TTL 300s]")
-Rel(aggregate_facade, ipc_error_handler, "AppError nel Signal<AggregateDetail>")
-Rel(aggregate_facade, telemetry, "trackEvent(SEARCH_RESULT_OPENED)")
+Rel_D(aggregate_facade, ipc_gateway, "getAggregateMetadata [cache-first, TTL 300s]")
+Rel_R(aggregate_facade, ipc_error_handler, "AppError nel Signal<AggregateDetail>")
+Rel_R(aggregate_facade, telemetry, "trackEvent(SEARCH_RESULT_OPENED)")
 
 ' ── IPC Gateway ────────────────────────────────────────────
-Rel(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
-Rel(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
-Rel(ipc_gateway, ipc_cache, "get(key) cache-first;\nset(key,val,ttl) dopo risposta IPC")
+Rel_D(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
+Rel_R(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
+Rel_R(ipc_gateway, ipc_cache, "get(key) cache-first;\nset(key,val,ttl) dopo risposta IPC")
 
 note as legend
 FLUSSO VISUALIZZAZIONE AGGREGAZIONE

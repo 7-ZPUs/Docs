@@ -1,6 +1,11 @@
 @startuml UC-7 – Operazioni di Output
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam nodesep 80
+skinparam ranksep 100
+
 title UC-7 – Operazioni di Output\nUC-19..25, UC-34..37: salva · salva multiplo · stampa · esporta PDF · scarica\nComponenti: OutputFacade · OutputToolbar · FolderPickerDialog · ErrorDialog
 
 Person(user, "Utente", "Revisore, archivista o consulente")
@@ -41,36 +46,36 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
 }
 
 ' ── Utente → Entry Points ──────────────────────────────────
-Rel(user, document_actions, "Clicca azione: Salva / Stampa /\nScarica / Esporta PDF", "Mouse / Tastiera")
+Rel_D(user, document_actions, "Clicca azione: Salva / Stampa /\nScarica / Esporta PDF", "Mouse / Tastiera")
 
 ' ── Entry Points → OutputToolbar ───────────────────────────
-Rel(document_actions, output_toolbar, "delega azioni output con context=documento")
-Rel(integrity_page_ref, output_toolbar, "context=report → solo Esporta PDF (UC-34)")
+Rel_D(document_actions, output_toolbar, "delega azioni output con context=documento")
+Rel_D(integrity_page_ref, output_toolbar, "context=report → solo Esporta PDF (UC-34)")
 
 ' ── OutputToolbar → OutputFacade ───────────────────────────
-Rel(output_toolbar, output_facade, "save(id)\nsaveMultiple(ids)\nprint(id)\nprintMultiple(ids)\nexportPdf(id|report)\ndownload(id)")
+Rel_D(output_toolbar, output_facade, "save(id)\nsaveMultiple(ids)\nprint(id)\nprintMultiple(ids)\nexportPdf(id|report)\ndownload(id)")
 
 ' ── OutputFacade → dialog ──────────────────────────────────
-Rel(output_facade, folder_picker_dialog, "apre via DialogService per operazioni con destPath\n(UC-19 Salva, UC-20 Salva Multiplo,\n UC-34 Esporta PDF, UC-35 Scarica)")
-Rel(output_facade, error_dialog, "AppError → dialogo modale bloccante:\n  UC-21 IO_ERROR (Salva)\n  UC-24 PRINT_ERROR (Stampa)\n  UC-25 FORMAT_NOT_PRINTABLE (Stampa)\n  UC-36 IO_ERROR/DOWNLOAD_ERROR (Scarica)\n  UC-37 PDF_GENERATION_ERROR (Esporta PDF)")
-Rel(output_facade, notification_service, "feedback positivo dopo operazione completata")
-Rel(output_facade, telemetry, "trackEvent(FILE_SAVED|PRINTED|PDF_EXPORTED)\ntrackError(AppError)")
-Rel(output_facade, live_announcer, "announce('Operazione completata') [polite]\nannounce(errore) [assertive]")
-Rel(output_facade, ipc_error_handler, "Result<void,AppError> → ErrorDialog")
+Rel_D(output_facade, folder_picker_dialog, "apre via DialogService per operazioni con destPath\n(UC-19 Salva, UC-20 Salva Multiplo,\n UC-34 Esporta PDF, UC-35 Scarica)")
+Rel_R(output_facade, error_dialog, "AppError → dialogo modale bloccante:\n  UC-21 IO_ERROR (Salva)\n  UC-24 PRINT_ERROR (Stampa)\n  UC-25 FORMAT_NOT_PRINTABLE (Stampa)\n  UC-36 IO_ERROR/DOWNLOAD_ERROR (Scarica)\n  UC-37 PDF_GENERATION_ERROR (Esporta PDF)")
+Rel_R(output_facade, notification_service, "feedback positivo dopo operazione completata")
+Rel_R(output_facade, telemetry, "trackEvent(FILE_SAVED|PRINTED|PDF_EXPORTED)\ntrackError(AppError)")
+Rel_R(output_facade, live_announcer, "announce('Operazione completata') [polite]\nannounce(errore) [assertive]")
+Rel_R(output_facade, ipc_error_handler, "Result<void,AppError> → ErrorDialog")
 
 ' ── FolderPickerDialog ─────────────────────────────────────
-Rel(folder_picker_dialog, accessibility_service, "trapFocus() apertura (WCAG 2.1.2)\nrestoreFocus() chiusura (WCAG 2.1.1)")
-Rel(folder_picker_dialog, output_facade, "conferma destPath selezionata")
+Rel_R(folder_picker_dialog, accessibility_service, "trapFocus() apertura (WCAG 2.1.2)\nrestoreFocus() chiusura (WCAG 2.1.1)")
+Rel_U(folder_picker_dialog, output_facade, "conferma destPath selezionata")
 
 ' ── ErrorDialog ────────────────────────────────────────────
-Rel(error_dialog, accessibility_service, "trapFocus() apertura (WCAG 2.1.2)\nrestoreFocus() chiusura (WCAG 2.1.1)")
+Rel_R(error_dialog, accessibility_service, "trapFocus() apertura (WCAG 2.1.2)\nrestoreFocus() chiusura (WCAG 2.1.1)")
 
 ' ── OutputFacade → IPC ─────────────────────────────────────
-Rel(output_facade, ipc_gateway, "saveFile [no-cache]\nsaveMultiple [no-cache]\nprint [no-cache]\nexportPdf [no-cache]\ndownload [no-cache]")
+Rel_D(output_facade, ipc_gateway, "saveFile [no-cache]\nsaveMultiple [no-cache]\nprint [no-cache]\nexportPdf [no-cache]\ndownload [no-cache]")
 
 ' ── IPC Gateway → Main ─────────────────────────────────────
-Rel(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
-Rel(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
+Rel_D(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
+Rel_R(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
 
 note as legend
 FLUSSI OUTPUT

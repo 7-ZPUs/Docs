@@ -1,6 +1,11 @@
 @startuml UC-6 – Verifica Integrità
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam nodesep 80
+skinparam ranksep 100
+
 title UC-6 – Verifica Integrità DIP\nUC-26..33: verifica DIP · classe · processo · documento · report · fallimenti\nComponenti: IntegrityPage · IntegrityFacade · VerificationProgress · Report Components
 
 Person(user, "Utente", "Revisore, archivista o consulente")
@@ -68,56 +73,56 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
 }
 
 ' ── Utente → IntegrityPage ─────────────────────────────────
-Rel(user, integrity_page, "Avvia verifica integrità", "Click su bottone verifica")
+Rel_D(user, integrity_page, "Avvia verifica integrità", "Click su bottone verifica")
 
 ' ── Router → IntegrityPage ─────────────────────────────────
-Rel(router, dip_ready_guard, "CanActivateFn su /integrity")
-Rel(router, integrity_page, "Lazy /integrity [guard: DipReadyGuard]")
+Rel_D(router, dip_ready_guard, "CanActivateFn su /integrity")
+Rel_D(router, integrity_page, "Lazy /integrity [guard: DipReadyGuard]")
 
 ' ── IntegrityPage → componenti ─────────────────────────────
-Rel(integrity_page, integrity_facade, "legge Signal<IntegrityState>; triggers verifica")
-Rel(integrity_page, async_state_wrapper, "avvolge report [loading, systemError: AppError]")
-Rel(async_state_wrapper, inline_error, "slot 'error' → INTEGRITY_VERIFY_ERROR")
-Rel(integrity_page, integrity_trigger, "@Input context, @Output verifyRequested – UC-26..29")
-Rel(integrity_page, verification_progress, "@Input progress: VerificationProgress – UC-26..29")
-Rel(integrity_page, dip_integrity_report, "@Input report – UC-30")
-Rel(integrity_page, class_integrity_report, "@Input report – UC-31")
-Rel(integrity_page, process_integrity_report, "@Input report – UC-32")
-Rel(integrity_page, doc_integrity_report, "@Input report – UC-33")
-Rel(integrity_page, output_toolbar, "context=report → esporta PDF UC-34")
+Rel_D(integrity_page, integrity_facade, "legge Signal<IntegrityState>; triggers verifica")
+Rel_D(integrity_page, async_state_wrapper, "avvolge report [loading, systemError: AppError]")
+Rel_D(async_state_wrapper, inline_error, "slot 'error' → INTEGRITY_VERIFY_ERROR")
+Rel_D(integrity_page, integrity_trigger, "@Input context, @Output verifyRequested – UC-26..29")
+Rel_D(integrity_page, verification_progress, "@Input progress: VerificationProgress – UC-26..29")
+Rel_D(integrity_page, dip_integrity_report, "@Input report – UC-30")
+Rel_D(integrity_page, class_integrity_report, "@Input report – UC-31")
+Rel_D(integrity_page, process_integrity_report, "@Input report – UC-32")
+Rel_D(integrity_page, doc_integrity_report, "@Input report – UC-33")
+Rel_D(integrity_page, output_toolbar, "context=report → esporta PDF UC-34")
 
 ' ── IntegrityTrigger → Facade ──────────────────────────────
-Rel(integrity_trigger, integrity_facade, "@Output verifyRequested → verifyDip/Class/Process/Document")
+Rel_D(integrity_trigger, integrity_facade, "@Output verifyRequested → verifyDip/Class/Process/Document")
 
 ' ── IntegrityFacade → progress ─────────────────────────────
-Rel(integrity_facade, verification_progress, "Signal<progress> aggiornato ogni documento verificato")
+Rel_R(integrity_facade, verification_progress, "Signal<progress> aggiornato ogni documento verificato")
 
 ' ── Report → shared components ─────────────────────────────
-Rel(dip_integrity_report, verification_badge, "badge stato per ogni classe – UC-4")
-Rel(dip_integrity_report, timestamp_label, "timestamp verifica – UC-5")
-Rel(class_integrity_report, verification_badge, "badge stato per ogni processo – UC-4")
-Rel(doc_integrity_report, verification_badge, "badge stato documento – UC-4")
-Rel(doc_integrity_report, integrity_failure_detail, "@Input failure – UC-33.3 (dominio, non IPC)")
-Rel(process_integrity_report, integrity_failure_detail, "@Input failure per doc corrotto – UC-32.4.1")
+Rel_R(dip_integrity_report, verification_badge, "badge stato per ogni classe – UC-4")
+Rel_R(dip_integrity_report, timestamp_label, "timestamp verifica – UC-5")
+Rel_R(class_integrity_report, verification_badge, "badge stato per ogni processo – UC-4")
+Rel_R(doc_integrity_report, verification_badge, "badge stato documento – UC-4")
+Rel_D(doc_integrity_report, integrity_failure_detail, "@Input failure – UC-33.3 (dominio, non IPC)")
+Rel_D(process_integrity_report, integrity_failure_detail, "@Input failure per doc corrotto – UC-32.4.1")
 
 ' ── OutputToolbar ──────────────────────────────────────────
-Rel(output_toolbar, output_facade, "exportPdf(report) – UC-34")
-Rel(output_facade, folder_picker_dialog, "apre dialogo selezione cartella PDF")
-Rel(output_facade, error_dialog, "OUTPUT_PDF_GENERATION_ERROR – UC-37")
-Rel(output_facade, notification_service, "conferma export PDF completato")
-Rel(output_facade, live_announcer, "announce('Operazione completata') [polite]")
-Rel(folder_picker_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
-Rel(error_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
+Rel_D(output_toolbar, output_facade, "exportPdf(report) – UC-34")
+Rel_D(output_facade, folder_picker_dialog, "apre dialogo selezione cartella PDF")
+Rel_R(output_facade, error_dialog, "OUTPUT_PDF_GENERATION_ERROR – UC-37")
+Rel_R(output_facade, notification_service, "conferma export PDF completato")
+Rel_R(output_facade, live_announcer, "announce('Operazione completata') [polite]")
+Rel_R(folder_picker_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
+Rel_R(error_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
 
 ' ── IntegrityFacade → IPC ──────────────────────────────────
-Rel(integrity_facade, ipc_gateway, "verifyDip, verifyClass, verifyProcess,\nverifyDocument [tutti no-cache]")
-Rel(integrity_facade, ipc_error_handler, "INTEGRITY_VERIFY_ERROR → AppError")
-Rel(integrity_facade, telemetry, "trackEvent(INTEGRITY_STARTED|COMPLETED)\ntrackError(AppError)")
-Rel(integrity_facade, live_announcer, "announce('Verifica integrità completata') [polite]")
+Rel_D(integrity_facade, ipc_gateway, "verifyDip, verifyClass, verifyProcess,\nverifyDocument [tutti no-cache]")
+Rel_R(integrity_facade, ipc_error_handler, "INTEGRITY_VERIFY_ERROR → AppError")
+Rel_R(integrity_facade, telemetry, "trackEvent(INTEGRITY_STARTED|COMPLETED)\ntrackError(AppError)")
+Rel_R(integrity_facade, live_announcer, "announce('Verifica integrità completata') [polite]")
 
 ' ── IPC Gateway ────────────────────────────────────────────
-Rel(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
-Rel(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
+Rel_D(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
+Rel_R(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
 
 note as legend
 FLUSSO VERIFICA INTEGRITÀ

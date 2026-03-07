@@ -1,6 +1,11 @@
 @startuml UC-4 – Visualizzazione Documento e Metadati
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam nodesep 80
+skinparam ranksep 100
+
 title UC-4 – Visualizzazione Documento e Metadati\nUC-7, UC-8, UC-38..58, UC-71: anteprima · metadati · soggetti · allegati · AiP\nComponenti: DocumentDetailPage · DocumentViewer · MetadataPanel · DocumentFacade
 
 Person(user, "Utente", "Revisore, archivista o consulente")
@@ -84,63 +89,63 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
 }
 
 ' ── Utente → DocumentPage ──────────────────────────────────
-Rel(user, document_page, "Apre documento", "Click nodo DipTree / risultato ricerca")
+Rel_D(user, document_page, "Apre documento", "Click nodo DipTree / risultato ricerca")
 
 ' ── Router → DocumentPage ──────────────────────────────────
-Rel(router, document_page, "Lazy /document/:id [guard: DipReadyGuard]")
+Rel_D(router, document_page, "Lazy /document/:id [guard: DipReadyGuard]")
 
 ' ── DocumentPage ───────────────────────────────────────────
-Rel(document_page, document_facade, "legge Signal<DocumentDetail>")
-Rel(document_page, async_state_wrapper, "avvolge il contenuto [loading, error]")
-Rel(async_state_wrapper, inline_error, "slot 'error' → DOC_NOT_FOUND | DOC_BLOB_LOAD_ERROR")
-Rel(document_page, document_viewer, "@Input documentId, mimeType, fileName – UC-7")
-Rel(document_page, metadata_panel, "@Input documentDetail – UC-42..71")
+Rel_D(document_page, document_facade, "legge Signal<DocumentDetail>")
+Rel_D(document_page, async_state_wrapper, "avvolge il contenuto [loading, error]")
+Rel_D(async_state_wrapper, inline_error, "slot 'error' → DOC_NOT_FOUND | DOC_BLOB_LOAD_ERROR")
+Rel_D(document_page, document_viewer, "@Input documentId, mimeType, fileName – UC-7")
+Rel_D(document_page, metadata_panel, "@Input documentDetail – UC-42..71")
 
 ' ── DocumentViewer ─────────────────────────────────────────
-Rel(document_viewer, preview_panel, "delega anteprima @Input src, mimeType – UC-7")
-Rel(document_viewer, document_actions, "delega azioni @Input documentId, mimeType")
+Rel_D(document_viewer, preview_panel, "delega anteprima @Input src, mimeType – UC-7")
+Rel_D(document_viewer, document_actions, "delega azioni @Input documentId, mimeType")
 
 ' ── PreviewPanel ───────────────────────────────────────────
-Rel(preview_panel, preview_renderer, "@Input src, mimeType – rendering puro UC-7")
-Rel(preview_panel, document_facade, "getFileBlob(documentId) per caricare il file")
-Rel(preview_panel, error_dialog, "AppError(DOC_FORMAT_UNSUPPORTED) – UC-8\nAppError(DOC_BLOB_LOAD_ERROR)")
-Rel(preview_renderer, preview_panel, "@Output unsupportedFormat → UC-8")
-Rel(error_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
+Rel_D(preview_panel, preview_renderer, "@Input src, mimeType – rendering puro UC-7")
+Rel_D(preview_panel, document_facade, "getFileBlob(documentId) per caricare il file")
+Rel_R(preview_panel, error_dialog, "AppError(DOC_FORMAT_UNSUPPORTED) – UC-8\nAppError(DOC_BLOB_LOAD_ERROR)")
+Rel_U(preview_renderer, preview_panel, "@Output unsupportedFormat → UC-8")
+Rel_R(error_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
 
 ' ── MetadataPanel ──────────────────────────────────────────
-Rel(metadata_panel, doc_metadata, "@Input metadata – UC-42,45-48,50-52,55-56")
-Rel(metadata_panel, registration_data, "@Input data – UC-49.1..5")
-Rel(metadata_panel, classification_info, "@Input data – UC-44.1..3")
-Rel(metadata_panel, format_info, "@Input data – UC-53.1..4")
-Rel(metadata_panel, verification_info, "@Input data – UC-54.1..4")
-Rel(metadata_panel, subject_list, "@Input subjects[] – UC-43")
-Rel(metadata_panel, attachments, "@Input data – UC-57")
-Rel(metadata_panel, change_tracking, "@Input data – UC-58")
-Rel(metadata_panel, custom_metadata, "@Input data – UC-71")
-Rel(metadata_panel, aip_info, "@Input data – UC-38")
-Rel(metadata_panel, conservation_process, "@Input data – UC-39..41")
+Rel_D(metadata_panel, doc_metadata, "@Input metadata – UC-42,45-48,50-52,55-56")
+Rel_D(metadata_panel, registration_data, "@Input data – UC-49.1..5")
+Rel_D(metadata_panel, classification_info, "@Input data – UC-44.1..3")
+Rel_D(metadata_panel, format_info, "@Input data – UC-53.1..4")
+Rel_D(metadata_panel, verification_info, "@Input data – UC-54.1..4")
+Rel_D(metadata_panel, subject_list, "@Input subjects[] – UC-43")
+Rel_D(metadata_panel, attachments, "@Input data – UC-57")
+Rel_D(metadata_panel, change_tracking, "@Input data – UC-58")
+Rel_D(metadata_panel, custom_metadata, "@Input data – UC-71")
+Rel_D(metadata_panel, aip_info, "@Input data – UC-38")
+Rel_D(metadata_panel, conservation_process, "@Input data – UC-39..41")
 
-Rel(subject_list, subject_card, "*SubjectCard per soggetto – UC-43.1.x")
-Rel(conservation_process, optional_absent, "UC-39.3, UC-39.6, UC-39.9 – campo opzionale assente")
-Rel(attachments, optional_absent, "UC-57.3 – nessun allegato presente")
-Rel(custom_metadata, optional_absent, "UC-71 – nessun metadato custom presente")
-Rel(verification_info, verification_badge, "stato verifica")
-Rel(doc_metadata, timestamp_label, "marcatura temporale")
+Rel_D(subject_list, subject_card, "*SubjectCard per soggetto – UC-43.1.x")
+Rel_D(conservation_process, optional_absent, "UC-39.3, UC-39.6, UC-39.9 – campo opzionale assente")
+Rel_D(attachments, optional_absent, "UC-57.3 – nessun allegato presente")
+Rel_D(custom_metadata, optional_absent, "UC-71 – nessun metadato custom presente")
+Rel_R(verification_info, verification_badge, "stato verifica")
+Rel_R(doc_metadata, timestamp_label, "marcatura temporale")
 
 ' ── DocumentActions ────────────────────────────────────────
-Rel(document_actions, output_toolbar, "delega azioni di output con context=documento")
-Rel(document_actions, integrity_facade, "verifyDocument(id) – UC-29")
-Rel(output_toolbar, output_facade, "save, print, exportPdf, download")
+Rel_D(document_actions, output_toolbar, "delega azioni di output con context=documento")
+Rel_R(document_actions, integrity_facade, "verifyDocument(id) – UC-29")
+Rel_D(output_toolbar, output_facade, "save, print, exportPdf, download")
 
 ' ── DocumentFacade → IPC ───────────────────────────────────
-Rel(document_facade, ipc_gateway, "getDocumentMetadata [cache-first, TTL 300s]\ngetFileBlob [cache-first, TTL 60s]\ngetAipInfo [cache-first, TTL 300s]")
-Rel(document_facade, ipc_error_handler, "DOC_* errors → AppError nel Signal<DocumentDetail>")
-Rel(document_facade, telemetry, "trackEvent(SEARCH_RESULT_OPENED)\ntrackTiming(BLOB_LOAD_TIME_MS)")
+Rel_D(document_facade, ipc_gateway, "getDocumentMetadata [cache-first, TTL 300s]\ngetFileBlob [cache-first, TTL 60s]\ngetAipInfo [cache-first, TTL 300s]")
+Rel_R(document_facade, ipc_error_handler, "DOC_* errors → AppError nel Signal<DocumentDetail>")
+Rel_R(document_facade, telemetry, "trackEvent(SEARCH_RESULT_OPENED)\ntrackTiming(BLOB_LOAD_TIME_MS)")
 
 ' ── IPC Gateway ────────────────────────────────────────────
-Rel(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
-Rel(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
-Rel(ipc_gateway, ipc_cache, "get(key) cache-first;\nset(key,val,ttl) dopo risposta IPC")
+Rel_D(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
+Rel_R(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
+Rel_R(ipc_gateway, ipc_cache, "get(key) cache-first;\nset(key,val,ttl) dopo risposta IPC")
 
 note as legend
 FLUSSO VISUALIZZAZIONE DOCUMENTO

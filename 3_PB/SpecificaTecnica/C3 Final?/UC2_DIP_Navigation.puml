@@ -1,6 +1,11 @@
 @startuml UC-2 – Navigazione Struttura DIP (Albero)
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam nodesep 80
+skinparam ranksep 100
+
 title UC-2 – Navigazione Struttura DIP (Albero)\nUC-1..6: Browse classi, processi, documenti · Lazy Loading · Virtual Scroll\nComponenti: AppShell · DipExplorer · DipTree · DipTreeNode · DipFacade · Router
 
 Person(user, "Utente", "Revisore, archivista o consulente")
@@ -46,45 +51,45 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
 }
 
 ' ── Utente → Shell ─────────────────────────────────────────
-Rel(user, app_shell, "Naviga l'albero DIP", "Mouse / Tastiera / Frecce")
+Rel_D(user, app_shell, "Naviga l'albero DIP", "Mouse / Tastiera / Frecce")
 
 ' ── AppShell ───────────────────────────────────────────────
-Rel(app_shell, dip_facade, "legge Signal<DipState>.phase per switch visivo")
-Rel(app_shell, dip_tree, "sidebar: @Input rootNodes – navigazione persistente")
+Rel_D(app_shell, dip_facade, "legge Signal<DipState>.phase per switch visivo")
+Rel_D(app_shell, dip_tree, "sidebar: @Input rootNodes – navigazione persistente")
 
 ' ── Router + Guard ─────────────────────────────────────────
-Rel(router, dip_ready_guard, "CanActivateFn su tutte le rotte")
-Rel(dip_ready_guard, dip_facade, "inject() DipFacade – verifica phase==='ready'")
-Rel(router, dip_explorer, "Lazy /dip [guard: DipReadyGuard]")
+Rel_D(router, dip_ready_guard, "CanActivateFn su tutte le rotte")
+Rel_D(dip_ready_guard, dip_facade, "inject() DipFacade – verifica phase==='ready'")
+Rel_D(router, dip_explorer, "Lazy /dip [guard: DipReadyGuard]")
 
 ' ── DipExplorer ────────────────────────────────────────────
-Rel(dip_explorer, dip_facade, "legge Signal<DipState>.rootNodes")
-Rel(dip_explorer, async_state_wrapper, "avvolge l'albero [loading, error: AppError – UC-6]")
-Rel(async_state_wrapper, inline_error, "slot 'error' → @Input error: AppError")
-Rel(dip_explorer, dip_tree, "@Input rootNodes: DipTreeNode[] – UC-1, UC-2, UC-3")
-Rel(dip_explorer, router, "router.navigate(['/document'|'/aggregate', id])\nsu @Output nodeSelected da DipTreeComponent")
+Rel_D(dip_explorer, dip_facade, "legge Signal<DipState>.rootNodes")
+Rel_D(dip_explorer, async_state_wrapper, "avvolge l'albero [loading, error: AppError – UC-6]")
+Rel_D(async_state_wrapper, inline_error, "slot 'error' → @Input error: AppError")
+Rel_D(dip_explorer, dip_tree, "@Input rootNodes: DipTreeNode[] – UC-1, UC-2, UC-3")
+Rel_U(dip_explorer, router, "router.navigate(['/document'|'/aggregate', id])\nsu @Output nodeSelected da DipTreeComponent")
 
 ' ── DipTree ────────────────────────────────────────────────
-Rel(dip_tree, dip_facade, "loadChildren(nodeId) on-demand al toggle\nlegge nodeChildrenErrors per errori parziali")
-Rel(dip_tree, dip_tree_node, "*cdkVirtualFor su FlatNode[] – solo nodi in viewport nel DOM")
-Rel(dip_tree, empty_state, "fallback se rootNodes vuoto – UC-6")
-Rel(dip_tree, accessibility_service, "gestione frecce su/giù tra nodi (WCAG 2.1.1)")
-Rel(dip_tree, live_announcer, "announce('Espanso: <nodo>, N figli') [polite]")
-Rel(dip_tree, telemetry, "trackEvent(NODE_EXPANDED)\ntrackTiming(TREE_RENDER_TIME_MS)")
+Rel_D(dip_tree, dip_facade, "loadChildren(nodeId) on-demand al toggle\nlegge nodeChildrenErrors per errori parziali")
+Rel_D(dip_tree, dip_tree_node, "*cdkVirtualFor su FlatNode[] – solo nodi in viewport nel DOM")
+Rel_D(dip_tree, empty_state, "fallback se rootNodes vuoto – UC-6")
+Rel_R(dip_tree, accessibility_service, "gestione frecce su/giù tra nodi (WCAG 2.1.1)")
+Rel_R(dip_tree, live_announcer, "announce('Espanso: <nodo>, N figli') [polite]")
+Rel_R(dip_tree, telemetry, "trackEvent(NODE_EXPANDED)\ntrackTiming(TREE_RENDER_TIME_MS)")
 
 ' ── DipTreeNode ────────────────────────────────────────────
-Rel(dip_tree_node, verification_badge, "@Input status – UC-4")
-Rel(dip_tree_node, timestamp_label, "@Input timestamp – UC-5")
-Rel(dip_tree_node, inline_error, "@Input error: AppError (DIP_CHILDREN_LOAD_ERROR parziale)")
+Rel_D(dip_tree_node, verification_badge, "@Input status – UC-4")
+Rel_D(dip_tree_node, timestamp_label, "@Input timestamp – UC-5")
+Rel_D(dip_tree_node, inline_error, "@Input error: AppError (DIP_CHILDREN_LOAD_ERROR parziale)")
 
 ' ── DipFacade → IPC ────────────────────────────────────────
-Rel(dip_facade, ipc_gateway, "getClasses, getProcesses, getDocuments,\nloadChildren(nodeId) [cache-first, TTL 600s]")
-Rel(dip_facade, ipc_error_handler, "DIP_CHILDREN_LOAD_ERROR → AppError parziale per nodo")
+Rel_D(dip_facade, ipc_gateway, "getClasses, getProcesses, getDocuments,\nloadChildren(nodeId) [cache-first, TTL 600s]")
+Rel_R(dip_facade, ipc_error_handler, "DIP_CHILDREN_LOAD_ERROR → AppError parziale per nodo")
 
 ' ── IPC Gateway ────────────────────────────────────────────
-Rel(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
-Rel(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
-Rel(ipc_gateway, ipc_cache, "get(key) cache-first;\nset(key,val,ttl) dopo risposta")
+Rel_D(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
+Rel_R(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
+Rel_R(ipc_gateway, ipc_cache, "get(key) cache-first;\nset(key,val,ttl) dopo risposta")
 
 note as legend
 FLUSSO PRINCIPALE
