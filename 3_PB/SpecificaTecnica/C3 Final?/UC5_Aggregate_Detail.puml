@@ -1,0 +1,147 @@
+@startuml UC-5 – Dettaglio Aggregazione Documentale
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title UC-5 – Dettaglio Aggregazione Documentale\nUC-59..70: metadati aggregazione · procedimento · indice documenti\nComponenti: AggregateDetailPage · AggregateFacade · AggregateMetadata · DocumentIndex
+
+Person(user, "Utente", "Revisore, archivista o consulente")
+System_Ext(ipc, "IPC Dispatcher (Main Process)", "Electron Context Bridge")
+
+Container_Boundary(renderer, "Renderer Process – Angular 17+") {
+
+  ' ── ROUTER ──────────────────────────────────────────────
+  Component(router, "AppRouter", "Angular Router","Rotta lazy: /aggregate/:id → AggregateDetailPageComponent\nProtetta da DipReadyGuard.")
+
+  Component(dip_ready_guard, "DipReadyGuard", "Angular CanActivateFn\n[Route Guard]","Verifica DipFacade.state().phase === 'ready'.\nBlocca accesso a /aggregate/:id se DIP non indicizzato.")
+
+  ' ── AGGREGATE DETAIL PAGE ───────────────────────────────
+  Component(aggregate_page, "AggregateDetailPageComponent", "Angular Standalone [Smart]\nRoute: /aggregate/:id","Pagina dettaglio aggregazione documentale.\nLegge Signal<AggregateDetail> da AggregateFacade.\nAvvolge con AsyncStateWrapperComponent.\nCompone:\n  AggregateMetadataComponent\n  AdminProcedureComponent\n  DocumentIndexComponent\n  DocumentActionsComponent (riuso)")
+
+  Component(async_state_wrapper, "AsyncStateWrapperComponent", "Angular Standalone [Dumb – Shared]\n[Cross-cutting – Template Method]","Wrapper generico per stati asincroni IPC.\n@Input: loading, error: AppError|null, empty\nSlot 'error' → InlineErrorComponent (DOC_NOT_FOUND per aggregazione)")
+
+  Component(inline_error, "InlineErrorComponent", "Angular Standalone [Dumb – Shared]\n[Errori non bloccanti]","DOC_NOT_FOUND per aggregazione mostrato inline.\n'Riprova' se error.recoverable === true.")
+
+  ' ── AGGREGATE METADATA ──────────────────────────────────
+  Component(aggregate_metadata, "AggregateMetadataComponent", "Angular Standalone [Dumb]\n[UC-59..65, UC-68..70]","Metadati aggregazione:\n  • UC-59 Tipo aggregazione\n  • UC-60 Identificativo\n  • UC-61 Tipologia fascicolo\n  • UC-62 Assegnazione\n  • UC-63 Date (apertura/chiusura)\n  • UC-64 Progressivo\n  • UC-65 Posizione fisica\n  • UC-68 ID primaria\n  • UC-69 Conservazione\n  • UC-70 Metadati di conservazione")
+
+  ' ── ADMIN PROCEDURE ─────────────────────────────────────
+  Component(admin_procedure, "AdminProcedureComponent", "Angular Standalone [Dumb]\n[UC-66.1..4]","Procedimento amministrativo:\n  • UC-66.1 Indice procedimento\n  • UC-66.2 Denominazione\n  • UC-66.3 URI\n  • UC-66.4 Fasi del procedimento\nDelega a ProcedurePhasesComponent per le fasi.")
+
+  Component(procedure_phases, "ProcedurePhasesComponent", "Angular Standalone [Dumb]\n[UC-66.4.1.1..3]","Fasi del procedimento:\n  • UC-66.4.1.1 Tipo fase\n  • UC-66.4.1.2 Data inizio\n  • UC-66.4.1.3 Data fine")
+
+  ' ── DOCUMENT INDEX ──────────────────────────────────────
+  Component(document_index, "DocumentIndexComponent", "Angular Standalone [Dumb]\n[UC-67.1.1..2]","Indice documenti contenuti nell'aggregazione:\n  • UC-67.1.1 Tipo documento\n  • UC-67.1.2 Identificativo documento")
+
+  ' ── DOCUMENT ACTIONS (riuso) ────────────────────────────
+  Component(document_actions, "DocumentActionsComponent", "Angular Standalone [Smart – Actions Host]\n[UC-19, UC-22, UC-34, UC-35]\n[Riuso da DocumentDetail]","Barra azioni contestuali.\nRiutilizzato per azioni su aggregazione:\n  Salva (UC-19), Stampa (UC-22),\n  Scarica (UC-35), Esporta PDF (UC-34).\n@Input aggregateId")
+
+  Component(output_toolbar, "OutputToolbarComponent", "Angular Standalone [Smart]\n[UC-19, UC-22, UC-34, UC-35]","Barra azioni output contestuali.\nInietta OutputFacade.\nBottoni: Salva, Stampa, Scarica, Esporta PDF.")
+
+  Component(folder_picker_dialog, "FolderPickerDialogComponent", "Angular Standalone [Smart]\n[UC-19, UC-34, UC-35]\n[WCAG 2.1.1, 2.1.2]","Dialogo modale selezione cartella destinazione.\nValidazione: blocca cartella sorgente DIP.\nFocus trap via AccessibilityService.")
+
+  Component(error_dialog, "ErrorDialogComponent", "Angular Standalone [Dumb – Shared]\n[UC-21, UC-24, UC-25, UC-36, UC-37]\n[WCAG 2.1.1, 2.1.2, 4.1.2]","Dialogo modale di errore.\nAperto da OutputFacade su errori output:\n  OUTPUT_IO_ERROR, OUTPUT_PRINT_ERROR,\n  OUTPUT_FORMAT_NOT_PRINTABLE,\n  OUTPUT_PDF_GENERATION_ERROR")
+
+  Component(verification_badge, "VerificationBadgeComponent", "Angular Standalone [Dumb – Shared]\n[UC-4]","Badge: Non Verificato / Valido / Non Valido.\nRiutilizzabile anche nei metadati aggregazione.")
+
+  Component(timestamp_label, "TimestampLabelComponent", "Angular Standalone [Dumb – Shared]\n[UC-5]","Label marcatura temporale.\n<time datetime='ISO-8601'>")
+
+  ' ── FACADE SERVICES ─────────────────────────────────────
+  Component(aggregate_facade, "AggregateFacade", "Angular Service [Injectable]\n[Facade + SRP]","Stato dettaglio aggregazione.\nSignal<AggregateDetail | null>, loading\n  error: AppError | null (DOC_NOT_FOUND per aggregazione)\nUC-59..70.")
+
+  Component(output_facade, "OutputFacade", "Angular Service [Injectable]\n[Facade + SRP]","Coordina operazioni di output per aggregazione.\n  saveFile [no-cache]\n  print [no-cache]\n  exportPdf [no-cache]\n  download [no-cache]\nApre FolderPickerDialog e ErrorDialog su errore.")
+
+  Component(ipc_gateway, "IpcGateway", "Angular Service [providedIn:'root']\n[Adapter + ISP]","Unico punto di accesso all'Electron Context Bridge.\nCanali aggregazione:\n  getAggregateMetadata [cache-first, TTL 300s]")
+
+  Component(ipc_cache, "IpcCacheService", "Angular Service [providedIn:'root']\n[SRP – Request Deduplication]","Cache in-memory TTL.\ngetAggregateMetadata → TTL 300_000 ms (5 min)")
+
+  Component(ipc_error_handler, "IpcErrorHandlerService", "Angular Service [providedIn:'root']\n[SRP – Error Translation]","AppError nel Signal<AggregateDetail>:\n  DOC_NOT_FOUND per aggregazione")
+
+  Component(telemetry, "TelemetryService", "Angular Service [providedIn:'root']\n[SRP – Observability]","trackEvent(SEARCH_RESULT_OPENED) per apertura aggregazione")
+
+  Component(notification_service, "NotificationService", "Angular Service [providedIn:'root']\n[SRP – Feedback]","Conferma operazioni output completate.")
+
+  Component(accessibility_service, "AccessibilityService", "Angular Service [providedIn:'root']\n[SRP – WCAG 2.1]","trapFocus() per FolderPickerDialog e ErrorDialog\nrestoreFocus() alla chiusura (WCAG 2.1.2)")
+
+  Component(live_announcer, "LiveAnnouncerService", "Angular CDK [providedIn:'root']\n[WCAG 2.1 – aria-live]","OutputFacade → 'Operazione completata' [polite]")
+}
+
+' ── Utente → AggregatePage ─────────────────────────────────
+Rel(user, aggregate_page, "Apre aggregazione", "Click nodo DipTree (tipo aggregate)")
+
+' ── Router → AggregatePage ─────────────────────────────────
+Rel(router, dip_ready_guard, "CanActivateFn su /aggregate/:id")
+Rel(router, aggregate_page, "Lazy /aggregate/:id [guard: DipReadyGuard]")
+
+' ── AggregatePage ──────────────────────────────────────────
+Rel(aggregate_page, aggregate_facade, "legge Signal<AggregateDetail>")
+Rel(aggregate_page, async_state_wrapper, "avvolge il contenuto [loading, error]")
+Rel(async_state_wrapper, inline_error, "slot 'error' → DOC_NOT_FOUND (aggregazione)")
+Rel(aggregate_page, aggregate_metadata, "@Input metadata – UC-59..65, UC-68..70")
+Rel(aggregate_page, admin_procedure, "@Input data – UC-66")
+Rel(aggregate_page, document_index, "@Input items[] – UC-67")
+Rel(aggregate_page, document_actions, "@Input aggregateId – riuso per azioni su aggregazione")
+
+' ── AggregateMetadata ──────────────────────────────────────
+Rel(aggregate_metadata, verification_badge, "stato verifica aggregazione – UC-4")
+Rel(aggregate_metadata, timestamp_label, "date aggregazione – UC-5")
+
+' ── AdminProcedure ─────────────────────────────────────────
+Rel(admin_procedure, procedure_phases, "@Input phases[] – UC-66.4")
+
+' ── DocumentActions ────────────────────────────────────────
+Rel(document_actions, output_toolbar, "delega azioni output con context=aggregazione")
+Rel(output_toolbar, output_facade, "save, print, exportPdf, download")
+Rel(output_facade, folder_picker_dialog, "apre dialogo selezione cartella – UC-19, UC-34, UC-35")
+Rel(output_facade, error_dialog, "AppError → UC-21, UC-24, UC-25, UC-36, UC-37\nrecoverable=true → 'Riprova'")
+Rel(output_facade, notification_service, "conferma operazione output completata")
+Rel(output_facade, live_announcer, "announce('Operazione completata') [polite]")
+Rel(folder_picker_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
+Rel(error_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
+
+' ── AggregateFacade → IPC ──────────────────────────────────
+Rel(aggregate_facade, ipc_gateway, "getAggregateMetadata [cache-first, TTL 300s]")
+Rel(aggregate_facade, ipc_error_handler, "AppError nel Signal<AggregateDetail>")
+Rel(aggregate_facade, telemetry, "trackEvent(SEARCH_RESULT_OPENED)")
+
+' ── IPC Gateway ────────────────────────────────────────────
+Rel(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
+Rel(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
+Rel(ipc_gateway, ipc_cache, "get(key) cache-first;\nset(key,val,ttl) dopo risposta IPC")
+
+note as legend
+FLUSSO VISUALIZZAZIONE AGGREGAZIONE
+══════════════════════════════════════════
+1. Utente clicca nodo aggregazione nell'albero DIP
+2. DipExplorer → router.navigate(['/aggregate', id])
+3. AggregateDetailPage:
+a. AggregateFacade.getAggregateMetadata(id)
+[cache-first, TTL 5min]
+b. Signal<AggregateDetail> aggiornato
+c. AggregateMetadataComponent ← metadati base
+d. AdminProcedureComponent ← procedimento + fasi
+e. DocumentIndexComponent ← lista documenti contenuti
+4. DocumentActionsComponent riutilizzato per azioni output
+
+DIFFERENZA DA DOCUMENT DETAIL
+══════════════════════════════════════════
+Non ha PreviewPanel (nessun file binario)
+Non ha MetadataPanel (struttura diversa)
+DocumentIndex mostra contenuto, non apre file direttamente
+DocumentActionsComponent riusato con @Input aggregateId
+
+USE CASE COPERTI
+══════════════════════════════════════════
+UC-59  Tipo aggregazione
+UC-60  Identificativo aggregazione
+UC-61  Tipologia fascicolo
+UC-62  Assegnazione
+UC-63  Date apertura/chiusura
+UC-64  Progressivo
+UC-65  Posizione fisica
+UC-66  Procedimento amministrativo (+ fasi UC-66.4)
+UC-67  Indice documenti contenuti
+UC-68  Identificativo primario
+UC-69  Dati conservazione aggregazione
+UC-70  Metadati di conservazione
+end note
+
+@enduml

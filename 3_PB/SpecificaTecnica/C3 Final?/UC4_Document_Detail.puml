@@ -1,0 +1,201 @@
+@startuml UC-4 – Visualizzazione Documento e Metadati
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title UC-4 – Visualizzazione Documento e Metadati\nUC-7, UC-8, UC-38..58, UC-71: anteprima · metadati · soggetti · allegati · AiP\nComponenti: DocumentDetailPage · DocumentViewer · MetadataPanel · DocumentFacade
+
+Person(user, "Utente", "Revisore, archivista o consulente")
+System_Ext(ipc, "IPC Dispatcher (Main Process)", "Electron Context Bridge")
+
+Container_Boundary(renderer, "Renderer Process – Angular 17+") {
+
+  ' ── ROUTER ──────────────────────────────────────────────
+  Component(router, "AppRouter", "Angular Router","Rotta lazy: /document/:id → DocumentDetailPageComponent\nProtetta da DipReadyGuard.")
+
+  ' ── DOCUMENT DETAIL PAGE ────────────────────────────────
+  Component(document_page, "DocumentDetailPageComponent", "Angular Standalone [Smart]\nRoute: /document/:id","Pagina dettaglio documento.\nLegge Signal<DocumentDetail> da DocumentFacade.\nAvvolge il contenuto con AsyncStateWrapperComponent.\nCompone: DocumentViewerComponent + MetadataPanelComponent\n  + DocumentActionsComponent.")
+
+  Component(async_state_wrapper, "AsyncStateWrapperComponent", "Angular Standalone [Dumb – Shared]\n[Cross-cutting – Template Method]","Wrapper generico per stati asincroni IPC.\n@Input: loading, error: AppError|null, empty\nSlot 'error' → InlineErrorComponent\nSlot 'loading' → spinner\nSlot 'content' → contenuto reale")
+
+  Component(inline_error, "InlineErrorComponent", "Angular Standalone [Dumb – Shared]\n[Errori non bloccanti]","DOC_NOT_FOUND o DOC_BLOB_LOAD_ERROR\nmostrato inline.\n'Riprova' se error.recoverable === true.")
+
+  ' ── H1: DOCUMENT VIEWER ─────────────────────────────────
+  Component(document_viewer, "DocumentViewerComponent", "Angular Standalone [Smart – Composite]\n[UC-7, UC-8]","Viewer principale del documento.\nComposizione: PreviewPanelComponent + DocumentActionsComponent.\nRiceve documentId, mimeType, fileName da DocumentDetailPage.\nSeparare layout del viewer dalla logica della pagina (SRP).\nRiutilizzabile anche da SearchResultsComponent.")
+
+  Component(preview_panel, "PreviewPanelComponent", "Angular Standalone [Smart]\n[UC-7, UC-8]","Pannello anteprima: gestisce caricamento file via IpcGateway.\nDelega rendering a PreviewRendererComponent.\nSe mimeType non supportato → apre ErrorDialogComponent (UC-8).\nSe file non leggibile → AppError(DOC_BLOB_LOAD_ERROR).")
+
+  Component(preview_renderer, "PreviewRendererComponent", "Angular Standalone [Dumb]\n[UC-7, UC-8]\n[Strategy per MIME type]","Renderer puro: PDF viewer, image viewer, text viewer.\n@Input: src: Uint8Array, mimeType: string.\n@Output: unsupportedFormat: EventEmitter.\nSeleziona strategia di rendering tramite switch su mimeType.\nNon conosce IPC né facade.")
+
+  Component(error_dialog, "ErrorDialogComponent", "Angular Standalone [Dumb – Shared]\n[UC-8] [WCAG 2.1.1, 2.1.2, 4.1.2]","Dialogo modale per errori bloccanti.\n@Input: error: AppError\nAperto da PreviewPanel per:\n  DOC_FORMAT_UNSUPPORTED (UC-8)\n  DOC_BLOB_LOAD_ERROR\nBottone 'Riprova' se recoverable=true.\nFocus trap via AccessibilityService (WCAG 2.1.2).")
+
+  ' ── H2: METADATA PANEL ──────────────────────────────────
+  Component(metadata_panel, "MetadataPanelComponent", "Angular Standalone [Smart – Composite]\n[UC-38..58, UC-71]","Pannello laterale/espandibile dei metadati documento.\n@Input documentDetail: DocumentDetail\nOrganizza sotto-sezioni in tab/accordion:\n  Metadati Generali · Dati Registrazione\n  Classificazione · Formato · Verifica\n  Soggetti · Allegati · Tracciature Modifiche\n  Metadati Custom · AiP / Processo Conservazione")
+
+  Component(doc_metadata, "DocumentMetadataComponent", "Angular Standalone [Dumb]\n[UC-42, UC-45..48, UC-50..52, UC-55..56]","Metadati generali: descrizione, note, tipo documentale,\nmodalità formazione, riservatezza, versione, nome.")
+
+  Component(registration_data, "RegistrationDataComponent", "Angular Standalone [Dumb]\n[UC-49.1..5]","Dati di registrazione: flusso, tipo registro,\ndata, numero, codice.")
+
+  Component(classification_info, "ClassificationInfoComponent", "Angular Standalone [Dumb]\n[UC-44.1..3]","Classificazione: indice, descrizione, URI piano.")
+
+  Component(format_info, "FormatInfoComponent", "Angular Standalone [Dumb]\n[UC-53.1..4]","Identificativo formato: tipo, prodotto, versione, produttore.")
+
+  Component(verification_info, "VerificationInfoComponent", "Angular Standalone [Dumb]\n[UC-54.1..4]","Dati verifica: firma digitale, sigillo,\nmarcatura temporale, conformità copie.")
+
+  Component(subject_list, "SubjectListComponent", "Angular Standalone [Dumb]\n[UC-43.1.1..6]", "Lista soggetti con ruolo e tipo.\nDelega a SubjectCardComponent per ciascun soggetto.")
+
+  Component(subject_card, "SubjectCardComponent", "Angular Standalone [Dumb]\n[UC-43.1.x]\n[Strategy per SubjectType]","Card soggetto: mostra campi specifici per tipo\n(PF, PG, AS, PAI, PAE, SW).\n@Input tipo: SubjectType come discriminante di strategia.")
+
+  Component(attachments, "AttachmentsComponent", "Angular Standalone [Dumb]\n[UC-57.1..3]","Allegati: numero, lista ID+descrizione.\nMessaggio OptionalFieldAbsent se assenti (UC-57.3).")
+
+  Component(change_tracking, "ChangeTrackingComponent", "Angular Standalone [Dumb]\n[UC-58.1..4]","Tracciature modifiche: tipo, soggetto,\ndata, ID versione precedente.")
+
+  Component(custom_metadata, "CustomMetadataComponent", "Angular Standalone [Dumb]\n[UC-71, UC-71.1..3]","Metadati custom (nome/valore).\nMessaggio OptionalFieldAbsent se assenti (UC-71).")
+
+  Component(aip_info, "AipInfoComponent", "Angular Standalone [Dumb]\n[UC-38.1..2]","AiP di provenienza: classe documentale, UUID.")
+
+  Component(conservation_process, "ConservationProcessComponent", "Angular Standalone [Dumb]\n[UC-39, UC-40, UC-41]","Processo/sessione di conservazione e versamento.\nCampi opzionali assenti → OptionalFieldAbsentComponent:\n  • Data fine assente    → UC-39.3 ('Processo non terminato')\n  • UUID terminatore     → UC-39.6 ('Terminatore non disponibile')\n  • Canale terminazione  → UC-39.9 ('Canale non disponibile')")
+
+  Component(optional_absent, "OptionalFieldAbsentComponent", "Angular Standalone [Dumb – Shared]\n[UC-39.3, UC-39.6, UC-39.9, UC-46, UC-47, UC-57.3, UC-71]","@Input: message: string, uc?: string\nDistinto da errore: campo legittimamente non presente nel DIP.\nCentralizza il pattern 'campo assente'.")
+
+  Component(verification_badge, "VerificationBadgeComponent", "Angular Standalone [Dumb – Shared]\n[UC-4]","Badge: Non Verificato / Valido / Non Valido.\nRiutilizzato in metadati documento.")
+
+  Component(timestamp_label, "TimestampLabelComponent", "Angular Standalone [Dumb – Shared]\n[UC-5]","Label marcatura temporale.\n<time datetime='ISO-8601'>")
+
+  ' ── H3: DOCUMENT ACTIONS ────────────────────────────────
+  Component(document_actions, "DocumentActionsComponent", "Angular Standalone [Smart – Actions Host]\n[UC-7, UC-19, UC-20, UC-22, UC-23, UC-29, UC-34, UC-35]", "Barra azioni contestuali per un documento.\nInput: documentId, documentName, mimeType.\nBottoni: Anteprima (UC-7), Salva (UC-19),\nStampa (UC-22), Scarica (UC-35),\nVerifica Integrità (UC-29), Esporta PDF (UC-34).\nDelega OutputFacade e IntegrityFacade.")
+
+  Component(output_toolbar, "OutputToolbarComponent", "Angular Standalone [Smart]\n[UC-19, UC-22, UC-34, UC-35]","Barra azioni output contestuali.\nInietta OutputFacade.\nBottoni: Salva, Stampa, Scarica, Esporta PDF.")
+
+  ' ── FACADE SERVICES ─────────────────────────────────────
+  Component(document_facade, "DocumentFacade", "Angular Service [Injectable]\n[Facade + SRP]","Stato dettaglio documento.\nSignal<DocumentDetail | null>, loading\n  error: AppError | null\n    DOC_NOT_FOUND      → documento non trovato\n    DOC_BLOB_LOAD_ERROR → file fisico non leggibile\nUC-42..58, UC-71.")
+
+  Component(output_facade, "OutputFacade", "Angular Service [Injectable]\n[Facade + SRP]","Coordina operazioni di output.\nRilevante per DocumentActions:\n  saveFile [no-cache], print [no-cache],\n  exportPdf [no-cache], download [no-cache]\nApre FolderPickerDialog e ErrorDialog su errore.")
+
+  Component(integrity_facade, "IntegrityFacade", "Angular Service [Injectable]\n[Facade + SRP]","Rilevante per DocumentActions (UC-29):\n  verifyDocument(id) [no-cache]\nSignal<isVerifying>: blocca avvio concorrente.")
+
+  Component(ipc_gateway, "IpcGateway", "Angular Service [providedIn:'root']\n[Adapter + ISP]","Unico punto di accesso all'Electron Context Bridge.\nCanali documento:\n  getDocumentMetadata [cache-first, TTL 300s]\n  getFileBlob         [cache-first, TTL 60s]\n  getAipInfo          [cache-first, TTL 300s]")
+
+  Component(ipc_cache, "IpcCacheService", "Angular Service [providedIn:'root']\n[SRP – Request Deduplication]","Cache in-memory TTL.\n  getDocumentMetadata → 300_000 ms\n  getFileBlob         →  60_000 ms\n  getAipInfo          → 300_000 ms")
+
+  Component(ipc_error_handler, "IpcErrorHandlerService", "Angular Service [providedIn:'root']\n[SRP – Error Translation]","DOC_NOT_FOUND → 404 documento\nDOC_BLOB_LOAD_ERROR → file fisico non leggibile\nDOC_FORMAT_UNSUPPORTED → formato non supportato")
+
+  Component(telemetry, "TelemetryService", "Angular Service [providedIn:'root']\n[SRP – Observability]","trackEvent(SEARCH_RESULT_OPENED)\ntrackTiming(BLOB_LOAD_TIME_MS)")
+
+  Component(accessibility_service, "AccessibilityService", "Angular Service [providedIn:'root']\n[SRP – WCAG 2.1]","trapFocus() apertura ErrorDialog (WCAG 2.1.2)\nrestoreFocus() alla chiusura")
+}
+
+' ── Utente → DocumentPage ──────────────────────────────────
+Rel(user, document_page, "Apre documento", "Click nodo DipTree / risultato ricerca")
+
+' ── Router → DocumentPage ──────────────────────────────────
+Rel(router, document_page, "Lazy /document/:id [guard: DipReadyGuard]")
+
+' ── DocumentPage ───────────────────────────────────────────
+Rel(document_page, document_facade, "legge Signal<DocumentDetail>")
+Rel(document_page, async_state_wrapper, "avvolge il contenuto [loading, error]")
+Rel(async_state_wrapper, inline_error, "slot 'error' → DOC_NOT_FOUND | DOC_BLOB_LOAD_ERROR")
+Rel(document_page, document_viewer, "@Input documentId, mimeType, fileName – UC-7")
+Rel(document_page, metadata_panel, "@Input documentDetail – UC-42..71")
+
+' ── DocumentViewer ─────────────────────────────────────────
+Rel(document_viewer, preview_panel, "delega anteprima @Input src, mimeType – UC-7")
+Rel(document_viewer, document_actions, "delega azioni @Input documentId, mimeType")
+
+' ── PreviewPanel ───────────────────────────────────────────
+Rel(preview_panel, preview_renderer, "@Input src, mimeType – rendering puro UC-7")
+Rel(preview_panel, document_facade, "getFileBlob(documentId) per caricare il file")
+Rel(preview_panel, error_dialog, "AppError(DOC_FORMAT_UNSUPPORTED) – UC-8\nAppError(DOC_BLOB_LOAD_ERROR)")
+Rel(preview_renderer, preview_panel, "@Output unsupportedFormat → UC-8")
+Rel(error_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
+
+' ── MetadataPanel ──────────────────────────────────────────
+Rel(metadata_panel, doc_metadata, "@Input metadata – UC-42,45-48,50-52,55-56")
+Rel(metadata_panel, registration_data, "@Input data – UC-49.1..5")
+Rel(metadata_panel, classification_info, "@Input data – UC-44.1..3")
+Rel(metadata_panel, format_info, "@Input data – UC-53.1..4")
+Rel(metadata_panel, verification_info, "@Input data – UC-54.1..4")
+Rel(metadata_panel, subject_list, "@Input subjects[] – UC-43")
+Rel(metadata_panel, attachments, "@Input data – UC-57")
+Rel(metadata_panel, change_tracking, "@Input data – UC-58")
+Rel(metadata_panel, custom_metadata, "@Input data – UC-71")
+Rel(metadata_panel, aip_info, "@Input data – UC-38")
+Rel(metadata_panel, conservation_process, "@Input data – UC-39..41")
+
+Rel(subject_list, subject_card, "*SubjectCard per soggetto – UC-43.1.x")
+Rel(conservation_process, optional_absent, "UC-39.3, UC-39.6, UC-39.9 – campo opzionale assente")
+Rel(attachments, optional_absent, "UC-57.3 – nessun allegato presente")
+Rel(custom_metadata, optional_absent, "UC-71 – nessun metadato custom presente")
+Rel(verification_info, verification_badge, "stato verifica")
+Rel(doc_metadata, timestamp_label, "marcatura temporale")
+
+' ── DocumentActions ────────────────────────────────────────
+Rel(document_actions, output_toolbar, "delega azioni di output con context=documento")
+Rel(document_actions, integrity_facade, "verifyDocument(id) – UC-29")
+Rel(output_toolbar, output_facade, "save, print, exportPdf, download")
+
+' ── DocumentFacade → IPC ───────────────────────────────────
+Rel(document_facade, ipc_gateway, "getDocumentMetadata [cache-first, TTL 300s]\ngetFileBlob [cache-first, TTL 60s]\ngetAipInfo [cache-first, TTL 300s]")
+Rel(document_facade, ipc_error_handler, "DOC_* errors → AppError nel Signal<DocumentDetail>")
+Rel(document_facade, telemetry, "trackEvent(SEARCH_RESULT_OPENED)\ntrackTiming(BLOB_LOAD_TIME_MS)")
+
+' ── IPC Gateway ────────────────────────────────────────────
+Rel(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
+Rel(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
+Rel(ipc_gateway, ipc_cache, "get(key) cache-first;\nset(key,val,ttl) dopo risposta IPC")
+
+note as legend
+FLUSSO VISUALIZZAZIONE DOCUMENTO
+══════════════════════════════════════════
+1. Utente clicca nodo documento nell'albero o risultato ricerca
+2. Router.navigate(['/document', id])
+3. DocumentDetailPage:
+a. DocumentFacade.getDocumentMetadata(id) [cache, TTL 5min]
+b. Signal<DocumentDetail> → MetadataPanelComponent
+c. DocumentFacade.getFileBlob(id) [cache, TTL 1min]
+d. Signal → PreviewPanelComponent → PreviewRendererComponent
+4. PreviewRenderer seleziona strategia MIME:
+PDF viewer / image viewer / text viewer
+5. Se mimeType non supportato:
+@Output unsupportedFormat → ErrorDialog (UC-8)
+
+GESTIONE CAMPI OPZIONALI ASSENTI
+══════════════════════════════════════════
+OptionalFieldAbsentComponent ≠ errore di sistema
+È un dato legittimamente non presente nel DIP:
+UC-39.3 Data fine processo
+UC-39.6 UUID terminatore
+UC-39.9 Canale terminazione
+UC-46   Conservazione ereditata
+UC-47   Note assenti
+UC-57.3 Nessun allegato
+UC-71   Nessun metadato custom
+
+CACHE IPC
+══════════════════════════════════════════
+getDocumentMetadata → TTL 5 min (300_000 ms)
+getFileBlob         → TTL 1 min ( 60_000 ms)
+getAipInfo          → TTL 5 min (300_000 ms)
+File grandi: TTL breve per evitare memoria eccessiva
+
+USE CASE COPERTI
+══════════════════════════════════════════
+UC-7    Anteprima documento (PDF/immagine/testo)
+UC-8    Formato non supportato / file non leggibile
+UC-38   AiP di provenienza
+UC-39   Processo di conservazione
+UC-40   Sessione di versamento
+UC-41   Dati versamento
+UC-42   Identificativo documento
+UC-43   Soggetti (PF, PG, AS, PAI, PAE, SW)
+UC-44   Classificazione
+UC-45..48 Metadati generali (tipo, modalità, riservatezza...)
+UC-49   Dati di registrazione
+UC-50..52 Metadati aggiuntivi
+UC-53   Formato file
+UC-54   Verifica (firma, sigillo, marcatura)
+UC-55..56 Versionamento
+UC-57   Allegati
+UC-58   Tracciature modifiche
+UC-71   Metadati custom
+end note
+
+@enduml

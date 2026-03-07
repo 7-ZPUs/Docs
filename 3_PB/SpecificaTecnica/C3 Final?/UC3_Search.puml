@@ -1,0 +1,180 @@
+@startuml UC-3 – Ricerca (Full-text, Avanzata e Semantica)
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title UC-3 – Ricerca Full-text, Avanzata e Semantica\nUC-9..18: ricerca libera · filtri avanzati · soggetti · validazione · risultati\nComponenti: SearchPage · SearchFacade · FilterValidator · SemanticIndexFacade · IpcGateway
+
+Person(user, "Utente", "Revisore, archivista o consulente")
+System_Ext(ipc, "IPC Dispatcher (Main Process)", "Electron Context Bridge")
+
+Container_Boundary(renderer, "Renderer Process – Angular 17+") {
+
+  ' ── ROUTER & GUARD ──────────────────────────────────────
+  Component(router, "AppRouter", "Angular Router","Rotta lazy: /search → SearchPageComponent\nProtetta da DipReadyGuard.")
+
+  Component(dip_ready_guard, "DipReadyGuard", "Angular CanActivateFn\n[Route Guard]","Verifica DipFacade.state().phase === 'ready'.\nBlocca accesso a /search se DIP non indicizzato.")
+
+  ' ── SEARCH MODULE ───────────────────────────────────────
+  Component(search_page, "SearchPageComponent", "Angular Standalone [Smart]\nRoute: /search","Pagina ricerca.\nLegge Signal<SearchState> da SearchFacade.\nAvvolge risultati con AsyncStateWrapperComponent.\nCompone: SearchBar, AdvancedFilterPanel,\n  SearchResults, SemanticIndexStatus (opzionale).")
+
+  Component(search_bar, "SearchBarComponent", "Angular Standalone [Dumb]\n[UC-9, UC-9.3, UC-9.4]","Input ricerca: libera, per nome classe, per ID processo.\n@Output: queryChanged: SearchQuery\nDebounce 300ms sull'input testuale (SearchFacade).")
+
+  Component(advanced_filter_panel, "AdvancedFilterPanelComponent", "Angular Standalone [Smart]\n[UC-9.1, UC-10, UC-12.1..3, UC-13, UC-18]","Pannello filtri avanzati espandibile.\nGestisce aggiunta/rimozione/azzeramento filtri.\nValidazione real-time via FilterValidatorService.\nDelega a CommonFilters, DiDaiFilters, AggregateFilters,\n  CustomMetaFilter, SubjectFilter.")
+
+  Component(common_filters, "CommonFiltersComponent", "Angular Standalone [Dumb]\n[UC-12.1.2..7]","Filtri comuni: chiave descrittiva, classificazione,\nconservazione, note, tipo.")
+
+  Component(di_dai_filters, "DiDaiFiltersComponent", "Angular Standalone [Dumb]\n[UC-12.2.1.2..11]","Filtri DI/DAI: registrazione, tipologia, formazione,\nriservatezza, formato, verifica, nome, versione,\nID primario, tracciature.")
+
+  Component(aggregate_filters, "AggregateFiltersComponent", "Angular Standalone [Dumb]\n[UC-12.2.2.2..9]","Filtri aggregazione: tipo, ID, fascicolo,\ndate, procedimento, assegnazione.")
+
+  Component(custom_meta_filter, "CustomMetaFilterComponent", "Angular Standalone [Dumb]\n[UC-12.3, UC-12.3.1]","Coppie Nome/Valore dinamiche per metadati custom.")
+
+  Component(subject_filter, "SubjectFilterComponent", "Angular Standalone [Smart]\n[UC-13, UC-13.1..3]","Wizard 3-step:\n  1. Selezione ruolo\n  2. Selezione tipo soggetto\n  3. Dettagli specifici per tipo\nDelega a SubjectDetailFormComponent per il passo 3.")
+
+  Component(subject_detail_form, "SubjectDetailFormComponent", "Angular Standalone [Dumb]\n[UC-13.3.1..7]\n[Strategy per SubjectType]","Form dettagli soggetto dinamico.\n@Input subjectType → campi specifici\n  (PAI, PAE, AS, PG, PF, RUP, SW).")
+
+  Component(filter_value_input, "FilterValueInputComponent", "Angular Standalone [Dumb]\n[UC-17, UC-18]","Input generico valore filtro con validazione inline.\n@Input:  value, fieldType: FilterFieldType\n@Output: valueChanged, validationError: ValidationError|null\nValidazione locale sincrona (formato data, numerico, ecc.).\nUC-18: FieldErrorComponent appare inline in tempo reale.")
+
+  Component(field_error, "FieldErrorComponent", "Angular Standalone [Dumb – Shared]\n[UC-18, UC-10]","Messaggio errore a livello di singolo campo.\n@Input: error: ValidationError | null\nMostra il messaggio inline sotto il campo.\nProdotto da FilterValidatorService, non da IpcErrorHandler.")
+
+  Component(search_results, "SearchResultsComponent", "Angular Standalone [Smart]\n[UC-15, UC-16]","Lista risultati: nome e tipo per elemento.\nAl click apre DocumentViewer in pannello laterale\n  (anteprima rapida, riuso senza navigare a /document/:id).\nFallback: EmptyStateComponent (UC-16).")
+
+  Component(semantic_status, "SemanticIndexStatusComponent", "Angular Standalone [Dumb]\n[UC-11 – Opzionale]","Badge/banner disponibilità ricerca semantica AI.\nInput: status: IndexingStatus.\nMostra stato 'disponibile' / 'in corso' / 'non disponibile'.")
+
+  Component(empty_state, "EmptyStateComponent", "Angular Standalone [Dumb – Shared]\n[UC-16] [WCAG 4.1.3]","Messaggio per nessun risultato trovato.\nrole='status', aria-live='polite'.")
+
+  Component(async_state_wrapper, "AsyncStateWrapperComponent", "Angular Standalone [Dumb – Shared]\n[Cross-cutting]","Wrapper generico per stati asincroni IPC.\n@Input: loading, error: AppError|null, empty\nSlot 'error' → InlineErrorComponent")
+
+  Component(inline_error, "InlineErrorComponent", "Angular Standalone [Dumb – Shared]\n[Errori non bloccanti]","Errore SEARCH_ENGINE_ERROR mostrato inline.\n'Riprova' se error.recoverable === true.")
+
+  ' ── FACADE SERVICES ─────────────────────────────────────
+  Component(search_facade, "SearchFacade", "Angular Service [Injectable]\n[Facade + SRP]","Stato ricerca.\nSignal<SearchState>:\n  query, filters, results, loading\n  error: AppError | null  ← SEARCH_ENGINE_ERROR\n  validationErrors: Map<field, ValidationError>\n  isSearching: boolean  ← mutex Signal\n\nControllo concorrenza:\n  AbortController per cancel IPC in volo\n  Debounce 300ms sull'input testuale\n  isSearching=true per tutta la durata;\n  seconda submit ignorata se isSearching=true\n\nDegrado graceful:\n  Se SemanticIndexFacade.status ≠ 'ready'\n  → disabilita automaticamente searchSemantic\nUC-9, UC-9.1..9.4, UC-10, UC-15, UC-16.")
+
+  Component(semantic_facade, "SemanticIndexFacade", "Angular Service [Injectable]\n[Facade – Opzionale]","Stato indicizzazione semantica AI.\nSignal<SemanticIndexState>:\n  status: 'idle'|'indexing'|'ready'|'error'|'timeout'|'cancelled'\nSearchFacade controlla questo status per\ndecidere se abilitare il canale searchSemantic.\nUC-9.2 (opzionale), UC-11.")
+
+  Component(filter_validator, "FilterValidatorService", "Angular Service [providedIn:'root']\n[SRP – Validation]","Valida i valori dei filtri di ricerca.\nRestituisce ValidationResult con mappa campo→errore.\nUC-10, UC-17, UC-18.")
+
+  Component(ipc_gateway, "IpcGateway", "Angular Service [providedIn:'root']\n[Adapter + ISP]","Unico punto di accesso all'Electron Context Bridge.\nCanali search:\n  search           → cache-first, TTL 30s\n  searchAdvanced   → cache-first, TTL 30s [AbortController]\n  searchSemantic   → no-cache se status≠ready")
+
+  Component(ipc_cache, "IpcCacheService", "Angular Service [providedIn:'root']\n[SRP – Request Deduplication]","Cache in-memory TTL.\nsearch results → TTL 30_000 ms (30 sec)")
+
+  Component(ipc_error_handler, "IpcErrorHandlerService", "Angular Service [providedIn:'root']\n[SRP – Error Translation]","SEARCH_ENGINE_ERROR → AppError nel Signal<SearchState>")
+
+  Component(telemetry, "TelemetryService", "Angular Service [providedIn:'root']\n[SRP – Observability]","Eventi rilevanti:\n  SEARCH_EXECUTED\n  SEARCH_LATENCY_MS\n  SEARCH_RESULT_OPENED\n  IPC_ERROR")
+
+  Component(live_announcer, "LiveAnnouncerService", "Angular CDK [providedIn:'root']\n[WCAG 2.1 – aria-live]","SearchFacade → 'Trovati N risultati' – UC-15 [polite]")
+
+  ' ── DOCUMENT VIEWER (riuso in search) ───────────────────
+  Component(document_viewer, "DocumentViewerComponent", "Angular Standalone [Smart – Composite]\n[Riuso da DocumentDetail]","Viewer documento riutilizzato da SearchResults\nper anteprima rapida senza navigare a /document/:id.\nComposizione: PreviewPanelComponent + DocumentActionsComponent.")
+
+  Component(metadata_panel, "MetadataPanelComponent", "Angular Standalone [Smart – Composite]\n[Riuso da DocumentDetail]","Pannello metadati rapido nel risultato di ricerca.\nRiutilizzato da SearchResultsComponent.")
+}
+
+' ── Utente → Search ────────────────────────────────────────
+Rel(user, search_page, "Inserisce query / applica filtri", "Mouse / Tastiera")
+
+' ── Router & Guard ─────────────────────────────────────────
+Rel(router, dip_ready_guard, "CanActivateFn su /search")
+Rel(router, search_page, "Lazy /search [guard: DipReadyGuard]")
+
+' ── SearchPage → componenti ────────────────────────────────
+Rel(search_page, search_facade, "legge Signal<SearchState>; dispatches query")
+Rel(search_page, async_state_wrapper, "avvolge risultati [loading, error, empty]")
+Rel(async_state_wrapper, inline_error, "slot 'error' → SEARCH_ENGINE_ERROR")
+Rel(search_page, search_bar, "@Input query, @Output queryChanged – UC-9")
+Rel(search_page, advanced_filter_panel, "@Input filters, @Output filtersChanged – UC-9.1")
+Rel(search_page, search_results, "@Input results[] – UC-15, UC-16")
+Rel(search_page, semantic_status, "@Input status [Opzionale] – UC-11")
+
+' ── SearchBar → Facade ─────────────────────────────────────
+Rel(search_bar, search_facade, "queryChanged → search() con debounce 300ms")
+
+' ── AdvancedFilterPanel → figli ────────────────────────────
+Rel(advanced_filter_panel, common_filters, "@Input – UC-12.1")
+Rel(advanced_filter_panel, di_dai_filters, "@Input – UC-12.2.1")
+Rel(advanced_filter_panel, aggregate_filters, "@Input – UC-12.2.2")
+Rel(advanced_filter_panel, custom_meta_filter, "@Input – UC-12.3")
+Rel(advanced_filter_panel, subject_filter, "@Input – UC-13")
+Rel(advanced_filter_panel, filter_validator, "validate(filters) real-time – UC-10, UC-18")
+
+' ── Subject Filter ─────────────────────────────────────────
+Rel(subject_filter, subject_detail_form, "@Input subjectType → campi – UC-13.3")
+
+' ── FilterValueInput ───────────────────────────────────────
+Rel(common_filters, filter_value_input, "ogni campo valore – UC-17, UC-18")
+Rel(di_dai_filters, filter_value_input, "ogni campo valore – UC-17, UC-18")
+Rel(aggregate_filters, filter_value_input, "ogni campo valore – UC-17, UC-18")
+Rel(filter_value_input, field_error, "@Input ValidationError – UC-18 inline sotto il campo")
+
+' ── SearchResults ──────────────────────────────────────────
+Rel(search_results, empty_state, "fallback UC-16")
+Rel(search_results, document_viewer, "anteprima rapida documento selezionato – UC-7 (riuso)")
+Rel(search_results, metadata_panel, "pannello metadati rapido nel risultato – riuso")
+
+' ── SemanticStatus ─────────────────────────────────────────
+Rel(semantic_status, semantic_facade, "legge Signal<SemanticIndexState>.status")
+
+' ── SearchFacade → servizi ─────────────────────────────────
+Rel(search_facade, ipc_gateway, "search, searchAdvanced [AbortController per cancel]\nsearchSemantic [no-cache se status≠ready]")
+Rel(search_facade, filter_validator, "pre-validazione filtri UC-10")
+Rel(search_facade, ipc_error_handler, "SEARCH_ENGINE_ERROR → AppError")
+Rel(search_facade, telemetry, "trackEvent(SEARCH_EXECUTED)\ntrackTiming(SEARCH_LATENCY_MS)\ntrackError(AppError)")
+Rel(search_facade, live_announcer, "announce('Trovati N risultati') – UC-15 [polite]")
+
+' ── IPC Gateway ────────────────────────────────────────────
+Rel(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
+Rel(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
+Rel(ipc_gateway, ipc_cache, "get(key) cache-first, TTL 30s per search results")
+
+note as legend
+FLUSSO RICERCA FULL-TEXT (UC-9)
+══════════════════════════════════════════
+1. Utente digita query in SearchBarComponent
+2. Debounce 300ms → SearchFacade.search(query)
+3. isSearching=true (mutex Signal)
+4. IpcGateway.invoke('search') [cache-first, TTL 30s]
+5. Risposta → Signal<SearchState>.results aggiornato
+6. SearchResultsComponent renderizza la lista
+7. LiveAnnouncer: 'Trovati N risultati' [polite]
+8. isSearching=false
+
+FLUSSO RICERCA AVANZATA (UC-9.1, UC-10..18)
+══════════════════════════════════════════
+1. Utente espande AdvancedFilterPanelComponent
+2. Configura filtri (CommonFilters, DiDai, Aggregate,
+CustomMeta, SubjectFilter)
+3. FilterValidatorService valida in real-time
+→ UC-18: FieldErrorComponent inline sotto ogni campo
+4. Submit → SearchFacade.searchAdvanced(filters)
+5. AbortController cancella IPC precedente se in volo
+
+CONCORRENZA
+══════════════════════════════════════════
+isSearching=true → secondo submit ignorato silenziosamente
+AbortController → cancella chiamata IPC in volo
+Debounce 300ms → riduce IPC su digitazione rapida
+
+DEGRADO SEMANTICO (UC-9.2, UC-11)
+══════════════════════════════════════════
+SemanticIndexFacade.status ≠ 'ready'
+→ SearchFacade disabilita searchSemantic automaticamente
+→ ricerca full-text rimane integra (graceful degradation)
+SemanticIndexStatusComponent mostra banner informativo
+
+USE CASE COPERTI
+══════════════════════════════════════════
+UC-9    Ricerca full-text libera
+UC-9.1  Attivazione filtri avanzati
+UC-9.2  Ricerca semantica AI (opzionale)
+UC-9.3  Ricerca per nome classe
+UC-9.4  Ricerca per ID processo
+UC-10   Pre-validazione filtri
+UC-11   Stato indicizzazione semantica
+UC-12   Filtri per tipo (Common, DiDai, Aggregate)
+UC-13   Filtro per soggetto (wizard 3-step)
+UC-15   Visualizzazione risultati
+UC-16   Nessun risultato (EmptyState)
+UC-17   Input valore filtro
+UC-18   Validazione real-time formato filtro
+end note
+
+@enduml

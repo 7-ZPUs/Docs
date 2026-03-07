@@ -1,0 +1,174 @@
+@startuml UC-6 – Verifica Integrità
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title UC-6 – Verifica Integrità DIP\nUC-26..33: verifica DIP · classe · processo · documento · report · fallimenti\nComponenti: IntegrityPage · IntegrityFacade · VerificationProgress · Report Components
+
+Person(user, "Utente", "Revisore, archivista o consulente")
+System_Ext(ipc, "IPC Dispatcher (Main Process)", "Electron Context Bridge")
+
+Container_Boundary(renderer, "Renderer Process – Angular 17+") {
+
+  ' ── ROUTER ──────────────────────────────────────────────
+  Component(router, "AppRouter", "Angular Router","Rotta lazy: /integrity → IntegrityPageComponent\nProtetta da DipReadyGuard.")
+
+  Component(dip_ready_guard, "DipReadyGuard", "Angular CanActivateFn\n[Route Guard]","Verifica DipFacade.state().phase === 'ready'.\nBlocca accesso a /integrity se DIP non indicizzato.")
+
+  ' ── INTEGRITY PAGE ──────────────────────────────────────
+  Component(integrity_page, "IntegrityPageComponent", "Angular Standalone [Smart]\nRoute: /integrity","Pagina verifica integrità.\nLegge Signal<IntegrityState> da IntegrityFacade.\nAvvolge con AsyncStateWrapperComponent.\nCompone:\n  IntegrityTriggerComponent\n  VerificationProgressComponent\n  4 report components\n  OutputToolbarComponent (esporta PDF report)")
+
+  Component(async_state_wrapper, "AsyncStateWrapperComponent", "Angular Standalone [Dumb – Shared]\n[Cross-cutting – Template Method]","Wrapper generico per stati asincroni IPC.\n@Input: loading, error: AppError|null, empty\nSlot 'error' → InlineErrorComponent (INTEGRITY_VERIFY_ERROR)")
+
+  Component(inline_error, "InlineErrorComponent", "Angular Standalone [Dumb – Shared]\n[Errori non bloccanti]","INTEGRITY_VERIFY_ERROR (crash IPC) mostrato inline.\n'Riprova' se error.recoverable === true.\nNon blocca tutta la UI.")
+
+  ' ── INTEGRITY TRIGGER ───────────────────────────────────
+  Component(integrity_trigger, "IntegrityTriggerComponent", "Angular Standalone [Dumb]\n[UC-26, UC-27, UC-28, UC-29]","Pulsanti avvio verifica per livello:\n  • DIP completo  (UC-26)\n  • Classe         (UC-27)\n  • Processo       (UC-28)\n  • Documento      (UC-29)\n@Input  disabledWhileVerifying: boolean\n  ← derivato da Signal<isVerifying>\n@Output verifyRequested: VerifyLevel\nBottoni disabilitati + tooltip 'Verifica in corso'\nse disabledWhileVerifying=true.")
+
+  ' ── VERIFICATION PROGRESS ───────────────────────────────
+  Component(verification_progress, "VerificationProgressComponent", "Angular Standalone [Dumb – Shared]\n[UC-26..29]\n[Observer via Signal]","Indicatore di avanzamento verifica in corso.\nInput: progress: VerificationProgress {\n  current, total, level, label\n}\nMostra:\n  • Barra progresso percentuale\n  • Contatore n/tot\n  • Nome elemento in verifica corrente\nRiceve dati aggiornati via Signal<IntegrityState>.progress\nproiettato da IntegrityPageComponent.\nVisibile durante verifica a qualsiasi livello.")
+
+  ' ── REPORT COMPONENTS ───────────────────────────────────
+  Component(dip_integrity_report, "DipIntegrityReportComponent", "Angular Standalone [Dumb]\n[UC-30.1..6]","Report DIP completo:\n  • UC-30.1 Totale classi verificate\n  • UC-30.2 Classi integre\n  • UC-30.3 Classi corrotte\n  • UC-30.4 Lista classi corrotte\n  • UC-30.5 Timestamp verifica\n  • UC-30.6 Messaggio 'tutte integre'")
+
+  Component(class_integrity_report, "ClassIntegrityReportComponent", "Angular Standalone [Dumb]\n[UC-31.1..6]","Report classe documentale:\n  • UC-31.1 Totale processi verificati\n  • UC-31.2 Processi integri\n  • UC-31.3 Processi corrotti\n  • UC-31.4 Lista processi corrotti\n  • UC-31.5 Timestamp verifica\n  • UC-31.6 Messaggio 'tutti integri'")
+
+  Component(process_integrity_report, "ProcessIntegrityReportComponent", "Angular Standalone [Dumb]\n[UC-32.1..6]","Report processo di conservazione:\n  • UC-32.1 Totale documenti verificati\n  • UC-32.2 Documenti integri\n  • UC-32.3 Documenti corrotti\n  • UC-32.4 Lista documenti corrotti con dettaglio\n  • UC-32.5 Timestamp verifica\n  • UC-32.6 Messaggio 'tutti integri'\nDelega a IntegrityFailureDetailComponent per UC-32.4.1")
+
+  Component(doc_integrity_report, "DocumentIntegrityReportComponent", "Angular Standalone [Dumb]\n[UC-33.1..3]","Report integrità documento:\n  • UC-33.1 Nome documento\n  • UC-33.2 Stato Valido / Non Valido\n  • UC-33.3 Se Non Valido → IntegrityFailureDetailComponent\nNOTA: HASH_MISMATCH e SIGNATURE_* NON sono AppError:\nsono IntegrityResult (errori di dominio,\nnon malfunzionamenti IPC).")
+
+  Component(integrity_failure_detail, "IntegrityFailureDetailComponent", "Angular Standalone [Dumb – Shared]\n[UC-33.3, UC-32.4.1]","Dettaglio visivo fallimento integrità.\n@Input: failure: IntegrityFailure {\n  type: 'HASH_MISMATCH'\n       | 'SIGNATURE_EXPIRED'\n       | 'SIGNATURE_INVALID',\n  documentName: string,\n  detail?: string\n}\nMostra icona, tipo errore localizzato, dettaglio.\nRiutilizzato in:\n  DocumentIntegrityReport (UC-33.3)\n  ProcessIntegrityReport  (UC-32.4.1)")
+
+  ' ── SHARED UI ───────────────────────────────────────────
+  Component(verification_badge, "VerificationBadgeComponent", "Angular Standalone [Dumb – Shared]\n[UC-4] [WCAG 1.4.1, 4.1.2]","Badge: Non Verificato / Valido / Non Valido.\nRiutilizzato nei report di integrità:\n  DipIntegrityReport   → badge per ogni classe\n  ClassIntegrityReport → badge per ogni processo\n  DocIntegrityReport   → badge stato documento")
+
+  Component(timestamp_label, "TimestampLabelComponent", "Angular Standalone [Dumb – Shared]\n[UC-5]","Timestamp verifica nei report.\n<time datetime='ISO-8601'>")
+
+  ' ── OUTPUT TOOLBAR (esporta PDF report) ─────────────────
+  Component(output_toolbar, "OutputToolbarComponent", "Angular Standalone [Smart]\n[UC-34]","Barra azioni output.\nNel contesto IntegrityPage: solo Esporta PDF (UC-34).\nInietta OutputFacade.")
+
+  Component(folder_picker_dialog, "FolderPickerDialogComponent", "Angular Standalone [Smart]\n[UC-34]\n[WCAG 2.1.1, 2.1.2]","Dialogo modale selezione cartella destinazione PDF.\nFocus trap via AccessibilityService.")
+
+  Component(error_dialog, "ErrorDialogComponent", "Angular Standalone [Dumb – Shared]\n[UC-37]\n[WCAG 2.1.1, 2.1.2]","Modale per errore OUTPUT_PDF_GENERATION_ERROR.\n'Riprova' se recoverable=true.")
+
+  ' ── FACADE SERVICES ─────────────────────────────────────
+  Component(integrity_facade, "IntegrityFacade", "Angular Service [Injectable]\n[Facade + SRP]","Avvia verifiche, raccoglie report.\nSignal<IntegrityState>:\n  report, progress, loading\n  systemError: AppError | null ← INTEGRITY_VERIFY_ERROR\n  isVerifying: boolean        ← mutex Signal\n\nNOTE: HASH_MISMATCH e SIGNATURE_* NON sono AppError:\n  sono IntegrityResult nel report (errori di dominio)\n\nControllo concorrenza:\n  isVerifying=true per tutta la durata della verifica IPC.\n  Secondo verifyRequested ignorato mentre isVerifying=true.\n  IntegrityTrigger disabilita bottoni via @Input.\n\nUC-26..33.")
+
+  Component(output_facade, "OutputFacade", "Angular Service [Injectable]\n[Facade + SRP]","Per IntegrityPage: solo exportPdf [no-cache]\nResult<void, AppError>:\n  OUTPUT_PDF_GENERATION_ERROR → UC-37")
+
+  Component(ipc_gateway, "IpcGateway", "Angular Service [providedIn:'root']\n[Adapter + ISP]","Canali integrità [tutti no-cache]:\n  verifyDip\n  verifyClass\n  verifyProcess\n  verifyDocument\nno-cache obbligatorio: operazioni di verifica\nnon devono essere cachate.")
+
+  Component(ipc_error_handler, "IpcErrorHandlerService", "Angular Service [providedIn:'root']\n[SRP – Error Translation]","INTEGRITY_VERIFY_ERROR → AppError (crash IPC)\nDistinto da IntegrityFailure (dominio):\n  HASH_MISMATCH, SIGNATURE_EXPIRED,\n  SIGNATURE_INVALID → gestiti nel report,\n  NON passano per IpcErrorHandlerService")
+
+  Component(telemetry, "TelemetryService", "Angular Service [providedIn:'root']\n[SRP – Observability]","trackEvent(INTEGRITY_STARTED)\ntrackEvent(INTEGRITY_COMPLETED)\ntrackError(AppError) se INTEGRITY_VERIFY_ERROR")
+
+  Component(live_announcer, "LiveAnnouncerService", "Angular CDK [providedIn:'root']\n[WCAG 2.1 – aria-live]","IntegrityFacade → 'Verifica integrità completata' [polite]\nOutputFacade → errore output [assertive]")
+
+  Component(notification_service, "NotificationService", "Angular Service [providedIn:'root']\n[SRP – Feedback]","Conferma export PDF completato.")
+
+  Component(accessibility_service, "AccessibilityService", "Angular Service [providedIn:'root']\n[SRP – WCAG 2.1]","trapFocus() FolderPickerDialog e ErrorDialog\nrestoreFocus() alla chiusura (WCAG 2.1.2)")
+}
+
+' ── Utente → IntegrityPage ─────────────────────────────────
+Rel(user, integrity_page, "Avvia verifica integrità", "Click su bottone verifica")
+
+' ── Router → IntegrityPage ─────────────────────────────────
+Rel(router, dip_ready_guard, "CanActivateFn su /integrity")
+Rel(router, integrity_page, "Lazy /integrity [guard: DipReadyGuard]")
+
+' ── IntegrityPage → componenti ─────────────────────────────
+Rel(integrity_page, integrity_facade, "legge Signal<IntegrityState>; triggers verifica")
+Rel(integrity_page, async_state_wrapper, "avvolge report [loading, systemError: AppError]")
+Rel(async_state_wrapper, inline_error, "slot 'error' → INTEGRITY_VERIFY_ERROR")
+Rel(integrity_page, integrity_trigger, "@Input context, @Output verifyRequested – UC-26..29")
+Rel(integrity_page, verification_progress, "@Input progress: VerificationProgress – UC-26..29")
+Rel(integrity_page, dip_integrity_report, "@Input report – UC-30")
+Rel(integrity_page, class_integrity_report, "@Input report – UC-31")
+Rel(integrity_page, process_integrity_report, "@Input report – UC-32")
+Rel(integrity_page, doc_integrity_report, "@Input report – UC-33")
+Rel(integrity_page, output_toolbar, "context=report → esporta PDF UC-34")
+
+' ── IntegrityTrigger → Facade ──────────────────────────────
+Rel(integrity_trigger, integrity_facade, "@Output verifyRequested → verifyDip/Class/Process/Document")
+
+' ── IntegrityFacade → progress ─────────────────────────────
+Rel(integrity_facade, verification_progress, "Signal<progress> aggiornato ogni documento verificato")
+
+' ── Report → shared components ─────────────────────────────
+Rel(dip_integrity_report, verification_badge, "badge stato per ogni classe – UC-4")
+Rel(dip_integrity_report, timestamp_label, "timestamp verifica – UC-5")
+Rel(class_integrity_report, verification_badge, "badge stato per ogni processo – UC-4")
+Rel(doc_integrity_report, verification_badge, "badge stato documento – UC-4")
+Rel(doc_integrity_report, integrity_failure_detail, "@Input failure – UC-33.3 (dominio, non IPC)")
+Rel(process_integrity_report, integrity_failure_detail, "@Input failure per doc corrotto – UC-32.4.1")
+
+' ── OutputToolbar ──────────────────────────────────────────
+Rel(output_toolbar, output_facade, "exportPdf(report) – UC-34")
+Rel(output_facade, folder_picker_dialog, "apre dialogo selezione cartella PDF")
+Rel(output_facade, error_dialog, "OUTPUT_PDF_GENERATION_ERROR – UC-37")
+Rel(output_facade, notification_service, "conferma export PDF completato")
+Rel(output_facade, live_announcer, "announce('Operazione completata') [polite]")
+Rel(folder_picker_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
+Rel(error_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
+
+' ── IntegrityFacade → IPC ──────────────────────────────────
+Rel(integrity_facade, ipc_gateway, "verifyDip, verifyClass, verifyProcess,\nverifyDocument [tutti no-cache]")
+Rel(integrity_facade, ipc_error_handler, "INTEGRITY_VERIFY_ERROR → AppError")
+Rel(integrity_facade, telemetry, "trackEvent(INTEGRITY_STARTED|COMPLETED)\ntrackError(AppError)")
+Rel(integrity_facade, live_announcer, "announce('Verifica integrità completata') [polite]")
+
+' ── IPC Gateway ────────────────────────────────────────────
+Rel(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
+Rel(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
+
+note as legend
+FLUSSO VERIFICA INTEGRITÀ
+══════════════════════════════════════════
+1. Utente accede a /integrity
+2. IntegrityPage compone Trigger + Progress + Report vuoto
+3. Utente clicca un bottone in IntegrityTriggerComponent
+(DIP completo, Classe, Processo, Documento)
+4. isVerifying=true → IntegrityTrigger disabilita tutti i bottoni
+5. IntegrityFacade.verify*() → IpcGateway [no-cache]
+6. Main Process verifica hash e firme documento per documento
+7. IPC invia aggiornamenti progress in streaming
+8. IntegrityFacade aggiorna Signal<progress>
+9. VerificationProgressComponent si aggiorna (Observer via Signal)
+10. Verifica completata → Signal<report> aggiornato
+11. Report Components si aggiornano
+12. isVerifying=false → bottoni riabilitati
+13. LiveAnnouncer: 'Verifica integrità completata' [polite]
+
+TASSONOMIA ERRORI INTEGRITÀ
+══════════════════════════════════════════
+INTEGRITY_VERIFY_ERROR (AppError – crash IPC)
+→ sistema non ha potuto completare la verifica
+→ InlineErrorComponent [recoverable=true → 'Riprova']
+→ passa per IpcErrorHandlerService
+
+HASH_MISMATCH / SIGNATURE_EXPIRED / SIGNATURE_INVALID
+→ IntegrityResult (errori di dominio)
+→ il documento è corrotto o la firma non è valida
+→ IntegrityFailureDetailComponent nel report
+→ NON passano per IpcErrorHandlerService
+
+CONTROLLO CONCORRENZA
+══════════════════════════════════════════
+isVerifying=true per tutta la durata della verifica
+Secondo verifyRequested ignorato silenziosamente
+IntegrityTrigger: bottoni disabilitati + tooltip
+verifyDocument (UC-29 da DocumentActions):
+stessa regola; mostra tooltip se isVerifying=true
+
+USE CASE COPERTI
+══════════════════════════════════════════
+UC-26  Verifica integrità DIP completo
+UC-27  Verifica integrità classe documentale
+UC-28  Verifica integrità processo di conservazione
+UC-29  Verifica integrità documento singolo
+UC-30  Report verifica DIP (classi)
+UC-31  Report verifica classe (processi)
+UC-32  Report verifica processo (documenti + dettaglio corrotti)
+UC-33  Report verifica documento (stato + dettaglio fallimento)
+UC-34  Esporta PDF report integrità
+end note
+
+@enduml

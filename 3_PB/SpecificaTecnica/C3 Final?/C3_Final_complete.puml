@@ -1,0 +1,561 @@
+@startuml Component Diagram – Angular Renderer (DIPReader) v2
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Component Diagram – Angular Renderer Process (DIPReader) v4\nCopertura UC-1..UC-71 | SOLID + Angular Best Practices\nv4: IpcCacheService · TelemetryService · AccessibilityService · LiveAnnouncerService\n    Mutex Signal (SearchFacade, IntegrityFacade) · SemanticIndexFacade timeout+cancel · WCAG 2.1
+
+'══════════════════════════════════════════════════════════════
+' ESTERNI
+'══════════════════════════════════════════════════════════════
+Person(user, "Utente", "Revisore, archivista o consulente")
+System_Ext(ipc, "IPC Dispatcher (Main Process)", "Electron Context Bridge")
+
+'══════════════════════════════════════════════════════════════
+' RENDERER ANGULAR
+'══════════════════════════════════════════════════════════════
+Container_Boundary(renderer, "Renderer Process – Angular 17+  (Standalone Components, Signals)") {
+
+  '──────────────────────────────────────────────────────────
+  ' [A] SHELL & ROUTING
+  '──────────────────────────────────────────────────────────
+  Component(app_shell, "AppShellComponent", "Angular Standalone [Smart – Layout Root]","Root component: toolbar, sidebar navigazione, router-outlet.\nLegge Signal<DipState>.phase da DipFacade:\n  • phase='idle'     → mostra DipLoadingPageComponent (fullscreen)\n  • phase='indexing' → mostra DipLoadingPageComponent con progresso\n  • phase='ready'    → attiva il router-outlet con le rotte normali\nFunge da guard visivo: nessuna rotta è accessibile prima che\nil DIP sia completamente indicizzato.")
+
+  Component(router, "AppRouter", "Angular Router [provideRouter + withComponentInputBinding]","Rotte lazy:\n  /dip           → DipExplorerComponent\n  /search        → SearchPageComponent\n  /document/:id  → DocumentDetailPageComponent\n  /aggregate/:id → AggregateDetailPageComponent\n  /integrity     → IntegrityPageComponent\nTutte le rotte protette da DipReadyGuard:\nnessuna rotta è accessibile se DipState.phase != 'ready'.")
+
+  '──────────────────────────────────────────────────────────
+  ' [A2] DIP LOADING & INDEXING SCREEN
+  '  Schermata fullscreen mostrata da AppShell mentre
+  '  il DIP è in fase di apertura e indicizzazione.
+  '  Visibile prima che qualsiasi rotta sia attivabile.
+  '──────────────────────────────────────────────────────────
+  Component(dip_loading_page, "DipLoadingPageComponent", "Angular Standalone [Smart]\n[Schermata di avvio – fullscreen]","Schermata fullscreen mostrata da AppShellComponent\nmentre DipState.phase è 'idle', 'indexing' o 'error'.\nFasi visualizzate:\n  1. Selezione file DIP\n  2. Decompressione archivio .zip\n  3. Parsing XML metadati AGID\n  4. Indicizzazione relazionale (SQLite)\n  5. [Opzionale] Indicizzazione semantica AI\nGestione errori di fase:\n  • DIP_FILE_NOT_FOUND       → messaggio + bottone 'Seleziona altro file'\n  • DIP_CORRUPT_ARCHIVE      → messaggio + bottone 'Seleziona altro file'\n  • DIP_PARSE_ERROR          → messaggio con fase fallita + dettaglio\n  • DIP_INDEX_ERROR          → messaggio + bottone 'Riprova'\nMostra InlineErrorComponent per errori non fatali;\nper errori fatali (recoverable=false) blocca il flusso.\nDi default: delega la barra di progresso a DipIndexingProgressComponent.")
+
+  Component(dip_indexing_progress, "DipIndexingProgressComponent", "Angular Standalone [Dumb]\n[UC – caricamento DIP]\n[Observer via Signal]","Visualizza il progresso dell'indicizzazione del DIP.\nInput: progress: DipLoadingProgress {\n  phase: LoadingPhase,\n  currentStep: string,\n  stepsCompleted: number,\n  totalSteps: number,\n  percentage: number\n}\nMostra:\n  • Stepper orizzontale con le fasi (decompressione →\n    parsing → indicizzazione relazionale → [semantica])\n  • Barra progresso percentuale\n  • Label 'Indicizzazione documento N di M: <nome>'\n  • Spinner per la fase corrente\nCompletamente Dumb: zero iniezioni di servizi.\nAlimentato da Signal<DipLoadingState> proiettato\nda DipLoadingPageComponent come @Input.")
+
+  Component(dip_ready_guard, "DipReadyGuard", "Angular CanActivateFn\n[Route Guard]","Guard funzionale (Angular 15+ CanActivateFn).\nVerifica che DipFacade.state().phase === 'ready'.\nSe non pronto: reindirizza AppShell a mostrare\nDipLoadingPageComponent invece di attivare la rotta.\nApplicato a tutte le rotte del router.\nDipendenza: DipFacade (via inject()).")
+
+  '──────────────────────────────────────────────────────────
+  ' [A3] DIP TREE – Navigazione ad albero
+  '  Separato dal modulo DipExplorer perché è un componente
+  '  con logica propria (stato expand/collapse, selezione nodo)
+  '  riutilizzabile anche nella sidebar di AppShell.
+  '──────────────────────────────────────────────────────────
+  Component(dip_tree, "DipTreeComponent", "Angular Standalone [Smart – Composite]\n[UC-1, UC-2, UC-3, UC-4, UC-5, UC-6]\n[Lazy Loading + Virtual Scroll]","Albero navigabile a tre livelli con lazy loading e virtual scrolling.\n\n── Lazy Loading ──────────────────────────────────────\nNon carica l'intero albero all'avvio.\nAl primo render chiama DipFacade.loadRootNodes().\nQuando l'utente espande un nodo (evento toggle):\n  1. Controlla se i figli sono già in nodeCache\n  2. Se no → chiama DipFacade.loadChildren(nodeId)\n  3. Aggiorna Signal<expandedIds: Set<nodeId>>\nI nodi in stato 'loading' mostrano uno spinner inline.\n\n── Virtual Scrolling (CDK) ───────────────────────────\nUsa CdkVirtualScrollViewport di @angular/cdk/scrolling.\nMantiene computed<FlatNode[]> che ricalcola l'array\npiatto dei nodi visibili ogni volta che cambiano\nexpandedIds o nodeCache:\n  FlatNode = { node: DipTreeNode, depth: number,\n               hasChildren: boolean, isLoading: boolean }\nSolo i FlatNode nella viewport sono nel DOM.\nItemSize fisso (es. 48px) per performance CDK ottimale.\n\n── Interfaccia ───────────────────────────────────────\n@Input:  rootNodes: DipTreeNode[]\n@Output: nodeSelected: EventEmitter<DipTreeNode>\nNon ricorsivo: delega ogni riga a DipTreeNodeComponent\ntramite *cdkVirtualFor sul FlatNode[] piatto.\nNon conosce Router.")
+
+  Component(dip_tree_node, "DipTreeNodeComponent", "Angular Standalone [Dumb – Non ricorsivo]\n[UC-1, UC-2, UC-3, UC-4, UC-5]\n[Virtual Scroll item]","Riga singola dell'albero virtualizzato. NON ricorsivo.\nAltezza fissa (es. 48px) per CDK itemSize.\n@Input:  flatNode: FlatNode\n         { node, depth, hasChildren, isLoading,\n           childrenError: AppError | null }  ← errore parziale nodo\n@Output: toggle: EventEmitter<nodeId>\n         nodeSelected: EventEmitter<DipTreeNode>\nVisualizza:\n  • padding-left da depth (indentazione visiva)\n  • icona expand/collapse se hasChildren\n  • spinner se isLoading\n  • InlineErrorComponent se childrenError != null\n    (con 'Riprova' se recoverable=true – UC: DIP_CHILDREN_LOAD_ERROR)\n  • nome nodo\n  • VerificationBadgeComponent – UC-4\n  • TimestampLabelComponent    – UC-5\nErrore parziale: fallisce il caricamento figli di UN nodo,\nnon l'intero albero. Gli altri nodi rimangono usabili.")
+  '──────────────────────────────────────────────────────────
+  Component(ipc_gateway, "IpcGateway", "Angular Service [providedIn:'root']\n[Adapter + ISP]","Unico punto di accesso all'Electron Context Bridge.\nEspone metodi tipizzati per dominio:\n  invoke<T>(channel, payload?, cachePolicy?): Promise<T>\n  on<T>(channel, handler): () => void\n\nCachePolicy (default 'cache-first' per letture):\n  'cache-first'   → legge IpcCacheService; chiama IPC solo su miss\n  'network-first' → chiama IPC, aggiorna cache\n  'no-cache'      → bypass totale (operazioni mutanti obbligatorio)\n\nCanali no-cache obbligatori:\n  verifyDip, verifyClass, verifyProcess, verifyDocument\n  saveFile, saveMultiple, print, exportPdf, download\n  loadDip, writeLog\n\nIsola completamente il resto dell'app da Electron.")
+
+  Component(ipc_error_handler, "IpcErrorHandlerService", "Angular Service [providedIn:'root']\n[SRP – Error Translation]","Traduce errori IPC grezzi nel modello AppError tipizzato:\n\nAppError {\n  code:       ErrorCode        // enum – identifica univocamente l'errore\n  category:   ErrorCategory    // IPC | VALIDATION | DOMAIN | IO | PRINT\n  severity:   ErrorSeverity    // FATAL | ERROR | WARN | INFO\n  recoverable: boolean         // true → mostra 'Riprova'; false → solo 'Chiudi'\n  context?:   string           // es. nome file, nodeId, nome campo\n  detail?:    string           // messaggio tecnico per debug\n}\n\nErrorCode (enum):\n  // DIP loading\n  DIP_FILE_NOT_FOUND, DIP_CORRUPT_ARCHIVE, DIP_PARSE_ERROR,\n  DIP_INDEX_ERROR, DIP_CHILDREN_LOAD_ERROR\n  // Document\n  DOC_NOT_FOUND, DOC_BLOB_LOAD_ERROR, DOC_FORMAT_UNSUPPORTED\n  // Output\n  OUTPUT_IO_ERROR, OUTPUT_SOURCE_FOLDER_FORBIDDEN,\n  OUTPUT_PRINT_ERROR, OUTPUT_FORMAT_NOT_PRINTABLE,\n  OUTPUT_PDF_GENERATION_ERROR, OUTPUT_DOWNLOAD_ERROR\n  // Integrity\n  INTEGRITY_HASH_MISMATCH, INTEGRITY_SIGNATURE_EXPIRED,\n  INTEGRITY_SIGNATURE_INVALID, INTEGRITY_VERIFY_ERROR\n  // Search\n  SEARCH_ENGINE_ERROR\n  // Field-level (opaque per componenti dumb)\n  FIELD_OPTIONAL_ABSENT\n\nEspone:\n  toAppError(ipcError): AppError\n  isFatal(e: AppError): boolean")
+
+  '──────────────────────────────────────────────────────────
+  ' [C] CROSS-CUTTING SERVICES
+  '──────────────────────────────────────────────────────────
+  Component(notification_service, "NotificationService", "Angular Service [providedIn:'root']\n[SRP – Feedback]","Emette toast/snackbar per conferme e messaggi non bloccanti.\nUsato da Facade e OutputToolbar dopo operazioni completate.")
+
+  Component(filter_validator, "FilterValidatorService", "Angular Service [providedIn:'root']\n[SRP – Validation]","Valida i valori dei filtri di ricerca.\nRestituisce ValidationResult con mappa campo→errore.\nUC-10, UC-17, UC-18.")
+
+  ' ── [C2] NUOVI SERVIZI CROSS-CUTTING v4 ──────────────────
+  Component(ipc_cache, "IpcCacheService", "Angular Service [providedIn:'root']\n[SRP – Request Deduplication]","Cache in-memory per risposte IPC di sola lettura.\nElimina chiamate IPC ridondanti (es. 3x stessa doc = 1x IPC).\n\nStruttura:\n  entries: Map<cacheKey, { value: T, ts: number, ttl: number }>\n\nAPI:\n  get<T>(key): T | null              – miss automatica se scaduto\n  set<T>(key, value, ttl): void\n  invalidate(key): void\n  invalidatePrefix(prefix): void     – es. 'doc/' dopo reload DIP\n  clear(): void                      – reset all'apertura nuovo DIP\n\nTTL per categoria (ms):\n  getDocumentMetadata  → 300_000 (5 min)\n  getAggregateMetadata → 300_000\n  getAipInfo           → 300_000\n  loadChildren (tree)  → 600_000 (10 min) – migrato da nodeCache\n  getFileBlob          →  60_000 (1 min)  – file grandi, TTL breve\n  search results       →  30_000 (30 sec) – dati più volatili\n\nReset completo (clear()) ad ogni apertura di nuovo DIP.")
+
+  Component(telemetry, "TelemetryService", "Angular Service [providedIn:'root']\n[SRP – Observability]","Log strutturato locale per eventi utente ed errori.\nIn Electron offline: scrive su file rotante via IPC writeLog [no-cache].\n\nTelemetryEvent {\n  type:      EventType  // enum\n  timestamp: number\n  payload:   Record<string, unknown>\n  sessionId: string\n}\n\nEventType:\n  ROUTE_CHANGE, DIP_LOADED, NODE_EXPANDED\n  SEARCH_EXECUTED, SEARCH_LATENCY_MS, SEARCH_RESULT_OPENED\n  FILE_SAVED, FILE_PRINTED, PDF_EXPORTED\n  INTEGRITY_STARTED, INTEGRITY_COMPLETED\n  IPC_ERROR, RENDER_ERROR\n  TREE_RENDER_TIME_MS, BLOB_LOAD_TIME_MS\n\nAPI (tutte fire-and-forget, mai bloccanti, mai rilanciano):\n  trackEvent(type, payload?): void\n  trackError(error: AppError, context?): void\n  trackTiming(label: EventType, ms: number): void\n\nRegola: chiamato DOPO l'aggiornamento del Signal nel Facade.\nNon espone dati all'esterno: log locale only.")
+
+  Component(accessibility_service, "AccessibilityService", "Angular Service [providedIn:'root']\n[SRP – WCAG 2.1 Focus Management]","Gestione centralizzata del focus e navigazione da tastiera.\n\nAPI:\n  trapFocus(container: ElementRef): () => void\n    → focus ciclico dentro dialoghi modali\n    → ritorna untrapper da chiamare alla chiusura\n  restoreFocus(): void\n    → ripristina focus sull'elemento trigger pre-dialogo\n  moveFocusTo(ref: ElementRef | string): void\n  setPageTitle(title: string): void\n    → aggiorna <title> ad ogni cambio rotta (WCAG 2.4.2)\n\nUso:\n  ErrorDialogComponent    → trapFocus + restoreFocus (WCAG 2.1.2)\n  FolderPickerDialog      → trapFocus + restoreFocus\n  AppShellComponent       → setPageTitle ad ogni cambio rotta\n  DipTreeComponent        → gestione frecce su/giù tra nodi\n\nSkip-link 'Vai al contenuto principale' registrato qui (WCAG 2.4.1).")
+
+  Component(live_announcer, "LiveAnnouncerService", "Angular CDK [providedIn:'root']\n[WCAG 2.1 – aria-live]","Wrapper su Angular CDK LiveAnnouncer.\nAnnuncia messaggi dinamici agli screen reader via regione aria-live.\n\nAPI:\n  announce(msg: string, politeness?: 'polite'|'assertive'): void\n\nUsi (politeness='polite' salvo indicato):\n  SearchFacade     → 'Trovati N risultati' – UC-15\n  DipFacade        → 'Indicizzazione X% completata' – ogni 10%\n  DipTreeComponent → 'Espanso: <nome nodo>, N figli'\n  OutputFacade     → 'File salvato con successo'\n  IntegrityFacade  → 'Verifica integrità completata'\n  InlineError      → messaggio errore [assertive] – non bloccante\n  SemanticFacade   → 'Ricerca semantica non disponibile' [assertive]")
+
+  '──────────────────────────────────────────────────────────
+  ' [D] SHARED UI – ATOMIC COMPONENTS
+  '  Componenti riutilizzabili tra più moduli.
+  '  Tutti Dumb: solo @Input/@Output, zero DI di servizi.
+  '──────────────────────────────────────────────────────────
+  Component(verification_badge, "VerificationBadgeComponent", "Angular Standalone [Dumb – Shared]\n[UC-4] [WCAG 1.4.1, 4.1.2]","Badge: Non Verificato / Valido / Non Valido.\nInput: status: VerificationStatus.\nAccessibilità:\n  role='status', aria-label='Stato verifica: <testo>'\n  Colore NON è unico indicatore: icona + testo sempre presenti.\nRiutilizzato in liste DIP, report integrità e dettaglio documento.")
+
+  Component(timestamp_label, "TimestampLabelComponent", "Angular Standalone [Dumb – Shared]\n[UC-5] [WCAG 1.3.1]","Label marcatura temporale formattata GG/MM/AAAA HH:MM:SS.\nInput: timestamp: string.\nAccessibilità:\n  <time datetime='ISO-8601'> per screen reader e parser semantici.\n  aria-label='Marcatura temporale: <data leggibile>'\nRiutilizzato in liste, dettaglio, report.")
+
+  Component(empty_state, "EmptyStateComponent", "Angular Standalone [Dumb – Shared]\n[UC-6, UC-16] [WCAG 4.1.3]","Messaggio informativo per liste vuote o nessun risultato.\nInput: message: string, icon?: string.\nAccessibilità:\n  role='status', aria-live='polite'\n  Annuncio automatico quando appare nel DOM.\nUC-6 (liste DIP), UC-16 (risultati ricerca).")
+
+  Component(error_dialog, "ErrorDialogComponent", "Angular Standalone [Dumb – Shared]\n[UC-8, UC-21, UC-24, UC-25, UC-36, UC-37]\n[WCAG 2.1.1, 2.1.2, 4.1.2]","Dialogo modale di errore per operazioni bloccanti.\n@Input: error: AppError\nMostra:\n  • Titolo derivato da error.code (localizzato)\n  • Messaggio contestuale (error.context se presente)\n  • Dettaglio tecnico espandibile (error.detail)\n  • Bottone 'Riprova' se error.recoverable === true\n  • Bottone 'Chiudi' sempre presente\nSeverity determina colore header (ERROR=rosso, WARN=giallo).\nAccessibilità:\n  role='alertdialog', aria-modal='true'\n  aria-labelledby → id del titolo dialogo\n  aria-describedby → id del corpo messaggio\n  Focus trap via AccessibilityService.trapFocus() (WCAG 2.1.2)\n  Tasto Esc chiude il dialogo (WCAG 2.1.1)\n  restoreFocus() alla chiusura → ritorna al trigger\nAperto da: OutputFacade (UC-21,24,25,36,37), PreviewPanelComponent (UC-8).")
+
+  Component(inline_error, "InlineErrorComponent", "Angular Standalone [Dumb – Shared]\n[Errori non bloccanti – inline]","Messaggio di errore inline, non modale.\n@Input: error: AppError\nUsi:\n  • Slot 'error' di AsyncStateWrapperComponent\n    (errori di caricamento pagina – recuperabili)\n  • Nodo albero con loadChildren fallito (UC: DIP_CHILDREN_LOAD_ERROR)\n  • Banner errore indicizzazione in DipLoadingPageComponent\nMostra:\n  • Icona severity + messaggio localizzato\n  • Link 'Riprova' se error.recoverable === true\nNon blocca la UI: il resto della pagina rimane usabile.")
+
+  Component(field_error, "FieldErrorComponent", "Angular Standalone [Dumb – Shared]\n[UC-18, UC-10 – Errori di campo]","Messaggio di errore a livello di singolo campo.\n@Input: error: ValidationError | null\nValidationError { field: string, message: string }\nUso: sotto ogni FilterValueInputComponent quando\nil valore ha formato non corretto (UC-18).\nDistinto da AppError: non passa per IpcErrorHandler,\nè prodotto localmente da FilterValidatorService.\nMostra il messaggio inline sotto il campo.")
+
+  Component(optional_absent, "OptionalFieldAbsentComponent", "Angular Standalone [Dumb – Shared]\n[UC-39.3, UC-39.6, UC-39.9, UC-46, UC-47, UC-57.3, UC-71]","Messaggio informativo per campi opzionali assenti nei metadati.\n@Input: message: string, uc?: string\nDistinto da errore: non è un malfunzionamento,\nè un dato legittimamente non presente nel DIP.\nUso: ConservationProcessComponent (UC-39.3, UC-39.6, UC-39.9),\n  DocumentMetadataComponent (note assenti UC-47, conservazione\n  ereditata UC-46), AttachmentsComponent (UC-57.3),\n  CustomMetadataComponent (metadati custom assenti UC-71).\nMotivazione: centralizza il pattern 'campo assente'\nevitando che ogni componente reimplementi il messaggio.")
+
+  '──────────────────────────────────────────────────────────
+  ' [E] SHARED UI – ASYNC STATE WRAPPER
+  '  Componente trasversale che risolve il problema del
+  '  boilerplate loading/error/empty nelle smart pages.
+  '  Pattern: Container Component + ng-content projection.
+  '──────────────────────────────────────────────────────────
+  Component(async_state_wrapper, "AsyncStateWrapperComponent", "Angular Standalone [Dumb – Shared]\n[Cross-cutting – Template Method]","Wrapper generico per stati asincroni IPC.\n@Input:\n  loading: boolean\n  error:   AppError | null    ← tipizzato, non solo string\n  empty:   boolean\nProietta tre named slots via ng-content:\n  <ng-template slot='loading'> → spinner\n  <ng-template slot='error'>   → InlineErrorComponent\n  <ng-template slot='content'> → contenuto reale\nPassa AppError a InlineErrorComponent per\nrendere il messaggio, la severity e il bottone\n'Riprova' (se error.recoverable === true).\nUsato da: DipExplorerComponent, DocumentDetailPageComponent,\n  AggregateDetailPageComponent, IntegrityPageComponent,\n  SearchPageComponent.")
+
+  '──────────────────────────────────────────────────────────
+  ' [F] FACADE SERVICES
+  '──────────────────────────────────────────────────────────
+  Component(dip_facade, "DipFacade", "Angular Service [Injectable]\n[Facade + SRP]","Stato del DIP caricato.\nSignal<DipState>:\n  phase: 'idle'|'indexing'|'ready'|'error'\n  loadingProgress: DipLoadingProgress\n  loadingError:    AppError | null   ← fase fallita + ErrorCode specifico\n  rootNodes: DipTreeNode[]\n  nodeChildrenErrors: Map<nodeId, AppError>  ← errori parziali per nodo\n  nodeCache: Map<nodeId, DipTreeNode[]>\nAPI lazy loading:\n  loadRootNodes()  → AppError(DIP_FILE_NOT_FOUND | DIP_CORRUPT_ARCHIVE\n                              | DIP_PARSE_ERROR | DIP_INDEX_ERROR)\n  loadChildren(id) → AppError(DIP_CHILDREN_LOAD_ERROR) per nodo specifico\nUC-1, UC-2, UC-3, UC-6.")
+
+  Component(search_facade, "SearchFacade", "Angular Service [Injectable]\n[Facade + SRP]","Stato ricerca.\nSignal<SearchState>:\n  query, filters, results, loading\n  error:            AppError | null  ← SEARCH_ENGINE_ERROR\n  validationErrors: Map<field, ValidationError>  ← UC-10, UC-18\n  isSearching:      boolean  ← mutex: blocca submit concorrenti\n\nControllo concorrenza:\n  Ogni nuova ricerca cancella la chiamata IPC precedente\n  tramite AbortController passato a IpcGateway.invoke().\n  Debounce 300ms sull'input testuale (SearchBarComponent).\n  isSearching=true per tutta la durata della chiamata;\n  una seconda submit ignorata silenziosamente se isSearching=true.\n  Se SemanticIndexFacade.status ≠ 'ready' → disabilita\n  automaticamente il canale searchSemantic (degrado graceful).\nUC-9, UC-9.1..9.4, UC-10, UC-15, UC-16.")
+
+  Component(document_facade, "DocumentFacade", "Angular Service [Injectable]\n[Facade + SRP]","Stato dettaglio documento.\nSignal<DocumentDetail | null>, loading\n  error: AppError | null\n    DOC_NOT_FOUND      → 404 del documento\n    DOC_BLOB_LOAD_ERROR → file fisico non leggibile\nUC-42..58, UC-71.")
+
+  Component(aggregate_facade, "AggregateFacade", "Angular Service [Injectable]\n[Facade + SRP]","Stato dettaglio aggregazione.\nSignal<AggregateDetail | null>, loading\n  error: AppError | null  (DOC_NOT_FOUND per aggregazione)\nUC-59..70.")
+
+  Component(integrity_facade, "IntegrityFacade", "Angular Service [Injectable]\n[Facade + SRP]","Avvia verifiche, raccoglie report.\nSignal<IntegrityState>:\n  report, progress, loading\n  systemError:  AppError | null   ← INTEGRITY_VERIFY_ERROR (crash IPC)\n  isVerifying:  boolean           ← mutex: blocca avvio concorrente\n  NOTE: HASH_MISMATCH e SIGNATURE_* NON sono AppError —\n        sono IntegrityResult nel report (errori di dominio,\n        non malfunzionamenti); gestiti da doc_integrity_report.\n\nControllo concorrenza:\n  isVerifying=true per tutta la durata della verifica IPC.\n  Secondo verifyRequested ignorato mentre isVerifying=true.\n  IntegrityTriggerComponent disabilita i bottoni via\n  @Input disabledWhileVerifying derivato dal Signal.\n  verifyDocument (UC-29 da DocumentActions): stessa regola;\n  mostra tooltip 'Verifica già in corso' se isVerifying=true.\nUC-26..33.")
+
+  Component(output_facade, "OutputFacade", "Angular Service [Injectable]\n[Facade + SRP]","Coordina operazioni di output.\nPer ogni operazione restituisce Result<void, AppError>:\n  OUTPUT_IO_ERROR                 → UC-21, UC-36\n  OUTPUT_SOURCE_FOLDER_FORBIDDEN  → UC-35 (blocco cartella sorgente)\n  OUTPUT_PRINT_ERROR              → UC-24\n  OUTPUT_FORMAT_NOT_PRINTABLE     → UC-25\n  OUTPUT_PDF_GENERATION_ERROR     → UC-37\n  OUTPUT_DOWNLOAD_ERROR           → UC-36\nApre ErrorDialogComponent con AppError tipizzato.\nUC-19, UC-20, UC-22, UC-23, UC-34, UC-35.")
+
+  Component(semantic_facade, "SemanticIndexFacade", "Angular Service [Injectable]\n[Facade – Opzionale]","Stato indicizzazione semantica AI.\nSignal<SemanticIndexState>:\n  status: 'idle'|'indexing'|'ready'|'error'|'timeout'|'cancelled'\n  progress: number  (0..100)\n  error: AppError | null\n\nTimeout e cancellazione:\n  Timeout configurabile (default 120s) avviato con l'indicizzazione.\n  Se scade → status='timeout'; app degrada a sola ricerca full-text.\n  cancel(): void\n    → invia IPC 'semantic:cancel' [no-cache] al Main Process\n    → imposta status='cancelled' immediatamente nel Signal\n    → LiveAnnouncer: 'Ricerca semantica non disponibile' [assertive]\n\n'timeout' e 'cancelled' NON sono AppError:\n  non sono crash IPC, non passano per IpcErrorHandlerService.\n  SemanticIndexStatusComponent mostra banner informativo.\n  SearchFacade disabilita searchSemantic automaticamente\n  (degrado graceful – ricerca full-text rimane integra).\n\nDipLoadingPageComponent espone bottone 'Salta indicizzazione AI'\nche chiama cancel() durante la fase 5 [Opzionale].\nUC-9.2 (opzionale), UC-11.")
+
+  '──────────────────────────────────────────────────────────
+  ' [G] MODULE: DIP EXPLORER
+  '──────────────────────────────────────────────────────────
+  Component(dip_explorer, "DipExplorerComponent", "Angular Standalone [Smart]\nRoute: /dip","Pagina di navigazione struttura DIP.\nLegge Signal<DipState>.rootNodes da DipFacade.\nOspita DipTreeComponent come unica vista della struttura.\nUC-1 (classi), UC-2 (processi), UC-3 (documenti) sono\nsoddisfatti dai nodi dell'albero ai rispettivi livelli.\nGestisce l'@Output nodeSelected di DipTreeComponent:\n  • tipo 'document'   → router.navigate(['/document', id])\n  • tipo 'aggregate'  → router.navigate(['/aggregate', id])\nAvvolge con AsyncStateWrapperComponent.")
+
+  '──────────────────────────────────────────────────────────
+  ' [H] MODULE: DOCUMENT DETAIL
+  '──────────────────────────────────────────────────────────
+  Component(document_page, "DocumentDetailPageComponent", "Angular Standalone [Smart]\nRoute: /document/:id","Pagina dettaglio documento.\nLegge Signal<DocumentDetail> da DocumentFacade.\nAvvolge il contenuto con AsyncStateWrapperComponent.\nCompone: DocumentViewerComponent + MetadataPanelComponent\n+ DocumentActionsComponent.")
+
+  '── H1: DocumentViewerComponent ──────────────────────────
+  Component(document_viewer, "DocumentViewerComponent", "Angular Standalone [Smart – Composite]\n[UC-7, UC-8]","Viewer principale del documento: integra anteprima e\nle azioni contestuali.\nComposizione: PreviewPanelComponent (anteprima) +\nDocumentActionsComponent (azioni).\nRiceve documentId, mimeType, fileName dal DocumentDetailPage.\nÈ il punto di ingresso visivo del documento;\ndelega rendering e azioni ai figli.\nMotivazione: separare il layout del viewer dalla logica\ndella pagina (SRP) e renderlo riutilizzabile da SearchResults.")
+
+  Component(preview_panel, "PreviewPanelComponent", "Angular Standalone [Smart]\n[UC-7, UC-8]","Pannello anteprima: gestisce caricamento del file via IpcGateway.\nDelega rendering a PreviewRendererComponent.\nSe mimeType non supportato → apre ErrorDialogComponent (UC-8).")
+
+  Component(preview_renderer, "PreviewRendererComponent", "Angular Standalone [Dumb]\n[UC-7, UC-8]\n[Strategy per MIME type]","Renderer puro: PDF viewer, image viewer, text viewer.\n@Input: src: Uint8Array, mimeType: string.\n@Output: unsupportedFormat: EventEmitter.\nSeleziona la strategia di rendering tramite switch su mimeType.\nNon conosce IPC né facade.")
+
+  '── H2: MetadataPanelComponent ───────────────────────────
+  Component(metadata_panel, "MetadataPanelComponent", "Angular Standalone [Smart – Composite]\n[UC-42..58, UC-71, UC-38, UC-39..41]","Pannello laterale/espandibile dei metadati documento.\nRiceve documentDetail: DocumentDetail come @Input.\nOrganizza le sotto-sezioni in tab o accordion:\n  • Metadati Generali\n  • Dati Registrazione\n  • Classificazione\n  • Formato\n  • Verifica\n  • Soggetti\n  • Allegati\n  • Tracciature Modifiche\n  • Metadati Custom\n  • AiP / Processo di Conservazione\nMotivazione: raggruppa tutti i componenti di dettaglio\nmetadati in un unico contenitore coeso (SRP – display);\nscarica DocumentDetailPage dalla gestione del layout metadati.\nPuò essere riutilizzato nel pannello laterale di SearchResults.")
+
+  Component(doc_metadata, "DocumentMetadataComponent", "Angular Standalone [Dumb]\n[UC-42, UC-45..48, UC-50..52, UC-55..56]","Metadati generali: descrizione, note, tipo documentale,\nmodalità formazione, riservatezza, versione, nome.")
+
+  Component(registration_data, "RegistrationDataComponent", "Angular Standalone [Dumb]\n[UC-49.1..5]","Dati di registrazione: flusso, tipo registro, data, numero, codice.")
+
+  Component(classification_info, "ClassificationInfoComponent", "Angular Standalone [Dumb]\n[UC-44.1..3]","Classificazione: indice, descrizione, URI piano.")
+
+  Component(format_info, "FormatInfoComponent", "Angular Standalone [Dumb]\n[UC-53.1..4]","Identificativo formato: tipo, prodotto, versione, produttore.")
+
+  Component(verification_info, "VerificationInfoComponent", "Angular Standalone [Dumb]\n[UC-54.1..4]","Dati verifica: firma digitale, sigillo, marcatura temporale, conformità copie.")
+
+  Component(subject_list, "SubjectListComponent", "Angular Standalone [Dumb]\n[UC-43.1.1..6]","Lista soggetti con ruolo e tipo.\nDelega a SubjectCardComponent per ciascun soggetto.")
+
+  Component(subject_card, "SubjectCardComponent", "Angular Standalone [Dumb]\n[UC-43.1.x]\n[Strategy per SubjectType]","Card soggetto: mostra i campi specifici per tipo\n(PF, PG, AS, PAI, PAE, SW).\n@Input tipo: SubjectType come discriminante di strategia.")
+
+  Component(attachments, "AttachmentsComponent", "Angular Standalone [Dumb]\n[UC-57.1..3]","Allegati: numero, lista ID+descrizione, messaggio se assente.")
+
+  Component(change_tracking, "ChangeTrackingComponent", "Angular Standalone [Dumb]\n[UC-58.1..4]","Tracciature modifiche: tipo, soggetto, data, ID versione precedente.")
+
+  Component(custom_metadata, "CustomMetadataComponent", "Angular Standalone [Dumb]\n[UC-71, UC-71.1..3]","Metadati custom (nome/valore). Messaggio se assenti.")
+
+  Component(aip_info, "AipInfoComponent", "Angular Standalone [Dumb]\n[UC-38.1..2]","AiP di provenienza: classe documentale, UUID.")
+
+  Component(conservation_process, "ConservationProcessComponent", "Angular Standalone [Dumb]\n[UC-39, UC-40, UC-41]","Processo/sessione di conservazione e versamento.\nPer i campi opzionali assenti usa OptionalFieldAbsentComponent:\n  • Data fine assente    → UC-39.3 ('Processo non terminato')\n  • UUID terminatore ass → UC-39.6 ('Terminatore non disponibile')\n  • Canale terminazione  → UC-39.9 ('Canale non disponibile')\nDistinzione: assenza campo ≠ errore di sistema.")
+
+  '── H3: DocumentActionsComponent ─────────────────────────
+  Component(document_actions, "DocumentActionsComponent", "Angular Standalone [Smart – Actions Host]\n[UC-7, UC-19, UC-20, UC-22, UC-23, UC-29, UC-34, UC-35]","Barra azioni contestuali per un documento.\nInput: documentId, documentName, mimeType.\nBottoni: Anteprima (UC-7), Salva (UC-19), Stampa (UC-22),\nScarica (UC-35), Verifica Integrità (UC-29), Esporta PDF (UC-34).\nInietta OutputFacade e IntegrityFacade.\nMotivazione: isola le azioni di output e verifica dalla\nvisualizzazione dei metadati (SRP);\nriutilizzabile in AggregateDetailPage.")
+
+  '──────────────────────────────────────────────────────────
+  ' [I] MODULE: AGGREGATE DETAIL
+  '──────────────────────────────────────────────────────────
+  Component(aggregate_page, "AggregateDetailPageComponent", "Angular Standalone [Smart]\nRoute: /aggregate/:id","Pagina dettaglio aggregazione documentale.\nLegge Signal<AggregateDetail> da AggregateFacade.\nAvvolge con AsyncStateWrapperComponent.\nCompone AggregateMetadataComponent + DocumentActionsComponent.")
+
+  Component(aggregate_metadata, "AggregateMetadataComponent", "Angular Standalone [Dumb]\n[UC-59..65, UC-68..70]","Metadati aggregazione: tipo, ID, tipologia fascicolo,\nassegnazione, date, progressivo, posizione fisica, ID primaria, conservazione.")
+
+  Component(admin_procedure, "AdminProcedureComponent", "Angular Standalone [Dumb]\n[UC-66.1..4]","Procedimento amministrativo: indice, denominazione, URI, fasi.")
+
+  Component(procedure_phases, "ProcedurePhasesComponent", "Angular Standalone [Dumb]\n[UC-66.4.1.1..3]","Fasi del procedimento: tipo fase, data inizio, data fine.")
+
+  Component(document_index, "DocumentIndexComponent", "Angular Standalone [Dumb]\n[UC-67.1.1..2]","Indice documenti contenuti nell'aggregazione: tipo e identificativo.")
+
+  '──────────────────────────────────────────────────────────
+  ' [L] MODULE: SEARCH
+  '──────────────────────────────────────────────────────────
+  Component(search_page, "SearchPageComponent", "Angular Standalone [Smart]\nRoute: /search","Pagina ricerca.\nLegge Signal<SearchState> da SearchFacade.\nAvvolge i risultati con AsyncStateWrapperComponent.\nCompone: SearchBar, AdvancedFilterPanel, SearchResults,\nSemanticIndexStatus (opzionale).")
+
+  Component(search_bar, "SearchBarComponent", "Angular Standalone [Dumb]\n[UC-9, UC-9.3, UC-9.4]","Input ricerca: libera, per nome classe, per ID processo.\nOutput: queryChanged: SearchQuery.")
+
+  Component(advanced_filter_panel, "AdvancedFilterPanelComponent", "Angular Standalone [Smart]\n[UC-9.1, UC-10, UC-12.1..3, UC-13, UC-18]","Pannello filtri avanzati espandibile.\nGestisce aggiunta/rimozione/azzeramento filtri.\nValidazione real-time via FilterValidatorService.\nDelega a CommonFilters, DiDaiFilters, AggregateFilters,\nCustomMetaFilter, SubjectFilter.")
+
+  Component(common_filters, "CommonFiltersComponent", "Angular Standalone [Dumb]\n[UC-12.1.2..7]","Filtri comuni: chiave descrittiva, classificazione, conservazione, note, tipo.")
+
+  Component(di_dai_filters, "DiDaiFiltersComponent", "Angular Standalone [Dumb]\n[UC-12.2.1.2..11]","Filtri DI/DAI: registrazione, tipologia, formazione, riservatezza,\nformato, verifica, nome, versione, ID primario, tracciature.")
+
+  Component(aggregate_filters, "AggregateFiltersComponent", "Angular Standalone [Dumb]\n[UC-12.2.2.2..9]","Filtri aggregazione: tipo, ID, fascicolo, date, procedimento, assegnazione.")
+
+  Component(custom_meta_filter, "CustomMetaFilterComponent", "Angular Standalone [Dumb]\n[UC-12.3, UC-12.3.1]","Coppie Nome/Valore dinamiche per metadati custom.")
+
+  Component(subject_filter, "SubjectFilterComponent", "Angular Standalone [Smart]\n[UC-13, UC-13.1..3]","Wizard 3-step: ruolo → tipo soggetto → dettagli.\nDelega a SubjectDetailFormComponent per il passo 3.")
+
+  Component(subject_detail_form, "SubjectDetailFormComponent", "Angular Standalone [Dumb]\n[UC-13.3.1..7]\n[Strategy per SubjectType]", "Form dettagli soggetto dinamico.\n@Input subjectType → campi specifici (PAI, PAE, AS, PG, PF, RUP, SW).")
+
+  Component(filter_value_input, "FilterValueInputComponent", "Angular Standalone [Dumb]\n[UC-17, UC-18]","Input generico valore filtro con validazione inline.\nUsa FieldErrorComponent per mostrare errori di formato.\n@Input:  value, fieldType: FilterFieldType\n@Output: valueChanged, validationError: ValidationError | null\nValidazione locale sincrona (formato data, formato numerico, ecc.).\nUC-18: FieldErrorComponent appare sotto il campo in tempo reale.")
+
+  Component(search_results, "SearchResultsComponent", "Angular Standalone [Smart]\n[UC-15, UC-16]","Lista risultati: nome e tipo per elemento.\nAl click su un risultato apre DocumentViewer in un pannello\nlaterale via DocumentViewerComponent (anteprima rapida).\nFallback: EmptyStateComponent (UC-16).\nMotivazione: riuso di DocumentViewerComponent senza\nnavigare a /document/:id, migliorando l'UX di esplorazione.")
+
+  Component(semantic_status, "SemanticIndexStatusComponent", "Angular Standalone [Dumb]\n[UC-11 – Opzionale]","Badge/banner disponibilità ricerca semantica AI.\nInput: status: IndexingStatus.")
+
+  '──────────────────────────────────────────────────────────
+  ' [M] MODULE: INTEGRITY
+  '──────────────────────────────────────────────────────────
+  Component(integrity_page, "IntegrityPageComponent", "Angular Standalone [Smart]\nRoute: /integrity","Pagina verifica integrità.\nLegge Signal<IntegrityState> da IntegrityFacade.\nAvvolge con AsyncStateWrapperComponent.\nCompone: IntegrityTrigger + VerificationProgressComponent\n+ quattro report components + OutputToolbarComponent.")
+
+  Component(integrity_trigger, "IntegrityTriggerComponent", "Angular Standalone [Dumb]\n[UC-26, UC-27, UC-28, UC-29]","Pulsanti avvio verifica per livello:\nDIP completo, classe, processo, documento.\n@Input  disabledWhileVerifying: boolean  ← derivato da Signal<isVerifying>\n@Output verifyRequested: VerifyLevel\nBottoni disabilitati + tooltip 'Verifica in corso' se input=true.")
+
+  '── M1: VerificationProgressComponent ───────────────────
+  Component(verification_progress, "VerificationProgressComponent", "Angular Standalone [Dumb – Shared]\n[UC-26..29]\n[Observer via Signal]","Indicatore di avanzamento della verifica in corso.\nInput: progress: VerificationProgress { current, total, level, label }.\nMostra: barra progresso, contatore n/tot, nome elemento in verifica.\nVisibile durante l'esecuzione della verifica a qualsiasi livello\n(DIP, classe, processo, documento).\nRiceve i dati aggiornati via Signal<IntegrityState>.progress\nproiettato dalla IntegrityPageComponent.\nMotivazione: isola la visualizzazione del progresso dalla logica\ndel report (SRP); riutilizzabile anche nella toolbar in futuro.\nUC-26 (DIP), UC-27 (classe), UC-28 (processo), UC-29 (documento).")
+
+  Component(dip_integrity_report, "DipIntegrityReportComponent", "Angular Standalone [Dumb]\n[UC-30.1..6]","Report DIP: classi verificate/integre/corrotte,\nlista classi corrotte, timestamp, messaggio 'tutte integre'.")
+
+  Component(class_integrity_report, "ClassIntegrityReportComponent", "Angular Standalone [Dumb]\n[UC-31.1..6]","Report classe: processi verificati/integri/corrotti,\nlista processi corrotti, timestamp.")
+
+  Component(process_integrity_report, "ProcessIntegrityReportComponent", "Angular Standalone [Dumb]\n[UC-32.1..6]","Report processo: documenti verificati/integri/corrotti,\nlista documenti corrotti con dettaglio errore.")
+
+  Component(doc_integrity_report, "DocumentIntegrityReportComponent", "Angular Standalone [Dumb]\n[UC-33.1..3]","Report integrità documento: nome, stato Valido/Non Valido,\ntimestamp verifica.\nSe stato = Non Valido mostra IntegrityFailureDetailComponent\ncon il dettaglio dell'errore di dominio (UC-33.3):\n  HASH_MISMATCH        → 'Hash non coincidente'\n  SIGNATURE_EXPIRED    → 'Firma digitale scaduta'\n  SIGNATURE_INVALID    → 'Firma digitale non valida'\nNOTA: questi NON sono AppError (non sono crash IPC);\nsono IntegrityResult — errori di dominio che indicano\ncorruzione o firma non valida nel documento stesso.")
+
+  Component(integrity_failure_detail, "IntegrityFailureDetailComponent", "Angular Standalone [Dumb – Shared]\n[UC-33.3, UC-32.4.1]","Dettaglio visivo di un fallimento di integrità.\n@Input: failure: IntegrityFailure\n  { type: 'HASH_MISMATCH'|'SIGNATURE_EXPIRED'|'SIGNATURE_INVALID',\n    documentName: string, detail?: string }\nMostra icona, tipo errore localizzato e dettaglio.\nRiutilizzato in:\n  DocumentIntegrityReportComponent (UC-33.3)\n  ProcessIntegrityReportComponent  (UC-32.4.1 – lista corrotti)\nDistinzione fondamentale rispetto a InlineErrorComponent:\n  InlineError     → malfunzionamento di sistema (IPC, IO)\n  IntegrityFailure → risultato di dominio (dati corrotti/firma)")
+
+  '──────────────────────────────────────────────────────────
+  ' [N] MODULE: OUTPUT
+  '──────────────────────────────────────────────────────────
+  Component(output_toolbar, "OutputToolbarComponent", "Angular Standalone [Smart]\n[UC-19, UC-20, UC-22, UC-23, UC-34, UC-35]","Barra azioni output contestuali al contesto corrente.\nInput: context: OutputContext (documento, lista, report).\nBottoni: Salva (UC-19), Salva Multiplo (UC-20),\nStampa (UC-22), Stampa Multipla (UC-23),\nScarica (UC-35), Esporta PDF (UC-34).\nInietta OutputFacade.\nUsato da: DocumentActionsComponent, IntegrityPageComponent.")
+
+  Component(folder_picker_dialog, "FolderPickerDialogComponent", "Angular Standalone [Smart]\n[UC-19, UC-20, UC-34, UC-35]\n[WCAG 2.1.1, 2.1.2]","Dialogo modale selezione cartella di destinazione.\nValidazione: blocca cartella sorgente DIP.\nConferma percorso. Gestisce UC-21, UC-36, UC-37.\nAperto da OutputFacade tramite DialogService.\nAccessibilità:\n  role='dialog', aria-modal='true'\n  Focus trap via AccessibilityService.trapFocus() (WCAG 2.1.2)\n  Esc chiude e ripristina focus al trigger (WCAG 2.1.1)")
+
+}
+
+'══════════════════════════════════════════════════════════════
+' RELAZIONI
+'══════════════════════════════════════════════════════════════
+
+' ── Utente → Shell ────────────────────────────────────────
+Rel(user, app_shell, "Interagisce con la UI", "Mouse / Tastiera")
+
+' ── Shell → Router ────────────────────────────────────────
+Rel(app_shell, router,            "attiva rotte quando phase='ready'")
+Rel(app_shell, dip_loading_page,  "mostra quando phase='idle'|'indexing'")
+Rel(app_shell, dip_tree,          "sidebar: @Input rootNodes – navigazione persistente quando phase='ready'")
+Rel(app_shell, dip_facade,        "legge Signal<DipState>.phase per switch visivo")
+Rel(dip_tree,  dip_facade,        "loadChildren(nodeId) + legge nodeCache\n(Signal condiviso – stesso stato di DipExplorerComponent)")
+
+' ── DipReadyGuard ─────────────────────────────────────────
+Rel(dip_ready_guard, dip_facade,  "inject() DipFacade – verifica phase==='ready'")
+Rel(router, dip_ready_guard,      "CanActivateFn su tutte le rotte")
+Rel(router, dip_explorer,         "Lazy /dip [guard: DipReadyGuard]")
+Rel(router, search_page,          "Lazy /search [guard: DipReadyGuard]")
+Rel(router, document_page,        "Lazy /document/:id [guard: DipReadyGuard]")
+Rel(router, aggregate_page,       "Lazy /aggregate/:id [guard: DipReadyGuard]")
+Rel(router, integrity_page,       "Lazy /integrity [guard: DipReadyGuard]")
+
+' ── DipLoadingPage ────────────────────────────────────────
+Rel(dip_loading_page, dip_facade,            "legge Signal<DipLoadingState>")
+Rel(dip_loading_page, dip_indexing_progress, "@Input progress: DipLoadingProgress")
+Rel(dip_loading_page, inline_error,          "@Input error: AppError – errori di fase DIP\n(DIP_CORRUPT_ARCHIVE, DIP_PARSE_ERROR, DIP_INDEX_ERROR)")
+Rel(dip_facade,       dip_indexing_progress, "Signal<loadingProgress> aggiornato in streaming via IPC")
+
+' ── IPC Gateway → Main ────────────────────────────────────
+Rel(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
+Rel(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
+Rel(ipc_gateway, ipc_cache, "get(key) prima di invoke [cache-first];\nset(key,val,ttl) dopo risposta IPC")
+
+' ── Facade → IPC Gateway ──────────────────────────────────
+Rel(dip_facade,       ipc_gateway, "loadDip [no-cache], getClasses, getProcesses, getDocuments")
+Rel(search_facade,    ipc_gateway, "search, searchAdvanced [AbortController per cancel],\nsearchSemantic [no-cache se status≠ready]")
+Rel(document_facade,  ipc_gateway, "getDocumentMetadata [cache-first],\ngetFileBlob [cache-first, TTL 60s], getAipInfo [cache-first]")
+Rel(aggregate_facade, ipc_gateway, "getAggregateMetadata [cache-first]")
+Rel(integrity_facade, ipc_gateway, "verifyDip, verifyClass, verifyProcess,\nverifyDocument [tutti no-cache]")
+Rel(output_facade,    ipc_gateway, "saveFile, saveMultiple, print,\nexportPdf, download [tutti no-cache]")
+Rel(semantic_facade,  ipc_gateway, "getIndexingStatus, semantic:cancel [no-cache]")
+
+' ── Facade → Cross-cutting ────────────────────────────────
+Rel(dip_facade,       notification_service, "feedback caricamento DIP completato")
+Rel(output_facade,    notification_service, "conferma operazione output completata")
+Rel(search_facade,    filter_validator,     "pre-validazione filtri UC-10")
+Rel(output_facade,    ipc_error_handler,    "Result<void,AppError> → ErrorDialog")
+Rel(integrity_facade, ipc_error_handler,    "INTEGRITY_VERIFY_ERROR → InlineError in IntegrityPage")
+Rel(dip_facade,       ipc_error_handler,    "DIP_* errors → AppError nel Signal<DipState>")
+Rel(document_facade,  ipc_error_handler,    "DOC_* errors → AppError nel Signal<DocumentDetail>")
+Rel(aggregate_facade, ipc_error_handler,    "AppError nel Signal<AggregateDetail>")
+
+' ── TelemetryService ──────────────────────────────────────
+Rel(dip_facade,       telemetry, "trackEvent(DIP_LOADED)\ntrackEvent(NODE_EXPANDED)\ntrackError(AppError)")
+Rel(search_facade,    telemetry, "trackEvent(SEARCH_EXECUTED)\ntrackTiming(SEARCH_LATENCY_MS)\ntrackError(AppError)")
+Rel(document_facade,  telemetry, "trackEvent(SEARCH_RESULT_OPENED)\ntrackTiming(BLOB_LOAD_TIME_MS)")
+Rel(output_facade,    telemetry, "trackEvent(FILE_SAVED|PRINTED|PDF_EXPORTED)\ntrackError(AppError)")
+Rel(integrity_facade, telemetry, "trackEvent(INTEGRITY_STARTED|COMPLETED)\ntrackError(AppError)")
+Rel(app_shell,        telemetry, "trackEvent(ROUTE_CHANGE) ad ogni NavigationEnd")
+Rel(telemetry,        ipc_gateway, "writeLog(entry) [no-cache] → file rotante Electron")
+
+' ── AccessibilityService + LiveAnnouncer ──────────────────
+Rel(app_shell,           accessibility_service, "setPageTitle() ad ogni cambio rotta (WCAG 2.4.2)")
+Rel(error_dialog,        accessibility_service, "trapFocus() apertura; restoreFocus() chiusura (WCAG 2.1.2)")
+Rel(folder_picker_dialog,accessibility_service, "trapFocus() apertura; restoreFocus() chiusura (WCAG 2.1.2)")
+Rel(dip_tree,            accessibility_service, "gestione frecce su/giù tra nodi (WCAG 2.1.1)")
+Rel(search_facade,       live_announcer, "announce('Trovati N risultati') – UC-15 [polite]")
+Rel(dip_facade,          live_announcer, "announce('Indicizzazione X%') ogni 10% [polite]")
+Rel(dip_tree,            live_announcer, "announce('Espanso: <nodo>, N figli') [polite]")
+Rel(output_facade,       live_announcer, "announce('Operazione completata') [polite]\nannounce(errore) [assertive]")
+Rel(integrity_facade,    live_announcer, "announce('Verifica completata') [polite]")
+Rel(semantic_facade,     live_announcer, "announce('Ricerca semantica non disponibile') [assertive]\n  su status=timeout|cancelled|error")
+
+' ── [G] DIP EXPLORER ──────────────────────────────────────
+' Lazy loading: DipFacade carica solo i nodi radice all'avvio.
+' I figli vengono caricati on-demand da DipTreeComponent
+' quando l'utente espande un nodo (evento toggle).
+' Virtual scroll: DipTreeComponent mantiene FlatNode[] piatto
+' e usa CdkVirtualScrollViewport — nessuna ricorsione nel DOM.
+'
+' Catena di navigazione (nodo foglia → vista documento):
+'   DipTreeNodeComponent  @Output nodeSelected
+'     → DipTreeComponent  bubble up @Output nodeSelected
+'       → DipExplorerComponent  router.navigate
+'         → DocumentDetailPageComponent / AggregateDetailPageComponent
+Rel(dip_explorer, dip_facade,          "legge Signal<DipState>.rootNodes (solo nodi radice)")
+Rel(dip_explorer, async_state_wrapper, "avvolge l'albero [loading, error: AppError – UC-6]")
+Rel(async_state_wrapper, inline_error, "slot 'error' → @Input error: AppError")
+Rel(dip_explorer, dip_tree,            "@Input rootNodes: DipTreeNode[] – UC-1, UC-2, UC-3")
+Rel(dip_explorer, router,              "router.navigate(['/document'|'/aggregate', id])\nsu @Output nodeSelected da DipTreeComponent")
+Rel(dip_tree,     dip_facade,          "loadChildren(nodeId) on-demand al toggle\nlegge nodeChildrenErrors per errori parziali")
+Rel(dip_tree,     dip_tree_node,       "*cdkVirtualFor su FlatNode[] – solo nodi in viewport nel DOM")
+Rel(dip_tree_node, verification_badge, "@Input status – UC-4")
+Rel(dip_tree_node, timestamp_label,    "@Input timestamp – UC-5")
+Rel(dip_tree_node, inline_error,       "@Input error: AppError (DIP_CHILDREN_LOAD_ERROR parziale)")
+Rel(dip_tree,     empty_state,         "fallback se rootNodes vuoto – UC-6")
+
+' ── [H] DOCUMENT DETAIL ───────────────────────────────────
+Rel(document_page, document_facade,     "legge Signal<DocumentDetail>")
+Rel(document_page, async_state_wrapper, "avvolge il contenuto [loading, error]")
+Rel(document_page, document_viewer,     "@Input documentId, mimeType, fileName – UC-7")
+Rel(document_page, metadata_panel,      "@Input documentDetail – UC-42..71")
+
+' H1: DocumentViewer
+Rel(document_viewer, preview_panel,      "delega anteprima @Input src, mimeType – UC-7")
+Rel(document_viewer, document_actions,   "delega azioni @Input documentId, mimeType – UC-19,22,29,34,35")
+Rel(preview_panel,   preview_renderer,   "@Input src, mimeType – rendering puro UC-7")
+Rel(preview_panel,   document_facade,    "getFileBlob(documentId) per caricare il file")
+Rel(preview_panel,   error_dialog,       "AppError(DOC_FORMAT_UNSUPPORTED) – UC-8\nAppError(DOC_BLOB_LOAD_ERROR) – file non leggibile")
+Rel(preview_renderer, preview_panel,     "@Output unsupportedFormat → UC-8")
+
+' H2: MetadataPanel e sotto-sezioni
+Rel(metadata_panel, doc_metadata,        "@Input metadata – UC-42,45-48,50-52,55-56")
+Rel(metadata_panel, registration_data,   "@Input data – UC-49.1..5")
+Rel(metadata_panel, classification_info, "@Input data – UC-44.1..3")
+Rel(metadata_panel, format_info,         "@Input data – UC-53.1..4")
+Rel(metadata_panel, verification_info,   "@Input data – UC-54.1..4")
+Rel(metadata_panel, subject_list,        "@Input subjects[] – UC-43")
+Rel(metadata_panel, attachments,         "@Input data – UC-57")
+Rel(metadata_panel, change_tracking,     "@Input data – UC-58")
+Rel(metadata_panel, custom_metadata,     "@Input data – UC-71")
+Rel(metadata_panel, aip_info,            "@Input data – UC-38")
+Rel(metadata_panel, conservation_process,"@Input data – UC-39..41")
+Rel(subject_list,   subject_card,        "*SubjectCard per soggetto – UC-43.1.x")
+Rel(conservation_process, optional_absent, "UC-39.3, UC-39.6, UC-39.9 – campo opzionale assente")
+Rel(attachments,    optional_absent,       "UC-57.3 – nessun allegato presente")
+Rel(custom_metadata,optional_absent,       "UC-71 – nessun metadato custom presente")
+
+' H3: DocumentActions → OutputToolbar
+Rel(document_actions, output_toolbar,     "delega le azioni di output con context=documento")
+Rel(document_actions, integrity_facade,   "verifyDocument(id) – UC-29")
+Rel(output_toolbar,   output_facade,      "save, print, exportPdf, download")
+Rel(output_facade,    folder_picker_dialog,"apre dialogo selezione cartella – UC-19,20,34,35")
+Rel(output_facade,    error_dialog,        "AppError → UC-21,24,25,36,37\n(OUTPUT_IO_ERROR, OUTPUT_PRINT_ERROR,\nOUTPUT_FORMAT_NOT_PRINTABLE, OUTPUT_PDF_GENERATION_ERROR)\nrecoverable=true → bottone 'Riprova'")
+
+' ── [I] AGGREGATE DETAIL ──────────────────────────────────
+Rel(aggregate_page, aggregate_facade,    "legge Signal<AggregateDetail>")
+Rel(aggregate_page, async_state_wrapper, "avvolge il contenuto [loading, error]")
+Rel(aggregate_page, aggregate_metadata,  "@Input metadata – UC-59..65,68..70")
+Rel(aggregate_page, admin_procedure,     "@Input data – UC-66")
+Rel(aggregate_page, document_index,      "@Input items[] – UC-67")
+Rel(aggregate_page, document_actions,    "@Input aggregateId – riuso per azioni su aggregazione")
+Rel(admin_procedure, procedure_phases,   "@Input phases[] – UC-66.4")
+
+' ── [L] SEARCH ────────────────────────────────────────────
+Rel(search_page, search_facade,          "legge Signal<SearchState>; dispatches query")
+Rel(search_page, async_state_wrapper,    "avvolge risultati [loading, error, empty]")
+Rel(search_page, search_bar,             "@Input query, Output queryChanged – UC-9")
+Rel(search_page, advanced_filter_panel,  "@Input filters, Output filtersChanged – UC-9.1")
+Rel(search_page, search_results,         "@Input results[] – UC-15,16")
+Rel(search_page, semantic_status,        "@Input status [Opzionale] – UC-11")
+Rel(advanced_filter_panel, common_filters,     "@Input – UC-12.1")
+Rel(advanced_filter_panel, di_dai_filters,     "@Input – UC-12.2.1")
+Rel(advanced_filter_panel, aggregate_filters,  "@Input – UC-12.2.2")
+Rel(advanced_filter_panel, custom_meta_filter, "@Input – UC-12.3")
+Rel(advanced_filter_panel, subject_filter,     "@Input – UC-13")
+Rel(advanced_filter_panel, filter_validator,   "validate(filters) real-time – UC-10,18")
+Rel(subject_filter,  subject_detail_form, "@Input subjectType → campi – UC-13.3")
+Rel(common_filters,  filter_value_input,  "ogni campo valore – UC-17,18")
+Rel(di_dai_filters,  filter_value_input,  "ogni campo valore – UC-17,18")
+Rel(aggregate_filters, filter_value_input,"ogni campo valore – UC-17,18")
+Rel(filter_value_input, field_error,       "@Input ValidationError – UC-18 inline sotto il campo")
+Rel(search_results,  empty_state,         "fallback UC-16")
+Rel(search_results,  document_viewer,     "anteprima rapida documento selezionato – UC-7 (riuso)")
+Rel(search_results,  metadata_panel,      "pannello metadati rapido nel risultato – riuso")
+
+' ── [M] INTEGRITY ─────────────────────────────────────────
+Rel(integrity_page, integrity_facade,        "legge Signal<IntegrityState>; triggers")
+Rel(integrity_page, async_state_wrapper,     "avvolge report [loading, systemError: AppError]")
+Rel(integrity_page, integrity_trigger,       "@Input context, Output verifyRequested – UC-26..29")
+Rel(integrity_page, verification_progress,   "@Input progress: VerificationProgress – UC-26..29")
+Rel(integrity_page, dip_integrity_report,    "@Input report – UC-30")
+Rel(integrity_page, class_integrity_report,  "@Input report – UC-31")
+Rel(integrity_page, process_integrity_report,"@Input report – UC-32")
+Rel(integrity_page, doc_integrity_report,    "@Input report – UC-33")
+Rel(integrity_page, output_toolbar,          "context=report → esporta PDF UC-34")
+Rel(integrity_facade, verification_progress, "Signal<progress> aggiornato ogni documento verificato")
+Rel(dip_integrity_report,    verification_badge,        "badge stato per ogni classe – UC-4")
+Rel(class_integrity_report,  verification_badge,        "badge stato per ogni processo – UC-4")
+Rel(doc_integrity_report,    verification_badge,        "badge stato documento – UC-4")
+Rel(dip_integrity_report,    timestamp_label,           "timestamp verifica – UC-5")
+Rel(doc_integrity_report,    integrity_failure_detail,  "@Input failure – UC-33.3 (dominio, non IPC)")
+Rel(process_integrity_report,integrity_failure_detail,  "@Input failure per doc corrotto – UC-32.4.1")
+
+'══════════════════════════════════════════════════════════════
+' LEGENDA
+'══════════════════════════════════════════════════════════════
+note as legend
+  ══════════════════════════════════════════════════════
+  NUOVI COMPONENTI v3
+  ══════════════════════════════════════════════════════
+  ┌─ DipLoadingPageComponent ────────────────────────┐
+  │ Schermata fullscreen di avvio/indicizzazione DIP. │
+  │ Mostrata da AppShell quando phase='indexing'.     │
+  │ Ospita DipIndexingProgressComponent.             │
+  │ Bottone 'Salta indicizzazione AI' → cancel() [v4]│
+  └──────────────────────────────────────────────────┘
+  ┌─ DipIndexingProgressComponent ───────────────────┐
+  │ Stepper + progress bar delle fasi di parsing.    │
+  │ Completamente Dumb, alimentato via @Input.        │
+  │ Fasi: decompressione → parsing XML → SQLite       │
+  │   → [semantica AI opzionale].                    │
+  └──────────────────────────────────────────────────┘
+  ┌─ DipTreeComponent – Lazy Loading ────────────────┐
+  │ Carica solo i nodi radice all'avvio.             │
+  │ loadChildren(nodeId) chiamato on-demand          │
+  │ al primo expand di ogni nodo.                    │
+  │ nodeCache migrata a IpcCacheService [v4].         │
+  │ Nodi in attesa mostrano spinner inline.          │
+  └──────────────────────────────────────────────────┘
+  ┌─ DipTreeComponent – Virtual Scrolling ───────────┐
+  │ CdkVirtualScrollViewport (@angular/cdk/scrolling)│
+  │ computed<FlatNode[]>: array piatto dei nodi       │
+  │ visibili, ricalcolato al cambio di expandedIds.  │
+  │ Solo i nodi nella viewport esistono nel DOM.     │
+  │ DipTreeNodeComponent NON è più ricorsivo:        │
+  │ riceve FlatNode con depth per l'indentazione.    │
+  │ itemSize fisso per performance CDK ottimale.     │
+  └──────────────────────────────────────────────────┘
+  ┌─ DipReadyGuard ──────────────────────────────────┐
+  │ CanActivateFn su tutte le rotte.                 │
+  │ Blocca l'accesso finché DIP non è indicizzato.   │
+  └──────────────────────────────────────────────────┘
+
+  ══════════════════════════════════════════════════════
+  NUOVI SERVIZI v4
+  ══════════════════════════════════════════════════════
+  ┌─ IpcCacheService ─────────────────────────────────┐
+  │ Cache in-memory TTL per canale IPC.               │
+  │ Elimina IPC ridondanti su stessi dati.            │
+  │ no-cache obbligatorio su operazioni mutanti.      │
+  │ clear() ad ogni apertura nuovo DIP.               │
+  │ nodeCache DipFacade migrata qui e generalizzata.  │
+  └──────────────────────────────────────────────────┘
+  ┌─ TelemetryService ────────────────────────────────┐
+  │ Log strutturato locale (file rotante via IPC).    │
+  │ trackEvent / trackError / trackTiming.            │
+  │ Fire-and-forget: mai bloccante, mai rilancia.     │
+  │ Chiamato dopo aggiornamento Signal nel Facade.    │
+  └──────────────────────────────────────────────────┘
+  ┌─ AccessibilityService ────────────────────────────┐
+  │ Focus trap per dialoghi modali (WCAG 2.1.2).      │
+  │ restoreFocus() al trigger dopo chiusura.          │
+  │ setPageTitle() ad ogni cambio rotta (WCAG 2.4.2). │
+  │ Skip-link 'Vai al contenuto principale'.          │
+  └──────────────────────────────────────────────────┘
+  ┌─ LiveAnnouncerService (CDK) ──────────────────────┐
+  │ aria-live 'polite' per aggiornamenti normali.     │
+  │ aria-live 'assertive' per errori non bloccanti.   │
+  │ Usato da Facade: mai da componenti Dumb.          │
+  └──────────────────────────────────────────────────┘
+
+  GESTIONE ERRORI – TASSONOMIA
+  ══════════════════════════════════════════════════════
+  AppError (errori di sistema – IpcErrorHandlerService)
+  ├─ category=IPC   → DIP_*, DOC_*, SEARCH_ENGINE_ERROR
+  ├─ category=IO    → OUTPUT_IO_ERROR, OUTPUT_DOWNLOAD_ERROR
+  ├─ category=PRINT → OUTPUT_PRINT_ERROR, FORMAT_NOT_PRINTABLE
+  └─ severity + recoverable → UI decide Riprova o solo Chiudi
+
+  ValidationError (errori di campo – FilterValidatorService)
+  └─ FieldErrorComponent inline sotto il campo – UC-18
+
+  IntegrityFailure (errori di dominio – non sono crash)
+  └─ IntegrityFailureDetailComponent – UC-33.3, UC-32.4.1
+     HASH_MISMATCH | SIGNATURE_EXPIRED | SIGNATURE_INVALID
+
+  SemanticStatus timeout/cancelled (degradazione controllata)
+  └─ NON è AppError – SemanticIndexStatusComponent banner
+     SearchFacade disabilita searchSemantic automaticamente
+
+  OptionalFieldAbsent (assenza legittima di dato)
+  └─ OptionalFieldAbsentComponent – UC-39.3/6/9, UC-57.3, UC-71
+     NON è un errore: il campo è semplicemente non presente nel DIP
+
+  COMPONENTI UI DI ERRORE
+  ══════════════════════════════════════════════════════
+  ErrorDialogComponent      → modale bloccante (output, preview)
+  InlineErrorComponent      → non bloccante (tree node, page load)
+  FieldErrorComponent       → sotto campo input (filtri)
+  IntegrityFailureDetail    → dettaglio corruzione documento
+  OptionalFieldAbsent       → campo opzionale assente nei metadati
+  ══════════════════════════════════════════════════════
+
+  CONCORRENZA v4
+  ══════════════════════════════════════════════════════
+  SearchFacade.isSearching   → mutex Signal + AbortController
+    nuova query cancella IPC in volo; debounce 300ms input
+  IntegrityFacade.isVerifying → mutex Signal
+    secondo avvio ignorato; bottoni disabilitati via @Input
+  SemanticIndexFacade.cancel() → IPC semantic:cancel [no-cache]
+    timeout 120s → status='timeout' → degrado graceful full-text
+  ══════════════════════════════════════════════════════
+
+  ACCESSIBILITÀ WCAG 2.1 (criteri implementati)
+  ══════════════════════════════════════════════════════
+  1.3.1  Struttura semantica: <time>, role, landmark
+  1.4.1  Colore non unico indicatore (VerificationBadge)
+  2.1.1  Tutte le funzioni accessibili da tastiera
+  2.1.2  Nessuna trappola da tastiera fuori dialoghi
+         (trapFocus/restoreFocus via AccessibilityService)
+  2.4.1  Skip-link 'Vai al contenuto principale'
+  2.4.2  <title> aggiornato ad ogni cambio rotta
+  4.1.2  role/aria-* su componenti interattivi
+  4.1.3  aria-live per aggiornamenti dinamici
+         (LiveAnnouncerService CDK)
+  ══════════════════════════════════════════════════════
+
+  PRINCIPI SOLID
+  ══════════════════════════════════════════════════════
+  SRP → ogni componente/service ha una sola ragione di cambiamento
+  OCP → filtri e tipi soggetto estendibili senza modifiche
+  LSP → SubjectCard/SubjectDetailForm/DipTreeNode sostituibili per tipo
+  ISP → IpcGateway espone interfacce separate per dominio
+  DIP → Smart Pages dipendono da Facade (Signal), non da IPC concrete
+
+  PATTERN ARCHITETTURALI
+  ══════════════════════════════════════════════════════
+  Facade         → 6 domain facades con Angular Signals
+  Adapter        → IpcGateway isola Electron dall'app
+  Cache-Aside    → IpcCacheService (TTL per canale, no-cache su mutazioni)
+  Mutex Signal   → isSearching, isVerifying nei Facade
+  Strategy       → SubjectCard, PreviewRenderer, SubjectDetailForm
+  Composite      → DocumentViewer, MetadataPanel, DipTree
+  Template Method → AsyncStateWrapper (ng-content slots)
+  Smart/Dumb     → Smart iniettano facade; Dumb solo @Input/@Output
+  Observer       → VerificationProgress + DipIndexingProgress via Signal
+  Lazy Loading   → ogni route on-demand + DipTree nodi on-demand
+  Virtual Scroll → CDK CdkVirtualScrollViewport su FlatNode[]
+  Route Guard    → DipReadyGuard (protezione rotte pre-indicizzazione)
+  ══════════════════════════════════════════════════════
+  [Opzionale] = UC-9.2 ricerca semantica, UC-11 stato indicizzazione
+end note
+
+@enduml

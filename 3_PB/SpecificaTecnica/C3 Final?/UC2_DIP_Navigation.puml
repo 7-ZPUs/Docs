@@ -1,0 +1,131 @@
+@startuml UC-2 – Navigazione Struttura DIP (Albero)
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title UC-2 – Navigazione Struttura DIP (Albero)\nUC-1..6: Browse classi, processi, documenti · Lazy Loading · Virtual Scroll\nComponenti: AppShell · DipExplorer · DipTree · DipTreeNode · DipFacade · Router
+
+Person(user, "Utente", "Revisore, archivista o consulente")
+System_Ext(ipc, "IPC Dispatcher (Main Process)", "Electron Context Bridge")
+
+Container_Boundary(renderer, "Renderer Process – Angular 17+") {
+
+  Component(app_shell, "AppShellComponent", "Angular Standalone [Smart – Layout Root]","Root component: toolbar, sidebar navigazione, router-outlet.\nQuando phase='ready':\n  • Mostra DipTreeComponent nella sidebar (navigazione persistente)\n  • Attiva router-outlet con le rotte normali")
+
+  Component(router, "AppRouter", "Angular Router [provideRouter]","Rotte lazy:\n  /dip → DipExplorerComponent\n  /document/:id → DocumentDetailPageComponent\n  /aggregate/:id → AggregateDetailPageComponent\nTutte protette da DipReadyGuard.")
+
+  Component(dip_ready_guard, "DipReadyGuard", "Angular CanActivateFn\n[Route Guard]","Guard funzionale (Angular 15+ CanActivateFn).\nVerifica DipFacade.state().phase === 'ready'.\nSe non pronto: reindirizza AppShell a DipLoadingPageComponent.\nApplicato a tutte le rotte del router.")
+
+  Component(dip_explorer, "DipExplorerComponent", "Angular Standalone [Smart]\nRoute: /dip","Pagina di navigazione struttura DIP.\nLegge Signal<DipState>.rootNodes da DipFacade.\nOspita DipTreeComponent come unica vista della struttura.\nUC-1 (classi), UC-2 (processi), UC-3 (documenti) → livelli albero.\nGestisce @Output nodeSelected:\n  • tipo 'document'   → router.navigate(['/document', id])\n  • tipo 'aggregate'  → router.navigate(['/aggregate', id])\nAvvolge con AsyncStateWrapperComponent.")
+
+  Component(async_state_wrapper, "AsyncStateWrapperComponent", "Angular Standalone [Dumb – Shared]\n[Cross-cutting – Template Method]","Wrapper generico per stati asincroni IPC.\n@Input: loading, error: AppError|null, empty\nProietta tre named slots:\n  loading → spinner\n  error   → InlineErrorComponent\n  content → contenuto reale")
+
+  Component(dip_tree, "DipTreeComponent", "Angular Standalone [Smart – Composite]\n[UC-1, UC-2, UC-3, UC-4, UC-5, UC-6]\n[Lazy Loading + Virtual Scroll]","Albero navigabile a tre livelli.\n\nLazy Loading:\n  loadRootNodes() al primo render.\n  loadChildren(nodeId) al primo expand di ogni nodo.\n  Nodi in attesa mostrano spinner inline.\n\nVirtual Scrolling (CDK):\n  CdkVirtualScrollViewport.\n  computed<FlatNode[]> piatto ricalcolato al cambio expandedIds.\n  Solo i nodi in viewport esistono nel DOM.\n  itemSize fisso (48px).\n\nInterfaccia:\n  @Input:  rootNodes: DipTreeNode[]\n  @Output: nodeSelected: EventEmitter<DipTreeNode>\n  Non conosce Router.")
+
+  Component(dip_tree_node, "DipTreeNodeComponent", "Angular Standalone [Dumb – Non ricorsivo]\n[UC-1, UC-2, UC-3, UC-4, UC-5]\n[Virtual Scroll item]","Riga singola dell'albero virtualizzato. NON ricorsivo.\nAltezza fissa (48px) per CDK itemSize.\n@Input:  flatNode: FlatNode\n  { node, depth, hasChildren, isLoading,\n    childrenError: AppError | null }\n@Output: toggle, nodeSelected\nVisualizza: padding-left depth, icona expand/collapse,\n  spinner se loading, VerificationBadgeComponent (UC-4),\n  TimestampLabelComponent (UC-5),\n  InlineErrorComponent se childrenError != null")
+
+  Component(verification_badge, "VerificationBadgeComponent", "Angular Standalone [Dumb – Shared]\n[UC-4] [WCAG 1.4.1, 4.1.2]","Badge: Non Verificato / Valido / Non Valido.\nInput: status: VerificationStatus.\nColore NON è unico indicatore: icona + testo sempre presenti.\nRiutilizzato in liste DIP, report integrità, dettaglio doc.")
+
+  Component(timestamp_label, "TimestampLabelComponent", "Angular Standalone [Dumb – Shared]\n[UC-5] [WCAG 1.3.1]","Label marcatura temporale GG/MM/AAAA HH:MM:SS.\n<time datetime='ISO-8601'> per screen reader.\nRiutilizzato in liste, dettaglio, report.")
+
+  Component(empty_state, "EmptyStateComponent", "Angular Standalone [Dumb – Shared]\n[UC-6] [WCAG 4.1.3]","Messaggio per liste vuote.\nInput: message: string, icon?: string.\nrole='status', aria-live='polite'.\nUC-6: albero DIP vuoto.")
+
+  Component(inline_error, "InlineErrorComponent", "Angular Standalone [Dumb – Shared]\n[Errori non bloccanti – inline]","Messaggio errore inline, non modale.\n@Input: error: AppError\nLink 'Riprova' se error.recoverable === true.\nNon blocca la UI: il resto della pagina rimane usabile.\nUso: nodo albero con loadChildren fallito (DIP_CHILDREN_LOAD_ERROR)")
+
+  Component(dip_facade, "DipFacade", "Angular Service [Injectable]\n[Facade + SRP]","Stato del DIP caricato.\nSignal<DipState>:\n  phase, rootNodes: DipTreeNode[]\n  nodeChildrenErrors: Map<nodeId, AppError>\n  nodeCache: Map<nodeId, DipTreeNode[]>\nAPI lazy loading:\n  loadRootNodes()  → AppError(DIP_FILE_NOT_FOUND | ...)\n  loadChildren(id) → AppError(DIP_CHILDREN_LOAD_ERROR)\nUC-1, UC-2, UC-3, UC-6.")
+
+  Component(ipc_gateway, "IpcGateway", "Angular Service [providedIn:'root']\n[Adapter + ISP]","Unico punto di accesso all'Electron Context Bridge.\nCachePolicy per tree:\n  loadChildren → 'cache-first', TTL 600_000 ms\n  getClasses, getProcesses, getDocuments → 'cache-first'")
+
+  Component(ipc_cache, "IpcCacheService", "Angular Service [providedIn:'root']\n[SRP – Request Deduplication]","Cache in-memory TTL per risposte IPC.\nloadChildren (tree) → TTL 600_000 ms (10 min)\nElimina IPC ridondanti su espansioni ripetute dello stesso nodo.")
+
+  Component(ipc_error_handler, "IpcErrorHandlerService", "Angular Service [providedIn:'root']\n[SRP – Error Translation]","Traduce errori IPC in AppError tipizzato.\nDIP_CHILDREN_LOAD_ERROR → errore parziale per nodo specifico\n  (non blocca l'intero albero)")
+
+  Component(telemetry, "TelemetryService", "Angular Service [providedIn:'root']\n[SRP – Observability]","Log strutturato locale.\nEventi rilevanti:\n  NODE_EXPANDED, TREE_RENDER_TIME_MS\n  IPC_ERROR")
+
+  Component(accessibility_service, "AccessibilityService", "Angular Service [providedIn:'root']\n[SRP – WCAG 2.1]","Gestione frecce su/giù tra nodi dell'albero (WCAG 2.1.1).")
+
+  Component(live_announcer, "LiveAnnouncerService", "Angular CDK [providedIn:'root']\n[WCAG 2.1 – aria-live]","DipTreeComponent → 'Espanso: <nome nodo>, N figli' [polite]")
+}
+
+' ── Utente → Shell ─────────────────────────────────────────
+Rel(user, app_shell, "Naviga l'albero DIP", "Mouse / Tastiera / Frecce")
+
+' ── AppShell ───────────────────────────────────────────────
+Rel(app_shell, dip_facade, "legge Signal<DipState>.phase per switch visivo")
+Rel(app_shell, dip_tree, "sidebar: @Input rootNodes – navigazione persistente")
+
+' ── Router + Guard ─────────────────────────────────────────
+Rel(router, dip_ready_guard, "CanActivateFn su tutte le rotte")
+Rel(dip_ready_guard, dip_facade, "inject() DipFacade – verifica phase==='ready'")
+Rel(router, dip_explorer, "Lazy /dip [guard: DipReadyGuard]")
+
+' ── DipExplorer ────────────────────────────────────────────
+Rel(dip_explorer, dip_facade, "legge Signal<DipState>.rootNodes")
+Rel(dip_explorer, async_state_wrapper, "avvolge l'albero [loading, error: AppError – UC-6]")
+Rel(async_state_wrapper, inline_error, "slot 'error' → @Input error: AppError")
+Rel(dip_explorer, dip_tree, "@Input rootNodes: DipTreeNode[] – UC-1, UC-2, UC-3")
+Rel(dip_explorer, router, "router.navigate(['/document'|'/aggregate', id])\nsu @Output nodeSelected da DipTreeComponent")
+
+' ── DipTree ────────────────────────────────────────────────
+Rel(dip_tree, dip_facade, "loadChildren(nodeId) on-demand al toggle\nlegge nodeChildrenErrors per errori parziali")
+Rel(dip_tree, dip_tree_node, "*cdkVirtualFor su FlatNode[] – solo nodi in viewport nel DOM")
+Rel(dip_tree, empty_state, "fallback se rootNodes vuoto – UC-6")
+Rel(dip_tree, accessibility_service, "gestione frecce su/giù tra nodi (WCAG 2.1.1)")
+Rel(dip_tree, live_announcer, "announce('Espanso: <nodo>, N figli') [polite]")
+Rel(dip_tree, telemetry, "trackEvent(NODE_EXPANDED)\ntrackTiming(TREE_RENDER_TIME_MS)")
+
+' ── DipTreeNode ────────────────────────────────────────────
+Rel(dip_tree_node, verification_badge, "@Input status – UC-4")
+Rel(dip_tree_node, timestamp_label, "@Input timestamp – UC-5")
+Rel(dip_tree_node, inline_error, "@Input error: AppError (DIP_CHILDREN_LOAD_ERROR parziale)")
+
+' ── DipFacade → IPC ────────────────────────────────────────
+Rel(dip_facade, ipc_gateway, "getClasses, getProcesses, getDocuments,\nloadChildren(nodeId) [cache-first, TTL 600s]")
+Rel(dip_facade, ipc_error_handler, "DIP_CHILDREN_LOAD_ERROR → AppError parziale per nodo")
+
+' ── IPC Gateway ────────────────────────────────────────────
+Rel(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
+Rel(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
+Rel(ipc_gateway, ipc_cache, "get(key) cache-first;\nset(key,val,ttl) dopo risposta")
+
+note as legend
+FLUSSO PRINCIPALE
+══════════════════════════════════════════
+1. Utente accede a /dip (DipReadyGuard verifica phase='ready')
+2. DipExplorer legge Signal<DipState>.rootNodes
+3. DipTreeComponent riceve rootNodes come @Input
+4. Albero renderizza solo nodi radice (lazy loading)
+5. Utente espande un nodo:
+a. DipTree controlla IpcCacheService (cache-first)
+b. Cache miss → DipFacade.loadChildren(nodeId)
+c. IpcGateway.invoke('getChildren') [cache-first, TTL 10min]
+d. Risposta → nodeCache aggiornata nel Signal
+e. FlatNode[] ricalcolato → CDK virtual scroll aggiorna DOM
+6. Utente clicca nodo foglia:
+a. DipTreeNode emette nodeSelected
+b. DipTree fa bubble up
+c. DipExplorer → router.navigate(['/document'|'/aggregate', id])
+
+ERRORE PARZIALE (DIP_CHILDREN_LOAD_ERROR)
+══════════════════════════════════════════
+Fallisce il caricamento figli di UN nodo specifico.
+Gli altri nodi dell'albero rimangono usabili.
+InlineErrorComponent appare nel nodo fallito.
+'Riprova' (recoverable=true) richiama loadChildren().
+
+VIRTUAL SCROLL CDK
+══════════════════════════════════════════
+CdkVirtualScrollViewport – itemSize fisso 48px
+Solo i nodi nella viewport esistono nel DOM
+computed<FlatNode[]> ricalcolato al cambio expandedIds
+DipTreeNodeComponent NON è ricorsivo (depth via FlatNode)
+
+USE CASE COPERTI
+══════════════════════════════════════════
+UC-1  Browse classi documentali
+UC-2  Browse processi di conservazione
+UC-3  Browse documenti
+UC-4  Visualizzazione stato verifica (VerificationBadge)
+UC-5  Visualizzazione marcatura temporale (TimestampLabel)
+UC-6  Lista vuota (EmptyState)
+end note
+
+@enduml
