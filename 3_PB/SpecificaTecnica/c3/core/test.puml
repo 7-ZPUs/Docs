@@ -1,0 +1,31 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam roundcorner 10
+
+' 1. Classe Astratta Base (Il Componente)
+abstract class Metadata {
+  + name: string
+  + {abstract} getValue(): any
+}
+
+' 2. La Foglia (Il valore testuale finale)
+class TextMetadata {
+  + value: string
+  + getValue(): string
+}
+
+' 3. Il Nodo Composto (Il contenitore)
+class NestedMetadata {
+  - children: Metadata[]
+  + add(metadata: Metadata): void
+  + getValue(): Record<string, any>
+}
+
+' Relazioni di Ereditarietà (is-a)
+Metadata <|-- TextMetadata
+Metadata <|-- NestedMetadata
+
+' Relazione di Composizione (has-a) - posizionata diversamente
+NestedMetadata --> "0..*" Metadata : contiene
+
+@enduml

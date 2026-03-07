@@ -1,0 +1,110 @@
+@startuml Diagramma delle Classi – ClasseDocumentale IPC
+top to bottom direction
+title Diagramma delle Classi – ClasseDocumentale IPC
+
+' ═════════════════════════════════════════════════════════════=
+'  Adapter
+' ═════════════════════════════════════════════════════════════=
+class ClasseDocumentaleIPCAdapter {
+	+getById(id: string): ClasseDocumentale
+	+search(name: string): ClasseDocumentale[]
+	+getByStatus(stato: StatoClasse): ClasseDocumentale[]
+	+checkIntegrity(id: string): boolean
+}
+
+' ═════════════════════════════════════════════════════════════=
+'  Use Case (interfacce)
+' ═════════════════════════════════════════════════════════════=
+interface IGetClasseDocumentaleByIdUC {
+	+getClasseDocumentaleById(id: string): ClasseDocumentale
+}
+
+interface ISearchClassiDocumentaliUC {
+	+searchClassiDocumentali(name: string): ClasseDocumentale[]
+}
+
+interface IGetClassiDocumentaliByStatusUC {
+	+getClassiDocumentaliByStatus(stato: StatoClasse): ClasseDocumentale[]
+}
+
+interface ICheckClasseDocumentaleIntegrityUC {
+	+checkIntegrity(id: string): boolean
+}
+
+' Service implementations of Use Cases
+class GetClasseDocumentaleByIdService {
+	+constructor(repo: ClasseDocumentaleRepository)
+	+getClasseDocumentaleById(id: string): ClasseDocumentale
+}
+
+class SearchClassiDocumentaliService {
+	+constructor(repo: ClasseDocumentaleRepository)
+	+searchClassiDocumentali(name: string): ClasseDocumentale[]
+}
+
+class GetClassiDocumentaliByStatusService {
+	+constructor(repo: ClasseDocumentaleRepository)
+	+getClassiDocumentaliByStatus(stato: StatoClasse): ClasseDocumentale[]
+}
+
+class CheckClasseDocumentaleIntegrityService {
+	+constructor(repo: ClasseDocumentaleRepository, reader: PackageReaderPort)
+	+checkIntegrity(id: string): boolean
+}
+
+' ═════════════════════════════════════════════════════════════=
+'  Repository e Port
+' ══════════════════════════════════════════════════════
+interface PackageReaderPort
+
+note right of PackageReaderPort
+	Definita in c4_dip.puml
+end note
+
+interface ClasseDocumentaleRepository {
+	+getById(id: string): ClasseDocumentale
+	+search(name: string): ClasseDocumentale[]
+	+create(classe: ClasseDocumentale): void
+	+getByStatus(stato: StatoClasse): ClasseDocumentale[]
+}
+
+class SqliteClasseDocumentaleRepository implements ClasseDocumentaleRepository {
+	+constructor(dbPath: string)
+	+getById(id: string): ClasseDocumentale
+	+search(name: string): ClasseDocumentale[]
+	+create(classe: ClasseDocumentale): void
+	+getByStatus(stato: StatoClasse): ClasseDocumentale[]
+}
+
+' ══════════════════════════════════════════════════════════════
+'  Relazioni
+' ══════════════════════════════════════════════════════════════
+ClasseDocumentaleIPCAdapter --> IGetClasseDocumentaleByIdUC
+ClasseDocumentaleIPCAdapter --> ISearchClassiDocumentaliUC
+ClasseDocumentaleIPCAdapter --> IGetClassiDocumentaliByStatusUC
+ClasseDocumentaleIPCAdapter --> ICheckClasseDocumentaleIntegrityUC
+
+' Forza layout: UC sopra Service
+IGetClasseDocumentaleByIdUC -[hidden]-> GetClasseDocumentaleByIdService
+ISearchClassiDocumentaliUC -[hidden]-> SearchClassiDocumentaliService
+IGetClassiDocumentaliByStatusUC -[hidden]-> GetClassiDocumentaliByStatusService
+ICheckClasseDocumentaleIntegrityUC -[hidden]-> CheckClasseDocumentaleIntegrityService
+
+' Implementations realize the interfaces
+GetClasseDocumentaleByIdService ..|> IGetClasseDocumentaleByIdUC
+SearchClassiDocumentaliService ..|> ISearchClassiDocumentaliUC
+GetClassiDocumentaliByStatusService ..|> IGetClassiDocumentaliByStatusUC
+CheckClasseDocumentaleIntegrityService ..|> ICheckClasseDocumentaleIntegrityUC
+
+' Services -> Repositories / Ports (Service layer invokes storage/IO)
+GetClasseDocumentaleByIdService --> ClasseDocumentaleRepository : usa
+SearchClassiDocumentaliService --> ClasseDocumentaleRepository : usa
+GetClassiDocumentaliByStatusService --> ClasseDocumentaleRepository : usa
+CheckClasseDocumentaleIntegrityService --> ClasseDocumentaleRepository : usa
+CheckClasseDocumentaleIntegrityService --> PackageReaderPort : usa
+
+note right of ClasseDocumentaleRepository
+	Implementazione con better-sqlite3
+end note
+
+@enduml

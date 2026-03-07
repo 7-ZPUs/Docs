@@ -1,0 +1,120 @@
+@startuml
+title Domain Classes
+
+class DiP {
+    - id: number
+    - uuid: string
+    - integrityStatus: IntegrityStatus
+    - classiDocumetali: ClasseDocumentale[]
+    + constructor(id: number, uuid: string, classiDocumetali: ClasseDocumentale[])
+    + getId(): number
+    + getUuid(): string
+    + getIntegrityStatus(): IntegrityStatus
+    + setIntegrityStatus(status: IntegrityStatus): void
+    + getClassiDocumentali(): ClasseDocumentale[]
+}
+
+class ClasseDocumentale {
+    - name: string
+    - uuid: string
+    - id: number
+    - timestamp: Date
+    - integrityStatus: IntegrityStatus
+    - processi: Processo[]
+    + constructor(name: string, uuid: string, id: number, timestamp: Date, processi: Processo[])
+    + getName(): string
+    + getId(): number
+    + getUuid(): string
+    + getTimestamp(): Date
+    + getProcessi(): Processo[]
+    + getIntegrityStatus(): IntegrityStatus
+    + setIntegrityStatus(status: IntegrityStatus): void
+}
+
+class Processo {
+    - uuid: string
+    - id: number
+    - integrityStatus: IntegrityStatus
+    - metadata: Metadata[]
+    - documenti: Documento[]
+    + constructor(uuid: string, id: number, metadata: Metadata[], documenti: Documento[])
+    + getUuid(): string
+    + getId(): number
+    + getIntegrityStatus(): IntegrityStatus
+    + setIntegrityStatus(status: IntegrityStatus): void
+    + getMetadata(): Metadata[]
+    + getDocumenti(): Documento[]
+}
+
+class Documento {
+    - uuid: string
+    - id: number
+    - metadata: Metadata[]
+    - files: File[]
+    + constructor(uuid: string, id: number, metadata: Metadata[], files: File[])
+    + getUuid(): string
+    + getId(): number
+    + getMetadata(): Metadata[]
+    + getFiles(): File[]
+}
+
+class File {
+    - filename: string
+    - path: string
+    - integrityStatus: IntegrityStatus
+    - isMain: boolean
+    + constructor(filename: string, path: string, isMain: boolean)
+    + getFilename(): string
+    + getPath(): string
+    + getIntegrityStatus(): IntegrityStatus
+    + setIntegrityStatus(status: IntegrityStatus): void
+}
+
+enum IntegrityStatus {
+    Valid,
+    Invalid,
+    Unknown
+}
+
+DiP o-> "0..*" ClasseDocumentale : contiene
+ClasseDocumentale o-> "0..*" Processo : contiene
+Processo o-> "0..*" Documento : contiene
+Documento o-> "0..*" File : contiene
+DiP ..> IntegrityStatus
+ClasseDocumentale ..> IntegrityStatus
+Processo ..> IntegrityStatus
+File ..> IntegrityStatus
+
+
+
+' 1. Classe Astratta Base (Il Componente)
+abstract class Metadata {
+    + name: string {readonly}
+    + {abstract} getValue(): any
+}
+
+' 2. La Foglia Generica (Il valore nativo convertito)
+class ValueMetadata<T> {
+    + value: T
+    + logicalType: string
+    + getValue(): T
+}
+
+' 3. Il Nodo Composto (Il contenitore)
+class NestedMetadata {
+  - children: Metadata[]
+  + add(metadata: Metadata): void
+  + getValue(): Record<string, any>
+}
+
+' Relazioni di Ereditarietà (is-a)
+Metadata <|-- ValueMetadata
+Metadata <|-- NestedMetadata
+
+' Relazione di Composizione (has-a) - posizionata diversamente
+NestedMetadata --> "0..*" Metadata
+
+' Relazione tra DiP e Metadata
+DiP --> "0..*" Metadata
+
+@enduml

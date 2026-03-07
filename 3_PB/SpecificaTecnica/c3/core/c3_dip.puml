@@ -1,0 +1,100 @@
+@startuml Component Diagram – DIP IPC
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Component Diagram – DIP IPC\n(dip:get-tree, dip:check-integrity)
+
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam shadowing false
+skinparam wrapWidth 160
+skinparam nodesep 30
+skinparam ranksep 50
+
+' ══════════════════════════════════════════════════════════════
+'  SISTEMI ESTERNI
+' ══════════════════════════════════════════════════════════════
+
+Component_Ext(renderer,   "Renderer Process", "Angular, TypeScript",  "Invia comandi via IPC bridge.")
+Component_Ext(filesystem, "File System",      "OS File System",       "Pacchetto DIP su disco.")
+Component_Ext(sqlite_db,  "SQLite Database",  "SQLite3 + sqlite-vss", "Tabelle relazionali e tabelle virtuali VSS.")
+
+Container_Boundary(main, "Main Process – Electron") {
+
+    ' ── Colonna sinistra: canale integrity ───────────────────
+    Component(dip_ipc,   "DIP IPC Adapter", "Node.js, TypeScript", "Canali attivi: dip:get-tree, dip:check-integrity.")
+
+    ' ── Colonna destra: canale indexing ──────────────────────
+    Component(bootstrap, "App Bootstrap",   "Node.js, TypeScript", "Indicizza automaticamente il DIP all'avvio dell'applicazione (cartella già nota a runtime).")
+
+    ' ── Use Cases ────────────────────────────────────────────
+    Container_Boundary(layer_uc, "Use Cases") {
+        Component(uc_integrity_dip, "CheckDIPIntegrityUC", "Node.js, TypeScript", "Calcola SHA256 del DIP e confronta con hash atteso.")
+        Component(uc_index,         "IndexDIPUC",          "Node.js, TypeScript", "Legge DiPIndex.xml, esegue il parsing struttura, estrae metadati/file in DB e genera vettori semantici.")
+    }
+
+    ' ── Ports ────────────────────────────────────────────────
+    Container_Boundary(layer_ports, "Ports") {
+        Component(port_reader,    "PackageReaderPort", "TypeScript Interface", "<<Port>> getDipIndex(), getPindexByUuid(), getDocumentMetadata(), readFileBytes().")
+        Component(port_embedding, "WordEmbeddingPort", "TypeScript Interface", "<<Port>> generateEmbedding(text): Promise<Vector>.")
+    }
+
+    ' ── Repositories ─────────────────────────────────────────
+    Container_Boundary(layer_repos, "Repositories") {
+        Component(repo_dip,       "DipRepository",               "TypeScript Interface", "<<Repository>> get(), create(), delete().")
+        Component(repo_classe,    "ClasseDocumentaleRepository", "TypeScript Interface", "<<Repository>> get(), create(), delete(), search().")
+        Component(repo_processo,  "ProcessoRepository",          "TypeScript Interface", "<<Repository>> get(), create(), delete(), search().")
+        Component(repo_documento, "DocumentoRepository",         "TypeScript Interface", "<<Repository>> get(), create(), delete(), search().")
+        Component(repo_file,      "FileRepository",              "TypeScript Interface", "<<Repository>> get(), create(), delete().")
+        Component(repo_vector,    "VectorRepository",            "TypeScript Interface", "<<Repository>> save(), search(), getAll(), clear().")
+    }
+}
+
+' ══════════════════════════════════════════════════════════════
+'  LAYOUT – due colonne parallele
+'  Sinistra: renderer → dip_ipc → uc_integrity → ports → filesystem
+'  Destra:   bootstrap           → uc_index    → repos  → sqlite_db
+' ══════════════════════════════════════════════════════════════
+Lay_R(dip_ipc,          bootstrap)
+Lay_R(uc_integrity_dip, uc_index)
+Lay_R(layer_ports,      layer_repos)
+Lay_R(filesystem,       sqlite_db)
+
+Lay_D(dip_ipc,    uc_integrity_dip)
+Lay_D(bootstrap,  uc_index)
+Lay_D(layer_uc,   layer_ports)
+Lay_D(layer_uc,   layer_repos)
+
+' ── Renderer → IPC ───────────────────────────────────────────
+Rel_D(renderer, dip_ipc, "comunicazione ipc", "Electron IPC")
+
+' ── Ingressi Use Cases ───────────────────────────────────────
+Rel_D(dip_ipc,   uc_integrity_dip, "dip:check-integrity")
+Rel_D(bootstrap, uc_index,         "avvio automatico")
+
+' ── CheckDIPIntegrityUC ──────────────────────────────────────
+Rel_D(uc_integrity_dip, port_reader, "Legge file per calcolo hash")
+Rel_D(uc_integrity_dip, repo_dip,   "Legge hash atteso")
+
+' ── IndexDIPUC → Ports ───────────────────────────────────────
+Rel_D(uc_index, port_reader,    "Legge struttura DIP")
+Rel_D(uc_index, port_embedding, "Genera embeddings")
+
+' ── IndexDIPUC → Repositories ────────────────────────────────
+Rel_D(uc_index, repo_dip,       "")
+Rel_D(uc_index, repo_classe,    "")
+Rel_D(uc_index, repo_processo,  "")
+Rel_D(uc_index, repo_documento, "")
+Rel_D(uc_index, repo_file,      "")
+Rel_D(uc_index, repo_vector,    "")
+
+' ── Ports → Sistemi Esterni ──────────────────────────────────
+Rel_D(port_reader, filesystem, "Lettura DIP")
+
+' ── Repositories → Sistemi Esterni ───────────────────────────
+Rel_D(repo_dip,       sqlite_db, "CRUD")
+Rel_D(repo_classe,    sqlite_db, "CRUD")
+Rel_D(repo_processo,  sqlite_db, "CRUD")
+Rel_D(repo_documento, sqlite_db, "CRUD")
+Rel_D(repo_file,      sqlite_db, "CRUD")
+Rel_D(repo_vector,    sqlite_db, "CRUD vettoriale")
+
+@enduml

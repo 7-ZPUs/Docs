@@ -1,0 +1,226 @@
+@startuml Diagramma delle Classi – DIP IPC
+top to bottom direction
+skinparam ranksep 80
+skinparam nodesep 30
+skinparam linetype ortho
+
+title Diagramma delle Classi – DIP IPC (Architettura a 5 Livelli)
+
+' ═════════════════════════════════════════════════════════════=
+'  LIVELLO 1: Primary Adapters / Entry Points
+' ═════════════════════════════════════════════════════════════=
+together {
+    class AppBootstrap {
+        +run(): void
+    }
+    
+    class DIPIPCAdapter {
+        +getTree(uuid: string): DiP
+        +checkIntegrity(uuid: string): IntegrityStatus
+    }
+}
+
+' ═════════════════════════════════════════════════════════════=
+'  LIVELLO 2: Use Cases & Builder (Posizionato in alto a dx)
+' ═════════════════════════════════════════════════════════════=
+together {
+    interface IGetDIPTreeUC {
+        +getDIPTree(uuid: string): DiP
+    }
+
+    interface ICheckDIPIntegrityUC {
+        +checkDIPIntegrity(uuid: string): IntegrityStatus
+    }
+
+    interface IIndexDIPUC {
+        +indexDIP(dirPath: string): void
+    }
+
+    class IndexDIPServiceBuilder {
+        -dipRepo: DipRepository
+        -classeRepo: ClasseDocumentaleRepository
+        -processoRepo: ProcessoRepository
+        -documentoRepo: DocumentoRepository
+        -fileRepo: FileRepository
+        -vectorRepo: VectorRepository
+        -reader: PackageReaderPort
+        -embedding: WordEmbeddingPort
+        +withDipRepository(repo: DipRepository): IndexDIPServiceBuilder
+        +withClasseDocumentaleRepository(repo: ClasseDocumentaleRepository): IndexDIPServiceBuilder
+        +withProcessoRepository(repo: ProcessoRepository): IndexDIPServiceBuilder
+        +withDocumentoRepository(repo: DocumentoRepository): IndexDIPServiceBuilder
+        +withFileRepository(repo: FileRepository): IndexDIPServiceBuilder
+        +withVectorRepository(repo: VectorRepository): IndexDIPServiceBuilder
+        +withPackageReader(reader: PackageReaderPort): IndexDIPServiceBuilder
+        +withWordEmbedding(embedding: WordEmbeddingPort): IndexDIPServiceBuilder
+        +build(): IndexDIPService
+    }
+}
+
+' ═════════════════════════════════════════════════════════════=
+'  LIVELLO 3: Application Services (Orchestratori)
+' ═════════════════════════════════════════════════════════════=
+together {
+    class GetDIPTreeService {
+        +constructor(dipRepo: DipRepository)
+        +getDIPTree(uuid: string): DiP
+    }
+
+    class CheckDIPIntegrityService {
+        +constructor(dipRepo: DipRepository, reader: PackageReaderPort)
+        +checkDIPIntegrity(uuid: string): IntegrityStatus
+    }
+
+    note right of CheckDIPIntegrityService
+        Il check di integrità del DIP include anche
+        il controllo di integrità di tutte le sue classi documentali.
+    end note
+
+    class IndexDIPService {
+        +constructor(builder: IndexDIPServiceBuilder)
+        +indexDIP(dirPath: string): void
+    }
+}
+
+' ═════════════════════════════════════════════════════════════=
+'  LIVELLO 4: Outbound Ports & Domain Types
+' ═════════════════════════════════════════════════════════════=
+together {
+    interface DipRepository {
+        +get(uuid: string): DiP
+        +create(dip: DiP): void
+        +delete(uuid: string): void
+    }
+    
+    interface PackageReaderPort {
+        +getDipIndex(dirPath: string): DiPIndex
+        +getPindexByUuid(uuid: string): PIndex
+        +getDocumentMetadata(documentUuid: string): Metadata[]
+        +readFileBytes(path: string): byte[]
+    }
+    
+    interface ClasseDocumentaleRepository
+    note bottom of ClasseDocumentaleRepository
+        Definita in c4_classe.puml
+    end note
+
+    interface ProcessoRepository {
+        +get(id: number): Processo
+        +create(processo: Processo): void
+        +delete(id: number): void
+        +search(query: string): Processo[]
+    }
+
+    interface DocumentoRepository {
+        +get(id: number): Documento
+        +create(documento: Documento): void
+        +delete(id: number): void
+        +search(query: string): Documento[]
+    }
+
+    interface FileRepository {
+        +get(id: number): File
+        +create(file: File): void
+        +delete(id: number): void
+    }
+
+    interface VectorRepository {
+        +save(id: string, vector: Vector): void
+        +search(vector: Vector, k: number): string[]
+        +clear(): void
+    }
+
+    interface WordEmbeddingPort {
+        +generateEmbedding(text: string): Promise<number[]>
+    }
+
+    class Vector {
+        -values: number[]
+        +constructor(values: number[])
+        +getValues(): number[]
+    }
+}
+
+' ═════════════════════════════════════════════════════════════=
+'  LIVELLO 5: Secondary Adapters (Implementazioni)
+' ═════════════════════════════════════════════════════════════=
+together {
+    class SQLiteDipRepository implements DipRepository
+    class FileSystemPackageReaderAdapter implements PackageReaderPort
+    class SQLiteProcessoRepository implements ProcessoRepository
+    class SQLiteDocumentoRepository implements DocumentoRepository
+    class SQLiteFileRepository implements FileRepository
+    
+    class SQLiteVectorRepository implements VectorRepository
+    note bottom of SQLiteVectorRepository
+        Usa better-sqlite3 + sqlite-vss.
+        Fallback BLOB se sqlite-vss non disponibile.
+    end note
+
+    class TransformersJSEmbeddingAdapter implements WordEmbeddingPort
+}
+
+' ══════════════════════════════════════════════════════════════
+'  IMPALCATURA INVISIBILE (Allineamento Orizzontale e Verticale)
+' ══════════════════════════════════════════════════════════════
+' Ordine Orizzontale Livello 2 (Spinge il Builder a destra)
+IGetDIPTreeUC -[hidden]right-> ICheckDIPIntegrityUC
+ICheckDIPIntegrityUC -[hidden]right-> IIndexDIPUC
+IIndexDIPUC -[hidden]right-> IndexDIPServiceBuilder
+
+' Ordine Orizzontale Livello 3
+GetDIPTreeService -[hidden]right-> CheckDIPIntegrityService
+CheckDIPIntegrityService -[hidden]right-> IndexDIPService
+
+' Ordine Orizzontale Livello 4 (Pulisce la riga dei repo)
+DipRepository -[hidden]right-> PackageReaderPort
+PackageReaderPort -[hidden]right-> ClasseDocumentaleRepository
+ClasseDocumentaleRepository -[hidden]right-> ProcessoRepository
+ProcessoRepository -[hidden]right-> DocumentoRepository
+DocumentoRepository -[hidden]right-> FileRepository
+FileRepository -[hidden]right-> VectorRepository
+VectorRepository -[hidden]right-> WordEmbeddingPort
+WordEmbeddingPort -[hidden]right-> Vector
+
+' Ordine Verticale
+AppBootstrap -[hidden]down-> ICheckDIPIntegrityUC
+ICheckDIPIntegrityUC -[hidden]down-> CheckDIPIntegrityService
+CheckDIPIntegrityService -[hidden]down-> ProcessoRepository
+ProcessoRepository -[hidden]down-> SQLiteProcessoRepository
+
+' ══════════════════════════════════════════════════════════════
+'  RELAZIONI REALI (Uso di -down-> per forzare il layout)
+' ══════════════════════════════════════════════════════════════
+
+' 1. Entry Points -> Use Cases
+AppBootstrap ..> DIPIPCAdapter : avvia
+DIPIPCAdapter ..> IGetDIPTreeUC : usa
+DIPIPCAdapter ..> ICheckDIPIntegrityUC : usa
+DIPIPCAdapter ..> IIndexDIPUC : usa
+
+' 2. Implementations
+GetDIPTreeService .up.|> IGetDIPTreeUC
+CheckDIPIntegrityService .up.|> ICheckDIPIntegrityUC
+IndexDIPService .up.|> IIndexDIPUC
+
+' 3. Builder
+IndexDIPServiceBuilder -down-> IndexDIPService : build()
+
+' 4. Services → Ports
+GetDIPTreeService -down-> DipRepository : usa
+
+CheckDIPIntegrityService -down-> DipRepository : usa
+CheckDIPIntegrityService -down-> ClasseDocumentaleRepository : usa
+CheckDIPIntegrityService -down-> PackageReaderPort : usa
+
+' Dipendenze di IndexDIPService (senza label di testo per pulizia visiva)
+IndexDIPService -down-> DipRepository
+IndexDIPService -down-> ClasseDocumentaleRepository
+IndexDIPService -down-> ProcessoRepository
+IndexDIPService -down-> DocumentoRepository
+IndexDIPService -down-> FileRepository
+IndexDIPService -down-> VectorRepository
+IndexDIPService -down-> PackageReaderPort
+IndexDIPService -down-> WordEmbeddingPort
+
+@enduml
