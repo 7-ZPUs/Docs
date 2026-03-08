@@ -1,0 +1,152 @@
+\documentclass[a4paper,12pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 2026/03/05 \\
+\textbf{Durata:} 1 ora\\
+\textbf{Luogo:} Incontro online (Discord)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Aggiornamento sullo stato di avanzamento della progettazione.
+    \item Divisione dei compiti.
+    \item Contenuti da esporre all'incontro con Sanmarco Informatica
+\end{enumerate}
+
+\subsection{Aggiornamento sullo stato di avanzamento della progettazione}
+Al fine di comprendere come effettuare la progettazione, il gruppo ha deciso di proceduto nello studio individuale del modello C4. 
+\\Il team ha organizzato una sessione congiunta per la definizione dei primi livelli, quelli di sistema e container. Il gruppo si è quindi diviso in due sottogruppi, uno per il renderer process e uno per il main process. 
+\\La progettazione di dettaglio è quindi iniziata, proseguendo con un approccio di "palestra". Ad ogni membro è stato assegnato un componente da progettare. 
+\\Una volta raggiunto un livello sufficientemente confidente con il modello in questi componenti di prova si procederà con la progettazione di dettaglio dei componenti reali.
+
+\subsection{Divisione dei compiti}
+La divisione del gruppo nei due gruppi di lavoro è la seguente:
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Processo} & \textbf{Membri del Gruppo} & \textbf{Componente specifico} \\
+    \hline
+    Renderer process & \begin{tabular}[c]{@{}c@{}} Georgescu Diana\\Gingillino Aaron\\Rocco Matteo A.\\Soligo Lorenzo \end{tabular}  & \begin{tabular}[c]{@{}c@{}} Export\\Navigation\\Rocco Matteo A.\\C3 correction \end{tabular} \\
+    \hline
+    Main process & \begin{tabular}[c]{@{}c@{}} Fattoni Antonio\\Laoud Zakaria\\Vigolo Davide \end{tabular} & \begin{tabular}[c]{@{}c@{}} Indexing\\?\\?\end{tabular} \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\subsection{Contenuti da esporre all'incontro con Sanmarco Informatica}
+Il gruppo ha deciso di esporre a Sanmarco Informatica i seguenti contenuti:
+\begin{itemize}[noitemsep]
+    \item Stato di avanzamento della progettazione.
+    \item Dubbi sulla applicazione di certi pattern.
+    \item Discussione sul risultato della RTB.
+\end{itemize}
+
+\section{Tabella delle Decisioni}
+
+Nel corso di questo incontro intermedio sono state aggiunte le seguenti attività:
+\begin{enumerate}[noitemsep]
+    \item Suddivisione dei componenti di prova per la progettazione di dettaglio.
+    \item 
+    \item Aggiornare il Cruscotto.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline \\Navigation\\Rocco Matteo A.\\C3 correction 
+    \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
+    \hline
+    \#1 & Export & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Georgescu Diana & Revisione congiunta \\
+    \hline
+    \#1 & Navigation & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Gingillino Aaron & Revisione congiunta \\
+    \hline
+    \#1 & Consuntivo Sprint 7 & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Rocco Matteo A. & Revisione congiunta \\
+    \hline
+    \#1 & C3 correction & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Soligo Lorenzo & Revisione congiunta \\
+    \hline
+    \#1 & Ricerca classe documentale & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Fattoni Antonio & Revisione congiunta \\
+    \hline
+    \#1 & Indicizzazione classe documentale & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Laoud Zakaria & Revisione congiunta \\
+    \hline
+    \#1 & & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Vigolo Davide & Revisione congiunta \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
