@@ -48,16 +48,16 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
   Component(timestamp_label, "TimestampLabelComponent", "Angular Standalone [Dumb – Shared]\n[UC-5]","Timestamp verifica nei report.\n<time datetime='ISO-8601'>")
 
   ' ── OUTPUT TOOLBAR (esporta PDF report) ─────────────────
-  Component(output_toolbar, "OutputToolbarComponent", "Angular Standalone [Smart]\n[UC-34]","Barra azioni output.\nNel contesto IntegrityPage: solo Esporta PDF (UC-34).\nInietta OutputFacade.")
+  Component(output_toolbar, "OutputToolbarComponent", "Angular Standalone [Dumb]\n[UC-34]","Barra azioni output.\nNel contesto IntegrityPage: solo Esporta PDF (UC-34).\n@Input:  context: OutputContext\n@Output: actionRequested: OutputAction  (EXPORT_PDF)\nNessuna DI: IntegrityPageComponent (Smart)\nriceve actionRequested e chiama OutputFacade.")
 
-  Component(folder_picker_dialog, "FolderPickerDialogComponent", "Angular Standalone [Smart]\n[UC-34]\n[WCAG 2.1.1, 2.1.2]","Dialogo modale selezione cartella destinazione PDF.\nFocus trap via AccessibilityService.")
+  Component(folder_picker_dialog, "FolderPickerDialogComponent", "Angular Standalone [Smart]\n[UC-34]\n[WCAG 2.1.1, 2.1.2]","Dialogo modale selezione cartella destinazione PDF.\nAperto da IntegrityPageComponent (NON da OutputFacade).\nDopo conferma path → chiama OutputFacade.exportPdf.\nFocus trap via AccessibilityService.")
 
   Component(error_dialog, "ErrorDialogComponent", "Angular Standalone [Dumb – Shared]\n[UC-37]\n[WCAG 2.1.1, 2.1.2]","Modale per errore OUTPUT_PDF_GENERATION_ERROR.\n'Riprova' se recoverable=true.")
 
   ' ── FACADE SERVICES ─────────────────────────────────────
   Component(integrity_facade, "IntegrityFacade", "Angular Service [Injectable]\n[Facade + SRP]","Avvia verifiche, raccoglie report.\nSignal<IntegrityState>:\n  report, progress, loading\n  systemError: AppError | null ← INTEGRITY_VERIFY_ERROR\n  isVerifying: boolean        ← mutex Signal\n\nNOTE: HASH_MISMATCH e SIGNATURE_* NON sono AppError:\n  sono IntegrityResult nel report (errori di dominio)\n\nControllo concorrenza:\n  isVerifying=true per tutta la durata della verifica IPC.\n  Secondo verifyRequested ignorato mentre isVerifying=true.\n  IntegrityTrigger disabilita bottoni via @Input.\n\nUC-26..33.")
 
-  Component(output_facade, "OutputFacade", "Angular Service [Injectable]\n[Facade + SRP]","Per IntegrityPage: solo exportPdf [no-cache]\nResult<void, AppError>:\n  OUTPUT_PDF_GENERATION_ERROR → UC-37")
+  Component(output_facade, "OutputFacade", "Angular Service [Injectable]\n[Facade + SRP]","Per IntegrityPage: solo exportPdf [no-cache]\nRestituisce Result<void, AppError>:\n  OUTPUT_PDF_GENERATION_ERROR → UC-37\nNON apre componenti UI: è IntegrityPageComponent\nche gestisce FolderPickerDialog ed ErrorDialog.")
 
   Component(ipc_gateway, "IpcGateway", "Angular Service [providedIn:'root']\n[Adapter + ISP]","Canali integrità [tutti no-cache]:\n  verifyDip\n  verifyClass\n  verifyProcess\n  verifyDocument\nno-cache obbligatorio: operazioni di verifica\nnon devono essere cachate.")
 
@@ -89,13 +89,15 @@ Rel_D(integrity_page, dip_integrity_report, "@Input report – UC-30")
 Rel_D(integrity_page, class_integrity_report, "@Input report – UC-31")
 Rel_D(integrity_page, process_integrity_report, "@Input report – UC-32")
 Rel_D(integrity_page, doc_integrity_report, "@Input report – UC-33")
-Rel_D(integrity_page, output_toolbar, "context=report → esporta PDF UC-34")
 
-' ── IntegrityTrigger → Facade ──────────────────────────────
-Rel_D(integrity_trigger, integrity_facade, "@Output verifyRequested → verifyDip/Class/Process/Document")
+' ── IntegrityPage → Trigger ────────────────────────────────
+' IntegrityTrigger è Dumb: emette @Output verifyRequested
+' IntegrityPageComponent (Smart) riceve l'evento e chiama IntegrityFacade
+Rel_R(integrity_page, integrity_facade, "@Output verifyRequested → verifyDip/Class/Process/Document")
 
-' ── IntegrityFacade → progress ─────────────────────────────
-Rel_R(integrity_facade, verification_progress, "Signal<progress> aggiornato ogni documento verificato")
+' IntegrityFacade aggiorna Signal<progress>;
+' IntegrityPageComponent (Smart) lo legge e proietta via @Input a VerificationProgress (Dumb)
+' Nessuna freccia diretta Facade → componente Dumb
 
 ' ── Report → shared components ─────────────────────────────
 Rel_R(dip_integrity_report, verification_badge, "badge stato per ogni classe – UC-4")
@@ -105,10 +107,11 @@ Rel_R(doc_integrity_report, verification_badge, "badge stato documento – UC-4"
 Rel_D(doc_integrity_report, integrity_failure_detail, "@Input failure – UC-33.3 (dominio, non IPC)")
 Rel_D(process_integrity_report, integrity_failure_detail, "@Input failure per doc corrotto – UC-32.4.1")
 
-' ── OutputToolbar ──────────────────────────────────────────
-Rel_D(output_toolbar, output_facade, "exportPdf(report) – UC-34")
-Rel_D(output_facade, folder_picker_dialog, "apre dialogo selezione cartella PDF")
-Rel_R(output_facade, error_dialog, "OUTPUT_PDF_GENERATION_ERROR – UC-37")
+' ── OutputToolbar → IntegrityPage → OutputFacade ──────────
+Rel_D(integrity_page, output_toolbar, "@Input context=report; @Output actionRequested → esporta PDF UC-34")
+Rel_R(integrity_page, output_facade, "chiama exportPdf in risposta a actionRequested – UC-34")
+Rel_D(integrity_page, folder_picker_dialog, "apre FolderPickerDialog; riceve path → chiama OutputFacade")
+Rel_R(integrity_page, error_dialog, "AppError(OUTPUT_PDF_GENERATION_ERROR) – UC-37")
 Rel_R(output_facade, notification_service, "conferma export PDF completato")
 Rel_R(output_facade, live_announcer, "announce('Operazione completata') [polite]")
 Rel_R(folder_picker_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
@@ -130,17 +133,20 @@ FLUSSO VERIFICA INTEGRITÀ
 1. Utente accede a /integrity
 2. IntegrityPage compone Trigger + Progress + Report vuoto
 3. Utente clicca un bottone in IntegrityTriggerComponent
-(DIP completo, Classe, Processo, Documento)
-4. isVerifying=true → IntegrityTrigger disabilita tutti i bottoni
-5. IntegrityFacade.verify*() → IpcGateway [no-cache]
-6. Main Process verifica hash e firme documento per documento
-7. IPC invia aggiornamenti progress in streaming
-8. IntegrityFacade aggiorna Signal<progress>
-9. VerificationProgressComponent si aggiorna (Observer via Signal)
-10. Verifica completata → Signal<report> aggiornato
-11. Report Components si aggiornano
-12. isVerifying=false → bottoni riabilitati
-13. LiveAnnouncer: 'Verifica integrità completata' [polite]
+   (DIP completo, Classe, Processo, Documento)
+4. IntegrityTrigger emette @Output verifyRequested (è Dumb)
+5. IntegrityPageComponent riceve l'evento → chiama IntegrityFacade.verify*()
+6. isVerifying=true → IntegrityTrigger disabilita tutti i bottoni
+7. IntegrityFacade → IpcGateway [no-cache]
+8. Main Process verifica hash e firme documento per documento
+9. IPC invia aggiornamenti progress in streaming
+10. IntegrityFacade aggiorna Signal<progress>
+11. IntegrityPageComponent legge Signal e proietta via @Input
+    a VerificationProgressComponent (Dumb) — mai Facade→Dumb diretto
+12. Verifica completata → Signal<report> aggiornato
+13. Report Components si aggiornano
+14. isVerifying=false → bottoni riabilitati
+15. LiveAnnouncer: 'Verifica integrità completata' [polite]
 
 TASSONOMIA ERRORI INTEGRITÀ
 ══════════════════════════════════════════

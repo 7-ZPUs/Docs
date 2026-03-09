@@ -37,13 +37,13 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
   Component(document_index, "DocumentIndexComponent", "Angular Standalone [Dumb]\n[UC-67.1.1..2]","Indice documenti contenuti nell'aggregazione:\n  • UC-67.1.1 Tipo documento\n  • UC-67.1.2 Identificativo documento")
 
   ' ── DOCUMENT ACTIONS (riuso) ────────────────────────────
-  Component(document_actions, "DocumentActionsComponent", "Angular Standalone [Smart – Actions Host]\n[UC-19, UC-22, UC-34, UC-35]\n[Riuso da DocumentDetail]","Barra azioni contestuali.\nRiutilizzato per azioni su aggregazione:\n  Salva (UC-19), Stampa (UC-22),\n  Scarica (UC-35), Esporta PDF (UC-34).\n@Input aggregateId")
+  Component(document_actions, "DocumentActionsComponent", "Angular Standalone [Smart – Actions Host]\n[UC-19, UC-22, UC-34, UC-35]\n[Riuso da DocumentDetail]","Barra azioni contestuali.\nRiutilizzato per azioni su aggregazione:\n  Salva (UC-19), Stampa (UC-22),\n  Scarica (UC-35), Esporta PDF (UC-34).\n@Input aggregateId\nRiceve @Output actionRequested da OutputToolbar (Dumb)\ne chiama OutputFacade con il parametro appropriato.\nApre FolderPickerDialogComponent per UC-19, UC-34, UC-35.\nApre ErrorDialogComponent in risposta ad AppError da OutputFacade.")
 
-  Component(output_toolbar, "OutputToolbarComponent", "Angular Standalone [Smart]\n[UC-19, UC-22, UC-34, UC-35]","Barra azioni output contestuali.\nInietta OutputFacade.\nBottoni: Salva, Stampa, Scarica, Esporta PDF.")
+  Component(output_toolbar, "OutputToolbarComponent", "Angular Standalone [Dumb]\n[UC-19, UC-22, UC-34, UC-35]","Barra azioni output contestuali.\n@Input:  context: OutputContext\n@Output: actionRequested: OutputAction\n         (SAVE | PRINT | DOWNLOAD | EXPORT_PDF)\nNessuna DI: DocumentActionsComponent (Smart)\nriceve actionRequested e chiama OutputFacade.")
 
-  Component(folder_picker_dialog, "FolderPickerDialogComponent", "Angular Standalone [Smart]\n[UC-19, UC-34, UC-35]\n[WCAG 2.1.1, 2.1.2]","Dialogo modale selezione cartella destinazione.\nValidazione: blocca cartella sorgente DIP.\nFocus trap via AccessibilityService.")
+  Component(folder_picker_dialog, "FolderPickerDialogComponent", "Angular Standalone [Smart]\n[UC-19, UC-34, UC-35]\n[WCAG 2.1.1, 2.1.2]","Dialogo modale selezione cartella destinazione.\nValidazione: blocca cartella sorgente DIP.\nAperto da DocumentActionsComponent (NON da OutputFacade).\nDopo conferma path → chiama OutputFacade.saveFile/exportPdf.\nFocus trap via AccessibilityService.")
 
-  Component(error_dialog, "ErrorDialogComponent", "Angular Standalone [Dumb – Shared]\n[UC-21, UC-24, UC-25, UC-36, UC-37]\n[WCAG 2.1.1, 2.1.2, 4.1.2]","Dialogo modale di errore.\nAperto da OutputFacade su errori output:\n  OUTPUT_IO_ERROR, OUTPUT_PRINT_ERROR,\n  OUTPUT_FORMAT_NOT_PRINTABLE,\n  OUTPUT_PDF_GENERATION_ERROR")
+  Component(error_dialog, "ErrorDialogComponent", "Angular Standalone [Dumb – Shared]\n[UC-21, UC-24, UC-25, UC-36, UC-37]\n[WCAG 2.1.1, 2.1.2, 4.1.2]","Dialogo modale di errore.\nAperto da DocumentActionsComponent in risposta\nall'AppError restituito da OutputFacade:\n  OUTPUT_IO_ERROR, OUTPUT_PRINT_ERROR,\n  OUTPUT_FORMAT_NOT_PRINTABLE,\n  OUTPUT_PDF_GENERATION_ERROR\nNON aperto direttamente da OutputFacade.")
 
   Component(verification_badge, "VerificationBadgeComponent", "Angular Standalone [Dumb – Shared]\n[UC-4]","Badge: Non Verificato / Valido / Non Valido.\nRiutilizzabile anche nei metadati aggregazione.")
 
@@ -52,7 +52,7 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
   ' ── FACADE SERVICES ─────────────────────────────────────
   Component(aggregate_facade, "AggregateFacade", "Angular Service [Injectable]\n[Facade + SRP]","Stato dettaglio aggregazione.\nSignal<AggregateDetail | null>, loading\n  error: AppError | null (DOC_NOT_FOUND per aggregazione)\nUC-59..70.")
 
-  Component(output_facade, "OutputFacade", "Angular Service [Injectable]\n[Facade + SRP]","Coordina operazioni di output per aggregazione.\n  saveFile [no-cache]\n  print [no-cache]\n  exportPdf [no-cache]\n  download [no-cache]\nApre FolderPickerDialog e ErrorDialog su errore.")
+  Component(output_facade, "OutputFacade", "Angular Service [Injectable]\n[Facade + SRP]","Coordina operazioni di output per aggregazione.\n  saveFile [no-cache]\n  print [no-cache]\n  exportPdf [no-cache]\n  download [no-cache]\nRestituisce Result<void, AppError>.\nNON apre componenti UI: è DocumentActionsComponent\nche gestisce FolderPickerDialog ed ErrorDialog.")
 
   Component(ipc_gateway, "IpcGateway", "Angular Service [providedIn:'root']\n[Adapter + ISP]","Unico punto di accesso all'Electron Context Bridge.\nCanali aggregazione:\n  getAggregateMetadata [cache-first, TTL 300s]")
 
@@ -93,10 +93,10 @@ Rel_R(aggregate_metadata, timestamp_label, "date aggregazione – UC-5")
 Rel_D(admin_procedure, procedure_phases, "@Input phases[] – UC-66.4")
 
 ' ── DocumentActions ────────────────────────────────────────
-Rel_D(document_actions, output_toolbar, "delega azioni output con context=aggregazione")
-Rel_D(output_toolbar, output_facade, "save, print, exportPdf, download")
-Rel_D(output_facade, folder_picker_dialog, "apre dialogo selezione cartella – UC-19, UC-34, UC-35")
-Rel_R(output_facade, error_dialog, "AppError → UC-21, UC-24, UC-25, UC-36, UC-37\nrecoverable=true → 'Riprova'")
+Rel_D(document_actions, output_toolbar, "@Input context; @Output actionRequested (Dumb)")
+Rel_R(document_actions, output_facade, "chiama OutputFacade in risposta a actionRequested – UC-19,22,34,35")
+Rel_D(document_actions, folder_picker_dialog, "apre FolderPickerDialog; riceve path → chiama OutputFacade")
+Rel_R(document_actions, error_dialog, "AppError da OutputFacade → UC-21,24,25,36,37")
 Rel_R(output_facade, notification_service, "conferma operazione output completata")
 Rel_R(output_facade, live_announcer, "announce('Operazione completata') [polite]")
 Rel_R(folder_picker_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
@@ -135,6 +135,8 @@ DocumentActionsComponent riusato con @Input aggregateId
 
 USE CASE COPERTI
 ══════════════════════════════════════════
+UC-4   Stato di verifica elemento (VerificationBadge)
+UC-5   Marcatura temporale elemento (TimestampLabel)
 UC-59  Tipo aggregazione
 UC-60  Identificativo aggregazione
 UC-61  Tipologia fascicolo

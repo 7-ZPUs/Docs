@@ -24,18 +24,18 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
   Component(inline_error, "InlineErrorComponent", "Angular Standalone [Dumb – Shared]\n[Errori non bloccanti]","DOC_NOT_FOUND o DOC_BLOB_LOAD_ERROR\nmostrato inline.\n'Riprova' se error.recoverable === true.")
 
   ' ── H1: DOCUMENT VIEWER ─────────────────────────────────
-  Component(document_viewer, "DocumentViewerComponent", "Angular Standalone [Smart – Composite]\n[UC-7, UC-8]","Viewer principale del documento.\nComposizione: PreviewPanelComponent + DocumentActionsComponent.\nRiceve documentId, mimeType, fileName da DocumentDetailPage.\nSeparare layout del viewer dalla logica della pagina (SRP).\nRiutilizzabile anche da SearchResultsComponent.")
+  Component(document_viewer, "DocumentViewerComponent", "Angular Standalone [Smart – Composite]\n[UC-7, UC-8]","Viewer principale del documento.\nResponsabilità blob: chiama DocumentFacade.getFileBlob(documentId)\ne passa src: Uint8Array a PreviewPanelComponent via @Input.\nGestisce @Output unsupportedFormat da PreviewRenderer\n→ apre ErrorDialogComponent (UC-8).\nComposizione: PreviewPanelComponent (Dumb) + DocumentActionsComponent.\nRiceve documentId, mimeType, fileName da DocumentDetailPage.\nRiutilizzabile anche da SearchPageComponent.")
 
-  Component(preview_panel, "PreviewPanelComponent", "Angular Standalone [Smart]\n[UC-7, UC-8]","Pannello anteprima: gestisce caricamento file via IpcGateway.\nDelega rendering a PreviewRendererComponent.\nSe mimeType non supportato → apre ErrorDialogComponent (UC-8).\nSe file non leggibile → AppError(DOC_BLOB_LOAD_ERROR).")
+  Component(preview_panel, "PreviewPanelComponent", "Angular Standalone [Dumb]\n[UC-7, UC-8]","Pannello anteprima: riceve il blob già caricato dal parent Smart.\n@Input: src: Uint8Array | null\n        loading: boolean\n        error: AppError | null\nDelega rendering a PreviewRendererComponent.\n@Output: unsupportedFormat → gestito da DocumentViewerComponent.\nNessuna DI: zero chiamate IPC dirette.")
 
   Component(preview_renderer, "PreviewRendererComponent", "Angular Standalone [Dumb]\n[UC-7, UC-8]\n[Strategy per MIME type]","Renderer puro: PDF viewer, image viewer, text viewer.\n@Input: src: Uint8Array, mimeType: string.\n@Output: unsupportedFormat: EventEmitter.\nSeleziona strategia di rendering tramite switch su mimeType.\nNon conosce IPC né facade.")
 
-  Component(error_dialog, "ErrorDialogComponent", "Angular Standalone [Dumb – Shared]\n[UC-8] [WCAG 2.1.1, 2.1.2, 4.1.2]","Dialogo modale per errori bloccanti.\n@Input: error: AppError\nAperto da PreviewPanel per:\n  DOC_FORMAT_UNSUPPORTED (UC-8)\n  DOC_BLOB_LOAD_ERROR\nBottone 'Riprova' se recoverable=true.\nFocus trap via AccessibilityService (WCAG 2.1.2).")
+  Component(error_dialog, "ErrorDialogComponent", "Angular Standalone [Dumb – Shared]\n[UC-8] [WCAG 2.1.1, 2.1.2, 4.1.2]","Dialogo modale per errori bloccanti.\n@Input: error: AppError\nAperto da DocumentViewerComponent per:\n  DOC_FORMAT_UNSUPPORTED (UC-8)\n  DOC_BLOB_LOAD_ERROR\nBottone 'Riprova' se recoverable=true.\nFocus trap via AccessibilityService (WCAG 2.1.2).")
 
   ' ── H2: METADATA PANEL ──────────────────────────────────
   Component(metadata_panel, "MetadataPanelComponent", "Angular Standalone [Smart – Composite]\n[UC-38..58, UC-71]","Pannello laterale/espandibile dei metadati documento.\n@Input documentDetail: DocumentDetail\nOrganizza sotto-sezioni in tab/accordion:\n  Metadati Generali · Dati Registrazione\n  Classificazione · Formato · Verifica\n  Soggetti · Allegati · Tracciature Modifiche\n  Metadati Custom · AiP / Processo Conservazione")
 
-  Component(doc_metadata, "DocumentMetadataComponent", "Angular Standalone [Dumb]\n[UC-42, UC-45..48, UC-50..52, UC-55..56]","Metadati generali: descrizione, note, tipo documentale,\nmodalità formazione, riservatezza, versione, nome.")
+  Component(doc_metadata, "DocumentMetadataComponent", "Angular Standalone [Dumb]\n[UC-42, UC-45..48, UC-50..52, UC-55..56, UC-46]","Metadati generali: descrizione, note, tipo documentale,\nmodalità formazione, riservatezza, versione, nome.\nUC-46: conservazione ereditata dalla classe documentale\n(campo opzionale → OptionalFieldAbsentComponent se assente).")
 
   Component(registration_data, "RegistrationDataComponent", "Angular Standalone [Dumb]\n[UC-49.1..5]","Dati di registrazione: flusso, tipo registro,\ndata, numero, codice.")
 
@@ -66,16 +66,18 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
   Component(timestamp_label, "TimestampLabelComponent", "Angular Standalone [Dumb – Shared]\n[UC-5]","Label marcatura temporale.\n<time datetime='ISO-8601'>")
 
   ' ── H3: DOCUMENT ACTIONS ────────────────────────────────
-  Component(document_actions, "DocumentActionsComponent", "Angular Standalone [Smart – Actions Host]\n[UC-7, UC-19, UC-20, UC-22, UC-23, UC-29, UC-34, UC-35]", "Barra azioni contestuali per un documento.\nInput: documentId, documentName, mimeType.\nBottoni: Anteprima (UC-7), Salva (UC-19),\nStampa (UC-22), Scarica (UC-35),\nVerifica Integrità (UC-29), Esporta PDF (UC-34).\nDelega OutputFacade e IntegrityFacade.")
+  Component(document_actions, "DocumentActionsComponent", "Angular Standalone [Smart – Actions Host]\n[UC-7, UC-19, UC-20, UC-22, UC-23, UC-29, UC-34, UC-35]", "Barra azioni contestuali per un documento.\n@Input: documentId, documentName, mimeType.\nBottoni: Anteprima (UC-7), Salva (UC-19),\nStampa (UC-22), Scarica (UC-35),\nVerifica Integrità (UC-29), Esporta PDF (UC-34).\nRiceve @Output actionRequested da OutputToolbar (Dumb)\ne chiama OutputFacade con il parametro appropriato.\nApre FolderPickerDialogComponent per UC-19, UC-34, UC-35.\nSe IntegrityFacade.isVerifying=true: bottone UC-29\nmostra tooltip 'Verifica già in corso'.")
 
-  Component(output_toolbar, "OutputToolbarComponent", "Angular Standalone [Smart]\n[UC-19, UC-22, UC-34, UC-35]","Barra azioni output contestuali.\nInietta OutputFacade.\nBottoni: Salva, Stampa, Scarica, Esporta PDF.")
+  Component(output_toolbar, "OutputToolbarComponent", "Angular Standalone [Dumb]\n[UC-19, UC-22, UC-34, UC-35]","Barra azioni output contestuali.\n@Input:  context: OutputContext\n@Output: actionRequested: OutputAction\n         (SAVE | PRINT | DOWNLOAD | EXPORT_PDF)\nNessuna DI: DocumentActionsComponent (Smart)\nriceve actionRequested e chiama OutputFacade.")
 
   ' ── FACADE SERVICES ─────────────────────────────────────
   Component(document_facade, "DocumentFacade", "Angular Service [Injectable]\n[Facade + SRP]","Stato dettaglio documento.\nSignal<DocumentDetail | null>, loading\n  error: AppError | null\n    DOC_NOT_FOUND      → documento non trovato\n    DOC_BLOB_LOAD_ERROR → file fisico non leggibile\nUC-42..58, UC-71.")
 
-  Component(output_facade, "OutputFacade", "Angular Service [Injectable]\n[Facade + SRP]","Coordina operazioni di output.\nRilevante per DocumentActions:\n  saveFile [no-cache], print [no-cache],\n  exportPdf [no-cache], download [no-cache]\nApre FolderPickerDialog e ErrorDialog su errore.")
+  Component(folder_picker_dialog, "FolderPickerDialogComponent", "Angular Standalone [Smart]\n[UC-19, UC-34, UC-35]\n[WCAG 2.1.1, 2.1.2]","Dialogo modale selezione cartella di destinazione.\nValidazione: blocca cartella sorgente DIP.\nAperto da DocumentActionsComponent (NON da OutputFacade).\nDopo conferma path → chiama OutputFacade.saveFile/exportPdf.\nFocus trap via AccessibilityService (WCAG 2.1.2).")
 
-  Component(integrity_facade, "IntegrityFacade", "Angular Service [Injectable]\n[Facade + SRP]","Rilevante per DocumentActions (UC-29):\n  verifyDocument(id) [no-cache]\nSignal<isVerifying>: blocca avvio concorrente.")
+  Component(output_facade, "OutputFacade", "Angular Service [Injectable]\n[Facade + SRP]","Coordina operazioni di output.\nRilevante per DocumentActions:\n  saveFile [no-cache], print [no-cache],\n  exportPdf [no-cache], download [no-cache]\nRestituisce Result<void, AppError>:\n  OUTPUT_IO_ERROR, OUTPUT_SOURCE_FOLDER_FORBIDDEN,\n  OUTPUT_PRINT_ERROR, OUTPUT_FORMAT_NOT_PRINTABLE,\n  OUTPUT_PDF_GENERATION_ERROR, OUTPUT_DOWNLOAD_ERROR\nNON apre componenti UI: è DocumentActionsComponent\nche gestisce FolderPickerDialog ed ErrorDialog.")
+
+  Component(integrity_facade, "IntegrityFacade", "Angular Service [Injectable]\n[Facade + SRP]","Rilevante per DocumentActions (UC-29):\n  verifyDocument(id) [no-cache]\nSignal<isVerifying>: blocca avvio concorrente.\nDocumentActionsComponent legge isVerifying → disabilita\nbottone UC-29 con tooltip 'Verifica già in corso'.")
 
   Component(ipc_gateway, "IpcGateway", "Angular Service [providedIn:'root']\n[Adapter + ISP]","Unico punto di accesso all'Electron Context Bridge.\nCanali documento:\n  getDocumentMetadata [cache-first, TTL 300s]\n  getFileBlob         [cache-first, TTL 60s]\n  getAipInfo          [cache-first, TTL 300s]")
 
@@ -102,14 +104,14 @@ Rel_D(document_page, document_viewer, "@Input documentId, mimeType, fileName –
 Rel_D(document_page, metadata_panel, "@Input documentDetail – UC-42..71")
 
 ' ── DocumentViewer ─────────────────────────────────────────
-Rel_D(document_viewer, preview_panel, "delega anteprima @Input src, mimeType – UC-7")
+Rel_D(document_viewer, document_facade, "getFileBlob(documentId) → src: Uint8Array [cache-first, TTL 60s]")
+Rel_D(document_viewer, preview_panel, "@Input src, loading, error – UC-7 (Dumb)")
 Rel_D(document_viewer, document_actions, "delega azioni @Input documentId, mimeType")
+Rel_R(document_viewer, error_dialog, "AppError(DOC_FORMAT_UNSUPPORTED) – UC-8\nAppError(DOC_BLOB_LOAD_ERROR)")
 
 ' ── PreviewPanel ───────────────────────────────────────────
 Rel_D(preview_panel, preview_renderer, "@Input src, mimeType – rendering puro UC-7")
-Rel_D(preview_panel, document_facade, "getFileBlob(documentId) per caricare il file")
-Rel_R(preview_panel, error_dialog, "AppError(DOC_FORMAT_UNSUPPORTED) – UC-8\nAppError(DOC_BLOB_LOAD_ERROR)")
-Rel_U(preview_renderer, preview_panel, "@Output unsupportedFormat → UC-8")
+Rel_U(preview_renderer, preview_panel, "@Output unsupportedFormat → UC-8 (gestito da DocumentViewer)")
 Rel_R(error_dialog, accessibility_service, "trapFocus() apertura; restoreFocus() chiusura")
 
 ' ── MetadataPanel ──────────────────────────────────────────
@@ -129,13 +131,15 @@ Rel_D(subject_list, subject_card, "*SubjectCard per soggetto – UC-43.1.x")
 Rel_D(conservation_process, optional_absent, "UC-39.3, UC-39.6, UC-39.9 – campo opzionale assente")
 Rel_D(attachments, optional_absent, "UC-57.3 – nessun allegato presente")
 Rel_D(custom_metadata, optional_absent, "UC-71 – nessun metadato custom presente")
+Rel_D(doc_metadata, optional_absent, "UC-46 – conservazione ereditata (campo opzionale assente)")
 Rel_R(verification_info, verification_badge, "stato verifica")
 Rel_R(doc_metadata, timestamp_label, "marcatura temporale")
 
 ' ── DocumentActions ────────────────────────────────────────
-Rel_D(document_actions, output_toolbar, "delega azioni di output con context=documento")
+Rel_D(document_actions, output_toolbar, "@Input context; @Output actionRequested (Dumb)")
+Rel_R(document_actions, output_facade, "chiama OutputFacade in risposta a actionRequested – UC-19,22,34,35")
+Rel_D(document_actions, folder_picker_dialog, "apre FolderPickerDialog; riceve path → chiama OutputFacade")
 Rel_R(document_actions, integrity_facade, "verifyDocument(id) – UC-29")
-Rel_D(output_toolbar, output_facade, "save, print, exportPdf, download")
 
 ' ── DocumentFacade → IPC ───────────────────────────────────
 Rel_D(document_facade, ipc_gateway, "getDocumentMetadata [cache-first, TTL 300s]\ngetFileBlob [cache-first, TTL 60s]\ngetAipInfo [cache-first, TTL 300s]")
@@ -153,14 +157,16 @@ FLUSSO VISUALIZZAZIONE DOCUMENTO
 1. Utente clicca nodo documento nell'albero o risultato ricerca
 2. Router.navigate(['/document', id])
 3. DocumentDetailPage:
-a. DocumentFacade.getDocumentMetadata(id) [cache, TTL 5min]
-b. Signal<DocumentDetail> → MetadataPanelComponent
-c. DocumentFacade.getFileBlob(id) [cache, TTL 1min]
-d. Signal → PreviewPanelComponent → PreviewRendererComponent
-4. PreviewRenderer seleziona strategia MIME:
-PDF viewer / image viewer / text viewer
-5. Se mimeType non supportato:
-@Output unsupportedFormat → ErrorDialog (UC-8)
+   a. DocumentFacade.getDocumentMetadata(id) [cache, TTL 5min]
+   b. Signal<DocumentDetail> → MetadataPanelComponent
+4. DocumentViewerComponent (Smart):
+   a. chiama DocumentFacade.getFileBlob(id) [cache, TTL 1min]
+   b. passa src: Uint8Array via @Input a PreviewPanelComponent (Dumb)
+   c. PreviewPanel → PreviewRendererComponent (rendering puro)
+5. PreviewRenderer seleziona strategia MIME:
+   PDF viewer / image viewer / text viewer
+6. Se mimeType non supportato:
+   @Output unsupportedFormat → DocumentViewer → ErrorDialog (UC-8)
 
 GESTIONE CAMPI OPZIONALI ASSENTI
 ══════════════════════════════════════════
@@ -193,6 +199,7 @@ UC-42   Identificativo documento
 UC-43   Soggetti (PF, PG, AS, PAI, PAE, SW)
 UC-44   Classificazione
 UC-45..48 Metadati generali (tipo, modalità, riservatezza...)
+UC-46   Conservazione ereditata (OptionalFieldAbsent se assente)
 UC-49   Dati di registrazione
 UC-50..52 Metadati aggiuntivi
 UC-53   Formato file

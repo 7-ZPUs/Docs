@@ -21,9 +21,9 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
   ' ── SEARCH MODULE ───────────────────────────────────────
   Component(search_page, "SearchPageComponent", "Angular Standalone [Smart]\nRoute: /search","Pagina ricerca.\nLegge Signal<SearchState> da SearchFacade.\nAvvolge risultati con AsyncStateWrapperComponent.\nCompone: SearchBar, AdvancedFilterPanel,\n  SearchResults, SemanticIndexStatus (opzionale).")
 
-  Component(search_bar, "SearchBarComponent", "Angular Standalone [Dumb]\n[UC-9, UC-9.3, UC-9.4]","Input ricerca: libera, per nome classe, per ID processo.\n@Output: queryChanged: SearchQuery\nDebounce 300ms sull'input testuale (SearchFacade).")
+  Component(search_bar, "SearchBarComponent", "Angular Standalone [Dumb]\n[UC-9, UC-9.3, UC-9.4]","Input ricerca: libera, per nome classe, per ID processo.\n@Output: queryChanged: SearchQuery\nEmette ad ogni modifica — nessun debounce interno.\nDebounce 300ms gestito da SearchFacade (toObservable + debounceTime).")
 
-  Component(advanced_filter_panel, "AdvancedFilterPanelComponent", "Angular Standalone [Smart]\n[UC-9.1, UC-10, UC-12.1..3, UC-13, UC-18]","Pannello filtri avanzati espandibile.\nGestisce aggiunta/rimozione/azzeramento filtri.\nValidazione real-time via FilterValidatorService.\nDelega a CommonFilters, DiDaiFilters, AggregateFilters,\n  CustomMetaFilter, SubjectFilter.")
+  Component(advanced_filter_panel, "AdvancedFilterPanelComponent", "Angular Standalone [Dumb]\n[UC-9.1, UC-10, UC-12.1..3, UC-13, UC-18]","Pannello filtri avanzati espandibile.\nGestisce aggiunta/rimozione/azzeramento filtri.\n@Input:  filters: SearchFilters\n         validator: FilterValidatorFn\n@Output: filtersChanged: SearchFilters\n         validationResult: ValidationResult\nNessuna DI: validator iniettato da SearchPageComponent.\nDelega a CommonFilters, DiDaiFilters, AggregateFilters,\n  CustomMetaFilter, SubjectFilter.")
 
   Component(common_filters, "CommonFiltersComponent", "Angular Standalone [Dumb]\n[UC-12.1.2..7]","Filtri comuni: chiave descrittiva, classificazione,\nconservazione, note, tipo.")
 
@@ -41,7 +41,7 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
 
   Component(field_error, "FieldErrorComponent", "Angular Standalone [Dumb – Shared]\n[UC-18, UC-10]","Messaggio errore a livello di singolo campo.\n@Input: error: ValidationError | null\nMostra il messaggio inline sotto il campo.\nProdotto da FilterValidatorService, non da IpcErrorHandler.")
 
-  Component(search_results, "SearchResultsComponent", "Angular Standalone [Smart]\n[UC-15, UC-16]","Lista risultati: nome e tipo per elemento.\nAl click apre DocumentViewer in pannello laterale\n  (anteprima rapida, riuso senza navigare a /document/:id).\nFallback: EmptyStateComponent (UC-16).")
+  Component(search_results, "SearchResultsComponent", "Angular Standalone [Dumb]\n[UC-15, UC-16]","Lista risultati: nome e tipo per elemento.\n@Input:  results: SearchResult[]\n@Output: resultSelected: EventEmitter<string>  ← emette documentId\nNON istanzia DocumentViewer direttamente.\nDelega la selezione a SearchPageComponent (Smart).\nFallback: EmptyStateComponent (UC-16).")
 
   Component(semantic_status, "SemanticIndexStatusComponent", "Angular Standalone [Dumb]\n[UC-11 – Opzionale]","Badge/banner disponibilità ricerca semantica AI.\nInput: status: IndexingStatus.\nMostra stato 'disponibile' / 'in corso' / 'non disponibile'.")
 
@@ -52,7 +52,7 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
   Component(inline_error, "InlineErrorComponent", "Angular Standalone [Dumb – Shared]\n[Errori non bloccanti]","Errore SEARCH_ENGINE_ERROR mostrato inline.\n'Riprova' se error.recoverable === true.")
 
   ' ── FACADE SERVICES ─────────────────────────────────────
-  Component(search_facade, "SearchFacade", "Angular Service [Injectable]\n[Facade + SRP]","Stato ricerca.\nSignal<SearchState>:\n  query, filters, results, loading\n  error: AppError | null  ← SEARCH_ENGINE_ERROR\n  validationErrors: Map<field, ValidationError>\n  isSearching: boolean  ← mutex Signal\n\nControllo concorrenza:\n  AbortController per cancel IPC in volo\n  Debounce 300ms sull'input testuale\n  isSearching=true per tutta la durata;\n  seconda submit ignorata se isSearching=true\n\nDegrado graceful:\n  Se SemanticIndexFacade.status ≠ 'ready'\n  → disabilita automaticamente searchSemantic\nUC-9, UC-9.1..9.4, UC-10, UC-15, UC-16.")
+  Component(search_facade, "SearchFacade", "Angular Service [Injectable]\n[Facade + SRP]","Stato ricerca.\nSignal<SearchState>:\n  query, filters, results, loading\n  error: AppError | null  ← SEARCH_ENGINE_ERROR\n  validationErrors: Map<field, ValidationError>\n  isSearching: boolean  ← mutex Signal\n\nControllo concorrenza:\n  AbortController per cancel IPC in volo\n  Debounce 300ms interno: toObservable(query).pipe(debounceTime(300))\n  isSearching=true per tutta la durata;\n  seconda submit ignorata se isSearching=true\n  isSearching resettato in finally: garantito=false anche su SEARCH_ENGINE_ERROR\n\nDegrado graceful:\n  Se SemanticIndexFacade.status ≠ 'ready'\n  → disabilita automaticamente searchSemantic\nUC-9, UC-9.1..9.4, UC-10, UC-15, UC-16.")
 
   Component(semantic_facade, "SemanticIndexFacade", "Angular Service [Injectable]\n[Facade – Opzionale]","Stato indicizzazione semantica AI.\nSignal<SemanticIndexState>:\n  status: 'idle'|'indexing'|'ready'|'error'|'timeout'|'cancelled'\nSearchFacade controlla questo status per\ndecidere se abilitare il canale searchSemantic.\nUC-9.2 (opzionale), UC-11.")
 
@@ -90,8 +90,8 @@ Rel_D(search_page, advanced_filter_panel, "@Input filters, @Output filtersChange
 Rel_D(search_page, search_results, "@Input results[] – UC-15, UC-16")
 Rel_D(search_page, semantic_status, "@Input status [Opzionale] – UC-11")
 
-' ── SearchBar → Facade ─────────────────────────────────────
-Rel_D(search_bar, search_facade, "queryChanged → search() con debounce 300ms")
+' ── SearchBar → SearchPage (corretto: Dumb non chiama Facade direttamente) ──
+' queryChanged sale a SearchPageComponent che chiama SearchFacade.setQuery()
 
 ' ── AdvancedFilterPanel → figli ────────────────────────────
 Rel_D(advanced_filter_panel, common_filters, "@Input – UC-12.1")
@@ -99,7 +99,8 @@ Rel_D(advanced_filter_panel, di_dai_filters, "@Input – UC-12.2.1")
 Rel_D(advanced_filter_panel, aggregate_filters, "@Input – UC-12.2.2")
 Rel_D(advanced_filter_panel, custom_meta_filter, "@Input – UC-12.3")
 Rel_D(advanced_filter_panel, subject_filter, "@Input – UC-13")
-Rel_R(advanced_filter_panel, filter_validator, "validate(filters) real-time – UC-10, UC-18")
+' FilterValidatorFn iniettata da SearchPageComponent e passata via @Input (non DI diretta)
+Rel_R(search_page, filter_validator, "inietta FilterValidatorFn → @Input validator a AdvancedFilterPanel")
 
 ' ── Subject Filter ─────────────────────────────────────────
 Rel_D(subject_filter, subject_detail_form, "@Input subjectType → campi – UC-13.3")
@@ -112,11 +113,14 @@ Rel_D(filter_value_input, field_error, "@Input ValidationError – UC-18 inline 
 
 ' ── SearchResults ──────────────────────────────────────────
 Rel_D(search_results, empty_state, "fallback UC-16")
-Rel_D(search_results, document_viewer, "anteprima rapida documento selezionato – UC-7 (riuso)")
-Rel_D(search_results, metadata_panel, "pannello metadati rapido nel risultato – riuso")
+Rel_D(search_results, search_page, "@Output resultSelected → documentId – UC-15")
+' SearchPageComponent (Smart) gestisce lo stato selectedDocumentId e istanzia il viewer
+Rel_D(search_page, document_viewer, "@if selectedDocumentId() → anteprima rapida – UC-7 (riuso)")
 
 ' ── SemanticStatus ─────────────────────────────────────────
-Rel_D(semantic_status, semantic_facade, "legge Signal<SemanticIndexState>.status")
+' SemanticIndexStatusComponent è Dumb: riceve status via @Input da SearchPageComponent
+' SearchPage legge SemanticIndexFacade e proietta il valore
+Rel_R(search_page, semantic_facade, "legge Signal<SemanticIndexState>.status → @Input a SemanticIndexStatus")
 
 ' ── SearchFacade → servizi ─────────────────────────────────
 Rel_D(search_facade, ipc_gateway, "search, searchAdvanced [AbortController per cancel]\nsearchSemantic [no-cache se status≠ready]")
@@ -133,37 +137,44 @@ Rel_R(ipc_gateway, ipc_cache, "get(key) cache-first, TTL 30s per search results"
 note as legend
 FLUSSO RICERCA FULL-TEXT (UC-9)
 ══════════════════════════════════════════
-1. Utente digita query in SearchBarComponent
-2. Debounce 300ms → SearchFacade.search(query)
-3. isSearching=true (mutex Signal)
-4. IpcGateway.invoke('search') [cache-first, TTL 30s]
-5. Risposta → Signal<SearchState>.results aggiornato
-6. SearchResultsComponent renderizza la lista
-7. LiveAnnouncer: 'Trovati N risultati' [polite]
-8. isSearching=false
+1. Utente digita → SearchBarComponent emette queryChanged (nessun debounce interno)
+2. SearchPageComponent riceve @Output → chiama SearchFacade.setQuery(q)
+3. SearchFacade: debounce 300ms interno (toObservable + debounceTime)
+4. isSearching=true (mutex Signal)
+5. IpcGateway.invoke('search') [cache-first, TTL 30s]
+6. finally: isSearching=false (garantito anche su SEARCH_ENGINE_ERROR)
+7. Signal<SearchState>.results aggiornato
+8. SearchResultsComponent renderizza la lista
+9. LiveAnnouncer: 'Trovati N risultati' [polite]
 
 FLUSSO RICERCA AVANZATA (UC-9.1, UC-10..18)
 ══════════════════════════════════════════
 1. Utente espande AdvancedFilterPanelComponent
 2. Configura filtri (CommonFilters, DiDai, Aggregate,
 CustomMeta, SubjectFilter)
-3. FilterValidatorService valida in real-time
+3. FilterValidatorFn (passata via @Input da SearchPage) valida in real-time
 → UC-18: FieldErrorComponent inline sotto ogni campo
 4. Submit → SearchFacade.searchAdvanced(filters)
 5. AbortController cancella IPC precedente se in volo
 
+GESTIONE SELEZIONE RISULTATO
+══════════════════════════════════════════
+SearchResultsComponent emette @Output resultSelected(documentId)
+SearchPageComponent riceve l'evento → selectedDocumentId.set(id)
+@if selectedDocumentId() → istanzia DocumentViewerComponent
+
 CONCORRENZA
 ══════════════════════════════════════════
-isSearching=true → secondo submit ignorato silenziosamente
+isSearching reset in finally → garantito=false anche su SEARCH_ENGINE_ERROR
 AbortController → cancella chiamata IPC in volo
-Debounce 300ms → riduce IPC su digitazione rapida
+Debounce 300ms → nel SearchFacade (toObservable), NON in SearchBarComponent
 
 DEGRADO SEMANTICO (UC-9.2, UC-11)
 ══════════════════════════════════════════
 SemanticIndexFacade.status ≠ 'ready'
 → SearchFacade disabilita searchSemantic automaticamente
 → ricerca full-text rimane integra (graceful degradation)
-SemanticIndexStatusComponent mostra banner informativo
+SearchPage legge SemanticIndexFacade → @Input status a SemanticIndexStatusComponent
 
 USE CASE COPERTI
 ══════════════════════════════════════════

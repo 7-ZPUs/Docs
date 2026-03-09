@@ -35,7 +35,7 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
 
   Component(inline_error, "InlineErrorComponent", "Angular Standalone [Dumb – Shared]\n[Errori non bloccanti – inline]","Messaggio errore inline, non modale.\n@Input: error: AppError\nLink 'Riprova' se error.recoverable === true.\nNon blocca la UI: il resto della pagina rimane usabile.\nUso: nodo albero con loadChildren fallito (DIP_CHILDREN_LOAD_ERROR)")
 
-  Component(dip_facade, "DipFacade", "Angular Service [Injectable]\n[Facade + SRP]","Stato del DIP caricato.\nSignal<DipState>:\n  phase, rootNodes: DipTreeNode[]\n  nodeChildrenErrors: Map<nodeId, AppError>\n  nodeCache: Map<nodeId, DipTreeNode[]>\nAPI lazy loading:\n  loadRootNodes()  → AppError(DIP_FILE_NOT_FOUND | ...)\n  loadChildren(id) → AppError(DIP_CHILDREN_LOAD_ERROR)\nUC-1, UC-2, UC-3, UC-6.")
+  Component(dip_facade, "DipFacade", "Angular Service [Injectable]\n[Facade + SRP]","Stato del DIP caricato.\nSignal<DipState>:\n  phase, rootNodes: DipTreeNode[]\n  nodeChildrenErrors: Map<nodeId, AppError>\nNOTA: nodeCache migrata a IpcCacheService (v4);\n  IpcCacheService gestisce la cache dei nodi figli\n  con TTL 600_000 ms (10 min).\nAPI lazy loading:\n  loadRootNodes()  → AppError(DIP_FILE_NOT_FOUND | ...)\n  loadChildren(id) → AppError(DIP_CHILDREN_LOAD_ERROR)\nUC-1, UC-2, UC-3, UC-6.")
 
   Component(ipc_gateway, "IpcGateway", "Angular Service [providedIn:'root']\n[Adapter + ISP]","Unico punto di accesso all'Electron Context Bridge.\nCachePolicy per tree:\n  loadChildren → 'cache-first', TTL 600_000 ms\n  getClasses, getProcesses, getDocuments → 'cache-first'")
 
@@ -56,6 +56,8 @@ Rel_D(user, app_shell, "Naviga l'albero DIP", "Mouse / Tastiera / Frecce")
 ' ── AppShell ───────────────────────────────────────────────
 Rel_D(app_shell, dip_facade, "legge Signal<DipState>.phase per switch visivo")
 Rel_D(app_shell, dip_tree, "sidebar: @Input rootNodes – navigazione persistente")
+' DipTree sidebar: @Output nodeSelected → AppShell → router.navigate()
+Rel_R(app_shell, router, "DipTree sidebar: @Output nodeSelected → router.navigate(['/document'|'/aggregate', id])")
 
 ' ── Router + Guard ─────────────────────────────────────────
 Rel_D(router, dip_ready_guard, "CanActivateFn su tutte le rotte")

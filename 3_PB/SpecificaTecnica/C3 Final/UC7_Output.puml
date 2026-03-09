@@ -14,18 +14,18 @@ System_Ext(ipc, "IPC Dispatcher (Main Process)", "Electron Context Bridge")
 Container_Boundary(renderer, "Renderer Process – Angular 17+") {
 
   ' ── ENTRY POINTS ────────────────────────────────────────
-  Component(document_actions, "DocumentActionsComponent", "Angular Standalone [Smart – Actions Host]\n[UC-19, UC-22, UC-23, UC-34, UC-35]\n[Entry Point dal documento]","Barra azioni contestuali per documento/aggregazione.\nBottoni attivati dall'utente:\n  Salva (UC-19), Stampa (UC-22),\n  Scarica (UC-35), Esporta PDF (UC-34).\nDelega a OutputToolbarComponent.\nDisponibile in: DocumentDetailPage,\n  AggregateDetailPage, SearchResults (anteprima).")
+  Component(document_actions, "DocumentActionsComponent", "Angular Standalone [Smart – Actions Host]\n[UC-19, UC-22, UC-23, UC-34, UC-35]\n[Entry Point dal documento]","Barra azioni contestuali per documento/aggregazione.\nRiceve @Output actionRequested da OutputToolbar (Dumb)\ne chiama OutputFacade con il parametro appropriato.\nApre FolderPickerDialogComponent per UC-19, UC-20, UC-34, UC-35;\nriceve @Output pathSelected → chiama OutputFacade(id, path).\nApre ErrorDialogComponent in risposta ad AppError da OutputFacade.\nDisponibile in: DocumentDetailPage,\n  AggregateDetailPage, SearchPageComponent (anteprima rapida).")
 
   Component(integrity_page_ref, "IntegrityPageComponent", "Angular Standalone [Smart]\n[Entry Point da report integrità]","Ospita OutputToolbarComponent con context=report.\nSolo Esporta PDF abilitato nel contesto report (UC-34).")
 
   ' ── OUTPUT TOOLBAR ──────────────────────────────────────
-  Component(output_toolbar, "OutputToolbarComponent", "Angular Standalone [Smart]\n[UC-19, UC-20, UC-22, UC-23, UC-34, UC-35]","Barra azioni output contestuali al contesto corrente.\nInput: context: OutputContext\n  (documento | lista | report)\nBottoni disponibili per contesto:\n  Salva (UC-19)         → singolo documento\n  Salva Multiplo (UC-20) → lista documenti\n  Stampa (UC-22)        → singolo documento\n  Stampa Multipla (UC-23) → lista documenti\n  Scarica (UC-34)       → singolo documento\n  Esporta PDF (UC-35)   → documento/report\nInietta OutputFacade.")
+  Component(output_toolbar, "OutputToolbarComponent", "Angular Standalone [Dumb]\n[UC-19, UC-20, UC-22, UC-23, UC-34, UC-35]","Barra azioni output contestuali al contesto corrente.\n@Input:  context: OutputContext\n         (documento | lista | report)\n@Output: actionRequested: OutputAction\n         (SAVE | SAVE_MULTIPLE | PRINT | PRINT_MULTIPLE |\n          DOWNLOAD | EXPORT_PDF)\nNessuna DI: zero Facade iniettati.\nIl componente Smart parent (DocumentActionsComponent\no IntegrityPageComponent) riceve actionRequested\ne chiama OutputFacade con il parametro appropriato.\nBottoni disponibili variano per contesto.")
 
   ' ── OUTPUT FACADE ───────────────────────────────────────
-  Component(output_facade, "OutputFacade", "Angular Service [Injectable]\n[Facade + SRP]","Coordina tutte le operazioni di output.\nPer ogni operazione restituisce Result<void, AppError>.\n\nAPI:\n  saveFile(id, destPath)    → UC-19 [no-cache]\n  saveMultiple(ids, destPath) → UC-20 [no-cache]\n  print(id)                 → UC-22 [no-cache]\n  printMultiple(ids)         → UC-23 [no-cache]\n  exportPdf(id|report, path) → UC-34 [no-cache]\n  download(id, destPath)    → UC-35 [no-cache]\n\nErrori possibili:\n  OUTPUT_IO_ERROR                → UC-21, UC-36\n  OUTPUT_SOURCE_FOLDER_FORBIDDEN → UC-35\n  OUTPUT_PRINT_ERROR             → UC-24\n  OUTPUT_FORMAT_NOT_PRINTABLE    → UC-25\n  OUTPUT_PDF_GENERATION_ERROR    → UC-37\n  OUTPUT_DOWNLOAD_ERROR          → UC-36\n\nApre ErrorDialogComponent con AppError tipizzato.\nApre FolderPickerDialog per operazioni con destPath.")
+  Component(output_facade, "OutputFacade", "Angular Service [Injectable]\n[Facade + SRP]","Coordina tutte le operazioni di output.\nPer ogni operazione restituisce Result<void, AppError>.\n\nAPI:\n  saveFile(id, destPath)      → UC-19 [no-cache]\n  saveMultiple(ids, destPath) → UC-20 [no-cache]\n  print(id)                   → UC-22 [no-cache]\n  printMultiple(ids)          → UC-23 [no-cache]\n  exportPdf(id|report, path)  → UC-34 [no-cache]\n  download(id, destPath)      → UC-35 [no-cache]\n\nErrori possibili:\n  OUTPUT_IO_ERROR                → UC-21, UC-36\n  OUTPUT_SOURCE_FOLDER_FORBIDDEN → UC-35\n  OUTPUT_PRINT_ERROR             → UC-24\n  OUTPUT_FORMAT_NOT_PRINTABLE    → UC-25\n  OUTPUT_PDF_GENERATION_ERROR    → UC-37\n  OUTPUT_DOWNLOAD_ERROR          → UC-36\n\nNON apre componenti UI direttamente.\nRestituisce Result<void, AppError> al componente Smart\n(DocumentActionsComponent / IntegrityPageComponent)\nche gestisce FolderPickerDialog ed ErrorDialog.")
 
   ' ── FOLDER PICKER DIALOG ────────────────────────────────
-  Component(folder_picker_dialog, "FolderPickerDialogComponent", "Angular Standalone [Smart]\n[UC-19, UC-20, UC-34, UC-35]\n[WCAG 2.1.1, 2.1.2]","Dialogo modale selezione cartella destinazione.\nFlusso:\n  1. Aperto da OutputFacade tramite DialogService\n  2. Utente sceglie cartella\n  3. Validazione: blocca cartella sorgente DIP\n     (OUTPUT_SOURCE_FOLDER_FORBIDDEN – UC-35)\n  4. Conferma → OutputFacade procede\nAccessibilità:\n  role='dialog', aria-modal='true'\n  Focus trap via AccessibilityService.trapFocus() (WCAG 2.1.2)\n  Esc chiude e ripristina focus (WCAG 2.1.1)")
+  Component(folder_picker_dialog, "FolderPickerDialogComponent", "Angular Standalone [Smart]\n[UC-19, UC-20, UC-34, UC-35]\n[WCAG 2.1.1, 2.1.2]","Dialogo modale selezione cartella destinazione.\nFlusso:\n  1. Aperto da DocumentActionsComponent o IntegrityPageComponent\n     (NON da OutputFacade — un Service non apre UI)\n  2. Utente sceglie cartella\n  3. Validazione: blocca cartella sorgente DIP\n     (OUTPUT_SOURCE_FOLDER_FORBIDDEN – UC-35)\n  4. Conferma → emette @Output pathSelected: string\n  5. Smart parent chiama OutputFacade con destPath\nAccessibilità:\n  role='dialog', aria-modal='true'\n  Focus trap via AccessibilityService.trapFocus() (WCAG 2.1.2)\n  Esc chiude e ripristina focus (WCAG 2.1.1)")
 
   ' ── ERROR DIALOG ────────────────────────────────────────
   Component(error_dialog, "ErrorDialogComponent", "Angular Standalone [Dumb – Shared]\n[UC-21, UC-24, UC-25, UC-36, UC-37]\n[WCAG 2.1.1, 2.1.2, 4.1.2]","Dialogo modale di errore per operazioni bloccanti.\n@Input: error: AppError\nMostra:\n  • Titolo localizzato da error.code\n  • Messaggio contestuale (error.context)\n  • Dettaglio tecnico espandibile (error.detail)\n  • 'Riprova' se error.recoverable === true\n  • 'Chiudi' sempre presente\nSeverity → colore header (ERROR=rosso, WARN=giallo)\nAccessibilità:\n  role='alertdialog', aria-modal='true'\n  Focus trap via AccessibilityService (WCAG 2.1.2)\n  Esc chiude il dialogo (WCAG 2.1.1)\n  restoreFocus() al trigger alla chiusura")
@@ -48,24 +48,31 @@ Container_Boundary(renderer, "Renderer Process – Angular 17+") {
 ' ── Utente → Entry Points ──────────────────────────────────
 Rel_D(user, document_actions, "Clicca azione: Salva / Stampa /\nScarica / Esporta PDF", "Mouse / Tastiera")
 
-' ── Entry Points → OutputToolbar ───────────────────────────
-Rel_D(document_actions, output_toolbar, "delega azioni output con context=documento")
-Rel_D(integrity_page_ref, output_toolbar, "context=report → solo Esporta PDF (UC-34)")
+' ── Entry Points → OutputToolbar (Dumb) ────────────────────
+Rel_D(document_actions, output_toolbar, "@Input context=documento; @Output actionRequested")
+Rel_D(integrity_page_ref, output_toolbar, "@Input context=report; @Output actionRequested (solo EXPORT_PDF)")
 
-' ── OutputToolbar → OutputFacade ───────────────────────────
-Rel_D(output_toolbar, output_facade, "save(id)\nsaveMultiple(ids)\nprint(id)\nprintMultiple(ids)\nexportPdf(id|report)\ndownload(id)")
+' ── Entry Points → OutputFacade (in risposta a actionRequested) ─
+Rel_R(document_actions, output_facade, "chiama OutputFacade in risposta a actionRequested\n– UC-19, UC-20, UC-22, UC-23, UC-34, UC-35")
+Rel_R(integrity_page_ref, output_facade, "chiama exportPdf in risposta a actionRequested – UC-34")
 
-' ── OutputFacade → dialog ──────────────────────────────────
-Rel_D(output_facade, folder_picker_dialog, "apre via DialogService per operazioni con destPath\n(UC-19 Salva, UC-20 Salva Multiplo,\n UC-34 Esporta PDF, UC-35 Scarica)")
-Rel_R(output_facade, error_dialog, "AppError → dialogo modale bloccante:\n  UC-21 IO_ERROR (Salva)\n  UC-24 PRINT_ERROR (Stampa)\n  UC-25 FORMAT_NOT_PRINTABLE (Stampa)\n  UC-36 IO_ERROR/DOWNLOAD_ERROR (Scarica)\n  UC-37 PDF_GENERATION_ERROR (Esporta PDF)")
+' ── Entry Points → FolderPickerDialog ──────────────────────
+Rel_D(document_actions, folder_picker_dialog, "apre FolderPickerDialog; riceve @Output pathSelected\n→ chiama OutputFacade(id, path)")
+Rel_D(integrity_page_ref, folder_picker_dialog, "apre FolderPickerDialog; riceve @Output pathSelected\n→ chiama OutputFacade.exportPdf(report, path)")
+
+' ── Entry Points → ErrorDialog ──────────────────────────────
+Rel_R(document_actions, error_dialog, "AppError da OutputFacade → ErrorDialog – UC-21,24,25,36,37")
+Rel_R(integrity_page_ref, error_dialog, "AppError(OUTPUT_PDF_GENERATION_ERROR) → ErrorDialog – UC-37")
+
+' ── OutputFacade → cross-cutting ───────────────────────────
 Rel_R(output_facade, notification_service, "feedback positivo dopo operazione completata")
 Rel_R(output_facade, telemetry, "trackEvent(FILE_SAVED|PRINTED|PDF_EXPORTED)\ntrackError(AppError)")
 Rel_R(output_facade, live_announcer, "announce('Operazione completata') [polite]\nannounce(errore) [assertive]")
-Rel_R(output_facade, ipc_error_handler, "Result<void,AppError> → ErrorDialog")
+Rel_R(output_facade, ipc_error_handler, "errori IPC grezzi → AppError tipizzato")
 
 ' ── FolderPickerDialog ─────────────────────────────────────
 Rel_R(folder_picker_dialog, accessibility_service, "trapFocus() apertura (WCAG 2.1.2)\nrestoreFocus() chiusura (WCAG 2.1.1)")
-Rel_U(folder_picker_dialog, output_facade, "conferma destPath selezionata")
+' pathSelected emesso come @Output al Smart parent — non chiama OutputFacade direttamente
 
 ' ── ErrorDialog ────────────────────────────────────────────
 Rel_R(error_dialog, accessibility_service, "trapFocus() apertura (WCAG 2.1.2)\nrestoreFocus() chiusura (WCAG 2.1.1)")
@@ -83,45 +90,63 @@ FLUSSI OUTPUT
 
 UC-19 SALVA DOCUMENTO
 ─────────────────────
-1. Utente clicca 'Salva' in OutputToolbar
-2. OutputFacade apre FolderPickerDialog
-3. Utente sceglie cartella (no cartella sorgente DIP)
-4. OutputFacade.saveFile(id, destPath) [no-cache]
-5. IPC → Main Process → copia file
-6a. Successo → NotificationService toast
-6b. Errore   → ErrorDialog (OUTPUT_IO_ERROR)
+1. Utente clicca 'Salva' in OutputToolbarComponent (Dumb)
+2. @Output actionRequested(SAVE) → DocumentActionsComponent
+3. DocumentActions apre FolderPickerDialog
+4. Utente sceglie cartella (no cartella sorgente DIP)
+5. FolderPickerDialog emette @Output pathSelected
+6. DocumentActions chiama OutputFacade.saveFile(id, destPath) [no-cache]
+7. IPC → Main Process → copia file
+8a. Successo → NotificationService toast
+8b. Errore   → DocumentActions apre ErrorDialog (OUTPUT_IO_ERROR)
 
 UC-22 STAMPA
 ─────────────────────
 1. Utente clicca 'Stampa'
-2. OutputFacade.print(id) [no-cache] → IPC
-3a. Successo → NotificationService toast
-3b. OUTPUT_PRINT_ERROR          → ErrorDialog (UC-24)
-3c. OUTPUT_FORMAT_NOT_PRINTABLE → ErrorDialog (UC-25)
+2. @Output actionRequested(PRINT) → DocumentActionsComponent
+3. DocumentActions chiama OutputFacade.print(id) [no-cache] → IPC
+4a. Successo → NotificationService toast
+4b. OUTPUT_PRINT_ERROR          → DocumentActions apre ErrorDialog (UC-24)
+4c. OUTPUT_FORMAT_NOT_PRINTABLE → DocumentActions apre ErrorDialog (UC-25)
 
 UC-34 ESPORTA PDF
 ─────────────────────
 1. Utente clicca 'Esporta PDF'
-2. OutputFacade apre FolderPickerDialog
-3. OutputFacade.exportPdf(id|report, path) [no-cache]
-4a. Successo → NotificationService toast
-4b. OUTPUT_PDF_GENERATION_ERROR → ErrorDialog (UC-37)
+2. @Output actionRequested(EXPORT_PDF) → Smart parent
+3. Smart parent apre FolderPickerDialog
+4. FolderPickerDialog emette @Output pathSelected
+5. Smart parent chiama OutputFacade.exportPdf(id|report, path) [no-cache]
+6a. Successo → NotificationService toast
+6b. OUTPUT_PDF_GENERATION_ERROR → Smart parent apre ErrorDialog (UC-37)
 
 UC-35 SCARICA
 ─────────────────────
 1. Utente clicca 'Scarica'
-2. OutputFacade apre FolderPickerDialog
-3. Validazione: blocca cartella sorgente DIP
-(OUTPUT_SOURCE_FOLDER_FORBIDDEN)
-4. OutputFacade.download(id, destPath) [no-cache]
-5a. Successo → NotificationService toast
-5b. OUTPUT_DOWNLOAD_ERROR → ErrorDialog (UC-36)
+2. @Output actionRequested(DOWNLOAD) → DocumentActionsComponent
+3. DocumentActions apre FolderPickerDialog
+4. Validazione: blocca cartella sorgente DIP
+   (OUTPUT_SOURCE_FOLDER_FORBIDDEN)
+5. FolderPickerDialog emette @Output pathSelected
+6. DocumentActions chiama OutputFacade.download(id, destPath) [no-cache]
+7a. Successo → NotificationService toast
+7b. OUTPUT_DOWNLOAD_ERROR → DocumentActions apre ErrorDialog (UC-36)
 
 REGOLA no-cache OBBLIGATORIA
 ══════════════════════════════════════════
 Tutte le operazioni output usano no-cache.
 Le operazioni mutanti non devono mai essere cachate.
 IpcCacheService ignorato completamente per questi canali.
+
+PATTERN SMART/DUMB APPLICATO
+══════════════════════════════════════════
+OutputToolbarComponent è Dumb:
+  emette @Output actionRequested, non chiama Facade.
+DocumentActionsComponent / IntegrityPageComponent (Smart):
+  ricevono actionRequested → chiamano OutputFacade.
+  aprono FolderPickerDialog e gestiscono @Output pathSelected.
+  aprono ErrorDialog in risposta ad AppError da OutputFacade.
+OutputFacade (Service): restituisce Result<void, AppError>,
+  non istanzia mai componenti UI.
 
 USE CASE COPERTI
 ══════════════════════════════════════════

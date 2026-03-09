@@ -48,6 +48,8 @@ Rel_D(app_shell, dip_facade, "legge Signal<DipState>.phase per switch visivo")
 Rel_D(app_shell, dip_loading_page, "mostra quando phase='idle'|'indexing'|'error'")
 Rel_R(app_shell, telemetry, "trackEvent(ROUTE_CHANGE) ad ogni NavigationEnd")
 Rel_R(app_shell, accessibility_service, "setPageTitle() ad ogni cambio rotta (WCAG 2.4.2)")
+' DipTree in sidebar: @Output nodeSelected → AppShell → router.navigate()
+Rel_R(app_shell, router, "DipTree sidebar: @Output nodeSelected → router.navigate(['/document'|'/aggregate', id])")
 
 ' ── DipLoadingPage ─────────────────────────────────────────
 Rel_D(dip_loading_page, dip_facade, "legge Signal<DipLoadingState>")
@@ -61,7 +63,8 @@ Rel_R(dip_facade, ipc_error_handler, "DIP_* errors → AppError nel Signal<DipSt
 Rel_R(dip_facade, notification_service, "feedback caricamento DIP completato")
 Rel_R(dip_facade, telemetry, "trackEvent(DIP_LOADED)\ntrackError(AppError)")
 Rel_R(dip_facade, live_announcer, "announce('Indicizzazione X%') ogni 10% [polite]")
-Rel_R(dip_facade, dip_indexing_progress, "Signal<loadingProgress> aggiornato in streaming via IPC")
+' DipFacade aggiorna Signal<loadingProgress>; DipLoadingPageComponent (Smart) lo legge
+' e proietta via @Input a DipIndexingProgressComponent (Dumb) — nessuna freccia diretta Facade→Dumb
 
 ' ── SemanticFacade → IPC ───────────────────────────────────
 Rel_D(semantic_facade, ipc_gateway, "getIndexingStatus, semantic:cancel [no-cache]")
