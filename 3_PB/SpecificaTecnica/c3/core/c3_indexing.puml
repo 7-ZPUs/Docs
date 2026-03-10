@@ -1,0 +1,28 @@
+@startuml Component Diagram - Indexing
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Component Diagram - Indexing
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam shadowing false
+skinparam wrapWidth 200
+skinparam nodesep 60
+skinparam ranksep 60
+
+Component(bootstrap, "AppIndexingBootstrap", "Angular / TypeScript", "Invia il segnale di indicizzazione all'avvio dell'applicazione.")
+Component(indexDip, "IndexDipUC", "Angular / TypeScript", "Gestisce l'indicizzazione dei documenti DIP.")
+Component(wordEmbed, "WordEmbeddingPort", "Angular / TypeScript", "Porta per generare embedding testuali usando un modello AI.")
+Component(pkgReader, "PackageReaderPort", "Angular / TypeScript", "Porta per la lettura del contenuto del pacchetto, indipendentemente dal supporto utilizzato")
+Component(pkgIndex, "PackageIndexPort", "Angular / TypeScript", "Porta per l'indicizzazione dei contenuti del pacchetto")
+
+Component_Ext(sqlite, "SQLite Database", "SQLite", "Database sqlite per l'indicizzazione dei contenuti del pacchetto")
+Component_Ext(onnx, "Modello di word-embedding locale", "ONNX Runtime / TypeScript", "Algoritmo di IA locale per la generazione di word embedding")
+
+bootstrap --> indexDip : "Invia segnale di indicizzazione"
+indexDip --> wordEmbed : "Richiede embedding testuali"
+indexDip --> pkgReader : "Richiede lettura del pacchetto"
+indexDip --> pkgIndex : "Richiede indicizzazione del pacchetto"
+pkgReader --> sqlite : "Legge dati per l'indicizzazione"
+pkgIndex --> sqlite : "Scrive dati indicizzati"
+wordEmbed --> onnx : "Genera embedding testuali"
+
+@enduml
