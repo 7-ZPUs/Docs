@@ -1,0 +1,33 @@
+@startuml Component Diagram - Export
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Component Diagram - Export\n(file:download, file:print)
+
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam shadowing false
+skinparam wrapWidth 200
+skinparam nodesep 60
+skinparam ranksep 60
+
+Component_Ext(renderer,   "Renderer Process", "Angular / TypeScript", "Invia comandi di export via IPC bridge.")
+Component_Ext(filesystem, "File System",       "OS / Local Disk",      "Salvataggio file su disco utente.")
+
+Container_Boundary(main, "Main Process - Electron") {
+    Component(file_ipc,       "FileViewerIpcAdapter",   "Node.js / TypeScript", "Canali: file:download, file:print")
+    Component(uc_export_file, "ExportFileUC", "Node.js / TypeScript", "Salva il file su disco nella path specificata dall'utente.")
+    Component(uc_print_file,  "PrintFileUC",  "Node.js / TypeScript", "Stampa il file.")
+    Component(port_export,    "FileExportPort",        "Interface",          "exportFile(destPath, content): Promise<ExportResult>")
+    Component(port_print,     "PrintPort",             "Interface",          "printFile(buffer: Buffer): Promise<PrintResult>")
+    Component(adapter_system, "ElectronSystemAdapter", "Node.js / Electron", "Implementa FileExportPort e PrintPort.")
+}
+
+Rel_D(renderer,       file_ipc,       "file:download, file:print", "Electron IPC")
+Rel_D(file_ipc,       uc_export_file, "file:download")
+Rel_D(file_ipc,       uc_print_file,  "file:print")
+Rel_D(uc_export_file, port_export,    "exportFile(destPath, content)")
+Rel_D(uc_print_file,  port_print,     "printFile(buffer)")
+Rel_D(port_export,    adapter_system, "implementa")
+Rel_D(port_print,     adapter_system, "implementa")
+Rel_D(adapter_system, filesystem,     "Write (export su disco utente)")
+
+@enduml
