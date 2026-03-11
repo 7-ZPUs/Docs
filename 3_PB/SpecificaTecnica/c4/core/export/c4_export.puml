@@ -2,55 +2,121 @@
 top to bottom direction
 title Diagramma delle Classi - Export IPC
 
-class FileViewerIpcAdapter {
-    +download(fileId: number, targetPath?: string): ExportResult
-    +print(fileId: number, targetPath?: string): ExportResult
+skinparam linetype ortho
+skinparam nodesep 50
+skinparam ranksep 60
+skinparam groupInheritance 2
+
+skinparam class {
+    BackgroundColor White
+    BorderColor #555555
+    ArrowColor #333333
+    FontSize 12
 }
 
-class ExportFileUC {
-    +exportFile(id: number, targetPath: string): ExportResult
+skinparam interface {
+    BackgroundColor #FFFDE7
+    BorderColor #F9A825
 }
 
-class PrintFileUC {
-    +printFile(id: number, targetPath: string): ExportResult
+class ExportResult <<value object>> {
+    + success: boolean
+    + savedPath?: string
+    + errorCode?: string
+    + errorMessage?: string
 }
 
-interface FileExportPort {
-    +exportFile(destPath: string, content: Buffer): Promise<ExportResult>
-    +openWriteStream(destPath: string, source: Readable): Promise<void>
+class PrintResult <<value object>> {
+    + success: boolean
+    + errorCode?: string
+    + errorMessage?: string
 }
 
-interface PrintPort {
-    +printFile(buffer: Buffer): Promise<PrintResult>
+package "Presentation Layer (ipc)" #E8F4FD {
+
+    class FileViewerIpcAdapter {
+        + getById(id: string): File
+        + openExternal(path: string): { success: boolean }
+        + openInWindow(path: string): { success: boolean }
+        + download(fileId: number, targetPath?: string): { success: boolean; savedPath?: string }
+        + print(fileId: number, targetPath?: string): { success: boolean; savedPath?: string }
+    }
 }
 
-class ElectronSystemAdapter {
-    +exportFile(destPath: string, content: Buffer): Promise<ExportResult>
-    +openWriteStream(destPath: string, source: Readable): Promise<void>
-    +printFile(buffer: Buffer): Promise<PrintResult>
+package "Business Layer (application + domain)" #E9F7EF {
+
+    package "Use Cases" {
+
+        class ExportFileUC {
+            - readerPort: PackageReaderPort
+            - exportPort: FileExportPort
+            + ExportFileUC(readerPort: PackageReaderPort, exportPort: FileExportPort)
+            + execute(id: number, targetPath: string): ExportResult
+        }
+
+        class PrintFileUC {
+            - readerPort: PackageReaderPort
+            - printPort: PrintPort
+            + PrintFileUC(readerPort: PackageReaderPort, printPort: PrintPort)
+            + execute(id: number, targetPath: string): ExportResult
+        }
+
+    }
+
+    package "Ports" {
+
+        interface PackageReaderPort {
+            + getClasses(): Promise<DocumentClass[]>
+            + getProcesses(): Promise<Process[]>
+            + getDocuments(): Promise<Document[]>
+            + getFiles(): Promise<File[]>
+            + readFileBytes(file_id): Promise<Buffer>
+            + openReadStream(file_id): Promise<Readable>
+        }
+
+        interface FileExportPort {
+            + exportFile(destPath: string, content: Buffer): Promise<ExportResult>
+            + openWriteStream(destPath: string, source: Readable): Promise<void>
+        }
+
+        interface PrintPort {
+            + printFile(buffer: Buffer): Promise<PrintResult>
+        }
+    }
 }
 
-FileViewerIpcAdapter --> ExportFileUC
-FileViewerIpcAdapter --> PrintFileUC
+package "Persistence Layer (adapters)" #FEF9E7 {
 
-ExportFileUC --> FileExportPort : usa
-PrintFileUC --> PrintPort : usa
+    class LocalPackageReaderAdapter {
+        - packagePath: string
+        + getClasses(): Promise<DocumentClass[]>
+        + getProcesses(): Promise<Process[]>
+        + getDocuments(): Promise<Document[]>
+        + getFiles(): Promise<File[]>
+        + readFileBytes(file_id): Promise<Buffer>
+        + openReadStream(file_id): Promise<Readable>
+    }
 
-ElectronSystemAdapter ..|> FileExportPort
-ElectronSystemAdapter ..|> PrintPort
+    class ElectronSystemAdapter {
+        + exportFile(destPath: string, content: Buffer): Promise<ExportResult>
+        + openWriteStream(destPath: string, source: Readable): Promise<void>
+        + printFile(buffer: Buffer): Promise<PrintResult>
+    }
+}
+
+FileViewerIpcAdapter --> ExportFileUC  : invoca
+FileViewerIpcAdapter --> PrintFileUC   : invoca
+
+ExportFileUC  --> PackageReaderPort : usa
+ExportFileUC  --> FileExportPort    : usa
+PrintFileUC   --> PackageReaderPort : usa
+PrintFileUC   --> PrintPort         : usa
+
+LocalPackageReaderAdapter ..|> PackageReaderPort : implements
+ElectronSystemAdapter     ..|> FileExportPort    : implements
+ElectronSystemAdapter     ..|> PrintPort         : implements
+
+ExportFileUC ..> ExportResult : returns
+PrintFileUC  ..> PrintResult  : returns
 
 @enduml
-
-' DUBBIO 1: ExportResult e PrintResult
-' La struttura interna di ExportResult e PrintResult
-' non è mai definita nel Markdown. Vanno aggiunte come entità?
-
-' DUBBIO 2: Costruttori di ExportFileUC e PrintFileUC
-' Nel Markdown non sono descritti i costruttori dei Service,
-' quindi non sappiamo quali dipendenze iniettare.
-' negli adapter vanno elencate TUTTE LE POTRE CHE USA nel costruttore 
-
-' DUBBIO 3: FileViewerIpcAdapter
-' I metodi download() e print() sono stati inferiti dalla
-' Sezione 5D del Markdown (file:download, file:print),
-' ma la firma esatta dei metodi interni dell'adapter non è definita.

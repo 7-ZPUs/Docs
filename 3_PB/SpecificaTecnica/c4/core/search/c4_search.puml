@@ -2,86 +2,124 @@
 top to bottom direction
 title Diagramma delle Classi – Search IPC
 
-skinparam packageBackgroundColor<<ipc>> #FFD700
-skinparam packageBackgroundColor<<application>> #CCE5FF
-skinparam packageBackgroundColor<<domain>> #FFE8CC
-skinparam packageBackgroundColor<<infrastructure>> #D5F5E3
-
 skinparam linetype ortho
 skinparam shadowing false
 skinparam wrapWidth 200
 skinparam nodesep 60
 skinparam ranksep 60
 
-package "infrastructure/ipc" <<ipc>> {
+skinparam class {
+    BackgroundColor White
+    BorderColor #555555
+    ArrowColor #333333
+    FontSize 12
+}
+
+skinparam interface {
+    BackgroundColor #FFFDE7
+    BorderColor #F9A825
+}
+
+class SearchFilter <<value object>> {
+    ' struttura non definita nel Markdown
+}
+
+class Vector <<value object>> {
+    ' struttura non definita nel Markdown
+}
+
+package "Presentation Layer\n(infrastructure/ipc)" #E8F4FD {
+
     class SearchIpcAdapter {
-        +searchClasses(name?: string): DocumentClass[]
-        +searchProcesses(uuid?: string): ArchivalProcess[]
-        +searchDocuments(filters: SearchFilter[]): Document[]
-        +searchSemantic(query: string): SearchResult[]
-        +getAiState(): { initialized: boolean, indexedDocuments: number }
+        ' tutti i canali definiti in §5B
+        + searchClasses(name?: string): DocumentClass[]
+        + searchProcesses(uuid?: string): ArchivalProcess[]
+        + searchDocuments(filters: SearchFilter[]): Document[]
+        + searchSemantic(query: string): SearchResult[]
+        ' NOTA §5B: nessun UC corrisponde a questo canale nel Markdown (§2)
+        ' la chiamata è gestita direttamente dall'adapter verso LocalAiAdapter
+        + getAiState(): { initialized: boolean; indexedDocuments: number }
     }
 }
 
-package "application/use-cases" <<application>> {
-    class SearchDocumentalClassUC {
-        +searchDocumentalClass(name: string): DocumentClass[]
+package "Business Layer\n(application/use-cases + domain/ports)" #E9F7EF {
+
+    package "Use Cases" {
+
+        class SearchDocumentalClassUC {
+            - searchPort: PackageSearchPort
+            + SearchDocumentalClassUC(searchPort: PackageSearchPort)
+            + execute(name: string): DocumentClass[]
+        }
+
+        class SearchProcessiUC {
+            - searchPort: PackageSearchPort
+            + SearchProcessiUC(searchPort: PackageSearchPort)
+            + execute(uuid: string): Process[]
+        }
+
+        class SearchDocumentsUC {
+            - searchPort: PackageSearchPort
+            + SearchDocumentsUC(searchPort: PackageSearchPort)
+            + execute(filters: SearchFilter[]): Document[]
+        }
+
+        class SearchSemanticUC {
+            - searchPort: PackageSearchPort
+            - embeddingPort: WordEmbeddingPort
+            + SearchSemanticUC(searchPort: PackageSearchPort, embeddingPort: WordEmbeddingPort)
+            + execute(query: string): { id, score }[]
+        }
     }
-    class SearchProcessiUC {
-        +searchProcessi(uuid: string): Processo[]
-    }
-    class SearchDocumentsUC {
-        +searchDocuments(filters: Filter[]): Document[]
-    }
-    class SearchSemanticUC {
-        +searchSemantic(query: string): { id, score }[]
+
+    package "Ports" {
+
+        interface PackageSearchPort {
+            + searchClasses(name: string): Class[]
+            + searchProcesses(uuid: string): Process[]
+            + searchDocument(filters: Filter[]): void
+            + searchDocumentSemantic(query: string): Promise<List<Document, number>>
+        }
+
+        interface WordEmbeddingPort {
+            + generateEmbedding(text: string): Promise<Vector>
+        }
     }
 }
 
-package "domain/ports" <<domain>> {
-    interface PackageSearchPort {
-        +searchClasses(name: string): Class[]
-        +searchProcesses(uuid: string): Process[]
-        +searchDocument(filters: Filter[]): void
-        +searchDocumentSemantic(query: string): Promise<List<Document, number>>
-    }
-    interface WordEmbeddingPort {
-        +generateEmbedding(text: string): Promise<Vector>
-    }
-}
+package "Persistence Layer\n(infrastructure/adapters)" #FEF9E7 {
 
-package "infrastructure/adapters" <<infrastructure>> {
     class SqlitePackageAdapter {
+        ' implementa PackageSearchPort (§4) — tutti i metodi della porta
+        + searchClasses(name: string): Class[]
+        + searchProcesses(uuid: string): Process[]
+        + searchDocument(filters: Filter[]): void
+        + searchDocumentSemantic(query: string): Promise<List<Document, number>>
     }
+
     class LocalAiAdapter {
+        ' implementa WordEmbeddingPort (§4) — tutti i metodi della porta
+        + generateEmbedding(text: string): Promise<Vector>
     }
 }
 
-' DUBBIO 1: search:ai-state
-' Nel Markdown è listato come canale di SearchIpcAdapter
-' ma non esiste un use case corrispondente nella Sezione 2.
-
-' DUBBIO 2: Costruttori dei UC
-' Non sono descritti nel Markdown.
-
-' DUBBIO 3: Filter
-' Usato in SearchDocumentsUC ma mai definito nel Markdown.
-
-' DUBBIO 4: Vector
-' Tipo di ritorno di WordEmbeddingPort ma mai definito nel Markdown.
-
-SearchIpcAdapter --> SearchDocumentalClassUC
-SearchIpcAdapter --> SearchProcessiUC
-SearchIpcAdapter --> SearchDocumentsUC
-SearchIpcAdapter --> SearchSemanticUC
+SearchIpcAdapter --> SearchDocumentalClassUC : invoca
+SearchIpcAdapter --> SearchProcessiUC        : invoca
+SearchIpcAdapter --> SearchDocumentsUC       : invoca
+SearchIpcAdapter --> SearchSemanticUC        : invoca
+' presumo sia da frontend che arriva la chiamata
+SearchIpcAdapter ..> LocalAiAdapter          : getAiState()
 
 SearchDocumentalClassUC --> PackageSearchPort : usa
-SearchProcessiUC --> PackageSearchPort : usa
-SearchDocumentsUC --> PackageSearchPort : usa
-SearchSemanticUC --> PackageSearchPort : usa
-SearchSemanticUC --> WordEmbeddingPort : usa
+SearchProcessiUC        --> PackageSearchPort : usa
+SearchDocumentsUC       --> PackageSearchPort : usa
+SearchSemanticUC        --> PackageSearchPort : usa
+SearchSemanticUC        --> WordEmbeddingPort : usa
 
-SqlitePackageAdapter ..|> PackageSearchPort
-LocalAiAdapter ..|> WordEmbeddingPort
+SqlitePackageAdapter ..|> PackageSearchPort : implements
+LocalAiAdapter       ..|> WordEmbeddingPort : implements
+
+SearchDocumentsUC ..> SearchFilter : usa
+SearchSemanticUC  ..> Vector       : usa
 
 @enduml
