@@ -21,7 +21,6 @@ skinparam interface {
 
 class ExportResult <<value object>> {
     + success: boolean
-    + savedPath?: string
     + errorCode?: string
     + errorMessage?: string
 }
@@ -32,7 +31,7 @@ class PrintResult <<value object>> {
     + errorMessage?: string
 }
 
-package "Presentation Layer (ipc)" #E8F4FD {
+package "Application Layer (ipc)" #E8F4FD {
 
     class FileViewerIpcAdapter {
         + getById(id: string): File
@@ -47,18 +46,26 @@ package "Business Layer (application + domain)" #E9F7EF {
 
     package "Use Cases" {
 
-        class ExportFileUC {
+        interface ExportFileUC {
             - readerPort: PackageReaderPort
             - exportPort: FileExportPort
-            + ExportFileUC(readerPort: PackageReaderPort, exportPort: FileExportPort)
+            + ExportFileService(readerPort: PackageReaderPort, exportPort: FileExportPort)
             + execute(id: number, targetPath: string): ExportResult
         }
 
-        class PrintFileUC {
+        class ExportFileService {
+            
+        }
+
+        interface PrintFileUC {
             - readerPort: PackageReaderPort
             - printPort: PrintPort
-            + PrintFileUC(readerPort: PackageReaderPort, printPort: PrintPort)
-            + execute(id: number, targetPath: string): ExportResult
+            + PrintFileService(readerPort: PackageReaderPort, printPort: PrintPort)
+            + execute(id: number, targetPath: string): PrintResult
+        }
+
+        class PrintFileService {
+            
         }
 
     }
@@ -104,8 +111,11 @@ package "Persistence Layer (adapters)" #FEF9E7 {
     }
 }
 
-FileViewerIpcAdapter --> ExportFileUC  : invoca
-FileViewerIpcAdapter --> PrintFileUC   : invoca
+FileViewerIpcAdapter --> ExportFileService  : invoca
+FileViewerIpcAdapter --> PrintFileService   : invoca
+
+ExportFileService ..|> ExportFileUC : implements
+PrintFileService  ..|> PrintFileUC  : implements
 
 ExportFileUC  --> PackageReaderPort : usa
 ExportFileUC  --> FileExportPort    : usa

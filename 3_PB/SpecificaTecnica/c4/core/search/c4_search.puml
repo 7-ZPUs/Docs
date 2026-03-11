@@ -1,43 +1,34 @@
 @startuml Class Diagram - Search
 top to bottom direction
 title Diagramma delle Classi – Search IPC
-
 skinparam linetype ortho
 skinparam shadowing false
 skinparam wrapWidth 200
 skinparam nodesep 60
 skinparam ranksep 60
-
 skinparam class {
     BackgroundColor White
     BorderColor #555555
     ArrowColor #333333
     FontSize 12
 }
-
 skinparam interface {
     BackgroundColor #FFFDE7
     BorderColor #F9A825
 }
 
 class SearchFilter <<value object>> {
-    ' struttura non definita nel Markdown
 }
 
 class Vector <<value object>> {
-    ' struttura non definita nel Markdown
 }
 
 package "Presentation Layer\n(infrastructure/ipc)" #E8F4FD {
-
     class SearchIpcAdapter {
-        ' tutti i canali definiti in §5B
         + searchClasses(name?: string): DocumentClass[]
         + searchProcesses(uuid?: string): ArchivalProcess[]
         + searchDocuments(filters: SearchFilter[]): Document[]
         + searchSemantic(query: string): SearchResult[]
-        ' NOTA §5B: nessun UC corrisponde a questo canale nel Markdown (§2)
-        ' la chiamata è gestita direttamente dall'adapter verso LocalAiAdapter
         + getAiState(): { initialized: boolean; indexedDocuments: number }
     }
 }
@@ -46,29 +37,45 @@ package "Business Layer\n(application/use-cases + domain/ports)" #E9F7EF {
 
     package "Use Cases" {
 
-        class SearchDocumentalClassUC {
+        interface SearchDocumentalClassUC {
             - searchPort: PackageSearchPort
-            + SearchDocumentalClassUC(searchPort: PackageSearchPort)
+            + SearchDocumentalClassService(searchPort: PackageSearchPort)
             + execute(name: string): DocumentClass[]
         }
 
-        class SearchProcessiUC {
+        class SearchDocumentalClassService {
+            
+        }
+
+        interface SearchProcessiUC {
             - searchPort: PackageSearchPort
-            + SearchProcessiUC(searchPort: PackageSearchPort)
+            + SearchProcessiService(searchPort: PackageSearchPort)
             + execute(uuid: string): Process[]
         }
 
-        class SearchDocumentsUC {
+        class SearchProcessiService {
+            
+        }
+
+        interface SearchDocumentsUC {
             - searchPort: PackageSearchPort
-            + SearchDocumentsUC(searchPort: PackageSearchPort)
+            + SearchDocumentsService(searchPort: PackageSearchPort)
             + execute(filters: SearchFilter[]): Document[]
         }
 
-        class SearchSemanticUC {
+        class SearchDocumentsService {
+            
+        }
+
+        interface SearchSemanticUC {
             - searchPort: PackageSearchPort
             - embeddingPort: WordEmbeddingPort
-            + SearchSemanticUC(searchPort: PackageSearchPort, embeddingPort: WordEmbeddingPort)
+            + SearchSemanticService(searchPort: PackageSearchPort, embeddingPort: WordEmbeddingPort)
             + execute(query: string): { id, score }[]
+        }
+
+        class SearchSemanticService {
+            
         }
     }
 
@@ -103,23 +110,33 @@ package "Persistence Layer\n(infrastructure/adapters)" #FEF9E7 {
     }
 }
 
+' Presentation → Use Case interfaces
 SearchIpcAdapter --> SearchDocumentalClassUC : invoca
 SearchIpcAdapter --> SearchProcessiUC        : invoca
 SearchIpcAdapter --> SearchDocumentsUC       : invoca
 SearchIpcAdapter --> SearchSemanticUC        : invoca
-' presumo sia da frontend che arriva la chiamata
+' getAiState(): nessun UC definito nel Markdown, dipendenza diretta
 SearchIpcAdapter ..> LocalAiAdapter          : getAiState()
 
-SearchDocumentalClassUC --> PackageSearchPort : usa
-SearchProcessiUC        --> PackageSearchPort : usa
-SearchDocumentsUC       --> PackageSearchPort : usa
-SearchSemanticUC        --> PackageSearchPort : usa
-SearchSemanticUC        --> WordEmbeddingPort : usa
+' Services implementano le interfacce UC
+SearchDocumentalClassService ..|> SearchDocumentalClassUC : implements
+SearchProcessiService        ..|> SearchProcessiUC        : implements
+SearchDocumentsService       ..|> SearchDocumentsUC       : implements
+SearchSemanticService        ..|> SearchSemanticUC        : implements
 
+' Services → Ports (dipendenze)
+SearchDocumentalClassService --> PackageSearchPort : usa
+SearchProcessiService        --> PackageSearchPort : usa
+SearchDocumentsService       --> PackageSearchPort : usa
+SearchSemanticService        --> PackageSearchPort : usa
+SearchSemanticService        --> WordEmbeddingPort : usa
+
+' Adapters → Ports (implementazioni)
 SqlitePackageAdapter ..|> PackageSearchPort : implements
 LocalAiAdapter       ..|> WordEmbeddingPort : implements
 
-SearchDocumentsUC ..> SearchFilter : usa
-SearchSemanticUC  ..> Vector       : usa
+' Value Objects
+SearchDocumentsService ..> SearchFilter : usa
+SearchSemanticService  ..> Vector       : usa
 
 @enduml
