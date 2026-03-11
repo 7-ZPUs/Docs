@@ -1,0 +1,87 @@
+@startuml Class Diagram - Search
+top to bottom direction
+title Diagramma delle Classi – Search IPC
+
+skinparam packageBackgroundColor<<ipc>> #FFD700
+skinparam packageBackgroundColor<<application>> #CCE5FF
+skinparam packageBackgroundColor<<domain>> #FFE8CC
+skinparam packageBackgroundColor<<infrastructure>> #D5F5E3
+
+skinparam linetype ortho
+skinparam shadowing false
+skinparam wrapWidth 200
+skinparam nodesep 60
+skinparam ranksep 60
+
+package "infrastructure/ipc" <<ipc>> {
+    class SearchIpcAdapter {
+        +searchClasses(name?: string): DocumentClass[]
+        +searchProcesses(uuid?: string): ArchivalProcess[]
+        +searchDocuments(filters: SearchFilter[]): Document[]
+        +searchSemantic(query: string): SearchResult[]
+        +getAiState(): { initialized: boolean, indexedDocuments: number }
+    }
+}
+
+package "application/use-cases" <<application>> {
+    class SearchDocumentalClassUC {
+        +searchDocumentalClass(name: string): DocumentClass[]
+    }
+    class SearchProcessiUC {
+        +searchProcessi(uuid: string): Processo[]
+    }
+    class SearchDocumentsUC {
+        +searchDocuments(filters: Filter[]): Document[]
+    }
+    class SearchSemanticUC {
+        +searchSemantic(query: string): { id, score }[]
+    }
+}
+
+package "domain/ports" <<domain>> {
+    interface PackageSearchPort {
+        +searchClasses(name: string): Class[]
+        +searchProcesses(uuid: string): Process[]
+        +searchDocument(filters: Filter[]): void
+        +searchDocumentSemantic(query: string): Promise<List<Document, number>>
+    }
+    interface WordEmbeddingPort {
+        +generateEmbedding(text: string): Promise<Vector>
+    }
+}
+
+package "infrastructure/adapters" <<infrastructure>> {
+    class SqlitePackageAdapter {
+    }
+    class LocalAiAdapter {
+    }
+}
+
+' DUBBIO 1: search:ai-state
+' Nel Markdown è listato come canale di SearchIpcAdapter
+' ma non esiste un use case corrispondente nella Sezione 2.
+
+' DUBBIO 2: Costruttori dei UC
+' Non sono descritti nel Markdown.
+
+' DUBBIO 3: Filter
+' Usato in SearchDocumentsUC ma mai definito nel Markdown.
+
+' DUBBIO 4: Vector
+' Tipo di ritorno di WordEmbeddingPort ma mai definito nel Markdown.
+
+SearchIpcAdapter --> SearchDocumentalClassUC
+SearchIpcAdapter --> SearchProcessiUC
+SearchIpcAdapter --> SearchDocumentsUC
+SearchIpcAdapter --> SearchSemanticUC
+
+SearchDocumentalClassUC --> PackageSearchPort : usa
+SearchProcessiUC --> PackageSearchPort : usa
+SearchDocumentsUC --> PackageSearchPort : usa
+SearchSemanticUC --> PackageSearchPort : usa
+SearchSemanticUC --> WordEmbeddingPort : usa
+
+SqlitePackageAdapter ..|> PackageSearchPort
+LocalAiAdapter ..|> WordEmbeddingPort
+
+@enduml

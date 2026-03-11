@@ -1,0 +1,56 @@
+@startuml Class Diagram - Export
+top to bottom direction
+title Diagramma delle Classi - Export IPC
+
+class FileViewerIpcAdapter {
+    +download(fileId: number, targetPath?: string): ExportResult
+    +print(fileId: number, targetPath?: string): ExportResult
+}
+
+class ExportFileUC {
+    +exportFile(id: number, targetPath: string): ExportResult
+}
+
+class PrintFileUC {
+    +printFile(id: number, targetPath: string): ExportResult
+}
+
+interface FileExportPort {
+    +exportFile(destPath: string, content: Buffer): Promise<ExportResult>
+    +openWriteStream(destPath: string, source: Readable): Promise<void>
+}
+
+interface PrintPort {
+    +printFile(buffer: Buffer): Promise<PrintResult>
+}
+
+class ElectronSystemAdapter {
+    +exportFile(destPath: string, content: Buffer): Promise<ExportResult>
+    +openWriteStream(destPath: string, source: Readable): Promise<void>
+    +printFile(buffer: Buffer): Promise<PrintResult>
+}
+
+FileViewerIpcAdapter --> ExportFileUC
+FileViewerIpcAdapter --> PrintFileUC
+
+ExportFileUC --> FileExportPort : usa
+PrintFileUC --> PrintPort : usa
+
+ElectronSystemAdapter ..|> FileExportPort
+ElectronSystemAdapter ..|> PrintPort
+
+@enduml
+
+' DUBBIO 1: ExportResult e PrintResult
+' La struttura interna di ExportResult e PrintResult
+' non è mai definita nel Markdown. Vanno aggiunte come entità?
+
+' DUBBIO 2: Costruttori di ExportFileUC e PrintFileUC
+' Nel Markdown non sono descritti i costruttori dei Service,
+' quindi non sappiamo quali dipendenze iniettare.
+' negli adapter vanno elencate TUTTE LE POTRE CHE USA nel costruttore 
+
+' DUBBIO 3: FileViewerIpcAdapter
+' I metodi download() e print() sono stati inferiti dalla
+' Sezione 5D del Markdown (file:download, file:print),
+' ma la firma esatta dei metodi interni dell'adapter non è definita.
