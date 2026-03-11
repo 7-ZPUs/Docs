@@ -1,0 +1,241 @@
+@startuml Class Diagram - Indicizzazione Layout Pulito
+allowmixing
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam nodesep 80
+skinparam ranksep 70
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+' --- 1. INFRASTRUTTURA INBOUND ---
+package "Infrastructure Layer (Inbound)" #fff2e6 {
+    class IndexingIpcAdapter  {
+        - indexDipUC: IndexDipUC
+        + handleIndexDip(event, dipPath: string): Promise<IndexResult>
+    }
+}
+
+' --- 2. APPLICATION LAYER ---
+package "Application Layer" #eaf5ff {
+    class IndexDipUC  {
+        - reader: IPackageReaderPort
+        - indexer: IPackageIndexPort
+        + execute(dipPath: string): Promise<IndexResult>
+    }
+}
+
+' --- 3. DOMAIN LAYER (Core) ---
+package "Domain Layer (Core Business)" #f9f9f9 {
+
+    ' PORTE
+    interface IPackageReaderPort  {
+        + readDip(dipPath: string): Promise<Dip>
+        + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass, void, unknown>
+        + readProcesses(dipPath: string): AsyncGenerator<Process, void, unknown>
+        + readDocuments(dipPath: string): AsyncGenerator<Document, void, unknown>
+        + readFiles(dipPath: string): AsyncGenerator<File, void, unknown>
+        + readFileBytes(file_id: string): AsyncGenerator<Buffer, void, unknown>
+    }
+
+    interface IPackageIndexPort  {
+        + indexDip(dip: Dip): Promise<void>
+        + indexClass(docClass: DocumentClass): Promise<void>
+        + indexProcess(process: Process): Promise<void>
+        + indexDocument(document: Document): Promise<void>
+        + indexFile(file: File): Promise<void>
+        + indexSubject(subject: Subject): Promise<void>
+        + beginTransaction(): Promise<void>
+        + commitTransaction(): Promise<void>
+        + rollbackTransaction(): Promise<void>
+    }
+
+    ' ENTITA E ENUM
+    enum IntegrityStatus  {
+        UNKNOWN
+        VALID
+        INVALID
+    }
+
+    abstract class ArchivalNode {
+        - uuid: string
+        - integrityStatus: IntegrityStatus
+        + getUuid(): string
+        + getIntegrityStatus(): IntegrityStatus
+        + setIntegrityStatus(status: IntegrityStatus): void
+    }
+
+    class Dip {
+    }
+
+    class DocumentClass {
+        - name: string
+        - timestamp: string
+        + getName(): string
+        + getTimestamp(): string
+    }
+
+    class Process {
+        - parentClassUuid: string
+        + getParentClassUuid(): string
+    }
+
+    class Document {
+        - type: string
+        - parentProcessUuid: string
+        + getType(): string
+        + getParentProcessUuid(): string
+    }
+
+    class File {
+        - hash: string
+        - isPrimary: boolean
+        - parentDocumentUuid: string
+        + getHash(): string
+        + getIsPrimary(): boolean
+        + getParentDocumentUuid(): string
+    }
+
+    class Subject {
+        - type: string
+        + getType(): string
+    }
+
+    class Metadata {
+        - name: string
+        - value: string | null
+        - type: string
+        + getName(): string
+        + getValue(): string | null
+        + getType(): string
+    }
+}
+
+' --- 4. INFRASTRUTTURA OUTBOUND ---
+package "Infrastructure Layer (Outbound)" #fff2e6 {
+
+    package "Parsing" #fce8d5 {
+
+        class DiPIndexParser {
+            + parse(xml: string): ParsedDiPIndex
+            - parseAiP(aip: any): ParsedAiP
+        }
+
+        class DocumentMetadataParser {
+            + parse(xml: string, uuid: string): Document
+            - traverseNode(name: string, node: any): Metadata[]
+        }
+
+        class ParsedDiPIndex {
+            + uuid: string
+            + documentClasses: ParsedDocumentClass[]
+        }
+
+        class ParsedDocumentClass {
+            + uuid: string
+            + name: string
+            + timestamp: string
+            + aips: ParsedAiP[]
+        }
+
+        class ParsedAiP {
+            + uuid: string
+            + root: string
+            + documents: ParsedDocument[]
+        }
+
+        class ParsedDocument {
+            + uuid: string
+            + metadataPath: string
+            + primaryFile: ParsedFile
+            + attachments: ParsedFile[]
+        }
+
+        class ParsedFile {
+            + uuid: string
+            + path: string
+        }
+
+        DiPIndexParser ..> ParsedDiPIndex : " <<produces>>"
+        ParsedDiPIndex *-- ParsedDocumentClass
+        ParsedDocumentClass *-- ParsedAiP
+        ParsedAiP *-- ParsedDocument
+        ParsedDocument *-- ParsedFile
+        DocumentMetadataParser ..> Metadata : " <<produces>>"
+    }
+
+    class LocalPackageReaderAdapter  {
+        - indexParser: DiPIndexParser
+        - metaParser: DocumentMetadataParser
+        - cache: ParsedDiPIndex
+        + readDip(dipPath: string): Promise<Dip>
+        + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass, void, unknown>
+        + readProcesses(dipPath: string): AsyncGenerator<Process, void, unknown>
+        + readDocuments(dipPath: string): AsyncGenerator<Document, void, unknown>
+        + readFiles(dipPath: string): AsyncGenerator<File, void, unknown>
+        + readFileBytes(file_id: string): AsyncGenerator<Buffer, void, unknown>
+        - loadIndex(dipPath: string): Promise<ParsedDiPIndex>
+    }
+
+    class SqlitePackageAdapter  {
+        - db: Database
+        + indexDip(dip: Dip): Promise<void>
+        + indexClass(docClass: DocumentClass): Promise<void>
+        + indexProcess(process: Process): Promise<void>
+        + indexDocument(document: Document): Promise<void>
+        + indexFile(file: File): Promise<void>
+        + indexSubject(subject: Subject): Promise<void>
+        + beginTransaction(): Promise<void>
+        + commitTransaction(): Promise<void>
+        + rollbackTransaction(): Promise<void>
+    }
+
+    LocalPackageReaderAdapter --> DiPIndexParser : " uses"
+    LocalPackageReaderAdapter --> DocumentMetadataParser : " uses"
+}
+
+' ==========================================
+' FLUSSO
+' ==========================================
+
+IndexingIpcAdapter -down-> IndexDipUC : " invokes"
+IndexDipUC -down-> IPackageReaderPort : " reads from"
+IndexDipUC -down-> IPackageIndexPort : " writes to"
+
+LocalPackageReaderAdapter -up-|> IPackageReaderPort : " implements"
+SqlitePackageAdapter -up-|> IPackageIndexPort : " implements"
+
+' Yields / Accepts
+IPackageReaderPort .right.> Dip : " <<yields>>"
+IPackageReaderPort .right.> DocumentClass : " <<yields>>"
+IPackageReaderPort .right.> Process : " <<yields>>"
+IPackageReaderPort .right.> Document : " <<yields>>"
+IPackageReaderPort .right.> File : " <<yields>>"
+
+IPackageIndexPort .right.> Dip : " <<accepts>>"
+IPackageIndexPort .right.> DocumentClass : " <<accepts>>"
+IPackageIndexPort .right.> Process : " <<accepts>>"
+IPackageIndexPort .right.> Document : " <<accepts>>"
+IPackageIndexPort .right.> File : " <<accepts>>"
+IPackageIndexPort .right.> Subject : " <<accepts>>"
+
+' Struttura dominio
+ArchivalNode .right.> IntegrityStatus : " <<uses>>"
+
+ArchivalNode <|-down- Dip
+ArchivalNode <|-down- DocumentClass
+ArchivalNode <|-down- Process
+ArchivalNode <|-down- Document
+ArchivalNode <|-down- File
+
+Process o-down- Metadata : " contains"
+Document o-down- Metadata : " contains"
+Subject o-down- Metadata : " contains"
+
+' Relazioni UUID tra nodi (riferimenti logici)
+Dip "1" o-down- "many" DocumentClass : " classUuids >"
+DocumentClass "1" o-down- "many" Process : " processUuids >"
+Process "1" o-down- "many" Document : " documentUuid >"
+Document "1" o-down- "many" File : " fileUuids >"
+Document "1" o-right- "many" Subject : " subjects >"
+
+@enduml
