@@ -15,9 +15,9 @@ class DiP {
 }
 
 class ClasseDocumentale {
+    - id: number
     - name: string
     - uuid: string
-    - id: number
     - timestamp: Date
     - integrityStatus: IntegrityStatus
     - processi: Processo[]
@@ -32,8 +32,8 @@ class ClasseDocumentale {
 }
 
 class Processo {
-    - uuid: string
     - id: number
+    - uuid: string
     - integrityStatus: IntegrityStatus
     - metadata: Metadata[]
     - documenti: Documento[]
@@ -47,8 +47,8 @@ class Processo {
 }
 
 class Documento {
-    - uuid: string
     - id: number
+    - uuid: string
     - metadata: Metadata[]
     - files: File[]
     + constructor(uuid: string, id: number, metadata: Metadata[], files: File[])
@@ -59,11 +59,12 @@ class Documento {
 }
 
 class File {
+    - id: number
     - filename: string
     - path: string
     - integrityStatus: IntegrityStatus
     - isMain: boolean
-    + constructor(filename: string, path: string, isMain: boolean)
+    + constructor(id: numer, filename: string, path: string, isMain: boolean)
     + getFilename(): string
     + getPath(): string
     + getIntegrityStatus(): IntegrityStatus
@@ -71,9 +72,9 @@ class File {
 }
 
 enum IntegrityStatus {
-    Valid,
-    Invalid,
-    Unknown
+    VALID,
+    INVALID,
+    UNKNOWN
 }
 
 DiP o-> "0..*" ClasseDocumentale : contiene
