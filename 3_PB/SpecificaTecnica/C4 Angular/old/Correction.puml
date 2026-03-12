@@ -1,0 +1,801 @@
+@startuml UC3_Search_ClassDiagram_v11
+title UC-3 Search – Class Diagram  ·  Smart / Dumb Pattern\n(SOLID · SRP · OCP · LSP · ISP · DIP)  –  v11
+
+skinparam classAttributeIconSize 0
+skinparam classFontSize 11
+skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 80
+
+skinparam class {
+  BackgroundColor       White
+  BorderColor           #334155
+  HeaderBackgroundColor #DBEAFE
+  FontColor             #1E293B
+  AttributeFontColor    #334155
+}
+skinparam packageBackgroundColor #F8FAFC
+skinparam packageBorderColor     #94A3B8
+skinparam arrowColor             #334155
+skinparam noteBackgroundColor    #FFFBEB
+skinparam noteBorderColor        #D97706
+
+' ════════════════════════════════════════════════════════
+' LAYER 0 – INTERFACES & CONTRACTS  (ISP + DIP)
+' ════════════════════════════════════════════════════════
+
+package "Interfaces & Contracts" #F0FDF4 {
+
+  interface ISearchFacade <<ISP>> {
+    + getState(): Signal<SearchState>
+    + setQuery(query: SearchQuery): void
+    + setFilters(filters: SearchFilters): void
+    + searchAdvanced(filters: SearchFilters): ValidationResult | null
+    + searchSemantic(query: SearchQuery): void
+    + cancelSearch(): void
+    + retry(): boolean
+  }
+
+  interface ISearchChannel <<ISP>> {
+    + search(q: SearchQuery, s: AbortSignal): Observable<SearchResult[]>
+    + searchAdvanced(f: SearchFilters, s: AbortSignal): Observable<SearchResult[]>
+    + searchSemantic(q: SearchQuery, s: AbortSignal): Observable<SearchResult[]>
+  }
+
+  interface IIndexingChannel <<ISP>> {
+    + getIndexingStatus(): Observable<SemanticIndexState>
+    + cancel(): Observable<void>
+  }
+
+  interface IFilterValidator <<ISP>> {
+    + validate(filters: PartialFilters): ValidationResult
+    + validateField(field: string, value: unknown, type: FilterFieldType): ValidationError | null
+  }
+
+  interface ISemanticIndexStatus <<ISP>> {
+    + getStatus(): Signal<SemanticIndexState>
+  }
+
+  interface ISemanticIndexControl <<ISP>> {
+    + cancelIndexing(): void
+  }
+
+  interface ICacheService <<ISP>> {
+    + get<T>(key: string): T | null
+    + set<T>(key: string, value: T, ttlMs: number): void
+    + invalidate(key: string): void
+  }
+
+  interface IErrorHandler <<ISP>> {
+    + handle(raw: unknown): AppError
+    + isRecoverable(error: AppError): boolean
+    + createError(code: ErrorCode, message: string, source: string): AppError
+  }
+
+  interface ITelemetry <<ISP>> {
+    + trackEvent(name: TelemetryEvent): void
+    + trackTiming(metric: TelemetryMetric, ms: number): void
+    + trackError(error: AppError): void
+  }
+
+  interface ILiveAnnouncer <<ISP>> {
+    + announce(message: string, politeness?: "polite"|"assertive"): void
+  }
+
+  interface IDocumentFacade <<ISP>> {
+    + loadDocument(documentId: string): Observable<DocumentBlob>
+    + getDocumentMetadata(documentId: string): Observable<DocumentMetadata>
+    + getFileBlob(documentId: string): Observable<DocumentBlob>
+    + getAipInfo(documentId: string): Observable<AipInfo>
+    + getError(): Signal<AppError | null>
+  }
+
+  note as FilterValidatorFnNote
+    type PartialFilters = Omit<SearchFilters, 'subject'>
+    type FilterValidatorFn = (filters: PartialFilters) => ValidationResult
+  end note
+
+  interface IElectronContextBridge <<ISP>> {
+    + invoke<T>(channel: string, payload: unknown, s?: AbortSignal): Promise<T>
+  }
+
+  interface ILoggingChannel <<ISP>> {
+    + writeLog(entry: LogEntry): Observable<void>
+  }
+
+  interface ISubjectDetailStrategy <<ISP>> {
+    + getFields(type: SubjectType): SubjectFieldDefinition[]
+  }
+
+  interface IFieldValidatorStrategy <<ISP>> {
+    + validate(field: string, value: unknown): ValidationError | null
+  }
+}
+
+' ════════════════════════════════════════════════════════
+' SHARED KERNEL & EXTERNAL REFERENCES
+' ════════════════════════════════════════════════════════
+
+package "Shared Kernel  «cross-cutting»" #F5F3FF {
+  interface IDipReadyChecker <<ISP>> {
+    + isReady(): boolean
+  }
+}
+
+package "External Module References" #F0F0F0 {
+  class DocumentFacade <<ExternalModule>> <<Service>> {
+    + loadDocument(documentId: string): Observable<DocumentBlob>
+    + getDocumentMetadata(documentId: string): Observable<DocumentMetadata>
+    + getFileBlob(documentId: string): Observable<DocumentBlob>
+    + getAipInfo(documentId: string): Observable<AipInfo>
+    + getError(): Signal<AppError | null>
+  }
+}
+
+' ════════════════════════════════════════════════════════
+' LAYER 1 – DOMAIN MODEL  (DTOs / Value Objects)
+' ════════════════════════════════════════════════════════
+
+package "Domain Model" #FFF7ED {
+
+  class SearchQuery <<DTO>> {
+    + text: string
+    + type: "free" | "className" | "processId"
+    + useSemantic: boolean
+  }
+
+  class SearchFilters <<DTO>> {
+    + common: CommonFilterValues
+    + diDai: DiDaiFilterValues
+    + aggregate: AggregateFilterValues
+    + customMeta: CustomMetaEntry[]
+    + subject: SubjectCriteria | null
+  }
+
+  class SearchResult <<DTO>> {
+    + documentId: string
+    + name: string
+    + type: string
+    + score: number | null
+  }
+
+  class SearchState <<StateModel>> {
+    + query: SearchQuery
+    + filters: SearchFilters
+    + results: SearchResult[]
+    + loading: boolean
+    + isSearching: boolean
+    + error: AppError | null
+  }
+
+  class AppError <<DTO>> {
+    + code: ErrorCode
+    + message: string
+    + source: string
+  }
+
+  class ValidationResult <<DTO>> {
+    + isValid: boolean
+    + errors: Map<string, ValidationError>
+  }
+
+  class ValidationError <<DTO>> {
+    + field: string
+    + message: string
+    + code: string
+  }
+
+  class SemanticIndexState <<DTO>> {
+    + status: IndexingStatus
+    + progress: number
+    + lastIndexedAt: Date | null
+  }
+
+  class SubjectCriteria <<DTO>> {
+    + role: SubjectRole
+    + type: SubjectType
+    + details: SubjectDetails
+  }
+
+  class DocumentBlob <<DTO>> {
+    + data: ArrayBuffer
+    + mimeType: string
+  }
+
+  class DocumentMetadata <<DTO>> {
+    + documentId: string
+    + name: string
+    + type: string
+    + createdAt: Date
+    + updatedAt: Date
+    + classification: string | null
+    + conservation: string | null
+  }
+
+  class AipInfo <<DTO>> {
+    + aipId: string
+    + version: string
+    + createdAt: Date
+    + checksumAlgorithm: string
+    + checksumValue: string
+  }
+
+  enum IndexingStatus {
+    IDLE · INDEXING · READY · ERROR · TIMEOUT · CANCELLED
+  }
+
+  enum FilterFieldType {
+    TEXT · DATE · NUMBER · ENUM · BOOLEAN
+  }
+
+  enum TelemetryEvent {
+    SEARCH_EXECUTED
+    SEARCH_RESULT_OPENED
+    IPC_ERROR
+  }
+
+  enum TelemetryMetric {
+    SEARCH_LATENCY_MS
+    BLOB_LOAD_TIME_MS
+  }
+
+  enum ErrorCode {
+    VALIDATION_ERROR
+    SEARCH_ENGINE_ERROR · IPC_ERROR
+    DOC_FORMAT_UNSUPPORTED · DOC_BLOB_LOAD_ERROR
+    DIP_CORRUPT_ARCHIVE · DIP_PARSE_ERROR · DIP_INDEX_ERROR
+  }
+
+  enum SubjectRole {
+    PRODUTTORE · DESTINATARIO · RESPONSABILE
+  }
+
+  enum SubjectType {
+    PAI · PAE · AS · PG · PF · RUP · SW
+  }
+
+  abstract class SubjectDetails { }
+
+  class PaiDetails     <<DTO>> extends SubjectDetails { }
+  class PaeDetails     <<DTO>> extends SubjectDetails { }
+  class AsDetails      <<DTO>> extends SubjectDetails { }
+  class PgDetails      <<DTO>> extends SubjectDetails { }
+  class PfDetails      <<DTO>> extends SubjectDetails { }
+  class RupDetails     <<DTO>> extends SubjectDetails { }
+  class SwDetails      <<DTO>> extends SubjectDetails { }
+
+  class SubjectFieldDefinition <<DTO>> {
+    + key: string
+    + label: string
+    + type: FilterFieldType
+    + required: boolean
+  }
+
+  class CommonFilterValues <<DTO>> {
+    + chiaveDescrittiva: string | null
+    + classificazione: string | null
+    + conservazione: string | null
+    + note: string | null
+    + tipo: string | null
+  }
+
+  class DiDaiFilterValues <<DTO>> {
+    + registrazione: string | null
+    + tipologia: string | null
+    + formazione: string | null
+    + riservatezza: string | null
+    + formato: string | null
+    + verifica: boolean | null
+    + nome: string | null
+    + versione: string | null
+    + idPrimario: string | null
+    + tracciature: string | null
+  }
+
+  class AggregateFilterValues <<DTO>> {
+    + tipo: string | null
+    + idAggregazione: string | null
+    + fascicolo: string | null
+    + dataDa: string | null
+    + dataA: string | null
+    + procedimento: string | null
+    + assegnazione: string | null
+  }
+
+  class CustomMetaEntry <<DTO>> {
+    + name: string
+    + value: string
+  }
+
+  class CacheEntry <<DTO>> {
+    + value: unknown
+    + expiresAt: number
+  }
+
+  class LogEntry <<DTO>> {
+    + level: "info" | "warn" | "error"
+    + event: string
+    + timestamp: number
+    + payload: unknown
+  }
+}
+
+' ════════════════════════════════════════════════════════
+' LAYER 2 – SERVICES  (SRP · DIP)
+' ════════════════════════════════════════════════════════
+
+package "Services  [providedIn:'root']" #EFF6FF {
+
+  class SearchFacade <<Service>> <<SRP>> {
+    - ipcGateway: ISearchChannel
+    - validator: IFilterValidator
+    - errorHandler: IErrorHandler
+    - telemetry: ITelemetry
+    - semanticStatus: ISemanticIndexStatus
+    - liveAnnouncer: ILiveAnnouncer  <<inject>>
+    - cacheService: ICacheService
+    - state: WritableSignal<SearchState>
+    --
+    + getState(): Signal<SearchState>
+    + setQuery(query: SearchQuery): void
+    + setFilters(filters: SearchFilters): void
+    + searchAdvanced(filters: SearchFilters): ValidationResult | null
+    + searchSemantic(query: SearchQuery): void
+    + cancelSearch(): void
+    + retry(): boolean
+  }
+
+  class SemanticIndexFacade <<Service>> <<SRP>> {
+    - ipcGateway: IIndexingChannel
+    - state: WritableSignal<SemanticIndexState>
+    --
+    + getStatus(): Signal<SemanticIndexState>
+    + cancelIndexing(): void
+  }
+
+  class FilterValidatorService <<Service>> <<SRP>> {
+    - validators: Map<FilterFieldType, IFieldValidatorStrategy>  <<inject>>
+    + validate(filters: PartialFilters): ValidationResult
+    + validateField(f: string, v: unknown, t: FilterFieldType): ValidationError | null
+  }
+
+  class SearchIpcGateway <<Service>> <<Adapter>> {
+    - contextBridge: IElectronContextBridge
+    - cache: ICacheService
+    - errorHandler: IErrorHandler
+    --
+    + search(q: SearchQuery, s: AbortSignal): Observable<SearchResult[]>
+    + searchAdvanced(f: SearchFilters, s: AbortSignal): Observable<SearchResult[]>
+    + searchSemantic(q: SearchQuery, s: AbortSignal): Observable<SearchResult[]>
+    - invoke<T>(channel: string, payload: unknown, s: AbortSignal): Observable<T>
+  }
+
+  class IndexingIpcGateway <<Service>> <<Adapter>> {
+    - contextBridge: IElectronContextBridge
+    - errorHandler: IErrorHandler
+    --
+    + getIndexingStatus(): Observable<SemanticIndexState>
+    + cancel(): Observable<void>
+    - invoke<T>(channel: string, payload: unknown): Observable<T>
+  }
+
+  class IpcCacheService <<Service>> <<SRP>> {
+    - store: Map<string, CacheEntry>
+    --
+    + get<T>(key: string): T | null
+    + set<T>(key: string, value: T, ttlMs: number): void
+    + invalidate(key: string): void
+  }
+
+  class IpcErrorHandlerService <<Service>> <<SRP>> {
+    + handle(raw: unknown): AppError
+    + isRecoverable(error: AppError): boolean
+    + createError(code: ErrorCode, message: string, source: string): AppError
+    - toErrorCode(raw: unknown): ErrorCode
+  }
+
+  class TelemetryService <<Service>> <<SRP>> {
+    - loggingChannel: ILoggingChannel  <<inject>>
+    + trackEvent(name: TelemetryEvent): void
+    + trackTiming(metric: TelemetryMetric, ms: number): void
+    + trackError(error: AppError): void
+  }
+
+  class LiveAnnouncerService <<Service>> <<SRP>> {
+    + announce(message: string, politeness?: "polite"|"assertive"): void
+  }
+}
+
+' ════════════════════════════════════════════════════════
+' LAYER 3 – ROUTING
+' ════════════════════════════════════════════════════════
+
+package "Routing" #FDF4FF {
+
+  interface IRouter <<ISP>> {
+    + navigate(commands: (string|number|object)[], extras?: object): Promise<boolean>
+  }
+
+  class AppRouter <<Service>> {
+    - angularRouter: Router  <<inject>>
+    --
+    + navigate(commands: (string|number|object)[], extras?: object): Promise<boolean>
+  }
+
+  class DipReadyGuard <<CanActivateFn>> <<function>> {
+  }
+}
+
+' ════════════════════════════════════════════════════════
+' LAYER 4a – SMART COMPONENTS  «Container»
+' ════════════════════════════════════════════════════════
+
+skinparam class {
+  HeaderBackgroundColor #BFDBFE
+  BorderColor           #1D4ED8
+}
+
+package "Smart Components  «Container»" #EFF6FF {
+
+  class SearchPageComponent <<Smart>> {
+    - searchFacade:      ISearchFacade          <<inject>>
+    - router:            IRouter                <<inject>>
+    - semanticControl:   ISemanticIndexControl  <<inject>>
+    - semanticStatus:    ISemanticIndexStatus   <<inject>>
+    - filterValidator:   IFilterValidator       <<inject>>
+    
+    ~ documentViewer: DocumentViewerComponent  [@ViewChild]
+    
+    - selectedDocumentId: WritableSignal<string | null>
+    - viewerError:        WritableSignal<AppError | null>
+    - uiValidation:       WritableSignal<ValidationResult>
+    
+    ~ searchState:       Signal<SearchState>        [read-only]
+    ~ indexingState:     Signal<SemanticIndexState> [via semanticStatus.getStatus()]
+    ~ isEmpty: Signal<boolean>
+    
+    + onQueryChanged(query: SearchQuery): void
+    + onFiltersChanged(filters: SearchFilters): void
+    + onFiltersSubmit(filters: SearchFilters): void
+    + onValidationResult(result: ValidationResult): void
+    + onResultSelected(documentId: string): void
+    + onRetrySearch(): void
+    + onViewerError(err: AppError): void
+    + onViewerRetry(): void
+    + onCancelSemanticIndexing(): void
+  }
+
+  class DocumentViewerComponent <<Smart>> {
+    - documentFacade: IDocumentFacade  <<inject>>
+    - isLoading: WritableSignal<boolean>
+    - documentMetadata: WritableSignal<DocumentMetadata | null>
+    + @Input  documentId: string
+    + @Output loadingChanged: EventEmitter<boolean>
+    + @Output viewerError: EventEmitter<AppError>
+    + retryLoad(): void
+    - onLoadError(err: AppError): void
+  }
+}
+
+' ════════════════════════════════════════════════════════
+' LAYER 4b – DUMB COMPONENTS  «Presentational»
+' ════════════════════════════════════════════════════════
+
+skinparam class {
+  HeaderBackgroundColor #BBF7D0
+  BorderColor           #15803D
+}
+
+package "Dumb Components  «Presentational»" #F0FDF4 {
+
+  class SearchBarComponent <<Dumb>> {
+    + @Input  query: SearchQuery
+    + @Input  isSearching: boolean
+    + @Input  defaultType: "free" | "className" | "processId"
+    + @Input  defaultUseSemantic: boolean
+    + @Output queryChanged: EventEmitter<SearchQuery>
+  }
+
+  class AdvancedFilterPanelComponent <<Dumb>> {
+    + @Input  filters: SearchFilters
+    + @Input  validator: FilterValidatorFn
+    + @Input  externalValidation: ValidationResult | null
+    + @Output filtersChanged: EventEmitter<SearchFilters>
+    + @Output filtersSubmit: EventEmitter<SearchFilters>
+    + @Output validationResult: EventEmitter<ValidationResult>
+    - currentValidationResult: WritableSignal<ValidationResult>
+    --
+    + addFilter(entry: CustomMetaEntry): void
+    + removeFilter(name: string): void
+    + resetFilters(): void
+    + onCommonFiltersChanged(values: CommonFilterValues): void
+    + onDiDaiFiltersChanged(values: DiDaiFilterValues): void
+    + onAggregateFiltersChanged(values: AggregateFilterValues): void
+    + onEntriesChanged(entries: CustomMetaEntry[]): void
+    + onSubjectChanged(subject: SubjectCriteria): void
+    + onFieldValidationError(field: string, error: ValidationError | null): void
+  }
+  
+  class SubjectFilterComponent <<Dumb>> {
+    - currentStep:  WritableSignal<1|2|3>
+    - selectedRole: WritableSignal<SubjectRole | null>
+    - selectedType: WritableSignal<SubjectType | null>
+    --
+    + @Input  subject: SubjectCriteria | null
+    + @Input  resetCounter: number
+    + @Output subjectChanged: EventEmitter<SubjectCriteria>
+    + nextStep(): void
+    + prevStep(): void
+    + reset(): void
+  }
+
+  class CommonFiltersComponent <<Dumb>> {
+    + @Input  filters: CommonFilterValues
+    + @Input  validationResult: ValidationResult
+    + @Output filtersChanged: EventEmitter<CommonFilterValues>
+    + @Output validationError: EventEmitter<{field: string; error: ValidationError | null}>
+    + onValueChanged(fieldKey: string, value: unknown): void
+    + onValidationError(field: string, error: ValidationError | null): void
+  }
+
+  class DiDaiFiltersComponent <<Dumb>> {
+    + @Input  filters: DiDaiFilterValues
+    + @Input  validationResult: ValidationResult
+    + @Output filtersChanged: EventEmitter<DiDaiFilterValues>
+    + @Output validationError: EventEmitter<{field: string; error: ValidationError | null}>
+    + onValueChanged(fieldKey: string, value: unknown): void
+    + onValidationError(field: string, error: ValidationError | null): void
+  }
+
+  class AggregateFiltersComponent <<Dumb>> {
+    + @Input  filters: AggregateFilterValues
+    + @Input  validationResult: ValidationResult
+    + @Output filtersChanged: EventEmitter<AggregateFilterValues>
+    + @Output validationError: EventEmitter<{field: string; error: ValidationError | null}>
+    + onValueChanged(fieldKey: string, value: unknown): void
+    + onValidationError(field: string, error: ValidationError | null): void
+  }
+
+  class CustomMetaFilterComponent <<Dumb>> {
+    + @Input  entries: CustomMetaEntry[]
+    + @Output entriesChanged: EventEmitter<CustomMetaEntry[]>
+  }
+
+  class SubjectDetailFormComponent <<Dumb>> {
+    - strategyRegistry: Map<SubjectType, ISubjectDetailStrategy>  <<inject>>
+    + @Input  subjectType: SubjectType
+    + @Input  details: SubjectDetails | null
+    + @Output detailsChanged: EventEmitter<SubjectDetails>
+  }
+
+  class FilterValueInputComponent <<Dumb>> {
+    + @Input  fieldKey: string
+    + @Input  value: unknown
+    + @Input  fieldType: FilterFieldType
+    + @Input  fieldError: ValidationError | null
+    + @Output valueChanged: EventEmitter<unknown>
+    + @Output validationError: EventEmitter<ValidationError | null>
+    - localValidationError: ValidationError | null
+  }
+
+  class SearchResultsComponent <<Dumb>> {
+    + @Input  results: SearchResult[]
+    + @Input  emptyMessage: string
+    + @Output resultSelected: EventEmitter<string>
+  }
+
+  class SemanticIndexStatusComponent <<Dumb>> {
+    + @Input  indexingState: SemanticIndexState
+    + @Output cancelRequested: EventEmitter<void>
+  }
+}
+
+' ════════════════════════════════════════════════════════
+' LAYER 4c – SHARED DUMB COMPONENTS  «Presentational»
+' ════════════════════════════════════════════════════════
+
+skinparam class {
+  HeaderBackgroundColor #FED7E2
+  BorderColor           #BE185D
+}
+
+package "Shared Dumb Components  «Presentational»" #FFF1F2 {
+
+  class AsyncStateWrapperComponent <<Dumb>> {
+    + @Input  loading: boolean
+    + @Input  error: AppError | null
+    + @Input  empty: boolean
+    + @Output retryClicked: EventEmitter<void>
+  }
+
+  class InlineErrorComponent <<Dumb>> {
+    + @Input  error: AppError | null
+    + @Output retryClicked: EventEmitter<void>
+  }
+
+  class FieldErrorComponent <<Dumb>> {
+    + @Input  error: ValidationError | null
+  }
+
+  class EmptyStateComponent <<Dumb>> {
+    + @Input  message: string
+  }
+}
+
+' ════════════════════════════════════════════════════════
+' INTERFACE IMPLEMENTATIONS & DI TOKENS
+' ════════════════════════════════════════════════════════
+
+SearchFacade           ..|> ISearchFacade
+SemanticIndexFacade    ..|> ISemanticIndexStatus
+SemanticIndexFacade    ..|> ISemanticIndexControl
+FilterValidatorService ..|> IFilterValidator
+SearchIpcGateway       ..|> ISearchChannel
+IndexingIpcGateway     ..|> IIndexingChannel
+IpcCacheService        ..|> ICacheService
+IpcErrorHandlerService ..|> IErrorHandler
+TelemetryService       ..|> ITelemetry
+TelemetryService       --> ILoggingChannel : <<uses>>
+LiveAnnouncerService   ..|> ILiveAnnouncer
+DocumentFacade         ..|> IDocumentFacade
+AppRouter              ..|> IRouter
+DocumentViewerComponent ..> IDocumentFacade : "<<inject>>"
+
+' ════════════════════════════════════════════════════════
+' SERVICE WIRE-UP  (all via interfaces — DIP)
+' ════════════════════════════════════════════════════════
+
+SearchFacade --> ISearchChannel       : <<uses>>
+SearchFacade --> IFilterValidator     : <<uses>>
+SearchFacade --> IErrorHandler        : <<uses>>
+SearchFacade --> ITelemetry           : <<uses>>
+SearchFacade --> ISemanticIndexStatus : <<uses>>
+SearchFacade --> ICacheService        : "<<uses>>\ninvalidate on abort"
+SearchFacade --> ILiveAnnouncer       : "<<uses>>\nannuncia transizioni di stato"
+
+SemanticIndexFacade --> IIndexingChannel : <<uses>>
+
+SearchIpcGateway   --> ICacheService          : <<uses>>
+SearchIpcGateway   --> IErrorHandler          : <<uses>>
+SearchIpcGateway   --> IElectronContextBridge : <<uses>>
+IndexingIpcGateway --> IErrorHandler          : <<uses>>
+IndexingIpcGateway --> IElectronContextBridge : <<uses>>
+
+FilterValidatorService --> IFieldValidatorStrategy : "<<uses>>\nMap<FilterFieldType, strategy>  [OCP registry]"
+SubjectDetailFormComponent ..> ISubjectDetailStrategy : "<<uses>>\nMap<SubjectType, strategy>  [OCP registry]"
+
+DipReadyGuard ..> IDipReadyChecker : "<<inject()>>"
+
+SearchFacade        *--> SearchState        : "owns WritableSignal<>\n(current value)"
+SemanticIndexFacade *--> SemanticIndexState : "owns WritableSignal<>\n(current value)"
+
+' ════════════════════════════════════════════════════════
+' DOMAIN ASSOCIATIONS
+' ════════════════════════════════════════════════════════
+
+SearchState      "1" o-- "1"    SearchQuery
+SearchState      "1" o-- "1"    SearchFilters
+SearchState      "1" o-- "*"    SearchResult
+
+SearchPageComponent *--> ValidationResult : "uiValidation\nWritableSignal<>"
+ValidationResult "1" o-- "*"    ValidationError
+SearchFilters    "1" o-- "0..1" SubjectCriteria
+
+IpcCacheService  *--> CacheEntry : "store Map<string, CacheEntry>"
+TelemetryService --> LogEntry    : "<<creates>>"
+
+' ════════════════════════════════════════════════════════
+' DATA FLOW  –  SMART ↔ DUMB
+' ════════════════════════════════════════════════════════
+
+SearchPageComponent -[#6B21A8,dashed]-> ISearchFacade \
+  : "<<inject>> reads Signal\ndispatches: setQuery/searchAdvanced/searchSemantic/retry"
+
+SearchPageComponent -[#6B21A8,dashed]-> ISemanticIndexControl \
+  : "<<inject>> cancelIndexing() when status===INDEXING"
+
+SearchPageComponent -[#6B21A8,dashed]-> ISemanticIndexStatus \
+  : "<<inject>> reads getStatus() for indexingStatus Signal"
+
+SearchPageComponent -[#6B21A8,dashed]-> IRouter \
+  : "<<inject>> navigate(['/document'|'/aggregate', id])"
+
+SearchPageComponent -[#1D4ED8]-> SearchBarComponent \
+  : "▼ @Input query, isSearching, defaultType, defaultUseSemantic"
+SearchBarComponent -[#15803D]-> SearchPageComponent \
+  : "▲ @Output queryChanged: SearchQuery"
+
+SearchPageComponent -[#1D4ED8]-> AdvancedFilterPanelComponent \
+  : "▼ @Input filters: SearchFilters\n▼ @Input validator: FilterValidatorFn\n▼ @Input externalValidation = uiValidation()"
+AdvancedFilterPanelComponent -[#15803D]-> SearchPageComponent \
+  : "▲ @Output filtersChanged: SearchFilters\n▲ @Output filtersSubmit: SearchFilters\n▲ @Output validationResult: ValidationResult"
+
+SearchPageComponent -[#1D4ED8]-> SearchResultsComponent \
+  : "▼ @Input results: SearchResult[]\n▼ @Input emptyMessage: string"
+SearchResultsComponent -[#15803D]-> SearchPageComponent \
+  : "▲ @Output resultSelected: string (documentId)"
+
+SearchPageComponent -[#1D4ED8]-> SemanticIndexStatusComponent \
+  : "▼ @Input indexingState = semanticStatus.getStatus()()"
+SemanticIndexStatusComponent -[#15803D]-> SearchPageComponent \
+  : "▲ @Output cancelRequested"
+
+SearchPageComponent -[#1D4ED8]-> AsyncStateWrapperComponent \
+  : "▼ @Input loading = SearchState.loading\n▼ @Input error = SearchState.error\n▼ @Input empty = results.length === 0"
+AsyncStateWrapperComponent -[#15803D]-> SearchPageComponent \
+  : "▲ @Output retryClicked"
+
+SearchPageComponent -[#1D4ED8]-> DocumentViewerComponent \
+  : "▼ @Input documentId = selectedDocumentId()\n[conditional render]"
+DocumentViewerComponent -[#15803D]-> SearchPageComponent \
+  : "▲ @Output viewerError: AppError\n▲ @Output loadingChanged: boolean"
+
+SearchPageComponent -[#1D4ED8]-> InlineErrorComponent \
+  : "▼ @Input error: viewerError() [viewer slot]"
+InlineErrorComponent -[#15803D]-> SearchPageComponent \
+  : "▲ @Output retryClicked"
+
+' ── AdvancedFilterPanelComponent (Dumb) ↔ sub-panels ────
+
+AdvancedFilterPanelComponent -[#1D4ED8]-> SubjectFilterComponent \
+  : "▼ @Input subject = filters.subject\n▼ @Input resetCounter"
+SubjectFilterComponent -[#15803D]-> AdvancedFilterPanelComponent \
+  : "▲ @Output subjectChanged"
+
+AdvancedFilterPanelComponent -[#1D4ED8]-> CommonFiltersComponent \
+  : "▼ @Input filters: CommonFilterValues\n▼ @Input validationResult: ValidationResult"
+CommonFiltersComponent -[#15803D]-> AdvancedFilterPanelComponent \
+  : "▲ @Output filtersChanged\n▲ @Output validationError"
+
+AdvancedFilterPanelComponent -[#1D4ED8]-> DiDaiFiltersComponent \
+  : "▼ @Input filters: DiDaiFilterValues\n▼ @Input validationResult: ValidationResult"
+DiDaiFiltersComponent -[#15803D]-> AdvancedFilterPanelComponent \
+  : "▲ @Output filtersChanged\n▲ @Output validationError"
+
+AdvancedFilterPanelComponent -[#1D4ED8]-> AggregateFiltersComponent \
+  : "▼ @Input filters: AggregateFilterValues\n▼ @Input validationResult: ValidationResult"
+AggregateFiltersComponent -[#15803D]-> AdvancedFilterPanelComponent \
+  : "▲ @Output filtersChanged\n▲ @Output validationError"
+
+AdvancedFilterPanelComponent -[#1D4ED8]-> CustomMetaFilterComponent \
+  : "▼ @Input entries: CustomMetaEntry[]"
+CustomMetaFilterComponent -[#15803D]-> AdvancedFilterPanelComponent \
+  : "▲ @Output entriesChanged"
+
+' ── SubjectFilterComponent (Dumb) ↔ SubjectDetailForm ──
+
+SubjectFilterComponent -[#1D4ED8]-> SubjectDetailFormComponent \
+  : "▼ @Input subjectType: SubjectType\n▼ @Input details: SubjectDetails | null"
+SubjectDetailFormComponent -[#15803D]-> SubjectFilterComponent \
+  : "▲ @Output detailsChanged: SubjectDetails"
+
+' ── FilterValueInputComponent ──
+
+CommonFiltersComponent -[#1D4ED8]-> FilterValueInputComponent \
+  : "▼ @Input fieldKey, value, fieldType, fieldError"
+DiDaiFiltersComponent -[#1D4ED8]-> FilterValueInputComponent \
+  : "▼ @Input fieldKey, value, fieldType, fieldError"
+AggregateFiltersComponent -[#1D4ED8]-> FilterValueInputComponent \
+  : "▼ @Input fieldKey, value, fieldType, fieldError"
+
+FilterValueInputComponent -[#1D4ED8]-> FieldErrorComponent \
+  : "▼ @Input error: ValidationError | null"
+
+FilterValueInputComponent -[#15803D]-> CommonFiltersComponent \
+  : "▲ @Output valueChanged\n▲ @Output validationError"
+FilterValueInputComponent -[#15803D]-> DiDaiFiltersComponent \
+  : "▲ @Output valueChanged\n▲ @Output validationError"
+FilterValueInputComponent -[#15803D]-> AggregateFiltersComponent \
+  : "▲ @Output valueChanged\n▲ @Output validationError"
+
+' ── Shared Dumb slots ────────────────────────────────────
+
+AsyncStateWrapperComponent -[#1D4ED8]-> InlineErrorComponent \
+  : "▼ @Input error: AppError | null"
+InlineErrorComponent -[#15803D]-> AsyncStateWrapperComponent \
+  : "▲ @Output retryClicked: void"
+
+SearchResultsComponent -[#1D4ED8]-> EmptyStateComponent \
+  : "▼ @Input message: string"
+
+@enduml

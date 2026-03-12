@@ -1,0 +1,555 @@
+@startuml C4 – Code Level – Search Use Case
+
+title C4 Code Level – Search Use Case\nUC-9..18: Full-text · Advanced · Semantic · Validation · Results\n
+
+skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 80
+skinparam classAttributeIconSize 0
+skinparam classFontSize 11
+skinparam packageFontSize 12
+
+hide empty members
+
+' ══════════════════════════════════════════════════════════════
+' ENUMS & VALUE TYPES
+' ══════════════════════════════════════════════════════════════
+
+package "Types & Enums" #F5F5F5 {
+
+  enum IndexingStatus {
+    IDLE
+    INDEXING
+    READY
+    ERROR
+    TIMEOUT
+    CANCELLED
+  }
+
+  enum FilterFieldType {
+    TEXT
+    DATE
+    NUMERIC
+    ENUM
+  }
+
+  enum SubjectType {
+    PAI
+    PAE
+    AS
+    PG
+    PF
+    RUP
+    SW
+  }
+
+  class SearchQuery {
+    + text: string
+    + className?: string
+    + processId?: string
+  }
+
+  class SearchFilter {
+    + common?: CommonFilterValues
+    + diDai?: DiDaiFilterValues
+    + aggregate?: AggregateFilterValues
+    + customMeta?: CustomMetaEntry[]
+    + subject?: SubjectFilter
+  }
+
+  class SearchResult {
+    + id: string
+    + name: string
+    + type: string
+  }
+
+  class ValidationError {
+    + field: string
+    + message: string
+  }
+
+  class ValidationResult {
+    + valid: boolean
+    + errors: Map<string, ValidationError>
+  }
+
+  class AppError {
+    + code: ErrorCode
+    + category: ErrorCategory
+    + severity: ErrorSeverity
+    + recoverable: boolean
+    + context?: string
+    + detail?: string
+  }
+
+  class SearchState {
+    + query: SearchQuery
+    + filters: SearchFilter
+    + results: SearchResult[]
+    + loading: boolean
+    + error: AppError | null
+    + validationErrors: Map<string, ValidationError>
+    + isSearching: boolean
+  }
+
+  class SemanticIndexState {
+    + status: IndexingStatus
+    + progress: number
+    + error: AppError | null
+  }
+
+  class CustomMetaEntry {
+    + name: string
+    + value: string
+  }
+}
+
+' ══════════════════════════════════════════════════════════════
+' ROUTING & GUARD
+' ══════════════════════════════════════════════════════════════
+
+package "Routing & Guard" #E8F5E9 {
+
+  class AppRouter {
+    + routes: Route[]
+    + navigate(path: string[], extras?): void
+  }
+
+  class DipReadyGuard <<CanActivateFn>> {
+    + canActivate(route, state): boolean | UrlTree
+    - dipFacade: DipFacade
+  }
+}
+
+' ══════════════════════════════════════════════════════════════
+' SEARCH MODULE – SMART COMPONENTS
+' ══════════════════════════════════════════════════════════════
+
+package "Search Module – Smart Components" #E3F2FD {
+
+  class SearchPageComponent <<Angular Standalone [Smart]\nRoute: /search>> {
+    - searchFacade: SearchFacade
+    + state: Signal<SearchState>
+    + ngOnInit(): void
+    + onQueryChanged(q: SearchQuery): void
+    + onFiltersChanged(f: SearchFilter): void
+  }
+
+  class AdvancedFilterPanelComponent <<Angular Standalone [Smart]\nUC-9.1, UC-10, UC-12, UC-13, UC-18>> {
+    - filterValidator: FilterValidatorService
+    + filters: Signal<SearchFilter>
+    + expanded: boolean
+    + onAddFilter(): void
+    + onRemoveFilter(field: string): void
+    + onResetFilters(): void
+    + validateRealTime(filters: SearchFilter): void
+    ' @Output
+    + filtersChanged: EventEmitter<SearchFilter>
+  }
+
+  class SubjectFilterComponent <<Angular Standalone [Smart]\nUC-13, UC-13.1..3 – Wizard 3-step>> {
+    + currentStep: number
+    + selectedRole: string
+    + selectedSubjectType: SubjectType
+    ' @Output
+    + subjectChanged: EventEmitter<SubjectFilter>
+    + nextStep(): void
+    + prevStep(): void
+  }
+
+  class SearchResultsComponent <<Angular Standalone [Smart]\nUC-15, UC-16>> {
+    ' @Input
+    + results: SearchResult[]
+    + onResultClick(result: SearchResult): void
+  }
+}
+
+' ══════════════════════════════════════════════════════════════
+' SEARCH MODULE – DUMB COMPONENTS
+' ══════════════════════════════════════════════════════════════
+
+package "Search Module – Dumb Components" #FFF9C4 {
+
+  class SearchBarComponent <<Angular Standalone [Dumb]\nUC-9, UC-9.3, UC-9.4>> {
+    ' @Input
+    + query: SearchQuery
+    ' @Output
+    + queryChanged: EventEmitter<SearchQuery>
+    - debounce: 300 <<ms>>
+  }
+
+  class CommonFiltersComponent <<Angular Standalone [Dumb]\nUC-12.1.2..7>> {
+    ' @Input / @Output
+    + filters: CommonFilterValues
+    + filtersChange: EventEmitter<CommonFilterValues>
+    ' Fields: chiave descrittiva, classificazione,
+    ' conservazione, note, tipo
+  }
+
+  class DiDaiFiltersComponent <<Angular Standalone [Dumb]\nUC-12.2.1.2..11>> {
+    ' @Input / @Output
+    + filters: DiDaiFilterValues
+    + filtersChange: EventEmitter<DiDaiFilterValues>
+    ' Fields: registrazione, tipologia, formazione,
+    ' riservatezza, formato, verifica, nome,
+    ' versione, ID primario, tracciature
+  }
+
+  class AggregateFiltersComponent <<Angular Standalone [Dumb]\nUC-12.2.2.2..9>> {
+    ' @Input / @Output
+    + filters: AggregateFilterValues
+    + filtersChange: EventEmitter<AggregateFilterValues>
+    ' Fields: tipo, ID, fascicolo, date,
+    ' procedimento, assegnazione
+  }
+
+  class CustomMetaFilterComponent <<Angular Standalone [Dumb]\nUC-12.3, UC-12.3.1>> {
+    ' @Input / @Output
+    + entries: CustomMetaEntry[]
+    + entriesChange: EventEmitter<CustomMetaEntry[]>
+    + onAdd(): void
+    + onRemove(index: number): void
+  }
+
+  class SubjectDetailFormComponent <<Angular Standalone [Dumb]\nUC-13.3.1..7 – Strategy per SubjectType>> {
+    ' @Input
+    + subjectType: SubjectType
+    ' @Output
+    + detailChanged: EventEmitter<SubjectDetail>
+    ' Dynamic fields per subjectType:
+    ' PAI, PAE, AS, PG, PF, RUP, SW
+  }
+
+  class FilterValueInputComponent <<Angular Standalone [Dumb]\nUC-17, UC-18>> {
+    ' @Input
+    + value: string
+    + fieldType: FilterFieldType
+    ' @Output
+    + valueChanged: EventEmitter<string>
+    + validationError: EventEmitter<ValidationError | null>
+    - validateLocal(): void
+  }
+
+  class SemanticIndexStatusComponent <<Angular Standalone [Dumb]\nUC-11 – Opzionale>> {
+    ' @Input
+    + status: IndexingStatus
+  }
+}
+
+' ══════════════════════════════════════════════════════════════
+' SHARED UI COMPONENTS
+' ══════════════════════════════════════════════════════════════
+
+package "Shared UI Components" #FCE4EC {
+
+  class AsyncStateWrapperComponent <<Angular Standalone [Dumb – Shared]\nCross-cutting>> {
+    ' @Input
+    + loading: boolean
+    + error: AppError | null
+    + empty: boolean
+    ' ng-content slots: loading | error | content
+  }
+
+  class InlineErrorComponent <<Angular Standalone [Dumb – Shared]\nNon-blocking errors>> {
+    ' @Input
+    + error: AppError
+    + onRetry(): void
+  }
+
+  class FieldErrorComponent <<Angular Standalone [Dumb – Shared]\nUC-18, UC-10>> {
+    ' @Input
+    + error: ValidationError | null
+  }
+
+  class EmptyStateComponent <<Angular Standalone [Dumb – Shared]\nUC-16 – WCAG 4.1.3>> {
+    ' @Input
+    + message: string
+    + icon?: string
+    ' role="status", aria-live="polite"
+  }
+
+  class DocumentViewerComponent <<Angular Standalone [Smart – Composite]\nReused from DocumentDetail>> {
+    ' @Input
+    + documentId: string
+    + mimeType: string
+    + fileName: string
+  }
+
+  class MetadataPanelComponent <<Angular Standalone [Smart – Composite]\nReused from DocumentDetail>> {
+    ' @Input
+    + documentDetail: DocumentDetail
+  }
+}
+
+' ══════════════════════════════════════════════════════════════
+' FACADE SERVICES
+' ══════════════════════════════════════════════════════════════
+
+package "Facade Services" #EDE7F6 {
+
+  class SearchFacade <<Angular Service [Injectable]\nFacade + SRP>> {
+    + state: Signal<SearchState>
+    - abortController: AbortController
+    - isSearching: Signal<boolean>
+    + search(query: SearchQuery): void
+    + searchAdvanced(filters: SearchFilter): void
+    + searchSemantic(query: SearchQuery): void
+    + cancelSearch(): void
+    - debounce(fn, ms: 300): void
+    - checkSemanticAvailability(): boolean
+    ' Dependencies injected:
+    - ipcGateway: IpcGateway
+    - filterValidator: FilterValidatorService
+    - ipcErrorHandler: IpcErrorHandlerService
+    - telemetry: TelemetryService
+    - liveAnnouncer: LiveAnnouncerService
+    - semanticFacade: SemanticIndexFacade
+  }
+
+  class SemanticIndexFacade <<Angular Service [Injectable]\nFacade – Opzionale>> {
+    + state: Signal<SemanticIndexState>
+    + cancel(): void
+    - timeout: 120 <<seconds>>
+    - ipcGateway: IpcGateway
+    - liveAnnouncer: LiveAnnouncerService
+  }
+}
+
+' ══════════════════════════════════════════════════════════════
+' SERVICES
+' ══════════════════════════════════════════════════════════════
+
+package "Services" #E8EAF6 {
+
+  class FilterValidatorService <<Angular Service [providedIn:'root']\nSRP – Validation>> {
+    + validate(filters: SearchFilter): ValidationResult
+    + validateField(field: string, value: string, type: FilterFieldType): ValidationError | null
+  }
+
+  class IpcGateway <<Angular Service [providedIn:'root']\nAdapter + ISP>> {
+    + invoke<T>(channel: string, payload?, cachePolicy?): Promise<T>
+    + on<T>(channel: string, handler): () => void
+    ' Search channels:
+    '   search           → cache-first, TTL 30s
+    '   searchAdvanced   → cache-first, TTL 30s + AbortController
+    '   searchSemantic   → no-cache if status≠ready
+    - ipcCache: IpcCacheService
+    - ipcErrorHandler: IpcErrorHandlerService
+  }
+
+  class IpcCacheService <<Angular Service [providedIn:'root']\nSRP – Request Deduplication>> {
+    - entries: Map<string, CacheEntry>
+    + get<T>(key: string): T | null
+    + set<T>(key: string, value: T, ttl: number): void
+    + invalidate(key: string): void
+    + invalidatePrefix(prefix: string): void
+    + clear(): void
+    ' search results TTL: 30_000ms
+  }
+
+  class IpcErrorHandlerService <<Angular Service [providedIn:'root']\nSRP – Error Translation>> {
+    + toAppError(ipcError: unknown): AppError
+    + isFatal(e: AppError): boolean
+    ' SEARCH_ENGINE_ERROR → AppError in Signal<SearchState>
+  }
+
+  class TelemetryService <<Angular Service [providedIn:'root']\nSRP – Observability>> {
+    + trackEvent(type: EventType, payload?): void
+    + trackError(error: AppError, context?): void
+    + trackTiming(label: EventType, ms: number): void
+    ' Events: SEARCH_EXECUTED, SEARCH_LATENCY_MS,
+    '         SEARCH_RESULT_OPENED, IPC_ERROR
+    - ipcGateway: IpcGateway
+  }
+
+  class LiveAnnouncerService <<Angular CDK [providedIn:'root']\nWCAG 2.1 – aria-live>> {
+    + announce(msg: string, politeness?: 'polite' | 'assertive'): void
+    ' SearchFacade → "Trovati N risultati" [polite] – UC-15
+  }
+}
+
+' ══════════════════════════════════════════════════════════════
+' EXTERNAL SYSTEM
+' ══════════════════════════════════════════════════════════════
+
+package "External" #EFEBE9 {
+  class IpcDispatcher <<Electron Main Process\nContext Bridge>> {
+    + invoke(channel, payload): Promise<unknown>
+  }
+}
+
+' ══════════════════════════════════════════════════════════════
+' ROUTING RELATIONS
+' ══════════════════════════════════════════════════════════════
+
+AppRouter --> DipReadyGuard        : "CanActivateFn /search"
+AppRouter --> SearchPageComponent  : "Lazy route /search\n[guard: DipReadyGuard]"
+
+' ══════════════════════════════════════════════════════════════
+' SEARCH PAGE → CHILDREN
+' ══════════════════════════════════════════════════════════════
+
+SearchPageComponent --> SearchFacade               : "reads Signal<SearchState>\ndispatches search()"
+SearchPageComponent --> AsyncStateWrapperComponent : "wraps results\n[loading, error, empty]"
+SearchPageComponent --> SearchBarComponent         : "@Input query\n@Output queryChanged – UC-9"
+SearchPageComponent --> AdvancedFilterPanelComponent : "@Input filters\n@Output filtersChanged – UC-9.1"
+SearchPageComponent --> SearchResultsComponent     : "@Input results[] – UC-15, UC-16"
+SearchPageComponent --> SemanticIndexStatusComponent : "@Input status [Optional] – UC-11"
+
+AsyncStateWrapperComponent --> InlineErrorComponent : "slot 'error'\n→ SEARCH_ENGINE_ERROR"
+
+' ══════════════════════════════════════════════════════════════
+' SEARCH BAR → FACADE
+' ══════════════════════════════════════════════════════════════
+
+SearchBarComponent --> SearchFacade : "queryChanged\n→ search() debounce 300ms"
+
+' ══════════════════════════════════════════════════════════════
+' ADVANCED FILTER PANEL → CHILDREN
+' ══════════════════════════════════════════════════════════════
+
+AdvancedFilterPanelComponent --> CommonFiltersComponent     : "@Input – UC-12.1"
+AdvancedFilterPanelComponent --> DiDaiFiltersComponent      : "@Input – UC-12.2.1"
+AdvancedFilterPanelComponent --> AggregateFiltersComponent  : "@Input – UC-12.2.2"
+AdvancedFilterPanelComponent --> CustomMetaFilterComponent  : "@Input – UC-12.3"
+AdvancedFilterPanelComponent --> SubjectFilterComponent     : "@Input – UC-13"
+AdvancedFilterPanelComponent --> FilterValidatorService     : "validate(filters)\nreal-time – UC-10, UC-18"
+
+' ══════════════════════════════════════════════════════════════
+' SUBJECT FILTER → DETAIL FORM
+' ══════════════════════════════════════════════════════════════
+
+SubjectFilterComponent --> SubjectDetailFormComponent : "@Input subjectType\n→ dynamic fields – UC-13.3"
+
+' ══════════════════════════════════════════════════════════════
+' FILTER VALUE INPUT → FIELD ERROR
+' ══════════════════════════════════════════════════════════════
+
+CommonFiltersComponent    --> FilterValueInputComponent : "each value field\nUC-17, UC-18"
+DiDaiFiltersComponent     --> FilterValueInputComponent : "each value field\nUC-17, UC-18"
+AggregateFiltersComponent --> FilterValueInputComponent : "each value field\nUC-17, UC-18"
+
+FilterValueInputComponent --> FieldErrorComponent : "@Input ValidationError\nUC-18 inline below field"
+
+' ══════════════════════════════════════════════════════════════
+' SEARCH RESULTS → SHARED
+' ══════════════════════════════════════════════════════════════
+
+SearchResultsComponent --> EmptyStateComponent      : "fallback – UC-16"
+SearchResultsComponent --> DocumentViewerComponent  : "quick preview – UC-7 (reuse)"
+SearchResultsComponent --> MetadataPanelComponent   : "quick metadata panel (reuse)"
+
+' ══════════════════════════════════════════════════════════════
+' SEMANTIC STATUS → FACADE
+' ══════════════════════════════════════════════════════════════
+
+SemanticIndexStatusComponent --> SemanticIndexFacade : "reads Signal<SemanticIndexState>.status"
+
+' ══════════════════════════════════════════════════════════════
+' SEARCH FACADE → SERVICES
+' ══════════════════════════════════════════════════════════════
+
+SearchFacade --> IpcGateway              : "search, searchAdvanced\n[AbortController]\nsearchSemantic [no-cache\nif status≠ready]"
+SearchFacade --> FilterValidatorService  : "pre-validate filters – UC-10"
+SearchFacade --> IpcErrorHandlerService  : "SEARCH_ENGINE_ERROR\n→ AppError"
+SearchFacade --> TelemetryService        : "trackEvent(SEARCH_EXECUTED)\ntrackTiming(SEARCH_LATENCY_MS)\ntrackError(AppError)"
+SearchFacade --> LiveAnnouncerService    : "announce('Trovati N risultati')\nUC-15 [polite]"
+SearchFacade --> SemanticIndexFacade     : "checks status\nfor graceful degradation"
+
+' ══════════════════════════════════════════════════════════════
+' IPC GATEWAY → SERVICES & EXTERNAL
+' ══════════════════════════════════════════════════════════════
+
+IpcGateway --> IpcDispatcher       : "invoke / on\nElectron contextBridge"
+IpcGateway --> IpcErrorHandlerService : "IPC errors → IpcAppError"
+IpcGateway --> IpcCacheService     : "get(key) cache-first\nset(key, val, TTL 30s)\nfor search results"
+
+' ══════════════════════════════════════════════════════════════
+' TELEMETRY → IPC
+' ══════════════════════════════════════════════════════════════
+
+TelemetryService --> IpcGateway : "writeLog(entry)\n[no-cache] – rotating log"
+
+' ══════════════════════════════════════════════════════════════
+' SEMANTIC FACADE → IPC
+' ══════════════════════════════════════════════════════════════
+
+SemanticIndexFacade --> IpcGateway       : "getIndexingStatus\nsemantic:cancel [no-cache]"
+SemanticIndexFacade --> LiveAnnouncerService : "announce('Ricerca semantica\nnon disponibile') [assertive]\non timeout | cancelled | error"
+
+' ══════════════════════════════════════════════════════════════
+' STATE COMPOSITIONS
+' ══════════════════════════════════════════════════════════════
+
+SearchState *-- SearchQuery
+SearchState *-- SearchFilter
+SearchState *-- SearchResult
+SearchState *-- AppError
+SearchState *-- ValidationError
+
+SearchFilter *-- CustomMetaEntry
+
+SemanticIndexState *-- IndexingStatus
+SemanticIndexState *-- AppError
+
+SubjectDetailFormComponent ..> SubjectType : "«uses»"
+FilterValueInputComponent  ..> FilterFieldType : "«uses»"
+
+' ══════════════════════════════════════════════════════════════
+' NOTES
+' ══════════════════════════════════════════════════════════════
+
+note as n1
+  CONCURRENCY (SearchFacade)
+  ─────────────────────────────────────────
+  isSearching = true  → mutex Signal,
+    second submit silently ignored
+  AbortController    → cancels in-flight IPC
+  Debounce 300ms     → limits IPC on fast typing
+
+  GRACEFUL DEGRADATION (UC-9.2, UC-11)
+  ─────────────────────────────────────────
+  SemanticIndexFacade.status ≠ 'ready'
+    → SearchFacade disables searchSemantic
+    → full-text search remains intact
+  SemanticIndexStatusComponent shows banner
+
+  SEARCH FLOW – FULL-TEXT (UC-9)
+  ─────────────────────────────────────────
+  1. User types → SearchBarComponent
+  2. Debounce 300ms → SearchFacade.search()
+  3. isSearching = true
+  4. IpcGateway.invoke('search') [cache-first TTL 30s]
+  5. Signal<SearchState>.results updated
+  6. SearchResultsComponent renders list
+  7. LiveAnnouncer: 'Trovati N risultati' [polite]
+  8. isSearching = false
+
+  ADVANCED SEARCH FLOW (UC-9.1, UC-10..18)
+  ─────────────────────────────────────────
+  1. User expands AdvancedFilterPanelComponent
+  2. Configures filters (Common, DiDai,
+     Aggregate, CustomMeta, Subject)
+  3. FilterValidatorService validates real-time
+     → UC-18: FieldErrorComponent inline
+  4. Submit → SearchFacade.searchAdvanced(filters)
+  5. AbortController cancels previous in-flight IPC
+
+  USE CASES COVERED
+  ─────────────────────────────────────────
+  UC-9    Full-text free search
+  UC-9.1  Advanced filters activation
+  UC-9.2  Semantic AI search (optional)
+  UC-9.3  Search by class name
+  UC-9.4  Search by process ID
+  UC-10   Filter pre-validation
+  UC-11   Semantic indexing status
+  UC-12   Typed filters (Common, DiDai, Aggregate)
+  UC-13   Subject filter (3-step wizard)
+  UC-15   Results display
+  UC-16   No results (EmptyState)
+  UC-17   Filter value input
+  UC-18   Real-time format validation
+end note
+
+@enduml

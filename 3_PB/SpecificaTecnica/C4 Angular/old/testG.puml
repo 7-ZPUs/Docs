@@ -1,0 +1,142 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam monochrome true
+skinparam linetype ortho
+skinparam nodesep 50
+skinparam ranksep 60
+
+' ── SERVIZI & FACADES ──
+package "Core & State (Services)" {
+  class "SearchFacade" as SearchFacade <<Service>> {
+    + state: Signal<SearchState>
+    + isSearching: boolean
+    + setQuery(q: SearchQuery): void
+    + searchAdvanced(filters: SearchFilters): void
+  }
+
+  class "SemanticIndexFacade" as SemanticFacade <<Service>> {
+    + status: Signal<SemanticIndexState>
+  }
+
+  class "FilterValidatorService" as ValidatorService <<Service>> {
+    + validate(): ValidationResult
+  }
+}
+
+' ── ORCHESTRATORE PRINCIPALE ──
+package "Pages (Smart)" {
+  class "SearchPageComponent" as SearchPage <<Smart>> {
+    - searchFacade: SearchFacade
+    - semanticFacade: SemanticIndexFacade
+    - validatorService: FilterValidatorService
+    + selectedDocumentId: Signal<string>
+  }
+}
+
+' ── COMPONENTI RICERCA PRINCIPALI ──
+package "Search Layout (Dumb)" {
+  class "SearchBarComponent" as SearchBar <<Dumb>> {
+    + queryChanged: Event<SearchQuery>
+  }
+
+  class "SemanticIndexStatusComponent" as SemanticStatus <<Dumb>> {
+    + status: IndexingStatus <<Input>>
+  }
+
+  class "AsyncStateWrapperComponent" as AsyncWrapper <<Dumb>> {
+    + loading: boolean <<Input>>
+    + error: AppError <<Input>>
+  }
+  
+  class "InlineErrorComponent" as InlineError <<Dumb>> {
+    + error: AppError <<Input>>
+  }
+
+  class "SearchResultsComponent" as SearchResults <<Dumb>> {
+    + results: SearchResult[] <<Input>>
+    + resultSelected: Event<string> <<Output>>
+  }
+
+  class "EmptyStateComponent" as EmptyState <<Dumb>> {
+    + message: string
+  }
+}
+
+' ── PANNELLO FILTRI E SOTTO-DOMINI ──
+package "Filters Ecosystem" {
+  class "AdvancedFilterPanelComponent" as AdvancedFilterPanel <<Dumb>> {
+    + filters: SearchFilters <<Input>>
+    + validator: FilterValidatorFn <<Input>>
+    + filtersChanged: Event <<Output>>
+  }
+
+  class "CommonFiltersComponent" as CommonFilters <<Dumb>>
+  class "DiDaiFiltersComponent" as DiDaiFilters <<Dumb>>
+  class "AggregateFiltersComponent" as AggregateFilters <<Dumb>>
+  class "CustomMetaFilterComponent" as CustomMetaFilter <<Dumb>>
+  
+  class "SubjectFilterComponent" as SubjectFilter <<Smart>> {
+    + handleWizardSteps(): void
+  }
+  
+  class "SubjectDetailFormComponent" as SubjectDetailForm <<Dumb>> {
+    + subjectType: SubjectType <<Input>>
+  }
+}
+
+' ── UI CONDIVISA ──
+package "Shared Form UI (Dumb)" {
+  class "FilterValueInputComponent" as FilterInput <<Dumb>> {
+    + value: any <<Input>>
+    + fieldType: FilterFieldType <<Input>>
+    + valueChanged: Event <<Output>>
+  }
+
+  class "FieldErrorComponent" as FieldError <<Dumb>> {
+    + error: ValidationError <<Input>>
+  }
+}
+
+' ── RISULTATI ESTERNI ──
+class "DocumentViewerComponent" as DocumentViewer <<Smart>> {
+  + documentId: string <<Input>>
+}
+
+' ==========================================
+' RELAZIONI E FLUSSI
+' ==========================================
+
+' Dipendenze Architetturali
+SearchPage .up.> SearchFacade : usa Signal e invia command
+SearchPage .up.> SemanticFacade : legge status
+SearchPage .up.> ValidatorService : inietta funzione
+
+' Composizione Layout Principale
+SearchPage *-- SearchBar : compone 
+SearchPage *-- SemanticStatus : compone 
+SearchPage *-- AsyncWrapper : compone 
+SearchPage *-- AdvancedFilterPanel : compone (passa validatore) 
+
+' Flusso Risultati
+AsyncWrapper *-- SearchResults : proietta risultati
+AsyncWrapper *-- InlineError : mostra errori IPC 
+SearchResults *-- EmptyState : fallback se vuoto [cite: 5]
+SearchPage ..> DocumentViewer : istanzia dinamicamente su resultSelected [cite: 11]
+
+' Albero dei Filtri Avanzati
+AdvancedFilterPanel *-- CommonFilters 
+AdvancedFilterPanel *-- DiDaiFilters 
+AdvancedFilterPanel *-- AggregateFilters 
+AdvancedFilterPanel *-- CustomMetaFilter 
+AdvancedFilterPanel *-- SubjectFilter 
+
+' Sotto-albero Smart dei Soggetti
+SubjectFilter *-- SubjectDetailForm : delega rendering passo 3 
+
+' Utilizzo Input Generici e Validazione
+CommonFilters ..> FilterInput : utilizza [cite: 11]
+DiDaiFilters ..> FilterInput : utilizza [cite: 11]
+AggregateFilters ..> FilterInput : utilizza [cite: 11]
+FilterInput *-- FieldError : mostra errore validazione localmente 
+
+@enduml

@@ -1,0 +1,125 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 70
+skinparam defaultFontName sans-serif
+
+title UC-3 – Ricerca · UML Class Diagram (Lollipop Style)
+
+' ==========================================
+' MODELLI E DTO
+' ==========================================
+package "search/models" {
+  class SearchQuery <<Value Object>> {
+    + text: string
+    + className?: string
+    + processId?: string
+    + searchMode: SearchMode
+  }
+  class SearchFilter <<Value Object>> {
+    + field: FilterField
+    + operator: FilterOperator
+    + value: FilterValue
+    + group: FilterGroup
+  }
+  class SearchState <<Signal State>> {
+    + query: SearchQuery | null
+    + filters: SearchFilter[]
+    + results: SearchResult[]
+    + loading: boolean
+    + isSearching: boolean
+  }
+  class SearchResult <<DTO>> {
+    + id: string
+    + name: string
+    + type: DipNodeType
+    + score?: number
+  }
+}
+
+' ==========================================
+' SERVIZI APPLICATIVI
+' ==========================================
+package "search/services" {
+  class SearchFacade <<Facade>> {
+    - state: WritableSignal<SearchState>
+    - abortCtrl: AbortController | null
+    + state: Signal<SearchState>
+    + search(q: SearchQuery): void
+    + searchAdvanced(q: SearchQuery, filters: SearchFilter[]): void
+    + searchSemantic(q: SearchQuery): void
+  }
+  class FilterValidatorService <<Service>> {
+    + validate(filters: SearchFilter[]): ValidationResult
+    + validateField(filter: SearchFilter): ValidationError | null
+  }
+  class SemanticIndexFacade <<Facade>> {
+    - state: WritableSignal<SemanticIndexState>
+    + status: Signal<SemanticIndexStatus>
+    + startIndexing(): void
+    + cancel(): void
+  }
+}
+
+' ==========================================
+' LAYER IPC E ADAPTER
+' ==========================================
+package "core/ipc" {
+  class SearchIpcAdapter <<Adapter>> {
+    + search(q: SearchQuery, signal?: AbortSignal): Promise<SearchResult[]>
+    + searchAdvanced(q, filters, signal?): Promise<SearchResult[]>
+    + searchSemantic(q, signal?): Promise<SearchResult[]>
+  }
+  class SearchResultMapper <<Mapper>> {
+    + {static} fromIpc(raw: IpcSearchHit[]): SearchResult[]
+  }
+  class IpcGateway <<Service>> {
+    + invoke(channel: string, payload: any, opts: any): Promise<any>
+  }
+}
+
+' ==========================================
+' COMPONENTI UI
+' ==========================================
+package "search/ui" {
+  class SearchPageComponent <<Smart Component>>
+  class AdvancedFilterPanelComponent <<Smart Component>>
+}
+
+' ==========================================
+' INTERFACCE E NOTAZIONE LOLLIPOP
+' ==========================================
+interface ISearchPort
+interface IFilterValidator
+interface ISemanticStatusPort
+
+' Providers (Ball - Chi implementa l'interfaccia)
+ISearchPort ()-- SearchIpcAdapter
+IFilterValidator ()-- FilterValidatorService
+ISemanticStatusPort ()-- SemanticIndexFacade
+
+' Consumers (Socket - Chi usa l'interfaccia)
+SearchFacade --( ISearchPort
+SearchFacade --( IFilterValidator
+SearchFacade --( ISemanticStatusPort
+
+AdvancedFilterPanelComponent --( IFilterValidator
+
+' ==========================================
+' RELAZIONI STRUTTURALI
+' ==========================================
+SearchFacade *-- SearchState : manages >
+SearchState o-- SearchQuery
+SearchState o-- SearchFilter
+SearchState o-- SearchResult
+
+SearchIpcAdapter --> IpcGateway : invokes >
+SearchIpcAdapter ..> SearchResultMapper : uses >
+SearchResultMapper ..> SearchResult : creates >
+
+SearchPageComponent --> SearchFacade : injects >
+SearchPageComponent --> SemanticIndexFacade : injects >
+SearchPageComponent *-- AdvancedFilterPanelComponent : contains >
+
+@enduml

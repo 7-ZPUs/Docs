@@ -1,0 +1,642 @@
+@startuml UC3_Search_ClassDiagram_v3
+title UC-3 Search – Class Diagram  ·  Smart / Dumb Pattern\n(SOLID · SRP · OCP · LSP · ISP · DIP)
+
+skinparam classAttributeIconSize 0
+skinparam classFontSize 11
+skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 80
+
+' ── Smart component skin (blue header) ──────────────────
+skinparam class {
+  BackgroundColor          White
+  BorderColor              #334155
+  HeaderBackgroundColor    #DBEAFE
+  FontColor                #1E293B
+  AttributeFontColor       #334155
+}
+
+' ── Package backgrounds ──────────────────────────────────
+skinparam packageBackgroundColor #F8FAFC
+skinparam packageBorderColor     #94A3B8
+
+' ── Arrow colours by type ────────────────────────────────
+'    @Input  (state DOWN)  → blue solid
+'    @Output (event UP)    → green dashed
+'    <<inject>> / <<uses>> → slate
+skinparam arrowColor #334155
+
+skinparam noteBackgroundColor #FFFBEB
+skinparam noteBorderColor     #D97706
+
+' ════════════════════════════════════════════════════════
+' LAYER 0 – INTERFACES & CONTRACTS  (ISP + DIP)
+' ════════════════════════════════════════════════════════
+
+package "Interfaces & Contracts" #F0FDF4 {
+
+  interface ISearchChannel <<ISP>> {
+    + search(q: SearchQuery): Observable<SearchResult[]>
+    + searchAdvanced(f: SearchFilters, s: AbortSignal): Observable<SearchResult[]>
+    + searchSemantic(q: SearchQuery): Observable<SearchResult[]>
+  }
+
+  interface IFilterValidator <<ISP>> {
+    + validate(filters: SearchFilters): ValidationResult
+    + validateField(field: string, value: unknown, type: FilterFieldType): ValidationError | null
+  }
+
+  interface ISemanticIndexStatus <<ISP>> {
+    + getStatus(): Signal<SemanticIndexState>
+  }
+
+  interface ICacheService <<ISP>> {
+    + get<T>(key: string): T | null
+    + set<T>(key: string, value: T, ttlMs: number): void
+    + invalidate(key: string): void
+  }
+
+  interface IErrorHandler <<ISP>> {
+    + handle(raw: unknown): AppError
+    + isRecoverable(error: AppError): boolean
+  }
+
+  interface ITelemetry <<ISP>> {
+    + trackEvent(name: TelemetryEvent): void
+    + trackTiming(name: string, ms: number): void
+    + trackError(error: AppError): void
+  }
+
+  interface ILiveAnnouncer <<ISP>> {
+    + announce(message: string, politeness?: "polite"|"assertive"): void
+  }
+
+  interface IRouteGuard <<ISP>> {
+    + canActivate(route: ActivatedRouteSnapshot): boolean | UrlTree
+  }
+}
+
+' ════════════════════════════════════════════════════════
+' LAYER 1 – DOMAIN MODEL  (DTOs / Value Objects)
+' ════════════════════════════════════════════════════════
+
+package "Domain Model" #FFF7ED {
+
+  class SearchQuery <<DTO>> {
+    + text: string
+    + type: "free" | "className" | "processId"
+    + useSemantic: boolean
+  }
+
+  class SearchFilters <<DTO>> {
+    + common: CommonFilterValues
+    + diDai: DiDaiFilterValues
+    + aggregate: AggregateFilterValues
+    + customMeta: CustomMetaEntry[]
+    + subject: SubjectCriteria | null
+  }
+
+  class SearchResult <<DTO>> {
+    + documentId: string
+    + name: string
+    + type: string
+    + score: number
+  }
+
+  class SearchState <<DTO>> {
+    + query: SearchQuery
+    + filters: SearchFilters
+    + results: SearchResult[]
+    + loading: boolean
+    + isSearching: boolean
+    + error: AppError | null
+    + validationErrors: Map<string, ValidationError>
+  }
+
+  class AppError <<DTO>> {
+    + code: ErrorCode
+    + message: string
+    + recoverable: boolean
+    + source: string
+  }
+
+  class ValidationResult <<DTO>> {
+    + isValid: boolean
+    + errors: Map<string, ValidationError>
+  }
+
+  class ValidationError <<DTO>> {
+    + field: string
+    + message: string
+    + code: string
+  }
+
+  class SemanticIndexState <<DTO>> {
+    + status: IndexingStatus
+    + progress: number
+    + lastIndexedAt: Date | null
+  }
+
+  class SubjectCriteria <<DTO>> {
+    + role: SubjectRole
+    + type: SubjectType
+    + details: SubjectDetails
+  }
+
+  enum IndexingStatus {
+    IDLE · INDEXING · READY · ERROR · TIMEOUT · CANCELLED
+  }
+
+  enum FilterFieldType {
+    TEXT · DATE · NUMBER · ENUM · BOOLEAN
+  }
+
+  enum TelemetryEvent {
+    SEARCH_EXECUTED · SEARCH_LATENCY_MS
+    SEARCH_RESULT_OPENED · IPC_ERROR
+  }
+}
+
+' ════════════════════════════════════════════════════════
+' LAYER 2 – SERVICES  (SRP · DIP)
+' ════════════════════════════════════════════════════════
+
+package "Services  [providedIn:'root']" #EFF6FF {
+
+  class SearchFacade <<Service>> <<SRP>> {
+    ' injected abstractions (DIP) ──────────────────────
+    - ipcGateway: ISearchChannel
+    - validator: IFilterValidator
+    - errorHandler: IErrorHandler
+    - telemetry: ITelemetry
+    - liveAnnouncer: ILiveAnnouncer
+    - semanticStatus: ISemanticIndexStatus
+    ' state ─────────────────────────────────────────────
+    - state: WritableSignal<SearchState>
+    - abortController: AbortController | null
+    ' public API (read by Smart components) ─────────────
+    + getState(): Signal<SearchState>
+    + setQuery(query: SearchQuery): void
+    + setFilters(filters: SearchFilters): void
+    + searchAdvanced(filters: SearchFilters): void
+    + cancelSearch(): void
+    ' private ────────────────────────────────────────────
+    - executeSearch(q: SearchQuery, f: SearchFilters): void
+    - handleError(err: unknown): void
+    - resetSearching(): void
+    .. debounce 300 ms · isSearching mutex · graceful semantic degradation ..
+  }
+
+  class SemanticIndexFacade <<Service>> <<SRP>> {
+    - state: WritableSignal<SemanticIndexState>
+    - ipcGateway: ISearchChannel
+    --
+    + getState(): Signal<SemanticIndexState>
+    + startIndexing(): void
+    + cancelIndexing(): void
+  }
+
+  class FilterValidatorService <<Service>> <<SRP>> {
+    + validate(filters: SearchFilters): ValidationResult
+    + validateField(f: string, v: unknown, t: FilterFieldType): ValidationError | null
+    - validateDate(v: string): ValidationError | null
+    - validateNumeric(v: string): ValidationError | null
+    .. OCP: new field types extend via strategy map ..
+  }
+
+  class IpcGateway <<Service>> <<Adapter>> {
+    - contextBridge: ElectronContextBridge
+    - cache: ICacheService
+    - errorHandler: IErrorHandler
+    --
+    + search(q: SearchQuery): Observable<SearchResult[]>
+    + searchAdvanced(f: SearchFilters, s: AbortSignal): Observable<SearchResult[]>
+    + searchSemantic(q: SearchQuery): Observable<SearchResult[]>
+    - invoke<T>(channel: string, payload: unknown): Observable<T>
+    .. search / searchAdvanced: cache-first TTL 30 s ..
+    .. searchSemantic: no-cache if status ≠ ready ..
+  }
+
+  class IpcCacheService <<Service>> <<SRP>> {
+    - store: Map<string, CacheEntry>
+    --
+    + get<T>(key: string): T | null
+    + set<T>(key: string, value: T, ttlMs: number): void
+    + invalidate(key: string): void
+    .. TTL default 30 000 ms ..
+  }
+
+  class IpcErrorHandlerService <<Service>> <<SRP>> {
+    + handle(raw: unknown): AppError
+    + isRecoverable(error: AppError): boolean
+    - toErrorCode(raw: unknown): ErrorCode
+  }
+
+  class TelemetryService <<Service>> <<SRP>> {
+    + trackEvent(name: TelemetryEvent): void
+    + trackTiming(name: string, ms: number): void
+    + trackError(error: AppError): void
+  }
+
+  class LiveAnnouncerService <<Service>> <<SRP>> {
+    + announce(message: string, politeness?: string): void
+    .. WCAG 2.1 aria-live regions ..
+  }
+}
+
+' ════════════════════════════════════════════════════════
+' LAYER 3 – ROUTING
+' ════════════════════════════════════════════════════════
+
+package "Routing" #FDF4FF {
+
+  class AppRouter {
+    + navigate(path: string): void
+    + lazyLoad(path: string): void
+    .. /search → SearchPageComponent (lazy) ..
+  }
+
+  class DipReadyGuard <<RouteGuard>> <<SRP>> {
+    - dipFacade: DipFacade
+    --
+    + canActivate(route: ActivatedRouteSnapshot): boolean | UrlTree
+    .. blocks /search if DipFacade.state().phase ≠ 'ready' ..
+  }
+}
+
+' ════════════════════════════════════════════════════════
+' LAYER 4 – COMPONENT TREE
+'
+'  Colour key (header):
+'   ■ Blue  (#BFDBFE) = SMART  – injects services, owns state
+'   ■ Green (#BBF7D0) = DUMB   – @Input/@Output only, no DI
+'   ■ Pink  (#FED7E2) = SHARED DUMB – reusable across features
+'
+'  Data-flow convention (arrow labels):
+'   ▼ @Input  label  = Smart pushes state DOWN  to Dumb
+'   ▲ @Output label  = Dumb bubbles event UP   to Smart
+' ════════════════════════════════════════════════════════
+
+' ── SMART ────────────────────────────────────────────────
+
+skinparam class {
+  HeaderBackgroundColor #BFDBFE
+  BorderColor           #1D4ED8
+}
+
+package "Smart Components  «Container»" #EFF6FF {
+
+  class SearchPageComponent <<Smart>> {
+    ' ── DI – only Smart may inject ──────────────────────
+    - searchFacade:    SearchFacade          <<inject>>
+    - semanticFacade:  SemanticIndexFacade   <<inject>>
+    - filterValidator: IFilterValidator      <<inject>>
+    ' ── local state ─────────────────────────────────────
+    - selectedDocumentId: WritableSignal<string | null>
+    ' ── projected state → children via @Input ───────────
+    ~ searchState:    Signal<SearchState>       [read-only]
+    ~ semanticStatus: Signal<IndexingStatus>    [projected]
+    ~ validatorFn:    FilterValidatorFn         [passed as @Input]
+    ' ── @Output handlers (events from Dumb children) ────
+    + onQueryChanged(query: SearchQuery): void
+    + onFiltersChanged(filters: SearchFilters): void
+    + onResultSelected(documentId: string): void
+    .. Route: /search – lazy, guarded by DipReadyGuard ..
+    .. selectedDocumentId() controls conditional DocumentViewer ..
+  }
+  note right of SearchPageComponent
+    ★ SMART RULES
+    ① Injects SearchFacade, SemanticIndexFacade,
+      IFilterValidator via Angular DI
+    ② Reads Signal<SearchState> and projects
+      slices as @Input to each Dumb child
+    ③ Handles all @Output events from children
+      and dispatches to SearchFacade
+    ④ Passes FilterValidatorFn via @Input
+      so Dumb panels never touch DI directly
+  end note
+
+  class SubjectFilterComponent <<Smart>> {
+    ' ── local wizard state (no service injection) ───────
+    - currentStep:    WritableSignal<1|2|3>
+    - selectedRole:   WritableSignal<SubjectRole | null>
+    - selectedType:   WritableSignal<SubjectType | null>
+    ' ── @Input / @Output boundary ───────────────────────
+    + @Input  subject: SubjectCriteria | null
+    + @Output subjectChanged: EventEmitter<SubjectCriteria>
+    ' ── step navigation ─────────────────────────────────
+    + nextStep(): void
+    + prevStep(): void
+    + reset(): void
+    .. Smart: manages multi-step wizard state internally ..
+    .. Does NOT inject services ..
+    .. Parent treats it as Dumb via @Input / @Output ..
+  }
+  note right of SubjectFilterComponent
+    ★ SMART (stateful coordination)
+    Smart because it coordinates internal
+    wizard state across 3 steps — NOT because
+    it injects services (it does not).
+    Its parent (AdvancedFilterPanel) treats
+    it as a Dumb child via @Input/@Output.
+  end note
+}
+
+' ── DUMB ─────────────────────────────────────────────────
+
+skinparam class {
+  HeaderBackgroundColor #BBF7D0
+  BorderColor           #15803D
+}
+
+package "Dumb Components  «Presentational»" #F0FDF4 {
+
+  class SearchBarComponent <<Dumb>> {
+    + @Input  query: SearchQuery
+    + @Output queryChanged: EventEmitter<SearchQuery>
+    .. no debounce (debounce owned by SearchFacade) ..
+  }
+
+  class AdvancedFilterPanelComponent <<Dumb>> {
+    + @Input  filters: SearchFilters
+    + @Input  validator: FilterValidatorFn
+    + @Output filtersChanged: EventEmitter<SearchFilters>
+    + @Output validationResult: EventEmitter<ValidationResult>
+    --
+    + addFilter(): void
+    + removeFilter(id: string): void
+    + resetFilters(): void
+    .. validator received via @Input — never via DI ..
+  }
+
+  class CommonFiltersComponent <<Dumb>> {
+    + @Input  filters: CommonFilterValues
+    + @Output filtersChanged: EventEmitter<CommonFilterValues>
+  }
+
+  class DiDaiFiltersComponent <<Dumb>> {
+    + @Input  filters: DiDaiFilterValues
+    + @Output filtersChanged: EventEmitter<DiDaiFilterValues>
+  }
+
+  class AggregateFiltersComponent <<Dumb>> {
+    + @Input  filters: AggregateFilterValues
+    + @Output filtersChanged: EventEmitter<AggregateFilterValues>
+  }
+
+  class CustomMetaFilterComponent <<Dumb>> {
+    + @Input  entries: CustomMetaEntry[]
+    + @Output entriesChanged: EventEmitter<CustomMetaEntry[]>
+  }
+
+  class SubjectDetailFormComponent <<Dumb>> {
+    + @Input  subjectType: SubjectType
+    + @Input  details: SubjectDetails | null
+    + @Output detailsChanged: EventEmitter<SubjectDetails>
+    .. Strategy: field set driven by subjectType ..
+    .. (PAI · PAE · AS · PG · PF · RUP · SW) ..
+  }
+
+  class FilterValueInputComponent <<Dumb>> {
+    + @Input  value: unknown
+    + @Input  fieldType: FilterFieldType
+    + @Output valueChanged: EventEmitter<unknown>
+    + @Output validationError: EventEmitter<ValidationError | null>
+    .. local synchronous format validation only ..
+  }
+
+  class SearchResultsComponent <<Dumb>> {
+    + @Input  results: SearchResult[]
+    + @Output resultSelected: EventEmitter<string>
+    .. emits documentId — never navigates directly ..
+  }
+
+  class SemanticIndexStatusComponent <<Dumb>> {
+    + @Input  status: IndexingStatus
+    .. badge: available / indexing / unavailable ..
+  }
+
+  class DocumentViewerComponent <<Dumb>> {
+    + @Input  documentId: string
+    .. composite: PreviewPanel + DocumentActions (reuse UC-7) ..
+  }
+
+  class MetadataPanelComponent <<Dumb>> {
+    + @Input  documentId: string
+  }
+}
+
+' ── SHARED DUMB ──────────────────────────────────────────
+
+skinparam class {
+  HeaderBackgroundColor #FED7E2
+  BorderColor           #BE185D
+}
+
+package "Shared Dumb Components  «Presentational»" #FFF1F2 {
+
+  class AsyncStateWrapperComponent <<Dumb>> {
+    + @Input  loading: boolean
+    + @Input  error: AppError | null
+    + @Input  empty: boolean
+    .. generic async state shell; slot 'error' → InlineError ..
+  }
+
+  class InlineErrorComponent <<Dumb>> {
+    + @Input  error: AppError | null
+    .. 'Riprova' shown if error.recoverable === true ..
+  }
+
+  class FieldErrorComponent <<Dumb>> {
+    + @Input  error: ValidationError | null
+    .. inline under field · aria-live='assertive' ..
+  }
+
+  class EmptyStateComponent <<Dumb>> {
+    + @Input  message: string
+    .. role='status' · aria-live='polite'  (WCAG 4.1.3) ..
+  }
+}
+
+' ════════════════════════════════════════════════════════
+' INTERFACE IMPLEMENTATIONS
+' ════════════════════════════════════════════════════════
+
+SemanticIndexFacade    ..|> ISemanticIndexStatus
+FilterValidatorService ..|> IFilterValidator
+IpcGateway             ..|> ISearchChannel
+IpcCacheService        ..|> ICacheService
+IpcErrorHandlerService ..|> IErrorHandler
+TelemetryService       ..|> ITelemetry
+LiveAnnouncerService   ..|> ILiveAnnouncer
+DipReadyGuard          ..|> IRouteGuard
+
+' ════════════════════════════════════════════════════════
+' SERVICE WIRE-UP (all via interfaces – DIP)
+' ════════════════════════════════════════════════════════
+
+SearchFacade --> ISearchChannel       : <<uses>>
+SearchFacade --> IFilterValidator     : <<uses>>
+SearchFacade --> IErrorHandler        : <<uses>>
+SearchFacade --> ITelemetry           : <<uses>>
+SearchFacade --> ILiveAnnouncer       : <<uses>>
+SearchFacade --> ISemanticIndexStatus : <<uses>>
+
+IpcGateway --> ICacheService  : <<uses>>
+IpcGateway --> IErrorHandler  : <<uses>>
+
+AppRouter --> DipReadyGuard : <<guards>>
+
+SearchFacade        --> SearchState        : "emits Signal<>"
+SemanticIndexFacade --> SemanticIndexState : "emits Signal<>"
+
+SearchState      o-- SearchQuery
+SearchState      o-- SearchFilters
+SearchState      o-- SearchResult
+SearchFilters    o-- SubjectCriteria
+ValidationResult o-- ValidationError
+SemanticIndexState *-- IndexingStatus
+
+' ════════════════════════════════════════════════════════
+' DATA FLOW  –  SMART ↔ DUMB
+'
+'  Convention used throughout:
+'
+'  Smart --> Dumb : "▼ @Input  propertyName: Type"
+'         State / data pushed DOWN from Smart to Dumb
+'
+'  Dumb  --> Smart: "▲ @Output eventName: Type"
+'         Events bubbled UP from Dumb to Smart
+'
+'  Both directions on the same pair shown as two arrows.
+' ════════════════════════════════════════════════════════
+
+' ── SearchPageComponent (Smart) ↔ direct Dumb children ──
+
+SearchPageComponent -[#1D4ED8]-> SearchBarComponent \
+  : "▼ @Input  query: SearchQuery"
+SearchBarComponent  -[#15803D]-> SearchPageComponent \
+  : "▲ @Output queryChanged: SearchQuery"
+
+SearchPageComponent -[#1D4ED8]-> AdvancedFilterPanelComponent \
+  : "▼ @Input  filters: SearchFilters\n▼ @Input  validator: FilterValidatorFn"
+AdvancedFilterPanelComponent -[#15803D]-> SearchPageComponent \
+  : "▲ @Output filtersChanged: SearchFilters\n▲ @Output validationResult: ValidationResult"
+
+SearchPageComponent -[#1D4ED8]-> SearchResultsComponent \
+  : "▼ @Input  results: SearchResult[]"
+SearchResultsComponent -[#15803D]-> SearchPageComponent \
+  : "▲ @Output resultSelected: string (documentId)"
+
+SearchPageComponent -[#1D4ED8]-> SemanticIndexStatusComponent \
+  : "▼ @Input  status: IndexingStatus\n   [projected from SemanticIndexFacade]"
+
+SearchPageComponent -[#1D4ED8]-> AsyncStateWrapperComponent \
+  : "▼ @Input  loading, error, empty\n   [projected from SearchState]"
+
+SearchPageComponent -[#1D4ED8]-> DocumentViewerComponent \
+  : "▼ @Input  documentId: string\n   [conditional: selectedDocumentId() != null]"
+
+' ── SearchPageComponent (Smart) ↔ Service layer ─────────
+
+SearchPageComponent -[#6B21A8,dashed]-> SearchFacade \
+  : "<<inject>>  reads Signal<SearchState>\n dispatches setQuery / setFilters / searchAdvanced"
+SearchPageComponent -[#6B21A8,dashed]-> SemanticIndexFacade \
+  : "<<inject>>  reads Signal<SemanticIndexState>.status"
+SearchPageComponent -[#6B21A8,dashed]-> IFilterValidator \
+  : "<<inject>>  wraps as FilterValidatorFn → @Input"
+
+' ── AdvancedFilterPanelComponent (Dumb) ↔ sub-panels ────
+
+AdvancedFilterPanelComponent -[#1D4ED8]-> CommonFiltersComponent \
+  : "▼ @Input  filters: CommonFilterValues"
+CommonFiltersComponent -[#15803D]-> AdvancedFilterPanelComponent \
+  : "▲ @Output filtersChanged"
+
+AdvancedFilterPanelComponent -[#1D4ED8]-> DiDaiFiltersComponent \
+  : "▼ @Input  filters: DiDaiFilterValues"
+DiDaiFiltersComponent -[#15803D]-> AdvancedFilterPanelComponent \
+  : "▲ @Output filtersChanged"
+
+AdvancedFilterPanelComponent -[#1D4ED8]-> AggregateFiltersComponent \
+  : "▼ @Input  filters: AggregateFilterValues"
+AggregateFiltersComponent -[#15803D]-> AdvancedFilterPanelComponent \
+  : "▲ @Output filtersChanged"
+
+AdvancedFilterPanelComponent -[#1D4ED8]-> CustomMetaFilterComponent \
+  : "▼ @Input  entries: CustomMetaEntry[]"
+CustomMetaFilterComponent -[#15803D]-> AdvancedFilterPanelComponent \
+  : "▲ @Output entriesChanged"
+
+AdvancedFilterPanelComponent -[#1D4ED8]-> SubjectFilterComponent \
+  : "▼ @Input  subject: SubjectCriteria | null"
+SubjectFilterComponent -[#15803D]-> AdvancedFilterPanelComponent \
+  : "▲ @Output subjectChanged: SubjectCriteria"
+
+' ── SubjectFilterComponent (Smart) ↔ SubjectDetailForm ──
+
+SubjectFilterComponent -[#1D4ED8]-> SubjectDetailFormComponent \
+  : "▼ @Input  subjectType: SubjectType\n▼ @Input  details: SubjectDetails | null"
+SubjectDetailFormComponent -[#15803D]-> SubjectFilterComponent \
+  : "▲ @Output detailsChanged: SubjectDetails"
+
+' ── Leaf filter inputs ───────────────────────────────────
+
+CommonFiltersComponent -[#1D4ED8]-> FilterValueInputComponent \
+  : "▼ @Input  value, fieldType"
+DiDaiFiltersComponent -[#1D4ED8]-> FilterValueInputComponent \
+  : "▼ @Input  value, fieldType"
+AggregateFiltersComponent -[#1D4ED8]-> FilterValueInputComponent \
+  : "▼ @Input  value, fieldType"
+FilterValueInputComponent -[#15803D]-> CommonFiltersComponent \
+  : "▲ @Output valueChanged\n▲ @Output validationError"
+
+FilterValueInputComponent -[#1D4ED8]-> FieldErrorComponent \
+  : "▼ @Input  error: ValidationError | null"
+
+' ── Shared Dumb slots ────────────────────────────────────
+
+AsyncStateWrapperComponent -[#1D4ED8]-> InlineErrorComponent \
+  : "▼ @Input  error: AppError | null  [slot]"
+SearchResultsComponent -[#1D4ED8]-> EmptyStateComponent \
+  : "▼ @Input  message: string  [fallback when results=[]]"
+
+' ════════════════════════════════════════════════════════
+' LEGEND
+' ════════════════════════════════════════════════════════
+
+note as legend
+  ╔═══════════════════════════════════════════════════════╗
+  ║     SMART / DUMB — VISUAL GUIDE                       ║
+  ╠════════════════════════╦══════════════════════════════╣
+  ║  ■ Blue header         ║  SMART «Container»           ║
+  ║                        ║  • Injects services via DI   ║
+  ║                        ║  • Owns / projects state     ║
+  ║                        ║  • Handles side-effects      ║
+  ╠════════════════════════╬══════════════════════════════╣
+  ║  ■ Green header        ║  DUMB «Presentational»       ║
+  ║                        ║  • @Input only — no DI       ║
+  ║                        ║  • @Output only — no effects ║
+  ║                        ║  • Pure rendering            ║
+  ╠════════════════════════╬══════════════════════════════╣
+  ║  ■ Pink header         ║  SHARED DUMB                 ║
+  ║                        ║  • Same rules as Dumb        ║
+  ║                        ║  • Reusable across features  ║
+  ╠════════════════════════╩══════════════════════════════╣
+  ║  DATA FLOW ARROWS                                     ║
+  ║  ──(blue)──►  ▼ @Input  state pushed DOWN to Dumb    ║
+  ║  ──(green)──► ▲ @Output event bubbled UP to Smart    ║
+  ║  --(purple)-> <<inject>> Angular DI (Smart only)     ║
+  ║  --(slate)──> <<uses>>   depends on interface (DIP)  ║
+  ║  ·····|>      interface implementation               ║
+  ╠═══════════════════════════════════════════════════════╣
+  ║  SOLID KEY DECISIONS                                  ║
+  ║  S SRP  One reason to change per class                ║
+  ║  O OCP  New filter types extend, never modify         ║
+  ║  L LSP  Dumb components substitutable by contract     ║
+  ║  I ISP  Narrow single-purpose interfaces              ║
+  ║  D DIP  Smart + Services depend on abstractions       ║
+  ╚═══════════════════════════════════════════════════════╝
+end note
+
+@enduml

@@ -1,0 +1,35 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam monochrome true
+
+class "UserService" as UserService <<Service>> {
+  + getUser(id: String): User
+  + updateUser(user: User): void
+}
+
+class "UserDashboard" as UserDashboard <<Smart>> {
+  - userService: UserService
+  - userData: User
+  + loadUser(): void
+  + handleUserUpdate(user: User): void
+}
+
+class "UserCard" as UserCard <<Dumb>> {
+  + user: User <<Input>>
+  + updateClick: Event <<Output>>
+  + onUpdateClick(): void
+}
+
+interface "User" as User {
+  + id: String
+  + name: String
+  + email: String
+}
+
+' Tracciamento delle relazioni
+UserDashboard .up.> UserService : <<use>>
+UserDashboard *-- UserCard : compone
+UserDashboard ..> User : utilizza
+UserCard ..> User : richiede
+
+@enduml
