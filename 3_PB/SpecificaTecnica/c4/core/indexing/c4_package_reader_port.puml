@@ -1,4 +1,4 @@
-@startuml Class Diagram - Indicizzazione Layout Pulito
+@startuml Class Diagram - Indicizzazione
 allowmixing
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
@@ -9,17 +9,22 @@ skinparam packageStyle rectangle
 
 ' --- 1. INFRASTRUTTURA INBOUND ---
 package "Infrastructure Layer (Inbound)" #fff2e6 {
-    class IndexingIpcAdapter  {
+    class IndexingIpcAdapter {
         - indexDipUC: IndexDipUC
+        + IndexingIpcAdapter(indexDipUC: IndexDipUC)
         + handleIndexDip(event, dipPath: string): Promise<IndexResult>
     }
 }
 
 ' --- 2. APPLICATION LAYER ---
 package "Application Layer" #eaf5ff {
-    class IndexDipUC  {
+    interface IndexDipUC {
+        + execute(dipPath: string): Promise<IndexResult>
+    }
+    class IndexDipService implements IndexDipUC {
         - reader: IPackageReaderPort
         - indexer: IPackageIndexPort
+        + IndexDipService(reader: IPackageReaderPort, indexer: IPackageIndexPort)
         + execute(dipPath: string): Promise<IndexResult>
     }
 }
@@ -28,16 +33,16 @@ package "Application Layer" #eaf5ff {
 package "Domain Layer (Core Business)" #f9f9f9 {
 
     ' PORTE
-    interface IPackageReaderPort  {
+    interface IPackageReaderPort {
         + readDip(dipPath: string): Promise<Dip>
-        + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass, void, unknown>
-        + readProcesses(dipPath: string): AsyncGenerator<Process, void, unknown>
-        + readDocuments(dipPath: string): AsyncGenerator<Document, void, unknown>
-        + readFiles(dipPath: string): AsyncGenerator<File, void, unknown>
-        + readFileBytes(file_id: string): AsyncGenerator<Buffer, void, unknown>
+        + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
+        + readProcesses(dipPath: string): AsyncGenerator<Process>
+        + readDocuments(dipPath: string): AsyncGenerator<Document>
+        + readFiles(dipPath: string): AsyncGenerator<File>
+        + readFileBytes(file_id: string): AsyncGenerator<Buffer>
     }
 
-    interface IPackageIndexPort  {
+    interface IPackageIndexPort {
         + indexDip(dip: Dip): Promise<void>
         + indexClass(docClass: DocumentClass): Promise<void>
         + indexProcess(process: Process): Promise<void>
@@ -50,7 +55,7 @@ package "Domain Layer (Core Business)" #f9f9f9 {
     }
 
     ' ENTITA E ENUM
-    enum IntegrityStatus  {
+    enum IntegrityStatus {
         UNKNOWN
         VALID
         INVALID
@@ -95,18 +100,23 @@ package "Domain Layer (Core Business)" #f9f9f9 {
         + getParentDocumentUuid(): string
     }
 
+    ' Subject non estende ArchivalNode — non ha uuid ne integrityStatus
     class Subject {
         - type: string
         + getType(): string
     }
 
+    ' Composite pattern — Metadata contiene Metadata
     class Metadata {
         - name: string
         - value: string | null
         - type: string
+        - children: Metadata[]
         + getName(): string
         + getValue(): string | null
         + getType(): string
+        + getChildren(): Metadata[]
+        + isLeaf(): boolean
     }
 }
 
@@ -122,7 +132,7 @@ package "Infrastructure Layer (Outbound)" #fff2e6 {
 
         class DocumentMetadataParser {
             + parse(xml: string, uuid: string): Document
-            - traverseNode(name: string, node: any): Metadata[]
+            - traverseNode(name: string, node: any): Metadata
         }
 
         class ParsedDiPIndex {
@@ -163,20 +173,20 @@ package "Infrastructure Layer (Outbound)" #fff2e6 {
         DocumentMetadataParser ..> Metadata : " <<produces>>"
     }
 
-    class LocalPackageReaderAdapter  {
+    class LocalPackageReaderAdapter {
         - indexParser: DiPIndexParser
         - metaParser: DocumentMetadataParser
         - cache: ParsedDiPIndex
         + readDip(dipPath: string): Promise<Dip>
-        + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass, void, unknown>
-        + readProcesses(dipPath: string): AsyncGenerator<Process, void, unknown>
-        + readDocuments(dipPath: string): AsyncGenerator<Document, void, unknown>
-        + readFiles(dipPath: string): AsyncGenerator<File, void, unknown>
-        + readFileBytes(file_id: string): AsyncGenerator<Buffer, void, unknown>
+        + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
+        + readProcesses(dipPath: string): AsyncGenerator<Process>
+        + readDocuments(dipPath: string): AsyncGenerator<Document>
+        + readFiles(dipPath: string): AsyncGenerator<File>
+        + readFileBytes(file_id: string): AsyncGenerator<Buffer>
         - loadIndex(dipPath: string): Promise<ParsedDiPIndex>
     }
 
-    class SqlitePackageAdapter  {
+    class SqlitePackageAdapter {
         - db: Database
         + indexDip(dip: Dip): Promise<void>
         + indexClass(docClass: DocumentClass): Promise<void>
@@ -198,27 +208,13 @@ package "Infrastructure Layer (Outbound)" #fff2e6 {
 ' ==========================================
 
 IndexingIpcAdapter -down-> IndexDipUC : " invokes"
-IndexDipUC -down-> IPackageReaderPort : " reads from"
-IndexDipUC -down-> IPackageIndexPort : " writes to"
+IndexDipService -down-> IPackageReaderPort : " reads from"
+IndexDipService -down-> IPackageIndexPort : " writes to"
 
 LocalPackageReaderAdapter -up-|> IPackageReaderPort : " implements"
 SqlitePackageAdapter -up-|> IPackageIndexPort : " implements"
 
-' Yields / Accepts
-IPackageReaderPort .right.> Dip : " <<yields>>"
-IPackageReaderPort .right.> DocumentClass : " <<yields>>"
-IPackageReaderPort .right.> Process : " <<yields>>"
-IPackageReaderPort .right.> Document : " <<yields>>"
-IPackageReaderPort .right.> File : " <<yields>>"
-
-IPackageIndexPort .right.> Dip : " <<accepts>>"
-IPackageIndexPort .right.> DocumentClass : " <<accepts>>"
-IPackageIndexPort .right.> Process : " <<accepts>>"
-IPackageIndexPort .right.> Document : " <<accepts>>"
-IPackageIndexPort .right.> File : " <<accepts>>"
-IPackageIndexPort .right.> Subject : " <<accepts>>"
-
-' Struttura dominio
+' Gerarchia dominio
 ArchivalNode .right.> IntegrityStatus : " <<uses>>"
 
 ArchivalNode <|-down- Dip
@@ -227,14 +223,18 @@ ArchivalNode <|-down- Process
 ArchivalNode <|-down- Document
 ArchivalNode <|-down- File
 
+' Aggregazioni con Metadata
 Process o-down- Metadata : " contains"
 Document o-down- Metadata : " contains"
 Subject o-down- Metadata : " contains"
 
+' Composite — Metadata contiene Metadata
+Metadata "1" o-right- "*" Metadata : " children"
+
 ' Relazioni UUID tra nodi (riferimenti logici)
 Dip "1" o-down- "many" DocumentClass : " classUuids >"
 DocumentClass "1" o-down- "many" Process : " processUuids >"
-Process "1" o-down- "many" Document : " documentUuid >"
+Process "1" o-down- "many" Document : " documentUuids >"
 Document "1" o-down- "many" File : " fileUuids >"
 Document "1" o-right- "many" Subject : " subjects >"
 
