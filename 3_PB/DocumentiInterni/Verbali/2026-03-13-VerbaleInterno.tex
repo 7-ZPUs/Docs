@@ -1,0 +1,176 @@
+\documentclass[a4paper,12pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+\setlength\parindent{0pt}
+
+\definecolor{lightblack}{gray}{0.35}
+\newcommand{\glossario}[1]{\textit{#1}\textsubscript{\textbf{\textit{\textcolor{lightblack}{G}}}}}
+
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 2026/03/13 \\
+\textbf{Durata:} 1 ora\\
+\textbf{Luogo:} Incontro online (Discord)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+\section{Retrospettiva}
+Il gruppo è riuscito a completare i diagrammi di progettazione seppur con qualche difficoltà e incertezza con un ritardo di 5 giorni rispetto alla pianificazione iniziale (2026-03-08). Si ritiene che questo ritardo sia in parte recuperato dal livello di dettaglio raggiunto nei diagrammi, che permetterà eventualmente di risparmiare tempo nell'applicazione di eventuali correzioni. Inoltre si spera che questo permetta anche di procedere più spediti con la fase di implementazione.\\
+
+Lo strumento di creazione di diagrammi deciso in seguito al periodo è stato \textit{PlantUML}, che permette di creare diagrammi in modo più efficiente e con un livello di dettaglio maggiore rispetto all'alternativa considerata cioè \textit{Draw.io}, a condizione di porre attenzione alla struttura generata dal codice.\\
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Aggiornamento sullo stato di avanzamento dei diagrammmi di progettazione.
+    \item Divisione dei ruoli.
+    \item Discussione sul metodo di lavoro per la fase di implementazione.
+\end{enumerate}
+
+\subsection{Aggiornamento sullo stato di avanzamento della progettazione}
+I diagrammi di progettazione di livello C4 sono stati completati e il gruppo ha intenzione di chiedere ricevimento al prof. Cardin per discutere alcuni dubbi a riguardo. \\
+
+
+\subsection{Divisione dei ruoli}
+La divisione dei ruoli è la seguente:
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Membro} & \textbf{Ruolo} \\
+    \hline
+    Fattoni Antonio & \begin{tabular}[c]{@{}c@{}} Amministratore \\ Programmatore \end{tabular} \\
+    \hline
+    Georgescu Diana & \begin{tabular}[c]{@{}c@{}} Progettista \end{tabular} \\
+    \hline
+    Gingillino Aaron & \begin{tabular}[c]{@{}c@{}} Responsabile \\ Progettista \end{tabular} \\
+    \hline
+    Laoud Zakaria & \begin{tabular}[c]{@{}c@{}} Programmatore \\ Amministratore \end{tabular} \\
+    \hline
+    Rocco Matteo A. & \begin{tabular}[c]{@{}c@{}} Programmatore \\ Responsabile \end{tabular} \\
+    \hline
+    Soligo Lorenzo & \begin{tabular}[c]{@{}c@{}} Programmatore \\ Amministratore \end{tabular} \\
+    \hline
+    Vigolo Davide & \begin{tabular}[c]{@{}c@{}} Programmatore \\ Amministratore \end{tabular} \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+Ognuno sarà anche Verificatore.
+
+\subsection{Discussione sul metodo di lavoro per la fase di implementazione}
+
+\subsubsection{Codifica}
+Per tenere traccia dei requisiti implementati durante la codifica si è deciso di considerare l'utilizzo di una \textit{GitHub Action} che legga la \glossario{codebase} e individui i commenti che contengono la firma dei requisiti implementati nella porzione di codice a cui si riferiscono, ad esempio "UC1.1.1", e aggiorni automaticamente una tabella dedicata con l'elenco dei requisiti da implementare e quelli implementati.\\
+
+I membri assegnati alla codifica del \glossario{backend} inizieranno la stesura dei \glossario{DTO} e dei repository, in modo da creare una base solida su cui costruire il resto dell'implementazione. Nel frattempo i membri assegnati alla codifica del \glossario{frontend} inizieranno a lavorare sulla creazione delle interfacce e dei DTO necessari per la visualizzazione dei dati per limitare l'utilizzo di mockup.\\
+
+
+\subsubsection{Buone pratiche di sviluppo}
+Il gruppo ha deciso di dotarsi dello strumento di \textit{SonarQube} per monitorare la code quality durante la fase di implementazione, in modo da individuare eventuali problemi e correggerli tempestivamente.\\
+
+\subsubsection{Piano di Qualifica}
+Ulteriore metrica che si è deciso di implementare è la \glossario{Task slippage} per migliorare ulteriormente la stima dei tempi di completamento delle attività.
+
+\section{Decisioni}
+\begin{enumerate}
+    \item Aggiornamento metriche di progetto con l'aggiunta di Task slippage
+    \item Implementazione di una GitHub Action per tracciare i requisiti implementati
+    \item Utilizzo di SonarQube per monitorare la code quality
+    \item Inizio della codifica
+\end{enumerate}
+
+\section{Tabella delle Decisioni}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
+    \hline
+    \#0 & Scrittura verbale interno & \href{https://7zpus.atlassian.net/browse/DIPR-333}{DIPR-333} & Rocco Matteo A. &  \\
+    \hline
+    \#0 & \begin{tabular}{@{}c@{}} Scrittura verbale\\ esterno 2026-03-18 \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-336}{DIPR-336} & Gingillino Aaron &  \\
+    \hline
+    \#0 & \begin{tabular}{@{}c@{}} Scrittura verbale\\ intermedio \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-339}{DIPR-339} &  &  \\
+    \hline
+    \#1 & \begin{tabular}{@{}c@{}} Aggiornamento \\ metriche PdQ \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Gingillino Aaron &  \\
+    \hline
+    \#2 & \begin{tabular}{@{}c@{}} Implementazione \\ GH Action \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} &  &  \\
+    \hline
+    \#4 & \begin{tabular}{@{}c@{}} Codifica \\modulo indexing \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Vigolo Davide &  \\
+    \hline
+    \#4 & \begin{tabular}{@{}c@{}} Codifica \\modulo browsing \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Fattoni Antonio &  \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
