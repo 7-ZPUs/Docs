@@ -1,7 +1,7 @@
 @startuml Component Diagram - Indexing
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 title Component Diagram - Indexing
-LAYOUT_TOP_DOWN()
+LAYOUT_LEFT_RIGHT()
 skinparam linetype ortho
 skinparam shadowing false
 skinparam wrapWidth 200
@@ -12,7 +12,10 @@ Component(bootstrap, "AppIndexingBootstrap", "Angular / TypeScript", "Invia il s
 Component(indexDip, "IndexDipUC", "Angular / TypeScript", "Gestisce l'indicizzazione dei documenti DIP.")
 Component(wordEmbed, "WordEmbeddingPort", "Angular / TypeScript", "Porta per generare embedding testuali usando un modello AI.")
 Component(pkgReader, "PackageReaderPort", "Angular / TypeScript", "Porta per la lettura del contenuto del pacchetto, indipendentemente dal supporto utilizzato")
-Component(pkgIndex, "PackageIndexPort", "Angular / TypeScript", "Porta per l'indicizzazione dei contenuti del pacchetto")
+Component(repoDocumentalClass, "DocumentalClassRepository", "Angular / TypeScript", "Repository per la persistenza delle classi documentali")
+Component(repoProcess, "ProcessRepository", "Angular / TypeScript", "Repository per la persistenza dei processi")
+Component(repoDocument, "DocumentRepository", "Angular / TypeScript", "Repository per la persistenza dei documenti")
+Component(repoFile, "FileRepository", "Angular / TypeScript", "Repository per la persistenza dei file")
 
 Component_Ext(sqlite, "SQLite Database", "SQLite", "Database sqlite per l'indicizzazione dei contenuti del pacchetto")
 Component_Ext(onnx, "Modello di word-embedding locale", "ONNX Runtime / TypeScript", "Algoritmo di IA locale per la generazione di word embedding")
@@ -20,9 +23,15 @@ Component_Ext(onnx, "Modello di word-embedding locale", "ONNX Runtime / TypeScri
 bootstrap --> indexDip : "Invia segnale di indicizzazione"
 indexDip --> wordEmbed : "Richiede embedding testuali"
 indexDip --> pkgReader : "Richiede lettura del pacchetto"
-indexDip --> pkgIndex : "Richiede indicizzazione del pacchetto"
+indexDip --> repoDocumentalClass : "Salva classi documentali"
+indexDip --> repoProcess : "Salva processi"
+indexDip --> repoDocument : "Salva documenti"
+indexDip --> repoFile : "Salva file"
 pkgReader --> sqlite : "Legge dati per l'indicizzazione"
-pkgIndex --> sqlite : "Scrive dati indicizzati"
+repoDocumentalClass --> sqlite : "Scrive classi documentali"
+repoProcess --> sqlite : "Scrive processi"
+repoDocument --> sqlite : "Scrive documenti"
+repoFile --> sqlite : "Scrive file"
 wordEmbed --> onnx : "Genera embedding testuali"
 
 @enduml

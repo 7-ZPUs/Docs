@@ -23,8 +23,11 @@ package "Application Layer" #eaf5ff {
     }
     class IndexDipService implements IndexDipUC {
         - reader: IPackageReaderPort
-        - indexer: IPackageIndexPort
-        + IndexDipService(reader: IPackageReaderPort, indexer: IPackageIndexPort)
+        - documentalClassRepository: IDocumentalClassRepository
+        - processRepository: IProcessRepository
+        - documentRepository: IDocumentRepository
+        - fileRepository: IFileRepository
+        + IndexDipService(reader: IPackageReaderPort, documentalClassRepository: IDocumentalClassRepository, processRepository: IProcessRepository, documentRepository: IDocumentRepository, fileRepository: IFileRepository)
         + execute(dipPath: string): Promise<IndexResult>
     }
 }
@@ -35,23 +38,29 @@ package "Domain Layer (Core Business)" #f9f9f9 {
     ' PORTE
     interface IPackageReaderPort {
         + readDip(dipPath: string): Promise<Dip>
-        + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
+        + readDocumentalClasses(dipPath: string): AsyncGenerator<DocumentalClass>
         + readProcesses(dipPath: string): AsyncGenerator<Process>
         + readDocuments(dipPath: string): AsyncGenerator<Document>
         + readFiles(dipPath: string): AsyncGenerator<File>
         + readFileBytes(file_id: string): AsyncGenerator<Buffer>
     }
 
-    interface IPackageIndexPort {
-        + indexDip(dip: Dip): Promise<void>
-        + indexClass(docClass: DocumentClass): Promise<void>
-        + indexProcess(process: Process): Promise<void>
-        + indexDocument(document: Document): Promise<void>
-        + indexFile(file: File): Promise<void>
-        + indexSubject(subject: Subject): Promise<void>
-        + beginTransaction(): Promise<void>
-        + commitTransaction(): Promise<void>
-        + rollbackTransaction(): Promise<void>
+    together {
+        interface IDocumentalClassRepository {
+            + save(documentalClass: DocumentalClass): Promise<void>
+        }
+
+        interface IProcessRepository {
+            + save(process: Process): Promise<void>
+        }
+
+        interface IDocumentRepository {
+            + save(document: Document): Promise<void>
+        }
+
+        interface IFileRepository {
+            + save(file: File): Promise<void>
+        }
     }
 
     ' ENTITA E ENUM
@@ -69,35 +78,37 @@ package "Domain Layer (Core Business)" #f9f9f9 {
         + setIntegrityStatus(status: IntegrityStatus): void
     }
 
-    class Dip {
-    }
+    together {
+        class Dip {
+        }
 
-    class DocumentClass {
-        - name: string
-        - timestamp: string
-        + getName(): string
-        + getTimestamp(): string
-    }
+        class DocumentalClass {
+            - name: string
+            - timestamp: string
+            + getName(): string
+            + getTimestamp(): string
+        }
 
-    class Process {
-        - parentClassUuid: string
-        + getParentClassUuid(): string
-    }
+        class Process {
+            - parentDocumentalClassUuid: string
+            + getParentDocumentalClassUuid(): string
+        }
 
-    class Document {
-        - type: string
-        - parentProcessUuid: string
-        + getType(): string
-        + getParentProcessUuid(): string
-    }
+        class Document {
+            - type: string
+            - parentProcessUuid: string
+            + getType(): string
+            + getParentProcessUuid(): string
+        }
 
-    class File {
-        - hash: string
-        - isPrimary: boolean
-        - parentDocumentUuid: string
-        + getHash(): string
-        + getIsPrimary(): boolean
-        + getParentDocumentUuid(): string
+        class File {
+            - hash: string
+            - isPrimary: boolean
+            - parentDocumentUuid: string
+            + getHash(): string
+            + getIsPrimary(): boolean
+            + getParentDocumentUuid(): string
+        }
     }
 
     ' Subject non estende ArchivalNode — non ha uuid ne integrityStatus
@@ -137,10 +148,10 @@ package "Infrastructure Layer (Outbound)" #fff2e6 {
 
         class ParsedDiPIndex {
             + uuid: string
-            + documentClasses: ParsedDocumentClass[]
+            + documentalClasses: ParsedDocumentalClass[]
         }
 
-        class ParsedDocumentClass {
+        class ParsedDocumentalClass {
             + uuid: string
             + name: string
             + timestamp: string
@@ -166,8 +177,8 @@ package "Infrastructure Layer (Outbound)" #fff2e6 {
         }
 
         DiPIndexParser ..> ParsedDiPIndex : " <<produces>>"
-        ParsedDiPIndex *-- ParsedDocumentClass
-        ParsedDocumentClass *-- ParsedAiP
+        ParsedDiPIndex *-- ParsedDocumentalClass
+        ParsedDocumentalClass *-- ParsedAiP
         ParsedAiP *-- ParsedDocument
         ParsedDocument *-- ParsedFile
         DocumentMetadataParser ..> Metadata : " <<produces>>"
@@ -178,7 +189,7 @@ package "Infrastructure Layer (Outbound)" #fff2e6 {
         - metaParser: DocumentMetadataParser
         - cache: ParsedDiPIndex
         + readDip(dipPath: string): Promise<Dip>
-        + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
+        + readDocumentalClasses(dipPath: string): AsyncGenerator<DocumentalClass>
         + readProcesses(dipPath: string): AsyncGenerator<Process>
         + readDocuments(dipPath: string): AsyncGenerator<Document>
         + readFiles(dipPath: string): AsyncGenerator<File>
@@ -188,15 +199,10 @@ package "Infrastructure Layer (Outbound)" #fff2e6 {
 
     class SqlitePackageAdapter {
         - db: Database
-        + indexDip(dip: Dip): Promise<void>
-        + indexClass(docClass: DocumentClass): Promise<void>
-        + indexProcess(process: Process): Promise<void>
-        + indexDocument(document: Document): Promise<void>
-        + indexFile(file: File): Promise<void>
-        + indexSubject(subject: Subject): Promise<void>
-        + beginTransaction(): Promise<void>
-        + commitTransaction(): Promise<void>
-        + rollbackTransaction(): Promise<void>
+        + save(documentalClass: DocumentalClass): Promise<void>
+        + save(process: Process): Promise<void>
+        + save(document: Document): Promise<void>
+        + save(file: File): Promise<void>
     }
 
     LocalPackageReaderAdapter --> DiPIndexParser : " uses"
@@ -208,17 +214,23 @@ package "Infrastructure Layer (Outbound)" #fff2e6 {
 ' ==========================================
 
 IndexingIpcAdapter -down-> IndexDipUC : " invokes"
-IndexDipService -down-> IPackageReaderPort : " reads from"
-IndexDipService -down-> IPackageIndexPort : " writes to"
+IndexDipService -left-> IPackageReaderPort : " reads from"
+IndexDipService -down-> IDocumentalClassRepository : " writes to"
+IndexDipService -down-> IProcessRepository : " writes to"
+IndexDipService -down-> IDocumentRepository : " writes to"
+IndexDipService -down-> IFileRepository : " writes to"
 
 LocalPackageReaderAdapter -up-|> IPackageReaderPort : " implements"
-SqlitePackageAdapter -up-|> IPackageIndexPort : " implements"
+SqlitePackageAdapter -up-|> IDocumentalClassRepository : " implements"
+SqlitePackageAdapter -up-|> IProcessRepository : " implements"
+SqlitePackageAdapter -up-|> IDocumentRepository : " implements"
+SqlitePackageAdapter -up-|> IFileRepository : " implements"
 
 ' Gerarchia dominio
 ArchivalNode .right.> IntegrityStatus : " <<uses>>"
 
 ArchivalNode <|-down- Dip
-ArchivalNode <|-down- DocumentClass
+ArchivalNode <|-down- DocumentalClass
 ArchivalNode <|-down- Process
 ArchivalNode <|-down- Document
 ArchivalNode <|-down- File
@@ -232,10 +244,10 @@ Subject o-down- Metadata : " contains"
 Metadata "1" o-right- "*" Metadata : " children"
 
 ' Relazioni UUID tra nodi (riferimenti logici)
-Dip "1" o-down- "many" DocumentClass : " classUuids >"
-DocumentClass "1" o-down- "many" Process : " processUuids >"
-Process "1" o-down- "many" Document : " documentUuids >"
-Document "1" o-down- "many" File : " fileUuids >"
-Document "1" o-right- "many" Subject : " subjects >"
+Dip "1" o-right- "many" DocumentalClass : " documentalClassUuids >"
+DocumentalClass "1" o-right- "many" Process : " processUuids >"
+Process "1" o-right- "many" Document : " documentUuids >"
+Document "1" o-right- "many" File : " fileUuids >"
+Document "1" o-down- "many" Subject : " subjects >"
 
 @enduml
