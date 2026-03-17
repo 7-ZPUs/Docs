@@ -108,6 +108,7 @@
     \begin{longtable}{|c|c|p{3.2cm}|p{3.2cm}|p{5cm}|}
         \hline
         \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+        1.0.1             & 2026/03/17    & Laoud Zakaria    & Soligo Lorenzo        & Stesura paragrafo sulla progettazione \\
         \hline
         1.0.0             & 2026/02/24    & Laoud Zakaria    & Soligo Lorenzo        & Approvazione per baseline RTB \\
         \hline
@@ -732,6 +733,108 @@ Per questo artefatto si lascia ampio margine di manovra, in quanto non è richie
                 % Sviluppatore & \begin{tabular}[c]{@{}p{10cm}@{}}Si occupa dello sviluppo del software seguendo le specifiche del progettista e della scrittura dei test automatici.\end{tabular} \\
                 % \hline
                 Verificatore   & \begin{tabular}[c]{@{}p{10cm}@{}}Verifica che ogni caso d'uso abbia granularità sufficiente, e che i diagrammi rispettino la sintassi UML\end{tabular}                                                                                                                    \\
+                \hline
+            \end{tabular}
+        \end{spacing}
+    \end{adjustwidth}
+\end{table}
+
+\subsubsection{Attività: Progettazione}
+L'attività di progettazione ha l'obiettivo di definire l'architettura del sistema e le sue componenti, traducendo i requisiti 
+individuati in una struttura software chiara, modulare e manutenibile. Il gruppo adotta il \textbf{modello C4} come framework 
+di riferimento per la rappresentazione dell'architettura a diversi livelli di astrazione. I diagrammi possono essere prodotti 
+tramite \textbf{PlantUML} o \textbf{Draw.io}, rispettando in entrambi i casi la sintassi e le convenzioni del modello C4.
+
+\paragraph{Procedura: Progettazione architetturale (Livelli C4 1 e 2)}
+I livelli più astratti del modello C4, ovvero il \textbf{Context diagram} (livello 1) e il \textbf{Container diagram} (livello 2),
+ vengono progettati \textbf{collegialmente} durante sessioni sincrone del team. Questo approccio è motivato dalla natura 
+ trasversale di tali diagrammi, che coinvolgono scelte architetturali ad alto impatto sull'intero sistema e richiedono l'attenzione 
+ di tutti i membri.
+
+Le sessioni si svolgono tramite Discord con condivisione dello schermo, seguendo i seguenti passaggi:
+\begin{enumerate}
+    \item \textbf{Presentazione del contesto}: la discussione è guidata a partire dai requisiti
+     e dai casi d'uso già definiti nel documento di Analisi dei Requisiti.
+    \item \textbf{Definizione condivisa}: i progettisti propongono e discutono le scelte architetturali, raggiungendo un
+     consenso sulla struttura del sistema e delle sue componenti.
+    \item \textbf{Produzione del diagramma}: uno o più membri redigono il diagramma risultante, rendendolo poi parte  
+    della documentazione secondo le modalità descritte nelle norme per la produzione dei diagrammi.
+\end{enumerate}
+
+\paragraph{Procedura: Progettazione di dettaglio (Livelli C4 3 e 4)}
+I livelli di maggiore dettaglio del modello C4, ovvero il \textbf{Component diagram} (livello 3) e il \textbf{Code diagram} (livello 4), 
+vengono progettati \textbf{individualmente} dai membri assegnati alle rispettive componenti. 
+Questo approccio consente una maggiore efficienza, distribuendo il carico di lavoro tra i membri 
+del team e lasciando a ciascuno la responsabilità della componente assegnata.
+
+Il processo di produzione individuale prevede i seguenti passaggi:
+\begin{enumerate}
+    \item \textbf{Ricezione del contesto}: il progettista assegnato prende visione dei diagrammi di livello superiore già approvati, 
+    assicurandosi di rispettare i vincoli architetturali stabiliti collegialmente.
+    \item \textbf{Produzione del diagramma}: il progettista redige il diagramma della componente assegnata, applicando 
+    le norme di nomenclatura definite e le modalità descritte nelle norme per la produzione dei diagrammi.
+    \item \textbf{Verifica}: il diagramma prodotto viene sottoposto a verifica da parte di un altro membro del team secondo le 
+    procedure definite in \ref{configurazione}, al fine di garantire coerenza con l'architettura complessiva e correttezza formale.
+\end{enumerate}
+
+\paragraph{Norme per la produzione dei diagrammi}
+Indipendentemente dal livello C4 e dallo strumento utilizzato, i diagrammi devono rispettare le seguenti linee guida:
+\begin{itemize}
+    \item I nomi degli elementi (componenti, container, relazioni) devono essere \textbf{significativi}, chiari e coerenti con 
+    la terminologia del dominio applicativo e del Glossario.
+    \item I diagrammi di livello 1 e 2 devono essere \textbf{validati dal team} prima di essere integrati; quelli di
+     livello 3 e 4 devono essere \textbf{verificati} da almeno un membro diverso dall'autore.
+    \item I diagrammi prodotti con \textbf{PlantUML} vengono versionati direttamente nella repository GitHub di progetto 
+    come file testuali \texttt{.puml}.
+    \item I diagrammi prodotti con \textbf{Draw.io} vengono caricati temporaneamente su Google Drive per la condivisione 
+    e la revisione; una volta approvati, vengono esportati come immagine e inseriti nella documentazione.
+\end{itemize}
+
+\paragraph{Strumenti}
+\begin{itemize}
+    \item \textbf{PlantUML}: strumento testuale per la produzione dei diagrammi C4, integrato in VSCode tramite apposita 
+    estensione. 
+    \item \textbf{Draw.io}: strumento grafico alternativo per la produzione dei diagrammi C4, utilizzabile quando si 
+    preferisce un approccio visuale. 
+    \item \textbf{Discord}: per le sessioni collegiali di progettazione architetturale (livelli C4 1 e 2), con condivisione dello 
+    schermo per la produzione condivisa dei diagrammi oppure per chiarire dubbi.
+    \item \textbf{GitHub}: per il versionamento dei file PlantUML e la gestione delle Pull Request di verifica dei diagrammi di dettaglio (livelli C4 3 e 4).
+    \item \textbf{Google Drive}: per la condivisione temporanea dei diagrammi Draw.io in fase di revisione.
+    \item \textbf{VSCode}: IDE principale, con estensione PlantUML per la visualizzazione in anteprima dei diagrammi durante la stesura.
+    \item \textbf{Jira}: per la creazione e il tracciamento delle task di progettazione, seguendo le stesse procedure definite per le 
+    altre attività in \ref{identificazioneTaskGestione}.
+\end{itemize}
+
+\subsubsection{Ruoli}
+Vengono qui raccolti per praticità i ruoli coinvolti dell'attività di progettazione, con una breve descrizione delle responsabilità di ciascuno.
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+        \centering
+        \begin{spacing}{1.1}
+            \begin{tabular}{|c|c|}
+                \hline
+                \textbf{Ruolo} & \textbf{Specifica} \\
+                \hline
+                Responsabile & 
+                \begin{tabular}[c]{@{}p{10cm}@{}}
+                    Coordina le sessioni collegiali di progettazione architetturale, assegna le 
+                    componenti per la progettazione di dettaglio e monitora la coerenza complessiva dell'architettura.
+                \end{tabular} \\
+                \hline
+                Progettista & 
+                \begin{tabular}[c]{@{}p{10cm}@{}}
+                    Figura centrale dell'attività: partecipa attivamente alle sessioni 
+                    collegiali per i livelli C4 1 e 2, e produce autonomamente i diagrammi di dettaglio dei livelli C4 3 e 4 per 
+                    le componenti assegnate.
+                \end{tabular} \\
+                \hline
+                Verificatore & 
+                \begin{tabular}[c]{@{}p{10cm}@{}}
+                    Verifica la correttezza e la coerenza architetturale dei diagrammi 
+                    di dettaglio (livelli C4 3 e 4) prodotti individualmente, secondo le procedure di revisione definite 
+                    in \ref{configurazione}.
+                \end{tabular} \\
                 \hline
             \end{tabular}
         \end{spacing}
