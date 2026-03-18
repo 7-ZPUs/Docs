@@ -2131,35 +2131,41 @@ conformità con lo standard ISO/IEC 12207.
 \metricdef{MPC-10}{Average Build Time}{Tempo medio impiegato per completare il processo di build e test automatici.}
 \metricformula{T_{avg} = \frac{\sum_{i=1}^{n} T_{build\_i}}{n}}
 
+\metricdef{MPC-11}{Sprint Velocity}{Quantità di lavoro completata dal team durante uno sprint, misurata in ore.}
+\metricformula{V_{sprint} = \sum_{i=1}^{n} \#\text{ore lavorate sul task i completato nello sprint}}
+
+\metricdef{MPC-12}{Burndown Chart}{Rappresenta il lavoro rimanente in uno sprint rispetto al tempo, utile per monitorare l'andamento del completamento dei task.}
+\metricformula{W_{remaining}(t) = \sum_{i=1}^{n} \#\text{ore ancora da completare per il task i al giorno t dello sprint}}
+
 \paragraph{Processo di Documentazione}
 
-\metricdef{MPC-11}{Indice di Gulpease}{Indice che valuta la leggibilità di un testo in lingua italiana. Valori bassi indicano bassa leggibilità.}
+\metricdef{MPC-13}{Indice di Gulpease}{Indice che valuta la leggibilità di un testo in lingua italiana. Valori bassi indicano bassa leggibilità.}
 \metricformula{G = 89 + \frac{300 \times (\#\text{Frasi}) - 10 \times (\#\text{Lettere})}{\#\text{Parole}}}
 
-\metricdef{MPC-12}{Correttezza Ortografica}{Misura la densità di errori ortografici presenti nella documentazione.}
+\metricdef{MPC-14}{Correttezza Ortografica}{Misura la densità di errori ortografici presenti nella documentazione.}
 \metricformula{C = \#\text{errori ortografici}}
 
 \paragraph{Processo di Verifica}
 
-\metricdef{MPC-13}{Code review turnaround time}{Tempo medio impiegato per completare una revisione del codice in vista di una Pull Request.}
+\metricdef{MPC-15}{Code review turnaround time}{Tempo medio impiegato per completare una revisione del codice in vista di una Pull Request.}
 \metricformula{CRT = \frac{\sum_{i=1}^{n} T_{review\_i}}{n}} $T_{review\_i}$ tempo impiegato per completare la revisione della PR $i$.
 
-\metricdef{MPC-14}{Test success rate}{Percentuale di test superati rispetto al totale dei test eseguiti.}
+\metricdef{MPC-16}{Test success rate}{Percentuale di test superati rispetto al totale dei test eseguiti.}
 \metricformula{TSR = \left( \frac{\#\text{Test superati}}{\#\text{Test eseguiti}} \right) \times 100}
 
-\metricdef{MPC-15}{Code Coverage}{Percentuale di codice coperta da test}
+\metricdef{MPC-17}{Code Coverage}{Percentuale di codice coperta da test}
 \metricformula{CC = \frac{\#\text{LOC testate}}{\#\text{LOC totali}} \times 100}
 
 \subsubsection{Processi Organizzativi}
 
 \paragraph{Processo di Gestione dei Rischi} \label{gestione_rischi_operativi}
 
-\metricdef{MPC-16}{Rischi non previsti}{Numero di rischi non previsti ad inizio periodo, per ciascun periodo di progetto.}
+\metricdef{MPC-18}{Rischi non previsti}{Numero di rischi non previsti ad inizio periodo, per ciascun periodo di progetto.}
 \metricformula{RNP_i = \#\text{Rischi non previsti nel periodo } i}
 
 \paragraph{Processo di Gestione della qualità}
 
-\metricdef{MPC-17}{Metriche soddisfatte}{Percentuale di metriche di qualità che vengono soddisfatte in un determinato istante di tempo.}
+\metricdef{MPC-19}{Metriche soddisfatte}{Percentuale di metriche di qualità che vengono soddisfatte in un determinato istante di tempo.}
 \metricformula{MS = \left( \frac{\#\text{Metriche soddisfatte}}{\#\text{Metriche totali}} \right) \times 100}
 
 \subsection{Qualità di Prodotto} \label{qualita_prodotto}
