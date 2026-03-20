@@ -26,7 +26,6 @@
     urlcolor=cyan,
 }
 
-% Colori ZPUS
 \definecolor{zpusgreen}{RGB}{4, 138, 55}
 \definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
 \definecolor{zpusblack}{RGB}{0, 0, 0}
@@ -72,39 +71,51 @@
 
 \section{Ordine del Giorno}
 \begin{enumerate}[noitemsep]
-    \item Discussione modifiche da fare alla progettazione post incontro con Prof. Cardin.
-    \item Aggiornamento sullo stato di avanzamento della codifica dei propri moduli.
+    \item Discussione delle modifiche alla progettazione dopo l’incontro con il Prof. Cardin.
+    \item Aggiornamento sullo stato di avanzamento della codifica dei moduli.
     \item Pianificazione delle prossime attività e decisioni.
 \end{enumerate}
 
 \subsection{Incontro con il docente}
-Durante l'incontro sono state poste alcune domande riguardanti la progettazione. Di seguito sono riportate le risposte fornite: \\
 
+Durante l'incontro sono state poste alcune domande sulla progettazione. 
+Di seguito sono riportate le risposte.
 
 \noindent\textbf{Domanda 1:} Qual è il livello di dettaglio richiesto nella specifica tecnica utilizzando il modello C4? \\
-\textbf{Risposta:} Nella specifica tecnica è opportuno evitare un eccessivo livello di dettaglio in assenza di codice, poiché ciò potrebbe portare 
-alla definizione di componenti non effettivamente implementabili. Si raccomanda pertanto di mantenere un livello di astrazione adeguato, approfondendo
- gli aspetti implementativi solo nei casi in cui sia necessario descrivere pattern progettuali specifici adottati. \\
+
+\textbf{Risposta:} Nella specifica tecnica è preferibile evitare un livello di dettaglio eccessivo in assenza di codice. 
+Questo potrebbe portare alla definizione di componenti non implementabili. 
+Si consiglia quindi di mantenere un adeguato livello di astrazione. 
+Gli aspetti implementativi vanno approfonditi solo quando è necessario descrivere pattern progettuali specifici. \\
 
 \noindent\textbf{Domanda 2:} Qual è la granularità adeguata nella definizione delle porte degli use case in un’architettura esagonale? \\
-\textbf{Risposta:} Le porte devono essere progettate in modo da riflettere casi d’uso ben definiti, mantenendo una coerenza con il principio di 
-singola responsabilità (Single Responsibility Principle). Inoltre, è fondamentale ridurre al minimo l’accoppiamento tra le diverse 
-porte e tra queste e le implementazioni concrete, così da garantire maggiore modularità e manutenibilità del sistema. \\
 
-Il team prevede di applicare le soluzioni e le linee guida emerse durante l'incontro, al fine di migliorarne coerenza ed efficacia
+\textbf{Risposta:} Le porte devono rappresentare casi d’uso ben definiti. 
+Devono inoltre rispettare il principio di singola responsabilità (Single Responsibility Principle). 
+È importante ridurre l’accoppiamento tra le porte e le implementazioni concrete, così da migliorare modularità e manutenibilità. \\
+
+Il team prevede di applicare le soluzioni e le linee guida emerse durante l'incontro per migliorare coerenza ed efficacia della progettazione.
 
 \subsection{Stato di avanzamento della codifica}
-Il team è in fase di completamento delle attività di codifica, per la quale prevede di terminare entro il 2026/03/24, e si appresta ad avviare la stesura 
-dei test di unità, con l’obiettivo di concluderli entro la fine dello sprint (2026/03/27). I test saranno organizzati secondo una modalità incrociata, 
-per cui ciascun membro del team si occuperà della verifica di un modulo sviluppato da un altro componente, al fine di garantire maggiore oggettività e qualità 
-del processo di validazione. 
-L’avanzamento dei lavori è stato generalmente lineare, con alcune criticità di lieve entità prontamente risolte, senza impatti significativi sul piano complessivo. \\
-Generalmente, le attività si sono svolte in conformità con quanto pianificato. Il gruppo esprime soddisfazione 
-per i risultati raggiunti finora e si impegna a mantenere l’attuale ritmo operativo al fine di completare le attività rimanenti entro le scadenze previste.
+
+Il team è in fase di completamento delle attività di codifica. 
+La conclusione è prevista entro il 2026/03/24. 
+
+Successivamente inizierà la stesura dei test di unità, con termine previsto entro la fine dello sprint (2026/03/27). 
+
+I test saranno svolti in modalità incrociata: ogni membro verificherà un modulo sviluppato da un altro componente. 
+Questo approccio aumenta l’oggettività e la qualità della validazione.
+
+L’avanzamento dei lavori è stato lineare. 
+Le poche criticità emerse sono state risolte rapidamente, senza impatti rilevanti.
+
+Nel complesso, le attività sono in linea con quanto pianificato. 
+Il gruppo è soddisfatto dei risultati raggiunti e intende mantenere l’attuale ritmo per rispettare le scadenze.
 
 \subsection{Definizione ruoli}
 
 I ruoli assegnati a ciascun membro per questo Sprint sono i seguenti:
+
 \begin{table}[H]
     \begin{adjustwidth}{-1cm}{-1cm}
     \centering
@@ -131,11 +142,12 @@ I ruoli assegnati a ciascun membro per questo Sprint sono i seguenti:
 \end{table}
 
 \section{Pianificazione delle attività e decisioni}
-Il gruppo ha individuato le seguenti attività da svolgere:
+
+Il gruppo ha individuato le seguenti attività:
 \begin{enumerate}
     \item progettazione del modulo di aggregate detail
     \item codifica del modulo di aggregate detail
-    \item codifica dei test di unità
+    \item sviluppo dei test di unità
 \end{enumerate}
 
 \section{Tabella delle Decisioni}
@@ -147,27 +159,27 @@ Il gruppo ha individuato le seguenti attività da svolgere:
     \hline
     \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
     \hline
-    \#0 & Stesura verbale interno & \href{https://7zpus.atlassian.net/browse/DIPR-339}{DIPR-339} & Laoud Zakaria &  Vigolo Davide\\
+    \#0 & Stesura verbale interno & \href{https://7zpus.atlassian.net/browse/DIPR-339}{DIPR-339} & Laoud Zakaria & Vigolo Davide \\
     \hline
-    \#1 & \begin{tabular}{@{}c@{}} Progettazione del modulo \\di aggregate detail \end{tabular}  & \href{https://7zpus.atlassian.net/browse/DIPR-354}{DIPR-354} & - & Revisione congiunta \\
+    \#1 & \begin{tabular}{@{}c@{}} Progettazione del modulo \\ di aggregate detail \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-354}{DIPR-354} & - & Revisione congiunta \\
     \hline
-    \#2 & \begin{tabular}{@{}c@{}} Codifica del modulo \\di aggregate detail \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-353}{DIPR-353} & - & - \\
+    \#2 & \begin{tabular}{@{}c@{}} Codifica del modulo \\ di aggregate detail \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-353}{DIPR-353} & - & - \\
     \hline
     \#3 & Verifica indexing & \href{https://7zpus.atlassian.net/browse/DIPR-356}{DIPR-356} & Fattoni Antonio & - \\
     \hline
-    \#3 & Verifica browsing & \href{https://7zpus.atlassian.net/browse/DIPR-358}{DIPR-358} & Vigolo Davide & - \\
+    \#4 & Verifica browsing & \href{https://7zpus.atlassian.net/browse/DIPR-358}{DIPR-358} & Vigolo Davide & - \\
     \hline
-    \#3 & Verifica search e export & \href{https://7zpus.atlassian.net/browse/DIPR-359}{DIPR-359} & Rocco Matteo A. & - \\
+    \#5 & Verifica search e export & \href{https://7zpus.atlassian.net/browse/DIPR-359}{DIPR-359} & Rocco Matteo A. & - \\
     \hline
-    \#3 & Verifica aggregate detail & \href{https://7zpus.atlassian.net/browse/DIPR-360}{DIPR-360} & Gingillino Aaron & - \\
+    \#6 & Verifica aggregate detail & \href{https://7zpus.atlassian.net/browse/DIPR-360}{DIPR-360} & Gingillino Aaron & - \\
     \hline
-    \#3 & Verifica import & \href{https://7zpus.atlassian.net/browse/DIPR-361}{DIPR-361} & Soligo Lorenzo & - \\
+    \#7 & Verifica import & \href{https://7zpus.atlassian.net/browse/DIPR-361}{DIPR-361} & Soligo Lorenzo & - \\
     \hline
-    \#3 & Verifica navigazione & \href{https://7zpus.atlassian.net/browse/DIPR-362}{DIPR-362} & Georgescu Diana & - \\
+    \#8 & Verifica navigazione & \href{https://7zpus.atlassian.net/browse/DIPR-362}{DIPR-362} & Georgescu Diana & - \\
     \hline
-    \#3 & Verifica della verifica integrità & \href{https://7zpus.atlassian.net/browse/DIPR-363}{DIPR-363} & Laoud Zakaria & - \\
+    \#9 & Verifica della verifica integrità & \href{https://7zpus.atlassian.net/browse/DIPR-363}{DIPR-363} & Laoud Zakaria & - \\
     \hline
-    \#3 & Verifica search & \href{https://7zpus.atlassian.net/browse/DIPR-364}{DIPR-364} & Georgescu Diana & - \\
+    \#10 & Verifica search & \href{https://7zpus.atlassian.net/browse/DIPR-364}{DIPR-364} & Georgescu Diana & - \\
     \hline
 \end{tabular}
     \end{adjustwidth}
