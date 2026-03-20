@@ -1,0 +1,134 @@
+\documentclass[a4paper,12pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 2026/03/06 \\
+\textbf{Durata:} 30 minuti\\
+\textbf{Luogo:} Incontro online (Discord)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Discussione modifiche da fare alla progettazione post incontro con Prof. Cardin.
+    \item Definizione dei ruoli.
+    \item Pianificazione delle prossime attività e decisioni.
+\end{enumerate}
+
+\section{Incontro con il docente}
+Durante l'incontro sono state poste alcune domande riguardanti la progettazione. Di seguito sono riportate le risposte fornite: \\
+
+
+\noindent\textbf{Domanda 1:} Qual è il livello di dettaglio richiesto nella specifica tecnica utilizzando il modello C4? \\
+\textbf{Risposta:} Nella specifica tecnica è opportuno evitare un eccessivo livello di dettaglio in assenza di codice, poiché ciò potrebbe portare 
+alla definizione di componenti non effettivamente implementabili. Si raccomanda pertanto di mantenere un livello di astrazione adeguato, approfondendo
+ gli aspetti implementativi solo nei casi in cui sia necessario descrivere pattern progettuali specifici adottati. \\
+
+\noindent\textbf{Domanda 2:} Qual è la granularità adeguata nella definizione delle porte degli use case in un’architettura esagonale? \\
+\textbf{Risposta:} Le porte devono essere progettate in modo da riflettere casi d’uso ben definiti, mantenendo una coerenza con il principio di 
+singola responsabilità (Single Responsibility Principle). Inoltre, è fondamentale ridurre al minimo l’accoppiamento tra le diverse 
+porte e tra queste e le implementazioni concrete, così da garantire maggiore modularità e manutenibilità del sistema. \\
+
+\section{Definizione dei ruoli}
+
+\section{Pianificazione delle attività e decisioni}
+
+\section{Tabella delle Decisioni}
+
+\vspace{0.5cm}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
+    \hline
+    \#1 & Export & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Georgescu Diana & Revisione congiunta \\
+    \hline
+    \#1 & Navigation & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Gingillino Aaron & Revisione congiunta \\
+    \hline
+    \#1 & Verification & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Rocco Matteo A. & Revisione congiunta \\
+    \hline
+    \#1 & C3 correction & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Soligo Lorenzo & Revisione congiunta \\
+    \hline
+    \#1 & Ricerca classe documentale & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Fattoni Antonio & Revisione congiunta \\
+    \hline
+    \#1 & Export & \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Laoud Zakaria & Revisione congiunta \\
+    \hline
+    \#1 & Indicizzazione classe documentale& \href{https://7zpus.atlassian.net/browse/DIPR-260}{DIPR-260} & Vigolo Davide & Revisione congiunta \\
+    \hline
+    \#2 & \begin{tabular}{@{}c@{}} Aggiunta delle metriche \\Sprint Burndown e Velocity \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-261}{DIPR-261} & Gingillino Aaron & Rocco Matteo A. \\
+     \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
