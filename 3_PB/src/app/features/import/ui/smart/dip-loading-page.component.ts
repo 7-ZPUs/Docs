@@ -1,4 +1,4 @@
-import { Component, OnInit, Signal } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { CommonModule }              from '@angular/common';
 import { ImportFacade }              from '../../services/import.facade';
 import { ImportPhase }               from '../../domain/enums';
@@ -54,7 +54,7 @@ import { DipTreeNode }               from '../../domain/models';
     </div>
   `,
 })
-export class DipLoadingPageComponent implements OnInit {
+export class DipLoadingPageComponent {
  
   protected readonly ImportPhase = ImportPhase;
  
@@ -67,8 +67,6 @@ export class DipLoadingPageComponent implements OnInit {
     this.selectedDocument = this.facade.selectedDocument;
     this.loading          = this.facade.loading;
   }
- 
-  ngOnInit(): void {}
  
   onNodeSelected(node: DipTreeNode): void {
     this.facade.selectDocument(node);

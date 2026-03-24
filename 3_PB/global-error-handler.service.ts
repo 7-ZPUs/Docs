@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppError } from '../../shared/domain/app-error';
-import { ErrorCategory, ErrorCode } from '../../shared/domain/app-error';
+import { AppError, ErrorCategory, ErrorCode } from '../../shared/domain/app-error';
 import { IErrorHandler } from '../contracts/i-error-handler';
  
 @Injectable({ providedIn: 'root' })
@@ -15,7 +14,7 @@ export class GlobalErrorHandlerService implements IErrorHandler {
       context,
       message,
       true,
-      String(err),
+     err instanceof Error ? err.stack ?? err.message : JSON.stringify(err),
     );
   }
  

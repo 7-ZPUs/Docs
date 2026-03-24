@@ -14,10 +14,10 @@ declare global {
 export class ElectronContextBridge implements IIpcDispatcher {
  
   invoke<T>(channel: string, ...args: unknown[]): Promise<T> {
-    return window.electronAPI.invoke<T>(channel, ...args);
+    return (globalThis as unknown as Window).electronAPI.invoke<T>(channel, ...args);
   }
  
   on<T>(channel: string, handler: (data: T) => void): void {
-    window.electronAPI.on<T>(channel, handler);
+    (globalThis as unknown as Window).electronAPI.on<T>(channel, handler);
   }
 }
