@@ -1,4 +1,4 @@
-import { Component, OnInit, Signal } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { CommonModule }              from '@angular/common';
 import { ExportFacade }              from '../../services/export.facade';
 import { ImportFacade }              from '../../../import/services/import.facade';
@@ -46,7 +46,7 @@ import { ExportProgressComponent }   from '../dumb/export-progress.component';
     </div>
   `,
 })
-export class ExportPageComponent implements OnInit {
+export class ExportPageComponent {
  
   protected readonly ExportPhase = ExportPhase;
  
@@ -72,8 +72,6 @@ export class ExportPageComponent implements OnInit {
     this.loading       = this.exportFacade.loading;
     this.selectedDocument = this.importFacade.selectedDocument;
   }
- 
-  ngOnInit(): void {}
  
   /** Converte selectedDocument (singolo) in array per DocumentActionsComponent */
   selectedAsArray(): DipTreeNode[] {
