@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule }                from '@angular/common';
 import { AppError }                    from '../domain/app-error';
 import { InlineErrorComponent }        from './inline-error.component';
@@ -31,13 +31,11 @@ import { InlineErrorComponent }        from './inline-error.component';
     </div>
   `,
 })
-export class AsyncStateWrapperComponent implements OnChanges {
+export class AsyncStateWrapperComponent {
   @Input() loading = false;
   @Input() error:     AppError | null = null;
   @Input() empty    = false;
   @Input() ariaLabel: string | null   = null;
  
   @Output() retry = new EventEmitter<void>();
- 
-  ngOnChanges(): void {}
 }
