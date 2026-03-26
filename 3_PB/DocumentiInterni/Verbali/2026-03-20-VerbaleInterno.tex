@@ -1,0 +1,192 @@
+\documentclass[a4paper,12pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 2026/03/20 \\
+\textbf{Durata:} 30 minuti\\
+\textbf{Luogo:} Incontro online (Discord)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Discussione delle modifiche alla progettazione dopo l'incontro con il Prof. Cardin.
+    \item Aggiornamento sullo stato di avanzamento della codifica dei moduli.
+    \item Pianificazione delle prossime attività e decisioni.
+\end{enumerate}
+
+\subsection{Incontro con il docente}
+
+Durante l'incontro sono state poste alcune domande sulla progettazione. 
+Di seguito sono riportate le risposte.
+
+\noindent\textbf{Domanda 1:} Qual è il livello di dettaglio richiesto nella specifica tecnica utilizzando il modello C4? \\
+
+\textbf{Risposta:} Nella specifica tecnica è preferibile evitare un livello di dettaglio eccessivo in assenza di codice. 
+Questo potrebbe portare alla definizione di componenti non implementabili. 
+Si consiglia quindi di mantenere un adeguato livello di astrazione. 
+Gli aspetti implementativi vanno approfonditi solo quando è necessario descrivere pattern progettuali specifici. \\
+
+\noindent\textbf{Domanda 2:} Qual è la granularità adeguata nella definizione delle porte degli use case in un'architettura esagonale? \\
+
+\textbf{Risposta:} Le porte devono rappresentare casi d'uso ben definiti. 
+Devono inoltre rispettare il principio di singola responsabilità (Single Responsibility Principle). 
+È importante ridurre l'accoppiamento tra le porte e le implementazioni concrete, così da migliorare modularità e manutenibilità. \\
+
+Il team prevede di applicare le soluzioni e le linee guida emerse durante l'incontro per migliorare coerenza ed efficacia della progettazione.
+
+\subsection{Stato di avanzamento della codifica}
+
+Il team è in fase di completamento delle attività di codifica. Si prevede la conclusione entro il 2026/03/24.
+
+Le attività di sviluppo e di testing procedono nel seguente modo: test di unità verranno sviluppati dalla stessa persona che effettua la codifica. Test di integrazione e sistema verranno invece sviluppati da un membro diverso.
+
+I test sono svolti in modalità incrociata: ogni membro verifica un modulo sviluppato da un altro componente. Questo 
+approccio aumenta l'oggettività e la qualità della validazione.
+
+L'avanzamento dei lavori è stato lineare. Le poche criticità emerse sono state risolte rapidamente, senza impatti 
+rilevanti.
+
+Nel complesso, le attività sono in linea con quanto pianificato. Il gruppo è soddisfatto dei risultati raggiunti e 
+intende mantenere l'attuale ritmo per rispettare le scadenze.
+
+\subsection{Definizione ruoli}
+
+I ruoli assegnati a ciascun membro per questo Sprint sono i seguenti:
+
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm}
+    \centering
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Membro} & \textbf{Ruolo} \\
+    \hline
+    Fattoni Antonio & \begin{tabular}{@{}c@{}} Amministratore\\Programmatore\\Verificatore \end{tabular} \\
+    \hline
+    Georgescu Diana & \begin{tabular}{@{}c@{}} Programmatore \\Verificatore \end{tabular} \\
+    \hline
+    Gingillino Aaron & \begin{tabular}{@{}c@{}} Responsabile\\Programmatore\\Verificatore \end{tabular} \\
+    \hline
+    Laoud Zakaria & \begin{tabular}{@{}c@{}} Programmatore \\Verificatore \end{tabular} \\
+    \hline
+    Rocco Matteo A. & \begin{tabular}{@{}c@{}} Programmatore \\Verificatore \end{tabular} \\
+    \hline
+    Soligo Lorenzo & \begin{tabular}{@{}c@{}} Programmatore \\Verificatore \end{tabular} \\
+    \hline
+    Vigolo Davide & \begin{tabular}{@{}c@{}} Programmatore \\Verificatore \end{tabular} \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\section{Pianificazione delle attività e decisioni}
+
+Il gruppo ha individuato le seguenti attività:
+\begin{enumerate}
+    \item progettazione del modulo di aggregate detail
+    \item codifica del modulo di aggregate detail
+    \item sviluppo dei test di unità
+\end{enumerate}
+
+\section{Tabella delle Decisioni}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
+    \hline
+    \#0 & Stesura verbale interno & \href{https://7zpus.atlassian.net/browse/DIPR-339}{DIPR-339} & Laoud Zakaria & Vigolo Davide \\
+    \hline
+    \#1 & \begin{tabular}{@{}c@{}} Progettazione del modulo \\ di aggregate detail \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-354}{DIPR-354} & - & Revisione congiunta \\
+    \hline
+    \#2 & \begin{tabular}{@{}c@{}} Codifica del modulo \\ di aggregate detail \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-353}{DIPR-353} & - & - \\
+    \hline
+    \#3 & Verifica indexing & \href{https://7zpus.atlassian.net/browse/DIPR-356}{DIPR-356} & Fattoni Antonio & - \\
+    \hline
+    \#3 & Verifica browsing & \href{https://7zpus.atlassian.net/browse/DIPR-358}{DIPR-358} & Vigolo Davide & - \\
+    \hline
+    \#3 & Verifica search e export & \href{https://7zpus.atlassian.net/browse/DIPR-359}{DIPR-359} & Rocco Matteo A. & - \\
+    \hline
+    \#3 & Verifica aggregate detail & \href{https://7zpus.atlassian.net/browse/DIPR-360}{DIPR-360} & Gingillino Aaron & - \\
+    \hline
+    \#3 & Verifica import & \href{https://7zpus.atlassian.net/browse/DIPR-361}{DIPR-361} & Soligo Lorenzo & - \\
+    \hline
+    \#3 & Verifica navigazione & \href{https://7zpus.atlassian.net/browse/DIPR-362}{DIPR-362} & Georgescu Diana & - \\
+    \hline
+    \#3 & Verifica della verifica integrità & \href{https://7zpus.atlassian.net/browse/DIPR-363}{DIPR-363} & Laoud Zakaria & - \\
+    \hline
+    \#3 & Verifica search & \href{https://7zpus.atlassian.net/browse/DIPR-364}{DIPR-364} & Georgescu Diana & - \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
