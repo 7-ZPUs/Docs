@@ -100,177 +100,40 @@
 
 \begin{document}
 
-\begin{center}
-    \includegraphics[width=9.5cm]{../../assets/logo7ZPUs.jpg}\\
-    \small\hspace{10cm} 7zpus.swe@gmail.com\\
-    \vspace{0.5cm}
-    \LARGE \textbf{Specifica Tecnica}\\
-    \vspace{0.3cm}
-\end{center}
+\pagenumbering{roman}
 
-\vspace{0.3cm}
-\hrule
-\vspace{0.5cm}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{specifica/Abstract.tex}
+\input{specifica/Container.tex}
+\input{specifica/Componenti.tex}
+%\input{specifica/F-VI.tex} % Verifica Integrità
+%\input{specifica/F-S.tex}  % Search 
+%\input{specifica/F-DD.tex} % Document Details
+%\input{specifica/F-AD.tex} % Aggregate Details 
+%\input{specifica/F-I.tex}  % Import 
+%\input{specifica/F-N.tex}  % Navigazione 
+%\input{specifica/B-I.tex}  % Indexing 
+%\input{specifica/B-B.tex}  % Browsing 
+%\input{specifica/B-SE.tex} % Search / Export 
+\end{document}
 
 
-\section*{Tabella di Versionamento}
-\begin{table}[H]
-    \begin{adjustwidth}{-4cm}{-4cm}
-    \centering
-    \begin{tabular}{|c|c|c|c|c|}
-        \hline
-        \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
-        \hline
-        0.1.0 & 2026/02/28 & Laoud Zakaria & Georgescu Diana & \begin{tabular}[c]{@{}c@{}} Creazione del documento\\ e stesura struttura iniziale \end{tabular} \\
-        \hline
-    \end{tabular}
-    \end{adjustwidth}
-\end{table}
-
-\newpage
-\tableofcontents
-
-\newpage
-\listoffigures
-
-\listoftables
-
-\newpage
-\section{Introduzione}
-
-\subsection{Obiettivo del documento}
-L’obiettivo del presente documento è descrivere in modo rigoroso le scelte tecnologiche e l’architettura del prodotto \textit{DIPReader}, adottando il modello di progettazione \textit{C4}.\\
-L’analisi verrà condotta partendo dalla descrizione del contesto applicativo, per poi approfondire la struttura dei container, delle componenti e, infine, del codice, al fine di fornire una rappresentazione completa, 
-coerente e sistematica del sistema.
-
-\subsection{Glossario}
-Ogni termine tecnico o con un significato particolare nell’ambito dell’Ingegneria del Software, utilizzato nella documentazione di progetto, è definito nell’apposito documento
-\href{https://7-zpus.github.io/Docs/assets/3_PB/DocumentiInterni/Glossario.pdf}{Glossario }\ped{(v2.0.0)}.
-
-\subsection{Riferimenti}
-
-    \subsubsection{Riferimenti normativi}
-    \begin{itemize}
-        \item \href{https://github.com/7-ZPUs/Docs/blob/main/3_PB/DocumentiInterni/NormeDiProgetto.pdf}{Norme di Progetto v2.0.0 }\ped{(v2.0.0)}
-        \item \href{https://en.wikipedia.org/wiki/Software_design_description}{Standard SDD/IEEE/1016:2009}\ped{(ultimo accesso: 02/03/2026)}
-        \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/PD1.pdf}{Regolamento di Progetto Didattico a.a.
-            2025/2026} \ped{(ultimo accesso: 02/03/2026)}
-    \end{itemize}
-
-    \subsubsection{Riferimenti informativi}
-    \begin{itemize}
-        \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{Capitolato C3: DIPReader} \ped{(ultimo accesso: 10/02/2026)}
-        \item \href{https://www.math.unipd.it/~rcardin/swea/2022/Design%20Pattern%20Architetturali%20-%20Dependency%20Injection.pdf}
-        {Dispense su Dependency Injection }\ped{(Ultimo accesso: 02/03/2026)}
-        \item \href{https://www.math.unipd.it/~rcardin/swea/2023/Object-Oriented%20Progamming%20Principles%20Revised.pdf}
-        {Dispense su OOP }\ped{(Ultimo accesso: 02/03/2026)}
-        \item \href{https://www.math.unipd.it/~rcardin/swea/2023/Diagrammi%20delle%20Classi.pdf}
-        {Dispense su Diagrammi delle classi }\ped{(Ultimo accesso: 02/03/2026)}
-        \item \href{https://www.math.unipd.it/~rcardin/swea/2022/Software%20Architecture%20Patterns.pdf}
-        {Dispense su Pattern architetturali }\ped{(Ultimo accesso: 02/03/2026)}
-        \item \href{https://www.math.unipd.it/~rcardin/swea/2022/Design%20Pattern%20Creazionali.pdf}
-        {Dispense su Pattern creazionali }\ped{(Ultimo accesso: 02/03/2026)}
-        \item \href{https://www.math.unipd.it/~rcardin/swea/2022/Design%20Pattern%20Strutturali.pdf}
-        {Dispense su Pattern strutturali }\ped{(Ultimo accesso: 02/03/2026)}
-        \item \href{https://www.math.unipd.it/~rcardin/swea/2021/SOLID%20Principles%20of%20Object-Oriented%20Design_4x4.pdf}
-        {Dispense su Principi SOLID }\ped{(Ultimo accesso: 02/03/2026)}
-        \item \href{https://www.math.unipd.it/~tullio/IS-1/2023/Dispense/T6.pdf}
-        {Dispense sulla Progettazione software }\ped{(Ultimo accesso: 02/03/2026)}
-        \item \href{https://www.math.unipd.it/~tullio/IS-1/2023/Dispense/T7.pdf}
-        {Dispense sulla Qualità del software }\ped{(Ultimo accesso: 02/03/2026)}
-        \item \href{https://github.com/rcardin/hexagonal}
-        {Repository Architettura esagonale (Kotlin) }\ped{(Ultimo accesso: 02/03/2026)}
-        \item \href{https://github.com/rcardin/hexagonal-java/}
-        {Repository Architettura esagonale (Java) }\ped{(Ultimo accesso: 02/03/2026)}
-        \item \href{https://github.com/rcardin/swe-imdb}
-        {Repository Ingegneria del software - swe-imdb }\ped{(Ultimo accesso: 02/03/2026)}
-        \item \href{https://c4model.com/}
-        {C4 Model }\ped{(Ultimo accesso: 03/03/2026)}
-        \item \href{https://plantuml.com/}
-        {PlantUML }\ped{(Ultimo accesso: 03/03/2026)}
-        \item Riferimenti a scelte tecnologiche:
-        \begin{itemize}
-            \item \href{https://www.typescriptlang.org/}
-            {TypeScript }\ped{(Ultimo accesso: 03/03/2026)}
-            \item \href{https://angular.io/}
-            {Angular }\ped{(Ultimo accesso: 03/03/2026)}
-            \item \href{https://www.electronjs.org/}
-            {Electron }\ped{(Ultimo accesso: 03/03/2026)}
-            \item \href{https://www.sqlite.org/}
-            {SQLite }\ped{(Ultimo accesso: 03/03/2026)}
-            \item \href{https://github.com/asg017/sqlite-vss}
-            {sqlite-vss }\ped{(Ultimo accesso: 03/03/2026)}
-            \item \href{https://onnxruntime.ai/}
-            {ONNX Runtime }\ped{(Ultimo accesso: 03/03/2026)}
-            \item \href{https://huggingface.co/docs/transformers.js}
-            {Transformers.js }\ped{(Ultimo accesso: 03/03/2026)}
-            \item \href{https://nodejs.org/}
-            {Node.js }\ped{(Ultimo accesso: 03/03/2026)}
-        \end{itemize}
-        \item \href{https://7-zpus.github.io/Docs/assets/3_PB/DocumentiInterni/Glossario.pdf}{Glossario }\ped{(v2.0.0)}
-        \item \href{https://github.com/7-ZPUs/Docs/blob/main/3_PB/DocumentiEsterni/PianoDiProgetto.pdf}{Piano di Progetto }\ped{(v2.0.0)}
-        \item \href{https://github.com/7-ZPUs/Docs/blob/main/3_PB/DocumentiEsterni/PianoDiQualifica.pdf}{Piano di Qualifica }\ped{(v2.0.0)}
-        \item Verbali interni:
-        \item Verbali esterni:
-    \end{itemize}
-    
-    
-
-\newpage
-\section{Tecnologie utilizzate}
-\newpage
-\section{Contesto del sistema}
-
-\subsection{Modello architetturale}
-
-\subsection{Descrizione degli attori esterni}
-
-\subsection{Descrizione dei sistemi esterni}
-
-\newpage
-\section{Architettura dei container}
-
-\subsection{[Container 1]}
-    \subsubsection{Tecnologia}
-        \paragraph{Descrizione}
-
-\subsection{[Container 2]}
-    \subsubsection{Tecnologia}
-        \paragraph{Descrizione}
-
-\subsection{[Container 3]}
-    \subsubsection{Configurazione}
-
-\newpage
-\section{Architettura delle componenti}
-
-\subsection{[Componente 1]}
-    \subsubsection{Descrizione}
-    \subsubsection{Interfacce}
-    \subsubsection{Dipendenze} %da vedere se ha senso tenerlo
-    \subsubsection{Tracciamento dei requisiti}
-
-\subsection{[Componente 2]}
-    \subsubsection{Descrizione}
-    \subsubsection{Interfacce}
-    \subsubsection{Dipendenze} %da vedere se ha senso tenerlo
-    \subsubsection{Tracciamento dei requisiti}
-
-\newpage
-\section{Progettazione di dettaglio}
-
-\subsection{[Componente 1]}
-    \subsubsection{Diagramma delle classi}
-    \subsubsection{Lista delle classi}
-        \paragraph{[Classe 1.1]}
-        \paragraph{[Classe 1.2]}
-        \paragraph{[Classe 1.n]}
-
-\subsection{[Componente 2]}
-    \subsubsection{Diagramma delle classi}
-    \subsubsection{Lista delle classi}
-        \paragraph{[Classe 2.1]}
-        \paragraph{[Classe 2.2]}
-        \paragraph{[Classe 2.n]}
-
+%\section{Progettazione di dettaglio}
+%
+%\subsection{[Componente 1]}
+%    \subsubsection{Diagramma delle classi}
+%    \subsubsection{Lista delle classi}
+%        \paragraph{[Classe 1.1]}
+%        \paragraph{[Classe 1.2]}
+%        \paragraph{[Classe 1.n]}
+%
+%\subsection{[Componente 2]}
+%    \subsubsection{Diagramma delle classi}
+%    \subsubsection{Lista delle classi}
+%        \paragraph{[Classe 2.1]}
+%        \paragraph{[Classe 2.2]}
+%        \paragraph{[Classe 2.n]}
+%
 \end{document}
