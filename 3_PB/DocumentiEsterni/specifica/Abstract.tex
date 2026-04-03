@@ -1,0 +1,234 @@
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../assets/logo7ZPUs.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \vspace{0.5cm}
+    \LARGE \textbf{Specifica Tecnica}\\
+    \vspace{0.3cm}
+\end{center}
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+        \centering
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione}                                                                             \\
+            \hline
+            0.1.0             & 2026/02/28    & Laoud Zakaria   & Georgescu Diana       & \begin{tabular}[c]{@{}c@{}} Creazione del documento\\ e stesura struttura iniziale \end{tabular} \\
+            \hline
+        \end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\newpage
+\tableofcontents
+
+\newpage
+\listoffigures
+
+\listoftables
+
+\newpage
+\section{Introduzione}
+
+\subsection{Obiettivo del documento}
+L’obiettivo del presente documento è descrivere in modo rigoroso le scelte
+tecnologiche e l’architettura del prodotto \textit{DIPReader}, adottando il
+modello di progettazione \textit{C4}.\\ L’analisi verrà condotta partendo dalla
+descrizione del contesto applicativo, per poi approfondire la struttura dei
+container, delle componenti e, infine, del codice, al fine di fornire una
+rappresentazione completa, coerente e sistematica del sistema.
+
+\subsection{Glossario}
+Ogni termine tecnico o con un significato particolare nell’ambito
+dell’Ingegneria del Software, utilizzato nella documentazione di progetto, è
+definito nell’apposito documento
+\href{https://7-zpus.github.io/Docs/assets/3_PB/DocumentiInterni/Glossario.pdf}{Glossario
+}\ped{(v2.0.0)}.
+
+\subsection{Riferimenti}
+
+\subsubsection{Riferimenti normativi}
+\begin{itemize}
+    \item \href{https://github.com/7-ZPUs/Docs/blob/main/3_PB/DocumentiInterni/NormeDiProgetto.pdf}{Norme di Progetto v2.0.0 }\ped{(v2.0.0)}
+    \item \href{https://en.wikipedia.org/wiki/Software_design_description}{Standard SDD/IEEE/1016:2009}\ped{(ultimo accesso: 02/03/2026)}
+    \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Dispense/PD1.pdf}{Regolamento di Progetto Didattico a.a.
+              2025/2026} \ped{(ultimo accesso: 02/03/2026)}
+\end{itemize}
+
+\subsubsection{Riferimenti informativi}
+\begin{itemize}
+    \item \href{https://www.math.unipd.it/~tullio/IS-1/2025/Progetto/C3.pdf}{Capitolato C3: DIPReader} \ped{(ultimo accesso: 10/02/2026)}
+    \item \href{https://www.math.unipd.it/~rcardin/swea/2022/Design%20Pattern%20Architetturali%20-%20Dependency%20Injection.pdf}
+          {Dispense su Dependency Injection }\ped{(Ultimo accesso: 02/03/2026)}
+    \item \href{https://www.math.unipd.it/~rcardin/swea/2023/Object-Oriented%20Progamming%20Principles%20Revised.pdf}
+          {Dispense su OOP }\ped{(Ultimo accesso: 02/03/2026)}
+    \item \href{https://www.math.unipd.it/~rcardin/swea/2023/Diagrammi%20delle%20Classi.pdf}
+          {Dispense su Diagrammi delle classi }\ped{(Ultimo accesso: 02/03/2026)}
+    \item \href{https://www.math.unipd.it/~rcardin/swea/2022/Software%20Architecture%20Patterns.pdf}
+          {Dispense su Pattern architetturali }\ped{(Ultimo accesso: 02/03/2026)}
+    \item \href{https://www.math.unipd.it/~rcardin/swea/2022/Design%20Pattern%20Creazionali.pdf}
+          {Dispense su Pattern creazionali }\ped{(Ultimo accesso: 02/03/2026)}
+    \item \href{https://www.math.unipd.it/~rcardin/swea/2022/Design%20Pattern%20Strutturali.pdf}
+          {Dispense su Pattern strutturali }\ped{(Ultimo accesso: 02/03/2026)}
+    \item \href{https://www.math.unipd.it/~rcardin/swea/2021/SOLID%20Principles%20of%20Object-Oriented%20Design_4x4.pdf}
+          {Dispense su Principi SOLID }\ped{(Ultimo accesso: 02/03/2026)}
+    \item \href{https://www.math.unipd.it/~tullio/IS-1/2023/Dispense/T6.pdf}
+          {Dispense sulla Progettazione software }\ped{(Ultimo accesso: 02/03/2026)}
+    \item \href{https://www.math.unipd.it/~tullio/IS-1/2023/Dispense/T7.pdf}
+          {Dispense sulla Qualità del software }\ped{(Ultimo accesso: 02/03/2026)}
+    \item \href{https://github.com/rcardin/hexagonal}
+          {Repository Architettura esagonale (Kotlin) }\ped{(Ultimo accesso: 02/03/2026)}
+    \item \href{https://github.com/rcardin/hexagonal-java/}
+          {Repository Architettura esagonale (Java) }\ped{(Ultimo accesso: 02/03/2026)}
+    \item \href{https://github.com/rcardin/swe-imdb}
+          {Repository Ingegneria del software - swe-imdb }\ped{(Ultimo accesso: 02/03/2026)}
+    \item \href{https://c4model.com/}
+          {C4 Model }\ped{(Ultimo accesso: 03/03/2026)}
+    \item \href{https://plantuml.com/}
+          {PlantUML }\ped{(Ultimo accesso: 03/03/2026)}
+    \item Riferimenti a scelte tecnologiche:
+          \begin{itemize}
+              \item \href{https://www.typescriptlang.org/}
+                    {TypeScript }\ped{(Ultimo accesso: 03/03/2026)}
+              \item \href{https://angular.io/}
+                    {Angular }\ped{(Ultimo accesso: 03/03/2026)}
+              \item \href{https://www.electronjs.org/}
+                    {Electron }\ped{(Ultimo accesso: 03/03/2026)}
+              \item \href{https://www.sqlite.org/}
+                    {SQLite }\ped{(Ultimo accesso: 03/03/2026)}
+              \item \href{https://github.com/asg017/sqlite-vss}
+                    {sqlite-vss }\ped{(Ultimo accesso: 03/03/2026)}
+              \item \href{https://onnxruntime.ai/}
+                    {ONNX Runtime }\ped{(Ultimo accesso: 03/03/2026)}
+              \item \href{https://huggingface.co/docs/transformers.js}
+                    {Transformers.js }\ped{(Ultimo accesso: 03/03/2026)}
+              \item \href{https://nodejs.org/}
+                    {Node.js }\ped{(Ultimo accesso: 03/03/2026)}
+          \end{itemize}
+    \item \href{https://7-zpus.github.io/Docs/assets/3_PB/DocumentiInterni/Glossario.pdf}{Glossario }\ped{(v2.0.0)}
+    \item \href{https://github.com/7-ZPUs/Docs/blob/main/3_PB/DocumentiEsterni/PianoDiProgetto.pdf}{Piano di Progetto }\ped{(v2.0.0)}
+    \item \href{https://github.com/7-ZPUs/Docs/blob/main/3_PB/DocumentiEsterni/PianoDiQualifica.pdf}{Piano di Qualifica }\ped{(v2.0.0)}
+    \item Verbali interni:
+    \item Verbali esterni:
+\end{itemize}
+
+\newpage
+\section{Tecnologie utilizzate}
+La scelta delle teccnologie è stata guidata dalla necessità di rispetta i
+vincoli richiesti dalla proponente legati ad autoconsistenza, portabilità e
+facilità d'uso, nonché da considerazioni relative alla facilità di sviluppo,
+alla disponibilità di risorse e alla compatibilità con i requisiti funzionali e
+non funzionali del sistema.\\
+
+\section{Linguaggio di Programmazione: TypeScript}
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|m{3cm}|m{2cm}|X|}
+        \hline
+        \rowcolor{zpusgreen!30}
+        \textbf{Scelta} & \textbf{Versione} & \textbf{Motivazione}                                                                                                                                                                                                                                                                                                                                         \\
+        \hline
+        TypeScript      & 5.9.2             & Scelto per la sua capacità di fornire un sistema di tipi statico che migliora la sicurezza del codice e facilita la manutenzione, riducendo il rischio di errori comuni durante lo sviluppo. Inoltre, TypeScript è ampiamente supportato da un ecosistema ricco di librerie e strumenti, e si integra perfettamente con tecnologie come Angular ed Electron. \\
+        \hline
+    \end{tabularx}
+    \caption{Dettagli sulla scelta di TypeScript come linguaggio di programmazione}
+\end{table}
+
+\subsection{Deployment: Electron}
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|m{3cm}|m{2cm}|X|}
+        \hline
+        \rowcolor{zpusgreen!30}
+        \textbf{Scelta} & \textbf{Versione} & \textbf{Motivazione}                                                                                                                                                                                                                                                                                                                                                                                                      \\
+        \hline
+        Electron        & 30.0.0            & Scelto per la sua capacità di consentire lo sviluppo di applicazioni desktop multipiattaforma utilizzando tecnologie web, garantendo così la portabilità del prodotto su diversi sistemi operativi. Electron permette di creare un'esperienza utente nativa, sfruttando le potenzialità di Node.js per l'accesso al filesystem e alle risorse locali, facilitando l'integrazione con librerie e strumenti di terze parti. \\
+        \hline
+    \end{tabularx}
+    \caption{Dettagli sulla scelta di Electron come piattaforma di deployment}
+\end{table}
+
+\subsection{Framework Frontend: Angular}
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|m{3cm}|m{2cm}|X|}
+        \hline
+        \rowcolor{zpusgreen!30}
+        \textbf{Scelta} & \textbf{Versione} & \textbf{Motivazione}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  \\
+        \hline
+        Angular         & 21.2.5            & Scelto per la sua capacità di supportare lo sviluppo di applicazioni web complesse e scalabili, con un'architettura basata su componenti che favorisce la modularità e la manutenibilità del codice. Inoltre, Angular offre un'ampia gamma di strumenti e funzionalità integrate, come la gestione dello stato, il routing e il supporto per la creazione di interfacce utente reattive, che lo rendono adatto a soddisfare i requisiti funzionali del progetto. La sua implementazione della Dependency Injection facilita la gestione delle dipendenze tra i componenti, migliorando la testabilità e la manutenibilità del codice. \\
+        \hline
+    \end{tabularx}
+    \caption{Dettagli sulla scelta di Angular come framework frontend}
+\end{table}
+
+\subsection{Librerie Aggiuntive}
+\rowcolors{2}{gray!15}{white}
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|m{3cm}|m{2cm}|X|}
+        \hline
+        \rowcolor{zpusgreen!30}
+        \textbf{Scelta} & \textbf{Versione} & \textbf{Motivazione}                                                                                                                                                                                                                                                                                                             \\
+        \hline
+        Better SQLite   & 12.8.0            & SQLite è un database relazionale che non richiede un server separato e può essere integrato direttamente nell'applicazione, facilitando lo sviluppo e il deployment. La sua leggerezza e portabilità lo rendono adatto a un'ampia gamma di piattaforme, garantendo la compatibilità con i requisiti di portabilità del progetto. \\
+        \hline
+        sqlite-vss      & 0.1.2             & Scelto per la sua capacità di fornire una versione virtuale di SQLite, che consente di eseguire query su dati in memoria senza la necessità di creare un database fisico dei vettori per la ricerca semantica, semplificando così l'integrazione con il sistema.                                                                 \\
+        \hline
+        ONNX Runtime    & 1.17.3            & Scelto per la sua capacità di eseguire modelli di machine learning in modo efficiente e flessibile, supportando una vasta gamma di modelli e framework, facilitando l'integrazione di funzionalità di intelligenza artificiale nel prodotto.                                                                                     \\
+        \hline
+        Transformers.js & 3.8.1             & Scelto per la sua capacità di fornire un'interfaccia JavaScript per l'utilizzo di modelli di trasformatori, facilitando l'integrazione di funzionalità avanzate di elaborazione del linguaggio naturale e machine learning nel prodotto.                                                                                         \\
+        \hline
+    \end{tabularx}
+    \caption{Dettagli sulle scelte di librerie aggiuntive}
+\end{table}
+
+\subsection{Tecnologie di analisi statica}
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|m{3cm}|m{2cm}|X|}
+        \hline
+        \rowcolor{zpusgreen!30}
+        \textbf{Scelta} & \textbf{Versione} & \textbf{Motivazione}                                                                                                                                                                                                                                                                                                                                                  \\
+        \hline
+        SonarQube          & 2026.2            & Scelto per la sua capacità di identificare e segnalare pattern di codice problematici, migliorando la qualità del codice e facilitando la manutenzione del progetto. Integrato nella pipeline di sviluppo, SonarQube consente di monitorare costantemente la qualità del codice, identificando potenziali bug, vulnerabilità e problemi di manutenzione, contribuendo così a garantire un prodotto finale robusto e affidabile. \\
+        \hline
+        Prettier        & 2.9.3             & Scelto per la sua capacità di formattare automaticamente il codice in modo coerente, migliorando la leggibilità e facilitando la collaborazione tra i membri del team. Prettier supporta una vasta gamma di linguaggi e può essere facilmente integrato con editor di codice e strumenti di sviluppo, semplificando il processo di mantenimento di uno stile di codifica uniforme. \\
+        \hline
+
+    \end{tabularx}
+    \caption{Dettagli sulle scelte di tecnologie di analisi statica}
+\end{table}
+
+\subsection{Tecnologie di analisi dinamica}
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|m{3cm}|m{2cm}|X|}
+        \hline
+        \rowcolor{zpusgreen!30}
+        \textbf{Scelta} & \textbf{Versione} & \textbf{Motivazione}                                                                                                                                                                                                                                                                                                                                                  \\
+        \hline
+        Vitest          & 2.3.1            & Scelto per la sua capacità di fornire un ambiente di test per applicazioni JavaScript e per il suo controllo dei componenti di Mock. \\
+        \hline
+        WebdriverIO        & 2.9.3             & Scelto per la sua capacità di fornire un ambiente di test per applicazioni web, con possibilità di testare flussi completi di interazione utente. Utilizzato quindi per i test E2E. \\
+        \hline
+    \end{tabularx}
+    \caption{Dettagli sulle scelte di tecnologie di analisi dinamica}
+\end{table}
+
+\section{Contesto del sistema}
+La progettazione del sistema \textit{DIPReader} è stata guidata da i principi di modularità, scalabilità e manutenibilità, con l'obiettivo di creare un'architettura che possa evolversi nel tempo e adattarsi a nuove esigenze.\\
+In particolare, è stata completamente scorporata la logica di business dalla logica di presentazione.\\
+
+
+\subsection{Modello architetturale}
+
+\subsection{Descrizione degli attori esterni}
+
+\subsection{Descrizione dei sistemi esterni}
