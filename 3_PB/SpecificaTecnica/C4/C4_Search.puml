@@ -1,5 +1,5 @@
-@startuml UC3_Search_ClassDiagram_v15
-title UC-3 Search – Class Diagram  ·  Smart / Dumb Pattern\n(SOLID · SRP · OCP · LSP · ISP · DIP · CQS)  –  v15\n[Fix: AppRouter→IAngularRouter(uses) · IAngularRouter→Layer0 · search() precondition · onValidationResult contratto\n      search()↔abortController · filterRemoved tipo · loading/isSearching semantica · IElectronContextBridge ripristinata\n      FilterValidatorFn membro · unsupportedFormat catena · SearchQueryType enum · ValidationResult.errors key\n      IpcCacheService→Adapters · AipInfo consumer · onUnsupportedFormat handler]
+@startuml UC3_Search_ClassDiagram_v16
+title UC-3 Search – Class Diagram  ·  Smart / Dumb Pattern\n(SOLID · SRP · OCP · LSP · ISP · DIP · CQS)  –  v16\n[Removed: Semantic Indexing Cancellation]
 
 skinparam classAttributeIconSize 0
 skinparam classFontSize 11
@@ -35,7 +35,8 @@ package "Interfaces & Contracts" #F0FDF4 {
     ' Triggers full-text search using current state.query.
     ' Precondition: state.query must have been set via setQuery() before calling search().
     ' Debounce 300ms applied inside the Facade (toObservable + debounceTime).
-    ' No-op if isSearching === true (mutex guard). CQS: results → Signal<SearchState>.results.
+    ' No-op if isSearching === true (mutex guard).
+    ' CQS: results → Signal<SearchState>.results.
     + setFilters(filters: SearchFilters): void
     ' Updates filters in state only. Does NOT trigger search.
     ' Call searchAdvanced() to apply filters and search.
@@ -56,7 +57,6 @@ package "Interfaces & Contracts" #F0FDF4 {
 
   interface IIndexingChannel <<ISP>> {
     + getIndexingStatus(): Observable<SemanticIndexState>
-    + cancel(): Observable<void>
   }
 
   interface IFilterValidator <<ISP>> {
@@ -66,10 +66,6 @@ package "Interfaces & Contracts" #F0FDF4 {
 
   interface ISemanticIndexStatus <<ISP>> {
     + getStatus(): Signal<SemanticIndexState>
-  }
-
-  interface ISemanticIndexControl <<ISP>> {
-    + cancelIndexing(): void
   }
 
   interface ICacheService <<ISP>> {
@@ -280,7 +276,7 @@ package "Domain Model" #FFF7ED {
   }
 
   enum IndexingStatus {
-    IDLE · INDEXING · READY · ERROR · TIMEOUT · CANCELLED
+    IDLE · INDEXING · READY · ERROR · TIMEOUT
   }
 
   enum FilterFieldType {
@@ -477,11 +473,8 @@ package "Services  [providedIn:'root']" #EFF6FF {
     - timeoutMs: number
     ' Default: 120_000 ms. Configurable. When elapsed → status = TIMEOUT → graceful degradation.
     - timeoutHandle: ReturnType<typeof setTimeout> | null
-    - abortController: AbortController | null
-    ' Cancelled via cancel() or on timeout expiry.
     --
     + getStatus(): Signal<SemanticIndexState>
-    + cancelIndexing(): void
   }
 
   class FilterValidatorService <<Service>> <<SRP>> {
@@ -549,7 +542,6 @@ package "Adapters  «Infrastructure»" #F0F4FF {
     - errorHandler: IErrorHandler
     --
     + getIndexingStatus(): Observable<SemanticIndexState>
-    + cancel(): Observable<void>
     - invoke<T>(channel: string, payload: unknown): Observable<T>
   }
 
@@ -613,7 +605,6 @@ package "Smart Components  «Container»" #EFF6FF {
   class SearchPageComponent <<Smart>> {
     - searchFacade:      ISearchFacade          <<inject>>
     - router:            IRouter                <<inject>>
-    - semanticControl:   ISemanticIndexControl  <<inject>>
     - semanticStatus:    ISemanticIndexStatus   <<inject>>
     - filterValidator:   IFilterValidator       <<inject>>
 
@@ -642,11 +633,11 @@ package "Smart Components  «Container»" #EFF6FF {
     + onValidationResult(result: ValidationResult): void
     ' Advisory only: used to enable/disable the submit button in the panel area.
     ' Does NOT update SearchState. Source of truth for validation errors is SearchState.validationErrors.
+
     + onResultSelected(documentId: string): void
     + onRetrySearch(): void
     + onViewerError(err: AppError): void
     + onViewerRetry(): void
-    + onCancelSemanticIndexing(): void
     + onUnsupportedFormat(mimeType: string): void
     ' Receives unsupportedFormat event propagated from DocumentViewerComponent.
     ' Sets unsupportedMimeType signal → drives InlineErrorComponent in viewer slot.
@@ -660,6 +651,7 @@ package "Smart Components  «Container»" #EFF6FF {
     - aipInfo:          WritableSignal<AipInfo | null>
     ' All three fetched from IDocumentFacade on documentId @Input change (parallel via forkJoin).
     ' All three passed as @Input to PreviewPanelComponent (Dumb child).
+
     + @Input  documentId: string
     + @Output loadingChanged: EventEmitter<boolean>
     + @Output viewerError: EventEmitter<AppError>
@@ -699,14 +691,18 @@ package "Dumb Components  «Presentational»" #F0FDF4 {
     + @Input  validator: FilterValidatorFn
     + @Input  externalValidation: ValidationResult | null
     ' externalValidation = SearchState.validationErrors projected by SearchPageComponent.
+
     + @Input  strategyRegistry: Map<SubjectType, ISubjectDetailStrategy>
     ' Passed through to SubjectFilterComponent → SubjectDetailFormComponent (never consumed here).
+
     + @Output filtersChanged: EventEmitter<SearchFilters>
     ' Emitted on every incremental field change (live update, no confirmation).
     ' SearchPageComponent uses it to keep its local SearchFilters in sync.
+
     + @Output filtersSubmit: EventEmitter<SearchFilters>
     ' Emitted only on explicit user submit action (e.g. "Cerca" button click).
     ' SearchPageComponent calls searchAdvanced() only on this event, not on filtersChanged.
+
     + @Output validationResult: EventEmitter<ValidationResult>
     + @Output filterAdded: EventEmitter<CustomMetaEntry>
     ' SearchPageComponent enforces name uniqueness before adding: rejects if customMeta already contains same name.
@@ -716,6 +712,7 @@ package "Dumb Components  «Presentational»" #F0FDF4 {
     ' Uniqueness invariant enforced at add time by SearchPageComponent; safe to use as removal key.
     + @Output filtersReset: EventEmitter<void>
     ' Mutations emitted upward; SearchPageComponent applies them to SearchFilters and re-binds via @Input.
+
     - isExpanded: boolean
     - currentValidationResult: ValidationResult | null
     ' Local UI-only state: not domain state.
@@ -797,6 +794,7 @@ package "Dumb Components  «Presentational»" #F0FDF4 {
     ' Errors from synchronous local format validation (date, number, etc.).
     ' Precedence rule: displayedError = externalError ?? localError
     ' FieldErrorComponent always receives displayedError (one resolved value, never both).
+
     + @Output valueChanged: EventEmitter<unknown>
     + @Output validationError: EventEmitter<ValidationError | null>
     ' Emits localError upward for parent aggregation; does NOT re-emit externalError.
@@ -810,8 +808,6 @@ package "Dumb Components  «Presentational»" #F0FDF4 {
 
   class SemanticIndexStatusComponent <<Dumb>> {
     + @Input  indexingState: SemanticIndexState
-    + @Output cancelRequested: EventEmitter<void>
-    ' cancelRequested: SearchPageComponent receives it and calls ISemanticIndexControl.cancelIndexing().
   }
 
   class PreviewPanelComponent <<Dumb>> {
@@ -866,7 +862,6 @@ package "Shared Dumb Components  «Presentational»" #FFF1F2 {
 
 SearchFacade           ..|> ISearchFacade
 SemanticIndexFacade    ..|> ISemanticIndexStatus
-SemanticIndexFacade    ..|> ISemanticIndexControl
 FilterValidatorService ..|> IFilterValidator
 SearchIpcGateway       ..|> ISearchChannel
 IndexingIpcGateway     ..|> IIndexingChannel
@@ -882,6 +877,7 @@ AppRouter              ..|> IRouter
 AppRouter              --> IAngularRouter : <<uses>>
 ' AppRouter implements IRouter (Layer 0 contract) and depends on IAngularRouter (Layer 0 wrapper).
 ' IAngularRouter is NOT implemented by AppRouter; it is injected into it.
+
 DocumentViewerComponent ..> IDocumentFacade : "<<inject>>"
 
 ' ════════════════════════════════════════════════════════
@@ -937,6 +933,7 @@ FilterValidatorFn ..> ValidationResult : "<<return type>>"
 ' SubjectDetails concrete flow: SubjectDetailFormComponent builds the concrete subtype
 ' and emits it via @Output detailsChanged. SubjectFilterComponent assembles SubjectCriteria
 ' and emits subjectChanged. AdvancedFilterPanel emits it up. SearchPageComponent calls setFilters().
+
 SubjectDetailFormComponent ..> PaiDetails  : "<<creates>> if SubjectType.PAI"
 SubjectDetailFormComponent ..> PaeDetails  : "<<creates>> if SubjectType.PAE"
 SubjectDetailFormComponent ..> AsDetails   : "<<creates>> if SubjectType.AS"
@@ -962,9 +959,6 @@ TelemetryService --> LogEntry    : "<<creates>>"
 
 SearchPageComponent -[#6B21A8,dashed]-> ISearchFacade \
   : "<<inject>>\nsetQuery() on queryChanged\nsearch() after setQuery (full-text)\nsearchAdvanced() on filtersSubmit (advanced)\ncancelSearch() / retry()"
-
-SearchPageComponent -[#6B21A8,dashed]-> ISemanticIndexControl \
-  : "<<inject>> cancelIndexing() when status===INDEXING"
 
 SearchPageComponent -[#6B21A8,dashed]-> ISemanticIndexStatus \
   : "<<inject>> reads getStatus() for indexingStatus Signal"
@@ -994,8 +988,6 @@ SearchResultsComponent -[#15803D]-> SearchPageComponent \
 
 SearchPageComponent -[#1D4ED8]-> SemanticIndexStatusComponent \
   : "▼ @Input indexingState = semanticStatus.getStatus()()"
-SemanticIndexStatusComponent -[#15803D]-> SearchPageComponent \
-  : "▲ @Output cancelRequested"
 
 SearchPageComponent -[#1D4ED8]-> AsyncStateWrapperComponent \
   : "▼ @Input loading = SearchState.loading\n▼ @Input error = SearchState.error\n▼ @Input empty = results.length === 0"
