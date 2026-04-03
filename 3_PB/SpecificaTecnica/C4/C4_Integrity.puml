@@ -1,0 +1,305 @@
+@startuml C4 – Class Diagram: Integrity Module (DIPReader)
+
+title C4 – Class Diagram: Integrity Module\nDIPReader · UC-26..33
+
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+'══════════════════════════════════════════════════════════
+' DOMAIN – ENUMS
+'══════════════════════════════════════════════════════════
+package "integrity/domain" {
+
+  enum VerifyLevel {
+    DIP
+    CLASS
+    PROCESS
+    DOCUMENT
+  }
+
+  enum IntegrityFailureType {
+    HASH_MISMATCH
+    SIGNATURE_EXPIRED
+    SIGNATURE_INVALID
+  }
+
+  '══════════════════════════════════════════════════════
+  ' DOMAIN – CLASSI DATI
+  '══════════════════════════════════════════════════════
+  class IntegrityFailure <<data>> {
+    +type: IntegrityFailureType
+    +documentId: string
+    +documentName: string
+    +detail?: string
+  }
+
+  class IntegrityResult <<data>> {
+    +documentId: string
+    +documentName: string
+    +status: string
+    +timestamp: string
+    +failure?: IntegrityFailure
+  }
+
+  class IntegrityReport <<data>> {
+    +level: VerifyLevel
+    +targetId: string
+    +timestamp: string
+    +totalChecked: number
+    +totalValid: number
+    +totalInvalid: number
+    +results: IntegrityResult[]
+  }
+
+  class VerificationProgress <<data>> {
+    +current: number
+    +total: number
+    +percentage: number
+    +level: VerifyLevel
+    +label: string
+  }
+
+  class IntegrityState <<data>> {
+    +report: IntegrityReport | null
+    +progress: VerificationProgress | null
+    +loading: boolean
+    +systemError: AppError | null
+    +isVerifying: boolean
+  }
+}
+
+'══════════════════════════════════════════════════════════
+' SHARED ERRORS
+'══════════════════════════════════════════════════════════
+package "shared/errors" {
+
+  class AppError <<data>> {
+    +code: ErrorCode
+    +category: ErrorCategory
+    +severity: ErrorSeverity
+    +recoverable: boolean
+    +context?: string
+    +detail?: string
+  }
+
+  enum ErrorCode {
+    INTEGRITY_VERIFY_ERROR
+  }
+}
+
+'══════════════════════════════════════════════════════════
+' INTERFACCE
+'══════════════════════════════════════════════════════════
+package "shared/interfaces" {
+
+  interface IIpcGateway {
+    +invoke(channel: string, payload: unknown, cachePolicy: CachePolicy): unknown
+    +on(channel: string, handler: Handler): void
+  }
+
+  interface IIpcErrorHandlerService {
+    +toAppError(ipcError: unknown): AppError
+    +isFatal(error: AppError): boolean
+  }
+
+  interface ITelemetryService {
+    +trackEvent(type: EventType, payload: unknown): void
+    +trackError(error: AppError, context: string): void
+    +trackTiming(label: EventType, ms: number): void
+  }
+
+  interface ILiveAnnouncerService {
+    +announce(msg: string, politeness: string): void
+  }
+}
+
+'══════════════════════════════════════════════════════════
+' SERVIZI
+'══════════════════════════════════════════════════════════
+package "shared/services" {
+
+  class IpcGateway {
+    -cache: IpcCacheService
+    +invoke(channel: string, payload: unknown, cachePolicy: CachePolicy): unknown
+    +on(channel: string, handler: Handler): void
+  }
+
+  class IpcErrorHandlerService {
+    +toAppError(ipcError: unknown): AppError
+    +isFatal(error: AppError): boolean
+  }
+
+  class TelemetryService {
+    -sessionId: string
+    +trackEvent(type: EventType, payload: unknown): void
+    +trackError(error: AppError, context: string): void
+    +trackTiming(label: EventType, ms: number): void
+  }
+
+  class LiveAnnouncerService {
+    +announce(msg: string, politeness: string): void
+  }
+}
+
+IpcGateway             ..|> IIpcGateway
+IpcErrorHandlerService ..|> IIpcErrorHandlerService
+TelemetryService       ..|> ITelemetryService
+LiveAnnouncerService   ..|> ILiveAnnouncerService
+
+'══════════════════════════════════════════════════════════
+' FACADE
+'══════════════════════════════════════════════════════════
+package "integrity/facade" {
+
+  class IntegrityFacade {
+    -state: IntegrityState
+    -ipcGateway: IIpcGateway
+    -ipcErrorHandler: IIpcErrorHandlerService
+    -telemetry: ITelemetryService
+    -liveAnnouncer: ILiveAnnouncerService
+    +getState(): IntegrityState
+    +isVerifying(): boolean
+    +verifyDip(): void
+    +verifyClass(classId: string): void
+    +verifyProcess(processId: string): void
+    +verifyDocument(documentId: string): void
+    +reset(): void
+  }
+}
+
+'══════════════════════════════════════════════════════════
+' COMPONENTI
+'══════════════════════════════════════════════════════════
+package "integrity/components" {
+
+  class IntegrityPageComponent {
+    -integrityFacade: IntegrityFacade
+    +onVerifyRequested(level: VerifyLevel): void
+  }
+
+  class IntegrityTriggerComponent {
+    +disabledWhileVerifying: boolean
+    +onVerifyRequested(): VerifyLevel
+  }
+
+  class VerificationProgressComponent {
+    +progress: VerificationProgress
+  }
+
+  class DipIntegrityReportComponent {
+    +report: IntegrityReport
+    +corruptedClasses: IntegrityResult[]
+    +allValid: boolean
+  }
+
+  class ClassIntegrityReportComponent {
+    +report: IntegrityReport
+    +corruptedProcesses: IntegrityResult[]
+    +allValid: boolean
+  }
+
+  class ProcessIntegrityReportComponent {
+    +report: IntegrityReport
+    +corruptedDocuments: IntegrityResult[]
+    +allValid: boolean
+  }
+
+  class DocumentIntegrityReportComponent {
+    +result: IntegrityResult
+    +isInvalid: boolean
+  }
+
+  class IntegrityFailureDetailComponent {
+    +failure: IntegrityFailure
+    +icon: string
+    +localizedType: string
+    +hasDetail: boolean
+  }
+}
+
+'══════════════════════════════════════════════════════════
+' RELAZIONI – DOMAIN TYPES
+'══════════════════════════════════════════════════════════
+
+IntegrityReport      "1" *-- "0..*" IntegrityResult      : results
+IntegrityResult      "1" o-- "0..1" IntegrityFailure     : failure
+IntegrityFailure          -->       IntegrityFailureType : type
+IntegrityReport           -->       VerifyLevel          : level
+VerificationProgress      -->       VerifyLevel          : level
+IntegrityState       "1" o-- "0..1" IntegrityReport      : report
+IntegrityState       "1" o-- "0..1" VerificationProgress : progress
+IntegrityState       "1" o-- "0..1" AppError             : systemError
+
+'══════════════════════════════════════════════════════════
+' RELAZIONI – FACADE
+'══════════════════════════════════════════════════════════
+
+IntegrityFacade "1" *-- "1" IntegrityState         : state
+IntegrityFacade      -->    IIpcGateway             : <<inject>>
+IntegrityFacade      -->    IIpcErrorHandlerService : <<inject>>
+IntegrityFacade      -->    ITelemetryService       : <<inject>>
+IntegrityFacade      -->    ILiveAnnouncerService   : <<inject>>
+IntegrityFacade     ..>     VerifyLevel             : <<uses>>
+IntegrityFacade     ..>     IntegrityReport         : <<produces>>
+IntegrityFacade     ..>     VerificationProgress    : <<produces>>
+
+'══════════════════════════════════════════════════════════
+' RELAZIONI – PAGE → FACADE & COMPONENTS
+'══════════════════════════════════════════════════════════
+
+IntegrityPageComponent --> IntegrityFacade                          : <<inject>>
+IntegrityPageComponent ..> IntegrityState                           : <<reads>>
+
+IntegrityPageComponent "1" --> "1" IntegrityTriggerComponent        : disabledWhileVerifying
+IntegrityPageComponent "1" --> "1" VerificationProgressComponent    : progress
+IntegrityPageComponent "1" --> "1" DipIntegrityReportComponent      : report
+IntegrityPageComponent "1" --> "1" ClassIntegrityReportComponent    : report
+IntegrityPageComponent "1" --> "1" ProcessIntegrityReportComponent  : report
+IntegrityPageComponent "1" --> "1" DocumentIntegrityReportComponent : result
+
+IntegrityTriggerComponent ..> VerifyLevel : onVerifyRequested()
+
+'══════════════════════════════════════════════════════════
+' RELAZIONI – REPORT GERARCHICI (Composite)
+'══════════════════════════════════════════════════════════
+
+DipIntegrityReportComponent      "1" --> "0..*" ClassIntegrityReportComponent   : classi corrotte
+ClassIntegrityReportComponent    "1" --> "0..*" ProcessIntegrityReportComponent : processi corrotti
+ProcessIntegrityReportComponent  "1" --> "0..*" IntegrityFailureDetailComponent : failure
+DocumentIntegrityReportComponent "1" --> "0..1" IntegrityFailureDetailComponent : failure
+IntegrityFailureDetailComponent        -->      IntegrityFailure                : failure
+
+'══════════════════════════════════════════════════════════
+' NOTE
+'══════════════════════════════════════════════════════════
+
+note top of IntegrityFacade
+  MUTEX isVerifying
+  ──────────────────────────────────────────
+  verifyDip/Class/Process/Document()
+  controlla isVerifying() prima di procedere.
+  Se true → return silenzioso.
+  Reset a false al completamento o errore.
+end note
+
+note right of IntegrityFailureDetailComponent
+  SYSTEM ERROR vs DOMAIN ERROR
+  ──────────────────────────────────────────
+  AppError → INTEGRITY_VERIFY_ERROR
+    crash IPC, gestito da IpcErrorHandler.
+  IntegrityFailure → HASH_MISMATCH ecc.
+    risultato di dominio (dati corrotti),
+    NON passa per IpcErrorHandlerService.
+end note
+
+note bottom of IntegrityFacade
+  CACHE IPC
+  ──────────────────────────────────────────
+  Tutti i canali di verifica sono no-cache:
+  verifyDip, verifyClass, verifyProcess,
+  verifyDocument sono operazioni mutanti.
+end note
+
+@enduml

@@ -1,0 +1,297 @@
+@startuml Class Diagram - Export Flow
+!theme plain
+skinparam classAttributeIconSize 0
+skinparam classFontSize 12
+skinparam classFontStyle bold
+skinparam classBackgroundColor #1E2A1E
+skinparam classFontColor #D4E8D4
+skinparam classBorderColor #4A7A4A
+skinparam classArrowColor #7FBF7F
+skinparam classHeaderBackgroundColor #2A3D2A
+skinparam noteBackgroundColor #2A3020
+skinparam noteFontColor #C8D8A0
+skinparam noteBorderColor #6A7A40
+skinparam linetype ortho
+skinparam arrowThickness 1.2
+
+title Class Diagram — Export Flow\n(UC-19, UC-20, UC-21, UC-22, UC-23, UC-24, UC-25, UC-34, UC-37)
+
+
+' PRESENTATION — Smart Components
+
+class DocumentActionsComponent {
+    - exportFacade: ExportFacade
+    - exportState: Signal<ExportState>
+    - selectedDocuments: Signal<DipTreeNode[]>
+    --
+    + onExportClick(): void
+    + onPrintClick(): void
+    + onExportReportClick(): void
+    + ngOnInit(): void
+}
+
+note bottom of DocumentActionsComponent
+    Legge selectedDocuments da DipFacade.
+    Abilita bottoni se selectedDocuments.length > 0.
+    UC-19 onExportClick() con 1 nodo selezionato
+    UC-20 onExportClick() con N nodi selezionati
+    UC-22 onPrintClick() con 1 nodo selezionato
+    UC-23 onPrintClick() con N nodi selezionati
+    UC-34 onExportReportClick()
+end note
+
+class ExportResultComponent {
+    - exportState: Signal<ExportState>
+    - exportResult: Signal<ExportResult | null>
+    --
+    + ngOnChanges(): void
+}
+
+note right of ExportResultComponent
+    Visualizza esito operazione.
+    UC-21 salvataggio fallito → mostra errore
+    UC-24 stampa fallita → mostra errore
+    UC-25 stampa non disponibile → mostra warning
+    UC-37 errore PDF → mostra errore
+end note
+
+class ExportProgressComponent {
+    - progress: Signal<number>
+    - statusLabel: string
+    - outputContext: OutputContext
+    --
+    + ngOnChanges(): void
+}
+
+note right of ExportProgressComponent
+    Mostra avanzamento export multiplo.
+    UC-20 salvataggio più documenti
+    UC-23 stampa insieme documenti
+end note
+
+
+' FACADE — centro del flusso
+
+class ExportFacade {
+    - state: Signal<ExportState>
+    - ipcGateway: IpcGateway
+    - ipcErrorHandlerService: IpcErrorHandlerService
+    - notificationService: NotificationService
+    - auditLogger: AuditLogger
+    - performanceMonitor: PerformanceMonitor
+    - announcerService: AnnouncerService
+    --
+    + state(): Signal<ExportState>
+    + exportDocument(node: DipTreeNode): Promise<void>
+    + exportDocuments(nodes: DipTreeNode[]): Promise<void>
+    + exportReportPdf(reportId: string): Promise<void>
+    + printDocument(node: DipTreeNode): Promise<void>
+    + printDocuments(nodes: DipTreeNode[]): Promise<void>
+    - checkPrintable(node: DipTreeNode): boolean
+    - emitProgress(current: number, total: number): void
+    - reset(): void
+}
+
+note right of ExportFacade
+    UC-19  exportDocument()   → salvataggio singolo
+    UC-20  exportDocuments()  → salvataggio multiplo + emitProgress()
+    UC-21  ipcErrorHandler    → salvataggio fallito
+    UC-22  printDocument()    → stampa singolo
+    UC-23  printDocuments()   → stampa multiplo + emitProgress()
+    UC-24  ipcErrorHandler    → stampa fallita
+    UC-25  checkPrintable()   → false: stato WARNING, no IPC
+    UC-34  exportReportPdf()  → esporta report verifica PDF
+    UC-37  ipcErrorHandler    → errore generazione PDF
+end note
+
+
+' STATE
+
+class ExportState {
+    - result: ExportResult | null
+    - loading: Signal<boolean>
+    - progress: number
+    - error: AppError | null
+    - outputContext: OutputContext
+}
+
+note right of ExportState
+    Stato reattivo osservato da
+    DocumentActionsComponent,
+    ExportResultComponent,
+    ExportProgressComponent
+end note
+
+enum OutputContext {
+    SINGLE_EXPORT
+    MULTI_EXPORT
+    SINGLE_PRINT
+    MULTI_PRINT
+    REPORT_PDF
+}
+
+note bottom of OutputContext
+    Distingue il contesto operativo
+    per mostrare UI e messaggi corretti
+end note
+
+
+' DATA CLASSES
+
+class ExportResult {
+    - outputContext: OutputContext
+    - totalDocuments: number
+    - successCount: number
+    - failedCount: number
+    - destPath: string
+    - errors: ExportItemError[]
+}
+
+note right of ExportResult
+    UC-19 UC-20: esito salvataggio
+    UC-22 UC-23: esito stampa
+    UC-34: percorso PDF generato
+end note
+
+class ExportItemError {
+    - nodeId: string
+    - nodeName: string
+    - reason: string
+}
+
+note right of ExportItemError
+    Un errore per ogni documento
+    fallito in un export multiplo.
+    UC-21 UC-24 UC-37
+end note
+
+class AppError {
+    - code: ErrorCode
+    - category: ErrorCategory
+    - context: string
+    - message: string
+    - recoverable: boolean
+    - detail: string
+}
+
+enum ErrorCode {
+    EXPORT_WRITE_FAILED
+    EXPORT_PDF_FAILED
+    PRINT_UNAVAILABLE
+    PRINT_FAILED
+}
+
+note bottom of ErrorCode
+    UC-21 EXPORT_WRITE_FAILED
+    UC-24 PRINT_FAILED
+    UC-25 PRINT_UNAVAILABLE
+    UC-37 EXPORT_PDF_FAILED
+end note
+
+
+' IPC LAYER
+
+class IpcGateway {
+    + exportDocument(nodeId: string, destPath: string): Promise<void>
+    + exportDocuments(nodeIds: string[], destPath: string): Promise<void>
+    + exportReportPdf(reportId: string): Promise<Blob>
+    + printDocument(nodeId: string): Promise<void>
+    + printDocuments(nodeIds: string[]): Promise<void>
+    + openSaveDialog(): Promise<string | null>
+}
+
+note right of IpcGateway
+    Chiama Main Process via Electron IPC.
+    export*        → fs.writeFile lato Main
+    exportReport   → genera PDF lato Main
+    print*         → contents.print() lato Main
+    openSaveDialog → dialog.showSaveDialog lato Main
+end note
+
+class IpcDispatcher {
+    + invoke<T>(channel: string, handler: Data<T>): Promise<T>
+    + on<T>(channel: string, handler: (data: T) => void): void
+}
+
+class IpcErrorHandlerService {
+    + handleError(err: AppError): void
+    + isRecoverable(err: AppError): boolean
+}
+
+
+' SUPPORT SERVICES
+
+class NotificationService {
+    + notifySuccess(msg: string): void
+    + notifyError(msg: string): void
+    + toast(msg: string): void
+    + modal(msg: string): void
+}
+
+class AuditLogger {
+    + log(event: AuditEvent): void
+}
+
+class PerformanceMonitor {
+    + trackEvent(name: string, payload?: Record<string, unknown>): void
+    + trackError(err: AppError, ctx: string): void
+    + trackTiming(name: string, value: number): void
+}
+
+class AnnouncerService {
+    + announce(msg: string, politeness?: "polite" | "assertive"): void
+}
+
+note right of AnnouncerService
+    Accessibilità: annuncia esito
+    export/stampa agli screen reader.
+    UC-21 UC-24 UC-25 UC-37
+end note
+
+
+' EXTERNAL
+
+class PrintDriver <<external>> {
+}
+
+note bottom of PrintDriver
+    Attore secondario esterno.
+    Raggiunto da Main via contents.print().
+    UC-25: se checkPrintable() = false
+    ExportFacade NON chiama IpcGateway.
+end note
+
+
+' RELAZIONI
+
+
+DocumentActionsComponent --> ExportFacade : chiama export* / print*
+DocumentActionsComponent --> ExportState : legge Signal<ExportState>
+
+ExportResultComponent --> ExportState : legge Signal<ExportState>
+ExportProgressComponent --> ExportState : legge Signal<ExportState>
+
+ExportFacade --> ExportState : aggiorna stato
+ExportFacade --> IpcGateway : delega I/O file e stampa
+ExportFacade --> IpcErrorHandlerService : UC-21 UC-24 UC-37 gestisce errori
+ExportFacade --> NotificationService : notifySuccess / notifyError
+ExportFacade --> AuditLogger : log export / print
+ExportFacade --> PerformanceMonitor : trackEvent / trackTiming
+ExportFacade --> AnnouncerService : annuncia esito
+
+ExportState --> ExportResult : contiene
+ExportState --> OutputContext : usa
+ExportState --> AppError : contiene
+
+ExportResult --> ExportItemError : contiene
+ExportResult --> OutputContext : usa
+AppError --> ErrorCode : usa
+
+IpcGateway --> IpcDispatcher : usa
+IpcGateway --> IpcErrorHandlerService : propaga AppError
+IpcErrorHandlerService --> NotificationService : notifica utente
+PerformanceMonitor --> AuditLogger : arricchisce log
+
+IpcGateway ..> PrintDriver : IPC → contents.print()
+
+@enduml
