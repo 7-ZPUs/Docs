@@ -1,5 +1,15 @@
 \newpage
 \section{Architettura dei container}
+La progettazione del sistema \textit{DIPReader} è stata guidata dai principi di modularità, scalabilità e manutenibilità, con l'obiettivo di creare un'architettura che possa evolversi nel tempo e adattarsi a nuove esigenze e normative AGID.\\
+In particolare, è stata completamente scorporata la logica di business dalla logica di presentazione, esponendo come unico punto di accesso comune gli \textit{IPC channel}.\\
+Il sistema così facendo permette di avere un backend facilmente estendibile, modificabile e soprattutto che si adatta allla struttura del DIP autonomamente. D'altra parte il frontend è completamente disaccoppiato ma strutturato in modo che i componenti di presentazione siano facilmente sostituibili, modificabili e soprattutto adattabili a nuove esigenze.\\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.2\textwidth]{../../assets/outDiagrammiST/DiagrammaC2(1).png}
+        \caption{Diagramma C2 - Container del sistema \textit{DIPReader}}
+    \label{fig:C2_container}
+\end{figure}
 
 \subsection{[Container 1]}
     \subsubsection{Tecnologia}

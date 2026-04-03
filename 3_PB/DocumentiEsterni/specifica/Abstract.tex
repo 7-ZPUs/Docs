@@ -223,12 +223,22 @@ non funzionali del sistema.\\
 \end{table}
 
 \section{Contesto del sistema}
-La progettazione del sistema \textit{DIPReader} è stata guidata da i principi di modularità, scalabilità e manutenibilità, con l'obiettivo di creare un'architettura che possa evolversi nel tempo e adattarsi a nuove esigenze.\\
-In particolare, è stata completamente scorporata la logica di business dalla logica di presentazione.\\
-
+I vincoli di progetto, come specificato nell'Analisi dei Requisiti, richiedono che il sistema sia portabile, facile da usare e autoconsistente.
+Il caso d'uso principale del sistema è quello di un utente che desidera esplorare e interrogare un DIP per estrarre documenti fiscali e non, potendone verificare la validità e autenticità.\\
 
 \subsection{Modello architetturale}
+I vincoli di progetto hanno guidato la progettazione del sistema, influenzando le scelte tecnologiche e architetturali. Il sistema progettato quindi è pensato per non utilizzare tecnologie che richiedano installazioni o configurazioni complesse da parte dell'utente. I servizi offerti sono tutti accessibili in assenza di connettività, complesa la ricerca semantica. \\
+Gli unici attori esterni coinvolti sono il file \textit{system locale} da cui viene letto il DIP. {STAMPA DA VEDERE SE HA SENSO METTERLO}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/DiagrammaC1.png}
+        \caption{Diagramma C1 - Contesto del sistema \textit{DIPReader}}
+    \label{fig:C1_system}
+\end{figure}
 
 \subsection{Descrizione degli attori esterni}
-
-\subsection{Descrizione dei sistemi esterni}
+Gli unici attori esterni come già detto sono:
+\begin{itemize}
+    \item il file system locale da cui viene letto il DIP
+    \item {STAMPA DA VEDERE SE HA SENSO METTERLO}
+\end{itemize}
