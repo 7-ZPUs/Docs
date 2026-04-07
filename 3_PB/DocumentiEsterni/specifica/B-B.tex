@@ -19,7 +19,7 @@ Supporta inoltre getter alternativi per ID e stato di integrità.
   \footnotesize
   \setlength{\tabcolsep}{4pt}
   \renewcommand{\arraystretch}{1.3}
-  \begin{tabular}{|l|p{9cm}|}
+  \begin{tabularx}{\textwidth}{|l|Y|}
     \hline
     \textbf{Componente} & \textbf{Tecnologia} \\
     \hline
@@ -35,7 +35,7 @@ Supporta inoltre getter alternativi per ID e stato di integrità.
     \hline
     Architettura & Clean Architecture (layering) \\
     \hline
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 \subsubsection{Layer architetturali}
@@ -59,7 +59,7 @@ Supporta inoltre getter alternativi per ID e stato di integrità.
   \footnotesize
   \setlength{\tabcolsep}{4pt}
   \renewcommand{\arraystretch}{1.5}
-  \begin{tabular}{|l|p{10.5cm}|}
+  \begin{tabularx}{\textwidth}{|l|Y|}
     \hline
     \textbf{Layer} & \textbf{File} \\
     \hline
@@ -75,7 +75,7 @@ Supporta inoltre getter alternativi per ID e stato di integrità.
     \hline
     Database & \texttt{schema.sql}, \texttt{DatabaseBootstrap.ts}, \texttt{IndexDip.ts} \\
     \hline
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 \subsubsection{Flusso end-to-end}
@@ -115,7 +115,8 @@ Contratto IPC definito in \texttt{ipc-channels.ts} e registrato in \texttt{Brows
   \footnotesize
   \setlength{\tabcolsep}{4pt}
   \renewcommand{\arraystretch}{1.4}
-  \begin{tabular}{|p{4.2cm}|p{3.2cm}|p{2.8cm}|p{4.3cm}|}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabularx}{\textwidth}{|>{\hsize=1.35\hsize\raggedright\arraybackslash}X|>{\hsize=0.95\hsize\raggedright\arraybackslash}X|>{\hsize=0.85\hsize\raggedright\arraybackslash}X|>{\hsize=1.35\hsize\raggedright\arraybackslash}X|}
     \hline
     \textbf{Canale} & \textbf{Payload} & \textbf{Return} & \textbf{Use case} \\
     \hline
@@ -149,13 +150,14 @@ Contratto IPC definito in \texttt{ipc-channels.ts} e registrato in \texttt{Brows
     \hline
     \texttt{BROWSE\_GET\_DIP\_BY\_STATUS}             & \texttt{status: IntegrityStatusEnum} & \texttt{DipDTO[]}                & \texttt{IGetDipByStatusUC} \\
     \hline
-  \end{tabular}
+  \end{tabularx}
+  }%
   \caption{Contratto IPC del modulo Browsing}
   \label{tab:browsing:ipc}
 \end{table}
 
 \noindent
-\textbf{Nota:} Il canale \texttt{BROWSE\_GET\_DIP\_BY\_DOCUMENT\_CLASS} è definito in \texttt{ipc-channels.ts} ma non registrato in \texttt{BrowsingIpcAdapter}.
+\textbf{Nota:} Il canale \texttt{BROWSE\_\allowbreak GET\_\allowbreak DIP\_\allowbreak BY\_\allowbreak DOCUMENT\_\allowbreak CLASS} è definito in \texttt{ipc-channels.ts} ma non registrato in \texttt{BrowsingIpcAdapter}.
 
 \subsubsection{Use Case: firme getter}
 \label{sec:browsing:usecase}
@@ -172,7 +174,7 @@ Gli use case sono thin wrapper senza logica aggiuntiva; delegano direttamente al
   \footnotesize
   \setlength{\tabcolsep}{4pt}
   \renewcommand{\arraystretch}{1.4}
-  \begin{tabular}{|l|p{8.2cm}|}
+  \begin{tabularx}{\textwidth}{|l|Y|}
     \hline
     \textbf{Use Case} & \textbf{Firma} \\
     \hline
@@ -195,7 +197,7 @@ Gli use case sono thin wrapper senza logica aggiuntiva; delegano direttamente al
     \texttt{IGetFileByDocumentUC} & \texttt{execute(documentId: number): File[]} \\
     \texttt{IGetFileByStatusUC} & \texttt{execute(status: IntegrityStatusEnum): File[]} \\
     \hline
-  \end{tabular}
+  \end{tabularx}
   \label{tab:browsing:usecase}
 \end{table}
 
@@ -210,7 +212,7 @@ Ogni repository delega al DAO corrispondente il retrieval dei dati.
   \footnotesize
   \setlength{\tabcolsep}{4pt}
   \renewcommand{\arraystretch}{1.5}
-  \begin{tabular}{|l|l|p{7.2cm}|}
+  \begin{tabularx}{\textwidth}{|l|l|Y|}
     \hline
     \textbf{Repository} & \textbf{Implementazione} & \textbf{Metodi getter} \\
     \hline
@@ -229,7 +231,7 @@ Ogni repository delega al DAO corrispondente il retrieval dei dati.
     \texttt{IFileRepository} & \texttt{FileRepository.ts} & 
       \texttt{ById}, \texttt{ByDocumentId}, \texttt{ByStatus} \\
     \hline
-  \end{tabular}
+  \end{tabularx}
   \label{tab:browsing:repositories}
 \end{table}
 
@@ -248,7 +250,7 @@ Le interfacce \texttt{I*DAO} espongono metodi paralleli ai repository per il ret
   \footnotesize
   \setlength{\tabcolsep}{4pt}
   \renewcommand{\arraystretch}{1.5}
-  \begin{tabular}{|l|p{2.5cm}|p{7.5cm}|}
+  \begin{tabularx}{\textwidth}{|l|l|Y|}
     \hline
     \textbf{DAO} & \textbf{File} & \textbf{Query / Operazioni} \\
     \hline
@@ -270,7 +272,7 @@ Le interfacce \texttt{I*DAO} espongono metodi paralleli ai repository per il ret
     \texttt{MetadataHelper} & \texttt{MetadataHelper.ts} & 
       Load/save ricorsivo; ricostruzione albero \\
     \hline
-  \end{tabular}
+  \end{tabularx}
   \label{tab:browsing:daos}
 \end{table}
 
@@ -285,21 +287,21 @@ Modello di dominio. Ogni entity espone getter e \texttt{setIntegrityStatus}:
   \footnotesize
   \setlength{\tabcolsep}{4pt}
   \renewcommand{\arraystretch}{1.4}
-  \begin{tabular}{|l|p{9cm}|}
+  \begin{tabularx}{\textwidth}{|l|Y|}
     \hline
     \textbf{Entity} & \textbf{Attributi principali} \\
     \hline
-    \texttt{Dip} & \texttt{id,uuid,integrityStatus} \\
+    \texttt{Dip} & \texttt{id,\allowbreak uuid,\allowbreak integrityStatus} \\
     \hline
-    \texttt{DocumentClass} & \texttt{id,dipId,dipUuid,uuid,name,timestamp,integrityStatus} \\
+    \texttt{DocumentClass} & \texttt{id,\allowbreak dipId,\allowbreak dipUuid,\allowbreak uuid,\allowbreak name,\allowbreak timestamp,\allowbreak integrityStatus} \\
     \hline
-    \texttt{Process} & \texttt{id,documentClassId,documentClassUuid,uuid,metadata,integrityStatus} \\
+    \texttt{Process} & \texttt{id,\allowbreak documentClassId,\allowbreak documentClassUuid,\allowbreak uuid,\allowbreak metadata,\allowbreak integrityStatus} \\
     \hline
-    \texttt{Document} & \texttt{id,uuid,metadata,processId,processUuid,integrityStatus} \\
+    \texttt{Document} & \texttt{id,\allowbreak uuid,\allowbreak metadata,\allowbreak processId,\allowbreak processUuid,\allowbreak integrityStatus} \\
     \hline
-    \texttt{File} & \texttt{id,uuid,filename,path,hash,isMain,documentId,documentUuid,integrityStatus} \\
+    \texttt{File} & \texttt{id,\allowbreak uuid,\allowbreak filename,\allowbreak path,\allowbreak hash,\allowbreak isMain,\allowbreak documentId,\allowbreak documentUuid,\allowbreak integrityStatus} \\
     \hline
-  \end{tabular}
+  \end{tabularx}
   \label{tab:browsing:entities}
 \end{table}
 
@@ -314,23 +316,23 @@ Contratto dati IPC (restituiti dall'adapter al renderer):
   \footnotesize
   \setlength{\tabcolsep}{4pt}
   \renewcommand{\arraystretch}{1.4}
-  \begin{tabular}{|l|p{10cm}|}
+  \begin{tabularx}{\textwidth}{|l|Y|}
     \hline
     \textbf{DTO} & \textbf{Attributi} \\
     \hline
-    \texttt{DipDTO} & \texttt{id,uuid,integrityStatus} \\
+    \texttt{DipDTO} & \texttt{id,\allowbreak uuid,\allowbreak integrityStatus} \\
     \hline
-    \texttt{DocumentClassDTO} & \texttt{id,dipId,uuid,name,timestamp,integrityStatus} \\
+    \texttt{DocumentClassDTO} & \texttt{id,\allowbreak dipId,\allowbreak uuid,\allowbreak name,\allowbreak timestamp,\allowbreak integrityStatus} \\
     \hline
-    \texttt{ProcessDTO} & \texttt{id,documentClassId,uuid,integrityStatus,metadata: MetadataDTO} \\
+    \texttt{ProcessDTO} & \texttt{id,\allowbreak documentClassId,\allowbreak uuid,\allowbreak integrityStatus,\allowbreak metadata: MetadataDTO} \\
     \hline
-    \texttt{DocumentDTO} & \texttt{id,processId,uuid,integrityStatus,metadata: MetadataDTO} \\
+    \texttt{DocumentDTO} & \texttt{id,\allowbreak processId,\allowbreak uuid,\allowbreak integrityStatus,\allowbreak metadata: MetadataDTO} \\
     \hline
-    \texttt{FileDTO} & \texttt{id,documentId,filename,path,hash,integrityStatus,isMain} \\
+    \texttt{FileDTO} & \texttt{id,\allowbreak documentId,\allowbreak filename,\allowbreak path,\allowbreak hash,\allowbreak integrityStatus,\allowbreak isMain} \\
     \hline
-    \texttt{MetadataDTO} & \texttt{name,value (scalare|MetadataDTO[]),type: MetadataType} \\
+    \texttt{MetadataDTO} & \texttt{name,\allowbreak value (scalare|MetadataDTO[]),\allowbreak type: MetadataType} \\
     \hline
-  \end{tabular}
+  \end{tabularx}
   \caption{DTO schema (metadati caricati ricorsivamente)}
   \label{tab:browsing:dtos}
 \end{table}
@@ -350,7 +352,7 @@ Trasformazioni tra layer di persistenza, entity e DTO:
   \footnotesize
   \setlength{\tabcolsep}{4pt}
   \renewcommand{\arraystretch}{1.4}
-  \begin{tabular}{|l|p{2.8cm}|p{8cm}|}
+  \begin{tabularx}{\textwidth}{|l|l|Y|}
     \hline
     \textbf{Conversione} & \textbf{File} & \textbf{Funzioni} \\
     \hline
@@ -360,7 +362,7 @@ Trasformazioni tra layer di persistenza, entity e DTO:
     SQL $\to$ Entity & \texttt{*Mapper.ts} & 
       \texttt{*Mapper} per dip, docClass, process, document, file, metadata \\
     \hline
-  \end{tabular}
+  \end{tabularx}
   \label{tab:browsing:mapping}
 \end{table}
 
@@ -394,7 +396,7 @@ Tabelle coinvolte e indici in \texttt{schema.sql}:
   \footnotesize
   \setlength{\tabcolsep}{4pt}
   \renewcommand{\arraystretch}{1.4}
-  \begin{tabular}{|l|p{9cm}|}
+  \begin{tabularx}{\textwidth}{|l|Y|}
     \hline
     \textbf{Tabella} & \textbf{Colonne chiave / Indici} \\
     \hline
@@ -412,7 +414,7 @@ Tabelle coinvolte e indici in \texttt{schema.sql}:
     \hline
     \texttt{document\_metadata} & FK \texttt{document\_id}, albero \texttt{parent\_id} \\
     \hline
-  \end{tabular}
+  \end{tabularx}
   \label{tab:browsing:schema}
 \end{table}
 
@@ -472,7 +474,7 @@ Browsing legge solo da queste tabelle; getter restituiscono \texttt{null}/\textt
   \footnotesize
   \setlength{\tabcolsep}{4pt}
   \renewcommand{\arraystretch}{1.5}
-  \begin{tabular}{|l|p{9cm}|}
+  \begin{tabularx}{\textwidth}{|l|Y|}
     \hline
     \textbf{Suite} & \textbf{Copertura} \\
     \hline
@@ -488,7 +490,7 @@ Browsing legge solo da queste tabelle; getter restituiscono \texttt{null}/\textt
     \texttt{*DAO.spec.ts} & 
       Query SQL; persistenza; ricostruzione entity \\
     \hline
-  \end{tabular}
+  \end{tabularx}
   \label{tab:browsing:tests}
 \end{table}
 
