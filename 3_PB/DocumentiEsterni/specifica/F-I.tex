@@ -1,0 +1,148 @@
+\newpage
+\section{Componente Frontend: Modulo Import}
+
+\subsection{Descrizione}
+Il modulo Import gestisce l'\textit{application logic} dedicata all'esplorazione gerarchica dei pacchetti di archiviazione. Il componente permette la navigazione (\textit{lazy loading}) delle classi documentali, dei processi e dei documenti, fornendo inoltre una funzionalità di anteprima (\textit{preview}) dei contenuti e dei relativi metadati. L'architettura è basata sul pattern Smart-Dumb Components per la UI e sul pattern Facade per il coordinamento dei servizi.
+
+\subsubsection{Lista delle Classi e Strutture Dati}
+
+\paragraph{ImportState}
+Oggetto responsabile della gestione dello stato reattivo del modulo tramite Angular Signals. Implementa la \textit{Persistence Logic} del frontend mantenendo uno snapshot sincronizzato dell'applicazione.
+
+\paragraph{Descrizione degli attributi della struttura:}
+\begin{itemize}
+    \item \textbf{phase Signal<ImportPhase>}: segnale che rappresenta la fase attuale del modulo (IDLE, LOADING, READY, EMPTY, ERROR);
+    \item \textbf{rootNodes Signal<DipTreeNode[]>}: contiene la lista dei nodi radice (classi documentali) del DIP caricato;
+    \item \textbf{nodeCache Signal<Map<string, DipTreeNode[]>>}: cache reattiva che memorizza i figli dei nodi già esplorati per ottimizzare le prestazioni ed evitare chiamate IPC ridondanti;
+    \item \textbf{nodeChildrenErrors Signal<Map<string, AppError>>}: mappa che associa a ogni nodo l'eventuale errore riscontrato durante il caricamento dei suoi figli;
+    \item \textbf{selectedDocument Signal<DipTreeNode | null>}: memorizza il riferimento al documento attualmente selezionato dall'utente per la visualizzazione;
+    \item \textbf{indicizzazione Signal<StatoIndicizzazione>}: traccia lo stato dell'indicizzazione semantica del DIP (es. NON\_COMPLETATA, IN\_CORSO, COMPLETATA);
+    \item \textbf{loading Signal<boolean>}: indica se è in corso un'operazione asincrona di recupero dati.
+\end{itemize}
+
+\paragraph{Descrizione dei metodi invocabili dalla struttura:}
+\begin{itemize}
+    \item \textbf{setRootNodes(nodes: DipTreeNode[])}: aggiorna i nodi radice e imposta la fase su READY o EMPTY in base al contenuto;
+    \item \textbf{setChildrenForNode(nodeId: string, children: DipTreeNode[])}: popola la cache dei nodi figli per un determinato nodo padre;
+    \item \textbf{setChildrenError(nodeId: string, error: AppError)}: registra un errore specifico per il caricamento dei figli di un nodo;
+    \item \textbf{setSelectedDocument(node: DipTreeNode | null)}: aggiorna il documento visualizzato nella preview;
+    \item \textbf{setIndicizzazione(stato: StatoIndicizzazione)}: aggiorna lo stato del processo di indicizzazione;
+    \item \textbf{reset()}: riporta lo stato del modulo alle condizioni iniziali, pulendo cache e nodi.
+\end{itemize}
+
+\paragraph{ImportFacade}
+Rappresenta l'oggetto che implementa la \textit{business logic} di coordinamento del modulo Import. Agisce come mediatore tra i componenti dell'interfaccia utente, lo stato reattivo e il layer di infrastruttura (Gateway). Implementa l'interfaccia \textit{IDipFacade}.
+
+\paragraph{Descrizione degli attributi della struttura:}
+\begin{itemize}
+    \item \textbf{importState ImportState}: istanza del servizio di gestione dello stato reattivo del modulo;
+    \item \textbf{ipcGateway DipIpcGateway}: istanza del gateway per la comunicazione IPC con il processo Main di Electron.
+\end{itemize}
+
+\paragraph{Descrizione dei metodi invocabili dalla struttura:}
+\begin{itemize}
+    \item \textbf{loadRootNodes() Promise<void>}: coordina il caricamento iniziale delle classi documentali radice del DIP. Gestisce l'impostazione dello stato di caricamento, l'invocazione del gateway, il mapping dei DTO in modelli di dominio tramite \textit{DipMapper} e la gestione centralizzata degli errori;
+    \item \textbf{loadChildren(nodeId string) Promise<void>}: implementa la logica di \textit{lazy loading} per i nodi figli di un elemento dell'albero. Il metodo verifica preventivamente la presenza dei dati nella cache dello stato per ottimizzare le prestazioni; in caso di assenza, interroga il gateway e aggiorna la cache o registra l'errore specifico per il nodo;
+    \item \textbf{selectDocument(node DipTreeNode) void}: permette di impostare il documento attualmente selezionato dall'utente all'interno dello stato, scatenando l'aggiornamento reattivo dei componenti di anteprima;
+    \item \textbf{retryLoad() void}: esegue il ripristino del modulo (\textit{reset}) e tenta nuovamente il caricamento delle classi radice a seguito di un errore critico;
+    \item \textbf{clearCache() void}: esegue la pulizia completa della cache dei nodi e degli errori memorizzati, riportando lo stato alle condizioni iniziali.
+\end{itemize}
+
+\paragraph{Descrizione dei segnali esposti:}
+\begin{itemize}
+    \item \textbf{rootNodes}: fornisce l'accesso in sola lettura alla lista dei nodi radice;
+    \item \textbf{selectedDocument}: fornisce il riferimento al documento correntemente selezionato;
+    \item \textbf{loading}: indica se è in corso un'operazione asincrona di recupero dati;
+    \item \textbf{phase}: espone la fase attuale del ciclo di vita del modulo (es. READY, ERROR, LOADING).
+\end{itemize}
+
+\paragraph{DipTreeNode (Domain Model)}
+Rappresenta l'oggetto di dominio per la resa visiva dell'albero.
+\begin{itemize}
+    \item \textbf{id string}: identificativo univoco;
+    \item \textbf{type NodeType}: enumerazione (CLASSE, PROCESSO, DOCUMENTO);
+    \item \textbf{label string}: nome visualizzato del nodo.
+\end{itemize}
+
+\subsection{Interfacce}
+
+\subsubsection{IDipFacade}
+Rappresenta l'interfaccia di contratto della Business Logic per il modulo Import. Definisce le proprietà reattive (\textit{Signals}) per l'osservazione dello stato e i metodi necessari per l'interazione con i dati del DIP.
+
+\paragraph{Descrizione delle proprietà dell'interfaccia:}
+\begin{itemize}
+    \item \textbf{rootNodes Signal<DipTreeNode[]>}: segnale per l'accesso alla lista dei nodi radice caricati;
+    \item \textbf{selectedDocument Signal<DipTreeNode | null>}: segnale che espone il documento attualmente selezionato per l'anteprima;
+    \item \textbf{loading Signal<boolean>}: segnale booleano che indica lo stato di avanzamento delle operazioni asincrone;
+    \item \textbf{phase Signal<ImportPhase>}: segnale che espone la fase corrente del ciclo di vita del modulo.
+\end{itemize}
+
+\paragraph{Descrizione dei metodi dell'interfaccia:}
+\begin{itemize}
+    \item \textbf{loadRootNodes() Promise<void>}: definisce l'operazione di caricamento delle classi documentali di primo livello;
+    \item \textbf{loadChildren(nodeId string) Promise<void>}: definisce l'operazione di recupero dei nodi figli (processi o documenti) associati a un identificativo;
+    \item \textbf{selectDocument(node DipTreeNode) void}: definisce la logica di selezione di un nodo per la visualizzazione dei dettagli;
+    \item \textbf{retryLoad() void}: definisce la procedura di ripristino e nuovo tentativo di caricamento del modulo;
+    \item \textbf{clearCache() void}: definisce l'operazione di pulizia dello stato e della cache locale.
+\end{itemize}
+
+\subsubsection{IDipChannel}
+Interfaccia di contratto per il layer di infrastruttura. Definisce le operazioni di basso livello necessarie per l'interrogazione del sistema operativo tramite i canali IPC di Electron.
+
+\paragraph{Descrizione dei metodi dell'interfaccia:}
+\begin{itemize}
+    \item \textbf{getClasses() Promise<ClasseDocumentaleDto[]>}: definisce la richiesta per ottenere le classi documentali radice del DIP;
+    \item \textbf{loadChildren(nodeId string) Promise<DipTreeNodeDto[]>}: definisce la richiesta per ottenere i nodi figli dato un identificativo;
+    \item \textbf{downloadFile(nodeId string) Promise<Blob>}: definisce la richiesta di estrazione e salvataggio di un file fisico.
+\end{itemize}
+
+\subsubsection{DipIpcGateway}
+
+Rappresenta l'Adapter di infrastruttura incaricato di gestire la comunicazione asincrona verso i canali IPC di Electron. Accede all'oggetto bridge esposto dal \textit{preload script} tramite \texttt{globalThis.electron}.
+
+\paragraph{Descrizione dei metodi invocabili dalla struttura:}
+\begin{itemize}
+    \item \textbf{getClasses()}: esegue l'invocazione del canale \texttt{browse:get-document-class-by-dip-id} per recuperare le classi radice;
+    \item \textbf{loadChildren(nodeId string)}: esegue il parsing dell'identificativo testuale in numerico e invoca il canale \texttt{browse:get-documents-by-process};
+    \item \textbf{downloadFile(nodeId string)}: coordina la richiesta di download invocando il canale \texttt{file:download} con un percorso di destinazione predefinito.
+\end{itemize}
+
+\paragraph{Descrizione dei metodi statici della struttura:}
+\begin{itemize}
+    \item \textbf{classeToDipTreeNode(dto DipClassDto) DipTreeNode}: mappa un DTO di tipo classe documentale nel modello di dominio, impostando correttamente la tipologia del nodo;
+    \item \textbf{toDipTreeNode(dto DipNodeDto) DipTreeNode}: metodo generico che trasforma i dati di un processo o di un documento nel corrispondente oggetto \textit{DipTreeNode}.
+\end{itemize}
+
+\subsection{Dipendenze}
+Il modulo presenta le seguenti dipendenze principali:
+\begin{itemize}
+    \item \textbf{Angular Signals}: utilizzato per la gestione della reattività dello stato e la sincronizzazione della UI;
+    \item \textbf{Electron IPC Bridge}: interfaccia di comunicazione nativa utilizzata dal \textit{DipIpcGateway} per interagire con il sistema operativo;
+    \item \textbf{AppError}: modello condiviso per la gestione e la propagazione degli errori di sistema e di comunicazione.
+\end{itemize}
+
+\subsection{Tracciamento dei requisiti}
+La tabella seguente mappa i requisiti funzionali obbligatori relativi all'Import sulle componenti realizzate.
+
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|c|X|l|}
+        \hline
+        \rowcolor{zpusgreen!30}
+        \textbf{Codice} & \textbf{Descrizione Sintetica} & \textbf{Componente Software} \\
+        \hline
+        \textbf{R-1-F-Ob} & Visualizzazione elenco classi documentali. & \textit{ImportFacade, DipTree} \\
+        \hline
+        \textbf{R-2-F-Ob} & Messaggio di errore per DIP vuoto. & \textit{ImportState, DipLoadingPage} \\
+        \hline
+        \textbf{R-7-F-Ob} & Visualizzazione processi di una classe. & \textit{ImportFacade, DipTreeNode} \\
+        \hline
+        \textbf{R-11-F-Ob} & Visualizzazione documenti di un processo. & \textit{ImportFacade, DipTreeNode} \\
+        \hline
+        \textbf{R-21-F-Ob} & Anteprima del documento selezionato. & \textit{DocumentPreview, ImportFacade} \\
+        \hline
+        \textbf{R-26-F-Op} & Visualizzazione stato indicizzazione semantica. & \textit{ImportState, ImportFacade} \\
+        \hline
+    \end{tabularx}
+    \caption{Tracciamento Requisiti Funzionali - Modulo Import}
+\end{table}
