@@ -1,0 +1,176 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{chngpage}
+\usepackage{tocloft}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage[table]{xcolor}
+\usepackage{color,soul}
+\usepackage[most]{tcolorbox}
+\usepackage{nameref}
+\usepackage{changepage} 
+\usepackage[colorlinks=true]{hyperref}
+
+% --- Definizione Colori ---
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+
+\hypersetup{
+    linkcolor=black,
+    urlcolor=blue
+}
+
+\definecolor{lightblack}{gray}{0.35}
+\newcommand{\glossario}[1]{\textit{#1}\textsubscript{\textbf{\textit{\textcolor{lightblack}{G}}}}}
+\newcommand{\ped}[1]{\textsubscript{#1}}
+
+% --- Header e Footer ---
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{\rightmark}
+\rhead{7-ZPUs}
+\lfoot{Manuale Utente - DIPReader}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+\renewcommand{\listoftables}{Elenco delle tabelle}
+\renewcommand{\listoffigures}{Elenco delle immagini}
+
+\geometry{margin=2.5cm}
+\setstretch{1.1}
+
+% --- Configurazione Titoli (Nero e Fix Horizontal Mode) ---
+\titleclass{\subsubsubsection}{straight}[\subsection]
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
+
+\titleformat{\section}{\LARGE\bfseries\textcolor{black}}{\thesection}{1em}{}
+\titleformat{\subsection}{\Large\bfseries\textcolor{black}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\large\bfseries\textcolor{black}}{\thesubsubsection}{1em}{}
+\titleformat{\subsubsubsection}{\normalfont\normalsize\bfseries\textcolor{black}}{\thesubsubsubsection}{1em}{}
+
+\titlespacing*{\section}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+\titlespacing*{\subsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\makeatletter
+\def\toclevel@subsubsubsection{4}
+\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
+\makeatother
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+\setlength\parindent{0pt}
+
+% -----------------------------------------------------------------
+% INIZIO DOCUMENTO
+% -----------------------------------------------------------------
+\begin{document}
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% --- Frontespizio ---
+\begin{center}
+    \includegraphics[width=9.5cm]{../../assets/logo7ZPUs.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \vspace{0.5cm}
+    \LARGE \textbf{Manuale Utente}\\
+    \vspace{0.3cm}
+\end{center}
+
+\vspace{0.3cm}
+\hrule
+\vspace{1cm}
+
+% --- Tabella di Versionamento ---
+\section*{Tabella di Versionamento}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm}
+    \centering
+    \begin{tabular}{|c|c|c|c|l|}
+        \hline
+        \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
+        \hline
+        0.1.0 & 2026/04/09 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Creazione del documento\\ e stesura iniziale \end{tabular} \\
+        \hline
+    \end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\newpage
+\tableofcontents
+
+\newpage
+\listoffigures
+\listoftables
+
+\newpage
+
+% --- Sezione 1: Introduzione (Ripristinata) ---
+\section{Introduzione}
+
+\subsection{Obiettivo del documento}
+L’obiettivo del presente documento è descrivere in modo rigoroso le funzionalità e l'utilizzo del prodotto \textit{DIPReader}.\\
+L’analisi guiderà l'utente attraverso il contesto applicativo e le procedure operative per una gestione corretta del sistema.
+
+\subsection{Glossario}
+Ogni termine tecnico è definito nell'apposito documento: 
+\href{https://7-zpus.github.io/Docs/assets/3_PB/DocumentiInterni/Glossario.pdf}{Glossario (v2.0.0)}.
+
+\subsection{Riferimenti}
+    \subsubsection{Riferimenti normativi}
+    \begin{itemize}
+        \item \href{https://github.com/7-ZPUs/Docs/blob/main/3_PB/DocumentiInterni/NormeDiProgetto.pdf}{Norme di Progetto v2.0.0}
+        \item Standard SDD/IEEE/1016:2009
+    \end{itemize}
+
+    \subsubsection{Riferimenti informativi}
+    \begin{itemize}
+        \item \href{https://angular.io/}{Angular Documentation}
+        \item \href{https://www.electronjs.org/}{Electron Documentation}
+    \end{itemize}
+
+\newpage
+
+% --- Sezione 2: Tecnologie Utilizzate (Ripristinata) ---
+\section{Tecnologie utilizzate}
+Il sistema \textit{DIPReader} è sviluppato utilizzando tecnologie moderne per garantire prestazioni e sicurezza:
+\begin{itemize}
+    \item \textbf{Angular}: Framework per l'interfaccia utente basato su \textit{Signals}.
+    \item \textbf{Electron}: Ambiente desktop per l'esecuzione cross-platform.
+    \item \textbf{SQLite}: Motore di database locale per la persistenza dei dati.
+\end{itemize}
+
+\newpage
+
+% --- Sezione 3: Contesto del Sistema (Ripristinata) ---
+\section{Contesto del sistema}
+\subsection{Modello architetturale}
+Il software segue un modello di visualizzazione dei dati gerarchico.
+\subsection{Descrizione degli attori esterni}
+L'utente che consulta i pacchetti di conservazione.
+\subsection{Descrizione dei sistemi esterni}
+File system locale per l'archiviazione dei DIP.
+
+\newpage
+
+% --- Sezione 4: Guida all'Utilizzo (Ripristinata) ---
+\section{Guida all'Utilizzo}
+In questa sezione verranno dettagliate le operazioni di navigazione dell'albero DIP e la consultazione dei documenti tramite il visualizzatore PDF integrato.
+
+\end{document}
