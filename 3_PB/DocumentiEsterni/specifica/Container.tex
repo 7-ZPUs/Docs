@@ -19,6 +19,93 @@ Il sistema così facendo permette di avere un backend facilmente estendibile, mo
     È poi stato applicato il pattern Smart and Dumb Components, che permette di separare la logica di presentazione pura dalla logica di business che la coordina.\\
     
 
-\subsection{[Main]}
-    \subsubsection{Tecnologia: Node.js}
-        \paragraph{Descrizione}
+\subsection{Main}
+\label{sec:container:main}
+
+\subsubsection{Ruolo architetturale}
+Il container \textit{Main} ospita la logica backend e costituisce il punto di orchestrazione tra IPC, use case applicativi e persistenza su SQLite.
+Le responsabilita principali sono la registrazione degli handler IPC, la risoluzione delle dipendenze tramite container DI, il coordinamento dei repository/DAO e il bootstrap iniziale dei dati indicizzati.
+
+\subsubsection{Stack tecnologico}
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{|l|Y|}
+        \hline
+        \textbf{Componente} & \textbf{Tecnologia} \\
+        \hline
+        Runtime desktop & Electron (main + renderer) \\
+        \hline
+        Backend core & TypeScript \\
+        \hline
+        Dependency Injection & tsyringe \\
+        \hline
+        Database & better-sqlite3 \\
+        \hline
+        IPC frontend-backend & ipcMain.handle / ipcRenderer.invoke \\
+        \hline
+        Architettura & Clean Architecture (layering) \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+\subsubsection{Layer architetturali}
+
+\begin{enumerate}
+    \item \textbf{IPC Adapter:} boundary verso renderer, gestione canali, mapping DTO.
+    \item \textbf{Use Case:} thin orchestration layer, delega diretta ai repository.
+    \item \textbf{Repository:} astrazione accesso dati, delega ai DAO.
+    \item \textbf{DAO:} query SQL concrete, ricostruzione entity da righe.
+    \item \textbf{Mapper:} trasformazione entity $\leftrightarrow$ DTO.
+    \item \textbf{Entity / Value Objects:} modello di dominio.
+\end{enumerate}
+
+\subsubsection{Sequenza runtime generale}
+\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
+    \item \textbf{Renderer invoca IPC:} \texttt{window.electronAPI.invoke(channel, payload)}.
+    \item \textbf{Preload autorizza:} verifica prefissi consentiti e inoltra a \texttt{ipcRenderer.invoke}.
+    \item \textbf{Main process intercetta:} adapter registra e gestisce l'handler del canale.
+    \item \textbf{Risoluzione DI:} l'adapter risolve il use case richiesto dal container.
+    \item \textbf{Use case delega:} orchestration verso il repository.
+    \item \textbf{Repository delega:} accesso ai dati tramite DAO.
+    \item \textbf{DAO esegue query:} interrogazione SQLite e ricostruzione entity.
+    \item \textbf{Conversione DTO:} mapping entity $\to$ DTO al boundary IPC.
+    \item \textbf{Risposta IPC:} il renderer riceve DTO o \texttt{null}.
+\end{enumerate}
+
+\subsubsection{Dependency Injection}
+\noindent
+Configurazione in \texttt{container.ts}:
+
+\begin{enumerate}
+    \item \textbf{Provider DB:} \texttt{DATABASE\_PROVIDER\_TOKEN} $\to$ \texttt{DatabaseProvider}.
+    \item \textbf{Repository tokens:} \texttt{*\_REPOSITORY\_TOKEN} per i vari aggregati.
+    \item \textbf{DAO tokens:} \texttt{*\_DAO\_TOKEN} per le implementazioni concrete.
+    \item \textbf{Use case tokens:} \texttt{GET\_BY\_*} per le operazioni di retrieval.
+\end{enumerate}
+
+\subsubsection{Bootstrap e indicizzazione}
+\noindent
+\textbf{DatabaseBootstrap.ts} (avvio):
+\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
+    \item Ricrea database zero.
+    \item Applica schema.
+    \item Chiama \texttt{IndexDip.execute(dipPath)}.
+\end{enumerate}
+
+\noindent
+\textbf{IndexDip.execute} (popolamento DB):
+\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
+    \item Insert: dip.
+    \item Insert: classi documentali.
+    \item Insert: processi (con metadati ricorsivi).
+    \item Insert: documenti (con metadati ricorsivi).
+    \item Insert: file.
+\end{enumerate}
+
+\subsubsection{Sicurezza preload}
+\noindent
+\texttt{preload.ts} consente IPC su prefissi autorizzati:\newline\texttt{ipc:search:}, \texttt{browse:}, \texttt{file:}, \texttt{check-integrity:}, \texttt{ipc:indexing:status}.
