@@ -4,13 +4,16 @@
 \usepackage[italian]{babel}
 \usepackage[sfdefault]{atkinson}
 \renewcommand*\familydefault{\sfdefault}
+
 \usepackage{float}
-\usepackage{microtype}
 \usepackage{geometry}
+\geometry{margin=2.5cm}
 \usepackage{setspace}
 \usepackage{enumitem}
+
+\usepackage[patch=none]{microtype} 
+
 \usepackage{titlesec}
-\usepackage{chngpage}
 \usepackage{tocloft}
 \usepackage{longtable}
 \usepackage{array}
@@ -21,64 +24,38 @@
 \usepackage[most]{tcolorbox}
 \usepackage{nameref}
 \usepackage{changepage} 
-\usepackage[colorlinks=true]{hyperref}
+\usepackage[colorlinks=true, linkcolor=black, urlcolor=blue]{hyperref}
 
-% --- Definizione Colori ---
 \definecolor{zpusblack}{RGB}{0, 0, 0}
 
-\hypersetup{
-    linkcolor=black,
-    urlcolor=blue
-}
-
-\definecolor{lightblack}{gray}{0.35}
-\newcommand{\glossario}[1]{\textit{#1}\textsubscript{\textbf{\textit{\textcolor{lightblack}{G}}}}}
+\newcommand{\glossario}[1]{\textit{#1}\textsubscript{\textbf{\textit{\textcolor{gray}{G}}}}}
 \newcommand{\ped}[1]{\textsubscript{#1}}
 
-% --- Header e Footer ---
 \pagestyle{fancy}
-\setlength{\headwidth}{\textwidth}
-\fancyhfoffset[L,R]{0pt}
+\fancyhf{}
 \lhead{\rightmark}
 \rhead{7-ZPUs}
 \lfoot{Manuale Utente - DIPReader}
 \rfoot{\thepage}
-\cfoot{}
 \renewcommand{\headrulewidth}{0.8pt}
 \renewcommand{\footrulewidth}{0.8pt}
 
-\renewcommand{\contentsname}{Indice}
-\renewcommand{\listoftables}{Elenco delle tabelle}
-\renewcommand{\listoffigures}{Elenco delle immagini}
-
-\geometry{margin=2.5cm}
-\setstretch{1.1}
-
-% --- Configurazione Titoli (Nero e Fix Horizontal Mode) ---
 \titleclass{\subsubsubsection}{straight}[\subsection]
 \newcounter{subsubsubsection}[subsubsection]
 \renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
 
-\titleformat{\section}{\LARGE\bfseries\textcolor{black}}{\thesection}{1em}{}
-\titleformat{\subsection}{\Large\bfseries\textcolor{black}}{\thesubsection}{1em}{}
-\titleformat{\subsubsection}{\large\bfseries\textcolor{black}}{\thesubsubsection}{1em}{}
-\titleformat{\subsubsubsection}{\normalfont\normalsize\bfseries\textcolor{black}}{\thesubsubsubsection}{1em}{}
+\titleformat{\section}{\normalfont\LARGE\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\Large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\large\bfseries}{\thesubsubsection}{1em}{}
+\titleformat{\subsubsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
 
 \titlespacing*{\section}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
 \titlespacing*{\subsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
-\makeatletter
-\def\toclevel@subsubsubsection{4}
-\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
-\makeatother
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
 
-\setcounter{secnumdepth}{4}
-\setcounter{tocdepth}{4}
-\setlength\parindent{0pt}
 
-% -----------------------------------------------------------------
-% INIZIO DOCUMENTO
-% -----------------------------------------------------------------
 \begin{document}
 
 \pagenumbering{arabic}
@@ -89,7 +66,7 @@
     \includegraphics[width=9.5cm]{../../assets/logo7ZPUs.jpg}\\
     \small\hspace{10cm} 7zpus.swe@gmail.com\\
     \vspace{0.5cm}
-    \LARGE \textbf{Manuale Utente}\\
+    \LARGE \textbf{Manuale Utente - DIPReader}\\
     \vspace{0.3cm}
 \end{center}
 
@@ -106,6 +83,10 @@
         \hline
         \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
         \hline
+        0.3.0 & 2026/04/11 & Gingillino Aaron & Georgescu Diana & \begin{tabular}[c]{@{}l@{}} Stesura sezioni 5.1, 5.2\\ \end{tabular} \\
+        \hline
+        0.2.0 & 2026/04/10 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Stesura sezioni 1, 2, 3, 4\\ \end{tabular} \\        
+        \hline
         0.1.0 & 2026/04/09 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Creazione del documento\\ e stesura iniziale \end{tabular} \\
         \hline
     \end{tabular}
@@ -121,13 +102,78 @@
 
 \newpage
 
-% --- Sezione 1: Introduzione (Ripristinata) ---
 \section{Introduzione}
 
 \subsection{Obiettivo del documento}
-L’obiettivo del presente documento è descrivere in modo rigoroso le funzionalità e l'utilizzo del prodotto \textit{DIPReader}.\\
+L’obiettivo del presente \glossario{documento} è descrivere in modo rigoroso le funzionalità e l'utilizzo del prodotto \textit{DIPReader}.\\
 L’analisi guiderà l'utente attraverso il contesto applicativo e le procedure operative per una gestione corretta del sistema.
 
+\subsection{Panoramica del prodotto}
+\textit{DIPReader} è un'applicazione progettata per l'accesso e la visualizzazione di documenti informatici all'interno di un Dissemination Information Package (\glossario{DIP}). Un DIP è un archivio compresso, distribuito da un sistema di \glossario{conservazione} centralizzato, che contiene documenti tecnici con valore legale e strutturati secondo specifiche normative. Poiché la struttura interna di questi pacchetti è complessa e difficilmente consultabile tramite strumenti generici, \textit{DIPReader} fornisce una soluzione dedicata per esplorare, ricercare e consultare tali archivi in modo efficiente.
+
+\subsection{Utenti di destinazione}
+Il prodotto costituisce una soluzione essenziale per gli utenti operanti nei settori giudiziario e tecnico. Tra i principali destinatari figurano l'Agenzia delle Entrate, la Guardia di Finanza e i magistrati, i quali necessitano di consultare i complessi documenti digitali normati e presenti nei pacchetti DIP.
+
+\newpage
+
+\section{Requisiti di Sistema e Tecnologie}
+
+\subsection{Tecnologie utilizzate}
+Il sistema \textit{DIPReader} è sviluppato per operare in modo autonomo e performante:
+\begin{itemize}
+    \item \textbf{Angular}: Framework per l'interfaccia utente basato su \textit{Signals}. Il sistema è sviluppato utilizzando la versione Angular 21 o superiore.
+    \item \textbf{Electron}: Ambiente desktop per l'esecuzione cross-platform.
+    \item \textbf{Motore di ricerca embedded}: Il software utilizza un motore di ricerca integrato che non richiede l'utilizzo di un server standalone per il suo funzionamento.
+\end{itemize}
+
+\subsection{Requisiti minimi di sistema}
+Per garantire un corretto funzionamento, il dispositivo ospite deve soddisfare i seguenti requisiti minimi:
+\begin{itemize}
+    \item \textbf{RAM}: Almeno 4 GB.
+    \item \textbf{Archiviazione}: Almeno 1 GB di spazio libero su disco.
+    \item \textbf{Processore}: Quad-core 64-bit a 2.0 Ghz o superiore (architettura x64 o ARM64).
+\end{itemize}
+
+\subsection{Sistemi Operativi supportati}
+Il sistema garantisce l'esecuzione sui seguenti sistemi operativi (o equivalenti/superiori):
+\begin{itemize}
+    \item Windows 10.
+    \item MacOS 11.
+    \item Linux Ubuntu 20.04.
+\end{itemize}
+
+\subsection{Modalità di esecuzione}
+Il software opera in totale modalità \textit{portable}. Questo significa che l'applicazione non richiede alcuna installazione sul disco del dispositivo né privilegi di amministratore nel sistema ospite per poter funzionare, favorendo flessibilità e immediatezza di utilizzo.
+
+\newpage
+
+\section{Contesto del sistema}
+
+\subsection{Modello architetturale}
+Il software segue un modello di visualizzazione dei dati gerarchico. È concepito come applicazione \textit{portable} con motore di ricerca integrato, capace di operare completamente offline in assenza di un server standalone. Inoltre, il sistema supporta rigorosamente la complessa struttura dei metadati definita dalle Linee Guida AGID.
+
+\subsection{Attori}
+\begin{itemize}
+    \item \textbf{Utente (Attore Primario):} L'operatore (es. magistrato o tecnico) che naviga, filtra, stampa e verifica i pacchetti di conservazione.
+    \item \textbf{Stampante (Attore Secondario):} Dispositivo hardware o driver di sistema invocato dall'applicativo quando l'utente richiede la stampa di un singolo documento o di un insieme di documenti.
+\end{itemize}
+
+\subsection{Sistemi esterni}
+\begin{itemize}
+    \item \textbf{File system locale:} Utilizzato dal sistema non solo per il caricamento in lettura dei DIP (.zip), ma anche come destinazione (tramite dialogo di selezione della cartella) per l'esportazione locale dei documenti estratti e per il salvataggio dei report di verifica integrità esportati in formato PDF.
+\end{itemize}
+
+\newpage
+
+\section{Panoramica delle Funzionalità}
+Le principali funzionalità offerte da \textit{DIPReader} per l'interazione con i pacchetti DIP includono:
+\begin{itemize}
+    \item \textbf{Navigazione e Visualizzazione:} Esplorazione gerarchica (Classe documentale, Processo, Documento) all'interno del DIP e visualizzazione in anteprima dei formati di documenti supportati.
+    \item \textbf{Ricerca Avanzata e Semantica:} Ricerca all'interno dei metadati tramite filtri specifici avanzati e ricerca semantica dei documenti.
+    \item \textbf{Verifica Integrità:} Controllo dello stato di verifica (Integro/Non Integro/Non Verificato) dei file contenuti nel DIP e generazione dei relativi report.
+    \item \textbf{Estrazione ed Esportazione:} Possibilità di scaricare singolarmente o in blocco i documenti sul computer locale, stampare i file tramite le periferiche di sistema o esportare i report di verifica in PDF.
+    \item \textbf{Verifica Firme e Processi:} Visualizzazione delle informazioni relative al processo di conservazione, versamento e allo stato dei dati di verifica, come firme digitali, sigilli elettronici e marcature temporali.
+\end{itemize}
 \subsection{Glossario}
 Ogni termine tecnico è definito nell'apposito documento: 
 \href{https://7-zpus.github.io/Docs/assets/3_PB/DocumentiInterni/Glossario.pdf}{Glossario (v2.0.0)}.
@@ -148,29 +194,7 @@ Ogni termine tecnico è definito nell'apposito documento:
 
 \newpage
 
-% --- Sezione 2: Tecnologie Utilizzate (Ripristinata) ---
-\section{Tecnologie utilizzate}
-Il sistema \textit{DIPReader} è sviluppato utilizzando tecnologie moderne per garantire prestazioni e sicurezza:
-\begin{itemize}
-    \item \textbf{Angular}: Framework per l'interfaccia utente basato su \textit{Signals}.
-    \item \textbf{Electron}: Ambiente desktop per l'esecuzione cross-platform.
-    \item \textbf{SQLite}: Motore di database locale per la persistenza dei dati.
-\end{itemize}
 
-\newpage
-
-% --- Sezione 3: Contesto del Sistema (Ripristinata) ---
-\section{Contesto del sistema}
-\subsection{Modello architetturale}
-Il software segue un modello di visualizzazione dei dati gerarchico.
-\subsection{Descrizione degli attori esterni}
-L'utente che consulta i pacchetti di conservazione.
-\subsection{Descrizione dei sistemi esterni}
-File system locale per l'archiviazione dei DIP.
-
-\newpage
-
-% --- Sezione 4: Guida all'Utilizzo (Ripristinata) ---
 \section{Guida all'Utilizzo}
 In questa sezione verranno dettagliate le operazioni di navigazione dell'albero DIP e la consultazione dei documenti tramite il visualizzatore PDF integrato.
 
