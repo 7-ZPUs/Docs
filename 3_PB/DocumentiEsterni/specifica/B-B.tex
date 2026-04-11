@@ -112,50 +112,47 @@ Contratto IPC definito in \texttt{ipc-channels.ts} e registrato in \texttt{Brows
 
 \begin{table}[H]
   \centering
-  \footnotesize
-  \setlength{\tabcolsep}{4pt}
   \renewcommand{\arraystretch}{1.4}
-  \resizebox{\textwidth}{!}{%
-  \begin{tabularx}{\textwidth}{|>{\hsize=1.35\hsize\raggedright\arraybackslash}X|>{\hsize=0.95\hsize\raggedright\arraybackslash}X|>{\hsize=0.85\hsize\raggedright\arraybackslash}X|>{\hsize=1.35\hsize\raggedright\arraybackslash}X|}
+  \begin{adjustbox}{max width=\textwidth}
+  \begin{tabular}{|l|l|l|l|}
     \hline
     \textbf{Canale} & \textbf{Payload} & \textbf{Return} & \textbf{Use case} \\
     \hline
-    \texttt{BROWSE\_GET\_DOCUMENT\_BY\_ID}            & \texttt{id: number}                  & \texttt{DocumentDTO | null}      & \texttt{IGetDocumentByIdUC} \\
+    \texttt{BROWSE\_GET\_DOCUMENT\_BY\_ID}              & \texttt{id: number}                  & \texttt{DocumentDTO | null}      & \texttt{IGetDocumentByIdUC} \\
     \hline
-    \texttt{BROWSE\_GET\_DOCUMENTS\_BY\_PROCESS}      & \texttt{processId: number}           & \texttt{DocumentDTO[]}           & \texttt{IGetDocumentByProcessUC} \\
+    \texttt{BROWSE\_GET\_DOCUMENTS\_BY\_PROCESS}        & \texttt{processId: number}           & \texttt{DocumentDTO[]}           & \texttt{IGetDocumentByProcessUC} \\
     \hline
-    \texttt{BROWSE\_GET\_DOCUMENTS\_BY\_STATUS}       & \texttt{status: IntegrityStatusEnum} & \texttt{DocumentDTO[]}           & \texttt{IGetDocumentByStatusUC} \\
+    \texttt{BROWSE\_GET\_DOCUMENTS\_BY\_STATUS}         & \texttt{status: IntegrityStatusEnum} & \texttt{DocumentDTO[]}           & \texttt{IGetDocumentByStatusUC} \\
     \hline
-    \texttt{BROWSE\_GET\_FILE\_BY\_ID}                & \texttt{id: number}                  & \texttt{FileDTO | null}          & \texttt{IGetFileByIdUC} \\
+    \texttt{BROWSE\_GET\_FILE\_BY\_ID}                  & \texttt{id: number}                  & \texttt{FileDTO | null}          & \texttt{IGetFileByIdUC} \\
     \hline
-    \texttt{BROWSE\_GET\_FILE\_BUFFER\_BY\_ID}        & \texttt{id: number}                  & \texttt{Buffer | null}           & \texttt{IGetFileByIdUC} + lettura fs \\
+    \texttt{BROWSE\_GET\_FILE\_BUFFER\_BY\_ID}          & \texttt{id: number}                  & \texttt{Buffer | null}           & \texttt{IGetFileByIdUC} + lettura fs \\
     \hline
-    \texttt{BROWSE\_GET\_FILE\_BY\_DOCUMENT}          & \texttt{documentId: number}          & \texttt{FileDTO[]}               & \texttt{IGetFileByDocumentUC} \\
+    \texttt{BROWSE\_GET\_FILE\_BY\_DOCUMENT}            & \texttt{documentId: number}          & \texttt{FileDTO[]}               & \texttt{IGetFileByDocumentUC} \\
     \hline
-    \texttt{BROWSE\_GET\_FILE\_BY\_STATUS}            & \texttt{status: IntegrityStatusEnum} & \texttt{FileDTO[]}               & \texttt{IGetFileByStatusUC} \\
+    \texttt{BROWSE\_GET\_FILE\_BY\_STATUS}              & \texttt{status: IntegrityStatusEnum} & \texttt{FileDTO[]}               & \texttt{IGetFileByStatusUC} \\
     \hline
-    \texttt{BROWSE\_GET\_PROCESS\_BY\_ID}             & \texttt{id: number}                  & \texttt{ProcessDTO | null}       & \texttt{IGetProcessByIdUC} \\
+    \texttt{BROWSE\_GET\_PROCESS\_BY\_ID}               & \texttt{id: number}                  & \texttt{ProcessDTO | null}       & \texttt{IGetProcessByIdUC} \\
     \hline
-    \texttt{BROWSE\_GET\_PROCESS\_BY\_STATUS}         & \texttt{status: IntegrityStatusEnum} & \texttt{ProcessDTO[]}            & \texttt{IGetProcessByStatusUC} \\
+    \texttt{BROWSE\_GET\_PROCESS\_BY\_STATUS}           & \texttt{status: IntegrityStatusEnum} & \texttt{ProcessDTO[]}            & \texttt{IGetProcessByStatusUC} \\
     \hline
-    \texttt{BROWSE\_GET\_PROCESS\_BY\_DOCUMENT\_CLASS} & \texttt{documentClassId: number}    & \texttt{ProcessDTO[]}            & \texttt{IGetProcessByDocumentClassUC} \\
+    \texttt{BROWSE\_GET\_PROCESS\_BY\_DOCUMENT\_CLASS}  & \texttt{documentClassId: number}     & \texttt{ProcessDTO[]}            & \texttt{IGetProcessByDocumentClassUC} \\
     \hline
-    \texttt{BROWSE\_GET\_DOCUMENT\_CLASS\_BY\_DIP\_ID} & \texttt{dipId: number}              & \texttt{DocumentClassDTO[]}      & \texttt{IGetDocumentClassByDipIdUC} \\
+    \texttt{BROWSE\_GET\_DOCUMENT\_CLASS\_BY\_DIP\_ID}  & \texttt{dipId: number}               & \texttt{DocumentClassDTO[]}      & \texttt{IGetDocumentClassByDipIdUC} \\
     \hline
-    \texttt{BROWSE\_GET\_DOCUMENT\_CLASS\_BY\_STATUS} & \texttt{status: IntegrityStatusEnum} & \texttt{DocumentClassDTO[]}      & \texttt{IGetDocumentClassByStatusUC} \\
+    \texttt{BROWSE\_GET\_DOCUMENT\_CLASS\_BY\_STATUS}   & \texttt{status: IntegrityStatusEnum} & \texttt{DocumentClassDTO[]}      & \texttt{IGetDocumentClassByStatusUC} \\
     \hline
-    \texttt{BROWSE\_GET\_DOCUMENT\_CLASS\_BY\_ID}     & \texttt{id: number}                  & \texttt{DocumentClassDTO | null} & \texttt{IGetDocumentClassByIdUC} \\
+    \texttt{BROWSE\_GET\_DOCUMENT\_CLASS\_BY\_ID}       & \texttt{id: number}                  & \texttt{DocumentClassDTO | null} & \texttt{IGetDocumentClassByIdUC} \\
     \hline
-    \texttt{BROWSE\_GET\_DIP\_BY\_ID}                 & \texttt{id: number}                  & \texttt{DipDTO | null}           & \texttt{IGetDipByIdUC} \\
+    \texttt{BROWSE\_GET\_DIP\_BY\_ID}                   & \texttt{id: number}                  & \texttt{DipDTO | null}           & \texttt{IGetDipByIdUC} \\
     \hline
-    \texttt{BROWSE\_GET\_DIP\_BY\_STATUS}             & \texttt{status: IntegrityStatusEnum} & \texttt{DipDTO[]}                & \texttt{IGetDipByStatusUC} \\
+    \texttt{BROWSE\_GET\_DIP\_BY\_STATUS}               & \texttt{status: IntegrityStatusEnum} & \texttt{DipDTO[]}                & \texttt{IGetDipByStatusUC} \\
     \hline
-  \end{tabularx}
-  }%
+  \end{tabular}
+  \end{adjustbox}
   \caption{Contratto IPC del modulo Browsing}
   \label{tab:browsing:ipc}
 \end{table}
-
 \noindent
 \textbf{Nota:} Il canale \texttt{BROWSE\_\allowbreak GET\_\allowbreak DIP\_\allowbreak BY\_\allowbreak DOCUMENT\_\allowbreak CLASS} è definito in \texttt{ipc-channels.ts} ma non registrato in \texttt{BrowsingIpcAdapter}.
 
@@ -385,39 +382,6 @@ Configurazione in \texttt{container.ts}:
 \noindent
 \texttt{BrowsingIpcAdapter} risolve ai root level: \texttt{DipUC}, \texttt{DocumentClassUC}, \texttt{ProcessUC}, \texttt{DocumentoUC}, \texttt{FileUC}.
 
-\subsubsection{Schema database}
-\label{sec:browsing:db}
-
-\noindent
-Tabelle coinvolte e indici in \texttt{schema.sql}:
-
-\begin{table}[H]
-  \centering
-  \footnotesize
-  \setlength{\tabcolsep}{4pt}
-  \renewcommand{\arraystretch}{1.4}
-  \begin{tabularx}{\textwidth}{|l|Y|}
-    \hline
-    \textbf{Tabella} & \textbf{Colonne chiave / Indici} \\
-    \hline
-    \texttt{dip} & PK \texttt{id}, AK \texttt{uuid}, IX \texttt{integrity\_status} \\
-    \hline
-    \texttt{document\_class} & PK \texttt{id}, FK \texttt{dip\_id}, AK \texttt{uuid}, \newline IX dip\_id + integrity\_status \\
-    \hline
-    \texttt{process} & PK \texttt{id}, FK \texttt{document\_class\_id}, AK \texttt{uuid}, \newline IX documentClass\_id + integrity\_status \\
-    \hline
-    \texttt{document} & PK \texttt{id}, FK \texttt{process\_id}, AK \texttt{uuid}, \newline IX process\_id + integrity\_status \\
-    \hline
-    \texttt{file} & PK \texttt{id}, FK \texttt{document\_id}, \newline UK (document\_id,path), IX ordinamento \\
-    \hline
-    \texttt{process\_metadata} & FK \texttt{process\_id}, albero \texttt{parent\_id} \\
-    \hline
-    \texttt{document\_metadata} & FK \texttt{document\_id}, albero \texttt{parent\_id} \\
-    \hline
-  \end{tabularx}
-  \label{tab:browsing:schema}
-\end{table}
-
 \subsubsection{Bootstrap e indicizzazione}
 \label{sec:browsing:bootstrap}
 
@@ -494,34 +458,5 @@ Browsing legge solo da queste tabelle; getter restituiscono \texttt{null}/\textt
   \label{tab:browsing:tests}
 \end{table}
 
-
-\subsubsection{Osservazioni tecniche}
-\label{sec:browsing:osservazioni}
-
-\noindent
-\begin{tcolorbox}[colback=zpuslightgray,colframe=zpusgreen,title=Issue identificati,boxrule=1pt]
-\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm,nosep]
-  \item \texttt{BROWSE\_GET\_DIP\_BY\_DOCUMENT\_CLASS} definito ma non registrato
-  \item \texttt{ipc-channels.d.ts} non allineato a \texttt{.ts} (legacy costanti)
-  \item Dichiarazioni duplicate in \texttt{IDocumentClassRepository}
-  \item Registrazioni duplicate nel container DI
-  \item Mapper attendono UUID FK: browsing OK, altri campi risky
-  \item \texttt{electron-api.d.ts} vs \texttt{window.electronAPI.invoke} divergente
-  \item DTO core vs renderer divergenti su metadati
-\end{enumerate}
-\end{tcolorbox}
-
-\subsubsection{Raccomandazioni}
-\label{sec:browsing:raccomandazioni}
-
-\noindent
-Backlog evolutivo:
-\begin{enumerate}
-  \item Allineare \texttt{ipc-channels.ts}, \texttt{.d.ts}, build artifacts
-  \item Rimuovere duplicazioni interfacce + container DI
-  \item Allineare query DAO ai campi richiesti dai mapper
-  \item Consolidare DTO core $\leftrightarrow$ renderer
-  \item Tipizzazione forte payload IPC per canale
-\end{enumerate}
 
 \newpage
