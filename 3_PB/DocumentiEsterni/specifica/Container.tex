@@ -106,6 +106,33 @@ Configurazione in \texttt{container.ts}:
     \item Insert: file.
 \end{enumerate}
 
+\subsubsection{Wiring runtime e registrazioni}
+\noindent
+In avvio applicazione (\texttt{main.ts}) il container runtime esegue:
+
+\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
+    \item bootstrap database tramite \texttt{ApplicationBootstrapAdapter}
+    \item registrazione token runtime \texttt{DIP\_PATH\_TOKEN}
+    \item registrazione adapter IPC (es. \texttt{BrowsingIpcAdapter}, \texttt{CheckIntegrityIpcAdapter})
+\end{enumerate}
+
+\noindent
+Nel bootstrap DB (\texttt{DatabaseBootstrap.ts}) viene registrato anche \texttt{SQLITE\_DB\_TOKEN} con la connessione SQLite runtime.
+
+\subsubsection{Semantica transazionale condivisa}
+\noindent
+Le operazioni backend che aggiornano alberi di dati su piu livelli usano \texttt{ITransactionManager} con implementazione SQLite (\texttt{SqliteTransactionManager}):
+
+\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
+    \item \texttt{BEGIN IMMEDIATE TRANSACTION}
+    \item esecuzione blocco applicativo
+    \item \texttt{COMMIT} su successo
+    \item \texttt{ROLLBACK} su errore
+\end{enumerate}
+
+\noindent
+Questa semantica garantisce consistenza dei dati durante propagazioni gerarchiche di stato.
+
 \subsubsection{Sicurezza preload}
 \noindent
 \texttt{preload.ts} consente IPC su prefissi autorizzati:\newline\texttt{ipc:search:}, \texttt{browse:}, \texttt{file:}, \texttt{check-integrity:}, \texttt{ipc:indexing:status}.

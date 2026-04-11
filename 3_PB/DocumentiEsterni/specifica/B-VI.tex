@@ -1,0 +1,293 @@
+\newpage
+\section{Backend - Verifica Integrita}
+
+\subsection{Panoramica}
+\label{sec:integrity}
+
+\noindent
+\begin{tcolorbox}[colback=zpuslightgray,colframe=zpusgreen,title=Verifica gerarchica dello stato,boxrule=1.5pt]
+Il modulo Verifica Integrita esegue controlli su 5 livelli gerarchici:
+File $\to$ Documento $\to$ Processo $\to$ Classe documentale $\to$ DIP.
+Il controllo puo essere avviato da qualsiasi livello e propaga lo stato nel sottoalbero interessato.
+\end{tcolorbox}
+
+\subsubsection{Perimetro funzionale}
+\label{sec:integrity:perimetro}
+
+\noindent
+La verifica opera sui seguenti livelli:
+\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
+	\item \textbf{File}
+	\item \textbf{Documento}
+	\item \textbf{Processo}
+	\item \textbf{Classe documentale}
+	\item \textbf{DIP}
+\end{enumerate}
+
+\noindent
+Ogni invocazione calcola lo stato del nodo root e dei suoi discendenti, con persistenza progressiva in SQLite tramite \texttt{updateIntegrityStatus(...)}.
+
+\subsubsection{Organizzazione file backend}
+\label{sec:integrity:struttura}
+
+\begin{table}[H]
+	\centering
+	\footnotesize
+	\setlength{\tabcolsep}{4pt}
+	\renewcommand{\arraystretch}{1.5}
+	\begin{tabularx}{\textwidth}{|l|Y|}
+		\hline
+		\textbf{Layer} & \textbf{File} \\
+		\hline
+		Entry point IPC & \texttt{main.ts}, \texttt{preload.ts}, \texttt{ipc-channels.ts}, \newline \texttt{CheckIntegrityIpcAdapter.ts} \\
+		\hline
+		Use case & \texttt{*/ICheck*IntegrityStatusUC.ts}, \texttt{*/impl/Check*IntegrityStatusUC.ts} \\
+		\hline
+		Service & \texttt{IntegrityVerificationService.ts}, \texttt{HashingService.ts} \\
+		\hline
+		Transaction manager & \texttt{SqliteTransactionManager.ts} \\
+		\hline
+		Repository & \texttt{I*Repository.ts}, \texttt{*Repository.ts} \\
+		\hline
+		DAO & \texttt{I*DAO.ts}, \texttt{*DAO.ts} \\
+		\hline
+		Entity / DTO & \texttt{entity/*}, \texttt{dto/*} \\
+		\hline
+		Database & \texttt{schema.sql} (colonna \texttt{integrity\_status} su 5 tabelle) \\
+		\hline
+	\end{tabularx}
+	\caption{Organizzazione modulo Verifica Integrita}
+	\label{tab:integrity:struttura}
+\end{table}
+
+\subsubsection{Flusso end-to-end}
+\label{sec:integrity:flusso}
+
+\paragraph{Sequenza di verifica.}
+\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
+	\item Il renderer invoca il canale \texttt{check-integrity:*}
+	\item \texttt{CheckIntegrityIpcAdapter} intercetta l'handler e risolve il use case
+	\item Il use case delega a \texttt{IntegrityVerificationService}
+	\item Il service esegue \texttt{runInTransaction(...)}
+	\item Il service verifica hash file e aggrega stati sui parent
+	\item Il service persiste gli stati sui livelli coinvolti
+	\item L'handler IPC ritorna \texttt{IntegrityStatusEnum}
+\end{enumerate}
+
+\paragraph{Flusso gerarchico di propagazione.}
+\begin{center}
+	\texttt{CHECK\_DIP\_INTEGRITY\_STATUS} \\
+	$\downarrow$ \\
+	\texttt{CHECK\_DOCUMENT\_CLASS\_INTEGRITY\_STATUS} \\
+	$\downarrow$ \\
+	\texttt{CHECK\_PROCESS\_INTEGRITY\_STATUS} \\
+	$\downarrow$ \\
+	\texttt{CHECK\_DOCUMENT\_INTEGRITY\_STATUS} \\
+	$\downarrow$ \\
+	\texttt{CHECK\_FILE\_INTEGRITY\_STATUS}
+\end{center}
+
+Contratto IPC definito in \texttt{ipc-channels.ts} e registrato in \texttt{CheckIntegrityIpcAdapter.ts}:
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.4}
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		\textbf{Canale} & \textbf{Payload} & \textbf{Return} & \textbf{Use case} \\
+		\hline
+		\texttt{CHECK\_FILE\_INTEGRITY\_STATUS}            & \texttt{id: number} & \texttt{IntegrityStatusEnum} & \texttt{ICheckFileIntegrityStatusUC} \\
+		\hline
+		\texttt{CHECK\_DOCUMENT\_INTEGRITY\_STATUS}        & \texttt{id: number} & \texttt{IntegrityStatusEnum} & \texttt{ICheckDocumentIntegrityStatusUC} \\
+		\hline
+		\texttt{CHECK\_PROCESS\_INTEGRITY\_STATUS}         & \texttt{id: number} & \texttt{IntegrityStatusEnum} & \texttt{ICheckProcessIntegrityStatusUC} \\
+		\hline
+		\texttt{CHECK\_DOCUMENT\_CLASS\_INTEGRITY\_STATUS} & \texttt{id: number} & \texttt{IntegrityStatusEnum} & \texttt{ICheckDocumentClassIntegrityStatusUC} \\
+		\hline
+		\texttt{CHECK\_DIP\_INTEGRITY\_STATUS}             & \texttt{id: number} & \texttt{IntegrityStatusEnum} & \texttt{ICheckDipIntegrityStatusUC} \\
+		\hline
+	\end{tabular}
+	\end{adjustbox}
+	\caption{Contratto IPC del modulo Verifica Integrita}
+	\label{tab:integrity:ipc}
+\end{table}
+
+\noindent
+\textbf{Nota:} Il canale \texttt{INTEGRITY\_VERIFY} e definito in \texttt{ipc-channels.ts} ma non risulta registrato in \texttt{CheckIntegrityIpcAdapter}.
+
+\subsubsection{Use Case: firme check}
+\label{sec:integrity:usecase}
+
+\noindent
+\begin{tcolorbox}[colback=zpuslightgray,colframe=zpusgreen,title=Caratteristica della layer,boxrule=1pt]
+I use case sono thin wrapper senza logica aggiuntiva; delegano direttamente a \texttt{IntegrityVerificationService}.
+\end{tcolorbox}
+
+\begin{table}[H]
+	\centering
+	\footnotesize
+	\setlength{\tabcolsep}{4pt}
+	\renewcommand{\arraystretch}{1.4}
+	\begin{tabularx}{\textwidth}{|l|Y|}
+		\hline
+		\textbf{Use Case} & \textbf{Firma} \\
+		\hline
+		\texttt{ICheckFileIntegrityStatusUC} & \texttt{execute(fileId: number): Promise<IntegrityStatusEnum>} \\
+		\hline
+		\texttt{ICheckDocumentIntegrityStatusUC} & \texttt{execute(documentId: number): Promise<IntegrityStatusEnum>} \\
+		\hline
+		\texttt{ICheckProcessIntegrityStatusUC} & \texttt{execute(processId: number): Promise<IntegrityStatusEnum>} \\
+		\hline
+		\texttt{ICheckDocumentClassIntegrityStatusUC} & \texttt{execute(documentClassId: number): Promise<IntegrityStatusEnum>} \\
+		\hline
+		\texttt{ICheckDipIntegrityStatusUC} & \texttt{execute(dipId: number): Promise<IntegrityStatusEnum>} \\
+		\hline
+	\end{tabularx}
+	\caption{Firme use case Verifica Integrita}
+	\label{tab:integrity:usecase}
+\end{table}
+
+\subsubsection{Servizio centrale}
+\label{sec:integrity:service}
+
+\noindent
+File: \texttt{IntegrityVerificationService.ts}.
+
+\paragraph{Dipendenze iniettate.}
+\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
+	\item \texttt{IFileRepository}
+	\item \texttt{IDocumentRepository}
+	\item \texttt{IProcessRepository}
+	\item \texttt{IDocumentClassRepository}
+	\item \texttt{IDipRepository}
+	\item \texttt{IHashingService}
+	\item \texttt{ITransactionManager}
+	\item \texttt{DIP\_PATH\_TOKEN}
+\end{enumerate}
+
+\paragraph{Regole operative.}
+\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
+	\item Ogni API pubblica gira dentro \texttt{runInTransaction}
+	\item Se la root non esiste, viene lanciato errore
+	\item La verifica e ricorsiva nel sottoalbero
+	\item Ogni livello aggiorna \texttt{integrity\_status} via repository
+\end{enumerate}
+
+\subsubsection{Regole di aggregazione}
+\label{sec:integrity:aggregation}
+
+\noindent
+\begin{tcolorbox}[colback=zpuslightgray,colframe=zpusgreen,title=Algoritmo aggregateStatuses,boxrule=1pt]
+\textbf{Caso 1:} nessun figlio $\to$ \texttt{VALID}\\
+\textbf{Caso 2:} almeno un figlio \texttt{INVALID} $\to$ \texttt{INVALID}\\
+\textbf{Caso 3:} nessun \texttt{INVALID} ma almeno un \texttt{UNKNOWN} $\to$ \texttt{UNKNOWN}\\
+\textbf{Caso 4:} tutti \texttt{VALID} $\to$ \texttt{VALID}
+\end{tcolorbox}
+
+\paragraph{Semantica per livello.}
+\begin{table}[H]
+	\centering
+	\footnotesize
+	\setlength{\tabcolsep}{4pt}
+	\renewcommand{\arraystretch}{1.4}
+	\begin{tabularx}{\textwidth}{|l|Y|}
+		\hline
+		\textbf{Metodo} & \textbf{Aggiornamenti} \\
+		\hline
+		\texttt{checkFileIntegrityStatus} & Verifica hash file; aggiorna solo file \\
+		\hline
+		\texttt{checkDocumentIntegrityStatus} & Verifica file del documento; aggiorna file + documento \\
+		\hline
+		\texttt{checkProcessIntegrityStatus} & Verifica documenti e file del processo; aggiorna file + documento + processo \\
+		\hline
+		\texttt{checkDocumentClassIntegrityStatus} & Verifica processi/documenti/file della classe; aggiorna livelli inferiori + classe \\
+		\hline
+		\texttt{checkDipIntegrityStatus} & Verifica intero sottoalbero; aggiorna file + documento + processo + classe + DIP \\
+		\hline
+	\end{tabularx}
+	\caption{Semantica operativa per livello}
+	\label{tab:integrity:semantics}
+\end{table}
+
+\subsubsection{Hashing e transazioni nel modulo}
+\label{sec:integrity:infra}
+
+\paragraph{HashingService.}
+\noindent
+\texttt{checkFileIntegrity(filePath, expectedHash)} legge bytes, calcola SHA-256, converte digest Base64 e confronta con l'hash atteso.
+
+\paragraph{Path assoluto file.}
+\noindent
+Il service risolve il percorso con \texttt{path.resolve(dipPath, file.getPath())} prima della verifica hash.
+
+\paragraph{Transaction manager.}
+\noindent
+L'esecuzione avviene in \texttt{runInTransaction(work)}; in caso di errore durante la cascata e garantito rollback completo.
+
+\subsubsection{Layer Repository e DAO}
+\label{sec:integrity:repository_dao}
+
+\begin{table}[H]
+	\centering
+	\footnotesize
+	\setlength{\tabcolsep}{4pt}
+	\renewcommand{\arraystretch}{1.5}
+	\begin{tabularx}{\textwidth}{|l|Y|}
+		\hline
+		\textbf{Componente} & \textbf{Metodi rilevanti per verifica} \\
+		\hline
+		\texttt{IFileRepository / FileDAO} & \texttt{getById}, \texttt{getByDocumentId}, \texttt{updateIntegrityStatus} \\
+		\hline
+		\texttt{IDocumentRepository / DocumentDAO} & \texttt{getById}, \texttt{getByProcessId}, \texttt{updateIntegrityStatus} \\
+		\hline
+		\texttt{IProcessRepository / ProcessDAO} & \texttt{getById}, \texttt{getByDocumentClassId}, \texttt{updateIntegrityStatus} \\
+		\hline
+		\texttt{IDocumentClassRepository / DocumentClassDAO} & \texttt{getById}, \texttt{getByDipId}, \texttt{updateIntegrityStatus} \\
+		\hline
+		\texttt{IDipRepository / DipDAO} & \texttt{getById}, \texttt{updateIntegrityStatus} \\
+		\hline
+	\end{tabularx}
+	\caption{Repository e DAO coinvolti nella verifica integrita}
+	\label{tab:integrity:repo-dao}
+\end{table}
+
+\subsubsection{Comportamenti runtime}
+\label{sec:integrity:runtime}
+
+\noindent
+\begin{tcolorbox}[colback=zpuslightgray,colframe=zpusgreen,title=Semantica runtime,boxrule=1pt]
+\textbf{Root non trovato:} eccezione su id non presente\\
+\textbf{Persistenza:} aggiornamento \texttt{integrity\_status} su tutti i livelli coinvolti\\
+\textbf{Atomicita:} rollback completo su errore interno\\
+\textbf{Return IPC:} stato finale \texttt{IntegrityStatusEnum}
+\end{tcolorbox}
+
+\subsubsection{Test coverage}
+\label{sec:integrity:test}
+
+\begin{table}[H]
+	\centering
+	\footnotesize
+	\setlength{\tabcolsep}{4pt}
+	\renewcommand{\arraystretch}{1.5}
+	\begin{tabularx}{\textwidth}{|l|Y|}
+		\hline
+		\textbf{Suite} & \textbf{Copertura} \\
+		\hline
+		\texttt{CheckIntegrityIpcAdapter.spec.ts} & Registrazione canali; forwarding payload; propagazione risultato/errore \\
+		\hline
+		\texttt{*UseCases.spec.ts} & Delega use case $\to$ service; propagazione errori \\
+		\hline
+		\texttt{IntegrityVerificationService.spec.ts} & Not found su root; cascata stati; propagazione invalid; caso senza figli \\
+		\hline
+		\texttt{IntegrityVerificationService.integration.spec.ts} & Persistenza in-memory; rollback completo su errore hashing; validazione stati su tutte le tabelle \\
+		\hline
+		\texttt{HashingService.spec.ts}, \texttt{SqliteTransactionManager.test.ts} & Hash valido/non valido; begin/commit e begin/rollback \\
+		\hline
+	\end{tabularx}
+	\caption{Copertura test modulo Verifica Integrita}
+	\label{tab:integrity:tests}
+\end{table}
+
+\newpage
