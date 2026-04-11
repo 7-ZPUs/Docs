@@ -1,0 +1,49 @@
+@startuml C1_DipReader_SystemContext
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title C4 Model - Level 1 (System Context)
+
+LAYOUT_WITH_LEGEND()
+
+Person(user, "Utente autorizzato", "Consulta documenti, ricerca contenuti e scarica file")
+Person(auditor, "Auditor / Responsabile conservazione", "Verifica integrita e completezza del pacchetto DIP")
+
+System_Boundary(dip_reader_boundary, "DIP Reader Desktop Application") {
+  System(dip_reader, "DIP Reader", "Desktop app Electron (main.ts + core/src/*) e Angular renderer per importazione DIP, consultazione metadati, ricerca e verifica integrita")
+}
+
+System_Ext(local_fs, "File System locale", "Cartelle DIP, file XML/metadata e contenuti binari")
+SystemDb_Ext(sqlite_db, "SQLite locale", "Persistenza indicizzazione, metadati, stati integrita e vettori")
+System_Ext(ai_engine, "Motore embedding locale", "@xenova/transformers + ONNX Runtime per ricerca semantica")
+System_Ext(os_services, "Servizi OS", "Apertura file con app di sistema, salvataggio ed eventuale stampa")
+
+Rel(user, dip_reader, "Importa DIP, naviga struttura e cerca documenti")
+Rel(auditor, dip_reader, "Esegue verifiche hash/integrita e controlli archivistici")
+
+Rel(dip_reader, local_fs, "Legge pacchetti DIP e contenuti")
+Rel(dip_reader, sqlite_db, "Indicizza e interroga dati")
+Rel(dip_reader, ai_engine, "Genera embedding e calcola similarita")
+Rel(dip_reader, os_services, "Apre/scarica/stampa file")
+
+note right of dip_reader
+SOLID applicato nel backend:
+- S: use case separati per indexing, search, integrity, file operations
+- O: nuovi adapter/port aggiungibili senza modificare i casi d'uso
+- L: implementazioni concrete sostituibili via interfacce/token
+- I: porte piccole e specifiche (repo, ai, fs, print, export)
+- D: dipendenze verso astrazioni, cablate nel composition root
+
+Pattern principali:
+- C4 + Hexagonal Architecture (Ports & Adapters)
+- Dependency Injection (tsyringe)
+- Repository + DAO su SQLite
+- Adapter pattern (IPC, filesystem, AI, OS integration)
+- Facade/Gateway lato renderer per chiamate IPC tipizzate
+end note
+
+note bottom of dip_reader_boundary
+Nessuna dipendenza cloud necessaria:
+elaborazione e verifica avvengono localmente.
+end note
+
+@enduml

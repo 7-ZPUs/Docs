@@ -1,0 +1,64 @@
+@startuml C3_Renderer_Search_Indexing
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title C4 Model - Level 3 (Renderer Components: Search + Indexing)
+
+LAYOUT_WITH_LEGEND()
+
+Container_Boundary(renderer_container, "Renderer (Angular)") {
+  Component(search_page, "SearchPageComponent", "Smart UI Component", "Gestisce interazioni search bar, filtri e risultati")
+  Component(search_facade, "SearchFacade", "Application Facade", "Stato ricerca, validation orchestration, cancellation, announcements")
+  Component(search_gateway, "SearchIpcGateway", "Adapter/Gateway", "Invoca canali IPC search e applica cache")
+
+  Component(semantic_facade, "SemanticIndexFacade", "Application Facade", "Monitora stato indicizzazione semantica")
+  Component(indexing_gateway, "IndexingIpcGateway", "Adapter/Gateway", "Invoca canale ipc:indexing:status")
+
+  Component(filter_validator, "FilterValidatorService", "Validation Service", "Valida filtri avanzati")
+  Component(cache_service, "IpcCacheService", "Infrastructure Service", "Cache TTL per richieste IPC")
+  Component(error_handler, "IpcErrorHandlerService", "Infrastructure Service", "Normalizza errori applicativi")
+  Component(telemetry, "TelemetryService", "Infrastructure Service", "Eventi metrici e error tracking")
+  Component(live_announcer, "LiveAnnouncerService", "Accessibility Service", "Annunci ARIA dei risultati")
+
+  Component(context_bridge, "IElectronContextBridge", "Port", "Astrazione invoke verso preload bridge")
+}
+
+Container_Ext(preload_bridge, "Electron Preload Bridge", "contextBridge", "window.electronAPI/api/electron")
+Container_Ext(main_ipc, "Main IPC Adapters", "Electron Main", "SearchIpcAdapter + bootstrap/status handlers")
+
+Rel(search_page, search_facade, "search()/searchAdvanced()/searchSemantic()")
+Rel(search_page, filter_validator, "validazione locale")
+
+Rel(search_facade, search_gateway, "search channels")
+Rel(search_facade, semantic_facade, "getStatus()")
+Rel(search_facade, filter_validator, "validate")
+Rel(search_facade, error_handler, "handle")
+Rel(search_facade, telemetry, "trackEvent/trackError")
+Rel(search_facade, live_announcer, "announce risultati")
+
+Rel(semantic_facade, indexing_gateway, "getIndexingStatus")
+
+Rel(search_gateway, cache_service, "get/set/invalidatePrefix")
+Rel(search_gateway, error_handler, "handle")
+Rel(search_gateway, context_bridge, "invoke")
+Rel(indexing_gateway, context_bridge, "invoke")
+
+Rel(context_bridge, preload_bridge, "bridge call")
+Rel(preload_bridge, main_ipc, "ipc invoke")
+
+note right of search_facade
+SOLID nel renderer:
+- S: UI delega logica a facade/gateway
+- I: contratti distinti (ISearchChannel, IIndexingChannel)
+- D: dipendenze tramite token/interfacce
+
+Pattern:
+- Facade + Gateway
+- Adapter verso IPC
+- State holder con Angular signals
+
+Nota implementativa attuale:
+- In app config il token SEMANTIC_INDEX_STATUS_TOKEN e attualmente fornito con useValue mock (status READY).
+- SemanticIndexFacade/IndexingIpcGateway restano componenti disponibili ma non binding di default.
+end note
+
+@enduml
