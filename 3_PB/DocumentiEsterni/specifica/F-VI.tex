@@ -1,0 +1,9 @@
+\subsection{Componenti di Verifica Integrità (Frontend)}
+\subsubsection{Descrizione}
+La funzionalità di verifica integrità garantisce la correttezza e l'autenticità dei pacchetti DIP, verificando ricorsivamente l'integrità crittografica (generalmente hash SHA-256) dei file contenuti, propagando poi il risultato alla gerarchia documentale.
+
+Per gestire l'albero delle dipendenze documentali sono stati adottati diversi design patterns:
+\begin{itemize}
+    \item \textbf{Facade Pattern}: tutta la logica dello state management è isolata in \textit{integrity.facade.ts}. In questo modo la facade agisce come single-source-of-truth per tutti i componenti di UI, inoltre coordina le chiamate ai servizi e gestisce lo stato interno \textit{isVerifying} e di invalidazione della cache quando necessario.
+    \item \textbf{Angular Signals}: Angular contribuisce con il suo sistema di state management reattivo basato su Signals
+\end{itemize}
