@@ -1,13 +1,24 @@
 \newpage
 \section{Architettura dei container}
+La progettazione del sistema \textit{DIPReader} è stata guidata dai principi di modularità, scalabilità e manutenibilità, con l'obiettivo di creare un'architettura che possa evolversi nel tempo e adattarsi a nuove esigenze e normative AGID.\\
+In particolare, è stata completamente scorporata la logica di business dalla logica di presentazione, esponendo come unico punto di accesso comune gli \textit{IPC channel}.\\
+Il sistema così facendo permette di avere un backend facilmente estendibile, modificabile e soprattutto che si adatta allla struttura del DIP autonomamente. D'altra parte il frontend è completamente disaccoppiato ma strutturato in modo che i componenti di presentazione siano facilmente sostituibili, modificabili e soprattutto adattabili a nuove esigenze.\\
 
-\subsection{[Container 1]}
-    \subsubsection{Tecnologia}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.2\textwidth]{../../assets/outDiagrammiST/DiagrammaC2(1).png}
+        \caption{Diagramma C2 - Container del sistema \textit{DIPReader}}
+    \label{fig:C2_container}
+\end{figure}
+
+\subsection{Renderer}
+    \subsubsection{Struttura architetturale}
+    Il container \textit{Renderer} è responsabile della presentazione dell'interfaccia utente e dell'interazione con l'utente. Per la gestione quindi dell'interfaccia è stato scelto di strutturare il container per componenti. Ogni componente a sua volta è strutturato da una serie di services che si occupano di gestire la logica di presentazione, e da una serie di componenti di presentazione che si occupano di mostrare i dati all'utente.\\
+    Visto poi che le interazioni tra i diversi componenti di presentazione sono limitate, è stato scelto di strutturare il container in modo che ogni componente sia completamente disaccoppiato dagli altri. Gli unici punti di contatto risultano infatti essere il sistema di routing e i canali IPC, che permettono ai componenti di comunicare tra loro e con il backend.\\
+    In presenza poi di componenti come per esempio l'esportazione dei file, che richiedono di essere inseriti in più punti del sistema, è stato scelto di strutturare il container in modo che questi componenti siano facilmente integrabili in qualsiasi punto del sistema, senza dover modificare la struttura del container o dei componenti di presentazione grazie a delle semplici Injection di dipendenze.\\
+    È poi stato applicato il pattern Smart and Dumb Components, che permette di separare la logica di presentazione pura dalla logica di business che la coordina.\\
+    
+
+\subsection{[Main]}
+    \subsubsection{Tecnologia: Node.js}
         \paragraph{Descrizione}
-
-\subsection{[Container 2]}
-    \subsubsection{Tecnologia}
-        \paragraph{Descrizione}
-
-\subsection{[Container 3]}
-    \subsubsection{Configurazione}
