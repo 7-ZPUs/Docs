@@ -83,11 +83,13 @@
         \hline
         \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
         \hline
+        0.5.0 & 2026/04/11 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Stesura sezione \ref{esport}\\ \end{tabular}\\
+        \hline
         0.4.0 & 2026/04/11 & Gingillino Aaron & Georgescu Diana &  \begin{tabular}[c]{@{}l@{}} Stesura sezioni \ref{integrità}, \ref{esplorazione}\\ \end{tabular} \\
         \hline
         0.3.0 & 2026/04/11 & Gingillino Aaron & Georgescu Diana & \begin{tabular}[c]{@{}l@{}} Stesura sezioni \ref{esplorazione ad albero}, \ref{ricerca}\\ \end{tabular} \\
         \hline
-        0.2.0 & 2026/04/10 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Stesura sezioni 1, 2, 3, 4\\ \end{tabular} \\        
+        0.2.0 & 2026/04/10 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Stesura sezioni \ref{intro}, \ref{requisiti}, \ref{contesto}, \ref{panoramica}\\ \end{tabular} \\        
         \hline
         0.1.0 & 2026/04/09 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Creazione del documento\\ e stesura iniziale \end{tabular} \\
         \hline
@@ -104,7 +106,7 @@
 
 \newpage
 
-\section{Introduzione}
+\section{Introduzione} \label{intro}
 
 \subsection{Obiettivo del documento}
 L’obiettivo del presente \glossario{documento} è descrivere in modo rigoroso le funzionalità e l'utilizzo del prodotto \textit{DIPReader}.\\
@@ -118,15 +120,7 @@ Il prodotto costituisce una soluzione essenziale per gli utenti operanti nei set
 
 \newpage
 
-\section{Requisiti di Sistema e Tecnologie}
-
-\subsection{Tecnologie utilizzate}
-Il sistema \textit{DIPReader} è sviluppato per operare in modo autonomo e performante:
-\begin{itemize}
-    \item \textbf{Angular}: Framework per l'interfaccia utente basato su \textit{Signals}. Il sistema è sviluppato utilizzando la versione Angular 21 o superiore.
-    \item \textbf{Electron}: Ambiente desktop per l'esecuzione cross-platform.
-    \item \textbf{Motore di ricerca embedded}: Il software utilizza un motore di ricerca integrato che non richiede l'utilizzo di un server standalone per il suo funzionamento.
-\end{itemize}
+\section{Requisiti di Sistema} \label{requisiti}
 
 \subsection{Requisiti minimi di sistema}
 Per garantire un corretto funzionamento, il dispositivo ospite deve soddisfare i seguenti requisiti minimi:
@@ -149,7 +143,7 @@ Il software opera in totale modalità \textit{portable}. Questo significa che l'
 
 \newpage
 
-\section{Contesto del sistema}
+\section{Contesto del sistema} \label{contesto}
 
 \subsection{Modello architetturale}
 Il software segue un modello di visualizzazione dei dati gerarchico. È concepito come applicazione \textit{portable} con motore di ricerca integrato, capace di operare completamente offline in assenza di un server standalone. Inoltre, il sistema supporta rigorosamente la complessa struttura dei metadati definita dalle Linee Guida AGID.
@@ -167,7 +161,7 @@ Il software segue un modello di visualizzazione dei dati gerarchico. È concepit
 
 \newpage
 
-\section{Panoramica delle Funzionalità}
+\section{Panoramica delle Funzionalità} \label{panoramica}
 Le principali funzionalità offerte da \textit{DIPReader} per l'interazione con i pacchetti DIP includono:
 \begin{itemize}
     \item \textbf{Navigazione e Visualizzazione:} Esplorazione gerarchica (Classe documentale, Processo, Documento) all'interno del DIP e visualizzazione in anteprima dei formati di documenti supportati.
@@ -208,7 +202,7 @@ Si verrà reindirizzati a questa sezione nel momento in cui si seleziona un nodo
     \item Verificare l'integrità dell'elemento e degli elementi contenuti in esso (per vedere l'esito dell'operazione consultare la sezione \ref{integrità})
     \item Visualizzare l'anteprima del documento (solo se si è selezionato un processo contenente documenti o il singolo documento)
     \item Stampare il documento    (TODO aggiungere ref)  
-    \item Scaricare il documento    (TODO aggiungere ref)
+    \item Scaricare il documento    (consultare la sezione \ref{esport})
 \end{itemize}
 
 \subsection{Esplorazione ad albero} \label{esplorazione ad albero}
@@ -233,5 +227,64 @@ Questa sezione permette di ricercare all'interno del DIP tramite le seguenti mod
 \subsection{Integrità} \label{integrità}
 Per accedere a questa sezione è possibile premere il pulsante "Sezione integrità" in alto a destra, contrassegnato dal simbolo di uno scudo. 
 In questa sezione è visibile il resoconto di tutti gli elementi per i quali è stata avviata una verifica d'integrità. Se si desidera è possibile avviare una verifica d'integrità globale per ogni elemento, ma per i file DIP più pesanti questa operazione potrebbe richiedere qualche minuto.
+
+\subsection{Esportazione e Salvataggio Documentale} \label {esport}
+
+L'utente può estrarre in locale i documenti conservati nel sistema. Il software supporta sia il salvataggio del singolo file principale, sia l'esportazione massiva di interi pacchetti documentali.
+
+\subsubsection{Procedura di Esportazione}
+
+L'azione di esportazione è disponibile esclusivamente per i nodi di tipo \textit{Documento Padre}. Per avviare il processo, seguire i passaggi indicati:
+
+\begin{enumerate}
+    \item \textbf{Selezione del Documento}: Identificare nell'albero di navigazione il documento desiderato. Una volta selezionato, l'area centrale mostrerà i metadati e le azioni disponibili;
+    \item \textbf{Attivazione Comando}: Cliccare sul pulsante \textbf{Scarica documento} (contrassegnato dal colore verde) situato nella barra superiore delle azioni (Figura \ref{fig:barra_azioni});
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/barra_azioni.png}
+    \caption{Barra delle azioni disponibili per i documenti padre.}
+    \label{fig:barra_azioni}
+\end{figure}
+
+\begin{enumerate}[resume]
+    \item \textbf{Configurazione dello scaricamento}: Il sistema aprirà una finestra di dialogo modale (\textit{Seleziona i documenti da scaricare}) che elenca il file principale e tutti gli eventuali allegati correlati (Figura \ref{fig:modale}).
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/modale.png}
+    \caption{Interfaccia di selezione granulare dei file per l'esportazione.}
+    \label{fig:modale}
+\end{figure}
+\subsubsection{Selezione Multipla e Allegati}
+
+All'interno della finestra di selezione, l'utente ha il pieno controllo sugli elementi da esportare:
+\begin{itemize}
+    \item \textbf{Selezione Granulare}: È possibile spuntare o deselezionare singolarmente ogni file. Per impostazione predefinita, il sistema seleziona l'intero pacchetto (file principale + allegati);
+    \item \textbf{Etichette di Tipologia}: Accanto a ogni nome file è presente un'etichetta identificativa (\textit{Principale} o \textit{Allegato}) per facilitare il riconoscimento dei contenuti;
+    \item \textbf{Conferma}: Il pulsante di conferma indica tra parentesi il numero totale di file pronti per lo scaricamento.
+\end{itemize}
+
+\subsubsection{Monitoraggio e Conclusione}
+
+Una volta avviata l'operazione, il software gestisce il trasferimento dei dati tramite il layer di infrastruttura IPC, fornendo feedback in tempo reale:
+
+\begin{itemize}
+    \item \textbf{Avanzamento}: In alto a destra comparirà una barra di stato che mostra l'elenco dei file in fase di scrittura e la conferma individuale per ogni elemento completato;
+    \item \textbf{Notifica Finale}: Al termine dell'intera procedura, un messaggio di conferma indicherà il numero totale di documenti salvati con successo sul \glossario{file system} locale (Figura \ref{fig:notifica_export});
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/notifica.png}
+    \caption{Messaggi di feedback per la conferma del salvataggio.}
+    \label{fig:notifica_export}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Destinazione}: I file vengono salvati nella cartella di destinazione predefinita del sistema o in quella selezionata tramite la finestra di dialogo ministeriale, mantenendo i nomi originali dei file presenti nel DIP.
+\end{itemize}
 
 \end{document}
