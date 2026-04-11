@@ -1,0 +1,67 @@
+@startuml C3_Main_Search_Flow
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title C4 Model - Level 3 (Main Process Components: Search Flow)
+
+LAYOUT_WITH_LEGEND()
+
+Container_Boundary(main_container, "Main Process") {
+  Component(search_ipc, "SearchIpcAdapter", "IPC Inbound Adapter", "Registers search channels and delegates to use cases")
+
+  Component(search_docs_uc, "SearchDocumentsUC", "Use Case", "Advanced structured metadata search")
+  Component(search_semantic_uc, "SearchSemanticUC", "Use Case", "Semantic retrieval based on embedding similarity")
+  Component(search_class_uc, "SearchDocumentalClassUC", "Use Case", "Document class lookup")
+  Component(search_process_uc, "SearchProcessUC", "Use Case", "Process lookup")
+  Component(custom_keys_uc, "GetCustomMetadataKeysUC", "Use Case", "Custom metadata keys for dynamic filters")
+
+  Component(doc_repo, "DocumentRepository", "Repository", "Document retrieval, semantic retrieval, metadata key stats")
+  Component(doc_class_repo, "DocumentClassRepository", "Repository", "Document class data access")
+  Component(doc_class_dao, "DocumentClassDAO", "DAO", "SQL queries for document classes")
+  
+  Component(process_repo, "ProcessRepository", "Repository", "Process data access")
+  Component(process_dao, "ProcessDAO", "DAO", "SQL queries for processes")
+  Component(word_embedding, "WordEmbedding", "Outbound Adapter", "Embedding generation and model state")
+  Component(doc_dao, "DocumentDAO", "DAO", "SQL queries for documents + metadata")
+}
+
+Container_Ext(renderer, "Renderer Search Facade/Gateway", "Angular", "Invokes search channels")
+ContainerDb_Ext(sqlite, "SQLite", "Relational metadata + vectors (sqlite-vss)")
+System_Ext(ai_runtime, "Local AI Runtime", "@xenova/transformers + ONNX Runtime")
+
+Rel(renderer, search_ipc, "ipc:search:text | ipc:search:advanced | ipc:search:semantic | search:get-custom-metadata-keys")
+
+Rel(search_ipc, search_docs_uc, "execute")
+Rel(search_ipc, search_semantic_uc, "execute")
+Rel(search_ipc, search_class_uc, "execute")
+Rel(search_ipc, search_process_uc, "execute")
+Rel(search_ipc, custom_keys_uc, "execute")
+Rel(search_ipc, word_embedding, "isInitialized")
+Rel(search_ipc, doc_repo, "getIndexedDocumentsCount")
+
+Rel(search_docs_uc, doc_repo, "searchDocument")
+Rel(search_semantic_uc, word_embedding, "generateEmbedding")
+Rel(search_semantic_uc, doc_repo, "searchDocumentSemantic")
+Rel(search_class_uc, doc_class_repo, "search")
+Rel(search_process_uc, process_repo, "search")
+Rel(process_repo, process_dao, "delegates")
+Rel(doc_class_repo, doc_class_dao, "delegates")
+Rel(custom_keys_uc, doc_repo, "getDistinctCustomMetadataKeys")
+
+Rel(doc_repo, doc_dao, "delegates")
+Rel(doc_dao, sqlite, "SQL read + vector similarity queries")
+Rel(word_embedding, ai_runtime, "Inference")
+Rel(doc_class_dao, sqlite, "SQL read")
+Rel(process_dao, sqlite, "SQL read")
+
+note right of search_ipc
+SOLID:
+- S: adapter delegates orchestration only
+- D: adapter/use cases depend on interfaces and tokens
+
+Patterns:
+- Hexagonal ports/adapters
+- Repository + DAO
+- Facade/Gateway at renderer edge
+end note
+
+@enduml

@@ -1,0 +1,8 @@
+\subsection{Componenti di Ricerca (FrontEnd)}
+\subsubsection{Descrizione}
+I componenti di ricerca sono responsabili della gestione delle funzionalità di compilazione dei campi di ricerca.
+\\ Come già anticipato il pattern applicato è quello di Smart and Dumb Components, per cui i componenti di ricerca sono suddivisi in componenti di pura presentazione e gestiti da i componenti \textit{"Padri"}, che si occupano di gestire la logica di questi ultimi nonchè le interazioni con altri servizi come la validazione dei filtri, la gestione dei campi di ricerca dinamici e il routing della sezione dei risultati.
+Nel contesto della ricerca questo coomponente Padre è SearchPageComponent.
+% FOTO SCHEMA SEARCHPAGE COMPONENT
+
+Come si può notare questo componente sfrutta la dependency injection nativa di Angular per risolvere le dipendenze. Inoltre sono iniettate le interfaccie dei servizi necessari per il funzionamento e non gli effettivi servizi, applicando il principio di sostituzione di Liskov. 
