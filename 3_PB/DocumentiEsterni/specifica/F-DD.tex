@@ -1,0 +1,46 @@
+\subsection{Componenti di Dettaglio (Frontend)}
+\subsubsection{Descrizione}
+All'interno di DIPReader la feature di dettaglio rappresenta il cuore della consultazione. Poiché un DIP aderisce allo standard OAIS, le entità che lo compongono all'interno dell'albero hanno una struttura ben definita non sempre trasversale a tutte le entità: processi, documenti informatici, documenti amministrativi informatici, aggregazioni documentali e le classi documentali che fungono da contenitori logici. La feature di dettaglio è quindi composta da più componenti, ognuna dedicata alla visualizzazione di una specifica entità, che condividono però un'interfaccia comune per poter essere utilizzata in modo intercambiabile all'interno dell'albero.\\
+
+Invece di duplicare le pagine di routing per ogni entità quindi è stata sviluppata la feature \textit{Item-Detail} per sfruttare una singola rotta generica \textit{/detail/:itemType/:itemId} che, a seconda del tipo di entità e dell'identificativo, renderizza il componente specifico per quella entità. Questo approccio implementa un design pattern di tipo strategy con polimorfismo statico, in cui la logica di selezione dell'entità da visualizzare è centralizzata e ben definita grazie alla tipizzazione statica di TypeScript, la scelta è stata dettata dalla considerazione che la struttura dei dati è ben definita e non si prevede l'aggiunta di nuovi tipi di entità in futuro, la possibilità di estensione riguarda invece i metadati delle entità.
+
+\subsubsection{Componente principale}
+Il componente principale della feature è \textit{ItemDetailPageComponent}, che agisce da orchestratore e si occupa di:
+\begin{itemize}
+    \item multiplexing dei Token delle facade delle singole entità e indirizzamento alla facade corretta, con un componente di fallback per coprire i casi di entità vuote come le classi documentali;
+    \item adattamento del layout grafico a seconda del tipo di entità, per i documenti viene utilizzato un layout comprensivo di un'anteprima del file, mentre per aggregazioni e processi viene mostrato un indice dei documenti che li compongono;
+\end{itemize}
+
+\subsubsection{Componente dei metadati}
+Il componente \textit{MetadataPanelComponent} decide quali componenti di metadati visualizzare in base al tipo di entità selezionata. Esso intercetta i dati passati dall'interfaccia dell'entità da visualizzare e in base ad essa decide quali componenti mostrare. Ad esempio, per i documenti sono presenti i componenti relativi alle informazioni del processo di conservazione, degli allegati, del formato del file, dei metadati custom, ecc., mentre per le aggregazioni e i processi vengono mostrati oltre ai metadati anche gli indici dei documenti che li compongono.
+
+\subsubsection{Componente di azioni sugli elementi}
+Il componente \textit{DocumentActionsComponent} crea la barra orizzontale di azioni che è possibile eseguire su un'entità, per tutte offre la verifica dell'integrità, per i documenti è anche possibile scaricarli o stamparli tramite il componente della feature di Export.
+
+\subsubsection{Componenti specifici per entità - DOCUMENT}
+È il modulo più denso di informazioni, ospita una notevole quantità di componenti \textit{dumb} per le sezioni specifiche dei metadati OAIS e i componenti per la visualizzazione dell'anteprima.
+
+\subparagraph{DocumentViewerComponent}
+Il componente \textit{DocumentViewerComponent} è responsabile della visualizzazione dell'anteprima del documento, supporta i formati PDF, XML, JPEG, PNG e testo semplice. Se il formato del documento non è supportato, interviene la logica di gestione degli errori unificata che restituisce un \textit{AppError}.
+
+\subparagraph{Schede metadati}
+Ogni sottoinsieme dei metadati nel formato XML viene visualizzato in un componente dedicato:
+\begin{itemize}
+    \item \textit{document-metadata}: identificativo, livello di riservatezza, hash del documento;
+    \item \textit{aip-info}: fornisce le proprietà di storicizzazione a lungo termine e riporta le informazioni di conservazione a norma;
+    \item \textit{attachments}: mostra l'elenco degli allegati associati al documento, con la relativa impronta crittografica;
+    \item \textit{change-tracking}: proprietà di versionamento;
+    \item \textit{classification-info}: restituisce l'indice e il piano di classificazione secondo i registri della PA;
+    \item \textit{format-info}: mostra il formato MIME del documento;
+    \item \textit{registration-data}: mostra i dati di registrazione del documento, sia protocollato che non protocollato;
+    \item \textit{subject-list}: mostra i soggetti coinvolti nella produzione del documento, con i relativi ruoli;
+    \item \textit{verification-info}: mostra i risultati dell'ultima verifica di integrità eseguita sul documento;
+    \item \textit{custom-metadata}: mostra i metadati custom definiti dall'ente, con un formato standard chiave-valore.
+\end{itemize}
+
+\subparagraph{Interfacce/Dominio/Servizi/Mappers}
+Come per tutte le feature, sono presenti le interfacce per i servizi, i servizi stessi, i mappers per adattare i dati restituiti dal backend al formato utilizzato dai componenti e le interfacce per i DTO estrate dagli schema XSD forniti e dalla documentazione AGID sui metadati. \\
+Rimangono rispettati quindi i principi di separazione dei compiti, single responsibility e inversion of control.
+
+\subsubsection{Componenti specifici per entità - AGGREGATE}
+I componenti dedicati alla visualizzazione di aggregazioni e processi sono più semplici rispetto a quelli dei documenti, in quanto non prevedono l'anteprima del file e hanno una quantità inferiore di metadati da visualizzare. 
