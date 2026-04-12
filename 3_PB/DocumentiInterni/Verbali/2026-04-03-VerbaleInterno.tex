@@ -1,0 +1,243 @@
+\documentclass[a4paper,12pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % per i caratteri accentati corretti in PDF
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+% Stili per i box migliorati
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{stepbox}{
+    colback=zpuswhite,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=1pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\newtcolorbox{highlightbox}{
+    colback=zpusgreen!10,
+    colframe=zpusdarkgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\color{zpusblack}\bfseries,
+    center
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 2026/04/03 \\
+\textbf{Durata:} 1 ora\\
+\textbf{Luogo:} Incontro online (Discord)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Gingillino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+\end{itemize}
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Stato di avanzamento dei lavori
+    \item Divisione ruoli
+\end{enumerate}
+
+
+\section{Svolgimento e Discussione}
+
+\subsection{Allineamento}
+I membri del gruppo stanno procedendo alla conclusione del progetto. Si prevede di finire il progetto entro lo sprint. 
+
+
+
+\subsection{Divisione Ruoli}
+\begin{table}[H]
+    \begin{adjustwidth}{-1cm}{-1cm}
+    \centering
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Membro} & \textbf{Ruolo} \\
+    \hline
+    Fattoni Antonio & Progettista, Verificatore\\
+    \hline
+    Georgescu Diana & Progettista, Verificatore, Responsabile\\
+    \hline
+    Gingillino Aaron & Progettista, Verificatore\\
+    \hline
+    Laoud Zakaria & Progettista, Verificatore\\
+    \hline
+    Rocco Matteo A. & Progettista, Verificatore, Amministratore\\
+    \hline
+    Soligo Lorenzo & Progettista, Verificatore \\
+    \hline
+    Vigolo Davide & Progettista, Verificatore \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\subsection{Stato Avanzamento Lavori}
+
+\subsubsection{Slittamento delle attività}
+La scrittura della specifica tecnica, del manuale utente e della lettera di presentazione è slittata rispetto allo sprint precedente, e si prevede di terminare le attività sopra elencate entro la fine dello sprint, con conseguente candidatura alla milestone PB.
+
+
+
+\section{Decisioni}
+\begin{enumerate}
+    \item Scrittura e completamento Specifica Tecnica.
+    \item Scrittura e completamento Lettera di presentazione per candidatura PB.
+    \item Scrittura e completamento Manuale Utente.
+\end{enumerate}
+
+
+\section*{Tabella delle decisioni}
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm} % modificare ogni volta in base alla larghezza della tabella per centrarla!!!
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
+    \hline
+    \#1 & \begin{tabular}[c]{@{}c@{}} Scrittura Specifica Tecnica \\ Modulo Verifica Integrità \end{tabular}  & \href{https://7zpus.atlassian.net/browse/DIPR-375}{DIPR-375} & Matteo Rocco & Zakaria Laoud \\
+    \hline
+    \#1 & \begin{tabular}[c]{@{}c@{}} Scrittura Specifica Tecnica \\ Modulo Search \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-376}{DIPR-376} & Lorenzo Soligo & Diana Georgescu \\
+    \hline
+    \#1 & \begin{tabular}[c]{@{}c@{}} Scrittura Specifica Tecnica \\ Modulo Document Detail\end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-377}{DIPR-377} & Matteo Rocco & Davide Vigolo \\
+    \hline
+    \#1 & \begin{tabular}[c]{@{}c@{}} Scrittura Specifica Tecnica \\ Modulo Aggregate Detail \end{tabular}& \href{https://7zpus.atlassian.net/browse/DIPR-378}{DIPR-378} & Matteo Rocco & \begin{tabular}[c]{@{}c@{}} Rocco Matteo A.\\ Aaron Gingillino \end{tabular} \\
+    \hline
+    \#1 & \begin{tabular}[c]{@{}c@{}} Scrittura Specifica Tecnica \\  Modulo Import \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-379}{DIPR-379} & Diana Georgescu & \begin{tabular}[c]{@{}c@{}} Rocco Matteo A.\\ Lorenzo Soligo \end{tabular} \\
+    \hline
+    \#1 & \begin{tabular}[c]{@{}c@{}} Scrittura Specifica Tecnica \\ Modulo Navigazione \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-380}{DIPR-380} & Aaron Gingillino & Diana Georgescu \\
+    \hline
+    \#1 & \begin{tabular}[c]{@{}c@{}} Scrittura Specifica Tecnica \\ Modulo Indexing \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-381}{DIPR-381} & Davide Vigolo & Antonio Fattoni \\
+    \hline
+    \#1 & \begin{tabular}[c]{@{}c@{}} Scrittura Specifica Tecnica \\ Modulo Browsing \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-382}{DIPR-382} & Antonio Fattoni & Davide Vigolo\\
+    \hline
+    \#1 & \begin{tabular}[c]{@{}c@{}} Scrittura Specifica Tecnica \\ Modulo Search e Export \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-383}{DIPR-383} & Zakaria Laoud & Diana Georgescu \\
+    \hline
+    \#2 & Scrittura Lettera di Presentazione & \href{https://7zpus.atlassian.net/browse/DIPR-384}{DIPR-384} & Diana Georgescu & Lorenzo Soligo \\
+    \hline
+    \#3 & Scrittura Manuale Utente & \href{https://7zpus.atlassian.net/browse/DIPR-396}{DIPR-396} & Diana Georgescu & Aaron Gingillino \\
+    \hline
+    \#0 & Aggiornamento Norme di Progetto  & \href{https://7zpus.atlassian.net/browse/DIPR-400}{DIPR-400}  & Matteo Rocco & Davide Vigolo \\
+    \hline
+    \#0 & Diapositive presentazione tecnica PB  & \href{https://7zpus.atlassian.net/browse/DIPR-400}{DIPR-402}  & Aaron Gingillino & Lorenzo Soligo \\
+    \hline
+    \#0 & Diapositive presentazione revisione PB  & \href{https://7zpus.atlassian.net/browse/DIPR-400}{DIPR-403}  & Lorenzo Soligo & Aaron Gingillino \\
+    \hline
+    \#0 & Scrittura Verbale Interno 2026-04-03  & \href{https://7zpus.atlassian.net/browse/DIPR-400}{DIPR-406}  & Aaron Gingillino & Lorenzo Soligo \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
