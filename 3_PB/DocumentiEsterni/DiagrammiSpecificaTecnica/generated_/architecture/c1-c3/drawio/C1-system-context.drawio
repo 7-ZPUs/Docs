@@ -1,0 +1,65 @@
+<mxfile host="app.diagrams.net" modified="2026-04-11T10:00:00.000Z" agent="Copilot" version="24.7.17" editor="draw.io">
+  <diagram id="C1Context" name="C1 System Context">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="user" value="Utente autorizzato" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="220" width="40" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="auditor" value="Auditor / Responsabile conservazione" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="420" width="40" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="boundary" value="DIP Reader Desktop Application" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="120" width="940" height="520" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dipreader" value="DIP Reader\n(Electron main.ts + core/src/* + Angular)\nImport, browse, search, integrity check" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="520" y="300" width="360" height="130" as="geometry" />
+        </mxCell>
+
+        <mxCell id="fs" value="File System locale\nDIP folders, XML metadata, binaries" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="140" width="280" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sqlite" value="SQLite locale\nMetadata, integrity states, vectors" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="270" width="280" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ai" value="Motore embedding locale\n@xenova/transformers + ONNX Runtime" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="400" width="280" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="os" value="Servizi OS\nopen / save / print" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="530" width="280" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="note" value="SOLID + Patterns\nS: use case separati\nO: estensione via nuovi adapter\nL: implementazioni sostituibili\nI: interfacce specifiche\nD: dipendenze su astrazioni\n\nHexagonal, DI, Repository+DAO, Adapter, Facade/Gateway" style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="300" y="500" width="560" height="130" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" value="usa" style="endArrow=block;html=1;" edge="1" parent="1" source="user" target="dipreader">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="verifica integrita" style="endArrow=block;html=1;" edge="1" parent="1" source="auditor" target="dipreader">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="legge" style="endArrow=block;html=1;" edge="1" parent="1" source="dipreader" target="fs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="indicizza/interroga" style="endArrow=block;html=1;" edge="1" parent="1" source="dipreader" target="sqlite">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="embedding/similarita" style="endArrow=block;html=1;" edge="1" parent="1" source="dipreader" target="ai">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="open/save/print" style="endArrow=block;html=1;" edge="1" parent="1" source="dipreader" target="os">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
