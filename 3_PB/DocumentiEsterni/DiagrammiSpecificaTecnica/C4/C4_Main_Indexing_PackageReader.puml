@@ -1,0 +1,50 @@
+@startuml Class Diagram - Main Indexing Flow - Group 2
+
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+hide empty members
+
+title Group 2 - LocalPackageReaderAdapter, FileSystemProvider, DataMapper, DipParser
+
+  interface IPackageReaderPort {
+    + readDip(dipPath: string): Promise<Dip>
+    + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
+    + readProcesses(dipPath: string): AsyncGenerator<Process>
+    + readDocuments(dipPath: string): AsyncGenerator<Document>
+    + readFiles(dipPath: string): AsyncGenerator<File>
+    + readFileBytes(filePath: string): Promise<NodeJS.ReadableStream>
+  }
+
+  class LocalPackageReaderAdapter {
+    - parser: IDipParser
+    - fileSystemProvider: IFileSystemProvider
+    - mapper: IDataMapper
+    + readDip(dipPath: string): Promise<Dip>
+    + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
+    + readProcesses(dipPath: string): AsyncGenerator<Process>
+    + readDocuments(dipPath: string): AsyncGenerator<Document>
+    + readFiles(dipPath: string): AsyncGenerator<File>
+    + readFileBytes(filePath: string): Promise<NodeJS.ReadableStream>
+    - resolveDipIndexFilename(dipPath: string): Promise<string>
+    - getParsedIndex(dipPath: string): Promise<any>
+    - getOptionalMetadata(dipPath: string, relativePath: string | null): Promise<any>
+  }
+
+  interface IDipParser {
+  }
+
+  interface IDataMapper {
+  }
+
+  interface IFileSystemProvider {
+  }
+
+LocalPackageReaderAdapter ..|> IPackageReaderPort
+LocalPackageReaderAdapter --> IDipParser
+LocalPackageReaderAdapter --> IDataMapper
+LocalPackageReaderAdapter --> IFileSystemProvider
+
+@enduml
