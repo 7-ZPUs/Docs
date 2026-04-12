@@ -48,6 +48,7 @@ I filtri custom sono metadati personalizzati di un documento costituiti da una c
 \paragraph{Componenti di visualizzazione}
 La visualizzazione dei risultati di ricerca deve rendere possibile la visualizzazione all'utente di anteprime di processi, classi, aggregazioni e documenti. Queste visualizzazioni sono naturalmente diverse. Per esempio solo i documenti possono essere stampati o scaricati. Le informazioni mostrate per i processi sono invece differenti da quelle mostrate per i documenti e dalle classi.
 \\La necessità è quindi quella di mostrare in modo dinamico i risultati di ricerca in base al tipo di risultato che viene ritornato. Per questo motivo è stato scelto di sfruttare un pattern \textit{Factory}.
-\\ il \textit{SearchResultFactory} si occupa di istanziare dinamicamente il componente di visualizzazione corretto in base al tipo di risultato di ricerca sfruttando un registry che associa al tipo di risultato il componente di visualizzazione corrispondente. 
+\\ il \textit{SearchResultFactory} si occupa di istanziare dinamicamente il componente di visualizzazione corretto in base al tipo di risultato di ricerca sfruttando un registry che associa al tipo di risultato il componente di visualizzazione corrispondente . 
 \paragraph{Search bar}
-La
+La Search bar è invece gestita da un componente dedicato. La sua responsabilità è quella di permettere all'utente di ricercare processi tramite id di processo, classi per nome e ricerche di testo libero sfruttando la ricerca semantica.
+\\ Oltre al compoenente di presentazione pure è stato realizzato un servizio dedicato alla logica del componente. Per la ricerca semantica infatti è stato aggiunto un checkbox. Alla versione attuale del codice la ricerca semantica è abilitata per la ricerca di documenti ma se in un futuro si volesse estendere questa funzionalità basterebbe modificare il servizio \textit{SearchBarRulesManager}
