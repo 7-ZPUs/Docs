@@ -116,6 +116,33 @@ Contratto IPC definito in \texttt{ipc-channels.ts} e registrato in \texttt{Check
 \noindent
 \textbf{Nota:} Il canale \texttt{INTEGRITY\_VERIFY} e definito in \texttt{ipc-channels.ts} ma non risulta registrato in \texttt{CheckIntegrityIpcAdapter}.
 
+\subsubsection{Diagrammi architetturali (C4)}
+\label{sec:integrity:diagrammi}
+
+\noindent
+Il flusso backend condiviso con il modulo Browsing e rappresentato in Figura~\ref{fig:browsing:c3-shared}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../../assets/outDiagrammiST/C4_Integrity_Backend.png}
+\caption{C4 del modulo Verifica Integrita}
+\label{fig:integrity:c4-backend}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../../assets/outDiagrammiST/C4_Integrity_Verification_Sequence.png}
+\caption{Sequenza di verifica e propagazione degli stati}
+\label{fig:integrity:c4-sequence}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{../../assets/outDiagrammiST/C4_Integrity_Aggregation_State.png}
+\caption{Macchina a stati per l'algoritmo di aggregazione}
+\label{fig:integrity:c4-aggregation-state}
+\end{figure}
+
 \subsubsection{Use Case: firme check}
 \label{sec:integrity:usecase}
 

@@ -1,0 +1,188 @@
+@startuml C4_Browsing_Backend
+
+title C4 - Backend Browsing (compatto)
+
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package "Domain" {
+  enum IntegrityStatusEnum {
+    VALID
+    INVALID
+    UNKNOWN
+  }
+
+  class Dip <<entity>> {
+    +id: number
+    +uuid: string
+    +integrityStatus: IntegrityStatusEnum
+  }
+
+  class DocumentClass <<entity>> {
+    +id: number
+    +dipId: number
+    +name: string
+    +integrityStatus: IntegrityStatusEnum
+  }
+
+  class Process <<entity>> {
+    +id: number
+    +documentClassId: number
+    +integrityStatus: IntegrityStatusEnum
+  }
+
+  class Document <<entity>> {
+    +id: number
+    +processId: number
+    +integrityStatus: IntegrityStatusEnum
+  }
+
+  class File <<entity>> {
+    +id: number
+    +documentId: number
+    +filename: string
+    +path: string
+    +hash: string
+    +integrityStatus: IntegrityStatusEnum
+  }
+
+  class Metadata <<value-object>>
+}
+
+Dip           "1" o-- "0..*" DocumentClass
+DocumentClass "1" o-- "0..*" Process
+Process       "1" o-- "0..*" Document
+Document      "1" o-- "0..*" File
+
+package "Application" {
+  interface IBrowsingQueryService {
+    +getDipById(id: number): Dip | null
+    +getClassesByDipId(dipId: number): DocumentClass[]
+    +getProcessesByClassId(classId: number): Process[]
+    +getDocumentsByProcessId(processId: number): Document[]
+    +getFilesByDocumentId(documentId: number): File[]
+    +getByStatus(status: IntegrityStatusEnum): unknown[]
+  }
+
+  class BrowsingQueryService <<use-cases>>
+}
+
+BrowsingQueryService ..|> IBrowsingQueryService
+
+note right of BrowsingQueryService
+  Thin wrappers sui repository.
+  Famiglie UC coperte:
+  - get by hierarchy
+  - get by id
+  - get by integrity status
+end note
+
+package "Infrastructure - IPC" {
+  class BrowsingIpcAdapter {
+    +register(): void
+    +handle(channel: string, payload: unknown): unknown
+  }
+}
+
+note right of BrowsingIpcAdapter
+  Canali principali:
+  BROWSE_GET_DIP_BY_ID
+  BROWSE_GET_DOCUMENT_CLASS_BY_DIP_ID
+  BROWSE_GET_PROCESS_BY_DOCUMENT_CLASS
+  BROWSE_GET_DOCUMENTS_BY_PROCESS
+  BROWSE_GET_FILE_BY_DOCUMENT
+  + varianti BY_ID / BY_STATUS
+end note
+
+package "Infrastructure - Persistence" {
+  interface IDipRepository {
+    +getById(id: number): Dip | null
+    +getByStatus(status: IntegrityStatusEnum): Dip[]
+  }
+
+  interface IDocumentClassRepository {
+    +getByDipId(dipId: number): DocumentClass[]
+    +getByStatus(status: IntegrityStatusEnum): DocumentClass[]
+  }
+
+  interface IProcessRepository {
+    +getByDocumentClassId(classId: number): Process[]
+    +getByStatus(status: IntegrityStatusEnum): Process[]
+  }
+
+  interface IDocumentRepository {
+    +getByProcessId(processId: number): Document[]
+    +getByStatus(status: IntegrityStatusEnum): Document[]
+  }
+
+  interface IFileRepository {
+    +getByDocumentId(documentId: number): File[]
+    +getByStatus(status: IntegrityStatusEnum): File[]
+  }
+
+  class DipRepository
+  class DocumentClassRepository
+  class ProcessRepository
+  class DocumentRepository
+  class FileRepository
+
+  interface IDipDAO
+  interface IDocumentClassDAO
+  interface IProcessDAO
+  interface IDocumentDAO
+  interface IFileDAO
+
+  class DipDAO
+  class DocumentClassDAO
+  class ProcessDAO
+  class DocumentDAO
+  class FileDAO
+
+  class MetadataHelper
+  class DatabaseProvider
+}
+
+DipRepository ..|> IDipRepository
+DocumentClassRepository ..|> IDocumentClassRepository
+ProcessRepository ..|> IProcessRepository
+DocumentRepository ..|> IDocumentRepository
+FileRepository ..|> IFileRepository
+
+DipDAO ..|> IDipDAO
+DocumentClassDAO ..|> IDocumentClassDAO
+ProcessDAO ..|> IProcessDAO
+DocumentDAO ..|> IDocumentDAO
+FileDAO ..|> IFileDAO
+
+BrowsingIpcAdapter --> IBrowsingQueryService
+
+IBrowsingQueryService --> IDipRepository
+IBrowsingQueryService --> IDocumentClassRepository
+IBrowsingQueryService --> IProcessRepository
+IBrowsingQueryService --> IDocumentRepository
+IBrowsingQueryService --> IFileRepository
+
+IDipRepository --> IDipDAO
+IDocumentClassRepository --> IDocumentClassDAO
+IProcessRepository --> IProcessDAO
+IDocumentRepository --> IDocumentDAO
+IFileRepository --> IFileDAO
+
+IDipDAO ..> Dip
+IDocumentClassDAO ..> DocumentClass
+IProcessDAO ..> Process
+IDocumentDAO ..> Document
+IFileDAO ..> File
+
+DocumentDAO --> MetadataHelper : nested metadata
+ProcessDAO --> MetadataHelper : nested metadata
+DatabaseProvider --> DipDAO
+DatabaseProvider --> DocumentClassDAO
+DatabaseProvider --> ProcessDAO
+DatabaseProvider --> DocumentDAO
+DatabaseProvider --> FileDAO
+
+@enduml

@@ -1,0 +1,56 @@
+@startuml C4_Integrity_Verification_Sequence
+
+title C4 - Sequence: Verifica Integrita Backend (compatta)
+
+autonumber
+
+actor Renderer
+participant "CheckIntegrityIpcAdapter" as Adapter
+participant "ICheck*IntegrityStatusUC" as UseCase
+participant "IntegrityVerificationService" as Service
+participant "SqliteTransactionManager" as Tx
+participant "Repositories\n(Dip/Class/Process/Document/File)" as Repos
+participant "HashingService" as Hash
+
+Renderer -> Adapter: invoke(CHECK_*_INTEGRITY_STATUS, id)
+Adapter -> UseCase: execute(id)
+UseCase -> Service: check*IntegrityStatus(id)
+
+Service -> Tx: runInTransaction(work)
+activate Tx
+Tx -> Service: BEGIN IMMEDIATE
+
+Service -> Service: resolveRoot(level, id)
+alt root assente
+  Service -> Tx: throw Error("Root not found")
+  Tx -> Service: ROLLBACK
+  Service --> UseCase: throw
+  UseCase --> Adapter: throw
+  Adapter --> Renderer: INTEGRITY_VERIFY_ERROR
+else root trovato
+  loop DFS su sottoalbero (File -> Document -> Process -> Class -> Dip)
+    Service -> Repos: getChildren(level, nodeId)
+    alt level == FILE
+      Service -> Hash: checkFileIntegrity(absPath, expectedHash)
+      Hash --> Service: VALID | INVALID
+    else level != FILE
+      Service -> Service: aggregateStatuses(childrenStatuses)
+    end
+    Service -> Repos: updateIntegrityStatus(level, nodeId, status)
+  end
+
+  Tx -> Service: COMMIT
+  Service --> UseCase: IntegrityStatusEnum
+  UseCase --> Adapter: IntegrityStatusEnum
+  Adapter --> Renderer: IntegrityStatusEnum
+end
+
+deactivate Tx
+
+note over Service
+  Flusso identico per CHECK_FILE / CHECK_DOCUMENT /
+  CHECK_PROCESS / CHECK_DOCUMENT_CLASS / CHECK_DIP.
+  Qualsiasi errore durante la cascata produce rollback completo.
+end note
+
+@enduml
