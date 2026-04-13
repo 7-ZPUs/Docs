@@ -120,11 +120,25 @@ definito nell’apposito documento
 
 \newpage
 \section{Tecnologie utilizzate}
-La scelta delle teccnologie è stata guidata dalla necessità di rispetta i
+La scelta delle tecnologie è stata guidata dalla necessità di rispettare i
 vincoli richiesti dalla proponente legati ad autoconsistenza, portabilità e
 facilità d'uso, nonché da considerazioni relative alla facilità di sviluppo,
 alla disponibilità di risorse e alla compatibilità con i requisiti funzionali e
 non funzionali del sistema.\\
+
+\subsection{Criteri architetturali e principi di progettazione}
+Le scelte architetturali del prodotto sono orientate alla separazione delle responsabilita,
+alla riduzione dell'accoppiamento e alla facilita di evoluzione del sistema.
+In particolare:
+\begin{itemize}
+      \item \textbf{Single Responsibility Principle (SRP):} UI, orchestrazione applicativa, accesso ai dati e mapping sono separati in layer distinti.
+      \item \textbf{Open/Closed Principle (OCP):} l'estensione di funzionalita avviene prevalentemente tramite nuove implementazioni (es. adapter/gateway/componenti specializzati) senza modificare i contratti esistenti.
+      \item \textbf{Liskov Substitution Principle (LSP):} i componenti dipendono da interfacce e token di iniezione, favorendo la sostituibilita delle implementazioni.
+      \item \textbf{Interface Segregation Principle (ISP):} le interfacce sono granulari e orientate al caso d'uso, evitando dipendenze inutili.
+      \item \textbf{Dependency Inversion Principle (DIP):} i livelli alti dipendono da astrazioni e non da classi concrete, grazie alla Dependency Injection.
+\end{itemize}
+Questi principi sono applicati in modo coerente lungo i container \textit{Renderer} e \textit{Main},
+con l'obiettivo di garantire testabilita, manutenibilita e robustezza del prodotto.
 
 \section{Linguaggio di Programmazione: TypeScript}
 \begin{table}[H]
@@ -228,7 +242,7 @@ Il caso d'uso principale del sistema è quello di un utente che desidera esplora
 
 \subsection{Modello architetturale}
 I vincoli di progetto hanno guidato la progettazione del sistema, influenzando le scelte tecnologiche e architetturali. Il sistema progettato quindi è pensato per non utilizzare tecnologie che richiedano installazioni o configurazioni complesse da parte dell'utente. I servizi offerti sono tutti accessibili in assenza di connettività, complesa la ricerca semantica. \\
-Gli unici attori esterni coinvolti sono il file \textit{system locale} da cui viene letto il DIP. {STAMPA DA VEDERE SE HA SENSO METTERLO}
+Gli unici attori esterni coinvolti sono il file \textit{system locale} da cui viene letto il DIP e il sistema operativo per l'interazione con la stampante e il download dei file.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/DiagrammaC1.png}
@@ -240,5 +254,5 @@ Gli unici attori esterni coinvolti sono il file \textit{system locale} da cui vi
 Gli unici attori esterni come già detto sono:
 \begin{itemize}
     \item il file system locale da cui viene letto il DIP
-    \item {STAMPA DA VEDERE SE HA SENSO METTERLO}
+    \item il sistema operativo per l'interazione con la stampante e il download dei file
 \end{itemize}
