@@ -1,56 +1,59 @@
 @startuml C4_Integrity_Verification_Sequence
 
-title C4 - Sequence: Verifica Integrita Backend (compatta)
+title C4 - Sequence: Verifica Integrita e propagazione stati (compatta)
 
 autonumber
+hide footbox
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 80
 
-actor Renderer
-participant "CheckIntegrityIpcAdapter" as Adapter
-participant "ICheck*IntegrityStatusUC" as UseCase
-participant "IntegrityVerificationService" as Service
+actor Renderer as UI
+participant "CheckIntegrityIpcAdapter" as IPC
+participant "CheckIntegrityUC" as UC
+participant "IntegrityVerificationService" as VerifySvc
+participant "Repo Layer" as Repo
 participant "SqliteTransactionManager" as Tx
-participant "Repositories\n(Dip/Class/Process/Document/File)" as Repos
 participant "HashingService" as Hash
 
-Renderer -> Adapter: invoke(CHECK_*_INTEGRITY_STATUS, id)
-Adapter -> UseCase: execute(id)
-UseCase -> Service: check*IntegrityStatus(id)
+UI -> IPC: invoke(check-integrity:*, id)
+IPC -> UC: execute(id)
+UC -> VerifySvc: checkIntegrity(level, id)
 
-Service -> Tx: runInTransaction(work)
+VerifySvc -> Tx: runInTransaction(work)
 activate Tx
-Tx -> Service: BEGIN IMMEDIATE
+Tx -> VerifySvc: BEGIN IMMEDIATE
 
-Service -> Service: resolveRoot(level, id)
-alt root assente
-  Service -> Tx: throw Error("Root not found")
-  Tx -> Service: ROLLBACK
-  Service --> UseCase: throw
-  UseCase --> Adapter: throw
-  Adapter --> Renderer: INTEGRITY_VERIFY_ERROR
-else root trovato
-  loop DFS su sottoalbero (File -> Document -> Process -> Class -> Dip)
-    Service -> Repos: getChildren(level, nodeId)
-    alt level == FILE
-      Service -> Hash: checkFileIntegrity(absPath, expectedHash)
-      Hash --> Service: VALID | INVALID
-    else level != FILE
-      Service -> Service: aggregateStatuses(childrenStatuses)
-    end
-    Service -> Repos: updateIntegrityStatus(level, nodeId, status)
+VerifySvc -> VerifySvc: resolveRoot(level, id)
+loop per node in subtree (bottom-up)
+  VerifySvc -> Repo: getChildren(level, nodeId)
+  alt node is FILE
+    VerifySvc -> Hash: checkFileIntegrity(path, expectedHash)
+    Hash --> VerifySvc: VALID | INVALID
+  else node is aggregate
+    VerifySvc -> VerifySvc: aggregateStatuses(children)
   end
-
-  Tx -> Service: COMMIT
-  Service --> UseCase: IntegrityStatusEnum
-  UseCase --> Adapter: IntegrityStatusEnum
-  Adapter --> Renderer: IntegrityStatusEnum
+  VerifySvc -> Repo: updateIntegrityStatus(level, nodeId, status)
 end
+
+Tx -> VerifySvc: COMMIT
+VerifySvc --> UC: IntegrityStatusEnum
+UC --> IPC: IntegrityStatusEnum
+IPC --> UI: IntegrityStatusEnum
 
 deactivate Tx
 
-note over Service
-  Flusso identico per CHECK_FILE / CHECK_DOCUMENT /
-  CHECK_PROCESS / CHECK_DOCUMENT_CLASS / CHECK_DIP.
-  Qualsiasi errore durante la cascata produce rollback completo.
+note over VerifySvc, Tx
+If root is missing or any runtime error occurs:
+- transaction is rolled back
+- IPC returns INTEGRITY_VERIFY_ERROR
+end note
+
+note right of VerifySvc
+  aggregateStatuses rules:
+  1) no children -> VALID
+  2) any INVALID -> INVALID
+  3) else, any UNKNOWN -> UNKNOWN
+  4) else -> VALID
 end note
 
 @enduml

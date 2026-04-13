@@ -1,40 +1,51 @@
 @startuml C4_Integrity_Aggregation_State
 
-title C4 - State: aggregateStatuses e propagazione gerarchica (compatto)
+title C4 - State: aggregateStatuses e propagazione gerarchica
 
-left to right direction
+top to bottom direction
 skinparam linetype ortho
-
-[*] --> ValutaNodo : start(rootId, level)
-
-state ValutaNodo {
-  [*] --> CaricaFigli
-  state Decisione <<choice>>
-
-  CaricaFigli --> Decisione
-  Decisione --> StatoValid : figli == 0
-  Decisione --> StatoInvalid : esiste INVALID
-  Decisione --> StatoUnknown : no INVALID && esiste UNKNOWN
-  Decisione --> StatoValid : tutti VALID
-
-  StatoValid : status = VALID
-  StatoInvalid : status = INVALID
-  StatoUnknown : status = UNKNOWN
+skinparam ArrowFontSize 12
+skinparam state {
+  FontSize 13
+  Padding 14
 }
 
-ValutaNodo --> Persisti
-Persisti : updateIntegrityStatus(nodeId, status)
+state "Carica figli" as CaricaFigli
+state "Decidi stato" as Decisione <<choice>>
+state "VALID" as StatoValid
+state "INVALID" as StatoInvalid
+state "UNKNOWN" as StatoUnknown
+state "Persisti stato" as Persisti
+state "Risali al parent" as Risali
+state "Completato" as Completato
 
+[*] --> CaricaFigli : start(rootId, level)
+CaricaFigli --> Decisione
+
+Decisione --> StatoInvalid : esiste INVALID
+Decisione --> StatoUnknown : nessun INVALID\ned esiste UNKNOWN
+Decisione --> StatoValid : nessun figlio
+Decisione --> StatoValid : tutti VALID
+
+StatoValid : status = VALID
+StatoInvalid : status = INVALID
+StatoUnknown : status = UNKNOWN
+
+StatoValid --> Persisti
+StatoInvalid --> Persisti
+StatoUnknown --> Persisti
+
+Persisti : updateIntegrityStatus(nodeId, status)
 Persisti --> Risali : parent esiste
 Persisti --> Completato : parent assente
 
 Risali : nodeId = parentId
-Risali --> ValutaNodo
+Risali --> CaricaFigli
 
 Completato : return stato root
 Completato --> [*]
 
-note bottom of ValutaNodo
+note right of CaricaFigli
   Livelli coperti:
   File -> Document -> Process -> DocumentClass -> Dip
 end note

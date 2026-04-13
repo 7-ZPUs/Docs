@@ -111,15 +111,36 @@ Contratto IPC definito in \texttt{ipc-channels.ts} e registrato in \texttt{Brows
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{../../assets/outDiagrammiST/C3_Backend_Browsing_Integrity.png}
+  \includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/C3_Backend_Browsing_Integrity.png}
   \caption{C3 del backend: orchestrazione condivisa tra Browsing e Verifica Integrita}
   \label{fig:browsing:c3-shared}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{../../assets/outDiagrammiST/C4_Backend_Browsing.png}
-  \caption{C4 del modulo Browsing}
+  \includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/C3_Backend_Browsing.png}
+  \caption{C3 del backend: focus sul flusso Browsing (BrowsingIpcAdapter)}
+  \label{fig:browsing:c3-focused}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/C3_Backend_File_Operations.png}
+  \caption{C3 del backend: focus sulle operazioni file (FileViewerIpcAdapter)}
+  \label{fig:fileops:c3-focused}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{../../assets/outDiagrammiST/C4_Browsing_Domain.png}
+  \caption{C4 del modulo Browsing - modello di dominio}
+  \label{fig:browsing:c4-domain}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/C4_Backend_Browsing.png}
+  \caption{C4 del modulo Browsing - architettura applicativa e infrastrutturale}
   \label{fig:browsing:c4-backend}
 \end{figure}
 
@@ -351,35 +372,6 @@ Trasformazioni tra layer di persistenza, entity e DTO:
   \item Legge contenuto con \texttt{fs.readFileSync}
   \item In caso di errore I/O: log e ritorno \texttt{null}
 \end{enumerate}
-
-\subsubsection{Test coverage}
-\label{sec:browsing:test}
-
-\noindent
-\begin{table}[H]
-  \centering
-  \footnotesize
-  \setlength{\tabcolsep}{4pt}
-  \renewcommand{\arraystretch}{1.5}
-  \begin{tabularx}{\textwidth}{|l|Y|}
-    \hline
-    \textbf{Suite} & \textbf{Copertura} \\
-    \hline
-    \texttt{BrowsingIpcAdapter.spec.ts} & 
-      Canali; mapping DTO; semantica null \\
-    \hline
-    \texttt{*UseCases.spec.ts} & 
-      Use case $\to$ repository \\
-    \hline
-    \texttt{*Repository.spec.ts} & 
-      Repository $\to$ DAO \\
-    \hline
-    \texttt{*DAO.spec.ts} & 
-      Query SQL; persistenza; ricostruzione entity \\
-    \hline
-  \end{tabularx}
-  \label{tab:browsing:tests}
-\end{table}
 
 
 \newpage
