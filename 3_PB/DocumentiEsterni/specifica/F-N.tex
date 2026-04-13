@@ -5,9 +5,7 @@ I componenti di navigazione sono responsabili della gestione della struttura ad 
 
 Il pattern applicato è quello di Smart and Dumb Components: i componenti di presentazione sono privi di logica applicativa e delegano la gestione dello stato e delle interazioni con i servizi al componente padre \textit{DipExplorerComponent}, che coordina la navigazione tramite la \textit{DipFacade}.
 
-Nel contesto della navigazione il componente padre è \textit{DipExplorerComponent}.
-
-\subsubsection{Pattern architetturali}
+\subsubsection{Pattern e scelte architetturali}
 
 \subparagraph{Facade e Angular Signals}
 Tutta la logica di state management è centralizzata in \textit{DipFacade}, che espone un'interfaccia semplificata basata su \textit{Signal<DipState>} e coordina le chiamate ai servizi sottostanti, nascondendo la complessità delle interazioni IPC. Il sistema reattivo di Angular aggiorna automaticamente la UI in risposta ai cambiamenti di stato senza richiedere una gestione manuale delle sottoscrizioni, limitando gli aggiornamenti ai soli componenti interessati.
