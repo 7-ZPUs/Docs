@@ -1,71 +1,76 @@
 @startuml Export_IPC_Part1
-scale 1.0
-title Diagramma delle Classi — Export IPC (Parte 1)\nUse Cases + ExportResult
-
+title Diagramma delle Classi — FileViewerIpcAdapter, Use Cases, ExportResult
+skinparam classAttributeIconSize 0
 skinparam linetype ortho
-skinparam nodesep 30
-skinparam ranksep 40
-top to bottom direction
-skinparam groupInheritance 2
-skinparam pageMargin 10
-skinparam dpi 150
+left to right direction
+hide empty members
 
-skinparam defaultFontSize 12
-skinparam defaultFontName Arial
-
-skinparam class {
-    BackgroundColor White
-    BorderColor #555555
-    ArrowColor #333333
-    FontSize 12
-    HeaderBackgroundColor #F0F0F0
-    AttributeFontSize 11
+class FileViewerIpcAdapter {
+    + {static} register(ipcMain: IpcMain): void
 }
 
-skinparam interface {
-    BackgroundColor #FFFDE7
-    BorderColor #F9A825
-    FontSize 12
+interface IExportFileUC {
+    + execute(fileId: number, targetPath: string): Promise<ExportResult>
 }
-
-skinparam package {
-    FontSize 11
-    BorderColor #999999
+interface IPrintFileUC {
+    + execute(fileId: number): Promise<ExportResult>
 }
-
-package "Application Layer (ipc)" as ipc{
-    class FileViewerIpcAdapter {
-        + {static} register(ipcMain: IpcMain): void
-    }
+class ExportFileUC {
+    - fileRepo: IFileRepository
+    - exportPort: IExportPort
+    - packageReader: IFileSystemPort
+    - dipPath: string
+    + execute(fileId: number, targetPath: string): Promise<ExportResult>
 }
-
-package "Business Layer" as core  {
-    package "Use Cases" as uc {
-        interface IExportFileUC {
-            + execute(fileId: number, targetPath: string): Promise<ExportResult>
-        }
-
-        interface IPrintFileUC {
-            + execute(fileId: number): Promise<ExportResult>
-        }
-
-        class ExportFileUC {
-            - fileRepo: IFileRepository
-            - exportPort: IExportPort
-            - packageReader: IFileSystemPort
-            - dipPath: string
-            + execute(fileId: number, targetPath: string): Promise<ExportResult>
-        }
-
-        class PrintFileUC {
-            - fileRepo: IFileRepository
-            - dipPath: string
-            - printPort: IPrintPort
-            + execute(fileId: number): Promise<ExportResult>
-        }
-    }
+class PrintFileUC {
+    - fileRepo: IFileRepository
+    - dipPath: string
+    - printPort: IPrintPort
+    + execute(fileId: number): Promise<ExportResult>
 }
+class ExportResult <<value object>> {}
 
+FileViewerIpcAdapter --> IExportFileUC : invoca
+FileViewerIpcAdapter --> IPrintFileUC  : invoca
+PrintFileUC  ..|> IPrintFileUC : <<implements>>
+PrintFileUC  ..> ExportResult : <<returns>>
+ExportFileUC ..> ExportResult : <<returns>>
+ExportFileUC ..|> IExportFileUC : <<implements>>
+@enduml
+
+@startuml Export_IPC_Part2
+title Diagramma delle Classi — Use Cases e Ports
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+hide empty members
+
+class ExportFileUC {
+    - fileRepo: IFileRepository
+    - exportPort: IExportPort
+    - packageReader: IFileSystemPort
+    - dipPath: string
+    + execute(fileId: number, 
+    targetPath: string): Promise<ExportResult>
+}
+class PrintFileUC {
+    - fileRepo: IFileRepository
+    - dipPath: string
+    - printPort: IPrintPort
+    + execute(fileId: 
+    number): Promise<ExportResult>
+}
+interface IFileSystemPort {
+    + readFileBytes(filePath:
+     string): Promise<Buffer>
+}
+interface IExportPort {
+    + exportFile(stream: ReadableStream,
+     destPath: string): Promise<ExportResult>
+}
+interface IPrintPort {
+    + printSingle(absolutePath: string, 
+    opts: PrintOptions): Promise<ExportResult>
+}
 class ExportResult <<value object>> {
     + success: boolean
     + errorCode?: string
@@ -74,169 +79,44 @@ class ExportResult <<value object>> {
     + {static} fail(code: string, msg: string): ExportResult
 }
 
-ipc -[hidden]down-> core
-
-FileViewerIpcAdapter --> ExportFileUC : invoca
-FileViewerIpcAdapter --> PrintFileUC  : invoca
-
-ExportFileUC ..|> IExportFileUC
-PrintFileUC  ..|> IPrintFileUC
-
-ExportFileUC ..> ExportResult : <<returns>>
-PrintFileUC  ..> ExportResult : <<returns>>
-@enduml
-
-@startuml Export_IPC_Part2
-scale 0.9
-title Diagramma delle Classi — Export IPC (Parte 2)\nUse Cases + Ports (interfacce)
-
-skinparam linetype ortho
-skinparam nodesep 30
-skinparam ranksep 40
-top to bottom direction
-skinparam groupInheritance 2
-skinparam pageMargin 10
-skinparam dpi 150
-
-skinparam defaultFontSize 12
-skinparam defaultFontName Arial
-
-skinparam class {
-    BackgroundColor White
-    BorderColor #555555
-    ArrowColor #333333
-    FontSize 12
-    HeaderBackgroundColor #F0F0F0
-    AttributeFontSize 11
-}
-
-skinparam interface {
-    BackgroundColor #FFFDE7
-    BorderColor #F9A825
-    FontSize 12
-}
-
-skinparam package {
-    FontSize 11
-    BorderColor #999999
-}
-
-package "Business Layer" as core  {
-    package "Use Cases" as uc {
-        class ExportFileUC {
-            - fileRepo: IFileRepository
-            - exportPort: IExportPort
-            - packageReader: IFileSystemPort
-            - dipPath: string
-            + execute(fileId: number, targetPath: string): Promise<ExportResult>
-        }
-
-        class PrintFileUC {
-            - fileRepo: IFileRepository
-            - dipPath: string
-            - printPort: IPrintPort
-            + execute(fileId: number): Promise<ExportResult>
-        }
-    }
-
-    package "Ports" as ports {
-        interface IFileSystemPort {
-            + readFileBytes(filePath: string): Promise<Buffer>
-        }
-
-        interface IExportPort {
-            + exportFile(stream: ReadableStream, destPath: string): Promise<ExportResult>
-        }
-
-        interface IPrintPort {
-            + printSingle(absolutePath: string, opts: PrintOptions): Promise<ExportResult>
-        }
-    }
-}
-
-class ExportResult <<value object>>  {
-    + success: boolean
-    + errorCode?: string
-    + errorMessage?: string
-    + {static} ok(): ExportResult
-    + {static} fail(code: string, msg: string): ExportResult
-}
-
-uc -[hidden]down-> ports
-
 ExportFileUC --> IFileSystemPort : usa
 ExportFileUC --> IExportPort     : usa
 PrintFileUC  --> IPrintPort      : usa
-
 ExportFileUC ..> ExportResult : <<returns>>
 PrintFileUC  ..> ExportResult : <<returns>>
 @enduml
 
-
 @startuml Export_IPC_Part3
-scale 0.8
-title Diagramma delle Classi — Export IPC (Parte 3)\nInfrastructure Layer (Adapters) + Ports + ExportResult
+title Diagramma delle Classi — Infrastructure: Adapters e Ports
+skinparam classAttributeIconSize 0
 skinparam linetype ortho
-skinparam nodesep 30
-skinparam ranksep 40
-top to bottom direction
-skinparam groupInheritance 2
-skinparam pageMargin 10
-skinparam dpi 150
-skinparam defaultFontSize 12
-skinparam defaultFontName Arial
-skinparam class {
-    BackgroundColor White
-    BorderColor #555555
-    ArrowColor #333333
-    FontSize 12
-    HeaderBackgroundColor #F0F0F0
-    AttributeFontSize 11
-}
-skinparam interface {
-    BackgroundColor #FFFDE7
-    BorderColor #F9A825
-    FontSize 12
-}
-skinparam package {
-    FontSize 11
-    BorderColor #999999
-}
+hide empty members
 
-package "Ports" as ports  {
-    interface IFileSystemPort {
-        + readFileBytes(filePath: 
-        string): Promise<Buffer>
-    }
-    interface IExportPort {
-        + exportFile(stream: ReadableStream, 
-        destPath: string): Promise<ExportResult>
-    }
-    interface IPrintPort {
-        + printSingle(absolutePath: string, 
-        opts: PrintOptions): Promise<ExportResult>
-    }
+interface IFileSystemPort {
+    + readFileBytes(filePath: 
+    string): Promise<Buffer>
 }
-
-package "Infrastructure Layer" as infra  {
-    package "Adapters" as adapters {
-        class NodeFileSystemAdapter {
-            + readFileBytes(filePath: 
-            string): Promise<Buffer>
-        }
-        class LocalExportPort {
-            + exportFile(stream: ReadableStream, 
-            destPath: string): Promise<ExportResult>
-        }
-        class PrintPort {
-            + printSingle(absolutePath: string, 
-            opts: PrintOptions): Promise<ExportResult>
-        }
-    }
+interface IExportPort {
+    + exportFile(stream: ReadableStream, 
+    destPath: string): Promise<ExportResult>
 }
-
-
-class ExportResult <<value object>>  {
+interface IPrintPort {
+    + printSingle(absolutePath: string, 
+    opts: PrintOptions): Promise<ExportResult>
+}
+class NodeFileSystemAdapter {
+    + readFileBytes(filePath:
+     string): Promise<Buffer>
+}
+class LocalExportPort {
+    + exportFile(stream: ReadableStream, 
+    destPath: string): Promise<ExportResult>
+}
+class PrintPort {
+    + printSingle(absolutePath: string, 
+    opts: PrintOptions): Promise<ExportResult>
+}
+class ExportResult <<value object>> {
     + success: boolean
     + errorCode?: string
     + errorMessage?: string
@@ -245,14 +125,9 @@ class ExportResult <<value object>>  {
     msg: string): ExportResult
 }
 
-ports -[hidden]-> infra
-infra -[hidden]-> ExportResult
-
-NodeFileSystemAdapter ..|> IFileSystemPort : <<implements>>
-LocalExportPort       ..|> IExportPort      : <<implements>>
-PrintPort             ..|> IPrintPort        : <<implements>>
-
+NodeFileSystemAdapter ..|> IFileSystemPort
+LocalExportPort       ..|> IExportPort
+PrintPort             ..|> IPrintPort
 LocalExportPort ..> ExportResult : <<returns>>
 PrintPort       ..> ExportResult : <<returns>>
-
 @enduml
