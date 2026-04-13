@@ -15,41 +15,64 @@ package "Domain" {
     UNKNOWN
   }
 
+  enum MetadataType {
+    STRING
+    NUMBER
+    BOOLEAN
+    COMPOSITE
+  }
+
   class Dip <<entity>> {
-    +id: number
+    +id: number | null
     +uuid: string
     +integrityStatus: IntegrityStatusEnum
   }
 
   class DocumentClass <<entity>> {
-    +id: number
-    +dipId: number
+    +id: number | null
+    +dipId: number | null
+    +dipUuid: string
+    +uuid: string
     +name: string
+    +timestamp: string
     +integrityStatus: IntegrityStatusEnum
   }
 
   class Process <<entity>> {
-    +id: number
-    +documentClassId: number
+    +id: number | null
+    +documentClassId: number | null
+    +documentClassUuid: string
+    +uuid: string
+    +metadata: Metadata
     +integrityStatus: IntegrityStatusEnum
   }
 
   class Document <<entity>> {
-    +id: number
-    +processId: number
+    +id: number | null
+    +processId: number | null
+    +processUuid: string
+    +uuid: string
+    +metadata: Metadata
     +integrityStatus: IntegrityStatusEnum
   }
 
   class File <<entity>> {
-    +id: number
-    +documentId: number
+    +id: number | null
+    +documentId: number | null
+    +documentUuid: string
+    +uuid: string
     +filename: string
     +path: string
     +hash: string
+    +isMain: boolean
     +integrityStatus: IntegrityStatusEnum
   }
 
-  class Metadata <<value-object>>
+  class Metadata <<value-object>> {
+    +name: string
+    +type: MetadataType
+    +value: string | Metadata[]
+  }
 }
 
 Dip "1" o-- "0..*" DocumentClass
@@ -57,9 +80,19 @@ DocumentClass "1" o-- "0..*" Process
 Process "1" o-- "0..*" Document
 Document "1" o-- "0..*" File
 
+Process --> "1" Metadata : metadata
+Document --> "1" Metadata : metadata
+Metadata "1" o-- "0..*" Metadata : children
+
 note right of Dip
 Hierarchy used by browsing use cases:
 Dip -> DocumentClass -> Process -> Document -> File
+end note
+
+note right of Process
+This diagram reflects domain entities in core/src/entity.
+Both id and parentUuid references are modeled because
+they are used in domain flows and persistence mapping.
 end note
 
 @enduml
