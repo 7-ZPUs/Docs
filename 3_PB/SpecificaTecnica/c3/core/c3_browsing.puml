@@ -1,0 +1,86 @@
+@startuml Component Diagram - Browsing
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Component Diagram - Browsing (browse:get-by-*, browse:get-*-by-id, integrity:get-*-by-status)
+
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam shadowing false
+skinparam wrapWidth 200
+skinparam nodesep 60
+skinparam ranksep 60
+
+Component_Ext(renderer,  "Renderer Process", "Angular / TypeScript", "Invia comandi di navigazione e recupero entita' via IPC bridge.")
+Component_Ext(sqlite_db, "SQLite Database",  "SQLite3",              "Tabelle relazionali per classi documentali, processi, documenti e file.")
+
+Container_Boundary(main, "Main Process - Electron") {
+
+    Component(browsing_ipc, "BrowsingIpcAdapter", "Node.js / TypeScript", "Canali: browse:get-by-class, browse:get-by-process, browse:get-by-document, browse:get-class-by-id, browse:get-process-by-id, browse:get-document-by-id, browse:get-file-by-id")
+
+    Component(integrity_ipc, "IntegrityIpcAdapter", "Node.js / TypeScript", "Canali: integrity:get-class-by-status, integrity:get-process-by-status, integrity:get-document-by-status")
+
+    ' Use Cases - Get By Entity (navigazione gerarchica)
+    Component(uc_get_classes_by_dip,       "GetClassesByDipUC",       "Node.js / TypeScript", "Recupera le classi documentali appartenenti a un DIP.")
+    Component(uc_get_processes_by_class,   "GetProcessesByClassUC",   "Node.js / TypeScript", "Recupera i processi archivistici appartenenti a una classe documentale.")
+    Component(uc_get_documents_by_process, "GetDocumentsByProcessUC", "Node.js / TypeScript", "Recupera i documenti appartenenti a un processo archivistico.")
+    Component(uc_get_files_by_document,    "GetFilesByDocumentUC",    "Node.js / TypeScript", "Recupera i file fisici appartenenti a un documento.")
+
+    ' Use Cases - Get By ID (recupero singola entita')
+    Component(uc_get_class_by_id,    "GetDocumentClassByIdUC", "Node.js / TypeScript", "Recupera una classe documentale per ID.")
+    Component(uc_get_process_by_id,  "GetProcessByIdUC",       "Node.js / TypeScript", "Recupera un processo archivistico per ID.")
+    Component(uc_get_document_by_id, "GetDocumentByIdUC",      "Node.js / TypeScript", "Recupera un documento per ID.")
+    Component(uc_get_file_by_id,     "GetFileByIdUC",          "Node.js / TypeScript", "Recupera un file per ID.")
+
+    ' Use Cases - Get By Status (filtro per stato integrita')
+    Component(uc_get_classes_by_status,   "GetClassiDocumentaliByStatusUC", "Node.js / TypeScript", "Recupera le classi documentali con lo stato di integrita' specificato.")
+    Component(uc_get_processes_by_status, "GetProcessiByStatusUC",          "Node.js / TypeScript", "Recupera i processi con lo stato di integrita' specificato.")
+    Component(uc_get_documents_by_status, "GetDocumentiByStatusUC",         "Node.js / TypeScript", "Recupera i documenti con lo stato di integrita' specificato.")
+    Component(uc_get_files_by_status,     "GetFilesByStatusUC",             "Node.js / TypeScript", "Recupera i file con lo stato di integrita' specificato.")
+
+    ' Port
+    Component(pkg_browsing, "PackageBrowsingPort", "PackageBrowsingPort + SqlitePackageAdapter", "Navigazione e recupero entita': getClasses(), getProcessesByClass(classId), getDocumentsByProcess(processId), getFilesByDocument(documentId), getClassById(id), getProcessById(id), getDocumentById(id), getFileById(id), getDocumentClassByStatus(status), getProcessesByStatus(status), getDocumentsByStatus(status), getFilesByStatus(status).")
+}
+
+' Relazioni Renderer -> IPC Adapters
+Rel_D(renderer, browsing_ipc,  "browse:*",    "Electron IPC")
+Rel_D(renderer, integrity_ipc, "integrity:get-*-by-status", "Electron IPC")
+
+' Relazioni BrowsingIpcAdapter -> Use Cases (Get By Entity)
+Rel_D(browsing_ipc, uc_get_classes_by_dip,       "browse:get-by-class")
+Rel_D(browsing_ipc, uc_get_processes_by_class,   "browse:get-by-class")
+Rel_D(browsing_ipc, uc_get_documents_by_process, "browse:get-by-process")
+Rel_D(browsing_ipc, uc_get_files_by_document,    "browse:get-by-document")
+
+' Relazioni BrowsingIpcAdapter -> Use Cases (Get By ID)
+Rel_D(browsing_ipc, uc_get_class_by_id,    "browse:get-class-by-id")
+Rel_D(browsing_ipc, uc_get_process_by_id,  "browse:get-process-by-id")
+Rel_D(browsing_ipc, uc_get_document_by_id, "browse:get-document-by-id")
+Rel_D(browsing_ipc, uc_get_file_by_id,     "browse:get-file-by-id")
+
+' Relazioni IntegrityIpcAdapter -> Use Cases (Get By Status)
+Rel_D(integrity_ipc, uc_get_classes_by_status,   "integrity:get-class-by-status")
+Rel_D(integrity_ipc, uc_get_processes_by_status, "integrity:get-process-by-status")
+Rel_D(integrity_ipc, uc_get_documents_by_status, "integrity:get-document-by-status")
+Rel_D(integrity_ipc, uc_get_files_by_status,     "integrity:get-file-by-status")
+
+' Relazioni Use Cases -> Port (Get By Entity)
+Rel_D(uc_get_classes_by_dip,       pkg_browsing, "getClasses()")
+Rel_D(uc_get_processes_by_class,   pkg_browsing, "getProcessesByClass(classId)")
+Rel_D(uc_get_documents_by_process, pkg_browsing, "getDocumentsByProcess(processId)")
+Rel_D(uc_get_files_by_document,    pkg_browsing, "getFilesByDocument(documentId)")
+
+' Relazioni Use Cases -> Port (Get By ID)
+Rel_D(uc_get_class_by_id,    pkg_browsing, "getClassById(id)")
+Rel_D(uc_get_process_by_id,  pkg_browsing, "getProcessById(id)")
+Rel_D(uc_get_document_by_id, pkg_browsing, "getDocumentById(id)")
+Rel_D(uc_get_file_by_id,     pkg_browsing, "getFileById(id)")
+
+' Relazioni Use Cases -> Port (Get By Status)
+Rel_D(uc_get_classes_by_status,   pkg_browsing, "getDocumentClassByStatus(status)")
+Rel_D(uc_get_processes_by_status, pkg_browsing, "getProcessesByStatus(status)")
+Rel_D(uc_get_documents_by_status, pkg_browsing, "getDocumentsByStatus(status)")
+Rel_D(uc_get_files_by_status,     pkg_browsing, "getFilesByStatus(status)")
+
+' Relazione Port -> Database
+Rel_D(pkg_browsing, sqlite_db, "Read (SQL SELECT / JOIN)")
+
+@enduml

@@ -1,0 +1,47 @@
+@startuml C3_Main_Integrity_Verification
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title C4 Model - Level 3 (Main Process Components: Integrity Verification)
+
+LAYOUT_WITH_LEGEND()
+
+Container_Boundary(main_container, "Main Process") {
+  Component(integrity_ipc, "CheckIntegrityIpcAdapter", "IPC Inbound Adapter", "Integrity check channels for Dip, Class, Process, Document, File")
+  Component(integrity_ucs, "Integrity Use Cases", "Application Services", "Check integrity status across hierarchy")
+  Component(integrity_service, "IntegrityVerificationService", "Domain Service", "Hash verification, aggregation, status propagation")
+
+  Component(dip_repo, "DipRepository", "Repository", "Dip status read and update")
+  Component(class_repo, "DocumentClassRepository", "Repository", "Class status read and update")
+  Component(process_repo, "ProcessRepository", "Repository", "Process status read and update")
+  Component(doc_repo, "DocumentRepository", "Repository", "Document status read and update")
+  Component(file_repo, "FileRepository", "Repository", "File status read and update")
+}
+
+Container_Ext(renderer, "Renderer UI", "Angular", "Integrity actions from dashboard and detail views")
+ContainerDb_Ext(sqlite, "SQLite", "Entity and status persistence")
+
+Rel(renderer, integrity_ipc, "check-integrity:* channels")
+Rel(integrity_ipc, integrity_ucs, "execute")
+Rel(integrity_ucs, integrity_service, "verify")
+
+Rel(integrity_service, file_repo, "read/update status")
+Rel(integrity_service, doc_repo, "read/update status")
+Rel(integrity_service, process_repo, "read/update status")
+Rel(integrity_service, class_repo, "read/update status")
+Rel(integrity_service, dip_repo, "read/update status")
+
+Rel(file_repo, sqlite, "SQL io")
+Rel(doc_repo, sqlite, "SQL io")
+Rel(process_repo, sqlite, "SQL io")
+Rel(class_repo, sqlite, "SQL io")
+Rel(dip_repo, sqlite, "SQL io")
+
+note right of integrity_service
+Rules:
+- run in transaction
+- verify leaf hashes
+- aggregate parent statuses
+- propagate updates up to Dip
+end note
+
+@enduml

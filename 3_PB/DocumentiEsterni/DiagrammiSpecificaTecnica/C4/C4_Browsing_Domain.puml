@@ -1,0 +1,65 @@
+@startuml C4_Browsing_Domain
+
+title C4 - Browsing Domain Model
+
+top to bottom direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package "Domain" {
+  enum IntegrityStatusEnum {
+    VALID
+    INVALID
+    UNKNOWN
+  }
+
+  class Dip <<entity>> {
+    +id: number
+    +uuid: string
+    +integrityStatus: IntegrityStatusEnum
+  }
+
+  class DocumentClass <<entity>> {
+    +id: number
+    +dipId: number
+    +name: string
+    +integrityStatus: IntegrityStatusEnum
+  }
+
+  class Process <<entity>> {
+    +id: number
+    +documentClassId: number
+    +integrityStatus: IntegrityStatusEnum
+  }
+
+  class Document <<entity>> {
+    +id: number
+    +processId: number
+    +integrityStatus: IntegrityStatusEnum
+  }
+
+  class File <<entity>> {
+    +id: number
+    +documentId: number
+    +filename: string
+    +path: string
+    +hash: string
+    +integrityStatus: IntegrityStatusEnum
+  }
+
+  class Metadata <<value-object>>
+}
+
+Dip "1" o-- "0..*" DocumentClass
+DocumentClass "1" o-- "0..*" Process
+Process "1" o-- "0..*" Document
+Document "1" o-- "0..*" File
+
+note right of Dip
+Hierarchy used by browsing use cases:
+Dip -> DocumentClass -> Process -> Document -> File
+end note
+
+@enduml
