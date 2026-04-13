@@ -17,6 +17,12 @@ Il componente \textit{MetadataPanelComponent} decide quali componenti di metadat
 \subsubsection{Componente di azioni sugli elementi}
 Il componente \textit{DocumentActionsComponent} crea la barra orizzontale di azioni che è possibile eseguire su un'entità, per tutte offre la verifica dell'integrità, per i documenti è anche possibile scaricarli o stamparli tramite il componente della feature di Export.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C4-ItemDetail.png}
+    \caption{Diagramma delle classi tecnico della feature di dettaglio - struttura generale}
+\end{figure}
+
 \subsubsection{Componenti specifici per entità - DOCUMENT}
 È il modulo più denso di informazioni, ospita una notevole quantità di componenti \textit{dumb} per le sezioni specifiche dei metadati OAIS e i componenti per la visualizzazione dell'anteprima.
 
@@ -42,5 +48,38 @@ Ogni sottoinsieme dei metadati nel formato XML viene visualizzato in un componen
 Come per tutte le feature, sono presenti le interfacce per i servizi, i servizi stessi, i mappers per adattare i dati restituiti dal backend al formato utilizzato dai componenti e le interfacce per i DTO estrate dagli schema XSD forniti e dalla documentazione AGID sui metadati. \\
 Rimangono rispettati quindi i principi di separazione dei compiti, single responsibility e inversion of control.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C4-Document.png}
+    \caption{Diagramma delle classi tecnico della feature di dettaglio - entità Document}
+\end{figure}
+
 \subsubsection{Componenti specifici per entità - AGGREGATE}
-I componenti dedicati alla visualizzazione di aggregazioni e processi sono più semplici rispetto a quelli dei documenti, in quanto non prevedono l'anteprima del file e hanno una quantità inferiore di metadati da visualizzare. 
+\subparagraph{\textit{AggregateFacade}} Come per i documenti, è presente una facade dedicata per le aggregazioni che si occupa di orchestrare i servizi necessari a recuperare i dati e i metadati dell'entità (con collegamento ai canali IPC). Inoltre implementa un sistema di \textit{Fetch Retry Synchronization} per gestire situazioni in cui i dati non sono ancora disponibili al momento della richiesta.
+
+\subparagraph{Componenti \textit{dumb}}
+Per le aggregazioni sono presenti componenti dedicati alla visualizzazione dei metadati specifici:
+\begin{itemize}
+    \item \textit{admin-procedure}: indica il procedimento a cui il fascicolo appartiene, nonché lo stato di avanzamento e le relative fasi;
+    \item \textit{aggregate-metadata}: mostra i metadati specifici dell'aggregazione, come Tipo, Progressivo, Classificazione, ecc.;
+    \item \textit{aggregate-subjects}: mostra i soggetti coinvolti nella produzione dell'aggregazione, con i relativi ruoli, differiscono leggermente dai soggetti dei documenti;
+    \item \textit{document-index}: mostra l'indice dei documenti che compongono l'aggregazione, con collegamento alla relativa pagina di dettaglio.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C4-Aggregate.png}
+    \caption{Diagramma delle classi tecnico della feature di dettaglio - entità Aggregate}
+\end{figure}
+
+\subsubsection{Componenti specifici per entità - PROCESS}
+\subparagraph{\textit{ProcessFacade}} Come per le aggregazioni, è presente una facade dedicata per i processi che si occupa di orchestrare i servizi necessari a recuperare i dati e i metadati dell'entità (con collegamento ai canali IPC). Anche in questo caso implementa un sistema di \textit{Fetch Retry Synchronization}.
+
+\subparagraph{Componente di presentazione}
+\textit{Process-Metadata-Component} in questo caso è l'unico componente specifico per i processi, mostra i metadati specifici dell'entità con un formato \textit{card-based}, lo stato di verifica e informazioni sulla classe documentale di appartenenza.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C4-Process.png}
+    \caption{Diagramma delle classi tecnico della feature di dettaglio - entità Process}
+\end{figure}
