@@ -5,4 +5,50 @@ I componenti di ricerca sono responsabili della gestione delle funzionalità di 
 Nel contesto della ricerca questo coomponente Padre è SearchPageComponent.
 % FOTO SCHEMA SEARCHPAGE COMPONENT
 
-Come si può notare questo componente sfrutta la dependency injection nativa di Angular per risolvere le dipendenze. Inoltre sono iniettate le interfaccie dei servizi necessari per il funzionamento e non gli effettivi servizi, applicando il principio di sostituzione di Liskov. 
+Come si può notare questo componente sfrutta la dependency injection nativa di Angular per risolvere le dipendenze. 
+Inoltre sono iniettate le interfaccie dei servizi necessari per il funzionamento e non gli effettivi servizi, applicando il principio di sostituzione di Liskov. 
+La page si appoggia poi alla SearchFacade per gestire tutte le interazioni con i servizi, nascondendo la complessità di questi ultimi e fornendo un'interfaccia semplificata per la gestione della logica di ricerca.
+
+\subsubsection{Componenti di presentazione} 
+I componenti di presentazione pura sono costruiti in modo da adattarsi completamente alle specifiche descritte dall'Allegato 5 dell'AGID e dalle linee guida di Sanmarco Informatica.
+\\ Posso essere suddivisi in tre categorie principali:
+\begin{itemize}
+    \item \textbf{Componenti di ricerca}: sono i componenti che gestiscono la compilazione dei filtri di ricerca.
+    \item \textbf{Componenti di visualizzazione}: sono i componenti che gestiscono la visualizzazione dei risultati di ricerca.
+    \item \textbf{Search bar}: è il componente che si occupa della ricerca di processi, classi documentali e ricerca semantica.
+\end{itemize}
+\paragraph{Componenti di ricerca}
+\subparagraph{AdvancedFilterPanelComponent}
+I diversi filtri di ricerca, basati sui metadati AGID, sono raggruppati nel \textit{AdvancedFilterPanelComponent}. Anche in questo caso le dipendenze sono risolte grazie alla dependency injection di Angular. 
+La responsabilità di questo componente è quella di gestire la compilazione dei filtri fi ricerca, delegando le logiche secondarie ai servizi iniettati.
+In particolare, è iniettata l'interfaccia del servizio di validazione dei filtri, che si occupa di validare i filtri di ricerca dinamici, e il servizio di gestione dei campi di ricerca dinamici, che si occupa di gestire i campi di ricerca dinamici.\\
+\subparagraph{FilterRulesManager}
+La gestione dei campi di ricerca risulta infatti fondamentale per garantire che la query di ricerca sia sensata. Dal momento che i campi sono differenti a seconda del tipo di documento, è obbligatorio forzare l'utente a compilare solo i campi di ricerca pertinenti al tipo di documento. Questo compito è delegato al \textit{FilterRulesManager}. 
+\subparagraph{Filtri semplici}
+La maggior parte dei filtri di ricerca sono semplici campi di testo o dropdown, che non richiedono una logica complessa per la loro gestione. Segue quindi un elenco di questi componenti di UI pura, al fine di mostrare la completa aderenza alle specifiche AGID e alle linee guida di Sanmarco Informatica.
+\begin{itemize}
+    \item \textit{CommonFiltersComponent}: è il componente che gestisce i filtri comuni a tutti i tipi di documento (Anni di Conservazione, Chiave descrittiva, Classificazione con i corrispettivi sottocampi) 
+    \item \textit{DiDaiFiltersComponent}: è il componente che gestisce i filtri specifici per i documenti informatici e amministrativi informatici (tipologia di documento, modalità di formazione, Nome, versione id del documento, informazioni sull'identificativo di formato, dati di veriffica e tracciatura con riguardo alla tracciatura delle modifiche)
+    \item  \textit{AggregateFiltersComponent}: è il componente che gestisce i filtri specifici per le aggregazioni documentali (tipologia e id di aggregazione, data di apertura e chiusura, dati di procedimento e delle sue fasi e dati sulle assegnazioni)
+\end{itemize}
+\subparagraph{Filtri dei soggetti}
+I filtri dei soggetti sono invece più complessi. La loro gestione è realizzata secondo un approccio a strategie, così da rendere il comportamento dell'interfaccia dipendente dal contesto documentale selezionato e non da logiche condizionali distribuite nel codice.
+ Il sistema consente di abilitare, disabilitare e specializzare i criteri disponibili in funzione del tipo di documento, mantenendo separati gli aspetti di presentazione, configurazione delle regole e costruzione della query.
+\\
+L'interazione dell'utente avviene attraverso il pannello dei filtri avanzati, che funge da contenitore dello stato complessivo e coordina i diversi sotto-filtri. 
+All'interno di tale pannello, il componente dedicato ai soggetti gestisce un wizard guidato: in base al DocContext viene selezionata, tramite una registry di strategie, la configurazione dei ruoli consentiti e dei relativi tipi di soggetto. 
+Una seconda registry definisce invece i campi di dettaglio associati a ciascun SubjectType, consentendo la generazione dinamica del form di compilazione.
+
+I criteri inseriti vengono raccolti come \textit{SubjectCriteria} e successivamente integrati nello stato complessivo dei filtri. In fase di esecuzione della ricerca, tali valori vengono trasformati in una struttura di query gerarchica 
+compatibile con il back-end, così da mantenere una separazione netta tra modello di interfaccia e modello di ricerca. Questo consente di garantire coerenza funzionale, facilità di estensione e una più chiara manutenzione delle regole di validazione e composizione dei filtri.
+
+\subparagraph{Filtri Custom}
+I filtri custom sono metadati personalizzati di un documento costituiti da una chiave e un valore. Per soddisfare la richiesta dell''azienda proponente di esporre all'utente una lista di chiavi che rappresenta quelle effettivamente presenti nei documenti, è stato realizzato un componente 
+
+\paragraph{Componenti di visualizzazione}
+La visualizzazione dei risultati di ricerca deve rendere possibile la visualizzazione all'utente di anteprime di processi, classi, aggregazioni e documenti. Queste visualizzazioni sono naturalmente diverse. Per esempio solo i documenti possono essere stampati o scaricati. Le informazioni mostrate per i processi sono invece differenti da quelle mostrate per i documenti e dalle classi.
+\\La necessità è quindi quella di mostrare in modo dinamico i risultati di ricerca in base al tipo di risultato che viene ritornato. Per questo motivo è stato scelto di sfruttare un pattern \textit{Factory}.
+\\ il \textit{SearchResultFactory} si occupa di istanziare dinamicamente il componente di visualizzazione corretto in base al tipo di risultato di ricerca sfruttando un registry che associa al tipo di risultato il componente di visualizzazione corrispondente . 
+\paragraph{Search bar}
+La Search bar è invece gestita da un componente dedicato. La sua responsabilità è quella di permettere all'utente di ricercare processi tramite id di processo, classi per nome e ricerche di testo libero sfruttando la ricerca semantica.
+\\ Oltre al compoenente di presentazione pure è stato realizzato un servizio dedicato alla logica del componente. Per la ricerca semantica infatti è stato aggiunto un checkbox. Alla versione attuale del codice la ricerca semantica è abilitata per la ricerca di documenti ma se in un futuro si volesse estendere questa funzionalità basterebbe modificare il servizio \textit{SearchBarRulesManager}
