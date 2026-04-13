@@ -7,30 +7,31 @@ skinparam packageStyle rectangle
 skinparam linetype ortho
 hide empty members
 
-title Group 2 - LocalPackageReaderAdapter, FileSystemProvider, DataMapper, DipParser
+title Group 2 - PackageReaderService, FileSystemPort, DataMapper, DipParser
 
-  interface IPackageReaderPort {
-    + readDip(dipPath: string): Promise<Dip>
-    + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
-    + readProcesses(dipPath: string): AsyncGenerator<Process>
-    + readDocuments(dipPath: string): AsyncGenerator<Document>
-    + readFiles(dipPath: string): AsyncGenerator<File>
-    + readFileBytes(filePath: string): Promise<NodeJS.ReadableStream>
+  interface IPackageReaderService {
+    + readDip(): Promise<Dip>
+    + readDocumentClasses(): AsyncGenerator<DocumentClass>
+    + readProcesses(): AsyncGenerator<Process>
+    + readDocuments(): AsyncGenerator<Document>
+    + readFiles(): AsyncGenerator<File>
+    + setDipPath(dipPath: string): void
   }
 
-  class LocalPackageReaderAdapter {
+  class PackageReaderService {
+    - dipPath: string
     - parser: IDipParser
-    - fileSystemProvider: IFileSystemProvider
+    - fileSystemProvider: IFileSystemPort
     - mapper: IDataMapper
-    + readDip(dipPath: string): Promise<Dip>
-    + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
-    + readProcesses(dipPath: string): AsyncGenerator<Process>
-    + readDocuments(dipPath: string): AsyncGenerator<Document>
-    + readFiles(dipPath: string): AsyncGenerator<File>
-    + readFileBytes(filePath: string): Promise<NodeJS.ReadableStream>
-    - resolveDipIndexFilename(dipPath: string): Promise<string>
-    - getParsedIndex(dipPath: string): Promise<any>
-    - getOptionalMetadata(dipPath: string, relativePath: string | null): Promise<any>
+    + readDip(): Promise<Dip>
+    + readDocumentClasses(): AsyncGenerator<DocumentClass>
+    + readProcesses(): AsyncGenerator<Process>
+    + readDocuments(): AsyncGenerator<Document>
+    + readFiles(): AsyncGenerator<File>
+    + setDipPath(dipPath: string): void;
+    - resolveDipIndexFilename(): Promise<string>
+    - getParsedIndex(): Promise<any>
+    - getOptionalMetadata(relativePath: string | null): Promise<any>
   }
 
   interface IDipParser {
@@ -39,12 +40,12 @@ title Group 2 - LocalPackageReaderAdapter, FileSystemProvider, DataMapper, DipPa
   interface IDataMapper {
   }
 
-  interface IFileSystemProvider {
+  interface IFileSystemPort {
   }
 
-LocalPackageReaderAdapter ..|> IPackageReaderPort
-LocalPackageReaderAdapter --> IDipParser
-LocalPackageReaderAdapter --> IDataMapper
-LocalPackageReaderAdapter --> IFileSystemProvider
+PackageReaderService ..|> IPackageReaderService
+PackageReaderService --> IDipParser
+PackageReaderService --> IDataMapper
+PackageReaderService --> IFileSystemPort
 
 @enduml

@@ -37,7 +37,7 @@ title Orchestration - ApplicationBootstrap, IndexDipUC
      - indexMainFileVector(file: File): Promise<void>
   }
 
-  class IndexResult{
+  interface IndexResult{
      - success: boolean
   }
 
@@ -48,5 +48,5 @@ interface IPackageReaderPort {}
 ApplicationBootstrap --> IIndexDipUC
 IndexDipUC --> IPackageReaderPort
 IndexDipUC --> IEmbeddingService
-IndexDipUC --> IndexResult
+IndexDipUC ..> IndexResult
 @enduml

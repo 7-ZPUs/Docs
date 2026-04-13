@@ -112,7 +112,7 @@ Queste due componenti collaborano per gestire l'estrazione del testo dai file e 
     \item \codeword{\textbf{+ isInitialized(): boolean}}: restituisce \codeword{true} se il modello è stato inizializzato, \codeword{false} altrimenti.
 \end{itemize}
 
-\subsubsection{LocalPackageReaderAdapter, DataMapper, DipParser, FileSystemProvider}
+\subsubsection{PackageReaderService, DataMapper, DipParser, FileSystemPort}
 
 \begin{figure}[H]
     \centering
@@ -121,9 +121,9 @@ Queste due componenti collaborano per gestire l'estrazione del testo dai file e 
     \label{fig:C4_orchestrazione_reading}
 \end{figure}
 
-\paragraph{LocalPackageReaderAdapter}:
+\paragraph{PackageReaderService}:
 \begin{itemize}
-    \item \textbf{Descrizione}: adapter che implementa \codeword{IPackageReaderPort}, responsabile della lettura del pacchetto DiP dal filesystem locale. Orchestr a il flusso di estrazione delle entità coordinando \codeword{DipParser}, \codeword{FileSystemProvider} e \codeword{DataMapper}.
+    \item \textbf{Descrizione}: adapter che implementa \codeword{IPackageReaderPort}, responsabile della lettura del pacchetto DiP dal filesystem locale. Orchestr a il flusso di estrazione delle entità coordinando \codeword{DipParser}, \codeword{FileSystemPort} e \codeword{DataMapper}.
     \item \codeword{\textbf{+ readDip(dipPath: string)}: Promise<Dip>}: legge il file \codeword{DiPIndex} dal percorso specificato, lo decodifica tramite \codeword{DipParser} e lo trasforma in entità \codeword{Dip} tramite \codeword{DataMapper}.
     \item \codeword{\textbf{+ readDocumentClasses(dipPath: string)}: AsyncGenerator<DocumentClass>}: genera in modo asincrono le entità \codeword{DocumentClass} estratte dal pacchetto. Per ogni classe documentale, legge il file XML corrispondente, lo decodifica e lo trasforma tramite \codeword{DataMapper}.
     \item \codeword{\textbf{+ readProcesses(dipPath: string)}: AsyncGenerator<Process>}: genera in modo asincrono le entità \codeword{Process} estratte dal pacchetto, leggendo e decodificando i file XML tramite \codeword{DipParser} e trasformandoli tramite \codeword{DataMapper}.
@@ -158,7 +158,7 @@ Queste due componenti collaborano per gestire l'estrazione del testo dai file e 
     \label{fig:C4_orchestrazione_reading}
 \end{figure}
 
-\paragraph{IFileSystemProvider}:
+\paragraph{IFileSystemPort}:
 \begin{itemize}
     \item \textbf{Descrizione}: interfaccia che astrae l'accesso al filesystem, permettendo una lettura e una scrittura indipendente dalla piattaforma. Facilita inoltre il testing tramite mock.
     \item \codeword{\textbf{+ readFile(filePath: string)}: Promise<string>}: legge il contenuto testuale di un file dal percorso specificato, restituendo una stringa.
@@ -167,9 +167,9 @@ Queste due componenti collaborano per gestire l'estrazione del testo dai file e 
     \item \codeword{\textbf{+ exists(filePath: string)}: Promise<boolean>}: verifica l'esistenza di un file o directory al percorso specificato.
 \end{itemize}
 
-\paragraph{FileSystemProvider}:
+\paragraph{FileSystemPort}:
 \begin{itemize}
-    \item \textbf{Descrizione}: implementazione concreta di \codeword{IFileSystemProvider} che utilizza le API native di Node.js (\codeword{fs} e \codeword{fs/promises}) per l'accesso al filesystem locale.
+    \item \textbf{Descrizione}: implementazione concreta di \codeword{IFileSystemPort} che utilizza le API native di Node.js (\codeword{fs} e \codeword{fs/promises}) per l'accesso al filesystem locale.
     \item \textbf{Caratteristiche}: supporta operazioni asincrone per evitare il blocco del thread principale, essenziale in un contesto Electron dove la responsività dell'UI è critica.
 \end{itemize}
 
@@ -180,14 +180,19 @@ Queste due componenti collaborano per gestire l'estrazione del testo dai file e 
     \label{fig:C4_orchestrazione_reading}
 \end{figure}
 
+\paragraph{Preambolo sulla struttura di un DiP}:
+
+Come specificato dalla documentazione ufficiale, un pacchetto DiP può contenere metadati distribuiti su più file e in posizioni potenzialmente variabili. Poiché la struttura e l'ubicazione dei metadati possono cambiare, è impraticabile codificarle rigidamente nel sistema.
+
+Ogni pacchetto DiP include un file "DiPIndex" che funge da catalogo centrale, descrivendo il contenuto completo del pacchetto e indicando l'ubicazione di eventuali file di metadati aggiuntivi. Le entità che possono disporre di metadati supplementari non vengono mappate direttamente, ma attraverso un oggetto \codeword{MapperRequest} che consente di gestire dinamicamente le variazioni strutturali.
+
+Durante il mapping, \codeword{DataMapper} estrae dal DiPIndex il percorso del file metadati per ciascuna entità, delegando a \codeword{PackageReaderPort} sia il recupero fisico del contenuto (tramite \codeword{FileSystemPort}) che il parsing (tramite \codeword{DipParser}). In questo modo, il mapper riceve tutte le informazioni necessarie per eseguire un mapping completo e corretto. Questo approccio garantisce il Single Responsibility Principle, separando nettamente l'estrazione fisica (I/O) da quella logica: qualora la posizione o la struttura dei metadati venissero modificate, \codeword{PackageReaderPort} rimane invariato, poiché non gli compete conoscere dove i metadati risiedono nel pacchetto.
+
 \paragraph{IDataMapper}:
 \begin{itemize}
-    \item \textbf{Descrizione}: interfaccia che definisce il contratto per la trasformazione dei dati grezzi estratti dai file XML nei modelli di dominio tipizzati. Utilizza il pattern \textbf{MapperRequest} per incapsulare i parametri di mapping e fornire contesto addizionale durante la trasformazione.
-    \item \codeword{\textbf{+ map(request: MapperRequest<DipIndexXml>)}: Dip}: trasforma i dati grezzi del DiPIndex nelle entità \codeword{Dip}. Il \codeword{MapperRequest} fornisce il payload XML e il contesto di esecuzione.
-    \item \codeword{\textbf{+ map(request: MapperRequest<DocumentClassXml>)}: DocumentClass}: trasforma i dati grezzi nelle entità \codeword{DocumentClass}, accedendo a metadati contestuali attraverso \codeword{MapperRequest}.
-    \item \codeword{\textbf{+ map(request: MapperRequest<AiPXml>)}: Process}: trasforma i dati grezzi nelle entità \codeword{Process}, utilizzando il contesto fornito da \codeword{MapperRequest} per correlazioni tra entità.
-    \item \codeword{\textbf{+ map(request: MapperRequest<DocumentXml>)}: Document}: trasforma i dati grezzi nelle entità \codeword{Document}, gestendo i metadati e la relazione con i file attraverso il contesto di \codeword{MapperRequest}.
-    \item \codeword{\textbf{+ map(request: MapperRequest<FileXml>)}: File}: trasforma i dati grezzi nelle entità \codeword{File}, distinguendo tra file principale e allegati tramite le informazioni contestuali di \codeword{MapperRequest}.
+    \item \textbf{Descrizione}: interfaccia che definisce il contratto per la trasformazione dei dati grezzi estratti dai file XML nei modelli di dominio tipizzati. Utilizza \textbf{MapperRequest} per le entità che dispongono di metadati supplementari
+    \item \codeword{\textbf{+ mapDip(request: MapperRequest<DocumentClassXml>)}: DocumentClass}: trasforma i dati grezzi nelle entità \codeword{DocumentClass}, accedendo a metadati contestuali attraverso \codeword{MapperRequest}.
+    \item \codeword{\textbf{+ mapDocumentClasses(rawDipIndex: any)}: Process}: trasforma i dati grezzi nelle entità \codeword{Process}, utilizzando il contesto fornito da \codeword{MapperRequest} per correlazioni tra entità.
 \end{itemize}
 
 \paragraph{MapperRequest<T>}:

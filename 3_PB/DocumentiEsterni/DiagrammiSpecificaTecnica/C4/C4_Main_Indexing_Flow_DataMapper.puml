@@ -11,19 +11,21 @@ hide empty members
 title DataMapper, IDataMapper
 
   interface IDataMapper {
-    + mapDip(rawDipIndex: any): Dip
-    + mapDocumentClasses(rawDipIndex: any): DocumentClass[]
-    + getProcessMappers(rawDipIndex: any): MapperRequest[]
-    + getDocumentMappers(rawDipIndex: any): MapperRequest[]
-    + getFileMappers(rawDipIndex: any): MapperRequest[]
+    + mapDip(): Dip
+    + mapDocumentClasses(): DocumentClass[]
+    + getProcessMappers(): MapperRequest[]
+    + getDocumentMappers(): MapperRequest[]
+    + getFileMappers(): MapperRequest[]
+    + setRawDipIndex(rawDipIndex: any): void
   }
 
   class DataMapper {
-    + mapDip(rawDipIndex: any): Dip
-    + mapDocumentClasses(rawDipIndex: any): DocumentClass[]
-    + getProcessMappers(rawDipIndex: any): MapperRequest[]
-    + getDocumentMappers(rawDipIndex: any): MapperRequest[]
-    + getFileMappers(rawDipIndex: any): MapperRequest[]
+    + mapDip(): Dip
+    + mapDocumentClasses(): DocumentClass[]
+    + getProcessMappers(): MapperRequest<Process>[]
+    + getDocumentMappers(): MapperRequest<Document>[]
+    + getFileMappers(): MapperRequest<File>[]
+    + setRawDipIndex(rawDipIndex: any): void
   }
 
   interface MapperRequest<T> {
@@ -32,6 +34,6 @@ title DataMapper, IDataMapper
   }
 
 IDataMapper <|.. DataMapper
-MapperRequest <|.. DataMapper
+MapperRequest <.. DataMapper
 
 @enduml

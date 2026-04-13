@@ -9,13 +9,13 @@ Container_Boundary(main_container, "Main Process") {
   Component(app_bootstrap, "ApplicationBootstrap", "Bootstrap Adapter", "Triggers startup indexing")
   Component(index_dip, "IndexDipUC", "Use Case", "Transactional indexing pipeline Dip -> Class -> Process -> Document -> File + vectors")
 
-  Component(package_reader, "LocalPackageReaderAdapter", "Outbound Adapter", "Reads DiPIndex XML and metadata/file streams")
+  Component(package_reader, "PackageReaderService", "Outbound Adapter", "Reads DiPIndex XML and metadata/file streams")
   Component(data_mapper, "DataMapper", "Mapper", "Maps parsed XML to domain entities")
   Component(dip_parser, "DipParser", "Parser", "Parses DiPIndex XML into domain entities")
-  Component(file_system_provider, "FileSystemProvider", "Infrastructure Adapter", "Filesystem read/list/stream")
+  Component(file_system_provider, "FileSystemPort", "Infrastructure Adapter", "Filesystem read/list/stream")
 
   Component(chunker, "EmbeddingService", "Domain Service", "Extracts document embedding from main file")
-  Component(word_embedding, "WordEmbedding", "Outbound Adapter", "Embedding generation")
+  Component(word_embedding, "WordEmbeddingPort", "Outbound Adapter", "Embedding generation")
 }
 
 Container_Ext(main_lifecycle, "Electron main.ts lifecycle", "Electron", "Registers DI and bootstrap startup")

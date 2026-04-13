@@ -7,10 +7,10 @@ skinparam packageStyle rectangle
 skinparam linetype ortho
 hide empty members
 
-title FileSystemProvider, IFileSystemProvider
+title FileSystemPort, IFileSystemPort
 
 
-  interface IFileSystemProvider {
+  interface IFileSystemPort {
     + readFile(filePath: string): Promise<Uint8Array>
     + openReadStream(filePath: string): Promise<NodeJS.ReadableStream>
     + readTextFile(filePath: string): Promise<string>
@@ -18,7 +18,7 @@ title FileSystemProvider, IFileSystemProvider
     + listFiles(dirPath: string): Promise<string[]>
   }
 
-  class FileSystemProvider {
+  class FileSystemPort {
     + readFile(filePath: string): Promise<Uint8Array>
     + openReadStream(filePath: string): Promise<NodeJS.ReadableStream>
     + readTextFile(filePath: string): Promise<string>
@@ -26,6 +26,6 @@ title FileSystemProvider, IFileSystemProvider
     + listFiles(dirPath: string): Promise<string[]>
   }
 
-IFileSystemProvider <|.. FileSystemProvider
+IFileSystemPort <|.. FileSystemPort
 
 @enduml

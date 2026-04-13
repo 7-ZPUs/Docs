@@ -12,14 +12,15 @@ hide empty members
 title Embedding - EmbeddingService, WordEmbeddingPort
 
 interface IEmbeddingService {
-  + generateDocumentEmbedding(filePath: string): Promise<Float32Array | null>
+  + generateDocumentEmbedding(dipPath:string, filePath: string): Promise<Float32Array | null>
+  + setEmbeddingConfiguration(config: IEmbeddingConfiguration): void
 }
 
 class EmbeddingService {
-  - packageReader: IPackageReaderPort
+  - fileSystemProvider: IFileSystemPort
   - embeddingAdapter: IWordEmbeddingPort
   - embeddingConfig: IEmbeddingConfiguration
-  + generateDocumentEmbedding(filePath: string): Promise<Float32Array | null>
+  + generateDocumentEmbedding(dipPath: string, filePath: string): Promise<Float32Array | null>
   + setEmbeddingConfiguration(config: IEmbeddingConfiguration): void
   - readTextFromStream(filePath: string): Promise<string>
   - chunkText(text: string, size: number, overlap: number): string[]
@@ -45,11 +46,11 @@ class WordEmbeddingPort {
   + isInitialized(): boolean
 }
 
-interface IPackageReaderPort
+interface IFileSystemPort
 
 ' Relazioni forzate verticalmente
 IEmbeddingService <|.. EmbeddingService
-EmbeddingService --down--> IPackageReaderPort
+EmbeddingService --down--> IFileSystemPort
 EmbeddingService --down--> IWordEmbeddingPort
 IWordEmbeddingPort <|.. WordEmbeddingPort
 EmbeddingService --down--> IEmbeddingConfiguration
