@@ -8,9 +8,22 @@ L'orchestrazione è gestita da due Use Case dedicati: \codeword{ExportFileUC} e 
 
 Il punto di ingresso del modulo lato Electron è \codeword{FileViewerIpcAdapter}, che registra i canali IPC necessari su \codeword{ipcMain} e funge da ponte tra il processo renderer e i Use Case del backend. Per le operazioni che coinvolgono interazione con l'utente (scelta del percorso di destinazione, conferma della stampa multipla), l'adapter si avvale delle API native di Electron tramite \codeword{dialog}.
 
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=0.6\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3_main_export/Component Diagram - Export.png}}
+    \caption{Diagramma C3 – Componenti del modulo di export e stampa}
+    \label{fig:C3_export_print}
+\end{figure}
 \subsection{Componenti}
 
 \subsubsection{FileViewerIpcAdapter}
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Export/Export_IPC_Part1.png}}
+    \caption{Diagramma C3 – Componenti del modulo di export e stampa}
+    \label{fig:C3_export_print}
+\end{figure}
 
 \begin{itemize}
     \item \textbf{Descrizione}: adapter IPC che registra i canali di comunicazione tra il processo renderer e il processo main di Electron, esponendo le funzionalità di export e stampa al frontend. Risolve le dipendenze \codeword{IExportFileUC} e \codeword{IPrintFileUC} tramite il container di dependency injection \codeword{tsyringe}.
