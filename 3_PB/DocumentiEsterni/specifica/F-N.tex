@@ -1,0 +1,22 @@
+\subsection{Componenti di Navigazione (Frontend)}
+
+\subsubsection{Descrizione}
+I componenti di navigazione sono responsabili della gestione della struttura ad albero del pacchetto DIP, consentendo all'utente di esplorare classi documentali, processi di conservazione e documenti in modo gerarchico e interattivo.
+
+Il pattern applicato è quello di Smart and Dumb Components: i componenti di presentazione sono privi di logica applicativa e delegano la gestione dello stato e delle interazioni con i servizi al componente padre \textit{DipExplorerComponent}, che coordina la navigazione tramite la \textit{DipFacade}.
+
+Nel contesto della navigazione il componente padre è \textit{DipExplorerComponent}.
+
+\subsubsection{Pattern architetturali}
+
+\subparagraph{Facade e Angular Signals}
+Tutta la logica di state management è centralizzata in \textit{DipFacade}, che espone un'interfaccia semplificata basata su \textit{Signal<DipState>} e coordina le chiamate ai servizi sottostanti, nascondendo la complessità delle interazioni IPC. Il sistema reattivo di Angular aggiorna automaticamente la UI in risposta ai cambiamenti di stato senza richiedere una gestione manuale delle sottoscrizioni, limitando gli aggiornamenti ai soli componenti interessati.
+
+\subparagraph{Gateway Pattern}
+Come per le altre funzionalità, anche per la navigazione è stato adottato il Gateway Pattern per isolare la logica di comunicazione con il backend attraverso \textit{IpcGateway}. Il gateway implementa una strategia \textit{cache-first} con TTL di 10 minuti, delegando la gestione della cache in-memory a \textit{IpcCacheService}, così da eliminare le chiamate IPC ridondanti su espansioni ripetute dello stesso nodo.
+
+\subparagraph{Composite e Virtual Scroll}
+La struttura ad albero viene appiattita in un array \textit{computed<FlatNode[]>}, ricalcolato al cambio degli identificatori dei nodi espansi, e renderizzata tramite \textit{CdkVirtualScrollViewport} con altezza fissa di 48px per nodo. In questo modo solo i nodi nella viewport esistono nel DOM, garantendo performance adeguate anche con strutture documentali di grandi dimensioni. Il componente \textit{DipTreeNodeComponent} non è ricorsivo: la profondità di ciascun nodo è comunicata tramite il campo \texttt{depth} del \texttt{FlatNode}, che determina il padding laterale della riga.
+
+\subparagraph{Lazy Loading}
+I nodi figli sono caricati su richiesta: alla prima espansione di un nodo viene invocato \texttt{DipFacade.loadChildren(nodeId)}, mentre le espansioni successive attingono alla cache. Gli errori di caricamento parziale, limitati al singolo nodo che ha fallito, non compromettono la navigabilità del resto dell'albero e sono gestiti tramite \textit{IpcErrorHandlerService}, che traduce gli errori IPC in oggetti \textit{AppError} tipizzati.
