@@ -20,15 +20,15 @@ I risultati vengono mappati in DTO di presentazione (\codeword{DocumentSearchRes
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3-main-search-flow/C3_Main_Search_Flow_No_Repos.png}
-    \caption{Diagramma C3 - Componenti del modulo di ricerca}
+    \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3-main-search-flow/C3_Main_Search_Flow_No_Repos.png}}
+    \caption{Diagramma C3 – Componenti del modulo di ricerca}
     \label{fig:C3_search_no_repos}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3-main-search-flow/C3_Main_Search_Flow_Repos.png}
-    \caption{Diagramma C3 - Componenti del modulo di ricerca (Repository e DAO)}
+    \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3-main-search-flow/C3_Main_Search_Flow_Repos.png}
+    \caption{Diagramma C3 – Componenti del modulo di ricerca (Repository e DAO)}
     \label{fig:C3_search_repos}
 \end{figure}
 
@@ -36,9 +36,9 @@ I risultati vengono mappati in DTO di presentazione (\codeword{DocumentSearchRes
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../../assets/logo7ZPUs.jpg}
-    \caption{Diagramma C4 - Dettaglio di SearchIpcAdapter}
-    \label{fig:C4_search_ipc_adapter}
+    \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/Class_Diagram_Search_IPC_UseCases.png}
+    \caption{Diagramma delle classi – Search: IPC Adapter e Use Cases}
+    \label{fig:search_ipc_usecases}
 \end{figure}
 
 \paragraph{SearchIpcAdapter}:
@@ -58,13 +58,6 @@ I risultati vengono mappati in DTO di presentazione (\codeword{DocumentSearchRes
 \end{itemize}
 
 \subsubsection{Use Case di ricerca}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{../../assets/logo7ZPUs.jpg}
-    \caption{Diagramma C4 - Use Case del modulo di ricerca}
-    \label{fig:C4_search_use_cases}
-\end{figure}
 
 \paragraph{SearchDocumentalClassUC}:
 \begin{itemize}
@@ -100,9 +93,9 @@ I risultati vengono mappati in DTO di presentazione (\codeword{DocumentSearchRes
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{../../assets/logo7ZPUs.jpg}
-    \caption{Diagramma C4 - Modello della query di ricerca}
-    \label{fig:C4_search_query_model}
+    \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/Class_Diagram_Search_QueryModel_Mappers.png}}
+    \caption{Diagramma delle classi – Search: Query Model e Mapper}
+    \label{fig:search_querymodel_mappers}
 \end{figure}
 
 \paragraph{SearchDocumentsQuery}:
@@ -141,13 +134,44 @@ I risultati vengono mappati in DTO di presentazione (\codeword{DocumentSearchRes
     \item \codeword{\textbf{useSemanticSearch: boolean}}: flag che indica se utilizzare la ricerca semantica.
 \end{itemize}
 
+\subsubsection{Mapper di ricerca}
+
+I mapper di ricerca trasformano le entità di dominio nei DTO di presentazione restituiti al frontend. Sono metodi statici collocati nei rispettivi mapper di persistenza per coerenza architetturale. Il diagramma di riferimento è riportato in figura~\ref{fig:search_querymodel_mappers}.
+
+\paragraph{DocumentClassMapper.toSearchResult()}:
+\begin{itemize}
+    \item \textbf{Descrizione}: trasforma un'entità \codeword{DocumentClass} in un \codeword{DocumentClassSearchResult}, verificando che l'entità sia già persistita (e quindi abbia un \codeword{id} valido). Il campo \codeword{type} è fisso a \codeword{"CLASSE"}.
+    \item \textbf{Output}: \codeword{DocumentClassSearchResult} con campi \codeword{id}, \codeword{uuid}, \codeword{integrityStatus}, \codeword{name} e \codeword{type}.
+\end{itemize}
+
+\paragraph{ProcessMapper.toSearchResult()}:
+\begin{itemize}
+    \item \textbf{Descrizione}: trasforma un'entità \codeword{Process} in un \codeword{ProcessSearchResult}, verificando che l'entità sia già persistita. Il campo \codeword{type} è fisso a \codeword{"PROCESSO"}.
+    \item \textbf{Output}: \codeword{ProcessSearchResult} con campi \codeword{id}, \codeword{uuid}, \codeword{integrityStatus} e \codeword{type}.
+\end{itemize}
+
+\paragraph{DocumentMapper.toSearchResult()}:
+\begin{itemize}
+    \item \textbf{Descrizione}: trasforma un'entità \codeword{Document} e uno score opzionale in un \codeword{DocumentSearchResult}. Estrae il nome del documento cercando prima il nodo \codeword{NomeDelDocumento} e poi \codeword{nome} nell'albero dei metadati. Determina il tipo del documento (\codeword{DocumentTypeEnum}) mappando il nome del nodo radice dei metadati tramite \codeword{mapRootMetadataType()}, che normalizza il nome in \codeword{UPPER\_SNAKE\_CASE} e lo confronta con i valori canonici attesi.
+    \item \textbf{Output}: \codeword{DocumentSearchResult} con campi \codeword{id}, \codeword{uuid}, \codeword{integrityStatus}, \codeword{name}, \codeword{type} e \codeword{score}.
+\end{itemize}
+
+\paragraph{MetadataKeyMapper}:
+\begin{itemize}
+    \item \textbf{Descrizione}: utility class che normalizza i path dei metadati provenienti dal frontend in PascalCase, garantendo coerenza con la struttura interna del JSON dei metadati dei documenti.
+    \item \codeword{\textbf{+ toPascalCase(key: string)}: string}: converte una chiave in PascalCase, gestendo separatori come \codeword{\_} e \codeword{-}, e supportando path dot-notation trasformando ogni segmento separatamente.
+    \item \codeword{\textbf{+ mapGroup(group: SearchGroup)}: SearchGroup}: applica ricorsivamente \codeword{toPascalCase()} al campo \codeword{path} di ogni \codeword{SearchCondition} nell'albero, inclusi i valori di condizioni \codeword{ELEM\_MATCH} che contengono un \codeword{SearchGroup} annidato. Restituisce un nuovo albero con tutti i path normalizzati.
+    \item \codeword{\textbf{+ mapFilters(filters: MetadataFilter[])}: MetadataFilter[]}: variante per array piatti di filtri chiave-valore, normalizza il campo \codeword{key} di ciascun filtro.
+    \item \codeword{\textbf{+ fromLegacyFilters(filters: MetadataFilter[])}: SearchGroup}: metodo di compatibilità che converte un array piatto di filtri legacy in un \codeword{SearchGroup} con operatore \codeword{AND}, filtrando i valori nulli o vuoti e impostando l'operatore \codeword{EQ} per ogni condizione.
+\end{itemize}
+
 \subsubsection{Repository e DAO di ricerca}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../../assets/logo7ZPUs.jpg}
-    \caption{Diagramma C4 - Repository e DAO del modulo di ricerca}
-    \label{fig:C4_search_repo_dao}
+    \makebox[\textwidth][c]{\includegraphics[width=1.1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/Class_Diagram_Search_Repos_DAOs.png}}
+    \caption{Diagramma delle classi – Search: Repository e DAO}
+    \label{fig:search_repos_daos}
 \end{figure}
 
 I repository implementano il pattern Repository delegando le operazioni di persistenza ai rispettivi DAO, che interagiscono direttamente con SQLite tramite \codeword{better-sqlite3}. Di seguito sono documentati i metodi specifici della ricerca.
@@ -175,13 +199,6 @@ I repository implementano il pattern Repository delegando le operazioni di persi
 
 \subsubsection{DocumentMetadataQueryBuilder}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{../../assets/logo7ZPUs.jpg}
-    \caption{Diagramma C4 - Dettaglio di DocumentMetadataQueryBuilder}
-    \label{fig:C4_query_builder}
-\end{figure}
-
 \paragraph{DocumentMetadataQueryBuilder}:
 \begin{itemize}
     \item \textbf{Descrizione}: componente responsabile della traduzione di un \codeword{SearchDocumentsQuery} in una clausola SQL parametrizzata compatibile con SQLite. Utilizza le funzioni \codeword{json\_extract()} e \codeword{json\_each()} di SQLite per navigare la struttura JSON dei metadati dei documenti. Viene istanziato direttamente da \codeword{DocumentDAO}.
@@ -190,42 +207,4 @@ I repository implementano il pattern Repository delegando le operazioni di persi
     \item \codeword{\textbf{- buildCondition(condition: SearchCondition, jsonSource: string)}: \{sql, params\}}: traduce una singola \codeword{SearchCondition} in SQL. Per l'operatore \codeword{ELEM\_MATCH}, genera una sottoquery con \codeword{EXISTS (SELECT 1 FROM json\_each(...))}, permettendo il filtraggio su array JSON annidati. Per tutti gli altri operatori, delega a \codeword{buildScalarCondition()} utilizzando \codeword{json\_extract()} per accedere al campo.
     \item \codeword{\textbf{- buildScalarCondition(jsonExtract, operator, value)}: \{sql, params\}}: genera la clausola SQL per operatori scalari. Per \codeword{EQ} su valori numerici, applica un doppio confronto per gestire la coerenza tra tipi numerici e stringhe nel JSON. Per \codeword{LIKE} utilizza \codeword{COLLATE NOCASE}. Per \codeword{IN} filtra i valori nulli o vuoti prima di costruire i placeholder.
     \item \codeword{\textbf{- toJsonPath(path: string)}: string}: converte un path dot-notation (es.\ \codeword{CustomMetadata.codice}) nella sintassi JSONPath di SQLite (es.\ \codeword{\$.CustomMetadata.codice}). Valida ogni segmento con una regex e solleva un'eccezione in caso di segmenti non validi.
-\end{itemize}
-
-\subsubsection{Mapper di ricerca}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{../../assets/logo7ZPUs.jpg}
-    \caption{Diagramma C4 - Mapper del modulo di ricerca}
-    \label{fig:C4_search_mappers}
-\end{figure}
-
-I mapper di ricerca trasformano le entità di dominio nei DTO di presentazione restituiti al frontend. Sono metodi statici collocati nei rispettivi mapper di persistenza per coerenza architetturale.
-
-\paragraph{DocumentClassMapper.toSearchResult()}:
-\begin{itemize}
-    \item \textbf{Descrizione}: trasforma un'entità \codeword{DocumentClass} in un \codeword{DocumentClassSearchResult}, verificando che l'entità sia già persistita (e quindi abbia un \codeword{id} valido). Il campo \codeword{type} è fisso a \codeword{"CLASSE"}.
-    \item \textbf{Output}: \codeword{DocumentClassSearchResult} con campi \codeword{id}, \codeword{uuid}, \codeword{integrityStatus}, \codeword{name} e \codeword{type}.
-\end{itemize}
-
-\paragraph{ProcessMapper.toSearchResult()}:
-\begin{itemize}
-    \item \textbf{Descrizione}: trasforma un'entità \codeword{Process} in un \codeword{ProcessSearchResult}, verificando che l'entità sia già persistita. Il campo \codeword{type} è fisso a \codeword{"PROCESSO"}.
-    \item \textbf{Output}: \codeword{ProcessSearchResult} con campi \codeword{id}, \codeword{uuid}, \codeword{integrityStatus} e \codeword{type}.
-\end{itemize}
-
-\paragraph{DocumentMapper.toSearchResult()}:
-\begin{itemize}
-    \item \textbf{Descrizione}: trasforma un'entità \codeword{Document} e uno score opzionale in un \codeword{DocumentSearchResult}. Estrae il nome del documento cercando prima il nodo \codeword{NomeDelDocumento} e poi \codeword{nome} nell'albero dei metadati. Determina il tipo del documento (\codeword{DocumentTypeEnum}) mappando il nome del nodo radice dei metadati tramite \codeword{mapRootMetadataType()}, che normalizza il nome in \codeword{UPPER\_SNAKE\_CASE} e lo confronta con i valori canonici attesi.
-    \item \textbf{Output}: \codeword{DocumentSearchResult} con campi \codeword{id}, \codeword{uuid}, \codeword{integrityStatus}, \codeword{name}, \codeword{type} e \codeword{score}.
-\end{itemize}
-
-\paragraph{MetadataKeyMapper}:
-\begin{itemize}
-    \item \textbf{Descrizione}: utility class che normalizza i path dei metadati provenienti dal frontend in PascalCase, garantendo coerenza con la struttura interna del JSON dei metadati dei documenti.
-    \item \codeword{\textbf{+ toPascalCase(key: string)}: string}: converte una chiave in PascalCase, gestendo separatori come \codeword{\_} e \codeword{-}, e supportando path dot-notation trasformando ogni segmento separatamente.
-    \item \codeword{\textbf{+ mapGroup(group: SearchGroup)}: SearchGroup}: applica ricorsivamente \codeword{toPascalCase()} al campo \codeword{path} di ogni \codeword{SearchCondition} nell'albero, inclusi i valori di condizioni \codeword{ELEM\_MATCH} che contengono un \codeword{SearchGroup} annidato. Restituisce un nuovo albero con tutti i path normalizzati.
-    \item \codeword{\textbf{+ mapFilters(filters: MetadataFilter[])}: MetadataFilter[]}: variante per array piatti di filtri chiave-valore, normalizza il campo \codeword{key} di ciascun filtro.
-    \item \codeword{\textbf{+ fromLegacyFilters(filters: MetadataFilter[])}: SearchGroup}: metodo di compatibilità che converte un array piatto di filtri legacy in un \codeword{SearchGroup} con operatore \codeword{AND}, filtrando i valori nulli o vuoti e impostando l'operatore \codeword{EQ} per ogni condizione.
 \end{itemize}

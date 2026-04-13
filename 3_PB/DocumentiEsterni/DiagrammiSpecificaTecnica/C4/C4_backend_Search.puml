@@ -1,0 +1,250 @@
+@startuml Class_Diagram_Search_IPC_UseCases
+left to right direction
+title Diagramma delle Classi – Search: IPC Adapter e Use Cases
+skinparam linetype ortho
+skinparam shadowing false
+skinparam nodesep 30
+skinparam ranksep 50
+skinparam class {
+    BackgroundColor White
+    BorderColor #555555
+    ArrowColor #333333
+    FontSize 11
+}
+skinparam interface {
+    BackgroundColor #FFFDE7
+    BorderColor #F9A825
+}
+
+package "Presentation Layer\n(infrastructure/ipc)" #E8F4FD {
+    class SearchIpcAdapter {
+        + {static} register(ipcMain: IpcMain): void
+    }
+}
+
+package "Application Layer\n(use-cases)" #E9F7EF {
+
+    interface ISearchDocumentalClassUC {
+        + execute(name: string): DocumentClass[]
+    }
+    class SearchDocumentalClassUC {
+        - repo: IDocumentClassRepository
+        + execute(name: string): DocumentClass[]
+    }
+
+    interface ISearchProcessUC {
+        + execute(uuid: string): Process[]
+    }
+    class SearchProcessUC {
+        - repo: IProcessRepository
+        + execute(uuid: string): Process[]
+    }
+
+    interface ISearchDocumentsUC {
+        + execute(filters: SearchDocumentsQuery): Document[]
+    }
+    class SearchDocumentsUC {
+        - documentRepo: IDocumentRepository
+        + execute(filters: SearchDocumentsQuery): Document[]
+    }
+
+    interface ISearchSemanticUC {
+        + execute(query: string): Promise<SemanticSearchMatch[]>
+    }
+    class SearchSemanticUC {
+        - documentRepo: IDocumentRepository
+        - aiAdapter: IWordEmbedding
+        + execute(query: string): Promise<SemanticSearchMatch[]>
+    }
+
+    interface IGetCustomMetadataKeysUC {
+        + execute(dipId: number | null): string[]
+    }
+    class GetCustomMetadataKeysUC {
+        - documentRepo: IDocumentRepository
+        + execute(dipId: number | null): string[]
+    }
+}
+
+SearchIpcAdapter --> ISearchDocumentalClassUC : invoca
+SearchIpcAdapter --> ISearchProcessUC         : invoca
+SearchIpcAdapter --> ISearchDocumentsUC       : invoca
+SearchIpcAdapter --> ISearchSemanticUC        : invoca
+SearchIpcAdapter --> IGetCustomMetadataKeysUC : invoca
+
+SearchDocumentalClassUC ..|> ISearchDocumentalClassUC : implements
+SearchProcessUC         ..|> ISearchProcessUC         : implements
+SearchDocumentsUC       ..|> ISearchDocumentsUC       : implements
+SearchSemanticUC        ..|> ISearchSemanticUC        : implements
+GetCustomMetadataKeysUC ..|> IGetCustomMetadataKeysUC : implements
+
+@enduml
+
+
+@startuml Class_Diagram_Search_Repos_DAOs
+left to right direction
+title Diagramma delle Classi – Search: Repository e DAO
+skinparam linetype ortho
+skinparam shadowing false
+skinparam nodesep 30
+skinparam ranksep 50
+skinparam class {
+    BackgroundColor White
+    BorderColor #555555
+    ArrowColor #333333
+    FontSize 11
+}
+skinparam interface {
+    BackgroundColor #FFFDE7
+    BorderColor #F9A825
+}
+
+package "Application Layer\n(use-cases)" #E9F7EF {
+    class SearchDocumentalClassUC
+    class SearchProcessUC
+    class SearchDocumentsUC
+    class SearchSemanticUC
+    class GetCustomMetadataKeysUC
+}
+
+package "Domain Layer\n(ports/repositories)" #EAF0FB {
+    interface IDocumentClassRepository {
+        + searchDocumentalClasses(name: string): DocumentClass[]
+    }
+    interface IProcessRepository {
+        + searchProcesses(uuid: string): Process[]
+    }
+    interface IDocumentRepository {
+        + searchDocument(filters: SearchDocumentsQuery): Document[]
+        + searchDocumentSemantic(v: Float32Array): Promise<Array<{document,score}>>
+        + getDistinctCustomMetadataKeys(dipId: number | null): string[]
+        + getIndexedDocumentsCount(): number
+    }
+}
+
+package "Persistence Layer\n(infrastructure/dao)" #FEF9E7 {
+    class DocumentClassRepository {
+        - dao: DocumentClassDAO
+        + searchDocumentalClasses(name: string): DocumentClass[]
+    }
+    class DocumentClassDAO {
+        - db: Database
+        + search(name: string): DocumentClass[]
+    }
+    class ProcessRepository {
+        - dao: ProcessDAO
+        + searchProcesses(uuid: string): Process[]
+    }
+    class ProcessDAO {
+        - db: Database
+        + searchProcesses(uuid: string): Process[]
+    }
+    class DocumentRepository {
+        - dao: DocumentDAO
+        + searchDocument(filters: SearchDocumentsQuery): Document[]
+        + searchDocumentSemantic(v: Float32Array): Promise<Array<{document,score}>>
+        + getDistinctCustomMetadataKeys(dipId: number | null): string[]
+        + getIndexedDocumentsCount(): number
+    }
+    class DocumentDAO {
+        - db: Database
+        - queryBuilder: DocumentMetadataQueryBuilder
+        + searchDocument(filters: SearchDocumentsQuery): Document[]
+        + searchDocumentSemantic(v: Float32Array): Promise<Array<{document,score}>>
+        + getDistinctCustomMetadataKeys(dipId: number | null): string[]
+        + getIndexedDocumentsCount(): number
+    }
+}
+
+SearchDocumentalClassUC --> IDocumentClassRepository : usa
+SearchProcessUC         --> IProcessRepository       : usa
+SearchDocumentsUC       --> IDocumentRepository      : usa
+SearchSemanticUC        --> IDocumentRepository      : usa
+GetCustomMetadataKeysUC --> IDocumentRepository      : usa
+
+DocumentClassRepository ..|> IDocumentClassRepository : implements
+ProcessRepository       ..|> IProcessRepository       : implements
+DocumentRepository      ..|> IDocumentRepository      : implements
+
+DocumentClassRepository --> DocumentClassDAO : delega
+ProcessRepository       --> ProcessDAO       : delega
+DocumentRepository      --> DocumentDAO      : delega
+
+@enduml
+
+
+@startuml Class_Diagram_Search_QueryModel_Mappers
+left to right direction
+title Diagramma delle Classi – Search: Query Model e Mapper
+skinparam linetype ortho
+skinparam shadowing false
+skinparam nodesep 30
+skinparam ranksep 50
+skinparam class {
+    BackgroundColor White
+    BorderColor #555555
+    ArrowColor #333333
+    FontSize 11
+}
+skinparam interface {
+    BackgroundColor #FFFDE7
+    BorderColor #F9A825
+}
+
+package "Domain Layer\n(entity/search)" #EAF0FB {
+    class SearchDocumentsQuery {
+        + filter: SearchGroup
+        + isTooDeep(maxDepth: number): boolean
+        - calculateDepth(group: SearchGroup, depth: number): number
+    }
+    interface SearchGroup {
+        + logicOperator: LogicOperator
+        + items: ReadonlyArray<SearchCondition | SearchGroup>
+    }
+    interface SearchCondition {
+        + path: string
+        + operator: SearchOperator
+        + value: any
+    }
+    enum LogicOperator {
+        AND
+        OR
+    }
+    enum SearchOperator {
+        EQ
+        GT
+        LT
+        LIKE
+        IN
+        ELEM_MATCH
+    }
+}
+
+package "Infrastructure Layer\n(mappers)" #FDE8F0 {
+    class DocumentClassMapper {
+        + {static} toSearchResult(dc: DocumentClass): DocumentClassSearchResult
+    }
+    class ProcessMapper {
+        + {static} toSearchResult(p: Process): ProcessSearchResult
+    }
+    class DocumentMapper {
+        + {static} toSearchResult(doc: Document, score: number | null): DocumentSearchResult
+        - {static} mapRootMetadataType(metadata: Metadata): DocumentTypeEnum
+    }
+    class MetadataKeyMapper {
+        + {static} toPascalCase(key: string): string
+        + {static} mapGroup(group: SearchGroup): SearchGroup
+        + {static} mapFilters(filters: MetadataFilter[]): MetadataFilter[]
+        + {static} fromLegacyFilters(filters: MetadataFilter[]): SearchGroup
+    }
+}
+
+SearchDocumentsQuery *-- SearchGroup
+SearchGroup          *-- SearchCondition
+SearchGroup          --> LogicOperator
+SearchCondition      --> SearchOperator
+
+MetadataKeyMapper --> SearchGroup     : normalizza path
+MetadataKeyMapper --> SearchCondition : normalizza path
+
+@enduml
