@@ -10,13 +10,19 @@ Il modulo supporta quattro modalità di ricerca principali:
 \begin{itemize}
     \item \textbf{Ricerca per classe documentale} – ricerca le \codeword{DocumentClass} per nome tramite \codeword{SearchDocumentalClassUC}.
     \item \textbf{Ricerca per processo} – ricerca i \codeword{Process} per UUID tramite \codeword{SearchProcessUC}.
-    \item \textbf{Ricerca strutturata per metadati} – ricerca i \codeword{Document} applicando un albero di filtri logici tramite \codeword{SearchDocumentsUC}, costruito a partire da un \codeword{SearchRequestDTO} validato con Zod e trasformato in un \codeword{SearchDocumentsQuery} tramite \codeword{MetadataKeyMapper}.
-    \item \textbf{Ricerca semantica} – ricerca i \codeword{Document} per similarità vettoriale tramite \codeword{SearchSemanticUC}, convertendo la query in un vettore di embedding tramite \codeword{IWordEmbedding} e calcolando la \textit{cosine similarity} rispetto ai vettori indicizzati.
+    \item \textbf{Ricerca strutturata per metadati} – ricerca i \codeword{Document} applicando un albero di filtri logici tramite 
+    \codeword{SearchDocumentsUC}, costruito a partire da un \codeword{SearchRequestDTO} validato con Zod e trasformato in un 
+    \codeword{SearchDocumentsQuery} tramite \codeword{MetadataKeyMapper}.
+    \item \textbf{Ricerca semantica} – ricerca i \codeword{Document} per similarità vettoriale tramite \codeword{SearchSemanticUC}, 
+    convertendo la query in un vettore di embedding tramite \codeword{IWordEmbedding} e calcolando la \textit{cosine similarity} 
+    rispetto ai vettori indicizzati.
+    \item \textbf{Ricerca chiavi di metadati} – recupera le chiavi di metadati personalizzati presenti nei documenti del pacchetto ( quindi nel Database ).
 \end{itemize}
 
-Sono inoltre esposti due canali ausiliari: uno per recuperare le chiavi di metadati personalizzati presenti nel pacchetto (\codeword{GetCustomMetadataKeysUC}), e uno per ottenere lo stato del motore AI (modello inizializzato, numero di documenti indicizzati).
+Inoltre è esposto un canale per ottenere lo stato del motore AI, cioè se il modello è stato inizializzato e il numero di documenti indicizzati.
 
-I risultati vengono mappati in DTO di presentazione (\codeword{DocumentSearchResult}, \codeword{ProcessSearchResult}, \codeword{DocumentClassSearchResult}) prima di essere restituiti al frontend, mantenendo il dominio disaccoppiato dal livello di trasporto IPC.
+I risultati vengono mappati in DTO di presentazione (\codeword{DocumentSearchResult}, \codeword{ProcessSearchResult}, \codeword{DocumentClassSearchResult}) 
+prima di essere restituiti al frontend, mantenendo il dominio disaccoppiato dal livello di trasporto IPC.
 
 \subsection{Architettura del modulo}
 
@@ -47,21 +53,27 @@ I risultati vengono mappati in DTO di presentazione (\codeword{DocumentSearchRes
 Risolve le dipendenze tramite il container DI (tsyringe) e instrada le richieste dal renderer process ai rispettivi Use Case, senza contenere logica di business.
 
 \paragraph{Metodo principale}
-\codeword{+ register(ipcMain: IpcMain): void} – metodo statico che registra tutti i canali IPC del modulo. Per ciascun canale risolve dal container il corrispondente Use Case o adapter, ne invoca \codeword{execute()} e restituisce i risultati mappati in DTO di presentazione.
+\codeword{+ register(ipcMain: IpcMain): void} – metodo statico che registra tutti i canali IPC del modulo. Per ciascun canale risolve dal container il 
+corrispondente Use Case o adapter, ne invoca \codeword{execute()} e restituisce i risultati mappati in DTO di presentazione.
 
 \paragraph{Canali registrati}
 
 \begin{itemize}
-    \item \codeword{SEARCH\_CLASSES} – ricerca le classi documentali per nome, delegando a \codeword{ISearchDocumentalClassUC} e mappando i risultati tramite \codeword{DocumentClassMapper.toSearchResult()}.
+    \item \codeword{SEARCH\_CLASSES} – ricerca le classi documentali per nome, delegando a \codeword{ISearchDocumentalClassUC} e mappando i risultati 
+    tramite \codeword{DocumentClassMapper.toSearchResult()}.
     \item \codeword{SEARCH\_PROCESSES} – ricerca i processi per UUID, delegando a \codeword{ISearchProcessUC} e mappando tramite \codeword{ProcessMapper.toSearchResult()}.
-    \item \codeword{SEARCH\_DOCUMENTS} – ricerca strutturata tramite filtri. Valida il \codeword{SearchRequestDTO} con Zod, normalizza i path dei metadati tramite \codeword{MetadataKeyMapper.mapGroup()}, costruisce un \codeword{SearchDocumentsQuery} e delega a \codeword{ISearchDocumentsUC}. I risultati vengono mappati tramite \codeword{DocumentMapper.toSearchResult()}.
-    \item \codeword{SEARCH\_SEMANTIC} – ricerca semantica testuale, delegando a \codeword{ISearchSemanticUC} e mappando i risultati (con score di similarità) tramite \codeword{DocumentMapper.toSearchResult()}.
-    \item \codeword{SEARCH\_FULLTEXT} – ricerca full-text polimorfica che, in base al \codeword{SearchQueryType} della query (\codeword{PROCESS\_ID}, \codeword{CLASS\_NAME}, \codeword{FREE}), instrada la richiesta al Use Case appropriato.
-    \item \codeword{SEARCH\_GET\_AI\_STATE} – restituisce lo stato del motore AI interrogando \codeword{IWordEmbedding.isInitialized()} e \codeword{IDocumentRepository.getIndexedDocumentsCount()}, costruendo un oggetto con \codeword{status}, \codeword{progressPercentage} e \codeword{indexedDocuments}.
+    \item \codeword{SEARCH\_DOCUMENTS} – ricerca strutturata tramite filtri. Valida il \codeword{SearchRequestDTO} con Zod, normalizza i path dei metadati 
+    tramite \codeword{MetadataKeyMapper.mapGroup()}, costruisce un \codeword{SearchDocumentsQuery} e delega a \codeword{ISearchDocumentsUC}. I risultati vengono
+     mappati tramite \codeword{DocumentMapper.toSearchResult()}.
+    \item \codeword{SEARCH\_SEMANTIC} – ricerca semantica testuale, delegando a \codeword{ISearchSemanticUC} e mappando i risultati (con score di similarità) 
+    tramite \codeword{DocumentMapper.toSearchResult()}.
+    \item \codeword{SEARCH\_FULLTEXT} – ricerca full-text polimorfica che, in base al \codeword{SearchQueryType} della query (\codeword{PROCESS\_ID}, 
+    \codeword{CLASS\_NAME}, \codeword{FREE}), instrada la richiesta al Use Case appropriato.
+    \item \codeword{SEARCH\_GET\_AI\_STATE} – restituisce lo stato del motore AI interrogando \codeword{IWordEmbedding.isInitialized()} e 
+    \codeword{IDocumentRepository.getIndexedDocumentsCount()}, costruendo un oggetto con \codeword{status}, \codeword{progressPercentage} e \codeword{indexedDocuments}.
     \item \codeword{SEARCH\_CUSTOM\_METADATA\_KEYS} – recupera le chiavi di metadati personalizzati delegando a \codeword{IGetCustomMetadataKeysUC}.
 \end{itemize}
 
-% ─────────────────────────────────────────────
 \subsubsection{Use Case di ricerca}
 
 I cinque Use Case del modulo implementano ciascuno un'interfaccia dedicata e delegano le operazioni di persistenza ai rispettivi repository, senza contenere logica infrastrutturale.
@@ -75,7 +87,8 @@ I cinque Use Case del modulo implementano ciascuno un'interfaccia dedicata e del
     \label{fig:uc_search_class}
 \end{figure}
 
-Implementa \codeword{ISearchDocumentalClassUC}. Il metodo \codeword{execute(name: string): DocumentClass[]} invoca \codeword{IDocumentClassRepository.searchDocumentalClasses(name)} e restituisce le entità corrispondenti, senza logica aggiuntiva.
+Implementa \codeword{ISearchDocumentalClassUC}. Il metodo \codeword{execute(name: string): DocumentClass[]} invoca\\
+\codeword{IDocumentClassRepository.searchDocumentalClasses(name)} e restituisce le entità corrispondenti, senza logica aggiuntiva.
 
 \paragraph{SearchProcessUC}
 
@@ -86,7 +99,8 @@ Implementa \codeword{ISearchDocumentalClassUC}. Il metodo \codeword{execute(name
     \label{fig:uc_search_process}
 \end{figure}
 
-Implementa \codeword{ISearchProcessUC}. Il metodo \codeword{execute(uuid: string): Process[]} invoca \codeword{IProcessRepository.searchProcesses(uuid)} e restituisce le entità corrispondenti.
+Implementa \codeword{ISearchProcessUC}. Il metodo \codeword{execute(uuid: string): Process[]} invoca \codeword{IProcessRepository.searchProcesses(uuid)} 
+e restituisce le entità corrispondenti.
 
 \paragraph{SearchDocumentsUC}
 
@@ -97,7 +111,9 @@ Implementa \codeword{ISearchProcessUC}. Il metodo \codeword{execute(uuid: string
     \label{fig:uc_search_documents}
 \end{figure}
 
-Implementa \codeword{ISearchDocumentsUC}. Riceve un \codeword{SearchDocumentsQuery} già costruito dall'adapter. Il metodo \codeword{execute(filters: SearchDocumentsQuery): Document[]} invoca \codeword{IDocumentRepository.searchDocument(filters)} e restituisce i documenti corrispondenti ai criteri di filtro.
+Implementa \codeword{ISearchDocumentsUC}. Riceve un \codeword{SearchDocumentsQuery} già costruito dall'adapter. Il metodo 
+\codeword{execute(filters: SearchDocumentsQuery): Document[]} invoca \codeword{IDocumentRepository.searchDocument(filters)} e restituisce i documenti 
+corrispondenti ai criteri di filtro.
 
 \paragraph{SearchSemanticUC}
 
@@ -108,7 +124,10 @@ Implementa \codeword{ISearchDocumentsUC}. Riceve un \codeword{SearchDocumentsQue
     \label{fig:uc_search_semantic}
 \end{figure}
 
-Implementa \codeword{ISearchSemanticUC}. Coordina \codeword{IWordEmbedding} per la generazione del vettore di query e \codeword{IDocumentRepository} per la ricerca tra i vettori indicizzati. Il metodo \codeword{execute(query: string): Promise<SemanticSearchMatch[]>} converte la query in un vettore tramite \codeword{IWordEmbedding.generateEmbedding()}, quindi invoca \codeword{IDocumentRepository.searchDocumentSemantic()} e restituisce un array di \codeword{SemanticSearchMatch}, ciascuno con il \codeword{Document} e il relativo \codeword{score} di similarità.
+Implementa \codeword{ISearchSemanticUC}. Coordina \codeword{IWordEmbedding} per la generazione del vettore di query e \codeword{IDocumentRepository} per 
+la ricerca tra i vettori indicizzati. Il metodo \codeword{execute(query: string): Promise<SemanticSearchMatch[]>} converte la query in un vettore tramite 
+\codeword{IWordEmbedding.generateEmbedding()}, quindi invoca \codeword{IDocumentRepository.searchDocumentSemantic()} e restituisce un array di 
+\codeword{SemanticSearchMatch}, ciascuno con il \codeword{Document} e il relativo \codeword{score} di similarità.
 
 \paragraph{GetCustomMetadataKeysUC}
 
@@ -119,7 +138,9 @@ Implementa \codeword{ISearchSemanticUC}. Coordina \codeword{IWordEmbedding} per 
     \label{fig:uc_get_metadata_keys}
 \end{figure}
 
-Implementa \codeword{IGetCustomMetadataKeysUC}. Il metodo \codeword{execute(dipId: number | null): string[]} invoca \codeword{IDocumentRepository.getDistinctCustomMetadataKeys(dipId)} e restituisce le chiavi distinte. Se \codeword{dipId} è \codeword{null}, le chiavi vengono recuperate sull'intero database senza filtrare per pacchetto.
+Implementa \codeword{IGetCustomMetadataKeysUC}. Il metodo \codeword{execute(dipId: number | null): string[]} invoca 
+\\\codeword{IDocumentRepository.getDistinctCustomMetadataKeys(dipId)} e restituisce le chiavi distinte. Se \codeword{dipId}
+ è \codeword{null}, le chiavi vengono recuperate sull'intero database senza filtrare per pacchetto.
 
 \subsubsection{Modelli di dominio per la ricerca}
 
@@ -132,15 +153,18 @@ Implementa \codeword{IGetCustomMetadataKeysUC}. Il metodo \codeword{execute(dipI
     \label{fig:search_query_model}
 \end{figure}
 
-Oggetto query che incapsula l'albero di filtri logici da applicare alla ricerca dei documenti. Viene costruito dall'adapter a partire dal \codeword{SearchRequestDTO} validato e passato allo Use Case e poi al DAO.
+Oggetto query che incapsula l'albero di filtri logici da applicare alla ricerca dei documenti. Viene costruito dall'adapter a partire dal 
+\codeword{SearchRequestDTO} validato e passato allo Use Case e poi al DAO.
 
 \begin{itemize}
     \item \codeword{filter: SearchGroup} – radice dell'albero di filtri.
-    \item \codeword{isTooDeep(maxDepth: number): boolean} – calcola ricorsivamente la profondità dell'albero e restituisce \codeword{true} se supera \codeword{maxDepth} (default 5), per prevenire query eccessivamente annidate.
+    \item \codeword{isTooDeep(maxDepth: number): boolean} – calcola ricorsivamente la profondità dell'albero e restituisce \codeword{true} 
+    se supera \codeword{maxDepth} (default 5), per prevenire query eccessivamente annidate.
 \end{itemize}
 
 \paragraph{SearchGroup}
-Interfaccia che rappresenta un nodo dell'albero di filtri. Implementa il \textbf{Composite pattern}: ogni elemento figlio può essere a sua volta un \codeword{SearchGroup} (nodo) o una \codeword{SearchCondition} (foglia).
+Interfaccia che rappresenta un nodo dell'albero di filtri. Implementa il \codeword{\textbf{Composite pattern}}: ogni elemento figlio può essere a sua 
+volta un \codeword{SearchGroup} (nodo) o una \codeword{SearchCondition} (foglia).
 
 \begin{itemize}
     \item \codeword{logicOperator: LogicOperator} – operatore \codeword{AND} o \codeword{OR} che combina i figli.
@@ -151,27 +175,29 @@ Interfaccia che rappresenta un nodo dell'albero di filtri. Implementa il \textbf
 Interfaccia che rappresenta una foglia dell'albero, ovvero una singola condizione atomica su un campo del documento.
 
 \begin{itemize}
-    \item \codeword{path: string} – percorso dot-notation del campo (es.\ \codeword{NomeDelDocumento} o \codeword{CustomMetadata.codice}).
+    \item \codeword{path: string} – percorso dot-notation del campo (es.\ \codeword{NomeDelDocumento} o\\\codeword{CustomMetadata.codice}).
     \item \codeword{operator: SearchOperator} – operatore di confronto: \codeword{EQ}, \codeword{GT}, \codeword{LT}, \codeword{LIKE}, \codeword{IN}, \codeword{ELEM\_MATCH}.
     \item \codeword{value: any} – valore di confronto. Per \codeword{IN} deve essere un array; per \codeword{ELEM\_MATCH} un \codeword{SearchGroup} annidato.
 \end{itemize}
 
 \paragraph{SearchRequestDTO e SearchRequestSchema}
-DTO e schema Zod per la richiesta di ricerca strutturata dal frontend. \codeword{SearchRequestSchema} valida ricorsivamente l'albero di filtri, garantendo la correttezza strutturale prima che la richiesta raggiunga il dominio. Il path di ogni \codeword{SearchCondition} è validato tramite una regex che consente solo la dot-notation alfanumerica.
+DTO e schema Zod per la richiesta di ricerca strutturata dal frontend. \codeword{SearchRequestSchema} valida ricorsivamente l'albero di filtri, garantendo la correttezza 
+strutturale prima che la richiesta raggiunga il dominio. Il path di ogni \codeword{SearchCondition} è validato tramite una regex che consente solo la dot-notation alfanumerica.
 
 \paragraph{SearchQuery}
 Interfaccia per le query di ricerca full-text o semantica provenienti dal frontend.
 
 \begin{itemize}
     \item \codeword{text: string} – testo inserito dall'utente.
-    \item \codeword{type: SearchQueryType} – tipo della query (\codeword{PROCESS\_ID}, \codeword{CLASS\_NAME}, \codeword{FREE}), usato da \codeword{SearchIpcAdapter} per l'instradamento nel canale \codeword{SEARCH\_FULLTEXT}.
+    \item \codeword{type: SearchQueryType} – tipo della query (\codeword{PROCESS\_ID}, \codeword{CLASS\_NAME}, \codeword{FREE}), usato da \codeword{SearchIpcAdapter} 
+    per l'instradamento nel canale \codeword{SEARCH\_FULLTEXT}.
     \item \codeword{useSemanticSearch: boolean} – flag per attivare la ricerca semantica.
 \end{itemize}
 
-% ─────────────────────────────────────────────
 \subsubsection{Mapper di ricerca}
 
-I mapper trasformano le entità di dominio nei DTO di presentazione restituiti al frontend. Sono metodi statici collocati nei rispettivi mapper di persistenza per coerenza architetturale.
+I mapper trasformano le entità di dominio nei DTO di presentazione restituiti al frontend. Sono metodi statici collocati nei rispettivi mapper di persistenza per 
+coerenza architetturale.
 
 \paragraph{DocumentClassMapper.toSearchResult()}
 
@@ -182,7 +208,8 @@ I mapper trasformano le entità di dominio nei DTO di presentazione restituiti a
     \label{fig:document_class_mapper}
 \end{figure}
 
-Trasforma un'entità \codeword{DocumentClass} in un \codeword{DocumentClassSearchResult}, verificando che l'entità sia già persistita (id valido). Restituisce i campi \codeword{id}, \codeword{uuid}, \codeword{integrityStatus}, \codeword{name} e \codeword{type} (fisso a \codeword{"CLASSE"}).
+Trasforma un'entità \codeword{DocumentClass} in un \codeword{DocumentClassSearchResult}, verificando che l'entità sia già persistita (id valido). Restituisce i campi 
+\codeword{id}, \codeword{uuid}, \codeword{integrityStatus}, \codeword{name} e \codeword{type} (fisso alle Classi).
 
 \paragraph{ProcessMapper.toSearchResult()}
 
@@ -193,7 +220,8 @@ Trasforma un'entità \codeword{DocumentClass} in un \codeword{DocumentClassSearc
     \label{fig:process_mapper}
 \end{figure}
 
-Trasforma un'entità \codeword{Process} in un \codeword{ProcessSearchResult}, verificando la persistenza. Restituisce i campi \codeword{id}, \codeword{uuid}, \codeword{integrityStatus} e \codeword{type} (fisso a \codeword{"PROCESSO"}).
+Trasforma un'entità \codeword{Process} in un \codeword{ProcessSearchResult}, verificando la persistenza. Restituisce i campi \codeword{id}, \codeword{uuid}, 
+\codeword{integrityStatus} e \codeword{type} (fisso ai processi).
 
 \paragraph{DocumentMapper.toSearchResult()}
 
@@ -204,7 +232,10 @@ Trasforma un'entità \codeword{Process} in un \codeword{ProcessSearchResult}, ve
     \label{fig:document_mapper}
 \end{figure}
 
-Trasforma un'entità \codeword{Document} e uno score opzionale in un \codeword{DocumentSearchResult}. Estrae il nome cercando prima il nodo \codeword{NomeDelDocumento}, poi \codeword{nome}, nell'albero dei metadati. Determina il tipo (\codeword{DocumentTypeEnum}) tramite \codeword{mapRootMetadataType()}, che normalizza il nome del nodo radice in \codeword{UPPER\_SNAKE\_CASE} e lo confronta con i valori canonici. Restituisce i campi \codeword{id}, \codeword{uuid}, \codeword{integrityStatus}, \codeword{name}, \codeword{type} e \codeword{score}.
+Trasforma un'entità \codeword{Document} e uno score opzionale in un \codeword{DocumentSearchResult}. Estrae il nome cercando prima il nodo \codeword{NomeDelDocumento}, 
+poi \codeword{nome}, nell'albero dei metadati. Determina il tipo (\codeword{DocumentTypeEnum}) tramite \codeword{mapRootMetadataType()}, che normalizza il nome del 
+nodo radice in \codeword{UPPER\_SNAKE\_CASE} e lo confronta con i valori canonici. Restituisce i campi \codeword{id}, \codeword{uuid}, \codeword{integrityStatus}, 
+\codeword{name}, \codeword{type} e \codeword{score}.
 
 \paragraph{MetadataKeyMapper}
 
@@ -218,73 +249,89 @@ Trasforma un'entità \codeword{Document} e uno score opzionale in un \codeword{D
 Utility class che normalizza i path dei metadati dal frontend in PascalCase, garantendo coerenza con la struttura interna del JSON dei metadati.
 
 \begin{itemize}
-    \item \codeword{toPascalCase(key: string): string} – converte una chiave in PascalCase, gestendo separatori \codeword{\_} e \codeword{-} e trasformando ogni segmento di path dot-notation separatamente.
-    \item \codeword{mapGroup(group: SearchGroup): SearchGroup} – applica ricorsivamente \codeword{toPascalCase()} al campo \codeword{path} di ogni \codeword{SearchCondition} nell'albero, inclusi i valori di condizioni \codeword{ELEM\_MATCH} con \codeword{SearchGroup} annidato.
-    \item \codeword{mapFilters(filters: MetadataFilter[]): MetadataFilter[]} – variante per array piatti di filtri chiave-valore; normalizza il campo \codeword{key} di ciascun filtro.
-    \item \codeword{fromLegacyFilters(filters: MetadataFilter[]): SearchGroup} – metodo di compatibilità che converte un array piatto di filtri legacy in un \codeword{SearchGroup} con operatore \codeword{AND}, filtrando i valori nulli o vuoti e impostando l'operatore \codeword{EQ} per ogni condizione.
+    \item \codeword{toPascalCase(key: string): string} – converte una chiave in PascalCase, gestendo separatori \codeword{\_} e \codeword{-} e trasformando ogni segmento 
+    di path dot-notation separatamente.
+    \item \codeword{mapGroup(group: SearchGroup): SearchGroup} – applica ricorsivamente \codeword{toPascalCase()} al campo \codeword{path} di ogni \codeword{SearchCondition}
+     nell'albero, inclusi i valori di condizioni \codeword{ELEM\_MATCH} con \codeword{SearchGroup} annidato.
+    \item \codeword{mapFilters(filters: MetadataFilter[]): MetadataFilter[]} – variante per array piatti di filtri chiave-valore; normalizza il campo \codeword{key} di 
+    ciascun filtro.
+    \item \codeword{fromLegacyFilters(filters: MetadataFilter[]): SearchGroup} – metodo di compatibilità che converte un array piatto di filtri legacy in un 
+    \codeword{SearchGroup} con operatore \codeword{AND}, filtrando i valori nulli o vuoti e impostando l'operatore \codeword{EQ} per ogni condizione.
 \end{itemize}
 
 % ─────────────────────────────────────────────
 \subsubsection{Repository e DAO di ricerca}
-
-I repository implementano il pattern Repository delegando le operazioni di persistenza ai rispettivi DAO, che interagiscono direttamente con SQLite tramite \codeword{better-sqlite3}.
-
+ 
+I repository implementano il \codeword{\textbf{pattern Repository}} delegando le operazioni di persistenza ai rispettivi DAO, che interagiscono direttamente con 
+SQLite tramite \codeword{better-sqlite3}.
+ 
 \paragraph{DocumentClassRepository e DocumentClassDAO}
-
+ 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-6.png}
+    \includegraphics[width=0.7\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-6.png}
     \caption{Diagramma delle classi – DocumentClassRepository e DAO}
     \label{fig:document_class_repo}
 \end{figure}
-
-\codeword{DocumentClassRepository} espone \codeword{searchDocumentalClasses(name)}, delegando a \codeword{DocumentClassDAO.search(name)}, che esegue una query \codeword{WHERE name LIKE \%name\%} sulla tabella \codeword{document\_class} e mappa le righe in entità \codeword{DocumentClass} tramite \codeword{DocumentClassMapper.fromPersistence()}.
-
+ 
+\codeword{DocumentClassRepository} espone \codeword{searchDocumentalClasses(name)}, delegando a \codeword{DocumentClassDAO.search(name)}, che esegue la query 
+e mappa le righe risultanti in entità \codeword{DocumentClass} tramite \\\codeword{DocumentClassMapper.fromPersistence()}.
+ 
 \paragraph{ProcessRepository e ProcessDAO}
-
+ 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-7.png}
+    \includegraphics[width=0.7\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-7.png}
     \caption{Diagramma delle classi – ProcessRepository e DAO}
     \label{fig:process_repo}
 \end{figure}
-
-\codeword{ProcessRepository} espone \codeword{searchProcesses(uuid)}, delegando a \codeword{ProcessDAO.searchProcesses(uuid)}, che esegue una query \codeword{WHERE uuid LIKE \%uuid\%} sulla tabella \codeword{process} (ordinata per \codeword{id}) e mappa le righe in entità \codeword{Process}.
-
+ 
+\codeword{ProcessRepository} espone \codeword{searchProcesses(uuid)}, delegando a \codeword{ProcessDAO.searchProcesses(uuid)}, che esegue la query e 
+mappa le righe risultanti in entità \codeword{Process}.
+ 
 \paragraph{DocumentRepository e DocumentDAO}
-
+ 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-8.png}
     \caption{Diagramma delle classi – DocumentRepository e DAO}
     \label{fig:document_repo}
 \end{figure}
-
-\codeword{DocumentRepository} espone due metodi di ricerca principali:
-
+ 
+\codeword{DocumentRepository} espone i seguenti metodi di ricerca:
+ 
 \begin{itemize}
-    \item \codeword{searchDocument(filters: SearchDocumentsQuery): Document[]} – delega a \codeword{DocumentDAO.searchDocument()}, che utilizza \codeword{DocumentMetadataQueryBuilder} per tradurre il \codeword{SearchDocumentsQuery} in una query SQL parametrizzata con \codeword{json\_extract()} su SQLite.
-    \item \codeword{searchDocumentSemantic(queryVector: Float32Array): Promise<Array<\{document, score\}>>} – delega a \codeword{DocumentDAO.searchDocumentSemantic()}, che carica tutti i vettori dalla tabella \codeword{document\_vector}, calcola la cosine similarity, ordina per score decrescente, seleziona i primi 10 e restituisce le coppie \codeword{\{document, score\}} filtrando i valori nulli. Restituisce un array vuoto se la tabella non esiste o il vettore è privo di dimensioni.
-    \item \codeword{getDistinctCustomMetadataKeys(dipId: number | null): string[]} – combina due strategie: una query SQL sui nodi figli di \codeword{CustomMetadata} e \codeword{ArchimemoData} nelle tabelle \codeword{document\_metadata} e \codeword{process\_metadata}, e una visita ricorsiva dei blob JSON nella colonna \codeword{metadata} della tabella \codeword{document}. I risultati vengono deduplicati e ordinati alfabeticamente.
-    \item \codeword{getIndexedDocumentsCount(): number} – restituisce il numero di documenti con vettore indicizzato nella tabella \codeword{document\_vector}, o 0 se la tabella non esiste.
+    \item \codeword{searchDocument(filters: SearchDocumentsQuery): Document[]} – delega a \\\codeword{DocumentDAO.searchDocument()}, che utilizza 
+    \codeword{DocumentMetadataQueryBuilder} per tradurre i filtri in una query ed eseguirla.
+    \item \codeword{searchDocumentSemantic(queryVector: Float32Array): Promise<Array<\{document, score\}> >} – delega a \codeword{DocumentDAO.searchDocumentSemantic()},
+     che esegue la ricerca per similarità vettoriale e restituisce le prime 10 coppie \codeword{\{document, score\}} ordinate per score decrescente.
+    \item \codeword{getDistinctCustomMetadataKeys(dipId: number | null): string[]} – esegue la query e restituisce le chiavi di metadati personalizzati 
+    distinte, deduplicate e ordinate alfabeticamente.
+    \item \codeword{getIndexedDocumentsCount(): number} – esegue la query e restituisce il numero di documenti con vettore indicizzato, o 0 se la tabella non esiste.
 \end{itemize}
 
-% ─────────────────────────────────────────────
 \subsubsection{DocumentMetadataQueryBuilder}
-
+ 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-9.png}
     \caption{Diagramma delle classi – DocumentMetadataQueryBuilder}
     \label{fig:metadata_query_builder}
 \end{figure}
-
-\codeword{DocumentMetadataQueryBuilder} traduce un \codeword{SearchDocumentsQuery} in una clausola SQL parametrizzata compatibile con SQLite, usando \codeword{json\_extract()} e \codeword{json\_each()} per navigare la struttura JSON dei metadati. Viene istanziato direttamente da \codeword{DocumentDAO}.
-
+ 
+\codeword{DocumentMetadataQueryBuilder} traduce un \codeword{SearchDocumentsQuery} in una clausola SQL parametrizzata compatibile con SQLite. Viene 
+istanziato direttamente da \codeword{DocumentDAO}.
+ 
 \begin{itemize}
-    \item \codeword{build(filters: SearchDocumentsQuery): \{sql: string, params: unknown[]\}} – punto di ingresso pubblico. Verifica che il filtro non sia vuoto, delega a \codeword{buildQueryFromGroup()} sulla radice e restituisce la clausola SQL con i parametri per la query preparata.
-    \item \codeword{buildQueryFromGroup(group: SearchGroup, jsonSource: string): \{sql, params\}} – costruisce ricorsivamente la clausola SQL per un \codeword{SearchGroup}, distinguendo nodi (ricorsione) e foglie (\codeword{buildCondition()}). Le clausole vengono unite con \codeword{AND} o \codeword{OR} in base al \codeword{logicOperator}.
-    \item \codeword{buildCondition(condition: SearchCondition, jsonSource: string): \{sql, params\}} – traduce una singola \codeword{SearchCondition}. Per \codeword{ELEM\_MATCH} genera una sottoquery con \codeword{EXISTS (SELECT 1 FROM json\_each(...))} per il filtraggio su array JSON annidati; per gli altri operatori delega a \codeword{buildScalarCondition()} con \codeword{json\_extract()}.
-    \item \codeword{buildScalarCondition(jsonExtract, operator, value): \{sql, params\}} – genera la clausola SQL per operatori scalari. Per \codeword{EQ} su valori numerici applica un doppio confronto per la coerenza tra tipi numerici e stringhe nel JSON. Per \codeword{LIKE} usa \codeword{COLLATE NOCASE}. Per \codeword{IN} filtra valori nulli o vuoti prima di costruire i placeholder.
-    \item \codeword{toJsonPath(path: string): string} – converte un path dot-notation (es.\ \codeword{CustomMetadata.codice}) nella sintassi JSONPath di SQLite (es.\ \codeword{\$.CustomMetadata.codice}), validando ogni segmento con una regex e sollevando un'eccezione in caso di segmenti non validi.
+    \item \codeword{build(filters: SearchDocumentsQuery): \{sql: string, params: unknown[]\}} – punto di ingresso pubblico. Verifica che il filtro non sia 
+    vuoto, delega a \codeword{buildQueryFromGroup()} sulla radice e restituisce la clausola SQL con i relativi parametri.
+    \item \codeword{buildQueryFromGroup(group: SearchGroup, jsonSource: string): \{sql, params\}} – costruisce ricorsivamente la clausola SQL per un 
+    \codeword{SearchGroup}, distinguendo nodi (ricorsione) e foglie (\codeword{buildCondition()}). Le clausole vengono unite con \codeword{AND} o 
+    \codeword{OR} in base al \codeword{logicOperator}.
+    \item \codeword{buildCondition(condition: SearchCondition, jsonSource: string): \{sql, params\}} – traduce una singola \codeword{SearchCondition} 
+    nella clausola SQL corrispondente, gestendo separatamente l'operatore \codeword{ELEM\_MATCH} (array annidati) e gli operatori scalari.
+    \item \codeword{buildScalarCondition(jsonExtract, operator, value): \{sql, params\}} – genera la clausola SQL per operatori scalari (\codeword{EQ},
+     \codeword{GT}, \codeword{LT}, \codeword{LIKE}, \codeword{IN}), eseguendo le opportune normalizzazioni di tipo e valore.
+    \item \codeword{toJsonPath(path: string): string} – converte un path dot-notation nella sintassi JSONPath di SQLite, validando ogni segmento e 
+    sollevando un'eccezione in caso di segmenti non validi.
 \end{itemize}

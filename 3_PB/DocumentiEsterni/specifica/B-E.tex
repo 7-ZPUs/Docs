@@ -2,11 +2,16 @@
 
 \subsection{Panoramica}
 
-Il modulo di export e stampa gestisce due flussi distinti ma correlati: l'esportazione di file dal pacchetto DiP verso il filesystem locale dell'utente, e la stampa di uno o più file tramite il sistema di stampa nativo del sistema operativo.
+Il modulo di export e stampa gestisce due flussi distinti ma correlati: l'esportazione di file dal pacchetto DiP verso il filesystem locale dell'utente, e la stampa di uno o 
+più file tramite il sistema di stampa nativo del sistema operativo.
 
-L'orchestrazione è gestita da due Use Case dedicati: \codeword{ExportFileUC} e \codeword{PrintFileUC}. Entrambi ricevono un identificativo numerico del file da elaborare, recuperano la relativa entità tramite \codeword{IFileRepository}, risolvono il percorso assoluto all'interno del pacchetto DiP e delegano l'operazione alle rispettive port outbound (\codeword{IExportPort} e \codeword{IPrintPort}).
+L'orchestrazione è gestita da due Use Case dedicati: \codeword{ExportFileUC} e \codeword{PrintFileUC}. Entrambi ricevono un identificativo numerico del file da elaborare, 
+recuperano la relativa entità tramite \codeword{IFileRepository}, risolvono il percorso assoluto all'interno del pacchetto DiP e delegano l'operazione alle rispettive port 
+outbound (\codeword{IExportPort} e \codeword{IPrintPort}).
 
-Il punto di ingresso lato Electron è \codeword{FileViewerIpcAdapter}, che registra i canali IPC su \codeword{ipcMain} e funge da ponte tra il processo renderer e i Use Case del backend. Per le operazioni che richiedono interazione con l'utente (scelta del percorso di destinazione, conferma della stampa multipla), l'adapter si avvale delle API native di Electron tramite \codeword{dialog}.
+Il punto di ingresso lato Electron è \codeword{FileViewerIpcAdapter}, che registra i canali IPC su \codeword{ipcMain} e funge da ponte tra il processo renderer e i Use Case 
+del backend. Per le operazioni che richiedono interazione con l'utente (scelta del percorso di destinazione, conferma della stampa multipla), l'adapter si avvale delle API 
+native di Electron tramite \codeword{dialog}.
 
 \subsection{Architettura del modulo}
 
@@ -28,7 +33,8 @@ Il punto di ingresso lato Electron è \codeword{FileViewerIpcAdapter}, che regis
     \label{fig:export_ipc_part1}
 \end{figure}
 
-\codeword{FileViewerIpcAdapter} è l'adapter IPC che registra i canali di comunicazione tra il processo renderer e il processo main di Electron, esponendo le funzionalità di export e stampa al frontend. Risolve le dipendenze \codeword{IExportFileUC} e \codeword{IPrintFileUC} tramite il container DI \codeword{tsyringe}.
+\codeword{FileViewerIpcAdapter} è l'adapter IPC che registra i canali di comunicazione tra il processo renderer e il processo main di Electron, esponendo le funzionalità di 
+export e stampa al frontend. Risolve le dipendenze \codeword{IExportFileUC} e \codeword{IPrintFileUC} tramite il container DI \codeword{tsyringe}.
 
 \paragraph{Metodo principale}
 \codeword{+ register(ipcMain: IpcMain): void} – metodo statico che registra tutti i canali IPC del modulo.
@@ -37,10 +43,12 @@ Il punto di ingresso lato Electron è \codeword{FileViewerIpcAdapter}, che regis
 
 \begin{itemize}
     \item \codeword{FILE\_PRINT} – avvia la stampa di un singolo file dato il suo \codeword{fileId}, delegando a \codeword{PrintFileUC.execute()}.
-    \item \codeword{FILE\_PRINT\_MANY} – avvia la stampa di più file dati i loro \codeword{fileIds}. Prima di procedere mostra una finestra di conferma tramite \codeword{dialog.showMessageBox}. Se confermata, itera sui file inviando aggiornamenti di avanzamento tramite il canale \codeword{FILE\_PRINT\_PROGRESS}.
+    \item \codeword{FILE\_PRINT\_MANY} – avvia la stampa di più file dati i loro \codeword{fileIds}. Prima di procedere mostra una finestra di conferma tramite \codeword{dialog.showMessageBox}.
+     Se confermata, itera sui file inviando aggiornamenti di avanzamento tramite il canale \codeword{FILE\_PRINT\_PROGRESS}.
     \item \codeword{FILE\_SAVE\_DIALOG} – apre la finestra di salvataggio nativa tramite \codeword{dialog.showSaveDialog}, restituendo il percorso scelto dall'utente o il flag \codeword{canceled}.
     \item \codeword{FILE\_DOWNLOAD} – avvia l'esportazione di un file dato \codeword{fileId} e \codeword{destPath}, delegando a \codeword{ExportFileUC.execute()}.
-    \item \codeword{FILE\_FOLDER\_DIALOG} – apre la finestra di selezione directory tramite \codeword{dialog.showOpenDialog}, restituendo il percorso della cartella selezionata o il flag \codeword{canceled}.
+    \item \codeword{FILE\_FOLDER\_DIALOG} – apre la finestra di selezione directory tramite \codeword{dialog.showOpenDialog}, restituendo il percorso della cartella selezionata o 
+    il flag \codeword{canceled}.
 \end{itemize}
 
 \subsubsection{Use Case}
@@ -54,15 +62,19 @@ Il punto di ingresso lato Electron è \codeword{FileViewerIpcAdapter}, che regis
     \label{fig:export_ipc_part2}
 \end{figure}
 
-Use Case che orchestra il processo di esportazione di un file dal pacchetto DiP verso il filesystem locale. Recupera l'entità \codeword{File} tramite \codeword{IFileRepository}, ne risolve il percorso assoluto e delega la scrittura su disco a \codeword{IExportPort}.
+Use Case che orchestra il processo di esportazione di un file dal pacchetto DiP verso il filesystem locale. Recupera l'entità \codeword{File} tramite \codeword{IFileRepository}, ne 
+risolve il percorso assoluto e delega la scrittura su disco a \codeword{IExportPort}.
 
-\codeword{+ execute(fileId: number, targetPath: string): Promise<ExportResult>} – avvia l'esportazione del file identificato da \codeword{fileId} verso \codeword{targetPath}. Se il file non viene trovato nel repository, restituisce un \codeword{ExportResult} di fallimento con codice \codeword{NOT\_FOUND}.
+\codeword{+ execute(fileId: number, targetPath: string): Promise<ExportResult>} – avvia l'esportazione del file identificato da \codeword{fileId} verso \codeword{targetPath}. Se il
+ file non viene trovato nel repository, restituisce un \codeword{ExportResult} di fallimento con codice \codeword{NOT\_FOUND}.
 
 \paragraph{PrintFileUC}
 
-Use Case che orchestra la stampa di un singolo file. Recupera l'entità \codeword{File} tramite \codeword{IFileRepository}, ne risolve il percorso assoluto all'interno del pacchetto DiP e delega la stampa a \codeword{IPrintPort}.
+Use Case che orchestra la stampa di un singolo file. Recupera l'entità \codeword{File} tramite \codeword{IFileRepository}, ne risolve il percorso assoluto all'interno del pacchetto DiP 
+e delega la stampa a \codeword{IPrintPort}.
 
-\codeword{+ execute(fileId: number): Promise<ExportResult>} – avvia la stampa del file identificato da \codeword{fileId}. Se il file non viene trovato nel repository, restituisce un \codeword{ExportResult} di fallimento con codice \codeword{NOT\_FOUND}.
+\codeword{+ execute(fileId: number): Promise<ExportResult>} – avvia la stampa del file identificato da \codeword{fileId}. Se il file non viene trovato nel repository, restituisce un 
+\codeword{ExportResult} di fallimento con codice \codeword{NOT\_FOUND}.
 
 
 \subsubsection{ExportResult}
@@ -88,12 +100,17 @@ Value object che rappresenta l'esito di un'operazione di export o stampa, conten
     \label{fig:export_ipc_part3}
 \end{figure}
 
-Adapter outbound che implementa \codeword{IExportPort}, responsabile della scrittura del contenuto di un file su disco tramite le API di streaming di Node.js. Utilizza \codeword{pipeline} di \codeword{node:stream/promises} per garantire la corretta gestione degli errori e la chiusura degli stream.
+Adapter outbound che implementa \codeword{IExportPort}, responsabile della scrittura del contenuto di un file su disco tramite le API di streaming di Node.js. Utilizza \codeword{pipeline} 
+di \codeword{node:stream/promises} per garantire la corretta gestione degli errori e la chiusura degli stream.
 
-\codeword{+ exportFile(stream: NodeJS.ReadableStream, destPath: string): Promise<ExportResult>} – riceve uno stream leggibile e lo scrive nel percorso di destinazione tramite \codeword{createWriteStream}. In caso di errore, restituisce un \codeword{ExportResult} di fallimento con codice \codeword{WRITE\_ERROR}.
+\codeword{+ exportFile(stream: NodeJS.ReadableStream, destPath: string): Promise<ExportResult>} – riceve uno stream leggibile e lo scrive nel percorso di destinazione tramite 
+\codeword{createWriteStream}. In caso di errore, restituisce un \codeword{ExportResult} di fallimento con codice \codeword{WRITE\_ERROR}.
 
 \paragraph{PrintPort}
 
-Adapter outbound che implementa \codeword{IPrintPort}, responsabile della stampa di un singolo file tramite le API native di Electron. Crea una \codeword{BrowserWindow} nascosta, carica il file tramite il protocollo \codeword{file://} e invoca la stampa al termine del rendering.
+Adapter outbound che implementa \codeword{IPrintPort}, responsabile della stampa di un singolo file tramite le API native di Electron. Crea una \codeword{BrowserWindow} nascosta, carica il 
+file tramite il protocollo \codeword{file://} e invoca la stampa al termine del rendering.
 
-\codeword{+ printSingle(absolutePath: string, opts: WebContentsPrintOptions): Promise<ExportResult>} – carica il file nel percorso indicato all'interno di una finestra Electron nascosta e avvia la stampa con le opzioni fornite. La finestra viene distrutta al termine dell'operazione, indipendentemente dall'esito. Gestisce sia l'evento \codeword{did-finish-load} (stampa avviata correttamente) sia \codeword{did-fail-load} (errore di caricamento), restituendo in entrambi i casi un \codeword{ExportResult} appropriato.
+\codeword{+ printSingle(absolutePath: string, opts: WebContentsPrintOptions): Promise<ExportResult>} – carica il file nel percorso indicato all'interno di una finestra Electron nascosta e
+ avvia la stampa con le opzioni fornite. La finestra viene distrutta al termine dell'operazione, indipendentemente dall'esito. Gestisce sia l'evento \codeword{did-finish-load} (stampa avviata 
+ correttamente) sia \codeword{did-fail-load} (errore di caricamento), restituendo in entrambi i casi un \codeword{ExportResult} appropriato.
