@@ -1,4 +1,4 @@
-\subsection{Componenti di Ricerca (FrontEnd)}
+\subsection{Componenti di Ricerca (Frontend)}
 
 \subsubsection{Architettura generale}
 La sezione di ricerca implementa un'architettura stratificata basata su due pattern fondamentali:
@@ -51,8 +51,8 @@ Il pannello filtri avanzati è responsabile della raccolta e gestione dello stat
 \noindent Il \textit{FilterRulesManager} implementa la logica di validazione contestuale: poiché i campi pertinenti variano in base al tipo di documento selezionato (identificato dal DocContext), questo componente:
 \begin{itemize}
     \item Definisce quali filtri sono visibili, obbligatori o opzionali.
-    \item Enforces vincoli di coerenza (ad es., un campo di un tipo specifico non deve essere compilato se quel tipo non è selezionato).
-    \item Può disabilitare/abilitare dynamicamente i campi senza ricaricare il DOM, garantendo UX fluido.
+    \item Applica vincoli di coerenza (ad es., un campo di un tipo specifico non deve essere compilato se quel tipo non e selezionato).
+    \item Puo disabilitare/abilitare dinamicamente i campi senza ricaricare il DOM, garantendo una UX fluida.
 \end{itemize}
 
 \paragraph{SubjectsFilterComponent e Strategy Registry}
@@ -60,7 +60,7 @@ Il pannello filtri avanzati è responsabile della raccolta e gestione dello stat
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/subject-filters-strategy-registry-code-l4.png}
-        \caption{Diagramma C4 - SUbjectsFilterComponent e SubjectType Strategy Registry}
+        \caption{Diagramma C4 - SubjectsFilterComponent e SubjectType Strategy Registry}
     \label{fig:C4_subject_filters_strategy}
 \end{figure}
 
@@ -71,9 +71,9 @@ Il filtro dei soggetti è strutturato secondo il pattern Strategy per consentire
     
     \item \textbf{SubjectType Detail Field Registry}: per ogni SubjectType (persona fisica, persona giuridica, ente pubblico), viene mantenuta una registry che associa il tipo ai campi di dettaglio richiesti. Questa consente la generazione \textit{dichiarativa} del form, evitando logiche condizionali sparse nel codice.
     
-    \item \textbf{Wizard guidato}: il componente orchestr a un flusso step-by-step:
+    \item \textbf{Wizard guidato}: il componente orchestra un flusso step-by-step:
     \begin{itemize}
-        \item Selezione del ruolo (reso disponibile dal Role Strategy).
+        \item Selezione del ruolo (reso disponibile dalla Role Strategy).
         \item Selezione del SubjectType.
         \item Compilazione dinamica dei campi di dettaglio.
         \item Raccolta come \textit{SubjectCriteria} e integrazione nello stato globale dei filtri.
@@ -244,7 +244,7 @@ La search bar consente tre modalità di ricerca:
 
 
 \subsubsection{Conformità normativa e linee guida}
-Tutti i componenti di presentazione sono progettati per aderire all'Allegato 5 AGID. IN particolare per struttura e denominazione dei metadati, ordine dei campi, obbligatorietà
+Tutti i componenti di presentazione sono progettati per aderire all'Allegato 5 AGID, in particolare per struttura e denominazione dei metadati, ordine dei campi e obbligatorieta.
 
 \noindent La validazione della conformità è:
 \begin{itemize}
@@ -392,7 +392,7 @@ Esempi di regole:
     \item Se AggregateFilters.dataApertura è compilata, allora dataChiusura >= dataApertura.
     \item CommonFilters.annoInizio >= 1900 (vincolo AGID).
 \end{itemize}
-Inoltre anche in questo caso l'utilizzo di un pattern Strategy consente di applicare regole specifiche in base ai filtri presi in considerazione. Questo permette di aggiongere nuove regole senza modificare il codice esistente, ma semplicemente aggiungendo nuove funzioni di validazione e registrandole nella registry.
+Inoltre anche in questo caso l'utilizzo di un pattern Strategy consente di applicare regole specifiche in base ai filtri presi in considerazione. Questo permette di aggiungere nuove regole senza modificare il codice esistente, ma semplicemente aggiungendo nuove funzioni di validazione e registrandole nella registry.
 
 \paragraph{ValidationError e Stato di Errore}
 Lo stato di ricerca mantiene una Map<fieldName, ValidationError> che:
