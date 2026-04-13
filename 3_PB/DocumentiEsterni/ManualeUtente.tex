@@ -83,9 +83,9 @@
         \hline
         \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
         \hline
-        0.6.0 & 2026/04/11 & Gingillino Aaron & Georgescu Diana & \begin{tabular}[c]{@{}l@{}} Aggiunta immagini e \\ sistemata sezione \ref{esport}\\ \end{tabular}\\
+        0.6.0 & 2026/04/11 & Gingillino Aaron & Georgescu Diana & \begin{tabular}[c]{@{}l@{}} Aggiunta immagini e \\ completamento sezione \\ \ref{esport}\\ \end{tabular}\\
         \hline
-        0.5.0 & 2026/04/11 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Stesura sezione \ref{esport}\\ \end{tabular}\\
+        0.5.0 & 2026/04/11 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Stesura sezione \ref{esport} e\\ glossario \end{tabular}\\
         \hline
         0.4.0 & 2026/04/11 & Gingillino Aaron & Georgescu Diana &  \begin{tabular}[c]{@{}l@{}} Stesura sezioni \ref{integrità}, \ref{esplorazione}\\ \end{tabular} \\
         \hline
@@ -151,7 +151,7 @@ Le principali funzionalità offerte da \textit{DIPReader} per l'interazione con 
     \item \textbf{Navigazione e Visualizzazione:} Esplorazione gerarchica (Classe documentale, Processo, Documento) all'interno del DIP e visualizzazione in anteprima dei formati di documenti supportati.
     \item \textbf{Ricerca Avanzata e Semantica:} Ricerca all'interno dei metadati tramite filtri specifici avanzati e ricerca semantica dei documenti.
     \item \textbf{Verifica Integrità:} Controllo dello stato di verifica (Integro/Non Integro/Non Verificato) dei file contenuti nel DIP e generazione dei relativi report.
-    \item \textbf{Estrazione ed Esportazione:} Possibilità di scaricare singolarmente o in blocco i documenti sul computer locale, stampare i file tramite le periferiche di sistema o esportare i report di verifica in PDF.
+    \item \textbf{Scaricamento ed Esportazione:} Possibilità di scaricare singolarmente o in blocco i documenti sul computer locale, stampare i file tramite le periferiche di sistema o esportare i report di verifica in PDF.
     \end{itemize}
 
 
@@ -224,13 +224,14 @@ In questa sezione è visibile il resoconto di tutti gli elementi per i quali è 
     \label{fig:integrita}
 \end{figure}
 
-\subsection{Stampa e Salvataggio Documentale} \label {esport}
+\subsection{Salvataggio Documentale e Stampa} \label {esport}
 
-L'utente può stampare o estrarre in locale i documenti conservati nel sistema. Il software supporta la stampa o il salvataggio sia del singolo file principale, che di interi pacchetti documentali.
+L'utente può scaricare in locale o stampare i documenti conservati nel sistema. Il software supporta il salvataggio e la stampa sia del singolo file principale, che di interi pacchetti documentali.
 
-\subsubsection{Procedura di Esportazione}
 
-L'azione di stampa è analoga a quella d'esportazione, dunque è mostrata solo l'esportazione. L'esportazione è disponibile esclusivamente per i nodi di tipo \textit{Documento Padre}. Per avviare il processo, seguire i passaggi indicati:
+\subsubsection{Procedura di Scaricamento}
+
+Lo scaricamento è disponibile esclusivamente per i nodi di tipo \textit{Documento Padre}. Per avviare il processo, seguire i passaggi indicati:
 
 \begin{enumerate}
     \item \textbf{Selezione del Documento}: Identificare nell'albero di navigazione il documento desiderato. Una volta selezionato, l'area centrale mostrerà i metadati e le azioni disponibili;
@@ -254,13 +255,44 @@ L'azione di stampa è analoga a quella d'esportazione, dunque è mostrata solo l
     \caption{Interfaccia di selezione granulare dei file per l'esportazione.}
     \label{fig:modale}
 \end{figure}
+
+\subsubsection{Stampa}
+
+Come per la procedura di scaricamento, la funzionalità di stampa è disponibile esclusivamente per i nodi di tipo \textit{Documento Padre}. Consente di riprodurre su supporto cartaceo o tramite driver di stampa virtuale i documenti consultati.
+
+Per avviare il processo, seguire i passaggi indicati:
+
+\begin{enumerate}
+    \item \textbf{Selezione del Documento}: Identificare nell'albero di navigazione il file desiderato;
+    \item \textbf{Attivazione Comando}: Cliccare sul pulsante \textbf{Stampa documento} situato nella barra superiore delle azioni (Figura 6). Il comando è identificato dall'icona di una stampante stilizzata;
+    \item \textbf{Configurazione della Stampa}: Il sistema aprirà una finestra di dialogo
+        modale \textit{Seleziona i documenti da stampare} che elenca il file principale e tutti gli
+        eventuali allegati correlati (Figura \ref{fig:stampa});
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/stampa.png}
+    \caption{Interfaccia di selezione granulare dei file per la stampa.}
+    \label{fig:stampa}
+\end{figure}
+
+\begin{enumerate}[resume]
+    \item \textbf{Interfaccia di Sistema}: Il software richiamerà automaticamente la finestra di dialogo nativa del sistema operativo (\textit{Print Dialog}). In questa fase è possibile:
+    \begin{itemize}
+        \item Selezionare la stampante di destinazione;
+        \item Configurare le impostazioni di layout;
+        \item Definire il numero di copie e l'intervallo di pagine da riprodurre.
+    \end{itemize}
+    \end{enumerate}
+
 \subsubsection{Selezione Multipla e Allegati}
 
 All'interno della finestra di selezione, l'utente ha il pieno controllo sugli elementi da esportare:
 \begin{itemize}
     \item \textbf{Selezione Granulare}: È possibile spuntare o deselezionare singolarmente ogni file. Per impostazione predefinita, il sistema seleziona l'intero pacchetto (file principale + allegati);
     \item \textbf{Etichette di Tipologia}: Accanto a ogni nome file è presente un'etichetta identificativa (\textit{Principale} o \textit{Allegato}) per facilitare il riconoscimento dei contenuti;
-    \item \textbf{Conferma}: Il pulsante di conferma indica tra parentesi il numero totale di file pronti per lo scaricamento.
+    \item \textbf{Conferma}: Il pulsante di conferma \textbf{Scarica}, o \textbf{Stampa} a seconda del contesto, indica tra parentesi il numero totale di file pronti per l'esportazione.
 \end{itemize}
 
 \subsubsection{Monitoraggio e Conclusione}
@@ -269,7 +301,7 @@ Una volta avviata l'operazione, il software gestisce il trasferimento dei dati t
 
 \begin{itemize}
     \item \textbf{Avanzamento}: In alto a destra comparirà una barra di stato che mostra l'elenco dei file in fase di scrittura e la conferma individuale per ogni elemento completato;
-    \item \textbf{Notifica Finale}: Al termine dell'intera procedura, un messaggio di conferma indicherà il numero totale di documenti salvati con successo sul \glossario{file system} locale (Figura \ref{fig:notifica_export});
+    \item \textbf{Notifica Finale}: Al termine dell'intera procedura, un messaggio di conferma indicherà il numero totale di file salvati con successo sul \glossario{file system} locale (Figura \ref{fig:notifica_export});
 \end{itemize}
 
 \begin{figure}[H]
@@ -279,7 +311,7 @@ Una volta avviata l'operazione, il software gestisce il trasferimento dei dati t
     \label{fig:notifica_export}
 \end{figure}
 \begin{itemize}
-    \item \textbf{Destinazione}: I file vengono salvati nella cartella di destinazione predefinita del sistema o in quella selezionata tramite la finestra di dialogo ministeriale, mantenendo i nomi originali dei file presenti nel DIP.
+    \item \textbf{Destinazione}: I file vengono salvati nella cartella di destinazione predefinita del sistema o in quella selezionata tramite la finestra di dialogo, mantenendo i nomi originali dei file presenti nel DIP.
 \end{itemize}
 
 \newpage
