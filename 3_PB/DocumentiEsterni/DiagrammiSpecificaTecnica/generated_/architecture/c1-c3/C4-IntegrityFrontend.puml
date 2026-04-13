@@ -1,0 +1,96 @@
+@startuml Verification_Frontend_A4
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam handwritten false
+skinparam packageStyle rectangle
+allowmixing
+
+' Aumenta la distanza minima orizzontale e verticale tra i nodi
+skinparam nodesep 110
+skinparam ranksep 80
+
+skinparam class {
+    BackgroundColor White
+    ArrowColor #2C3E50
+    BorderColor #2C3E50
+}
+
+package "UI Layer (Smart & Dumb Components)" #FDFEFE {
+    class IntegrityDashboardComponent <<Smart>> {
+        + currentDipId: number
+        + ngOnInit(): void
+        + startVerification(): void
+    }
+
+    class IntegritySummaryCardsComponent <<Dumb>> {
+        + stats: IntegrityOverviewStats
+    }
+
+    class IntegrityValidPanelComponent <<Dumb>> {
+        + nodes: IntegrityNodeVM[]
+        + corruptedNodes: IntegrityNodeVM[]
+    }
+}
+
+package "Domain Layer (State & Logic)" #F9EBEA {
+    interface IIntegrityFacade <<Facade>> {
+        + isVerifying: Signal<boolean>
+        + error: Signal<string | null>
+        + overviewStats: Signal<IntegrityOverviewStats>
+        + corruptedNodes: Signal<IntegrityNodeVM[]>
+        + loadOverview(dipId: number): Promise<void>
+        + verifyDip(dipId: number): Promise<void>
+    }
+
+    class IntegrityFacade {
+        - _isVerifying: WritableSignal<boolean>
+        - _overviewStats: WritableSignal<IntegrityOverviewStats>
+        - collectClassOverview(...)
+        - collectProcessOverview(...)
+    }
+
+    class "View Models" as VMs <<Data>> {
+        + IntegrityNodeVM
+        + IntegrityOverviewStats
+    }
+}
+
+package "Infrastructure Layer (Gateways)" #EAF2F8 {
+    interface IIntegrityIpcGateway <<Gateway>> {
+        + checkDipIntegrity(id: number): Promise<IntegrityStatusEnum>
+        + getClassesByDipId(id: number): Promise<DocumentClassDTO[]>
+        + getProcessesByClassId(id: number): Promise<ProcessDTO[]>
+    }
+
+    class IntegrityIpcGateway {
+        - invoke<T>(channel: string, args: any[]): Promise<T>
+    }
+}
+
+boundary "Electron ContextBridge\n(window.electronAPI)" as IPC_Bridge #E8F8F5
+
+' --- Relazioni ---
+
+' UI Rendering
+IntegrityDashboardComponent ..> IIntegrityFacade : "injects"
+IntegrityDashboardComponent *-- IntegritySummaryCardsComponent : "renders"
+IntegrityDashboardComponent *-- IntegrityValidPanelComponent : "renders"
+
+' Domain & State management
+IntegrityFacade .up.|> IIntegrityFacade : "implements"
+
+' >>> FRECCIA ALLUNGATA PER EVITARE SOVRAPPOSIZIONI <<<
+IIntegrityFacade ....right....> VMs : "exposes state"
+
+IntegrityFacade ...> IIntegrityIpcGateway : "injects"
+
+' Infrastructure & Backend contact
+IntegrityIpcGateway .up.|> IIntegrityIpcGateway : "implements"
+IntegrityIpcGateway ...> IPC_Bridge : "IPC Calls"
+
+note right of IPC_Bridge
+  Singolo punto di contatto 
+  con il Main Process (Backend)
+end note
+
+@enduml

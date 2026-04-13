@@ -11,6 +11,7 @@
 \usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage{chngpage}
+\usepackage{pdflscape}
 \usepackage{tocloft}
 \usepackage{longtable}
 \usepackage{ltablex}
@@ -23,6 +24,7 @@
 \usepackage{nameref}
 \usepackage[colorlinks=true]{hyperref}
 \usepackage{tabularx}
+\usepackage{adjustbox}
 % Colori ZPUS - Verde, Nero, Bianco
 \definecolor{zpusgreen}{RGB}{4, 138, 55}
 \definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
@@ -44,6 +46,8 @@
 \newcommand{\glossario}[1]{\textit{#1}\textsubscript{\textbf{\textit{\textcolor{lightblack}{G}}}}}
 \newcommand{\ped}[1]{\textsubscript{#1}}
 \renewcommand{\tabularxcolumn}[1]{m{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\def\UrlBreaks{\do\_\do\,\do\:\do\-\do\.\do\/}
 
 \pagestyle{fancy}
 \setlength{\headwidth}{\textwidth}
@@ -114,15 +118,16 @@
 \input{specifica/Abstract.tex}
 \input{specifica/Container.tex}
 \input{specifica/Componenti.tex}
-%\input{specifica/F-VI.tex} % Verifica Integrità
+\input{specifica/F-VI.tex} % Verifica Integrità
 \input{specifica/F-S.tex}  % Search 
-%\input{specifica/F-DD.tex} % Document Details
+\input{specifica/F-DD.tex} % Document Details
 %\input{specifica/F-AD.tex} % Aggregate Details 
 %\input{specifica/F-I.tex}  % Import 
 %\input{specifica/F-N.tex}  % Navigazione 
 %\input{specifica/B-I.tex}  % Indexing 
-%\input{specifica/B-B.tex}  % Browsing 
+\input{specifica/B-B.tex}  % Browsing 
 %\input{specifica/B-SE.tex} % Search / Export 
+\input{specifica/B-VI.tex} % Verifica Integrità
 \end{document}
 
 

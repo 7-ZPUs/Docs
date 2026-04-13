@@ -1,0 +1,377 @@
+\newpage
+\section{Backend - Browsing}
+
+\subsection{Panoramica}
+\label{sec:browsing}
+
+\noindent
+\begin{tcolorbox}[colback=zpuslightgray,colframe=zpusgreen,title=Navigazione gerarchica,boxrule=1.5pt]
+Il modulo Browsing implementa la navigazione gerarchica dei dati indicizzati in SQLite: 
+DIP\ped{G} $\to$ Classi documentali $\to$ Processi $\to$ Documenti $\to$ File. 
+Supporta inoltre getter alternativi per ID e stato di integrità.
+\end{tcolorbox}
+
+\noindent
+Le caratteristiche backend trasversali al container Main (stack tecnologico, layering, sequenza runtime generale, Dependency Injection, bootstrap e sicurezza preload) sono descritte in \nameref{sec:container:main}.
+
+
+\subsubsection{Organizzazione file backend}
+\label{sec:browsing:struttura}
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabularx}{\textwidth}{|l|Y|}
+    \hline
+    \textbf{Layer} & \textbf{File} \\
+    \hline
+    Entry point IPC & \texttt{main.ts}, \texttt{preload.ts}, \texttt{ipc-channels.ts}, \newline \texttt{BrowsingIpcAdapter.ts} \\
+    \hline
+    Use case & \texttt{dip/*}, \texttt{classe-documentale/*}, \newline \texttt{process/*}, \texttt{document/*}, \texttt{file/*} \\
+    \hline
+    Repository & \texttt{I*Repository.ts}, \texttt{*Repository.ts} \\
+    \hline
+    DAO & \texttt{I*DAO.ts}, \texttt{*DAO.ts}, \texttt{mappers/*Mapper.ts} \\
+    \hline
+    Entity / DTO & \texttt{entity/*}, \texttt{dto/*}, \texttt{value-objects/*} \\
+    \hline
+    Database & \texttt{schema.sql}, \texttt{DatabaseBootstrap.ts}, \texttt{IndexDip.ts} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\subsubsection{Flusso end-to-end}
+\label{sec:browsing:flusso}
+
+\paragraph{Flusso gerarchico di navigazione.}
+\begin{center}
+  \texttt{BROWSE\_GET\_DIP\_BY\_ID} \\
+  $\downarrow$ \\
+  \texttt{BROWSE\_GET\_DOCUMENT\_CLASS\_BY\_DIP\_ID} \\
+  $\downarrow$ \\
+  \texttt{BROWSE\_GET\_PROCESS\_BY\_DOCUMENT\_CLASS} \\
+  $\downarrow$ \\
+  \texttt{BROWSE\_GET\_DOCUMENTS\_BY\_PROCESS} \\
+  $\downarrow$ \\
+  \texttt{BROWSE\_GET\_FILE\_BY\_DOCUMENT}
+\end{center}
+
+Contratto IPC definito in \texttt{ipc-channels.ts} e registrato in \texttt{BrowsingIpcAdapter.ts}:
+
+\begin{table}[H]
+  \centering
+  \renewcommand{\arraystretch}{1.4}
+  \begin{adjustbox}{max width=\textwidth}
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Canale} & \textbf{Payload} & \textbf{Return} & \textbf{Use case} \\
+    \hline
+    \texttt{BROWSE\_GET\_DOCUMENT\_BY\_ID}              & \texttt{id: number}                  & \texttt{DocumentDTO | null}      & \texttt{IGetDocumentByIdUC} \\
+    \hline
+    \texttt{BROWSE\_GET\_DOCUMENTS\_BY\_PROCESS}        & \texttt{processId: number}           & \texttt{DocumentDTO[]}           & \texttt{IGetDocumentByProcessUC} \\
+    \hline
+    \texttt{BROWSE\_GET\_DOCUMENTS\_BY\_STATUS}         & \texttt{status: IntegrityStatusEnum} & \texttt{DocumentDTO[]}           & \texttt{IGetDocumentByStatusUC} \\
+    \hline
+    \texttt{BROWSE\_GET\_FILE\_BY\_ID}                  & \texttt{id: number}                  & \texttt{FileDTO | null}          & \texttt{IGetFileByIdUC} \\
+    \hline
+    \texttt{BROWSE\_GET\_FILE\_BUFFER\_BY\_ID}          & \texttt{id: number}                  & \texttt{Buffer | null}           & \texttt{IGetFileByIdUC} + lettura fs \\
+    \hline
+    \texttt{BROWSE\_GET\_FILE\_BY\_DOCUMENT}            & \texttt{documentId: number}          & \texttt{FileDTO[]}               & \texttt{IGetFileByDocumentUC} \\
+    \hline
+    \texttt{BROWSE\_GET\_FILE\_BY\_STATUS}              & \texttt{status: IntegrityStatusEnum} & \texttt{FileDTO[]}               & \texttt{IGetFileByStatusUC} \\
+    \hline
+    \texttt{BROWSE\_GET\_PROCESS\_BY\_ID}               & \texttt{id: number}                  & \texttt{ProcessDTO | null}       & \texttt{IGetProcessByIdUC} \\
+    \hline
+    \texttt{BROWSE\_GET\_PROCESS\_BY\_STATUS}           & \texttt{status: IntegrityStatusEnum} & \texttt{ProcessDTO[]}            & \texttt{IGetProcessByStatusUC} \\
+    \hline
+    \texttt{BROWSE\_GET\_PROCESS\_BY\_DOCUMENT\_CLASS}  & \texttt{documentClassId: number}     & \texttt{ProcessDTO[]}            & \texttt{IGetProcessByDocumentClassUC} \\
+    \hline
+    \texttt{BROWSE\_GET\_DOCUMENT\_CLASS\_BY\_DIP\_ID}  & \texttt{dipId: number}               & \texttt{DocumentClassDTO[]}      & \texttt{IGetDocumentClassByDipIdUC} \\
+    \hline
+    \texttt{BROWSE\_GET\_DOCUMENT\_CLASS\_BY\_STATUS}   & \texttt{status: IntegrityStatusEnum} & \texttt{DocumentClassDTO[]}      & \texttt{IGetDocumentClassByStatusUC} \\
+    \hline
+    \texttt{BROWSE\_GET\_DOCUMENT\_CLASS\_BY\_ID}       & \texttt{id: number}                  & \texttt{DocumentClassDTO | null} & \texttt{IGetDocumentClassByIdUC} \\
+    \hline
+    \texttt{BROWSE\_GET\_DIP\_BY\_ID}                   & \texttt{id: number}                  & \texttt{DipDTO | null}           & \texttt{IGetDipByIdUC} \\
+    \hline
+    \texttt{BROWSE\_GET\_DIP\_BY\_STATUS}               & \texttt{status: IntegrityStatusEnum} & \texttt{DipDTO[]}                & \texttt{IGetDipByStatusUC} \\
+    \hline
+  \end{tabular}
+  \end{adjustbox}
+  \caption{Contratto IPC del modulo Browsing}
+  \label{tab:browsing:ipc}
+\end{table}
+\noindent
+\textbf{Nota:} Il canale \texttt{BROWSE\_\allowbreak GET\_\allowbreak DIP\_\allowbreak BY\_\allowbreak DOCUMENT\_\allowbreak CLASS} è definito in \texttt{ipc-channels.ts} ma non registrato in \texttt{BrowsingIpcAdapter}.
+
+\subsubsection{Diagrammi architetturali (C3/C4)}
+\label{sec:browsing:diagrammi}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/C3_Backend_Browsing_Integrity.png}
+  \caption{C3 del backend: orchestrazione condivisa tra Browsing e Verifica Integrita}
+  \label{fig:browsing:c3-shared}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/C3_Backend_Browsing.png}
+  \caption{C3 del backend: focus sul flusso Browsing (BrowsingIpcAdapter)}
+  \label{fig:browsing:c3-focused}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/C3_Backend_File_Operations.png}
+  \caption{C3 del backend: focus sulle operazioni file (FileViewerIpcAdapter)}
+  \label{fig:fileops:c3-focused}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{../../assets/outDiagrammiST/C4_Browsing_Domain.png}
+  \caption{C4 del modulo Browsing - modello di dominio}
+  \label{fig:browsing:c4-domain}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/C4_Backend_Browsing.png}
+  \caption{C4 del modulo Browsing - architettura applicativa e infrastrutturale}
+  \label{fig:browsing:c4-backend}
+\end{figure}
+
+\subsubsection{Use Case: firme getter}
+\label{sec:browsing:usecase}
+
+\noindent
+\begin{tcolorbox}[colback=zpuslightgray,colframe=zpusgreen,title=Caratteristica della layer,boxrule=1pt]
+Gli use case sono thin wrapper senza logica aggiuntiva; delegano direttamente al repository corrispondente.
+\end{tcolorbox}
+
+\paragraph{Interfacce per aggregato.}
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{tabularx}{\textwidth}{|l|Y|}
+    \hline
+    \textbf{Use Case} & \textbf{Firma} \\
+    \hline
+    \texttt{IGetDipByIdUC} & \texttt{execute(id: number): Dip | null} \\
+    \texttt{IGetDipByStatusUC} & \texttt{execute(status: IntegrityStatusEnum): Dip[]} \\
+    \hline
+    \texttt{IGetDocumentClassByDipIdUC} & \texttt{execute(dipId: number): DocumentClass[]} \\
+    \texttt{IGetDocumentClassByIdUC} & \texttt{execute(id: number): DocumentClass | null} \\
+    \texttt{IGetDocumentClassByStatusUC} & \texttt{execute(status: IntegrityStatusEnum): DocumentClass[]} \\
+    \hline
+    \texttt{IGetProcessByDocumentClassUC} & \texttt{execute(documentClassId: number): Process[]} \\
+    \texttt{IGetProcessByIdUC} & \texttt{execute(id: number): Process | null} \\
+    \texttt{IGetProcessByStatusUC} & \texttt{execute(status: IntegrityStatusEnum): Process[]} \\
+    \hline
+    \texttt{IGetDocumentByIdUC} & \texttt{execute(id: number): Document | null} \\
+    \texttt{IGetDocumentByProcessUC} & \texttt{execute(processId: number): Document[]} \\
+    \texttt{IGetDocumentByStatusUC} & \texttt{execute(status: IntegrityStatusEnum): Document[]} \\
+    \hline
+    \texttt{IGetFileByIdUC} & \texttt{execute(id: number): File | null} \\
+    \texttt{IGetFileByDocumentUC} & \texttt{execute(documentId: number): File[]} \\
+    \texttt{IGetFileByStatusUC} & \texttt{execute(status: IntegrityStatusEnum): File[]} \\
+    \hline
+  \end{tabularx}
+  \label{tab:browsing:usecase}
+\end{table}
+
+\subsubsection{Layer Repository}
+\label{sec:browsing:repository}
+
+\noindent
+Ogni repository delega al DAO corrispondente il retrieval dei dati.
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabularx}{\textwidth}{|l|l|Y|}
+    \hline
+    \textbf{Repository} & \textbf{Implementazione} & \textbf{Metodi getter} \\
+    \hline
+    \texttt{IDipRepository} & \texttt{DipRepository.ts} & 
+      \texttt{ById}, \texttt{ByUuid}, \texttt{ByStatus} \\
+    \hline
+    \texttt{IDocumentClassRepository} & \texttt{DocumentClassRepository.ts} & 
+      \texttt{ById}, \texttt{ByDipId}, \texttt{ByStatus} \\
+    \hline
+    \texttt{IProcessRepository} & \texttt{ProcessRepository.ts} & 
+      \texttt{ById}, \texttt{ByDocumentClassId}, \texttt{ByStatus} \\
+    \hline
+    \texttt{IDocumentRepository} & \texttt{DocumentRepository.ts} & 
+      \texttt{ById}, \texttt{ByProcessId}, \texttt{ByStatus} \\
+    \hline
+    \texttt{IFileRepository} & \texttt{FileRepository.ts} & 
+      \texttt{ById}, \texttt{ByDocumentId}, \texttt{ByStatus} \\
+    \hline
+  \end{tabularx}
+  \label{tab:browsing:repositories}
+\end{table}
+
+\noindent
+Inoltre: \texttt{save}, \texttt{updateIntegrityStatus} per persistenza; \texttt{searchDocument*}, 
+\texttt{getIndexedDocumentsCount} per DocumentRepository.
+
+\subsubsection{Layer DAO}
+\label{sec:browsing:dao}
+
+\noindent
+Le interfacce \texttt{I*DAO} espongono metodi paralleli ai repository per il retrieval e query concrete eseguite in SQLite.
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabularx}{\textwidth}{|l|l|Y|}
+    \hline
+    \textbf{DAO} & \textbf{File} & \textbf{Query / Operazioni} \\
+    \hline
+    \texttt{DipDAO} & \texttt{DipDAO.ts} & 
+      By id/uuid/status; UPSERT uuid \\
+    \hline
+    \texttt{DocumentClassDAO} & \texttt{DocumentClassDAO.ts} & 
+      By id/dipId/status; search LIKE; UPSERT \\
+    \hline
+    \texttt{ProcessDAO} & \texttt{ProcessDAO.ts} & 
+      By id/documentClassId/status; metadati albero \\
+    \hline
+    \texttt{DocumentDAO} & \texttt{DocumentDAO.ts} & 
+      By id/processId/status; search avanzate; ricerca vettoriale \\
+    \hline
+    \texttt{FileDAO} & \texttt{FileDAO.ts} & 
+      By id/documentId/status; sort is\_main DESC \\
+    \hline
+    \texttt{MetadataHelper} & \texttt{MetadataHelper.ts} & 
+      Load/save ricorsivo; ricostruzione albero \\
+    \hline
+  \end{tabularx}
+  \label{tab:browsing:daos}
+\end{table}
+
+\subsubsection{Entity e Value Objects}
+\label{sec:browsing:entity}
+
+\noindent
+Modello di dominio. Ogni entity espone getter e \texttt{setIntegrityStatus}:
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{tabularx}{\textwidth}{|l|Y|}
+    \hline
+    \textbf{Entity} & \textbf{Attributi principali} \\
+    \hline
+    \texttt{Dip} & \texttt{id,\allowbreak uuid,\allowbreak integrityStatus} \\
+    \hline
+    \texttt{DocumentClass} & \texttt{id,\allowbreak dipId,\allowbreak dipUuid,\allowbreak uuid,\allowbreak name,\allowbreak timestamp,\allowbreak integrityStatus} \\
+    \hline
+    \texttt{Process} & \texttt{id,\allowbreak documentClassId,\allowbreak documentClassUuid,\allowbreak uuid,\allowbreak metadata,\allowbreak integrityStatus} \\
+    \hline
+    \texttt{Document} & \texttt{id,\allowbreak uuid,\allowbreak metadata,\allowbreak processId,\allowbreak processUuid,\allowbreak integrityStatus} \\
+    \hline
+    \texttt{File} & \texttt{id,\allowbreak uuid,\allowbreak filename,\allowbreak path,\allowbreak hash,\allowbreak isMain,\allowbreak documentId,\allowbreak documentUuid,\allowbreak integrityStatus} \\
+    \hline
+  \end{tabularx}
+  \label{tab:browsing:entities}
+\end{table}
+
+\subsubsection{Data Transfer Objects}
+\label{sec:browsing:dto}
+
+\noindent
+Contratto dati IPC (restituiti dall'adapter al renderer):
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{tabularx}{\textwidth}{|l|Y|}
+    \hline
+    \textbf{DTO} & \textbf{Attributi} \\
+    \hline
+    \texttt{DipDTO} & \texttt{id,\allowbreak uuid,\allowbreak integrityStatus} \\
+    \hline
+    \texttt{DocumentClassDTO} & \texttt{id,\allowbreak dipId,\allowbreak uuid,\allowbreak name,\allowbreak timestamp,\allowbreak integrityStatus} \\
+    \hline
+    \texttt{ProcessDTO} & \texttt{id,\allowbreak documentClassId,\allowbreak uuid,\allowbreak integrityStatus,\allowbreak metadata: MetadataDTO} \\
+    \hline
+    \texttt{DocumentDTO} & \texttt{id,\allowbreak processId,\allowbreak uuid,\allowbreak integrityStatus,\allowbreak metadata: MetadataDTO} \\
+    \hline
+    \texttt{FileDTO} & \texttt{id,\allowbreak documentId,\allowbreak filename,\allowbreak path,\allowbreak hash,\allowbreak integrityStatus,\allowbreak isMain} \\
+    \hline
+    \texttt{MetadataDTO} & \texttt{name,\allowbreak value (scalare|MetadataDTO[]),\allowbreak type: MetadataType} \\
+    \hline
+  \end{tabularx}
+  \caption{DTO schema (metadati caricati ricorsivamente)}
+  \label{tab:browsing:dtos}
+\end{table}
+
+\noindent
+\textbf{Nota:} Il converter genera eccezioni se \texttt{id} o FK sono \texttt{null} durante la conversione.
+
+
+\subsubsection{Mapping e conversioni}
+\label{sec:browsing:mapping}
+
+\noindent
+Trasformazioni tra layer di persistenza, entity e DTO:
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{tabularx}{\textwidth}{|l|l|Y|}
+    \hline
+    \textbf{Conversione} & \textbf{File} & \textbf{Funzioni} \\
+    \hline
+    Entity $\to$ DTO & \texttt{EntityToDtoConverter.ts} & 
+      \texttt{*ToDto} per dip, docClass, process, document, file, metadata \\
+    \hline
+    SQL $\to$ Entity & \texttt{*Mapper.ts} & 
+      \texttt{*Mapper} per dip, docClass, process, document, file, metadata \\
+    \hline
+  \end{tabularx}
+  \label{tab:browsing:mapping}
+\end{table}
+
+\noindent
+\texttt{MetadataMapper.fromFlatRows} ricostruisce l'albero da righe flat con controllo cicli/root.
+
+
+\subsubsection{Comportamenti runtime}
+\label{sec:browsing:runtime}
+
+\noindent
+\begin{tcolorbox}[colback=zpuslightgray,colframe=zpusgreen,title=Semantica getter,boxrule=1pt]
+\textbf{By-ID:} restituisce \texttt{null} se entity non trovata\\
+\textbf{List:} restituisce array, anche vuoto\\
+\textbf{DTO:} conversione applicata nel boundary IPC prima della restituzione
+\end{tcolorbox}
+
+\paragraph{Lettura file buffer (\texttt{BROWSE\_GET\_FILE\_BUFFER\_BY\_ID}).}
+\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
+  \item Recupera file entity tramite \texttt{IGetFileByIdUC}
+  \item Risolve percorso assoluto: \texttt{path.resolve(dipPath, file.getPath())}
+  \item Legge contenuto con \texttt{fs.readFileSync}
+  \item In caso di errore I/O: log e ritorno \texttt{null}
+\end{enumerate}
+
+
+\newpage

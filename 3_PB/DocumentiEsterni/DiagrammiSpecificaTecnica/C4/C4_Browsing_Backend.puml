@@ -1,0 +1,62 @@
+@startuml C4_Browsing_Backend
+
+title C4 - Backend Browsing (application and infrastructure)
+
+top to bottom direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package "Application" {
+  interface IBrowsingQueryService {
+    +getById(entity: string, id: number): unknown
+    +getByParent(parentEntity: string, parentId: number): unknown[]
+    +getByStatus(entity: string, status: string): unknown[]
+  }
+
+  class BrowsingQueryService <<use-cases>>
+}
+
+package "Infrastructure - IPC" {
+  class BrowsingIpcAdapter {
+    +register(): void
+    +handle(channel: string, payload: unknown): unknown
+  }
+}
+
+package "Infrastructure - Persistence" {
+  interface IBrowsingRepositoryHub {
+    +readById(entity: string, id: number): unknown
+    +readByParent(entity: string, parentId: number): unknown[]
+    +readByStatus(entity: string, status: string): unknown[]
+  }
+
+  class BrowsingRepositoryHub
+  class BrowsingDaoLayer
+  class MetadataHelper
+  class DatabaseProvider
+}
+
+BrowsingQueryService ..|> IBrowsingQueryService
+BrowsingIpcAdapter -down-> IBrowsingQueryService
+IBrowsingQueryService -down-> IBrowsingRepositoryHub
+BrowsingRepositoryHub ..|> IBrowsingRepositoryHub
+BrowsingRepositoryHub -down-> BrowsingDaoLayer
+BrowsingRepositoryHub --> MetadataHelper : nested metadata
+DatabaseProvider -down-> BrowsingDaoLayer
+
+note bottom of BrowsingRepositoryHub
+Wraps Dip/Class/Process/Document/File repositories.
+end note
+
+note right of BrowsingQueryService
+Thin wrappers over repository abstractions.
+Domain entities are documented in C4_Browsing_Domain.
+end note
+
+note bottom of BrowsingIpcAdapter
+browse:* channels by id, parent and status.
+end note
+
+@enduml
