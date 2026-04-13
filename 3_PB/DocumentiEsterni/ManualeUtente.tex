@@ -91,7 +91,7 @@
         \hline
         0.3.0 & 2026/04/10 & Gingillino Aaron & Georgescu Diana & \begin{tabular}[c]{@{}l@{}} Stesura sezioni \ref{esplorazione ad albero}, \ref{ricerca}\\ \end{tabular} \\
         \hline
-        0.2.0 & 2026/04/09 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Stesura sezioni \ref{intro}, \ref{requisiti}, \ref{contesto}, \ref{panoramica}\\ \end{tabular} \\        
+        0.2.0 & 2026/04/09 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Stesura sezioni \ref{intro}, \ref{requisiti}, \ref{panoramica}\\ \end{tabular} \\        
         \hline
         0.1.0 & 2026/04/01 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Creazione del documento\\ e stesura iniziale \end{tabular} \\
         \hline
@@ -282,8 +282,101 @@ Una volta avviata l'operazione, il software gestisce il trasferimento dei dati t
     \item \textbf{Destinazione}: I file vengono salvati nella cartella di destinazione predefinita del sistema o in quella selezionata tramite la finestra di dialogo ministeriale, mantenendo i nomi originali dei file presenti nel DIP.
 \end{itemize}
 
-
+\newpage
 \subsection{Glossario}
 Ogni termine tecnico è definito di seguito: 
+
+\begin{description}
+
+  \item[Allegato]
+    File secondario collegato a un Documento Padre, identificato da un pallino azzurro
+    nell'albero di navigazione. Viene visualizzato in forma indentata sotto il documento
+    principale di riferimento.
+
+  \item[Barra di stato]
+    Elemento grafico posizionato in alto nell'interfaccia, che mostra
+    l'avanzamento di un'operazione in corso (es.\ esportazione o verifica di integrità)
+    e i messaggi di conferma al completamento.
+
+  \item[Classe documentale]
+    Categoria di primo livello nella gerarchia interna al DIP. Raggruppa i processi
+    per tipologia di documento (es.\ fatture, registri) ed è il primo
+    livello espandibile nell'albero di navigazione.
+
+  \item[Conservazione]
+    Sistema centralizzato preposto all'archiviazione a lungo termine di documenti
+    informatici con valore legale, dal quale vengono distribuiti i pacchetti DIP.
+
+  \item[DIP (Dissemination Information Package)]
+    Archivio compresso distribuito da un sistema di conservazione centralizzato,
+    contenente documenti tecnici con valore legale strutturati secondo specifiche
+    normative. La struttura interna è organizzata gerarchicamente in classi
+    documentali, processi e documenti.
+
+  \item[Documento]
+    Nel contesto del DIPReader, unità informativa contenuta nel DIP comprensiva
+    del file principale e dei relativi allegati, dotata di metadati descrittivi
+    e valore legale.
+
+  \item[Documento Padre]
+    File principale all'interno di un processo, identificato da un pallino verde
+    nell'albero di navigazione. Può avere uno o più allegati collegati. Le operazioni
+    di esportazione e stampa sono disponibili esclusivamente per questa tipologia
+    di nodo.
+
+  \item[File system]
+    Sistema di organizzazione dei file sul disco del dispositivo in uso. Il salvataggio
+    sul file system locale indica il salvataggio in una cartella del proprio computer
+    (es.\ Documenti, Desktop, Download).
+
+  \item[Finestra di dialogo modale]
+    Finestra secondaria che appare sopra l'interfaccia principale e richiede
+    un'interazione da parte dell'utente prima di poter tornare alla schermata
+    sottostante. Nel DIPReader viene utilizzata per la selezione granulare dei
+    file da esportare.
+
+  \item[IPC (Inter-Process Communication)]
+    Meccanismo software che permette a componenti distinti dell'applicazione di
+    scambiarsi dati. Nel DIPReader gestisce il trasferimento dei file durante
+    l'esportazione, fornendo aggiornamenti in tempo reale sull'avanzamento
+    dell'operazione.
+
+  \item[Metadati]
+    Informazioni descrittive associate a un documento, distinte dal contenuto del
+    file stesso (es.\ identificativo, oggetto, descrizione, tipologia documentale). Nel DIPReader vengono visualizzati nell'area centrale alla
+    selezione di un nodo dell'albero.
+
+  \item[Modalità portable]
+    Modalità di esecuzione in cui il software funziona senza necessità di
+    installazione sul sistema operativo ospite e senza richiedere privilegi
+    di amministratore.
+
+  \item[Nodo]
+    Ogni singolo elemento selezionabile nell'albero di navigazione: può rappresentare
+    il DIP radice, una classe documentale, un processo, un documento padre o un
+    allegato. Ogni nodo può essere espanso per mostrare gli elementi contenuti
+    al suo interno.
+
+  \item[Pacchetto documentale]
+    Insieme strutturato composto da un documento principale e dai suoi allegati
+    correlati, esportabile come unità tramite la finestra di selezione granulare.
+
+  \item[Processo]
+    Secondo livello della gerarchia DIP, identificato da un pallino rosso
+    nell'albero di navigazione. Raggruppa i file principali appartenenti a uno
+    stesso procedimento e viene numerato in ordine progressivo.
+
+  \item[Ricerca semantica]
+    Modalità di ricerca che restituisce risultati il cui significato è simile o
+    correlato al termine cercato, andando oltre la corrispondenza esatta delle
+    parole (es.\ cercando ``automobile'' possono comparire risultati contenenti
+    ``veicolo'' o ``auto'').
+
+  \item[Verifica di integrità]
+    Procedura che controlla se un file non è stato alterato o corrotto rispetto
+    alla versione archiviata originariamente. L'esito può essere:
+    \textit{Integro}, \textit{Non Integro} o \textit{Non Verificato}.
+
+\end{description}
 
 \end{document}
