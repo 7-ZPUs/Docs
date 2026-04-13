@@ -1,0 +1,120 @@
+@startuml advanced-filter-panel-code-l4
+
+title C4 Level 4 (Code) - Advanced Filter Panel Component
+
+allowmixing
+left to right direction
+
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+skinparam defaultTextAlignment left
+skinparam linetype ortho
+skinparam ArrowThickness 2
+skinparam ArrowColor #1F2937
+skinparam ArrowFontColor #111827
+skinparam ArrowFontSize 10
+skinparam ArrowFontStyle bold
+skinparam wrapWidth 400
+skinparam nodesep 50
+skinparam ranksep 50
+skinparam maxMessageSize 150
+
+package "Renderer App (Angular)" {
+  class "AdvancedFilterPanelComponent" as Panel {
+    +ngOnInit(): void
+    +onCommonFiltersChanged(values: CommonFilterValues): void
+    +onDiDaiFiltersChanged(values: DiDaiFilterValues): void
+    +onAggregateFiltersChanged(values: AggregateFilterValues): void
+    +onEntriesChanged(entries: CustomFilterValues[] | null): void
+    +onSubjectChanged(subject: SubjectCriteria[]): void
+    +onSubmit(): void
+    +onReset(): void
+    +validateAndEmit(formValues: any): void
+    +currentDocContext: DocContext
+    +effectiveValidationResult: ValidationResult | null
+    --
+    -panelForm: FormGroup
+    -filters: SearchFilters
+    -currentValidationResult: ValidationResult | null
+    -subjectResetCounter: number
+    -uiState: FilterUIState
+    -validator?: FilterValidatorFn
+    -externalValidation: ValidationResult | null
+    -customMetadataKeys: string[]
+  }
+
+  class "FilterRulesManager" as RulesManager {
+    +calculateUIState(formValues: any): FilterUIState
+    +hasValoriCompilati(obj: any): boolean
+  }
+
+  class "FilterUIState" as UIState <<value object>> {
+    +disableAggregate: boolean
+    +disableDiDai: boolean
+    +motivoBloccoAggregate: string
+    +motivoBloccoDiDai: string
+  }
+
+  interface "FilterValidatorFn" as ValidatorFn {
+    +(filters: PartialSearchFilters): ValidationResult
+  }
+
+  class "FilterSectionsComponent" as FilterSections <<composite child>> {
+    +renders common filters
+    +renders DiDai filters
+    +renders aggregate filters
+    +renders custom meta filters
+    +renders subject filters
+  }
+
+  class "FormBuilder" as FormBuilder <<angular>>
+  class "Reactive FormGroup" as FormGroup <<angular>>
+}
+
+package "Shared Domain" {
+  class "SearchFilters" as SearchFilters
+  class "PartialSearchFilters" as PartialSearchFilters
+  class "ValidationResult" as ValidationResult
+  class "DocContext" as DocContext
+}
+
+Panel --> FormBuilder : build form
+Panel --> FormGroup : reactive state
+Panel --> ValidatorFn : @Input validator
+Panel --> RulesManager : calculateUIState()
+Panel --> UIState : stores block reasons
+Panel --> ValidationResult : current/external result
+Panel --> SearchFilters : panel value model
+Panel --> PartialSearchFilters : validation payload
+Panel --> DocContext : computes context for subject filters
+
+Panel --> FilterSections : input/output binding
+Panel --> SearchFilters : submits final filters
+Panel --> ValidationResult : emits validation result
+
+RulesManager --> UIState : returns
+RulesManager --> SearchFilters : inspects values
+
+Panel -[hidden]right-> FilterSections
+FilterSections -[hidden]right-> RulesManager
+RulesManager -[hidden]right-> UIState
+
+note right of Panel
+Reactive flow:
+1) ngOnInit builds FormGroup
+2) valueChanges recalculates UI state
+3) validateAndEmit() validates partial filters
+4) emits filtersChanged / validationResult
+5) onSubmit() emits final SearchFilters
+6) onReset() clears form and state
+end note
+
+note bottom of RulesManager
+Blocking logic:
+- DiDai sections disabled when Tipo Documento is DiDai
+- Aggregate sections disabled when Tipo Documento is Aggregazione
+- reasons are exposed through FilterUIState
+end note
+
+@enduml
