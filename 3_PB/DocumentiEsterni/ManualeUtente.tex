@@ -83,7 +83,7 @@
         \hline
         \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
         \hline
-        0.6.0 & 2026/04/11 & Gingillino Aaron & Georgescu Diana & \begin{tabular}[c]{@{}l@{}} Aggiunta immagini e sistemata sezione \ref{esport}\\ \end{tabular}\\
+        0.6.0 & 2026/04/11 & Gingillino Aaron & Georgescu Diana & \begin{tabular}[c]{@{}l@{}} Aggiunta immagini e \\ sistemata sezione \ref{esport}\\ \end{tabular}\\
         \hline
         0.5.0 & 2026/04/11 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Stesura sezione \ref{esport}\\ \end{tabular}\\
         \hline
@@ -145,24 +145,6 @@ Il software opera in totale modalità \textit{portable}. Questo significa che l'
 
 \newpage
 
-\section{Contesto del sistema} \label{contesto}
-
-\subsection{Modello architetturale}
-Il software segue un modello di visualizzazione dei dati gerarchico. È concepito come applicazione \textit{portable} con motore di ricerca integrato, capace di operare completamente offline in assenza di un server standalone. Inoltre, il sistema supporta rigorosamente la complessa struttura dei metadati definita dalle Linee Guida AGID.
-
-\subsection{Attori}
-\begin{itemize}
-    \item \textbf{Utente (Attore Primario):} L'operatore (es. magistrato o tecnico) che naviga, filtra, stampa e verifica i pacchetti di conservazione.
-    \item \textbf{Stampante (Attore Secondario):} Dispositivo hardware o driver di sistema invocato dall'applicativo quando l'utente richiede la stampa di un singolo documento o di un insieme di documenti.
-\end{itemize}
-
-\subsection{Sistemi esterni}
-\begin{itemize}
-    \item \textbf{File system locale:} Utilizzato dal sistema non solo per il caricamento in lettura dei DIP (.zip), ma anche come destinazione (tramite dialogo di selezione della cartella) per l'esportazione locale dei documenti estratti e per il salvataggio dei report di verifica integrità esportati in formato PDF.
-\end{itemize}
-
-\newpage
-
 \section{Panoramica delle Funzionalità} \label{panoramica}
 Le principali funzionalità offerte da \textit{DIPReader} per l'interazione con i pacchetti DIP includono:
 \begin{itemize}
@@ -170,27 +152,7 @@ Le principali funzionalità offerte da \textit{DIPReader} per l'interazione con 
     \item \textbf{Ricerca Avanzata e Semantica:} Ricerca all'interno dei metadati tramite filtri specifici avanzati e ricerca semantica dei documenti.
     \item \textbf{Verifica Integrità:} Controllo dello stato di verifica (Integro/Non Integro/Non Verificato) dei file contenuti nel DIP e generazione dei relativi report.
     \item \textbf{Estrazione ed Esportazione:} Possibilità di scaricare singolarmente o in blocco i documenti sul computer locale, stampare i file tramite le periferiche di sistema o esportare i report di verifica in PDF.
-    \item \textbf{Verifica Firme e Processi:} Visualizzazione delle informazioni relative al processo di conservazione, versamento e allo stato dei dati di verifica, come firme digitali, sigilli elettronici e marcature temporali.
-\end{itemize}
-\subsection{Glossario}
-Ogni termine tecnico è definito nell'apposito documento: 
-\href{https://7-zpus.github.io/Docs/assets/3_PB/DocumentiInterni/Glossario.pdf}{Glossario (v2.0.0)}.
-
-\subsection{Riferimenti}
-
-    \subsubsection{Riferimenti normativi}
-    \begin{itemize}
-        \item \href{https://github.com/7-ZPUs/Docs/blob/main/3_PB/DocumentiInterni/NormeDiProgetto.pdf}{Norme di Progetto v2.0.0}
-        \item Standard SDD/IEEE/1016:2009
     \end{itemize}
-
-    \subsubsection{Riferimenti informativi}
-    \begin{itemize}
-        \item \href{https://angular.io/}{Angular Documentation}
-        \item \href{https://www.electronjs.org/}{Electron Documentation}
-    \end{itemize}
-
-\newpage
 
 
 \section{Guida all'Utilizzo}
@@ -316,9 +278,12 @@ Una volta avviata l'operazione, il software gestisce il trasferimento dei dati t
     \caption{Messaggi di feedback per la conferma del salvataggio.}
     \label{fig:notifica_export}
 \end{figure}
-
 \begin{itemize}
     \item \textbf{Destinazione}: I file vengono salvati nella cartella di destinazione predefinita del sistema o in quella selezionata tramite la finestra di dialogo ministeriale, mantenendo i nomi originali dei file presenti nel DIP.
 \end{itemize}
+
+
+\subsection{Glossario}
+Ogni termine tecnico è definito di seguito: 
 
 \end{document}
