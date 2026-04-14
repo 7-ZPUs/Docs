@@ -2,13 +2,26 @@
 ' === Impostazioni per A4 Verticale ===
 scale max 1024 width
 page 1x2
-skinparam pageMargin 10
 skinparam dpi 300
 
 ' Sviluppo rigorosamente verticale
 skinparam classAttributeIconSize 0
 skinparam nodesep 40
 skinparam ranksep 70
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype ortho
+skinparam ArrowThickness 2
+skinparam ArrowColor #1F2937
+skinparam ArrowFontColor #111827
+skinparam ArrowFontSize 10
+skinparam ArrowFontStyle bold
+skinparam defaultTextAlignment left
+skinparam wrapWidth 220
+skinparam maxMessageSize 80
+skinparam handwritten false
+skinparam packageStyle rectangle
+allowmixing
 
 
 ' ==========================================
@@ -39,8 +52,8 @@ class DocumentViewerComponent << (C,#00AA00) Smart >> {
 
 
 ' Composizione interna della feature
-DocumentViewerComponent *-- PreviewPanelComponent : renders
-PreviewPanelComponent *-- PreviewRendererComponent : relies on
+DocumentViewerComponent --> PreviewPanelComponent : renders
+PreviewPanelComponent --> PreviewRendererComponent : relies on
 
 ' ==========================================
 ' LIVELLO 3: CONTRATTI E SERVICES (Facade)
@@ -63,7 +76,7 @@ class DocumentFacade implements IDocumentFacade {
 
 
 ' Injection
-DocumentViewerComponent --> IDocumentFacade : injects (DOCUMENT_FACADE_TOKEN)
+DocumentViewerComponent --> IDocumentFacade : injects
 
 
 ' ==========================================
@@ -120,12 +133,12 @@ class Subject << (M,#FF7700) Data >>
 
 ' Mapping Strutturale
 DocumentFacade --> DocumentState : manages via signal
-DocumentState "1" *-- "0..1" DocumentDetail : contains
+DocumentState -->  DocumentDetail : contains
 
-DocumentDetail "1" *-left- "1" DocumentMetadata
+DocumentDetail --> DocumentMetadata
 
 
-DocumentDetail "1" *-right- "0..*" Subject
+DocumentDetail --> Subject
 
 
 ' Vincoli Formativi (I dumb components mostrano il proprio frammento di dominio)

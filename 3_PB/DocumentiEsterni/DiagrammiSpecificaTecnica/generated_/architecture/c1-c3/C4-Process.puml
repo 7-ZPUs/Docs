@@ -10,10 +10,20 @@ top to bottom direction
 skinparam classAttributeIconSize 0
 skinparam nodesep 40
 skinparam ranksep 70
-
-title Diagramma delle Classi Tecnico - Feature Process (Stato Reale)
-
-
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype ortho
+skinparam ArrowThickness 2
+skinparam ArrowColor #1F2937
+skinparam ArrowFontColor #111827
+skinparam ArrowFontSize 10
+skinparam ArrowFontStyle bold
+skinparam defaultTextAlignment left
+skinparam wrapWidth 220
+skinparam maxMessageSize 80
+skinparam handwritten false
+skinparam packageStyle rectangle
+allowmixing
 
 ' ==========================================
 ' LIVELLO 2: DUMB COMPONENTS (Presentational)
@@ -103,13 +113,13 @@ class DocumentIndexEntryDTO << (M,#FF7700) Data >>
 
 ' Mapping Strutturale dello Stato
 ProcessFacade --> ProcessState : manages via signal
-ProcessState "1" *-- "0..1" ProcessDetail : contains
+ProcessState -->  ProcessDetail : contains
 
 ' Associazione Modello Composito
-ProcessDetail "1" *-down- "1" ProcessCoreMetadata
-ProcessDetail "1" *-down- "1" ProcessOverviewData
-ProcessDetail "1" *-right- "1" ProcessConservationData
-ProcessDetail "1" *-left- "0..*" DocumentIndexEntryDTO
+ProcessDetail  -down-> ProcessCoreMetadata
+ProcessDetail  -down->  ProcessOverviewData
+ProcessDetail  -right->  ProcessConservationData
+ProcessDetail  -left->  DocumentIndexEntryDTO
 
 ' Vincoli Formativi (Visualizzazione)
 ProcessMetadataComponent .up.> ProcessCoreMetadata : displays block

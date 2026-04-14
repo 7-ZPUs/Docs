@@ -1,6 +1,15 @@
 @startuml Verification_Frontend_A4
 skinparam classAttributeIconSize 0
+skinparam shadowing false
 skinparam linetype ortho
+skinparam ArrowThickness 2
+skinparam ArrowColor #1F2937
+skinparam ArrowFontColor #111827
+skinparam ArrowFontSize 10
+skinparam ArrowFontStyle bold
+skinparam defaultTextAlignment left
+skinparam wrapWidth 220
+skinparam maxMessageSize 80
 skinparam handwritten false
 skinparam packageStyle rectangle
 allowmixing
@@ -15,66 +24,54 @@ skinparam class {
     BorderColor #2C3E50
 }
 
-package "UI Layer (Smart & Dumb Components)" #FDFEFE {
-    class IntegrityDashboardComponent <<Smart>> {
-        + currentDipId: number
-        + ngOnInit(): void
-        + startVerification(): void
-    }
-
-    class IntegritySummaryCardsComponent <<Dumb>> {
-        + stats: IntegrityOverviewStats
-    }
-
-    class IntegrityValidPanelComponent <<Dumb>> {
-        + nodes: IntegrityNodeVM[]
-        + corruptedNodes: IntegrityNodeVM[]
-    }
+class IntegrityDashboardComponent <<Smart>> {
+    + currentDipId: number
+    + ngOnInit(): void
+    + startVerification(): void
+}
+class IntegritySummaryCardsComponent <<Dumb>> {
+    + stats: IntegrityOverviewStats
+}
+class IntegrityValidPanelComponent <<Dumb>> {
+    + nodes: IntegrityNodeVM[]
+    + corruptedNodes: IntegrityNodeVM[]
+}
+interface IIntegrityFacade <<Facade>> {
+    + isVerifying: Signal<boolean>
+    + error: Signal<string | null>
+    + overviewStats: Signal<IntegrityOverviewStats>
+    + corruptedNodes: Signal<IntegrityNodeVM[]>
+    + loadOverview(dipId: number): Promise<void>
+    + verifyDip(dipId: number): Promise<void>
+}
+class IntegrityFacade {
+    - _isVerifying: WritableSignal<boolean>
+    - _overviewStats: WritableSignal<IntegrityOverviewStats>
+    - collectClassOverview(...)
+    - collectProcessOverview(...)
+}
+class "View Models" as VMs <<Data>> {
+    + IntegrityNodeVM
+    + IntegrityOverviewStats
+}
+interface IIntegrityIpcGateway <<Gateway>> {
+    + checkDipIntegrity(id: number): Promise<IntegrityStatusEnum>
+    + getClassesByDipId(id: number): Promise<DocumentClassDTO[]>
+    + getProcessesByClassId(id: number): Promise<ProcessDTO[]>
+}
+class IntegrityIpcGateway {
+    - invoke<T>(channel: string, args: any[]): Promise<T>
 }
 
-package "Domain Layer (State & Logic)" #F9EBEA {
-    interface IIntegrityFacade <<Facade>> {
-        + isVerifying: Signal<boolean>
-        + error: Signal<string | null>
-        + overviewStats: Signal<IntegrityOverviewStats>
-        + corruptedNodes: Signal<IntegrityNodeVM[]>
-        + loadOverview(dipId: number): Promise<void>
-        + verifyDip(dipId: number): Promise<void>
-    }
-
-    class IntegrityFacade {
-        - _isVerifying: WritableSignal<boolean>
-        - _overviewStats: WritableSignal<IntegrityOverviewStats>
-        - collectClassOverview(...)
-        - collectProcessOverview(...)
-    }
-
-    class "View Models" as VMs <<Data>> {
-        + IntegrityNodeVM
-        + IntegrityOverviewStats
-    }
-}
-
-package "Infrastructure Layer (Gateways)" #EAF2F8 {
-    interface IIntegrityIpcGateway <<Gateway>> {
-        + checkDipIntegrity(id: number): Promise<IntegrityStatusEnum>
-        + getClassesByDipId(id: number): Promise<DocumentClassDTO[]>
-        + getProcessesByClassId(id: number): Promise<ProcessDTO[]>
-    }
-
-    class IntegrityIpcGateway {
-        - invoke<T>(channel: string, args: any[]): Promise<T>
-    }
-}
 
 boundary "Electron ContextBridge\n(window.electronAPI)" as IPC_Bridge #E8F8F5
 
 ' --- Relazioni ---
 
 ' UI Rendering
-IntegrityDashboardComponent ..> IIntegrityFacade : "injects"
-IntegrityDashboardComponent *-- IntegritySummaryCardsComponent : "renders"
-IntegrityDashboardComponent *-- IntegrityValidPanelComponent : "renders"
+IntegrityDashboardComponent --> IIntegrityFacade : "injects"
+IntegrityDashboardComponent --> IntegritySummaryCardsComponent : "renders"
+IntegrityDashboardComponent --> IntegrityValidPanelComponent : "renders"
 
 ' Domain & State management
 IntegrityFacade .up.|> IIntegrityFacade : "implements"
@@ -82,11 +79,11 @@ IntegrityFacade .up.|> IIntegrityFacade : "implements"
 ' >>> FRECCIA ALLUNGATA PER EVITARE SOVRAPPOSIZIONI <<<
 IIntegrityFacade ....right....> VMs : "exposes state"
 
-IntegrityFacade ...> IIntegrityIpcGateway : "injects"
+IntegrityFacade .right.> IIntegrityIpcGateway : "injects"
 
 ' Infrastructure & Backend contact
 IntegrityIpcGateway .up.|> IIntegrityIpcGateway : "implements"
-IntegrityIpcGateway ...> IPC_Bridge : "IPC Calls"
+IntegrityIpcGateway .right.> IPC_Bridge : "IPC Calls"
 
 note right of IPC_Bridge
   Singolo punto di contatto 
