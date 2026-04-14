@@ -1,4 +1,4 @@
-@startuml Verification_Frontend_A4
+@startuml
 skinparam classAttributeIconSize 0
 skinparam shadowing false
 skinparam linetype ortho
@@ -36,19 +36,40 @@ class IntegrityValidPanelComponent <<Dumb>> {
     + nodes: IntegrityNodeVM[]
     + corruptedNodes: IntegrityNodeVM[]
 }
-interface IIntegrityFacade <<Facade>> {
-    + isVerifying: Signal<boolean>
-    + error: Signal<string | null>
-    + overviewStats: Signal<IntegrityOverviewStats>
-    + corruptedNodes: Signal<IntegrityNodeVM[]>
-    + loadOverview(dipId: number): Promise<void>
-    + verifyDip(dipId: number): Promise<void>
-}
+interface IIntegrityFacade <<Interface>> {
+      + isVerifying(): Signal<boolean>
+      + error(): Signal<string | null>
+      + currentDipStatus(): Signal<IntegrityStatusEnum | null>
+      + dipClasses(): Signal<DocumentClassDTO[]>
+      + overviewStats(): Signal<IntegrityOverviewStats>
+      + corruptedNodes(): Signal<IntegrityNodeVM[]>
+      + validRolledUpNodes(): Signal<IntegrityNodeVM[]>
+      + loadOverview(dipId: number): Promise<void>
+      + verifyDip(dipId: number): Promise<void>
+      + clearResults(): void
+    }
 class IntegrityFacade {
-    - _isVerifying: WritableSignal<boolean>
-    - _overviewStats: WritableSignal<IntegrityOverviewStats>
-    - collectClassOverview(...)
-    - collectProcessOverview(...)
+    - gateway: IntegrityIpcGateway
+      - errorHandler: IErrorHandler
+      - cacheService: ICacheService
+      - _isVerifying: WritableSignal<boolean>
+      - _error: WritableSignal<string | null>
+      - _currentDipStatus: WritableSignal<IntegrityStatusEnum | null>
+      - _dipClasses: WritableSignal<DocumentClassDTO[]>
+      - _overviewStats: WritableSignal<IntegrityOverviewStats>
+      - _corruptedNodes: WritableSignal<IntegrityNodeVM[]>
+      - _validRolledUpNodes: WritableSignal<IntegrityNodeVM[]>
+      --
+      + isVerifying(): Signal<boolean>
+      + error(): Signal<string | null>
+      + currentDipStatus(): Signal<IntegrityStatusEnum | null>
+      + dipClasses(): Signal<DocumentClassDTO[]>
+      + overviewStats(): Signal<IntegrityOverviewStats>
+      + corruptedNodes(): Signal<IntegrityNodeVM[]>
+      + validRolledUpNodes(): Signal<IntegrityNodeVM[]>
+      + loadOverview(dipId: number): Promise<void>
+      + verifyDip(dipId: number): Promise<void>
+      + clearResults(): void
 }
 class "View Models" as VMs <<Data>> {
     + IntegrityNodeVM
