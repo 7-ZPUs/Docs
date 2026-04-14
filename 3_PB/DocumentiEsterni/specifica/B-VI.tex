@@ -23,7 +23,7 @@ La verifica opera sui seguenti livelli:
 \end{enumerate}
 
 \noindent
-Ogni invocazione calcola lo stato del nodo root e dei suoi discendenti, con persistenza progressiva in SQLite tramite \texttt{updateIntegrityStatus(...)}.
+Ogni invocazione calcola lo stato del nodo root e dei suoi discendenti, con persistenza progressiva in SQLite tramite \codeword{updateIntegrityStatus(...)}.
 
 \subsubsection{Organizzazione file backend}
 \label{sec:integrity:struttura}
@@ -63,29 +63,29 @@ Ogni invocazione calcola lo stato del nodo root e dei suoi discendenti, con pers
 
 \paragraph{Sequenza di verifica.}
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-	\item Il renderer invoca il canale \texttt{check-integrity:*}
-	\item \texttt{CheckIntegrityIpcAdapter} intercetta l'handler e risolve il use case
-	\item Il use case delega a \texttt{IntegrityVerificationService}
-	\item Il service esegue \texttt{runInTransaction(...)}
+	\item Il renderer invoca il canale \codeword{check-integrity:*}
+	\item \codeword{CheckIntegrityIpcAdapter} intercetta l'handler e risolve il use case
+	\item Il use case delega a \codeword{IntegrityVerificationService}
+	\item Il service esegue \codeword{runInTransaction(...)}
 	\item Il service verifica hash file e aggrega stati sui parent
 	\item Il service persiste gli stati sui livelli coinvolti
-	\item L'handler IPC ritorna \texttt{IntegrityStatusEnum}
+	\item L'handler IPC ritorna \codeword{IntegrityStatusEnum}
 \end{enumerate}
 
 \paragraph{Flusso gerarchico di propagazione.}
 \begin{center}
-	\texttt{CHECK\_DIP\_INTEGRITY\_STATUS} \\
+	\codeword{CHECK\_DIP\_INTEGRITY\_STATUS} \\
 	$\downarrow$ \\
-	\texttt{CHECK\_DOCUMENT\_CLASS\_INTEGRITY\_STATUS} \\
+	\codeword{CHECK\_DOCUMENT\_CLASS\_INTEGRITY\_STATUS} \\
 	$\downarrow$ \\
-	\texttt{CHECK\_PROCESS\_INTEGRITY\_STATUS} \\
+	\codeword{CHECK\_PROCESS\_INTEGRITY\_STATUS} \\
 	$\downarrow$ \\
-	\texttt{CHECK\_DOCUMENT\_INTEGRITY\_STATUS} \\
+	\codeword{CHECK\_DOCUMENT\_INTEGRITY\_STATUS} \\
 	$\downarrow$ \\
-	\texttt{CHECK\_FILE\_INTEGRITY\_STATUS}
+	\codeword{CHECK\_FILE\_INTEGRITY\_STATUS}
 \end{center}
 
-Contratto IPC definito in \texttt{ipc-channels.ts} e registrato in \texttt{CheckIntegrityIpcAdapter.ts}:
+Contratto IPC definito in \codeword{ipc-channels.ts} e registrato in \codeword{CheckIntegrityIpcAdapter.ts}:
 
 \begin{table}[H]
 	\centering
@@ -112,7 +112,7 @@ Contratto IPC definito in \texttt{ipc-channels.ts} e registrato in \texttt{Check
 \end{table}
 
 \noindent
-\textbf{Nota:} Il canale \texttt{INTEGRITY\_VERIFY} e definito in \texttt{ipc-channels.ts} ma non risulta registrato in \texttt{CheckIntegrityIpcAdapter}.
+\textbf{Nota:} Il canale \codeword{INTEGRITY\_VERIFY} e definito in \codeword{ipc-channels.ts} ma non risulta registrato in \codeword{CheckIntegrityIpcAdapter}.
 
 \subsubsection{Diagrammi architetturali (C3/C4)}
 \label{sec:integrity:diagrammi}
@@ -160,7 +160,7 @@ La vista focalizzata sul percorso di verifica integrita e mostrata in Figura~\re
 \label{sec:integrity:usecase}
 
 \noindent
-I use case sono thin wrapper senza logica aggiuntiva; delegano direttamente a \texttt{IntegrityVerificationService}.
+I use case sono thin wrapper senza logica aggiuntiva; delegano direttamente a \codeword{IntegrityVerificationService}.
 
 \begin{table}[H]
 	\centering
@@ -190,36 +190,36 @@ I use case sono thin wrapper senza logica aggiuntiva; delegano direttamente a \t
 \label{sec:integrity:service}
 
 \noindent
-File: \texttt{IntegrityVerificationService.ts}.
+File: \codeword{IntegrityVerificationService.ts}.
 
 \paragraph{Dipendenze iniettate.}
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-	\item \texttt{IFileRepository}
-	\item \texttt{IDocumentRepository}
-	\item \texttt{IProcessRepository}
-	\item \texttt{IDocumentClassRepository}
-	\item \texttt{IDipRepository}
-	\item \texttt{IHashingService}
-	\item \texttt{ITransactionManager}
-	\item \texttt{DIP\_PATH\_TOKEN}
+	\item \codeword{IFileRepository}
+	\item \codeword{IDocumentRepository}
+	\item \codeword{IProcessRepository}
+	\item \codeword{IDocumentClassRepository}
+	\item \codeword{IDipRepository}
+	\item \codeword{IHashingService}
+	\item \codeword{ITransactionManager}
+	\item \codeword{DIP\_PATH\_TOKEN}
 \end{enumerate}
 
 \paragraph{Regole operative.}
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-	\item Ogni API pubblica gira dentro \texttt{runInTransaction}
+	\item Ogni API pubblica gira dentro \codeword{runInTransaction}
 	\item Se la root non esiste, viene lanciato errore
 	\item La verifica e ricorsiva nel sottoalbero
-	\item Ogni livello aggiorna \texttt{integrity\_status} via repository
+	\item Ogni livello aggiorna \codeword{integrity\_status} via repository
 \end{enumerate}
 
 \subsubsection{Regole di aggregazione}
 \label{sec:integrity:aggregation}
 
 \noindent
-\textbf{Caso 1:} nessun figlio $\to$ \texttt{VALID}\\
-\textbf{Caso 2:} almeno un figlio \texttt{INVALID} $\to$ \texttt{INVALID}\\
-\textbf{Caso 3:} nessun \texttt{INVALID} ma almeno un \texttt{UNKNOWN} $\to$ \texttt{UNKNOWN}\\
-\textbf{Caso 4:} tutti \texttt{VALID} $\to$ \texttt{VALID}
+\textbf{Caso 1:} nessun figlio $\to$ \codeword{VALID}\\
+\textbf{Caso 2:} almeno un figlio \codeword{INVALID} $\to$ \codeword{INVALID}\\
+\textbf{Caso 3:} nessun \codeword{INVALID} ma almeno un \codeword{UNKNOWN} $\to$ \codeword{UNKNOWN}\\
+\textbf{Caso 4:} tutti \codeword{VALID} $\to$ \codeword{VALID}
 
 \paragraph{Semantica per livello.}
 \begin{table}[H]
@@ -251,15 +251,15 @@ File: \texttt{IntegrityVerificationService.ts}.
 
 \paragraph{HashingService.}
 \noindent
-\texttt{checkFileIntegrity(filePath, expectedHash)} legge bytes, calcola SHA-256, converte digest Base64 e confronta con l'hash atteso.
+\codeword{checkFileIntegrity(filePath, expectedHash)} legge bytes, calcola SHA-256, converte digest Base64 e confronta con l'hash atteso.
 
 \paragraph{Path assoluto file.}
 \noindent
-Il service risolve il percorso con \texttt{path.resolve(dipPath, file.getPath())} prima della verifica hash.
+Il service risolve il percorso con \codeword{path.resolve(dipPath, file.getPath())} prima della verifica hash.
 
 \paragraph{Transaction manager.}
 \noindent
-L'esecuzione avviene in \texttt{runInTransaction(work)}; in caso di errore durante la cascata e garantito rollback completo.
+L'esecuzione avviene in \codeword{runInTransaction(work)}; in caso di errore durante la cascata e garantito rollback completo.
 
 \subsubsection{Layer Repository e DAO}
 \label{sec:integrity:repository_dao}
@@ -293,8 +293,8 @@ L'esecuzione avviene in \texttt{runInTransaction(work)}; in caso di errore duran
 
 \noindent
 \textbf{Root non trovato:} eccezione su id non presente\\
-\textbf{Persistenza:} aggiornamento \texttt{integrity\_status} su tutti i livelli coinvolti\\
+\textbf{Persistenza:} aggiornamento \codeword{integrity\_status} su tutti i livelli coinvolti\\
 \textbf{Atomicita:} rollback completo su errore interno\\
-\textbf{Return IPC:} stato finale \texttt{IntegrityStatusEnum}
+\textbf{Return IPC:} stato finale \codeword{IntegrityStatusEnum}
 
 \newpage

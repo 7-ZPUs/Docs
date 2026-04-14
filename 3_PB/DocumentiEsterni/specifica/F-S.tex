@@ -17,7 +17,7 @@ La sezione di ricerca implementa un'architettura stratificata basata su due patt
 
 \noindent La SearchPageComponent è il componente radice che:
 \begin{enumerate}
-    \item Risolve le dipendenze tramite Angular Dependency Injection (iniettando \textit{interfacce} di servizi, non implementazioni concrete, applicando il principio di sostituzione di Liskov).
+    \item Risolve le dipendenze tramite Angular Dependency Injection (iniettando interfacce di servizi, non implementazioni concrete, applicando il principio di sostituzione di Liskov).
     \item Delega alla SearchFacade tutta la logica di orchestrazione tra servizi: validazione, gestione dello stato, routing.
     \item Espone al template esclusivamente @Input/@Output properties, mantenendo la componente come contenitore logico puro.
 \end{enumerate}
@@ -48,7 +48,7 @@ Il pannello filtri avanzati è responsabile della raccolta e gestione dello stat
     \item Applicare regole di validazione dinamiche tramite il FilterRulesManager.
 \end{itemize}
 
-\noindent Il \textit{FilterRulesManager} implementa la logica di validazione contestuale: poiché i campi pertinenti variano in base al tipo di documento selezionato (identificato dal DocContext), questo componente:
+\noindent Il \codeword{FilterRulesManager} implementa la logica di validazione contestuale: poiché i campi pertinenti variano in base al tipo di documento selezionato (identificato dal DocContext), questo componente:
 \begin{itemize}
     \item Definisce quali filtri sono visibili, obbligatori o opzionali.
     \item Applica vincoli di coerenza (ad es., un campo di un tipo specifico non deve essere compilato se quel tipo un altro tipo è già selezionato).
@@ -76,7 +76,7 @@ Il filtro dei soggetti è strutturato secondo il pattern Strategy per consentire
         \item Selezione del ruolo (reso disponibile dalla Role Strategy).
         \item Selezione del SubjectType.
         \item Compilazione dinamica dei campi di dettaglio.
-        \item Raccolta come \textit{SubjectCriteria} e integrazione nello stato globale dei filtri.
+        \item Raccolta come \codeword{SubjectCriteria} e integrazione nello stato globale dei filtri.
     \end{itemize}
 \end{enumerate}
 
@@ -97,7 +97,7 @@ Il filtro dei soggetti è strutturato secondo il pattern Strategy per consentire
 La maggior parte dei filtri sono componenti dumb di presentazione, allineati alle specifiche AGID e alle linee guida Sanmarco Informatica:
 
 \begin{description}
-    \item[\textit{CommonFiltersComponent}] Gestisce i filtri applicabili a \textbf{tutti} i tipi di documento:
+    \item[\codeword{CommonFiltersComponent}] Gestisce i filtri applicabili a \textbf{tutti} i tipi di documento:
     \begin{itemize}
         \item Anni di Conservazione (anno inizio, anno fine).
         \item Chiave descrittiva (campo di testo libero).
@@ -105,7 +105,7 @@ La maggior parte dei filtri sono componenti dumb di presentazione, allineati all
     \end{itemize}
     Lo schema è stratificato: la validazione della classificazione (es., "codice" disponibile solo se "partizione" è compilata) è delegata al FilterRulesManager, non al componente.
     
-    \item[\textit{DiDaiFiltersComponent}] Gestisce i filtri specifici per Documenti Informatici (DiI) e Documenti Amministrativi Informatici (DAI):
+    \item[\codeword{DiDaiFiltersComponent}] Gestisce i filtri specifici per Documenti Informatici (DiI) e Documenti Amministrativi Informatici (DAI):
     \begin{itemize}
         \item Tipologia di documento (enum ristretto ai soli tipi DiI/DAI).
         \item Modalità di formazione (pre-formati, post-formati, cartacei scansionati, ...).
@@ -115,7 +115,7 @@ La maggior parte dei filtri sono componenti dumb di presentazione, allineati all
     \end{itemize}
     Ciascun campo è memoizzato e reattivo: il componente emette update solo quando il valore effettivamente cambia.
     
-    \item[\textit{AggregateFiltersComponent}] Gestisce i filtri specifici per Aggregazioni Documentali (DiP):
+    \item[\codeword{AggregateFiltersComponent}] Gestisce i filtri specifici per Aggregazioni Documentali (DiP):
     \begin{itemize}
         \item Tipologia aggregazione (fascicolo, procedimento, cartella).
         \item ID aggregazione.
@@ -160,12 +160,12 @@ La visualizzazione dei risultati di ricerca deve adattarsi al tipo di entità ri
     \begin{itemize}
         \item Interroga il tipo di risultato ricevuto (DocumentResult, ProcessResult, AggregateResult, ClassResult).
         \item Consulta una registry configurata \textit{a compile-time} che associa tipo $\to$ componente di visualizzazione.
-        \item Istanzia e proietta il componente corretto nel template tramite \textit{ng-container} e \textit{ngComponentOutlet}.
+        \item Istanzia e proietta il componente corretto nel template tramite \codeword{ng-container} e \codeword{ngComponentOutlet}.
     \end{itemize}
     
     \item \textbf{Componenti di visualizzazione specializzati}:
     \begin{description}
-        \item[\textit{ProcessResultComponent}] Visualizza informazioni essenziali del processo:
+        \item[\codeword{ProcessResultComponent}] Visualizza informazioni essenziali del processo:
         \begin{itemize}
             \item ID processo (copiabile).
             \item Descrizione breve.
@@ -174,7 +174,7 @@ La visualizzazione dei risultati di ricerca deve adattarsi al tipo di entità ri
         \end{itemize}
         No azioni di download/stampa (non applicabili ai processi).
         
-        \item[\textit{DocumentResultComponent}] Visualizza metadati e azioni specifiche per documenti:
+        \item[\codeword{DocumentResultComponent}] Visualizza metadati e azioni specifiche per documenti:
         \begin{itemize}
             \item Anteprima miniatura (se disponibile).
             \item Titolo, descrizione, formato.
@@ -182,7 +182,7 @@ La visualizzazione dei risultati di ricerca deve adattarsi al tipo di entità ri
             \item Azioni contestuali: apri anteprima, scarica, stampa, mostra metadati.
         \end{itemize}
         
-        \item[\textit{AggregateResultComponent}] Visualizza dati di aggregazione:
+        \item[\codeword{AggregateResultComponent}] Visualizza dati di aggregazione:
         \begin{itemize}
             \item Tipo aggregazione (fascicolo/procedimento).
             \item ID e data apertura.
@@ -190,7 +190,7 @@ La visualizzazione dei risultati di ricerca deve adattarsi al tipo di entità ri
             \item Link all'apertura dell'aggregazione.
         \end{itemize}
         
-        \item[\textit{ClassResultComponent}] Visualizza metadati di classe documentale:
+        \item[\codeword{ClassResultComponent}] Visualizza metadati di classe documentale:
         \begin{itemize}
             \item Codice e descrizione.
             \item Periodo di conservazione.
@@ -223,10 +223,10 @@ La search bar consente tre modalità di ricerca:
     
     \item \textbf{Ricerca per nome}: inserimento di nome di classe o metadato; ricerca con wildcard.
     
-    \item \textbf{Ricerca semantica}: ricerca full-text su documenti usando embedding vettoriali (modello Xenova \textit{paraphrase-multilingual-MiniLM-L12-v2}, eseguito nel browser tramite ONNX Runtime).
+    \item \textbf{Ricerca semantica}: ricerca full-text su documenti usando embedding vettoriali (modello Xenova \codeword{paraphrase-multilingual-MiniLM-L12-v2}, eseguito nel browser tramite ONNX Runtime).
 \end{enumerate}
 
-\noindent Il \textit{SearchBarRulesManager} incapsula la logica di:
+\noindent Il \codeword{SearchBarRulesManager} incapsula la logica di:
 \begin{itemize}
     \item Determinazione della modalità di ricerca in base all'input (euristiche: "se input match UUID pattern $\to$ ricerca ID").
     \item Abilitazione/disabilitazione della ricerca semantica per tipo di risultato. Attualmente è abilitata \textit{solo} per documenti; estendere a processi richiederebbe configurazione nel servizio, non nel componente.
@@ -275,8 +275,10 @@ Responsabilità:
 Interfaccia:
 \begin{itemize}
     \item search(query: SearchQuery, signal: AbortSignal): Observable<ISearchResult[]>
-    \item searchAdvanced(filters: SearchFilters, signal: AbortSignal): Observable<ISearchResult[]>
-    \item searchSemantic(query: SearchQuery, signal: AbortSignal): Observable<ISearchResult[]>
+    \item searchAdvanced(filters: SearchFilters, signal: AbortSignal):\\
+    Observable<ISearchResult[]>
+    \item searchSemantic(query: SearchQuery, signal: AbortSignal):\\
+    Observable<ISearchResult[]>
     \item getCustomMetadataKeys(dipId: number | null, signal: AbortSignal): Observable<string[]>
 \end{itemize}
 
