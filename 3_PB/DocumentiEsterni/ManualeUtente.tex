@@ -159,39 +159,55 @@ Le principali funzionalità offerte da \textit{DIPReader} per l'interazione con 
 In questa sezione verranno dettagliate le operazioni di navigazione dell'albero DIP e la consultazione dei documenti tramite il visualizzatore PDF integrato.
 
 
-\subsection{Esplorazione} \label{esplorazione}
-Questa sezione è visibile all'avvio del software, e presenta un breve riassunto delle funzionalità disponibili. 
+\subsection{Esplorazione e Visualizzazione dei Contenuti} \label{esplorazione}
+Questa sezione rappresenta il cuore operativo del \textit{DIPReader}. Una volta selezionato un elemento dall'albero di navigazione (sezione \ref{esplorazione ad albero}) o dai risultati di ricerca (sezione \ref{ricerca}), l'area centrale si popola con i dettagli specifici dell'oggetto scelto.
+
+L'interfaccia si adatta dinamicamente alla tipologia di nodo selezionato:
+
+\subsubsection{Visualizzazione del Documento}
+Selezionando un file (principale o allegato), l'area centrale viene suddivisa per offrire una panoramica completa:
+\begin{itemize}
+    \item \textbf{Metadati Principali}: A sinistra è presente un pannello scorrevole che elenca i dati identificativi del documento (UUID, Nome, Oggetto, Descrizione) e le informazioni sulla sua formazione;
+    \item \textbf{Anteprima Integrata}: A destra è presente un visualizzatore PDF interattivo. Tramite la barra degli strumenti superiore dell'anteprima, l'utente può scorrere le pagine, zoomare o ruotare il documento;
+    \item \textbf{Azioni rapide}: In alto a destra sono sempre disponibili i comandi per la verifica di integrità, la stampa e lo scaricamento (sezione \ref{esport}).
+\end{itemize}
+
+
+\subsubsection{Dettaglio del Processo}
+Selezionando un nodo di tipo \textbf{Processo} (pallino verde nell'albero), l'interfaccia mostra un riepilogo gestionale dell'intera unità di versamento:
+
+\begin{itemize}
+    \item \textbf{Pannello Informativo (Sinistra)}: Una sezione verticale scorrevole che organizza i metadati in blocchi logici:
+    \begin{itemize}
+        \item \textit{Anagrafica Processo}: Contiene i codici univoci e lo stato di verifica;
+        \item \textit{Processo di Versamento}: Indica le date di inizio/fine, gli operatori coinvolti (UUID attivatore/terminatore) e il canale di attivazione;
+        \item \textit{Processo di Conservazione}: Dettaglia le tempistiche e le modalità di archiviazione definitiva.
+    \end{itemize}
+    \item \textbf{Indice dei Documenti (Destra)}: Una tabella riassuntiva che elenca tutti i documenti contenuti nel processo. Per ogni riga è possibile cliccare sul pulsante \textbf{Visualizza} per saltare direttamente alla visualizzazione del singolo file.
+\end{itemize}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{img/esplorazione.png}
-    \caption{Schermata di benvenuto.}
-    \label{fig:esplorazione}
+    \includegraphics[width=0.9\textwidth]{img/dettaglio_processo.png}
+    \caption{Schermata di dettaglio di un processo con indice documenti.}
+    \label{fig:view_proc}
 \end{figure}
 
-Si verrà reindirizzati a questa sezione nel momento in cui si seleziona un nodo dell'albero di navigazione (sezione \ref{esplorazione ad albero}) oppure se si seleziona un risultato della ricerca (sezione \ref{ricerca}). Dentro la sezione appariranno i metadati dell'elemento selezionato e sarà possibile:
-\begin{itemize}
-    \item Verificare l'integrità dell'elemento e degli elementi contenuti in esso (per vedere l'esito dell'operazione consultare la sezione \ref{integrità})
-    \item Visualizzare l'anteprima del documento (solo se si è selezionato un processo contenente documenti o il singolo documento)
-    \item Scaricare o stampare il documento    (consultare la sezione \ref{esport})
-\end{itemize}
+\subsection{Gerarchia e Struttura del DIP} \label{esplorazione ad albero}
+Per facilitare la consultazione di archivi complessi, il software utilizza un'organizzazione gerarchica visualizzabile tramite l'albero di navigazione a sinistra.
 
-\subsection{Esplorazione ad albero} \label{esplorazione ad albero}
-In qualsiasi momento è possibile vedere a sinistra una sezione dedicata alla vista ad albero del file DIP. Ogni riga rappresenta un raggruppamento oppure un file. Se una riga presenta una tabulazione, allora appartiene alla prima riga sopra che non presenta l'indentazione. La gerarchia dei raggruppamenti è la seguente:
+\begin{tcolorbox}[colback=zpusblack!5,colframe=zpusblack,title=Legenda dell'Albero]
+Ogni livello della gerarchia è identificato da un'indentazione e da un'icona colorata:
 \begin{itemize}
-    \item Il nodo radice DIP contiene le classi documentali
-    \item Le classi documenti contengono i processi associati (pallino rosso)
-    \item I processi, che sono numerati in modo ordinato, contengono i file principali (pallino verde)
-    \item I file principali contengono gli allegati (pallino azzurro) 
+    \item \textbf{Radice DIP}: Il punto di ingresso del pacchetto documentale;
+    \item \textcolor{red}{\textbullet} \textbf{Classe Documentale}: Primo raggruppamento logico dei documenti;
+    \item \textcolor{zpusblack}{\textbullet} \textbf{Processo}: Unità minima di versamento (es. una pratica o un registro);
+    \item \textcolor{blue}{\textbullet} \textbf{File Principale}: Il documento primario contenuto nel processo;
+    \item \textcolor{gray}{\textbullet} \textbf{Allegato}: File correlati al documento principale (visibili espandendo il file principale).
 \end{itemize}
-È possibile navigare questa sezione tramite il TAB. Se si desidera è possibile chiudere questa sezione tramite l'apposita linguetta "Albero" adiacente alla sezione. 
+\end{tcolorbox}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{img/albero.png}
-    \caption{Albero di navigaizone evidenziato in rosso.}
-    \label{fig:albero}
-\end{figure}
+\noindent \textbf{Suggerimento per la navigazione}: È possibile espandere o comprimere i nodi cliccando sul nome stesso. Se l'area di lavoro centrale richiede più spazio, l'albero può essere rimpicciolito o chiuso cliccando sulla linguetta verticale \textit{"Albero"}.
 
 \subsection{Ricerca} \label{ricerca}
 Per accedere a questa sezione è possibile premere il pulsante "Ricerca" in alto a destra, contrassegnato da una lente di ingrandimento. 
