@@ -6,12 +6,12 @@ title C4 Model - Level 3 (Main Process Components: Indexing Flow)
 LAYOUT_WITH_LEGEND()
 
 Container_Boundary(main_container, "Main Process") {
-  Component(app_bootstrap, "ApplicationBootstrapAdapter", "Bootstrap Adapter", "Triggers startup indexing")
-  Component(index_dip, "IndexDip", "Use Case", "Transactional indexing pipeline Dip -> Class -> Process -> Document -> File + vectors")
-  Component(tx_manager, "SqliteTransactionManager", "Infrastructure Service", "runInTransaction boundary")
+  Component(app_bootstrap, "ApplicationBootstrap", "Bootstrap Adapter", "Triggers startup indexing")
+  Component(index_dip, "IndexDipUC", "Use Case", "Transactional indexing pipeline Dip -> Class -> Process -> Document -> File + vectors")
 
   Component(package_reader, "LocalPackageReaderAdapter", "Outbound Adapter", "Reads DiPIndex XML and metadata/file streams")
-  Component(data_mapper, "DataMapper + XmlDipParser", "Mapper/Parser", "Maps parsed XML to domain entities")
+  Component(data_mapper, "DataMapper", "Mapper", "Maps parsed XML to domain entities")
+  Component(dip_parser, "DipParser", "Parser", "Parses DiPIndex XML into domain entities")
   Component(file_system_provider, "FileSystemProvider", "Infrastructure Adapter", "Filesystem read/list/stream")
 
   Component(dip_repo, "DipRepository", "Repository", "save Dip")
@@ -21,7 +21,7 @@ Container_Boundary(main_container, "Main Process") {
   Component(file_repo, "FileRepository", "Repository", "save files")
   Component(vector_repo, "VectorRepository", "Repository", "save vectors")
 
-  Component(chunker, "DocumentChunker", "Domain Service", "Extracts document embedding from main file")
+  Component(chunker, "EmbeddingService", "Domain Service", "Extracts document embedding from main file")
   Component(word_embedding, "WordEmbedding", "Outbound Adapter", "Embedding generation")
 }
 
@@ -32,10 +32,10 @@ System_Ext(ai_runtime, "Local AI Runtime", "@xenova/transformers + ONNX Runtime"
 
 Rel(main_lifecycle, app_bootstrap, "bootstrap(dipPath)")
 Rel(app_bootstrap, index_dip, "execute(dipPath)")
-Rel(index_dip, tx_manager, "runInTransaction")
 
 Rel(index_dip, package_reader, "readDip/readDocumentClasses/readProcesses/readDocuments/readFiles")
 Rel(package_reader, data_mapper, "map parsed XML")
+Rel(package_reader, dip_parser, "parse XML")
 Rel(package_reader, file_system_provider, "list/read/open stream")
 Rel(file_system_provider, local_fs, "filesystem io")
 
@@ -56,17 +56,5 @@ Rel(process_repo, sqlite, "SQL write")
 Rel(doc_repo, sqlite, "SQL write")
 Rel(file_repo, sqlite, "SQL write")
 Rel(vector_repo, sqlite, "SQL write")
-
-note right of index_dip
-SOLID:
-- S: dedicated indexing orchestration component
-- O: extend with new index steps via ports/repositories
-- D: indexing depends on reader/repo/chunker abstractions
-
-Patterns:
-- Transaction Script around use case
-- Ports & Adapters
-- Repository + Unit-of-Work style transaction manager
-end note
 
 @enduml
