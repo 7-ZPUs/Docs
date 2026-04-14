@@ -295,17 +295,7 @@ Interfaccia:
     \item SearchFacade aggiorna signal<SearchState>.results.
     \item SearchResultsComponent visualizza dinamicamente tramite SearchResultFactory.
 \end{enumerate}
-
-\paragraph{Integrazione con Core Backend}
-Il backend riceve SearchRequestDTO e lo elabora tramite:
-\begin{itemize}
-    \item SearchDocumentsUC: filtra documenti per metadati AGID.
-    \item SearchProcessUC: filtra processi per ID/proprietà.
-    \item SearchSemanticUC: embedding vettoriale (Xenova in browser o backend).
-    \item SearchAggregateUC: filtra aggregazioni per proprietà DiP.
-\end{itemize}
-
-Ognuno restituisce ISearchResult[], che viene serializzato e rimandato al renderer via IPC.
+Ognuno degli UC backend restituisce ISearchResult[], che viene serializzato e rimandato al renderer via IPC per la visualizzazione.
 
 \paragraph{Vantaggi dell'approccio}
 \begin{itemize}
