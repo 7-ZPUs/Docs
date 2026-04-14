@@ -1,0 +1,90 @@
+@startuml Class Diagram - Main Indexing Flow - Group 2
+
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+hide empty members
+
+title Group 2 - LocalPackageReaderAdapter, FileSystemProvider, DataMapper, DipParser
+
+package "Reader Adapter" {
+  interface IPackageReaderPort {
+    + readDip(dipPath: string): Promise<Dip>
+    + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
+    + readProcesses(dipPath: string): AsyncGenerator<Process>
+    + readDocuments(dipPath: string): AsyncGenerator<Document>
+    + readFiles(dipPath: string): AsyncGenerator<File>
+    + readFileBytes(filePath: string): Promise<NodeJS.ReadableStream>
+  }
+
+  class LocalPackageReaderAdapter {
+    - parser: IDipParser
+    - fileSystemProvider: IFileSystemProvider
+    - mapper: IDataMapper
+    + readDip(dipPath: string): Promise<Dip>
+    + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
+    + readProcesses(dipPath: string): AsyncGenerator<Process>
+    + readDocuments(dipPath: string): AsyncGenerator<Document>
+    + readFiles(dipPath: string): AsyncGenerator<File>
+    + readFileBytes(filePath: string): Promise<NodeJS.ReadableStream>
+    - resolveDipIndexFilename(dipPath: string): Promise<string>
+    - getParsedIndex(dipPath: string): Promise<any>
+    - getOptionalMetadata(dipPath: string, relativePath: string | null): Promise<any>
+  }
+
+  interface IDipParser {
+    + parse(rawContent: string): any
+  }
+
+  class DipParser {
+    - parser: XMLParser
+    + parse(rawContent: string): any
+  }
+
+  interface IDataMapper {
+    + mapDip(rawDipIndex: any): Dip
+    + mapDocumentClasses(rawDipIndex: any): DocumentClass[]
+    + getProcessMappers(rawDipIndex: any): MapperRequest[]
+    + getDocumentMappers(rawDipIndex: any): MapperRequest[]
+    + getFileMappers(rawDipIndex: any): MapperRequest[]
+  }
+
+  class DataMapper {
+    + mapDip(rawDipIndex: any): Dip
+    + mapDocumentClasses(rawDipIndex: any): DocumentClass[]
+    + getProcessMappers(rawDipIndex: any): MapperRequest[]
+    + getDocumentMappers(rawDipIndex: any): MapperRequest[]
+    + getFileMappers(rawDipIndex: any): MapperRequest[]
+  }
+
+  interface IFileSystemProvider {
+    + readFile(filePath: string): Promise<Uint8Array>
+    + openReadStream(filePath: string): Promise<NodeJS.ReadableStream>
+    + readTextFile(filePath: string): Promise<string>
+    + fileExists(filePath: string): Promise<boolean>
+    + listFiles(dirPath: string): Promise<string[]>
+  }
+
+  class FileSystemProvider {
+    + readFile(filePath: string): Promise<Uint8Array>
+    + openReadStream(filePath: string): Promise<NodeJS.ReadableStream>
+    + readTextFile(filePath: string): Promise<string>
+    + fileExists(filePath: string): Promise<boolean>
+    + listFiles(dirPath: string): Promise<string[]>
+  }
+}
+
+class XMLParser <<external>>
+
+LocalPackageReaderAdapter ..|> IPackageReaderPort
+LocalPackageReaderAdapter --> IDipParser
+LocalPackageReaderAdapter --> IDataMapper
+LocalPackageReaderAdapter --> IFileSystemProvider
+DipParser ..|> IDipParser
+DipParser --> XMLParser
+DataMapper ..|> IDataMapper
+FileSystemProvider ..|> IFileSystemProvider
+
+@enduml

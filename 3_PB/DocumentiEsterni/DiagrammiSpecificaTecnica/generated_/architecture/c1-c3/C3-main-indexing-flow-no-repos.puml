@@ -1,0 +1,38 @@
+@startuml C3_Main_Indexing_Flow_No_Repos
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title C4 Model - Level 3 (Main Process Components: Indexing Flow - No Repositories)
+
+LAYOUT_WITH_LEGEND()
+
+Container_Boundary(main_container, "Main Process") {
+  Component(app_bootstrap, "ApplicationBootstrap", "Bootstrap Adapter", "Triggers startup indexing")
+  Component(index_dip, "IndexDipUC", "Use Case", "Transactional indexing pipeline Dip -> Class -> Process -> Document -> File + vectors")
+
+  Component(package_reader, "PackageReaderService", "Outbound Adapter", "Reads DiPIndex XML and metadata/file streams")
+  Component(data_mapper, "DataMapper", "Mapper", "Maps parsed XML to domain entities")
+  Component(dip_parser, "DipParser", "Parser", "Parses DiPIndex XML into domain entities")
+  Component(file_system_provider, "FileSystemPort", "Infrastructure Adapter", "Filesystem read/list/stream")
+
+  Component(chunker, "EmbeddingService", "Domain Service", "Extracts document embedding from main file")
+  Component(word_embedding, "WordEmbeddingPort", "Outbound Adapter", "Embedding generation")
+}
+
+Container_Ext(main_lifecycle, "Electron main.ts lifecycle", "Electron", "Registers DI and bootstrap startup")
+System_Ext(local_fs, "Local File System", "DIP folder, XML files, binaries")
+System_Ext(ai_runtime, "Local AI Runtime", "@xenova/transformers + ONNX Runtime")
+
+Rel(main_lifecycle, app_bootstrap, "bootstrap(dipPath)")
+Rel(app_bootstrap, index_dip, "execute(dipPath)")
+
+Rel(index_dip, package_reader, "readDip/readDocumentClasses/readProcesses/readDocuments/readFiles")
+Rel(package_reader, data_mapper, "map parsed XML")
+Rel(package_reader, dip_parser, "parse XML")
+Rel(package_reader, file_system_provider, "list/read/open stream")
+Rel(file_system_provider, local_fs, "filesystem io")
+
+Rel(index_dip, chunker, "generateDocumentEmbedding(mainFile)")
+Rel(chunker, word_embedding, "generateEmbedding")
+Rel(word_embedding, ai_runtime, "inference")
+
+@enduml

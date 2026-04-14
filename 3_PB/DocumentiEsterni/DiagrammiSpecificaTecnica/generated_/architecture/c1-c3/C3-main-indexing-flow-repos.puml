@@ -1,0 +1,35 @@
+@startuml C3_Main_Indexing_Flow_Repos
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title C4 Model - Level 3 (Main Process Components: Indexing Flow - Repositories)
+
+LAYOUT_WITH_LEGEND()
+
+Container_Boundary(main_container, "Main Process") {
+  Component(index_dip, "IndexDipUC", "Use Case", "Transactional indexing pipeline Dip -> Class -> Process -> Document -> File + vectors")
+
+  Component(dip_repo, "DipRepository", "Repository", "save Dip")
+  Component(class_repo, "DocumentClassRepository", "Repository", "save classes")
+  Component(process_repo, "ProcessRepository", "Repository", "save processes")
+  Component(doc_repo, "DocumentRepository", "Repository", "save documents")
+  Component(file_repo, "FileRepository", "Repository", "save files")
+  Component(vector_repo, "VectorRepository", "Repository", "save vectors")
+}
+
+ContainerDb_Ext(sqlite, "SQLite", "Persistence for entities and vectors")
+
+Rel(index_dip, dip_repo, "save")
+Rel(index_dip, class_repo, "save")
+Rel(index_dip, process_repo, "save")
+Rel(index_dip, doc_repo, "save")
+Rel(index_dip, file_repo, "save")
+Rel(index_dip, vector_repo, "saveVector")
+
+Rel(dip_repo, sqlite, "SQL write")
+Rel(class_repo, sqlite, "SQL write")
+Rel(process_repo, sqlite, "SQL write")
+Rel(doc_repo, sqlite, "SQL write")
+Rel(file_repo, sqlite, "SQL write")
+Rel(vector_repo, sqlite, "SQL write")
+
+@enduml

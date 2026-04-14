@@ -1,0 +1,209 @@
+\section{Backend - Indexing}
+
+\subsection{Panoramica}
+
+Il modulo di indicizzazione esplora il contenuto del pacchetto DiP e orchestra un flusso dati che va dal \codeword{PackageReaderPort} ai repository, garantendo persistenza efficiente delle entità estratte.
+L'orchestrazione è gestita da \codeword{IndexDipUC}, che riceve in modalità asincrona tramite \codeword{AsyncGenerator} le entità del pacchetto (DiP, DocumentClass, Process, Document, File) dal \codeword{PackageReaderPort}. Ogni entità viene elaborata e persistita nel corrispettivo repository (\codeword{dipRepository}, \codeword{documentClassRepository}, \codeword{processRepository}, \codeword{documentRepository}, \codeword{fileRepository}).
+Per i documenti, è previsto un trattamento speciale: il file principale (non gli allegati) subisce un processo di word embedding. L'estrazione del testo e la generazione dei vettori sono orchestrate da \codeword{EmbeddingService}, che interagisce con \codeword{WordEmbeddingPort} per convertire il contenuto testuale in vettori di embedding. Questi vettori vengono successivamente salvati in \codeword{VectorRepository}.
+
+L'indicizzazione avviene in modalità asincrona, garantendo un utilizzo efficiente della memoria: le entità vengono elaborate e salvate man mano che vengono estratte dal pacchetto, senza attendere il completamento dell'esplorazione dell'intero contenuto.
+
+Il modulo espone una inbound port per l'avvio del processo di indicizzazione, attualmente utilizzata da \codeword{ApplicationBootstrap} in \codeword{main.ts}. Poiché il software è distribuito all'interno del pacchetto DiP stesso, l'indicizzazione viene eseguita automaticamente durante il bootstrap dell'applicazione, senza richiedere intervento manuale dell'utente.
+
+\subsection{Componenti}
+
+\newpage
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3-main-indexing-flow-no-repos/C3_Main_Indexing_Flow_No_Repos.png}
+        \caption{Diagramma C3 - Componenti del modulo di indicizzazione}
+    \label{fig:C3_componenti_no_repos}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3-main-indexing-flow-repos/C3_Main_Indexing_Flow_Repos.png}
+        \caption{Diagramma C3 - Componenti del modulo di indicizzazione}
+    \label{fig:C3_componenti_repos}
+\end{figure}
+\newpage
+\subsubsection{ApplicationBootstrap, IndexDipUC}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_Orchestration/Class Diagram - Main Indexing Flow - Orchestration.png}
+        \caption{Diagramma C4 - Dettaglio dell'orchestrazione del processo di indicizzazione}
+    \label{fig:C4_orchestrazione_embedding}
+\end{figure}
+
+Prima di tutto è necessario capire la relazione tra le varie entità presenti all'interno di un pacchetto DiP:
+\begin{itemize}
+    \item \textbf{DiP}: è il pacchetto che viene indicizzato, contiene al suo interno tutte le altre entità.
+    \item \textbf{DocumentClass}: rappresenta un aggregato di documenti, ma di fatto nel contesto di un pacchetto DiP rappresenta un aggregato di processi. Essendo il documento gestito all'interno di un processo, è stato aggiunto questo livello di innestamento per rappresentare questa relazione. Un DiP può contenere più DocumentClass.
+    \item \textbf{Process}: rappresenta un processo, che contiene al suo interno più documenti.
+    \item \textbf{Document}: rappresenta un documento, che contiene al suo interno più file.
+    \item \textbf{File}: entità atomica contenuta all'interno di un documento. Può essere il documento principale del file (di cui ne esiste sempre uno e solo uno), oppure un allegato.
+\end{itemize}
+
+Viene spiegato in seguito come queste entità vengono gestite dal modulo di indicizzazione.
+
+\paragraph{ApplicationBootstrap}:
+\begin{itemize}
+    \item \textbf{Descrizione}: adapter responsabile dell'avvio del processo di indicizzazione, utilizzato in \codeword{main.ts} per gestire il lifecycle dell'applicazione Electron.
+    \item \codeword{\textbf{+ bootstrap()}: Promise<void>}: metodo che avvia il processo di indicizzazione, invocando \codeword{IndexDipUC.execute()}.
+\end{itemize}
+
+\paragraph{IndexDipUC}:
+\begin{itemize}
+    \item \textbf{Descrizione}: Use Case che orchestra il processo di indicizzazione, coordinando i flussi di dati in arrivo da \codeword{PackageReaderPort} verso i repository, effettuando l'embedding dei documenti tramite \codeword{WordEmbeddingPort}
+    \item \codeword{\textbf{+execute(dipPath: string)}: Promise<IndexResult>}: metodo che avvia il processo di indicizzazione, accettando in ingresso il percorso del pacchetto DiP da indicizzare. Restituisce un oggetto \codeword{IndexResult} che rappresenta l'esito dell'operazione.
+    \item \codeword{\textbf{-indexDip()}: Promise<IndexResult>}: Riceve l'entità DiP da \\
+    \codeword{PackageReaderPort.readDip()} e la persiste nel corrispettivo repository
+    \codeword{dipRepository}.
+    \item \codeword{\textbf{-indexDocumentClasses()}: Promise<IndexResult>}: Riceve le DocumentClass da \\\codeword{PackageReaderPort.readDocumentClasses()} tramite AsyncGenerator e le persiste nel repository \codeword{documentClassRepository}.
+    \item \codeword{\textbf{-indexProcesses()}: Promise<IndexResult>}: Riceve i Processi da \\\codeword{PackageReaderPort.readProcesses()} tramite AsyncGenerator e li persiste nel repository \codeword{processRepository}.
+    \item \codeword{\textbf{-indexDocuments()}: Promise<IndexResult>}: Riceve i Documenti da \\\codeword{PackageReaderPort.readDocuments()} tramite AsyncGenerator e li persiste nel repository \codeword{documentRepository}. Per ogni documento, identifica il file principale, ne estrae il testo e lo converte in vettore tramite \codeword{WordEmbeddingPort}.
+    \item \codeword{\textbf{-indexFiles()}: Promise<IndexResult>}: Riceve i File da\\
+    \codeword{PackageReaderPort.readFiles()} tramite AsyncGenerator e li persiste nel\\
+    repository \codeword{fileRepository}.
+    \item \codeword{\textbf{-indexMainFileVector(file: File)}: Promise<IndexResult>}:\\
+    Estrae il testo del file principale, lo converte in vettore tramite\\
+    \codeword{WordEmbeddingPort} e lo salva in \codeword{VectorRepository}.
+\end{itemize}
+
+\paragraph{IndexResult}:
+\begin{itemize}
+    \item Descrizione: rappresenta l'esito del processo di indicizzazione, contenente una proprietà booleana \codeword{success} che indica se l'operazione è stata completata con successo o se si è verificato un errore.
+    \item \codeword{\textbf{- success: boolean}}: indica l'esito del processo di indicizzazione, con \codeword{true} se l'operazione è stata completata con successo, o \codeword{false} se si è verificato un errore.
+\end{itemize}
+
+\subsubsection{EmbeddingService, WordEmbeddingPort}
+Queste due componenti collaborano per gestire l'estrazione del testo dai file e la generazione dei vettori di embedding, che vengono poi restituiti a IndexDipUC per il salvataggio nella rispettiva \codeword{VectorRepository}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_Embedding/Class Diagram - Vertical Flow.png}
+        \caption{Diagramma C4 - Dettaglio dell'orchestrazione del processo di indicizzazione}
+    \label{fig:C4_orchestrazione_embedding}
+\end{figure}
+
+\paragraph{EmbeddingService}:
+\begin{itemize}
+    \item \textbf{Descrizione}: business service che si occupa di gestire la generazione di vettori a partire dal path del file principale di un documento. Questo servizio non si occupa della persistenza in quanto violerebbe il principio di Single Reponsibility.
+    \item \codeword{\textbf{+ generateDocumentEmbedding(dipPath:string, filePath: string)}:} \\ \codeword{Promise<Float32Array | null>}: tramite \codeword{readTextFromStream} legge il contenuto del file principale del documento, che viene successivamente ridotto in chunk tramite \codeword{chunkText} e convertito in vettore tramite \codeword{WordEmbeddingPort}. Restituisce un array di float a 32 bit che rappresenta il vettore del documento, o null in caso di errore. Questo vettore è costruito come media dei vettori di ogni chunk del testo tramite \codeword{meanEmbedding}.
+    \item \codeword{\textbf{+ setEmbeddingConfiguration(config: IEmbeddingConfiguration)}: void}: permette di aggiornare la configurazione per la generazione degli embedding, accettando in ingresso un oggetto che rispetta l'interfaccia \codeword{IEmbeddingConfiguration}.
+    \item \codeword{\textbf{- readTextFromStream(filePath: string)}: Promise<string>}: legge il contenuto del file principale del documento a partire dal suo path tramite \\ \codeword{PackageReaderPort.readFileBytes}, restituendo una stringa di testo.
+    \item \codeword{\textbf{- chunkText(text: string)}: string[]}: suddivide il testo in chunk di dimensione massima definita da \codeword{embeddingConfig.chunkSize}, restituendo un array di stringhe.
+    \item \codeword{\textbf{- meanEmbedding(embeddings: Float32Array[])}: Float32Array | null}: calcola la media dei vettori di ogni chunk del testo, restituendo un array di float a 32 bit che rappresenta il vettore medio del documento, o null in caso di errore.
+\end{itemize}
+
+\paragraph{IEmbeddingConfiguration}:
+\begin{itemize}
+    \item \textbf{Descrizione}: interfaccia che definisce la configurazione per la generazione degli embedding.
+    \item \codeword{chunkSize}: dimensione massima di ogni chunk di testo da convertire in vettore.
+    \item \codeword{chunkOverlap}: sovrapposizione in byte tra un chunk e l'altro, per garantire continuità tra i chunk.
+    \item \codeword{maxEmbeddingChunks}: numero massimo di chunk da convertire in vettore per ogni documento, permette di mantenere performance stabili con pacchetti contenenti file di dimensioni elevate.
+\end{itemize}
+
+\paragraph{WordEmbeddingPort}:
+\begin{itemize}
+    \item \textbf{Descrizione}: outbound adapter che permette di interagire con ONNX runtime per la generazione di vettori.
+    \item \codeword{\textbf{+ initialize()}: Promise<void>}: inizializza il modello di embedding (paraphrase-multilingual-MiniLM-L12-v2) tramite la libreria \codeword{@xenova/transformers}. Questa operazione è asincrona e deve essere completata prima di poter generare embedding.
+    \item \codeword{\textbf{+ generateEmbedding(texts: string[])}: Promise<Float32Array[]>}: genera i vettori di embedding per un array di stringhe di testo. Restituisce un array di Float32Array, uno per ogni testo in ingresso.
+    \item \codeword{\textbf{+ isInitialized(): boolean}}: restituisce \codeword{true} se il modello è stato inizializzato, \codeword{false} altrimenti.
+\end{itemize}
+
+\subsubsection{PackageReaderService, DataMapper, DipParser, FileSystemPort}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_Main_Indexing_PackageReader/Class Diagram - Main Indexing Flow - Group 2.png}
+        \caption{Diagramma C4 - Dettaglio dell'orchestrazione del processo di indicizzazione}
+    \label{fig:C4_orchestrazione_reading}
+\end{figure}
+
+\paragraph{PackageReaderService}:
+\begin{itemize}
+    \item \textbf{Descrizione}: adapter che implementa \codeword{IPackageReaderPort}, responsabile della lettura del pacchetto DiP dal filesystem locale. Orchestr a il flusso di estrazione delle entità coordinando \codeword{DipParser}, \codeword{FileSystemPort} e \codeword{DataMapper}.
+    \item \codeword{\textbf{+ readDip()}: Promise<Dip>}: legge il file \codeword{DiPIndex} dal percorso specificato, lo decodifica tramite \codeword{DipParser} e lo trasforma in entità \codeword{Dip} tramite \codeword{DataMapper}.
+    \item \codeword{\textbf{+ readDocumentClasses()}: AsyncGenerator<DocumentClass>}: genera in modo asincrono le entità \codeword{DocumentClass} estratte dal pacchetto. Per ogni classe documentale presente in DipIndex.xml, ne viene eseguito il parsing e il mapping verso l'entità di dominio corrispondente tramite\codeword{DataMapper}.
+    \item \codeword{\textbf{+ readProcesses()}: AsyncGenerator<Process>}: genera in modo asincrono le entità \codeword{Process} estratte dal pacchetto, leggendo e decodificando i file XML che contengono i metadati aggiuntivi tramite \codeword{DipParser} e trasformandoli tramite \codeword{DataMapper}.
+    \item \codeword{\textbf{+ readDocuments()}: AsyncGenerator<Document>}: genera in modo asincrono le entità \codeword{Document} estratte dal pacchetto, gestendo la lettura dei metadati e la loro mappatura.
+    \item \codeword{\textbf{+ readFiles()}: AsyncGenerator<File>}: genera in modo asincrono le entità \codeword{File} estratte dal pacchetto, distinguendo tra file principale e allegati.
+    \item \codeword{\textbf{+ setDipPath(dipPath: string)}: void}: imposta il percorso del pacchetto DiP da cui leggere i dati, necessario per risolvere correttamente i percorsi relativi dei file all'interno del pacchetto.
+    \item \codeword{\textbf{- getOptionalMetadata(relativePath: string)}: Promise<any>}: metodo helper che, dato un percorso relativo, legge il file corrispondente all'interno del pacchetto, ne effettua il parsing tramite \codeword{DipParser} e restituisce i dati grezzi. Utilizzato per recuperare i metadati supplementari di processi, documenti e file.
+    \item \codeword{\textbf{- getParsedIndex()}: Promise<any>}: metodo helper che legge e decodifica il file \codeword{DiPIndex} tramite \codeword{DipParser} e mappato tramite \codeword{DataMapper}. Utilizzato come punto di partenza per l'estrazione delle entità del pacchetto. Questo elemento è presente in ogni pacchetto DiP.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_Main_Indexing_Parser/Class Diagram - Main Indexing Flow - Group 2.png}
+        \caption{Diagramma C4 - Dettaglio dell'orchestrazione del processo di indicizzazione}
+    \label{fig:C4_orchestrazione_reading}
+\end{figure}
+
+\paragraph{IDipParser}:
+\begin{itemize}
+    \item \textbf{Descrizione}: interfaccia che permette l'attuazione dello \textbf{strategy pattern} per il parsing dei file XML. Il contratto è definito in modo da prevedere la massima flessibilità e facilità di implementazione dei diversi mapper. Viene accettato il contenuto del file (sia esso XML, JSON o altro) e restituito un oggetto JavaScript non tipizzato, che reifica il contenuto del file. L'attuale implementazione prevede il supporto di file XML.
+    \item \codeword{\textbf{+ parse(rawContent: string)}: any}: effettua il parsing di una stringa XML e restituisce un oggetto JavaScript secondo lo schema fornito.
+\end{itemize}
+
+\paragraph{XmlDipParser}:
+\begin{itemize}
+    \item \textbf{Descrizione}: implementazione concreta di \codeword{IDipParser} che utilizza la libreria \codeword{fast-xml-parser} per la deserializzazione efficiente e type-safe dei file XML del pacchetto DiP.
+    \item \textbf{Configurazione}: le opzioni di parsing sono configurate per gestire correttamente i namespace, gli attributi e le strutture complesse presenti negli schemi XSD forniti.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_Main_Indexing_Flow_FsProvider/Class Diagram - Main Indexing Flow - Group 2.png}
+        \caption{Diagramma C4 - Dettaglio dell'orchestrazione del processo di indicizzazione}
+    \label{fig:C4_orchestrazione_reading}
+\end{figure}
+
+\paragraph{IFileSystemPort}:
+\begin{itemize}
+    \item \textbf{Descrizione}: interfaccia che astrae l'accesso al filesystem, permettendo una lettura e una scrittura indipendente dalla piattaforma. Facilita inoltre il testing tramite mock.
+    \item \codeword{\textbf{+ readFile(filePath: string)}: Promise<string>}: legge il contenuto testuale di un file dal percorso specificato, restituendo una stringa.
+    \item \codeword{\textbf{+ readFileAsBuffer(filePath: string)}: Promise<Buffer>}: legge il contenuto binario di un file, restituendo un Buffer.
+    \item \codeword{\textbf{+ listFiles(dirPath: string)}: Promise<string[]>}: elenca i file presenti in una directory, restituendo un array di percorsi relativi.
+    \item \codeword{\textbf{+ exists(filePath: string)}: Promise<boolean>}: verifica l'esistenza di un file o directory al percorso specificato.
+\end{itemize}
+
+\paragraph{FileSystemPort}:
+\begin{itemize}
+    \item \textbf{Descrizione}: implementazione concreta di \codeword{IFileSystemPort} che utilizza le API native di Node.js (\codeword{fs} e \codeword{fs/promises}) per l'accesso al filesystem locale.
+    \item \textbf{Caratteristiche}: supporta operazioni asincrone per evitare il blocco del thread principale, essenziale in un contesto Electron dove la responsività dell'UI è critica.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_Main_Indexing_Flow_DataMapper/Class Diagram - Main Indexing Flow - Group 2.png}
+        \caption{Diagramma C4 - Dettaglio dell'orchestrazione del processo di indicizzazione}
+    \label{fig:C4_orchestrazione_reading}
+\end{figure}
+
+\paragraph{Preambolo sulla struttura di un DiP}:
+
+Come specificato dalla documentazione ufficiale, un pacchetto DiP può contenere metadati distribuiti su più file e in posizioni potenzialmente variabili. Poiché la struttura e l'ubicazione dei metadati possono cambiare, è impraticabile codificarle rigidamente nel sistema.
+
+Ogni pacchetto DiP include un file "DiPIndex" che funge da catalogo centrale, descrivendo il contenuto completo del pacchetto e indicando l'ubicazione di eventuali file di metadati aggiuntivi. Le entità che possono disporre di metadati supplementari non vengono mappate direttamente, ma attraverso un oggetto \codeword{MapperRequest} che consente di gestire dinamicamente le variazioni strutturali.
+
+Durante il mapping, \codeword{DataMapper} estrae dal DiPIndex il percorso del file metadati per ciascuna entità, delegando a \codeword{PackageReaderPort} sia il recupero fisico del contenuto (tramite \codeword{FileSystemPort}) che il parsing (tramite \codeword{DipParser}). In questo modo, il mapper riceve tutte le informazioni necessarie per eseguire un mapping completo e corretto. Questo approccio garantisce il Single Responsibility Principle, separando nettamente l'estrazione fisica (I/O) da quella logica: qualora la posizione o la struttura dei metadati venissero modificate, \codeword{PackageReaderPort} rimane invariato, poiché non gli compete conoscere dove i metadati risiedono nel pacchetto.
+
+\paragraph{IDataMapper}:
+\begin{itemize}
+    \item \textbf{Descrizione}: interfaccia che definisce il contratto per la trasformazione dei dati grezzi estratti dai file XML nei modelli di dominio tipizzati. Utilizza \textbf{MapperRequest} per le entità che dispongono di metadati supplementari
+    \item \codeword{\textbf{+ mapDip()}: DocumentClass}: trasforma i dati grezzi nelle entità \codeword{DocumentClass}, accedendo a metadati contestuali attraverso \codeword{MapperRequest}.
+    \item \codeword{\textbf{+ mapDocumentClasses()}: Process}: trasforma i dati grezzi nelle entità \codeword{Process}, utilizzando il contesto fornito da \codeword{MapperRequest} per correlazioni tra entità.
+    \item \codeword{\textbf{+ getProcessMappers()}: MapperRequest<Process>[]}: restituisce una lista di richieste di mapping per i processi, utilizzando il contesto fornito da \codeword{MapperRequest}.
+    \item \codeword{\textbf{+ getDocumentMappers()}: MapperRequest<Document>[]}: restituisce una lista di richieste di mapping per i documenti, utilizzando il contesto fornito da \codeword{MapperRequest}.
+    \item \codeword{\textbf{+ getFileMappers()}: MapperRequest<File>[]}: restituisce una lista di richieste di mapping per i file, utilizzando il cont
+    \item \codeword{\textbf{+ setRawDipIndex(rawDipIndex: any): void}}: setter per il contenuto grezzo del DiPIndex (JS object non tipizzato), necessario per poter estrarre successivamente le entità tramite gli altri metodi pubblici.
+\end{itemize}
+
+\paragraph{MapperRequest<T>}:
+\begin{itemize}
+    \item \textbf{Descrizione}: interfaccia generica che incapsula i dati da trasformare e fornisce il contesto di esecuzione necessario per il mapping. Permette di passare informazioni addizionali al mapper senza modificare la firma dei metodi.
+    \item \codeword{\textbf{+ metadataRelativePath: string}}: path relativo all'interno del pacchetto DiP that indica la posizione del file contenente i metadati supplementari per l'entità da mappare.
+    \item \codeword{\textbf{+ map: (rawMetadata: any) => T}}: lambda di mapping che trasforma i dati grezzi nei modelli di dominio.
+\end{itemize}

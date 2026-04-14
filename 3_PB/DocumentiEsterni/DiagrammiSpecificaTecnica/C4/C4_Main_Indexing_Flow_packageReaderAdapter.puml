@@ -1,0 +1,134 @@
+@startuml Class Diagram - Main Indexing Flow - Package Reader Adapter
+
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+hide empty members
+
+title Class Diagram - Main Indexing Flow - Package Reader Adapter
+
+package "Orchestration" {
+  class ApplicationBootstrap {
+    - indexDipUC: IndexDipUC
+    + bootstrap(dipPath: string): Promise<void>
+  }
+
+  class IndexDipUC {
+    - packageReader: IPackageReaderPort
+    - embeddingService: IEmbeddingService
+    + execute(dipPath: string): Promise<void>
+  }
+}
+
+package "Reader Adapter" {
+  interface IPackageReaderPort {
+    + readDip(dipPath: string): Promise<Dip>
+    + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
+    + readProcesses(dipPath: string): AsyncGenerator<Process>
+    + readDocuments(dipPath: string): AsyncGenerator<Document>
+    + readFiles(dipPath: string): AsyncGenerator<File>
+    + readFileBytes(filePath: string): Promise<NodeJS.ReadableStream>
+  }
+
+  class LocalPackageReaderAdapter {
+    - parser: IDipParser
+    - fileSystemProvider: IFileSystemProvider
+    - mapper: IDataMapper
+    + readDip(dipPath: string): Promise<Dip>
+    + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
+    + readProcesses(dipPath: string): AsyncGenerator<Process>
+    + readDocuments(dipPath: string): AsyncGenerator<Document>
+    + readFiles(dipPath: string): AsyncGenerator<File>
+    + readFileBytes(filePath: string): Promise<NodeJS.ReadableStream>
+    - resolveDipIndexFilename(dipPath: string): Promise<string>
+    - getParsedIndex(dipPath: string): Promise<any>
+    - getOptionalMetadata(dipPath: string, relativePath: string | null): Promise<any>
+  }
+
+  interface IDipParser {
+    + parse(rawContent: string): any
+  }
+
+  class DipParser {
+    - parser: XMLParser
+    + parse(rawContent: string): any
+  }
+
+  interface IEmbeddingService{
+    + generateDocumentEmbedding(filePath: string) : Promise<Float32Array | null>
+  }
+
+  interface IDataMapper {
+    + mapDip(rawDipIndex: any): Dip
+    + mapDocumentClasses(rawDipIndex: any): DocumentClass[]
+    + getProcessMappers(rawDipIndex: any): MapperRequest[]
+    + getDocumentMappers(rawDipIndex: any): MapperRequest[]
+    + getFileMappers(rawDipIndex: any): MapperRequest[]
+  }
+
+  class DataMapper {
+    + mapDip(rawDipIndex: any): Dip
+    + mapDocumentClasses(rawDipIndex: any): DocumentClass[]
+    + getProcessMappers(rawDipIndex: any): MapperRequest[]
+    + getDocumentMappers(rawDipIndex: any): MapperRequest[]
+    + getFileMappers(rawDipIndex: any): MapperRequest[]
+  }
+
+  interface IFileSystemProvider {
+    + readFile(filePath: string): Promise<Uint8Array>
+    + openReadStream(filePath: string): Promise<NodeJS.ReadableStream>
+    + readTextFile(filePath: string): Promise<string>
+    + fileExists(filePath: string): Promise<boolean>
+    + listFiles(dirPath: string): Promise<string[]>
+  }
+
+  class FileSystemProvider {
+    + readFile(filePath: string): Promise<Uint8Array>
+    + openReadStream(filePath: string): Promise<NodeJS.ReadableStream>
+    + readTextFile(filePath: string): Promise<string>
+    + fileExists(filePath: string): Promise<boolean>
+    + listFiles(dirPath: string): Promise<string[]>
+  }
+
+  class EmbeddingService {
+    - packageReader: IPackageReaderPort
+    - embeddingAdapter: IWordEmbeddingPort
+    + generateDocumentEmbedding(filePath: string): Promise<Float32Array | null>
+    - readTextFromStream(filePath: string): Promise<string>
+    - chunkText(text: string, size: number, overlap: number): string[]
+    - meanEmbedding(embeddings: Float32Array[]): Float32Array | null
+  }
+
+  interface IWordEmbeddingPort {
+    + generateEmbedding(text: string): Promise<Float32Array>
+    + isInitialized(): boolean
+  }
+
+  class WordEmbeddingPort {
+    - embedder: unknown
+    - initialized: boolean
+    + initialize(): Promise<void>
+    + generateEmbedding(text: string): Promise<Float32Array>
+    + isInitialized(): boolean
+  }
+}
+
+ApplicationBootstrap --> IndexDipUC
+IndexDipUC --> IPackageReaderPort
+LocalPackageReaderAdapter ..|> IPackageReaderPort
+LocalPackageReaderAdapter --> IDipParser
+LocalPackageReaderAdapter --> IDataMapper
+LocalPackageReaderAdapter --> IFileSystemProvider
+DipParser ..|> IDipParser
+DipParser --> XMLParser
+DataMapper ..|> IDataMapper
+FileSystemProvider ..|> IFileSystemProvider
+IndexDipUC --> IEmbeddingService
+EmbeddingService ..|> IEmbeddingService
+EmbeddingService --> IPackageReaderPort
+EmbeddingService --> IWordEmbeddingPort
+WordEmbeddingPort ..|> IWordEmbeddingPort
+
+@enduml
