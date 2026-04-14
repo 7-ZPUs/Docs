@@ -8,8 +8,22 @@ skinparam dpi 300
 ' Sviluppo rigorosamente verticale
 top to bottom direction
 skinparam classAttributeIconSize 0
-skinparam nodesep 20
-skinparam ranksep 30
+skinparam nodesep 40
+skinparam ranksep 70
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype ortho
+skinparam ArrowThickness 2
+skinparam ArrowColor #1F2937
+skinparam ArrowFontColor #111827
+skinparam ArrowFontSize 10
+skinparam ArrowFontStyle bold
+skinparam defaultTextAlignment left
+skinparam wrapWidth 220
+skinparam maxMessageSize 80
+skinparam handwritten false
+skinparam packageStyle rectangle
+allowmixing
 
 ' ==========================================
 ' LIVELLO UI (SMART & DUMB COMPONENTS)
@@ -53,11 +67,11 @@ class DocumentViewerComponent
 
 
 ' Composizione della UI
-ItemDetailPageComponent *-down- DocumentActionsComponent : renders
-ItemDetailPageComponent *-down- MetadataPanelComponent : renders
-ItemDetailPageComponent *-down- NodeFallbackPanelComponent : renders
-ItemDetailPageComponent *-down- DocumentViewerComponent : renders
-ItemDetailPageComponent *-down- DocumentIndexComponent : renders
+ItemDetailPageComponent -down-> DocumentActionsComponent : renders
+ItemDetailPageComponent -down-> MetadataPanelComponent : renders
+ItemDetailPageComponent -down-> NodeFallbackPanelComponent : renders
+ItemDetailPageComponent -down-> DocumentViewerComponent : renders
+ItemDetailPageComponent -down-> DocumentIndexComponent : renders
 
 DocumentActionsComponent -[hidden]down- MetadataPanelComponent
 MetadataPanelComponent -[hidden]down- NodeFallbackPanelComponent
@@ -119,8 +133,8 @@ class NodeFallbackRelatedSection << (M,#FF7700) Model >> {
 
 ' Relazioni di Dominio e Gestione Stato
 NodeFallbackFacade --> NodeFallbackState : manages via signal
-NodeFallbackState "1" *-- "0..1" NodeFallbackDetail : contains
-NodeFallbackDetail "1" *-- "0..1" NodeFallbackRelatedSection : has
+NodeFallbackState --> NodeFallbackDetail : contains
+NodeFallbackDetail --> NodeFallbackRelatedSection : has
 
 ' Binding UI-Domino passivo
 NodeFallbackPanelComponent ..> NodeFallbackDetail : displays

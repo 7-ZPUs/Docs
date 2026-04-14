@@ -10,6 +10,20 @@ top to bottom direction
 skinparam classAttributeIconSize 0
 skinparam nodesep 40
 skinparam ranksep 70
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype ortho
+skinparam ArrowThickness 2
+skinparam ArrowColor #1F2937
+skinparam ArrowFontColor #111827
+skinparam ArrowFontSize 10
+skinparam ArrowFontStyle bold
+skinparam defaultTextAlignment left
+skinparam wrapWidth 220
+skinparam maxMessageSize 80
+skinparam handwritten false
+skinparam packageStyle rectangle
+allowmixing
 
 
 ' ==========================================
@@ -89,11 +103,11 @@ class ProcedimentoAmministrativoDTO << (M,#FF7700) Data >>
 
 ' Mapping Strutturale dello Stato
 AggregateFacade --> AggregateState : manages via signal
-AggregateState "1" *-- "0..1" AggregateDetailDTO : contains
+AggregateState --> AggregateDetailDTO : contains
 
 ' Decomposizione del modello principale (esemplificativa per i Dumb Components)
-AggregateDetailDTO "1" *-down- "0..*" DocumentIndexEntryDTO
-AggregateDetailDTO "1" *-right- "0..1" ProcedimentoAmministrativoDTO
+AggregateDetailDTO <-down- DocumentIndexEntryDTO
+AggregateDetailDTO <-right- ProcedimentoAmministrativoDTO
 
 ' Vincoli Formativi (Quale Dumb Component visualizza quale DTO)
 DocumentIndexComponent .down.> DocumentIndexEntryDTO : displays
