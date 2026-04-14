@@ -124,14 +124,19 @@ interface ISearchSemanticUC {
     string) : Promise<SemanticSearchMatch[]>
 }
 class SearchSemanticUC {
-    - documentRepo: IDocumentRepository
+    - documentRepo : IDocumentRepository
+    - vectorRepo: IVectorRepository
     - aiAdapter: IWordEmbedding
     + execute(query: string
     ): Promise<SemanticSearchMatch[]>
 }
+interface IVectorRepository {
+    + searchSimilarVectors( queryVector: Float32Array,
+    topK: number, ): Promise<Array<{ documentId: number; score: number }>>
+}
 interface IDocumentRepository {
-    + searchDocumentSemantic(v: Float32Array
-    ) : Promise<Array<{document,score}>>
+    + searchDocumentSemantic( queryVector: Float32Array
+     ): Promise<Array<{  document: Document; score: number }>>;
 }
 interface IWordEmbedding {
     + generateEmbedding(text: 
@@ -140,8 +145,9 @@ interface IWordEmbedding {
 }
 
 SearchSemanticUC ..|> ISearchSemanticUC
+SearchSemanticUC --> IVectorRepository : usa
+SearchSemanticUC --> IWordEmbedding    : usa
 SearchSemanticUC --> IDocumentRepository : usa
-SearchSemanticUC --> IWordEmbedding      : usa
 
 @enduml
 
@@ -225,14 +231,12 @@ hide empty members
 
 interface IDocumentRepository {
     + searchDocument(filters: SearchDocumentsQuery): Document[]
-    + searchDocumentSemantic(v: Float32Array): Promise<Array<{document,score}>>
     + getDistinctCustomMetadataKeys(dipId: number | null): string[]
     + getIndexedDocumentsCount(): number
 }
 class DocumentRepository {
     - dao: DocumentDAO
     + searchDocument(filters: SearchDocumentsQuery): Document[]
-    + searchDocumentSemantic(v: Float32Array): Promise<Array<{document,score}>>
     + getDistinctCustomMetadataKeys(dipId: number | null): string[]
     + getIndexedDocumentsCount(): number
 }
@@ -240,7 +244,6 @@ class DocumentDAO {
     - db: Database
     - queryBuilder: DocumentMetadataQueryBuilder
     + searchDocument(filters: SearchDocumentsQuery): Document[]
-    + searchDocumentSemantic(v: Float32Array): Promise<Array<{document,score}>>
     + getDistinctCustomMetadataKeys(dipId: number | null): string[]
     + getIndexedDocumentsCount(): number
 }
@@ -284,7 +287,8 @@ skinparam linetype ortho
 hide empty members
 
 class SearchDocumentsQuery {
-    + filter: SearchGroup
+    - filter: SearchGroup
+    + getFilter(): SearchGroup
     + isTooDeep(maxDepth: number): boolean
     - calculateDepth(group: SearchGroup, depth: number): number
 }
@@ -327,8 +331,6 @@ hide empty members
 class MetadataKeyMapper {
     + {static} toPascalCase(key: string): string
     + {static} mapGroup(group: SearchGroup): SearchGroup
-    + {static} mapFilters(filters: MetadataFilter[]): MetadataFilter[]
-    + {static} fromLegacyFilters(filters: MetadataFilter[]): SearchGroup
 }
 interface SearchGroup {
     + logicOperator: LogicOperator
@@ -340,7 +342,7 @@ interface SearchCondition {
     + value: any
 }
 
-MetadataKeyMapper --> SearchGroup    : normalizza path
+MetadataKeyMapper --> SearchGroup     : normalizza path
 MetadataKeyMapper --> SearchCondition : normalizza path
 
 @enduml
@@ -357,15 +359,18 @@ class DocumentClassMapper {
     ): DocumentClassSearchResult
 }
 class DocumentClass
-class DocumentClassSearchResult {
+interface SearchResult {
     + id: number
     + uuid: string
-    + integrityStatus: string
+    + integrityStatus: IntegrityStatusEnum
+}
+class DocumentClassSearchResult {
     + name: string
     + type: string
 }
 
-DocumentClassMapper ..> DocumentClass           : riceve
+DocumentClassSearchResult ..|> SearchResult
+DocumentClassMapper ..> DocumentClass             : riceve
 DocumentClassMapper ..> DocumentClassSearchResult : restituisce
 
 @enduml
@@ -378,16 +383,19 @@ skinparam linetype ortho
 hide empty members
 
 class ProcessMapper {
-    + {static} toSearchResult(p: Process ): ProcessSearchResult
+    + {static} toSearchResult(p: Process): ProcessSearchResult
 }
 class Process
-class ProcessSearchResult {
+interface SearchResult {
     + id: number
     + uuid: string
-    + integrityStatus: string
+    + integrityStatus: IntegrityStatusEnum
+}
+class ProcessSearchResult {
     + type: string
 }
 
+ProcessSearchResult ..|> SearchResult
 ProcessMapper ..> Process           : riceve
 ProcessMapper ..> ProcessSearchResult : restituisce
 
@@ -405,17 +413,20 @@ class DocumentMapper {
     - {static} mapRootMetadataType(metadata: Metadata): DocumentTypeEnum
 }
 class Document
-class DocumentSearchResult {
+interface SearchResult {
     + id: number
     + uuid: string
-    + integrityStatus: string
+    + integrityStatus: IntegrityStatusEnum
+}
+class DocumentSearchResult {
     + name: string
     + type: DocumentTypeEnum
     + score: number | null
 }
 enum DocumentTypeEnum
 
-DocumentMapper ..> Document           : riceve
+DocumentSearchResult ..|> SearchResult
+DocumentMapper ..> Document             : riceve
 DocumentMapper ..> DocumentSearchResult : restituisce
 DocumentMapper ..> DocumentTypeEnum     : usa
 
