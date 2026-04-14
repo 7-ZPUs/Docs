@@ -83,15 +83,15 @@
         \hline
         \textbf{Versione} & \textbf{Data} & \textbf{Autore}  & \textbf{Verificatore} & \textbf{Descrizione} \\
         \hline
-        0.6.0 & 2026/04/11 & Gingillino Aaron & Georgescu Diana & \begin{tabular}[c]{@{}l@{}} Aggiunta immagini e sistemata sezione \ref{esport}\\ \end{tabular}\\
+        0.6.0 & 2026/04/11 & Gingillino Aaron & Georgescu Diana & \begin{tabular}[c]{@{}l@{}} Aggiunta immagini e \\ completamento sezione \\ \ref{esport}\\ \end{tabular}\\
         \hline
-        0.5.0 & 2026/04/11 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Stesura sezione \ref{esport}\\ \end{tabular}\\
+        0.5.0 & 2026/04/11 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Stesura sezione \ref{esport} e\\ glossario \end{tabular}\\
         \hline
         0.4.0 & 2026/04/11 & Gingillino Aaron & Georgescu Diana &  \begin{tabular}[c]{@{}l@{}} Stesura sezioni \ref{integrità}, \ref{esplorazione}\\ \end{tabular} \\
         \hline
         0.3.0 & 2026/04/10 & Gingillino Aaron & Georgescu Diana & \begin{tabular}[c]{@{}l@{}} Stesura sezioni \ref{esplorazione ad albero}, \ref{ricerca}\\ \end{tabular} \\
         \hline
-        0.2.0 & 2026/04/09 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Stesura sezioni \ref{intro}, \ref{requisiti}, \ref{contesto}, \ref{panoramica}\\ \end{tabular} \\        
+        0.2.0 & 2026/04/09 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Stesura sezioni \ref{intro}, \ref{requisiti}, \ref{panoramica}\\ \end{tabular} \\        
         \hline
         0.1.0 & 2026/04/01 & Georgescu Diana & Gingillino Aaron & \begin{tabular}[c]{@{}l@{}} Creazione del documento\\ e stesura iniziale \end{tabular} \\
         \hline
@@ -133,7 +133,7 @@ Per garantire un corretto funzionamento, il dispositivo ospite deve soddisfare i
 \end{itemize}
 
 \subsection{Sistemi Operativi supportati}
-Il sistema garantisce l'esecuzione sui seguenti sistemi operativi (o equivalenti/superiori):
+Il sistema garantisce l'esecuzione sui seguenti sistemi operativi o superiori:
 \begin{itemize}
     \item Windows 10.
     \item MacOS 11.
@@ -145,24 +145,6 @@ Il software opera in totale modalità \textit{portable}. Questo significa che l'
 
 \newpage
 
-\section{Contesto del sistema} \label{contesto}
-
-\subsection{Modello architetturale}
-Il software segue un modello di visualizzazione dei dati gerarchico. È concepito come applicazione \textit{portable} con motore di ricerca integrato, capace di operare completamente offline in assenza di un server standalone. Inoltre, il sistema supporta rigorosamente la complessa struttura dei metadati definita dalle Linee Guida AGID.
-
-\subsection{Attori}
-\begin{itemize}
-    \item \textbf{Utente (Attore Primario):} L'operatore (es. magistrato o tecnico) che naviga, filtra, stampa e verifica i pacchetti di conservazione.
-    \item \textbf{Stampante (Attore Secondario):} Dispositivo hardware o driver di sistema invocato dall'applicativo quando l'utente richiede la stampa di un singolo documento o di un insieme di documenti.
-\end{itemize}
-
-\subsection{Sistemi esterni}
-\begin{itemize}
-    \item \textbf{File system locale:} Utilizzato dal sistema non solo per il caricamento in lettura dei DIP (.zip), ma anche come destinazione (tramite dialogo di selezione della cartella) per l'esportazione locale dei documenti estratti e per il salvataggio dei report di verifica integrità esportati in formato PDF.
-\end{itemize}
-
-\newpage
-
 \section{Panoramica delle Funzionalità} \label{panoramica}
 Le principali funzionalità offerte da \textit{DIPReader} per l'interazione con i pacchetti DIP includono:
 \begin{itemize}
@@ -170,65 +152,78 @@ Le principali funzionalità offerte da \textit{DIPReader} per l'interazione con 
     \item \textbf{Ricerca Avanzata:} Ricerca all'interno dei metadati tramite una barra di ricerca oppure un'ampia batteria di filtri specifici avanzati. 
     \item \textbf{Ricerca Semantica:} Ricerca all'interno dei metadati tramite una ricerca semantica, o in altri termini, una ricerca per elementi contenti termini pertinenti al termine inserito. 
     \item \textbf{Verifica Integrità:} Controllo dello stato di verifica (Integro/Non Integro/Non Verificato) dei file contenuti nel DIP e generazione dei relativi report.
-    \item \textbf{Estrazione ed Esportazione:} Possibilità di scaricare singolarmente o in blocco i documenti sul computer locale, stampare i file tramite le periferiche di sistema o esportare i report di verifica in PDF.
-    \item \textbf{Verifica Firme e Processi:} Visualizzazione delle informazioni relative al processo di conservazione, versamento e allo stato dei dati di verifica, come firme digitali, sigilli elettronici e marcature temporali.
-\end{itemize}
-\subsection{Glossario}
-Ogni termine tecnico è definito nell'apposito documento: 
-\href{https://7-zpus.github.io/Docs/assets/3_PB/DocumentiInterni/Glossario.pdf}{Glossario (v2.0.0)}.
-
-\subsection{Riferimenti}
-
-    \subsubsection{Riferimenti normativi}
-    \begin{itemize}
-        \item \href{https://github.com/7-ZPUs/Docs/blob/main/3_PB/DocumentiInterni/NormeDiProgetto.pdf}{Norme di Progetto v2.0.0}
-        \item Standard SDD/IEEE/1016:2009
+    \item \textbf{Scaricamento ed Esportazione:} Possibilità di scaricare singolarmente o in blocco i documenti sul computer locale, stampare i file tramite le periferiche di sistema o esportare i report di verifica in PDF.
     \end{itemize}
-
-    \subsubsection{Riferimenti informativi}
-    \begin{itemize}
-        \item \href{https://angular.io/}{Angular Documentation}
-        \item \href{https://www.electronjs.org/}{Electron Documentation}
-    \end{itemize}
-
-\newpage
 
 
 \section{Guida all'Utilizzo}
 In questa sezione verranno dettagliate le operazioni di navigazione dell'albero DIP e la consultazione dei documenti tramite il visualizzatore PDF integrato.
 
 
-\subsection{Esplorazione} \label{esplorazione}
-Questa sezione è visibile all'avvio del software, e presenta un breve riassunto delle funzionalità disponibili. 
+\subsection{Esplorazione e Visualizzazione dei Contenuti} \label{esplorazione}
+Questa sezione rappresenta il cuore operativo del \textit{DIPReader}. Una volta selezionato un elemento dall'albero di navigazione (sezione \ref{esplorazione ad albero}) o dai risultati di ricerca (sezione \ref{ricerca}), l'area centrale si popola con i dettagli specifici dell'oggetto scelto.
 
+L'interfaccia si adatta dinamicamente alla tipologia di nodo selezionato:
+
+\subsubsection{Visualizzazione del Documento}
+Selezionando un file (principale o allegato), l'area centrale viene suddivisa per offrire una panoramica completa:
+\begin{itemize}
+    \item \textbf{Metadati Principali}: A sinistra è presente un pannello scorrevole che elenca i dati identificativi del documento (UUID, Nome, Oggetto, Descrizione) e le informazioni sulla sua formazione;
+    \item \textbf{Anteprima Integrata}: A destra è presente un visualizzatore PDF interattivo. Tramite la barra degli strumenti superiore dell'anteprima, l'utente può scorrere le pagine, zoomare o ruotare il documento (Figura \ref{fig:anteprima}).;
+\end{itemize}
+    
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{img/esplorazione.png}
-    \caption{Schermata di benvenuto.}
-    \label{fig:esplorazione}
+    \includegraphics[width=0.8\textwidth]{img/anteprima.png}
+    \caption{Schermata di visualizzazione dell'anteprima di un documento.}
+    \label{fig:anteprima}
 \end{figure}
 
-Si verrà reindirizzati a questa sezione nel momento in cui si seleziona un nodo dell'albero di navigazione (sezione \ref{esplorazione ad albero}) oppure se si seleziona un risultato della ricerca (sezione \ref{ricerca}). Dentro la sezione appariranno i metadati dell'elemento selezionato e sarà possibile:
-\begin{itemize}
-    \item Verificare l'integrità dell'elemento e degli elementi contenuti in esso (per vedere l'esito dell'operazione consultare la sezione \ref{integrità})
-    \item Visualizzare l'anteprima del documento (solo se si è selezionato un processo contenente documenti o il singolo documento)
-    \item Scaricare o stampare il documento    (consultare la sezione \ref{esport})
+\begin{itemize}[resume]
+    \item \textbf{Azioni rapide}: In alto a destra sono sempre disponibili i comandi per la verifica di integrità, la stampa e lo scaricamento (sezione \ref{esport}).
 \end{itemize}
 
-\subsection{Esplorazione ad albero} \label{esplorazione ad albero}
-In qualsiasi momento è possibile vedere a sinistra una sezione dedicata alla vista ad albero del file DIP. Ogni riga rappresenta un raggruppamento oppure un file. Se una riga presenta una tabulazione, allora appartiene alla prima riga sopra che non presenta l'indentazione. La gerarchia dei raggruppamenti è la seguente:
+
+\subsubsection{Dettaglio del Processo}
+Selezionando un nodo di tipo \textbf{Processo} (pallino verde nell'albero), l'interfaccia mostra un riepilogo gestionale dell'intera unità di versamento:
+
 \begin{itemize}
-    \item Il nodo radice DIP contiene le classi documentali
-    \item Le classi documenti contengono i processi associati (pallino rosso)
-    \item I processi, che sono contraddistini dalla data di creazione, contengono i file principali (pallino verde)
-    \item I file principali contengono gli allegati (pallino azzurro) 
+    \item \textbf{Pannello Informativo (Sinistra)}: Una sezione verticale scorrevole che organizza i metadati in blocchi logici:
+    \begin{itemize}
+        \item \textit{Anagrafica Processo}: Contiene i codici univoci e lo stato di verifica;
+        \item \textit{Processo di Versamento}: Indica le date di inizio/fine, gli operatori coinvolti (UUID attivatore/terminatore) e il canale di attivazione;
+        \item \textit{Processo di Conservazione}: Dettaglia le tempistiche e le modalità di archiviazione definitiva.
+    \end{itemize}
+    \item \textbf{Indice dei Documenti (Destra)}: Una tabella riassuntiva che elenca tutti i documenti contenuti nel processo. Per ogni riga è possibile cliccare sul pulsante \textbf{Visualizza} per saltare direttamente alla visualizzazione del singolo file.
 \end{itemize}
-È possibile navigare questa sezione tramite il TAB. Se si desidera è possibile chiudere questa sezione tramite l'apposita linguetta "Albero" adiacente alla sezione. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{img/albero.png}
-    \caption{Albero di navigaizone evidenziato in rosso.}
+    \includegraphics[width=0.9\textwidth]{img/dettaglio_processo.png}
+    \caption{Schermata di dettaglio di un processo con indice documenti.}
+    \label{fig:view_proc}
+\end{figure}
+
+\subsection{Gerarchia e Struttura del DIP} \label{esplorazione ad albero}
+Per facilitare la consultazione di archivi complessi, il software utilizza un'organizzazione gerarchica visualizzabile tramite l'albero di navigazione a sinistra.
+
+\begin{tcolorbox}[colback=zpusblack!5,colframe=zpusblack,title=Legenda dell'Albero]
+Ogni livello della gerarchia è identificato da un'indentazione e da un'icona colorata:
+\begin{itemize}
+    \item \textbf{Radice DIP}: Il punto di ingresso del pacchetto documentale;
+    \item \textcolor{red}{\textbullet} \textbf{Classe Documentale}: Primo raggruppamento logico dei documenti;
+    \item \textcolor{zpusblack}{\textbullet} \textbf{Processo}: Unità minima di versamento (es. una pratica o un registro);
+    \item \textcolor{blue}{\textbullet} \textbf{File Principale}: Il documento primario contenuto nel processo;
+    \item \textcolor{gray}{\textbullet} \textbf{Allegato}: File correlati al documento principale (visibili espandendo il file principale).
+\end{itemize}
+\end{tcolorbox}
+
+\noindent \textbf{Suggerimento per la navigazione}: È possibile espandere o comprimere i nodi cliccando sul nome stesso. Se l'area di lavoro centrale richiede più spazio, l'albero può essere rimpicciolito o chiuso cliccando sulla linguetta verticale \textit{"Albero"}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{img/albero.png}
+    \caption{Struttura gerarchica del DIP visualizzata nell'albero di navigazione.}
     \label{fig:albero}
 \end{figure}
 
@@ -314,13 +309,23 @@ Di seguito è possibile vedere un esempio di report di integrità. Possiamo vede
     \label{fig:report_integrita}
 \end{figure}
 
-\subsection{Stampa e Salvataggio Documentale} \label {esport}
+Di seguito è possibile vedere un esempio di report di integrità. Possiamo vedere le classi analizzate, e nel caso ci fosse un errore è possibile vedere nello specifico quali documenti interessa l'errore.
 
-L'utente può stampare o estrarre in locale i documenti conservati nel sistema. Il software supporta la stampa o il salvataggio sia del singolo file principale, che di interi pacchetti documentali.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/report_integrita.png}
+    \caption{Un esempio di report d'integrità.}
+    \label{fig:report_integrita}
+\end{figure}
 
-\subsubsection{Procedura di Esportazione}
+\subsection{Salvataggio Documentale e Stampa} \label {esport}
 
-L'azione di stampa è analoga a quella d'esportazione, dunque è mostrata solo l'esportazione. L'esportazione è disponibile esclusivamente per i nodi di tipo \textit{Documento Padre}. Per avviare il processo, seguire i passaggi indicati:
+L'utente può scaricare in locale o stampare i documenti conservati nel sistema. Il software supporta il salvataggio e la stampa sia del singolo file principale, che di interi pacchetti documentali.
+
+
+\subsubsection{Procedura di Scaricamento}
+
+Lo scaricamento è disponibile esclusivamente per i nodi di tipo \textit{Documento Padre}. Per avviare il processo, seguire i passaggi indicati:
 
 \begin{enumerate}
     \item \textbf{Selezione del Documento}: Identificare nell'albero di navigazione il documento desiderato. Una volta selezionato, l'area centrale mostrerà i metadati e le azioni disponibili;
@@ -344,13 +349,44 @@ L'azione di stampa è analoga a quella d'esportazione, dunque è mostrata solo l
     \caption{Interfaccia di selezione granulare dei file per l'esportazione.}
     \label{fig:modale}
 \end{figure}
+
+\subsubsection{Stampa}
+
+Come per la procedura di scaricamento, la funzionalità di stampa è disponibile esclusivamente per i nodi di tipo \textit{Documento Padre}. Consente di riprodurre su supporto cartaceo o tramite driver di stampa virtuale i documenti consultati.
+
+Per avviare il processo, seguire i passaggi indicati:
+
+\begin{enumerate}
+    \item \textbf{Selezione del Documento}: Identificare nell'albero di navigazione il file desiderato;
+    \item \textbf{Attivazione Comando}: Cliccare sul pulsante \textbf{Stampa documento} situato nella barra superiore delle azioni (Figura 6). Il comando è identificato dall'icona di una stampante stilizzata;
+    \item \textbf{Configurazione della Stampa}: Il sistema aprirà una finestra di dialogo
+        modale \textit{Seleziona i documenti da stampare} che elenca il file principale e tutti gli
+        eventuali allegati correlati (Figura \ref{fig:stampa});
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/stampa.png}
+    \caption{Interfaccia di selezione granulare dei file per la stampa.}
+    \label{fig:stampa}
+\end{figure}
+
+\begin{enumerate}[resume]
+    \item \textbf{Interfaccia di Sistema}: Il software richiamerà automaticamente la finestra di dialogo nativa del sistema operativo (\textit{Print Dialog}). In questa fase è possibile:
+    \begin{itemize}
+        \item Selezionare la stampante di destinazione;
+        \item Configurare le impostazioni di layout;
+        \item Definire il numero di copie e l'intervallo di pagine da riprodurre.
+    \end{itemize}
+    \end{enumerate}
+
 \subsubsection{Selezione Multipla e Allegati}
 
 All'interno della finestra di selezione, l'utente ha il pieno controllo sugli elementi da esportare:
 \begin{itemize}
     \item \textbf{Selezione Granulare}: È possibile spuntare o deselezionare singolarmente ogni file. Per impostazione predefinita, il sistema seleziona l'intero pacchetto (file principale + allegati);
     \item \textbf{Etichette di Tipologia}: Accanto a ogni nome file è presente un'etichetta identificativa (\textit{Principale} o \textit{Allegato}) per facilitare il riconoscimento dei contenuti;
-    \item \textbf{Conferma}: Il pulsante di conferma "Scarica" indica tra parentesi il numero totale di file pronti per lo scaricamento.
+    \item \textbf{Conferma}: Il pulsante di conferma \textbf{Scarica}, o \textbf{Stampa} a seconda del contesto, indica tra parentesi il numero totale di file pronti per l'esportazione.
 \end{itemize}
 
 \subsubsection{Monitoraggio e Conclusione}
@@ -368,9 +404,105 @@ Una volta avviata l'operazione, il software gestisce il trasferimento dei dati t
     \caption{Messaggi di feedback per la conferma del salvataggio.}
     \label{fig:notifica_export}
 \end{figure}
-
 \begin{itemize}
-    \item \textbf{Destinazione}: I file vengono salvati nella cartella di destinazione predefinita del sistema o in quella selezionata tramite la finestra di dialogo ministeriale, mantenendo i nomi originali dei file presenti nel DIP.
+    \item \textbf{Destinazione}: I file vengono salvati nella cartella di destinazione predefinita del sistema o in quella selezionata tramite la finestra di dialogo, mantenendo i nomi originali dei file presenti nel DIP.
 \end{itemize}
+
+\newpage
+\subsection{Glossario}
+Ogni termine tecnico è definito di seguito: 
+
+\begin{description}
+
+  \item[Allegato]
+    File secondario collegato a un Documento Padre, identificato da un pallino azzurro
+    nell'albero di navigazione. Viene visualizzato in forma indentata sotto il documento
+    principale di riferimento.
+
+  \item[Barra di stato]
+    Elemento grafico posizionato in alto nell'interfaccia, che mostra
+    l'avanzamento di un'operazione in corso (es.\ esportazione o verifica di integrità)
+    e i messaggi di conferma al completamento.
+
+  \item[Classe documentale]
+    Categoria di primo livello nella gerarchia interna al DIP. Raggruppa i processi
+    per tipologia di documento (es.\ fatture, registri) ed è il primo
+    livello espandibile nell'albero di navigazione.
+
+  \item[Conservazione]
+    Sistema centralizzato preposto all'archiviazione a lungo termine di documenti
+    informatici con valore legale, dal quale vengono distribuiti i pacchetti DIP.
+
+  \item[DIP (Dissemination Information Package)]
+    Archivio compresso distribuito da un sistema di conservazione centralizzato,
+    contenente documenti tecnici con valore legale strutturati secondo specifiche
+    normative. La struttura interna è organizzata gerarchicamente in classi
+    documentali, processi e documenti.
+
+  \item[Documento]
+    Nel contesto del DIPReader, unità informativa contenuta nel DIP comprensiva
+    del file principale e dei relativi allegati, dotata di metadati descrittivi
+    e valore legale.
+
+  \item[Documento Padre]
+    File principale all'interno di un processo, identificato da un pallino verde
+    nell'albero di navigazione. Può avere uno o più allegati collegati. Le operazioni
+    di esportazione e stampa sono disponibili esclusivamente per questa tipologia
+    di nodo.
+
+  \item[File system]
+    Sistema di organizzazione dei file sul disco del dispositivo in uso. Il salvataggio
+    sul file system locale indica il salvataggio in una cartella del proprio computer
+    (es.\ Documenti, Desktop, Download).
+
+  \item[Finestra di dialogo modale]
+    Finestra secondaria che appare sopra l'interfaccia principale e richiede
+    un'interazione da parte dell'utente prima di poter tornare alla schermata
+    sottostante. Nel DIPReader viene utilizzata per la selezione granulare dei
+    file da esportare.
+
+  \item[IPC (Inter-Process Communication)]
+    Meccanismo software che permette a componenti distinti dell'applicazione di
+    scambiarsi dati. Nel DIPReader gestisce il trasferimento dei file durante
+    l'esportazione, fornendo aggiornamenti in tempo reale sull'avanzamento
+    dell'operazione.
+
+  \item[Metadati]
+    Informazioni descrittive associate a un documento, distinte dal contenuto del
+    file stesso (es.\ identificativo, oggetto, descrizione, tipologia documentale). Nel DIPReader vengono visualizzati nell'area centrale alla
+    selezione di un nodo dell'albero.
+
+  \item[Modalità portable]
+    Modalità di esecuzione in cui il software funziona senza necessità di
+    installazione sul sistema operativo ospite e senza richiedere privilegi
+    di amministratore.
+
+  \item[Nodo]
+    Ogni singolo elemento selezionabile nell'albero di navigazione: può rappresentare
+    il DIP radice, una classe documentale, un processo, un documento padre o un
+    allegato. Ogni nodo può essere espanso per mostrare gli elementi contenuti
+    al suo interno.
+
+  \item[Pacchetto documentale]
+    Insieme strutturato composto da un documento principale e dai suoi allegati
+    correlati, esportabile come unità tramite la finestra di selezione granulare.
+
+  \item[Processo]
+    Secondo livello della gerarchia DIP, identificato da un pallino rosso
+    nell'albero di navigazione. Raggruppa i file principali appartenenti a uno
+    stesso procedimento e viene numerato in ordine progressivo.
+
+  \item[Ricerca semantica]
+    Modalità di ricerca che restituisce risultati il cui significato è simile o
+    correlato al termine cercato, andando oltre la corrispondenza esatta delle
+    parole (es.\ cercando ``automobile'' possono comparire risultati contenenti
+    ``veicolo'' o ``auto'').
+
+  \item[Verifica di integrità]
+    Procedura che controlla se un file non è stato alterato o corrotto rispetto
+    alla versione archiviata originariamente. L'esito può essere:
+    \textit{Integro}, \textit{Non Integro} o \textit{Non Verificato}.
+
+\end{description}
 
 \end{document}
