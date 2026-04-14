@@ -5,11 +5,9 @@
 \label{sec:integrity}
 
 \noindent
-\begin{tcolorbox}[colback=zpuslightgray,colframe=zpusgreen,title=Verifica gerarchica dello stato,boxrule=1.5pt]
 Il modulo Verifica Integrita esegue controlli su 5 livelli gerarchici:
 File $\to$ Documento $\to$ Processo $\to$ Classe documentale $\to$ DIP.
 Il controllo puo essere avviato da qualsiasi livello e propaga lo stato nel sottoalbero interessato.
-\end{tcolorbox}
 
 \subsubsection{Perimetro funzionale}
 \label{sec:integrity:perimetro}
@@ -162,9 +160,7 @@ La vista focalizzata sul percorso di verifica integrita e mostrata in Figura~\re
 \label{sec:integrity:usecase}
 
 \noindent
-\begin{tcolorbox}[colback=zpuslightgray,colframe=zpusgreen,title=Caratteristica della layer,boxrule=1pt]
 I use case sono thin wrapper senza logica aggiuntiva; delegano direttamente a \texttt{IntegrityVerificationService}.
-\end{tcolorbox}
 
 \begin{table}[H]
 	\centering
@@ -220,12 +216,10 @@ File: \texttt{IntegrityVerificationService.ts}.
 \label{sec:integrity:aggregation}
 
 \noindent
-\begin{tcolorbox}[colback=zpuslightgray,colframe=zpusgreen,title=Algoritmo aggregateStatuses,boxrule=1pt]
 \textbf{Caso 1:} nessun figlio $\to$ \texttt{VALID}\\
 \textbf{Caso 2:} almeno un figlio \texttt{INVALID} $\to$ \texttt{INVALID}\\
 \textbf{Caso 3:} nessun \texttt{INVALID} ma almeno un \texttt{UNKNOWN} $\to$ \texttt{UNKNOWN}\\
 \textbf{Caso 4:} tutti \texttt{VALID} $\to$ \texttt{VALID}
-\end{tcolorbox}
 
 \paragraph{Semantica per livello.}
 \begin{table}[H]
@@ -298,11 +292,9 @@ L'esecuzione avviene in \texttt{runInTransaction(work)}; in caso di errore duran
 \label{sec:integrity:runtime}
 
 \noindent
-\begin{tcolorbox}[colback=zpuslightgray,colframe=zpusgreen,title=Semantica runtime,boxrule=1pt]
 \textbf{Root non trovato:} eccezione su id non presente\\
 \textbf{Persistenza:} aggiornamento \texttt{integrity\_status} su tutti i livelli coinvolti\\
 \textbf{Atomicita:} rollback completo su errore interno\\
 \textbf{Return IPC:} stato finale \texttt{IntegrityStatusEnum}
-\end{tcolorbox}
 
 \newpage

@@ -5,11 +5,10 @@
 \label{sec:browsing}
 
 \noindent
-\begin{tcolorbox}[colback=zpuslightgray,colframe=zpusgreen,title=Navigazione gerarchica,boxrule=1.5pt]
 Il modulo Browsing implementa la navigazione gerarchica dei dati indicizzati in SQLite: 
 DIP\ped{G} $\to$ Classi documentali $\to$ Processi $\to$ Documenti $\to$ File. 
 Supporta inoltre getter alternativi per ID e stato di integrità.
-\end{tcolorbox}
+
 
 \noindent
 Le caratteristiche backend trasversali al container Main (stack tecnologico, layering, sequenza runtime generale, Dependency Injection, bootstrap e sicurezza preload) sono descritte in \nameref{sec:container:main}.
@@ -148,9 +147,7 @@ Contratto IPC definito in \texttt{ipc-channels.ts} e registrato in \texttt{Brows
 \label{sec:browsing:usecase}
 
 \noindent
-\begin{tcolorbox}[colback=zpuslightgray,colframe=zpusgreen,title=Caratteristica della layer,boxrule=1pt]
 Gli use case sono thin wrapper senza logica aggiuntiva; delegano direttamente al repository corrispondente.
-\end{tcolorbox}
 
 \paragraph{Interfacce per aggregato.}
 
@@ -359,11 +356,9 @@ Trasformazioni tra layer di persistenza, entity e DTO:
 \label{sec:browsing:runtime}
 
 \noindent
-\begin{tcolorbox}[colback=zpuslightgray,colframe=zpusgreen,title=Semantica getter,boxrule=1pt]
 \textbf{By-ID:} restituisce \texttt{null} se entity non trovata\\
 \textbf{List:} restituisce array, anche vuoto\\
 \textbf{DTO:} conversione applicata nel boundary IPC prima della restituzione
-\end{tcolorbox}
 
 \paragraph{Lettura file buffer (\texttt{BROWSE\_GET\_FILE\_BUFFER\_BY\_ID}).}
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
