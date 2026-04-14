@@ -1,8 +1,353 @@
-\subsection{Componenti di Ricerca (FrontEnd)}
-\subsubsection{Descrizione}
-I componenti di ricerca sono responsabili della gestione delle funzionalità di compilazione dei campi di ricerca.
-\\ Come già anticipato il pattern applicato è quello di Smart and Dumb Components, per cui i componenti di ricerca sono suddivisi in componenti di pura presentazione e gestiti da i componenti \textit{"Padri"}, che si occupano di gestire la logica di questi ultimi nonchè le interazioni con altri servizi come la validazione dei filtri, la gestione dei campi di ricerca dinamici e il routing della sezione dei risultati.
-Nel contesto della ricerca questo coomponente Padre è SearchPageComponent.
-% FOTO SCHEMA SEARCHPAGE COMPONENT
+\subsection{Componenti di Ricerca (Frontend)}
 
-Come si può notare questo componente sfrutta la dependency injection nativa di Angular per risolvere le dipendenze. Inoltre sono iniettate le interfaccie dei servizi necessari per il funzionamento e non gli effettivi servizi, applicando il principio di sostituzione di Liskov. 
+\subsubsection{Architettura generale}
+La sezione di ricerca implementa un'architettura stratificata basata su due pattern fondamentali:
+\begin{itemize}
+    \item \textbf{Smart \& Dumb Components}: separazione netta tra logica (SearchPageComponent) e presentazione (componenti figli).
+    \item \textbf{Facade Pattern}: la SearchFacade astrae la complessità dell'orchestrazione dei servizi, fornendo un'interfaccia semplificata al layer di presentazione.
+\end{itemize}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/renderer-search-dataflow-l3-page1.png}
+        \caption{Diagramma C3 - Data flow della funzionalità di ricerca}
+    \label{fig:C3_dataflow}
+\end{figure}
+
+\noindent La SearchPageComponent è il componente radice che:
+\begin{enumerate}
+    \item Risolve le dipendenze tramite Angular Dependency Injection (iniettando \textit{interfacce} di servizi, non implementazioni concrete, applicando il principio di sostituzione di Liskov).
+    \item Delega alla SearchFacade tutta la logica di orchestrazione tra servizi: validazione, gestione dello stato, routing.
+    \item Espone al template esclusivamente @Input/@Output properties, mantenendo la componente come contenitore logico puro.
+\end{enumerate}
+
+\noindent Questo approccio garantisce:
+\begin{itemize}
+    \item \textbf{Testabilità}: ogni componente e servizio è mockabile in isolamento.
+    \item \textbf{Manutenibilità}: i cambiamenti ai servizi non propagano ai componenti di presentazione.
+    \item \textbf{Riutilizzabilità}: i componenti dumb possono essere utilizzati in contesti diversi.
+\end{itemize}
+
+
+\subsubsection{Layer di gestione dello stato e validazione}
+
+\paragraph{AdvancedFilterPanelComponent e FilterRulesManager}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/advanced-filter-panel-code-l4.png}
+        \caption{Diagramma C4 - AdvancedFilterPanel e gestione dinamica dei filtri}
+    \label{fig:C4_advanced_filter}
+\end{figure}
+
+Il pannello filtri avanzati è responsabile della raccolta e gestione dello stato complessivo della ricerca. La sua responsabilità core è:
+\begin{itemize}
+    \item Mantenere lo stato mutabile dei filtri durante l'interazione utente.
+    \item Coordinare i sotto-componenti (CommonFiltersComponent, DiDaiFiltersComponent, AggregateFiltersComponent, SubjectsFilterComponent, CustomMetadataComponent).
+    \item Applicare regole di validazione dinamiche tramite il FilterRulesManager.
+\end{itemize}
+
+\noindent Il \textit{FilterRulesManager} implementa la logica di validazione contestuale: poiché i campi pertinenti variano in base al tipo di documento selezionato (identificato dal DocContext), questo componente:
+\begin{itemize}
+    \item Definisce quali filtri sono visibili, obbligatori o opzionali.
+    \item Applica vincoli di coerenza (ad es., un campo di un tipo specifico non deve essere compilato se quel tipo un altro tipo è già selezionato).
+    \item Puo disabilitare/abilitare dinamicamente i campi senza ricaricare il DOM, garantendo una UX fluida.
+\end{itemize}
+
+\paragraph{SubjectsFilterComponent e Strategy Registry}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/subject-filters-strategy-registry-code-l4.png}
+        \caption{Diagramma C4 - SubjectsFilterComponent e SubjectType Strategy Registry}
+    \label{fig:C4_subject_filters_strategy}
+\end{figure}
+
+Il filtro dei soggetti è strutturato secondo il pattern Strategy per consentire comportamenti specializzati per ogni contesto documentale:
+
+\begin{enumerate}
+    \item \textbf{Role Strategy Registry}: in base al DocContext e al tipo di documento, viene selezionata la configurazione di ruoli consentiti. Ad esempio, un documento DiPIndex può avere ruoli (creatore, responsabile) diversi da un'aggregazione (responsabile della procedura, responsabile di fase).
+    
+    \item \textbf{SubjectType Detail Field Registry}: per ogni SubjectType (persona fisica, persona giuridica, ente pubblico), viene mantenuta una registry che associa il tipo ai campi di dettaglio richiesti. Questa consente la generazione \textit{dichiarativa} del form, evitando logiche condizionali sparse nel codice.
+    
+    \item \textbf{Wizard guidato}: il componente orchestra un flusso step-by-step:
+    \begin{itemize}
+        \item Selezione del ruolo (reso disponibile dalla Role Strategy).
+        \item Selezione del SubjectType.
+        \item Compilazione dinamica dei campi di dettaglio.
+        \item Raccolta come \textit{SubjectCriteria} e integrazione nello stato globale dei filtri.
+    \end{itemize}
+\end{enumerate}
+
+\noindent In fase di esecuzione della ricerca, i SubjectCriteria vengono trasformati in una struttura gerarchica di query compatibile col back-end, mantenendo una separazione netta tra:
+\begin{itemize}
+    \item \textbf{Modello di interfaccia} (SubjectCriteria): forma usabile in UI.
+    \item \textbf{Modello di ricerca} (QueryModel per back-end): forma serializzabile e ottimizzata per la query.
+\end{itemize}
+
+\noindent Ciò consente:
+\begin{itemize}
+    \item Facile estensione: nuovi SubjectType o ruoli si aggiungono alle registry senza modificare il componente.
+    \item Manutenzione centralizzata: le regole di validazione e composizione dei filtri risiedono in un'unica registry, non sparse nel codice.
+    \item Coerenza funzionale: un cambiamento nel back-end (nuovo ruolo, nuovo tipo di soggetto) si riflette solo nelle registry, non nella logica del componente.
+\end{itemize}
+
+\paragraph{Componenti di filtro semplici}
+La maggior parte dei filtri sono componenti dumb di presentazione, allineati alle specifiche AGID e alle linee guida Sanmarco Informatica:
+
+\begin{description}
+    \item[\textit{CommonFiltersComponent}] Gestisce i filtri applicabili a \textbf{tutti} i tipi di documento:
+    \begin{itemize}
+        \item Anni di Conservazione (anno inizio, anno fine).
+        \item Chiave descrittiva (campo di testo libero).
+        \item Classificazione con sottocampi (partizione, categoria, codice).
+    \end{itemize}
+    Lo schema è stratificato: la validazione della classificazione (es., "codice" disponibile solo se "partizione" è compilata) è delegata al FilterRulesManager, non al componente.
+    
+    \item[\textit{DiDaiFiltersComponent}] Gestisce i filtri specifici per Documenti Informatici (DiI) e Documenti Amministrativi Informatici (DAI):
+    \begin{itemize}
+        \item Tipologia di documento (enum ristretto ai soli tipi DiI/DAI).
+        \item Modalità di formazione (pre-formati, post-formati, cartacei scansionati, ...).
+        \item Nome, versione, ID del documento.
+        \item Dati di formato (tipologia MIME, versione, estensione).
+        \item Verifica e tracciatura: hash algoritmo, hash valore, data tracciatura, modifiche rilevate.
+    \end{itemize}
+    Ciascun campo è memoizzato e reattivo: il componente emette update solo quando il valore effettivamente cambia.
+    
+    \item[\textit{AggregateFiltersComponent}] Gestisce i filtri specifici per Aggregazioni Documentali (DiP):
+    \begin{itemize}
+        \item Tipologia aggregazione (fascicolo, procedimento, cartella).
+        \item ID aggregazione.
+        \item Date di apertura e chiusura.
+        \item Dati di procedimento: numero, data inizio, fase corrente.
+        \item Dati di assegnazione: assegnatario, data assegnazione.
+    \end{itemize}
+\end{description}
+
+\paragraph{CustomMetadataComponent}
+I metadati custom sono coppie chiave-valore personalizzate non previste dallo schema AGID. La loro gestione presenta sfide specifiche:
+
+\begin{enumerate}
+    \item \textbf{Discovery dinamico}: le chiavi disponibili devono riflettere l'insieme di chiavi \textit{effettivamente presenti} nei documenti del repository, non uno schema prefissato.
+    
+    \item \textbf{Implementazione}: il componente:
+    \begin{itemize}
+        \item Interroga un servizio (GetCustomMetadataKeysUC dal back-end) per recuperare la lista di chiavi popolate.
+        \item Popola un'autocomplete o una select renderizzata dinamicamente.
+        \item Consente all'utente di filtrare documenti per chiave e valore.
+        \item Valida l'input (es., no valori null, lunghezza massima).
+    \end{itemize}
+    
+    \item \textbf{Separazione di responsabilità}: il componente UI gestisce \textit{solo} la presentazione; il servizio di ricerca si occupa di trasformare i criteri custom nel modello di query del back-end.
+\end{enumerate}
+
+
+\subsubsection{Layer di visualizzazione dei risultati}
+
+\paragraph{SearchResultFactory e Dynamic Component Instantiation}
+La visualizzazione dei risultati di ricerca deve adattarsi al tipo di entità ritornata. Poiché processi, classi, aggregazioni e documenti hanno strutture dati e esigenze di presentazione radicalmente diverse, è stato adottato il pattern \textit{Factory} con registry dinamico:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/search-result-factory-strategy-code-l4.png}
+        \caption{Diagramma C4 - SearchResultFactory e componenti di visualizzazione specializzati}
+    \label{fig:C4_result_factory}
+\end{figure}
+
+\begin{enumerate}
+    \item \textbf{SearchResultFactory}: componente factory che:
+    \begin{itemize}
+        \item Interroga il tipo di risultato ricevuto (DocumentResult, ProcessResult, AggregateResult, ClassResult).
+        \item Consulta una registry configurata \textit{a compile-time} che associa tipo $\to$ componente di visualizzazione.
+        \item Istanzia e proietta il componente corretto nel template tramite \textit{ng-container} e \textit{ngComponentOutlet}.
+    \end{itemize}
+    
+    \item \textbf{Componenti di visualizzazione specializzati}:
+    \begin{description}
+        \item[\textit{ProcessResultComponent}] Visualizza informazioni essenziali del processo:
+        \begin{itemize}
+            \item ID processo (copiabile).
+            \item Descrizione breve.
+            \item Numero documenti associati.
+            \item Link all'apertura del processo.
+        \end{itemize}
+        No azioni di download/stampa (non applicabili ai processi).
+        
+        \item[\textit{DocumentResultComponent}] Visualizza metadati e azioni specifiche per documenti:
+        \begin{itemize}
+            \item Anteprima miniatura (se disponibile).
+            \item Titolo, descrizione, formato.
+            \item Data creazione, autore (da metadati AGID).
+            \item Azioni contestuali: apri anteprima, scarica, stampa, mostra metadati.
+        \end{itemize}
+        
+        \item[\textit{AggregateResultComponent}] Visualizza dati di aggregazione:
+        \begin{itemize}
+            \item Tipo aggregazione (fascicolo/procedimento).
+            \item ID e data apertura.
+            \item Numero documenti e sotto-aggregazioni.
+            \item Link all'apertura dell'aggregazione.
+        \end{itemize}
+        
+        \item[\textit{ClassResultComponent}] Visualizza metadati di classe documentale:
+        \begin{itemize}
+            \item Codice e descrizione.
+            \item Periodo di conservazione.
+            \item Numero documenti in classe.
+        \end{itemize}
+    \end{description}
+    
+    \item \textbf{Vantaggi dell'approccio}:
+    \begin{itemize}
+        \item \textbf{Open/Closed}: aggiungere un nuovo tipo di risultato richiede solo di registrare il componente nella registry, senza modificare la factory.
+        \item \textbf{Single Responsibility}: ogni componente di visualizzazione conosce \textit{solo} la struttura del proprio tipo di risultato.
+        \item \textbf{Performance}: solo il componente attivo è renderizzato; gli altri sono completamente distrutti (no lazy loading overhead).
+    \end{itemize}
+\end{enumerate}
+
+
+\subsubsection{Layer di ricerca globale}
+
+\paragraph{SearchBarComponent e SearchBarRulesManager}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/search-bar-rules-code-l4.png}
+        \caption{Diagramma C4 - SearchBarComponent e SearchBarRulesManager}
+    \label{fig:C4_search_bar_rules}
+\end{figure}
+La search bar consente tre modalità di ricerca:
+
+\begin{enumerate}
+    \item \textbf{Ricerca per ID}: inserimento dell'ID di processo; ricerca esatta nel back-end.
+    
+    \item \textbf{Ricerca per nome}: inserimento di nome di classe o metadato; ricerca con wildcard.
+    
+    \item \textbf{Ricerca semantica}: ricerca full-text su documenti usando embedding vettoriali (modello Xenova \textit{paraphrase-multilingual-MiniLM-L12-v2}, eseguito nel browser tramite ONNX Runtime).
+\end{enumerate}
+
+\noindent Il \textit{SearchBarRulesManager} incapsula la logica di:
+\begin{itemize}
+    \item Determinazione della modalità di ricerca in base all'input (euristiche: "se input match UUID pattern $\to$ ricerca ID").
+    \item Abilitazione/disabilitazione della ricerca semantica per tipo di risultato. Attualmente è abilitata \textit{solo} per documenti; estendere a processi richiederebbe configurazione nel servizio, non nel componente.
+    \item Gestione dello stato di loading durante l'embedding vettoriale (che può impiegare millisecondi su CPU).
+    \item Caching dei risultati (opzionale, per evitare query ridondanti).
+\end{itemize}
+
+\noindent Il componente di presentazione pura emette eventi:
+\begin{itemize}
+    \item onSearch(searchTerm, mode): notifica la ricerca.
+    \item onSemanticToggle(enabled): notifica l'abilitazione/disabilitazione della ricerca semantica.
+\end{itemize}
+
+\noindent Questi eventi sono catturati dal SearchPageComponent, che li instrada alla SearchFacade.
+
+
+\subsubsection{Conformità normativa e linee guida}
+Tutti i componenti di presentazione sono progettati per aderire all'Allegato 5 AGID, in particolare per struttura e denominazione dei metadati, ordine dei campi e obbligatorieta.
+
+\noindent La validazione della conformità è:
+\begin{itemize}
+    \item \textbf{Strutturale}: il FilterRulesManager garantisce che solo i campi previsti da Allegato 5 siano disponibili.
+    \item \textbf{Dinamica}: il FilterRulesManager può disabilitare campi in base al DocContext senza modificare il template.
+    \item \textbf{Testabile}: ogni regola di filtro è una funzione pura, facilmente unit-testabile.
+\end{itemize}
+
+\subsubsection{Comunicazione IPC e Gateway Layer}
+
+\paragraph{SearchIpcGateway e ISearchChannel}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/search-ipc-gateway-channel-code-l4-page1.png}
+        \caption{Diagramma C4 - SearchIpcGateway e comunicazione IPC}
+    \label{fig:C4_search_ipc_gateway}
+\end{figure}
+Il SearchIpcGateway implementa ISearchChannel, fungendo da adapter tra il layer UI (SearchFacade) e il back-end tramite Electron IPC.\\
+Responsabilità:
+\begin{enumerate}
+    \item \textbf{Mapping DTO}: converte SearchQuery/SearchFilters (modello UI) in SearchRequestDTO (modello back-end) tramite toSearchRequestDTO().
+    
+    \item \textbf{Caching}: mantiene cache a TTL 5 minuti per risultati di ricerca identici, riducendo overhead IPC.
+    
+    \item \textbf{Error Handling}: cattura errori IPC e li trasforma in AppError normalizzati per il layer UI.
+\end{enumerate}
+
+Interfaccia:
+\begin{itemize}
+    \item search(query: SearchQuery, signal: AbortSignal): Observable<ISearchResult[]>
+    \item searchAdvanced(filters: SearchFilters, signal: AbortSignal): Observable<ISearchResult[]>
+    \item searchSemantic(query: SearchQuery, signal: AbortSignal): Observable<ISearchResult[]>
+    \item getCustomMetadataKeys(dipId: number | null, signal: AbortSignal): Observable<string[]>
+\end{itemize}
+
+\paragraph{Flusso IPC}
+\begin{enumerate}
+    \item SearchFacade richiama gateway.search(query, abortSignal).
+    \item Gateway:
+    \begin{enumerate}
+        \item Verifica cache con cacheKey = hash(query).
+        \item Se HIT: restituisce cached results.
+        \item Se MISS: invoca contextBridge.invoke(SEARCH\_CHANNEL, searchRequestDTO).
+        \item Aspetta risposta dal Main Process.
+        \item Salva in cache se successo.
+        \item Emette risultati via Observable.
+    \end{enumerate}
+    \item SearchFacade aggiorna signal<SearchState>.results.
+    \item SearchResultsComponent visualizza dinamicamente tramite SearchResultFactory.
+\end{enumerate}
+
+\paragraph{Integrazione con Core Backend}
+Il backend riceve SearchRequestDTO e lo elabora tramite:
+\begin{itemize}
+    \item SearchDocumentsUC: filtra documenti per metadati AGID.
+    \item SearchProcessUC: filtra processi per ID/proprietà.
+    \item SearchSemanticUC: embedding vettoriale (Xenova in browser o backend).
+    \item SearchAggregateUC: filtra aggregazioni per proprietà DiP.
+\end{itemize}
+
+Ognuno restituisce ISearchResult[], che viene serializzato e rimandato al renderer via IPC.
+
+\paragraph{Vantaggi dell'approccio}
+\begin{itemize}
+    \item \textbf{Separation of Concerns}: UI non conosce dettagli back-end, gateway non conosce dettagli UI.
+    \item \textbf{Performance}: caching riduce IPC overhead.
+    \item \textbf{Testabilità}: gateway è mockabile, backend è testabile in isolamento.
+    \item \textbf{Resilienza}: error handling e abort signals gestiscono edge cases.
+\end{itemize}
+
+
+\subsection{Validazione Filtri}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/filter-validator-service-fn-code-l4-page1.png}
+        \caption{Diagramma C4 - FilterValidatorService e FilterValidatorFn}
+    \label{fig:C4_search_ipc_gateway}
+\end{figure}
+
+\paragraph{FilterValidatorService e FilterValidatorFn}
+La validazione non è un aspetto casuale ma un layer dedicato.
+ Il FilterValidatorService applica regole di validazione pure e composabili:
+
+\begin{itemize}
+    \item \textbf{Pure Functions}: ogni regola è una funzione pura FilterValidatorFn = (filters) → ValidationResult.
+    \item \textbf{Composizione}: regole si combinano (AND/OR) per validazioni complesse.
+    \item \textbf{Error Mapping}: ValidationError[] contiene campo, messaggio, severity (ERROR | WARNING).
+\end{itemize}
+
+Esempi di regole:
+\begin{itemize}
+    \item Se DiDaiFilters.tipologia è compilata, allora modalitàFormazione è obbligatoria.
+    \item Se SubjectFilter include PERSONA\_FISICA, allora codFiscale è obbligatorio.
+    \item Se AggregateFilters.dataApertura è compilata, allora dataChiusura >= dataApertura.
+    \item CommonFilters.annoInizio >= 1900 (vincolo AGID).
+\end{itemize}
+Inoltre anche in questo caso l'utilizzo di un pattern Strategy consente di applicare regole specifiche in base ai filtri presi in considerazione. Questo permette di aggiungere nuove regole senza modificare il codice esistente, ma semplicemente aggiungendo nuove funzioni di validazione e registrandole nella registry.
+
+\paragraph{ValidationError e Stato di Errore}
+Lo stato di ricerca mantiene una Map<fieldName, ValidationError> che:
+\begin{itemize}
+    \item Permette visualizzazione inline degli errori nei componenti dumb.
+    \item È aggiornata dinamicamente durante la compilazione (non solo al submit).
+    \item È resettata prima di una nuova ricerca.
+\end{itemize}

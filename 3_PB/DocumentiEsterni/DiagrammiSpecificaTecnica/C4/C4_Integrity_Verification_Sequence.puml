@@ -1,0 +1,59 @@
+@startuml C4_Integrity_Verification_Sequence
+
+title C4 - Sequence: Verifica Integrita e propagazione stati (compatta)
+
+autonumber
+hide footbox
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 80
+
+actor Renderer as UI
+participant "CheckIntegrityIpcAdapter" as IPC
+participant "CheckIntegrityUC" as UC
+participant "IntegrityVerificationService" as VerifySvc
+participant "Repo Layer" as Repo
+participant "SqliteTransactionManager" as Tx
+participant "HashingService" as Hash
+
+UI -> IPC: invoke(check-integrity:*, id)
+IPC -> UC: execute(id)
+UC -> VerifySvc: checkIntegrity(level, id)
+
+VerifySvc -> Tx: runInTransaction(work)
+activate Tx
+Tx -> VerifySvc: BEGIN IMMEDIATE
+
+VerifySvc -> VerifySvc: resolveRoot(level, id)
+loop per node in subtree (bottom-up)
+  VerifySvc -> Repo: getChildren(level, nodeId)
+  alt node is FILE
+    VerifySvc -> Hash: checkFileIntegrity(path, expectedHash)
+    Hash --> VerifySvc: VALID | INVALID
+  else node is aggregate
+    VerifySvc -> VerifySvc: aggregateStatuses(children)
+  end
+  VerifySvc -> Repo: updateIntegrityStatus(level, nodeId, status)
+end
+
+Tx -> VerifySvc: COMMIT
+VerifySvc --> UC: IntegrityStatusEnum
+UC --> IPC: IntegrityStatusEnum
+IPC --> UI: IntegrityStatusEnum
+
+deactivate Tx
+
+note over VerifySvc, Tx
+If root is missing or any runtime error occurs:
+- transaction is rolled back
+- IPC returns INTEGRITY_VERIFY_ERROR
+end note
+
+note right of VerifySvc
+  aggregateStatuses rules:
+  1) no children -> VALID
+  2) any INVALID -> INVALID
+  3) else, any UNKNOWN -> UNKNOWN
+  4) else -> VALID
+end note
+
+@enduml

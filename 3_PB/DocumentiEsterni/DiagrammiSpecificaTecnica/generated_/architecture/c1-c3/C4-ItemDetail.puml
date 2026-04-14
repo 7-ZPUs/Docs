@@ -1,0 +1,142 @@
+@startuml
+' === Impostazioni per A4 Verticale ===
+scale max 800 width
+page 1x2
+skinparam pageMargin 10
+skinparam dpi 300
+
+' Sviluppo rigorosamente verticale
+top to bottom direction
+skinparam classAttributeIconSize 0
+skinparam nodesep 40
+skinparam ranksep 70
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype ortho
+skinparam ArrowThickness 2
+skinparam ArrowColor #1F2937
+skinparam ArrowFontColor #111827
+skinparam ArrowFontSize 10
+skinparam ArrowFontStyle bold
+skinparam defaultTextAlignment left
+skinparam wrapWidth 220
+skinparam maxMessageSize 80
+skinparam handwritten false
+skinparam packageStyle rectangle
+allowmixing
+
+' ==========================================
+' LIVELLO UI (SMART & DUMB COMPONENTS)
+' ==========================================
+class ItemDetailPageComponent << (C,#00AA00) Smart >> {
+  - aggregateFacade: IAggregateFacade
+  - processFacade: IProcessFacade
+  - documentFacade: IDocumentFacade
+  - nodeFallbackFacade: INodeFallbackFacade
+  + itemId: input<string>
+  + itemType: input<DetailRouteItemType>
+  + fallbackState: Signal<NodeFallbackState>
+  + retryLoad(): void
+}
+
+' Facade esterne iniettate minimalmente
+interface IAggregateFacade
+interface IProcessFacade
+interface IDocumentFacade
+
+class DocumentActionsComponent << Smart >> {
+  + itemId: input<string>
+  + itemType: input<string>
+  + initialVerificationStatus: input<string>
+}
+
+class MetadataPanelComponent << Dumb >> {
+  + itemType: input<'AGGREGATE' | 'DOCUMENT' | 'PROCESS'>
+  + aggregateData: input<AggregateDetailDTO>
+  + documentData: input<DocumentDetail>
+}
+
+class NodeFallbackPanelComponent << Dumb >> {
+  + detail: input<NodeFallbackDetail>
+}
+
+' Componenti esterni iniettati minimalmente
+
+class DocumentIndexComponent
+class DocumentViewerComponent
+
+
+' Composizione della UI
+ItemDetailPageComponent -down-> DocumentActionsComponent : renders
+ItemDetailPageComponent -down-> MetadataPanelComponent : renders
+ItemDetailPageComponent -down-> NodeFallbackPanelComponent : renders
+ItemDetailPageComponent -down-> DocumentViewerComponent : renders
+ItemDetailPageComponent -down-> DocumentIndexComponent : renders
+
+DocumentActionsComponent -[hidden]down- MetadataPanelComponent
+MetadataPanelComponent -[hidden]down- NodeFallbackPanelComponent
+DocumentViewerComponent -[hidden]down- DocumentIndexComponent
+NodeFallbackPanelComponent -[hidden]down- DocumentViewerComponent
+
+
+' ==========================================
+' LIVELLO SERVIZI E CONTRATTI (FACADE)
+' ==========================================
+interface INodeFallbackFacade {
+  + getState(): Signal<NodeFallbackState>
+  + loadNode(itemType: NodeFallbackItemType, id: string): Promise<void>
+}
+
+class NodeFallbackFacade implements INodeFallbackFacade {
+  - ipcGateway: IpcGatewayService
+  - cache: IpcCacheService
+  - state: signal<NodeFallbackState>
+  + getState(): Signal<NodeFallbackState>
+  + loadNode(itemType: NodeFallbackItemType, id: string): Promise<void>
+  - fetchDetail(itemType, nodeId): Promise<NodeFallbackDetail>
+}
+
+
+
+' Dipendenza Invertita
+ItemDetailPageComponent --> INodeFallbackFacade : injects (via Token)
+ItemDetailPageComponent --> IAggregateFacade : injects
+ItemDetailPageComponent --> IProcessFacade : injects
+ItemDetailPageComponent --> IDocumentFacade : injects
+
+INodeFallbackFacade -[hidden]down- IAggregateFacade
+IAggregateFacade -[hidden]down- IProcessFacade
+IProcessFacade -[hidden]down- IDocumentFacade
+
+' ==========================================
+' LIVELLO DI DOMINIO E STATO
+' ==========================================
+class NodeFallbackState << (S,#DDDDDD) State >> {
+  + loading: boolean
+  + error: AppError | null
+}
+
+class NodeFallbackDetail << (M,#FF7700) Model >> {
+  + type: NodeFallbackItemType
+  + typeLabel: string
+  + title: string
+  + subtitle: string
+  + fields: NodeFallbackField[]
+  + hint?: string
+}
+
+class NodeFallbackRelatedSection << (M,#FF7700) Model >> {
+  + title: string
+  + emptyMessage: string
+  + items: NodeFallbackRelatedItem[]
+}
+
+' Relazioni di Dominio e Gestione Stato
+NodeFallbackFacade --> NodeFallbackState : manages via signal
+NodeFallbackState --> NodeFallbackDetail : contains
+NodeFallbackDetail --> NodeFallbackRelatedSection : has
+
+' Binding UI-Domino passivo
+NodeFallbackPanelComponent ..> NodeFallbackDetail : displays
+
+@enduml

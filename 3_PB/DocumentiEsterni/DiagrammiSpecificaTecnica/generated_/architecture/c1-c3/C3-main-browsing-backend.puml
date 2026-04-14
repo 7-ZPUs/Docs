@@ -1,0 +1,47 @@
+@startuml C3_Main_Browsing_Backend
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title C4 Model - Level 3 (Main Process Components: Browsing Backend)
+
+LAYOUT_WITH_LEGEND()
+
+Container_Boundary(main_container, "Main Process") {
+  Component(browsing_ipc, "BrowsingIpcAdapter", "IPC Inbound Adapter", "Read channels by id, status and hierarchy")
+  Component(browse_ucs, "Browsing Use Cases", "Application Services", "GetById, GetByStatus, GetByParent")
+
+  Component(dip_repo, "DipRepository", "Repository", "Dip queries")
+  Component(class_repo, "DocumentClassRepository", "Repository", "Document class queries")
+  Component(process_repo, "ProcessRepository", "Repository", "Process queries")
+  Component(doc_repo, "DocumentRepository", "Repository", "Document queries")
+  Component(file_repo, "FileRepository", "Repository", "File queries")
+}
+
+Container_Ext(renderer, "Renderer UI", "Angular", "Browse tree and detail navigation")
+ContainerDb_Ext(sqlite, "SQLite", "Entity persistence")
+
+Rel(renderer, browsing_ipc, "browse:* channels")
+Rel(browsing_ipc, browse_ucs, "execute")
+
+Rel(browse_ucs, dip_repo, "read")
+Rel(browse_ucs, class_repo, "read")
+Rel(browse_ucs, process_repo, "read")
+Rel(browse_ucs, doc_repo, "read")
+Rel(browse_ucs, file_repo, "read")
+
+Rel(dip_repo, sqlite, "SQL read")
+Rel(class_repo, sqlite, "SQL read")
+Rel(process_repo, sqlite, "SQL read")
+Rel(doc_repo, sqlite, "SQL read")
+Rel(file_repo, sqlite, "SQL read")
+
+note right of browse_ucs
+SOLID:
+- S: thin wrappers over repository contracts
+- D: use cases depend on abstractions
+
+Patterns:
+- Repository
+- IPC inbound adapter
+end note
+
+@enduml

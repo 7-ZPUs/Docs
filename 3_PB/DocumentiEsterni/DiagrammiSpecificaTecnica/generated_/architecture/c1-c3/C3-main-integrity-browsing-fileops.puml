@@ -24,7 +24,7 @@ Container_Boundary(main_container, "Main Process") {
 
   Component(export_port, "LocalExportPort", "Outbound Adapter", "Writes files to user-selected path")
   Component(print_port, "PrintPort", "Outbound Adapter", "Print integration")
-  Component(package_reader, "LocalPackageReaderAdapter", "Outbound Adapter", "Reads file stream from DIP")
+  Component(package_reader, "FileSystemPort", "Outbound Adapter", "Reads file stream from DIP")
 }
 
 Container_Ext(renderer, "Renderer UI", "Angular", "Browse tree, integrity actions, download/print actions")

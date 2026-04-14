@@ -2,7 +2,7 @@
 \section{Architettura dei container}
 La progettazione del sistema \textit{DIPReader} è stata guidata dai principi di modularità, scalabilità e manutenibilità, con l'obiettivo di creare un'architettura che possa evolversi nel tempo e adattarsi a nuove esigenze e normative AGID.\\
 In particolare, è stata completamente scorporata la logica di business dalla logica di presentazione, esponendo come unico punto di accesso comune gli \textit{IPC channel}.\\
-Il sistema così facendo permette di avere un backend facilmente estendibile, modificabile e soprattutto che si adatta allla struttura del DIP autonomamente. D'altra parte il frontend è completamente disaccoppiato ma strutturato in modo che i componenti di presentazione siano facilmente sostituibili, modificabili e soprattutto adattabili a nuove esigenze.\\
+Il sistema cosi progettato consente di avere un backend facilmente estendibile e modificabile, capace di adattarsi alla struttura del DIP. Il frontend risulta disaccoppiato dal backend e organizzato in componenti di presentazione sostituibili, in modo da facilitare evoluzione funzionale e manutenzione.\\
 
 \begin{figure}[H]
     \centering
@@ -13,12 +13,166 @@ Il sistema così facendo permette di avere un backend facilmente estendibile, mo
 
 \subsection{Renderer}
     \subsubsection{Struttura architetturale}
-    Il container \textit{Renderer} è responsabile della presentazione dell'interfaccia utente e dell'interazione con l'utente. Per la gestione quindi dell'interfaccia è stato scelto di strutturare il container per componenti. Ogni componente a sua volta è strutturato da una serie di services che si occupano di gestire la logica di presentazione, e da una serie di componenti di presentazione che si occupano di mostrare i dati all'utente.\\
-    Visto poi che le interazioni tra i diversi componenti di presentazione sono limitate, è stato scelto di strutturare il container in modo che ogni componente sia completamente disaccoppiato dagli altri. Gli unici punti di contatto risultano infatti essere il sistema di routing e i canali IPC, che permettono ai componenti di comunicare tra loro e con il backend.\\
-    In presenza poi di componenti come per esempio l'esportazione dei file, che richiedono di essere inseriti in più punti del sistema, è stato scelto di strutturare il container in modo che questi componenti siano facilmente integrabili in qualsiasi punto del sistema, senza dover modificare la struttura del container o dei componenti di presentazione grazie a delle semplici Injection di dipendenze.\\
-    È poi stato applicato il pattern Smart and Dumb Components, che permette di separare la logica di presentazione pura dalla logica di business che la coordina.\\
-    
+    Il container \textit{Renderer} è responsabile della presentazione dell'interfaccia utente e dell'interazione con l'utente. 
+    Per la gestione dell'interfaccia è stata adottata una struttura a componenti. Ogni feature espone componenti di presentazione e servizi dedicati al coordinamento della logica applicativa lato UI.\\
+    Poiche le interazioni tra i componenti di presentazione sono limitate, ogni componente e mantenuto disaccoppiato dagli altri. 
+    I punti di contatto principali sono il routing e i canali IPC, usati per coordinare la navigazione e la comunicazione con il backend.\\
+    Per componenti riusabili in piu contesti (ad esempio export e stampa), l'integrazione avviene tramite Dependency Injection, evitando modifiche invasive alla struttura delle feature.\\
+    E inoltre applicato il pattern Smart and Dumb Components, che separa la logica di coordinamento dalla presentazione pura.\\
+    \subsubsection{Stack tecnologico}
 
-\subsection{[Main]}
-    \subsubsection{Tecnologia: Node.js}
-        \paragraph{Descrizione}
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{|l|Y|}
+        \hline
+        \textbf{Componente} & \textbf{Tecnologia} \\
+        \hline
+        Runtime desktop & Electron (main + renderer) \\
+        \hline
+        Renderer core & TypeScript \\
+        \hline
+        Dependency Injection & Angular \\
+        \hline
+        Routing & Angular Router \\
+        \hline
+        Accessibility & Angular A11y \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+\subsubsection{Relazione con i principi SOLID}
+\begin{itemize}
+    \item \textbf{SRP:} ogni componente ha una sola responsabilità.
+    \item \textbf{OCP:} nuovi componenti possono essere aggiunti estendendo i contratti esistenti.
+    \item \textbf{LSP e ISP:} i layer dipendono da interfacce coese e sostituibili. 
+    \item \textbf{DIP:} Sono iniettati i token delle interfacce dei servizi, non le implementazioni concrete.
+\end{itemize}
+
+\subsection{Main}
+\label{sec:container:main}
+
+\subsubsection{Ruolo architetturale}
+Il container \textit{Main} ospita la logica backend e costituisce il punto di orchestrazione tra IPC, use case applicativi e persistenza su SQLite.
+Le responsabilita principali sono la registrazione degli handler IPC, la risoluzione delle dipendenze tramite container DI, il coordinamento dei repository/DAO e il bootstrap iniziale dei dati indicizzati.
+
+\subsubsection{Stack tecnologico}
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{|l|Y|}
+        \hline
+        \textbf{Componente} & \textbf{Tecnologia} \\
+        \hline
+        Runtime desktop & Electron (main + renderer) \\
+        \hline
+        Backend core & TypeScript \\
+        \hline
+        Dependency Injection & tsyringe \\
+        \hline
+        Database & better-sqlite3 \\
+        \hline
+        IPC frontend-backend & ipcMain.handle / ipcRenderer.invoke \\
+        \hline
+        Architettura & Clean Architecture (layering) \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+\subsubsection{Layer architetturali}
+
+\begin{enumerate}
+    \item \textbf{IPC Adapter:} boundary verso renderer, gestione canali, mapping DTO.
+    \item \textbf{Use Case:} thin orchestration layer, delega diretta ai repository.
+    \item \textbf{Repository:} astrazione accesso dati, delega ai DAO.
+    \item \textbf{DAO:} query SQL concrete, ricostruzione entity da righe.
+    \item \textbf{Mapper:} trasformazione entity $\leftrightarrow$ DTO.
+    \item \textbf{Entity / Value Objects:} modello di dominio.
+\end{enumerate}
+
+\subsubsection{Relazione con i principi SOLID}
+\begin{itemize}
+    \item \textbf{SRP:} ogni layer ha responsabilita esplicite e non sovrapposte.
+    \item \textbf{OCP:} nuovi use case o adapter possono essere aggiunti estendendo i contratti esistenti.
+    \item \textbf{LSP e ISP:} i layer dipendono da interfacce coese e sostituibili.
+    \item \textbf{DIP:} il wiring runtime usa token DI e inversione delle dipendenze verso repository/servizi.
+\end{itemize}
+
+\subsubsection{Sequenza runtime generale}
+\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
+    \item \textbf{Renderer invoca IPC:} \texttt{window.electronAPI.invoke(channel, payload)}.
+    \item \textbf{Preload autorizza:} verifica prefissi consentiti e inoltra a \texttt{ipcRenderer.invoke}.
+    \item \textbf{Main process intercetta:} adapter registra e gestisce l'handler del canale.
+    \item \textbf{Risoluzione DI:} l'adapter risolve il use case richiesto dal container.
+    \item \textbf{Use case delega:} orchestration verso il repository.
+    \item \textbf{Repository delega:} accesso ai dati tramite DAO.
+    \item \textbf{DAO esegue query:} interrogazione SQLite e ricostruzione entity.
+    \item \textbf{Conversione DTO:} mapping entity $\to$ DTO al boundary IPC.
+    \item \textbf{Risposta IPC:} il renderer riceve DTO o \texttt{null}.
+\end{enumerate}
+
+\subsubsection{Dependency Injection}
+\noindent
+Configurazione in \texttt{container.ts}:
+
+\begin{enumerate}
+    \item \textbf{Provider DB:} \texttt{DATABASE\_PROVIDER\_TOKEN} $\to$ \texttt{DatabaseProvider}.
+    \item \textbf{Repository tokens:} \texttt{*\_REPOSITORY\_TOKEN} per i vari aggregati.
+    \item \textbf{DAO tokens:} \texttt{*\_DAO\_TOKEN} per le implementazioni concrete.
+    \item \textbf{Use case tokens:} \texttt{GET\_BY\_*} per le operazioni di retrieval.
+\end{enumerate}
+
+\subsubsection{Bootstrap e indicizzazione}
+\noindent
+\textbf{DatabaseBootstrap.ts} (avvio):
+\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
+    \item Ricrea database zero.
+    \item Applica schema.
+    \item Chiama \texttt{IndexDip.execute(dipPath)}.
+\end{enumerate}
+
+\noindent
+\textbf{IndexDip.execute} (popolamento DB):
+\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
+    \item Insert: dip.
+    \item Insert: classi documentali.
+    \item Insert: processi (con metadati ricorsivi).
+    \item Insert: documenti (con metadati ricorsivi).
+    \item Insert: file.
+\end{enumerate}
+
+\subsubsection{Wiring runtime e registrazioni}
+\noindent
+In avvio applicazione (\texttt{main.ts}) il container runtime esegue:
+
+\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
+    \item bootstrap database tramite \texttt{ApplicationBootstrapAdapter}
+    \item registrazione token runtime \texttt{DIP\_PATH\_TOKEN}
+    \item registrazione adapter IPC (es. \texttt{BrowsingIpcAdapter}, \texttt{CheckIntegrityIpcAdapter})
+\end{enumerate}
+
+\noindent
+Nel bootstrap DB (\texttt{DatabaseBootstrap.ts}) viene registrato anche \texttt{SQLITE\_DB\_TOKEN} con la connessione SQLite runtime.
+
+\subsubsection{Semantica transazionale condivisa}
+\noindent
+Le operazioni backend che aggiornano alberi di dati su piu livelli usano \texttt{ITransactionManager} con implementazione SQLite (\texttt{SqliteTransactionManager}):
+
+\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
+    \item \texttt{BEGIN IMMEDIATE TRANSACTION}
+    \item esecuzione blocco applicativo
+    \item \texttt{COMMIT} su successo
+    \item \texttt{ROLLBACK} su errore
+\end{enumerate}
+
+\noindent
+Questa semantica garantisce consistenza dei dati durante propagazioni gerarchiche di stato.
+
+\subsubsection{Sicurezza preload}
+\noindent
+\texttt{preload.ts} consente IPC su prefissi autorizzati:\newline\texttt{ipc:search:}, \texttt{browse:}, \texttt{file:}, \texttt{check-integrity:}, \texttt{ipc:indexing:status}.
