@@ -876,7 +876,8 @@ seguenti buone pratiche:
         \item \textbf{Linter e formatter}: per applicare automaticamente le convenzioni di stile e ridurre difetti formali.
         \item \textbf{Sistema di versionamento}: per tracciare le modifiche, gestire branch e revisioni.
 \end{itemize}
-
+Inoltre, al fine di allineare tutti i membri del team sulle stesse tecnologie e strumenti, è necessario l'utilizzo dell'ambiente di sviluppo condiviso a container Docker. \\
+Così facendo si limitano i problemi di configurazione e compatibilità.
 \subsubsection{Attività: Realizzazione dei test}
 L'attività di test ha l'obiettivo di verificare in modo sistematico la
 correttezza del software prodotto e la conformità ai requisiti, riducendo il
@@ -887,11 +888,17 @@ Per ogni incremento vengono identificati i casi di test necessari, definendo
 copertura attesa e priorità in funzione del rischio e della criticità delle
 funzionalità coinvolte.
 
-\paragraph{Procedura: Implementazione ed esecuzione dei test}
-I test vengono realizzati a livelli progressivi (unità, integrazione,
-sistema), con esecuzione periodica durante lo sviluppo e prima del rilascio.
+\paragraph{Procedura: Implementazione ed esecuzione dei test} \label{test}
+I test vengono realizzati a livelli progressivi, con esecuzione automatica durante lo sviluppo, integrata nel workflow.
 Quando possibile, i test sono automatizzati per garantire ripetibilità e
 rapidità di feedback.
+I livelli di test adottati sono i seguenti:
+\begin{itemize}
+    \item \textbf{Unit Testing}: test di unità per verificare la correttezza di singole unità di codice.
+    \item \textbf{Integration Testing}: test di integrazione per verificare l'interazione tra diverse unità o componenti del sistema.
+    \item \textbf{System Testing}: test di sistema per verificare il comportamento complessivo del sistema rispetto ai requisiti specificati.
+\end{itemize}
+Maggior dettaglio sui livelli di test e le relative procedure di implementazione ed esecuzione è riportato nella sezione \ref{}
 
 \paragraph{Procedura: Analisi degli esiti e azioni correttive}
 Gli esiti dei test vengono analizzati dal team per identificare difetti,
@@ -900,7 +907,11 @@ accompagnata da verifica di non regressione.
 
 \paragraph{Strumenti}
 \begin{itemize}
-        \item \textbf{Framework di test}: per la scrittura ed esecuzione dei test automatizzati.
+        \item \textbf{Framework di test}: per la scrittura ed esecuzione dei test automatizzati. In particolare:
+        \begin{itemize}
+            \item \textbf{Vitest}: Strumento di testing per i test di unità dei singoli componenti. È stato sfruttato anche per i test di integrazione dei diversi moduli.
+            \item \textbf{Playwright}: Strumento di testing per i test end-to-end, che permettono di testare il sistema nella sua interezza, simulando l'interazione dell'utente con l'interfaccia grafica.
+        \end{itemize}
         \item \textbf{Pipeline di integrazione continua}: per l'esecuzione ricorrente dei test e il controllo qualità.
         \item \textbf{Strumenti di tracciamento}: per registrare difetti, priorità ed esito delle attività correttive.
 \end{itemize}
@@ -1323,6 +1334,31 @@ La verifica di aderenza è attuata in forma di checklist. Il verificatore, duran
     \item \textbf{Textstat} per il controllo di leggibilità, utilizzato negli script automatizzati (Github Action).
 \end{itemize}
 
+\subsubsection{Attività: Verifica del codice}
+La verifica statica del codice avviene grazie all'utilizzo di SonarQube, che permette di individuare errori, vulnerabilità e code smell nel codice sorgente. 
+Il processo di verifica del codice è integrato nel workflow di sviluppo, con l'esecuzione automatica dei controlli ad ogni push o pull request.\\
+Inoltre, il Team inoltre può consultare la dashboard di SonarQube per monitorare la qualità del codice a livello di branch e di progetto.\\
+La verifica dinamica del codice come già anticipato nella sezione \ref{test}, avviene in tre fasi, descritte a seguire.
+
+\paragraph{Procedura: Test di unità}
+Ogni componente software deve essere accompagnato da un test di unità che ne verifichi il comportamento in isolamento. Visto la natura del test, eventuali dipendenze vengono sostituite da \glossario{mock}.\\
+Utilizzando i comandi Angular, nella sezione frontend, è possibile generare automaticamente i file di test da popolare. Si consiglia quindi di sfruttare al massimo le potenzialità di Angular.
+
+\paragraph{Procedura: Test di integrazione}
+I test di integrazione verificano l'interazione tra più componenti, assicurando che funzionino correttamente insieme. È utile effettuare test di integrazione graduale man mano che si sviluppano le componenti.\\
+In questo caso, i mock vengono limitati a componenti al di sotto del livello di integrazione testato.
+
+\paragraph{Procedura: Test end-to-end di sistema}
+I test end-to-end verificano il sistema nella sua interezza, simulando l'interazione dell'utente con l'interfaccia grafica e verificando che tutte le componenti funzionino correttamente insieme.\\
+Per facilitare l'esecuzione il testing, viene utilizzato il pattern Page Object, che permette di astrarre l'interazione con l'interfaccia grafica in classi dedicate, migliorando la manutenibilità dei test e riducendo la duplicazione di codice.
+Così facendo, e utilizzando selettori stabili come \textit{data-testid}, non si dipende da elementi di interfaccia variabili come etichette o parametri grafici.
+\subparagraph{POM pattern per i test E2E}
+Il pattern Page Object Model (POM) è una metodologia di progettazione per i test end-to-end che prevede la creazione di classi dedicate per rappresentare le pagine dell'applicazione. 
+Ogni classe contiene metodi che rappresentano le azioni che un utente può eseguire sulla pagina, come cliccare su un pulsante o inserire testo in un campo.\\
+Il flusso di interazione utente viene quindi rappresentato attraverso l'invocazione di questi metodi, rendendo i test più leggibili e manutenibili.\\
+Inoltre, il POM consente di centralizzare la gestione dei selettori, raggruppando in un'unica classe tutti i selettori.
+\\ Per il tracciamento dei test di sistema è stato creato un piccolo script che, a  partire dai file di test e i codici di test, genera un file di con indicazioni sullo stato di copertura e indicazione delle coordinate test file di un determinato test.
+
 \subsubsection{Ruoli}
 Vengono qui raccolti per praticità i ruoli coinvolti del processo di verifica,
 con una breve descrizione delle responsabilità di ciascuno.
@@ -1375,6 +1411,9 @@ passaggi:
 \begin{itemize}
     \item \textbf{Jira:} per la gestione delle attività di validazione, con la creazione di task specifici per la pianificazione e l'esecuzione dei test.
     \item \textbf{\LaTeX:} per la definizione dei test di accettazione nel documento Piano di Qualifica.
+    \item \textbf{Vitest:} per la definizione e esecuzione dei test di unità e di integrazione
+    \item \textbf{Playwright:} per la definizione e esecuzione dei test end-to-end di sistema.
+    \item \textbf{SonarQube:} per la verifica statica del codice, integrata nel processo di sviluppo.
 \end{itemize}
 
 \subsubsection{Attività: Definizione dei test di accettazione}
@@ -1827,6 +1866,7 @@ Vengono elencati a seguire gli strumenti adottati dal Team per lo svolgimento de
 \begin{itemize}
     \item \textbf{Giustificazione (Costi ed Equipment):} IDE gratuito, leggero e standard de facto, garantisce che tutti i membri operino in un ambiente omogeneo.
     \item \textbf{Configurazione (Estensioni):} Per uniformare lo sviluppo, l'ambiente richiede le estensioni: Atlassian (Jira, Rovo Dev, Bitbucket) per la gestione delle issue integrata, GitHub Pull Requests and Issues, GitHub Actions, e LaTeX Workshop. GitHub Copilot è autorizzato a discrezione del singolo per ottimizzare i tempi di codifica o documentazione.
+    \item \textbf{Container:} Per garantire un ambiente di sviluppo omogeneo e facilmente replicabile, è stata configurata una Dev Container con tutte le estensioni e strumenti necessari preinstallati. Questo permette a ogni membro di avviare un ambiente di lavoro coerente con un semplice comando, riducendo i problemi di configurazione locale. L'accesso alla è guidato dall'uso di VSCode Remote Containers, che consente di lavorare direttamente all'interno del container come se fosse un ambiente locale, garantendo così la massima compatibilità e facilità d'uso.
 \end{itemize}
 
 \paragraph{\LaTeX} \label{LaTeX}
@@ -2258,7 +2298,7 @@ strumento specifico per l'analisi testuale.
 
 \subsubsection{Strumenti di Testing e Performance (Electron-Angular)}
 
-\paragraph{Cypress}
+\paragraph{Playwright}
 Framework di testing End-to-End utilizzato per simulare l'interazione utente
 all'interno dell'ambiente Electron.
 \begin{itemize}
@@ -2271,7 +2311,7 @@ Per misurare l'efficienza di un'applicazione Electron, è necessario monitorare
 l'istanza di Chromium sottostante.
 \begin{itemize}
     \item \textbf{Metriche associate:} MPD-10 (Average CPU usage), MPD-11 (Peak memory usage).
-    \item \textbf{Utilizzo:} Durante le sessioni di test automatizzati con Cypress, vengono invocati script Node.js che interrogano le API \texttt{process.getProcessMemoryInfo()} e \texttt{process.getCPUUsage()} di Electron per campionare il consumo di risorse in idle e sotto carico.
+    \item \textbf{Utilizzo:} Durante le sessioni di test automatizzati con Playwright, vengono invocati script Node.js che interrogano le API \texttt{process.getProcessMemoryInfo()} e \texttt{process.getCPUUsage()} di Electron per campionare il consumo di risorse in idle e sotto carico.
 \end{itemize}
 
 \paragraph{TotalValidator}
