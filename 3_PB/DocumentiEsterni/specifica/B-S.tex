@@ -1,0 +1,336 @@
+\section{Backend – Search}
+
+\subsection{Panoramica}
+
+Il modulo di ricerca espone al frontend, tramite IPC di Electron, le funzionalità di interrogazione del pacchetto DiP indicizzato.
+Il punto di ingresso è \textit{SearchIpcAdapter}, che registra su \textit{IpcMain} i canali di comunicazione e delega l'elaborazione ai rispettivi Use Case.
+
+Il modulo supporta quattro modalità di ricerca principali:
+
+\begin{itemize}
+    \item \textbf{Ricerca per classe documentale} – ricerca le \textit{DocumentClass} per nome tramite \textit{SearchDocumentalClassUC}.
+    \item \textbf{Ricerca per processo} – ricerca i \textit{Process} per UUID tramite \textit{SearchProcessUC}.
+    \item \textbf{Ricerca strutturata per metadati} – ricerca i \textit{Document} applicando un albero di filtri logici tramite 
+    \textit{SearchDocumentsUC}, costruito a partire da un \textit{SearchRequestDTO} validato con Zod e trasformato in un 
+    \textit{SearchDocumentsQuery} tramite \textit{MetadataKeyMapper}.
+    \item \textbf{Ricerca semantica} – ricerca i \textit{Document} per similarità vettoriale tramite \textit{SearchSemanticUC}, 
+    convertendo la query in un vettore di embedding tramite \textit{IWordEmbedding} e calcolando la \textit{cosine similarity} 
+    rispetto ai vettori indicizzati.
+    \item \textbf{Ricerca chiavi di metadati} – recupera le chiavi di metadati personalizzati presenti nei documenti del pacchetto ( quindi nel Database ).
+\end{itemize}
+
+Inoltre è esposto un canale per ottenere lo stato del motore AI, cioè se il modello è stato inizializzato e il numero di documenti indicizzati.
+
+I risultati vengono mappati in DTO di presentazione (\textit{DocumentSearchResult}, \textit{ProcessSearchResult}, \textit{DocumentClassSearchResult}) 
+prima di essere restituiti al frontend, mantenendo il dominio disaccoppiato dal livello di trasporto IPC.
+
+\subsection{Architettura del modulo}
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3-main-search-flow/C3_Main_Search_Flow_No_Repos.png}}
+    \caption{Diagramma C3 – Componenti del modulo di ricerca}
+    \label{fig:C3_search_no_repos}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3-main-search-flow/C3_Main_Search_Flow_Repos.png}
+    \caption{Diagramma C3 – Componenti del modulo di ricerca (Repository e DAO)}
+    \label{fig:C3_search_repos}
+\end{figure}
+
+\subsubsection{SearchIpcAdapter}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search.png}
+    \caption{Diagramma delle classi – SearchIpcAdapter}
+    \label{fig:search_ipc_adapter}
+\end{figure}
+
+\textit{SearchIpcAdapter} è l'adapter inbound che registra su \textit{IpcMain} i canali IPC del modulo di ricerca.
+Risolve le dipendenze tramite il container DI (tsyringe) e instrada le richieste dal renderer process ai rispettivi Use Case, senza contenere logica di business.
+
+\paragraph{Metodo principale}
+\textit{+ register(ipcMain: IpcMain): void} – metodo statico che registra tutti i canali IPC del modulo. Per ciascun canale risolve dal container il 
+corrispondente Use Case o adapter, ne invoca \textit{execute()} e restituisce i risultati mappati in DTO di presentazione.
+
+\paragraph{Canali registrati}
+
+\begin{itemize}
+    \item \textit{SEARCH\_CLASSES} : ricerca le classi documentali per nome, delegando a \textit{ISearchDocumentalClassUC} e mappando i risultati 
+    tramite \textit{DocumentClassMapper.toSearchResult()}.
+    \item \textit{SEARCH\_PROCESSES} : ricerca i processi per UUID, delegando a \textit{ISearchProcessUC} e mappando tramite \textit{ProcessMapper.toSearchResult()}.
+    \item \textit{SEARCH\_DOCUMENTS} : ricerca strutturata tramite filtri. Valida il \textit{SearchRequestDTO} con Zod, normalizza i path dei metadati 
+    tramite \textit{MetadataKeyMapper.mapGroup()}, costruisce un \textit{SearchDocumentsQuery} e delega a \textit{ISearchDocumentsUC}. I risultati vengono
+     mappati tramite \textit{DocumentMapper.toSearchResult()}.
+    \item \textit{SEARCH\_SEMANTIC} : ricerca semantica testuale, delegando a \textit{ISearchSemanticUC} e mappando i risultati (con score di similarità) 
+    tramite \textit{DocumentMapper.toSearchResult()}.
+    \item \textit{SEARCH\_FULLTEXT} : ricerca full-text polimorfica che, in base al \textit{SearchQueryType} della query (\textit{PROCESS\_ID}, 
+    \textit{CLASS\_NAME}, \textit{FREE}), instrada la richiesta al Use Case appropriato.
+    \item \textit{SEARCH\_GET\_AI\_STATE} : restituisce lo stato del motore AI interrogando \textit{IWordEmbedding.isInitialized()} e 
+    \textit{IDocumentRepository.getIndexedDocumentsCount()}, costruendo un oggetto con \textit{status}, \textit{progressPercentage} e \textit{indexedDocuments}.
+    \item \textit{SEARCH\_CUSTOM\_METADATA\_KEYS} : recupera le chiavi di metadati personalizzati delegando a \textit{IGetCustomMetadataKeysUC}.
+\end{itemize}
+
+\subsubsection{Use Case di ricerca}
+
+I cinque Use Case del modulo implementano ciascuno un'interfaccia dedicata e delegano le operazioni di persistenza ai rispettivi repository, senza contenere logica infrastrutturale.
+
+\paragraph{SearchDocumentalClassUC}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-1.png}
+    \caption{Diagramma delle classi – SearchDocumentalClassUC}
+    \label{fig:uc_search_class}
+\end{figure}
+
+Implementa \textit{ISearchDocumentalClassUC}. Il metodo \textit{execute(name: string): DocumentClass[]} invoca\\
+\textit{IDocumentClassRepository.searchDocumentalClasses(name)} e restituisce le entità corrispondenti, senza logica aggiuntiva.
+
+\paragraph{SearchProcessUC}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-2.png}
+    \caption{Diagramma delle classi – SearchProcessUC}
+    \label{fig:uc_search_process}
+\end{figure}
+
+Implementa \textit{ISearchProcessUC}. Il metodo \textit{execute(uuid: string): Process[]} invoca \textit{IProcessRepository.searchProcesses(uuid)} 
+e restituisce le entità corrispondenti.
+
+\paragraph{SearchDocumentsUC}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-3.png}
+    \caption{Diagramma delle classi – SearchDocumentsUC}
+    \label{fig:uc_search_documents}
+\end{figure}
+
+Implementa \textit{ISearchDocumentsUC}. Riceve un \textit{SearchDocumentsQuery} già costruito dall'adapter. Il metodo 
+\textit{execute(filters: SearchDocumentsQuery): Document[]} invoca \textit{IDocumentRepository.searchDocument(filters)} e restituisce i documenti 
+corrispondenti ai criteri di filtro.
+
+\paragraph{SearchSemanticUC}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-4.png}
+    \caption{Diagramma delle classi – SearchSemanticUC}
+    \label{fig:uc_search_semantic}
+\end{figure}
+
+Implementa \textit{ISearchSemanticUC}. Coordina \textit{IWordEmbedding} per la generazione del vettore di query e \textit{IDocumentRepository} per 
+la ricerca tra i vettori indicizzati. Il metodo \textit{execute(query: string): Promise<SemanticSearchMatch[]>} converte la query in un vettore tramite 
+\textit{IWordEmbedding.generateEmbedding()}, quindi invoca \textit{IDocumentRepository.searchDocumentSemantic()} e restituisce un array di 
+\textit{SemanticSearchMatch}, ciascuno con il \textit{Document} e il relativo \textit{score} di similarità.
+
+\paragraph{GetCustomMetadataKeysUC}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-5.png}
+    \caption{Diagramma delle classi – GetCustomMetadataKeysUC}
+    \label{fig:uc_get_metadata_keys}
+\end{figure}
+
+Implementa \textit{IGetCustomMetadataKeysUC}. Il metodo \textit{execute(dipId: number | null): string[]} invoca 
+\\\textit{IDocumentRepository.getDistinctCustomMetadataKeys(dipId)} e restituisce le chiavi distinte. Se \textit{dipId}
+ è \textit{null}, le chiavi vengono recuperate sull'intero database senza filtrare per pacchetto.
+
+\subsubsection{Modelli di dominio per la ricerca}
+
+\paragraph{SearchDocumentsQuery}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-10.png}
+    \caption{Diagramma delle classi – Query Model: SearchDocumentsQuery, SearchGroup, SearchCondition}
+    \label{fig:search_query_model}
+\end{figure}
+
+Oggetto query che incapsula l'albero di filtri logici da applicare alla ricerca dei documenti. Viene costruito dall'adapter a partire dal 
+\textit{SearchRequestDTO} validato e passato allo Use Case e poi al DAO.
+
+\begin{itemize}
+    \item \textit{filter: SearchGroup} : radice dell'albero di filtri.
+    \item \textit{isTooDeep(maxDepth: number): boolean} : calcola ricorsivamente la profondità dell'albero e restituisce \textit{true} 
+    se supera \textit{maxDepth} (default 5), per prevenire query eccessivamente annidate.
+\end{itemize}
+
+\paragraph{SearchGroup}
+Interfaccia che rappresenta un nodo dell'albero di filtri. Implementa il \textit{\textbf{Composite pattern}}: ogni elemento figlio può essere a sua 
+volta un \textit{SearchGroup} (nodo) o una \textit{SearchCondition} (foglia).
+
+\begin{itemize}
+    \item \textit{logicOperator: LogicOperator} : operatore \textit{AND} o \textit{OR} che combina i figli.
+    \item \textit{items: ReadonlyArray<SearchCondition | SearchGroup>} : elementi figli del gruppo.
+\end{itemize}
+
+\paragraph{SearchCondition}
+Interfaccia che rappresenta una foglia dell'albero, ovvero una singola condizione atomica su un campo del documento.
+
+\begin{itemize}
+    \item \textit{path: string} : percorso dot-notation del campo (es.\ \textit{NomeDelDocumento} o\\\textit{CustomMetadata.codice}).
+    \item \textit{operator: SearchOperator} : operatore di confronto: \textit{EQ}, \textit{GT}, \textit{LT}, \textit{LIKE}, \textit{IN}, \textit{ELEM\_MATCH}.
+    \item \textit{value: any} : valore di confronto. Per \textit{IN} deve essere un array; per \textit{ELEM\_MATCH} un \textit{SearchGroup} annidato.
+\end{itemize}
+
+\paragraph{SearchRequestDTO e SearchRequestSchema}
+DTO e schema Zod per la richiesta di ricerca strutturata dal frontend. \textit{SearchRequestSchema} valida ricorsivamente l'albero di filtri, garantendo la correttezza 
+strutturale prima che la richiesta raggiunga il dominio. Il path di ogni \textit{SearchCondition} è validato tramite una regex che consente solo la dot-notation alfanumerica.
+
+\paragraph{SearchQuery}
+Interfaccia per le query di ricerca full-text o semantica provenienti dal frontend.
+
+\begin{itemize}
+    \item \textit{text: string} : testo inserito dall'utente.
+    \item \textit{type: SearchQueryType} : tipo della query (\textit{PROCESS\_ID}, \textit{CLASS\_NAME}, \textit{FREE}), usato da \textit{SearchIpcAdapter} 
+    per l'instradamento nel canale \textit{SEARCH\_FULLTEXT}.
+    \item \textit{useSemanticSearch: boolean} : flag per attivare la ricerca semantica.
+\end{itemize}
+
+\subsubsection{Mapper di ricerca}
+
+I mapper trasformano le entità di dominio nei DTO di presentazione restituiti al frontend. Sono metodi statici collocati nei rispettivi mapper di persistenza per 
+coerenza architetturale.
+
+\paragraph{DocumentClassMapper.toSearchResult()}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-12.png}
+    \caption{Diagramma delle classi – DocumentClassMapper}
+    \label{fig:document_class_mapper}
+\end{figure}
+
+Trasforma un'entità \textit{DocumentClass} in un \textit{DocumentClassSearchResult}, verificando che l'entità sia già persistita (id valido). Restituisce i campi 
+\textit{id}, \textit{uuid}, \textit{integrityStatus}, \textit{name} e \textit{type} (fisso alle Classi).
+
+\paragraph{ProcessMapper.toSearchResult()}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-13.png}
+    \caption{Diagramma delle classi – ProcessMapper}
+    \label{fig:process_mapper}
+\end{figure}
+
+Trasforma un'entità \textit{Process} in un \textit{ProcessSearchResult}, verificando la persistenza. Restituisce i campi \textit{id}, \textit{uuid}, 
+\textit{integrityStatus} e \textit{type} (fisso ai processi).
+
+\paragraph{DocumentMapper.toSearchResult()}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-14.png}
+    \caption{Diagramma delle classi – DocumentMapper}
+    \label{fig:document_mapper}
+\end{figure}
+
+Trasforma un'entità \textit{Document} e uno score opzionale in un \textit{DocumentSearchResult}. Estrae il nome cercando prima il nodo \textit{NomeDelDocumento}, 
+poi \textit{nome}, nell'albero dei metadati. Determina il tipo (\textit{DocumentTypeEnum}) tramite \textit{mapRootMetadataType()}, che normalizza il nome del 
+nodo radice in \textit{UPPER\_SNAKE\_CASE} e lo confronta con i valori canonici. Restituisce i campi \textit{id}, \textit{uuid}, \textit{integrityStatus}, 
+\textit{name}, \textit{type} e \textit{score}.
+
+\paragraph{MetadataKeyMapper}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-11.png}
+    \caption{Diagramma delle classi – MetadataKeyMapper}
+    \label{fig:metadata_key_mapper}
+\end{figure}
+
+Utility class che normalizza i path dei metadati dal frontend in PascalCase, garantendo coerenza con la struttura interna del JSON dei metadati.
+
+\begin{itemize}
+    \item \textit{toPascalCase(key: string): string} : converte una chiave in PascalCase, gestendo separatori \textit{\_} e \textit{-} e trasformando ogni segmento 
+    di path dot-notation separatamente.
+    \item \textit{mapGroup(group: SearchGroup): SearchGroup} : applica ricorsivamente \textit{toPascalCase()} al campo \textit{path} di ogni \textit{SearchCondition}
+     nell'albero, inclusi i valori di condizioni \textit{ELEM\_MATCH} con \textit{SearchGroup} annidato.
+    \item \textit{mapFilters(filters: MetadataFilter[]): MetadataFilter[]} : variante per array piatti di filtri chiave-valore; normalizza il campo \textit{key} di 
+    ciascun filtro.
+    \item \textit{fromLegacyFilters(filters: MetadataFilter[]): SearchGroup} : metodo di compatibilità che converte un array piatto di filtri legacy in un 
+    \textit{SearchGroup} con operatore \textit{AND}, filtrando i valori nulli o vuoti e impostando l'operatore \textit{EQ} per ogni condizione.
+\end{itemize}
+
+\subsubsection{Repository e DAO di ricerca}
+ 
+I repository implementano il \textit{\textbf{pattern Repository}} delegando le operazioni di persistenza ai rispettivi DAO, che interagiscono direttamente con 
+SQLite tramite \textit{better-sqlite3}.
+ 
+\paragraph{DocumentClassRepository e DocumentClassDAO}
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-6.png}
+    \caption{Diagramma delle classi – DocumentClassRepository e DAO}
+    \label{fig:document_class_repo}
+\end{figure}
+ 
+\textit{DocumentClassRepository} espone \textit{searchDocumentalClasses(name)}, delegando a \textit{DocumentClassDAO.search(name)}, che esegue la query 
+e mappa le righe risultanti in entità \textit{DocumentClass} tramite \\\textit{DocumentClassMapper.fromPersistence()}.
+ 
+\paragraph{ProcessRepository e ProcessDAO}
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-7.png}
+    \caption{Diagramma delle classi – ProcessRepository e DAO}
+    \label{fig:process_repo}
+\end{figure}
+ 
+\textit{ProcessRepository} espone \textit{searchProcesses(uuid)}, delegando a \textit{ProcessDAO.searchProcesses(uuid)}, che esegue la query e 
+mappa le righe risultanti in entità \textit{Process}.
+ 
+\paragraph{DocumentRepository e DocumentDAO}
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-8.png}
+    \caption{Diagramma delle classi – DocumentRepository e DAO}
+    \label{fig:document_repo}
+\end{figure}
+ 
+\textit{DocumentRepository} espone i seguenti metodi di ricerca:
+ 
+\begin{itemize}
+    \item \textit{searchDocument(filters: SearchDocumentsQuery): Document[]} : delega a \\\textit{DocumentDAO.searchDocument()}, che utilizza 
+    \textit{DocumentMetadataQueryBuilder} per tradurre i filtri in una query ed eseguirla.
+    \item \textit{searchDocumentSemantic(queryVector: Float32Array): Promise<Array<\{document, score\}> >} : delega a \textit{DocumentDAO.searchDocumentSemantic()},
+     che esegue la ricerca per similarità vettoriale e restituisce le prime 10 coppie \textit{\{document, score\}} ordinate per score decrescente.
+    \item \textit{getDistinctCustomMetadataKeys(dipId: number | null): string[]} : esegue la query e restituisce le chiavi di metadati personalizzati 
+    distinte, deduplicate e ordinate alfabeticamente.
+    \item \textit{getIndexedDocumentsCount(): number} : esegue la query e restituisce il numero di documenti con vettore indicizzato, o 0 se la tabella non esiste.
+\end{itemize}
+
+\subsubsection{DocumentMetadataQueryBuilder}
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-9.png}
+    \caption{Diagramma delle classi – DocumentMetadataQueryBuilder}
+    \label{fig:metadata_query_builder}
+\end{figure}
+ 
+\textit{DocumentMetadataQueryBuilder} traduce un \textit{SearchDocumentsQuery} in una clausola SQL parametrizzata compatibile con SQLite. Viene 
+istanziato direttamente da \textit{DocumentDAO}.
+ 
+\begin{itemize}
+    \item \textit{build(filters: SearchDocumentsQuery): \{sql: string, params: unknown[]\}} : punto di ingresso pubblico. Verifica che il filtro non sia 
+    vuoto, delega a \textit{buildQueryFromGroup()} sulla radice e restituisce la clausola SQL con i relativi parametri.
+    \item \textit{buildQueryFromGroup(group: SearchGroup, jsonSource: string): \{sql, params\}} : costruisce ricorsivamente la clausola SQL per un 
+    \textit{SearchGroup}, distinguendo nodi (ricorsione) e foglie (\textit{buildCondition()}). Le clausole vengono unite con \textit{AND} o 
+    \textit{OR} in base al \textit{logicOperator}.
+    \item \textit{buildCondition(condition: SearchCondition, jsonSource: string): \{sql, params\}} : traduce una singola \textit{SearchCondition} 
+    nella clausola SQL corrispondente, gestendo separatamente l'operatore \textit{ELEM\_MATCH} (array annidati) e gli operatori scalari.
+    \item \textit{buildScalarCondition(jsonExtract, operator, value): \{sql, params\}} : genera la clausola SQL per operatori scalari (\textit{EQ},
+     \textit{GT}, \textit{LT}, \textit{LIKE}, \textit{IN}), eseguendo le opportune normalizzazioni di tipo e valore.
+    \item \textit{toJsonPath(path: string): string} : converte un path dot-notation nella sintassi JSONPath di SQLite, validando ogni segmento e 
+    sollevando un'eccezione in caso di segmenti non validi.
+\end{itemize}
