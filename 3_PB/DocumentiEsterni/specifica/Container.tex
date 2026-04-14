@@ -13,11 +13,43 @@ Il sistema cosi progettato consente di avere un backend facilmente estendibile e
 
 \subsection{Renderer}
     \subsubsection{Struttura architetturale}
-    Il container \textit{Renderer} è responsabile della presentazione dell'interfaccia utente e dell'interazione con l'utente. Per la gestione dell'interfaccia è stata adottata una struttura a componenti. Ogni feature espone componenti di presentazione e servizi dedicati al coordinamento della logica applicativa lato UI.\\
-    Poiche le interazioni tra i componenti di presentazione sono limitate, ogni componente e mantenuto disaccoppiato dagli altri. I punti di contatto principali sono il routing e i canali IPC, usati per coordinare la navigazione e la comunicazione con il backend.\\
+    Il container \textit{Renderer} è responsabile della presentazione dell'interfaccia utente e dell'interazione con l'utente. 
+    Per la gestione dell'interfaccia è stata adottata una struttura a componenti. Ogni feature espone componenti di presentazione e servizi dedicati al coordinamento della logica applicativa lato UI.\\
+    Poiche le interazioni tra i componenti di presentazione sono limitate, ogni componente e mantenuto disaccoppiato dagli altri. 
+    I punti di contatto principali sono il routing e i canali IPC, usati per coordinare la navigazione e la comunicazione con il backend.\\
     Per componenti riusabili in piu contesti (ad esempio export e stampa), l'integrazione avviene tramite Dependency Injection, evitando modifiche invasive alla struttura delle feature.\\
     E inoltre applicato il pattern Smart and Dumb Components, che separa la logica di coordinamento dalla presentazione pura.\\
-    
+    \subsubsection{Stack tecnologico}
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{|l|Y|}
+        \hline
+        \textbf{Componente} & \textbf{Tecnologia} \\
+        \hline
+        Runtime desktop & Electron (main + renderer) \\
+        \hline
+        Renderer core & TypeScript \\
+        \hline
+        Dependency Injection & Angular \\
+        \hline
+        Routing & Angular Router \\
+        \hline
+        Accessibility & Angular A11y \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+\subsubsection{Relazione con i principi SOLID}
+\begin{itemize}
+    \item \textbf{SRP:} ogni componente ha una sola responsabilità.
+    \item \textbf{OCP:} nuovi componenti possono essere aggiunti estendendo i contratti esistenti.
+    \item \textbf{LSP e ISP:} i layer dipendono da interfacce coese e sostituibili. 
+    \item \textbf{DIP:} Sono iniettati i token delle interfacce dei servizi, non le implementazioni concrete.
+\end{itemize}
 
 \subsection{Main}
 \label{sec:container:main}

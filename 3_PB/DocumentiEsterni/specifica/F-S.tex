@@ -51,7 +51,7 @@ Il pannello filtri avanzati è responsabile della raccolta e gestione dello stat
 \noindent Il \textit{FilterRulesManager} implementa la logica di validazione contestuale: poiché i campi pertinenti variano in base al tipo di documento selezionato (identificato dal DocContext), questo componente:
 \begin{itemize}
     \item Definisce quali filtri sono visibili, obbligatori o opzionali.
-    \item Applica vincoli di coerenza (ad es., un campo di un tipo specifico non deve essere compilato se quel tipo non e selezionato).
+    \item Applica vincoli di coerenza (ad es., un campo di un tipo specifico non deve essere compilato se quel tipo un altro tipo è già selezionato).
     \item Puo disabilitare/abilitare dinamicamente i campi senza ricaricare il DOM, garantendo una UX fluida.
 \end{itemize}
 
@@ -314,56 +314,6 @@ Ognuno restituisce ISearchResult[], che viene serializzato e rimandato al render
     \item \textbf{Testabilità}: gateway è mockabile, backend è testabile in isolamento.
     \item \textbf{Resilienza}: error handling e abort signals gestiscono edge cases.
 \end{itemize}
-
-\subsubsection{DTO e Trasformazione Dati}
-
-\paragraph{SearchRequestDTO vs SearchQuery}
-La separazione tra SearchQuery (modello UI) e SearchRequestDTO (modello back-end) è fondamentale:
-
-\begin{description}
-    \item[SearchQuery] Rappresenta lo stato complessivo della ricerca in UI:
-    \begin{itemize}
-        \item query { text, type, useSemanticSearch }
-        \item filters { common, diDai, aggregate, subject, customMeta }
-        \item Contiene domini tipizzati (es., SubjectCriteria[], FilterField[]).
-        \item Facilmente serializzabile per caching/logging.
-    \end{itemize}
-    
-    \item[SearchRequestDTO] Rappresenta la richiesta per il back-end:
-    \begin{itemize}
-        \item Trasformazione via toSearchRequestDTO(searchQuery, filters).
-        \item Ottimizzata per efficienza back-end: flattened, indici normalizzati.
-        \item Non contiene dati UI-specifici (es., stati di UI, flag di caricamento).
-        \item Utilizzata come chiave di cache nel gateway.
-    \end{itemize}
-\end{description}
-
-\paragraph{Mappers: SearchRequestMapper e CustomMetadataMapper}
-\begin{itemize}
-    \item \textit{toSearchRequestDTO()}: converte SearchQuery → SearchRequestDTO.
-    \begin{itemize}
-        \item Flattens nested filters.
-        \item Normalizza subject criteria in formato back-end.
-        \item Aggiunge context headers (es., dipId, userId).
-    \end{itemize}
-    
-    \item \textit{DocumentMetadataMapper}: converte raw metadata XML/JSON → DocumentDTO.
-    \begin{itemize}
-        \item Valida conformità AGID.
-        \item Estrae metadati standardizzati vs custom.
-    \end{itemize}
-\end{itemize}
-
-\paragraph{ISearchResult Union Type}
-Il risultato di ricerca è una discriminated union:
-\begin{itemize}
-    \item IDocumentSearchResult { type: 'DOCUMENT', id, title, metadata, ... }
-    \item IProcessSearchResult { type: 'PROCESS', id, docCount, ... }
-    \item IAggregateSearchResult { type: 'AGGREGATE', id, docCount, ... }
-    \item IClassSearchResult { type: 'CLASS', code, description, ... }
-\end{itemize}
-
-Questa discriminazione permette al SearchResultFactory di istanziare il componente corretto, garantendo type safety.
 
 
 \subsection{Validazione Filtri}
