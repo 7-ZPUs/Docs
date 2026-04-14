@@ -10,25 +10,24 @@ class SearchIpcAdapter {
 }
 
 interface ISearchDocumentalClassUC {
-    + execute(name: string)
-    : DocumentClass[]
+    + execute(name: 
+    string): DocumentClass[]
 }
 interface ISearchProcessUC {
-    + execute(uuid: string)
-    : Process[]
+    + execute(uuid: 
+    string) : Process[]
 }
 interface ISearchDocumentsUC {
-    + execute(filters
-    : SearchDocumentsQuery)
-    : Document[]
+    + execute(filters : SearchDocumentsQuery
+    ) : Document[]
 }
 interface ISearchSemanticUC {
-    + execute(query: string)
-    : Promise<SemanticSearchMatch[]>
+    + execute(query: string
+    ): Promise<SemanticSearchMatch[]>
 }
 interface IGetCustomMetadataKeysUC {
-    + execute(dipId: number | null)
-    : string[]
+    + execute(dipId: number | null
+    ): string[]
 }
 
 SearchIpcAdapter --> ISearchDocumentalClassUC : invoca
@@ -54,8 +53,8 @@ class SearchDocumentalClassUC {
     + execute(name: string): DocumentClass[]
 }
 interface IDocumentClassRepository {
-    + searchDocumentalClasses(name: string)
-    : DocumentClass[]
+    + searchDocumentalClasses(name: 
+    string): DocumentClass[]
 }
 
 SearchDocumentalClassUC ..|> ISearchDocumentalClassUC
@@ -95,17 +94,17 @@ skinparam linetype ortho
 hide empty members
 
 interface ISearchDocumentsUC {
-    + execute(filters: SearchDocumentsQuery)
-    : Document[]
+    + execute(filters: SearchDocumentsQuery
+    ) : Document[]
 }
 class SearchDocumentsUC {
     - documentRepo: IDocumentRepository
-    + execute(filters: SearchDocumentsQuery)
-    : Document[]
+    + execute(filters: SearchDocumentsQuery
+    ) : Document[]
 }
 interface IDocumentRepository {
-    + searchDocument(filters: SearchDocumentsQuery)
-    : Document[]
+    + searchDocument(filters: SearchDocumentsQuery
+    ) : Document[]
 }
 
 SearchDocumentsUC ..|> ISearchDocumentsUC
@@ -127,7 +126,8 @@ interface ISearchSemanticUC {
 class SearchSemanticUC {
     - documentRepo: IDocumentRepository
     - aiAdapter: IWordEmbedding
-    + execute(query: string): Promise<SemanticSearchMatch[]>
+    + execute(query: string
+    ): Promise<SemanticSearchMatch[]>
 }
 interface IDocumentRepository {
     + searchDocumentSemantic(v: Float32Array
@@ -353,7 +353,8 @@ skinparam linetype ortho
 hide empty members
 
 class DocumentClassMapper {
-    + {static} toSearchResult(dc: DocumentClass): DocumentClassSearchResult
+    + {static} toSearchResult(dc: DocumentClass
+    ): DocumentClassSearchResult
 }
 class DocumentClass
 class DocumentClassSearchResult {
@@ -377,7 +378,7 @@ skinparam linetype ortho
 hide empty members
 
 class ProcessMapper {
-    + {static} toSearchResult(p: Process): ProcessSearchResult
+    + {static} toSearchResult(p: Process ): ProcessSearchResult
 }
 class Process
 class ProcessSearchResult {
