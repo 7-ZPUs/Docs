@@ -105,26 +105,26 @@ Le responsabilita principali sono la registrazione degli handler IPC, la risoluz
 
 \subsubsection{Sequenza runtime generale}
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-    \item \textbf{Renderer invoca IPC:} \texttt{window.electronAPI.invoke(channel, payload)}.
-    \item \textbf{Preload autorizza:} verifica prefissi consentiti e inoltra a \texttt{ipcRenderer.invoke}.
+    \item \textbf{Renderer invoca IPC:} \codeword{window.electronAPI.invoke(channel, payload)}.
+    \item \textbf{Preload autorizza:} verifica prefissi consentiti e inoltra a \codeword{ipcRenderer.invoke}.
     \item \textbf{Main process intercetta:} adapter registra e gestisce l'handler del canale.
     \item \textbf{Risoluzione DI:} l'adapter risolve il use case richiesto dal container.
     \item \textbf{Use case delega:} orchestration verso il repository.
     \item \textbf{Repository delega:} accesso ai dati tramite DAO.
     \item \textbf{DAO esegue query:} interrogazione SQLite e ricostruzione entity.
     \item \textbf{Conversione DTO:} mapping entity $\to$ DTO al boundary IPC.
-    \item \textbf{Risposta IPC:} il renderer riceve DTO o \texttt{null}.
+    \item \textbf{Risposta IPC:} il renderer riceve DTO o \codeword{null}.
 \end{enumerate}
 
 \subsubsection{Dependency Injection}
 \noindent
-Configurazione in \texttt{container.ts}:
+Configurazione in \codeword{container.ts}:
 
 \begin{enumerate}
-    \item \textbf{Provider DB:} \texttt{DATABASE\_PROVIDER\_TOKEN} $\to$ \texttt{DatabaseProvider}.
-    \item \textbf{Repository tokens:} \texttt{*\_REPOSITORY\_TOKEN} per i vari aggregati.
-    \item \textbf{DAO tokens:} \texttt{*\_DAO\_TOKEN} per le implementazioni concrete.
-    \item \textbf{Use case tokens:} \texttt{GET\_BY\_*} per le operazioni di retrieval.
+    \item \textbf{Provider DB:} \codeword{DATABASE\_PROVIDER\_TOKEN} $\to$ \codeword{DatabaseProvider}.
+    \item \textbf{Repository tokens:} \codeword{*\_REPOSITORY\_TOKEN} per i vari aggregati.
+    \item \textbf{DAO tokens:} \codeword{*\_DAO\_TOKEN} per le implementazioni concrete.
+    \item \textbf{Use case tokens:} \codeword{GET\_BY\_*} per le operazioni di retrieval.
 \end{enumerate}
 
 \subsubsection{Bootstrap e indicizzazione}
@@ -133,7 +133,7 @@ Configurazione in \texttt{container.ts}:
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
     \item Ricrea database zero.
     \item Applica schema.
-    \item Chiama \texttt{IndexDip.execute(dipPath)}.
+    \item Chiama \codeword{IndexDip.execute(dipPath)}.
 \end{enumerate}
 
 \noindent
@@ -148,26 +148,26 @@ Configurazione in \texttt{container.ts}:
 
 \subsubsection{Wiring runtime e registrazioni}
 \noindent
-In avvio applicazione (\texttt{main.ts}) il container runtime esegue:
+In avvio applicazione (\codeword{main.ts}) il container runtime esegue:
 
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-    \item bootstrap database tramite \texttt{ApplicationBootstrapAdapter}
-    \item registrazione token runtime \texttt{DIP\_PATH\_TOKEN}
-    \item registrazione adapter IPC (es. \texttt{BrowsingIpcAdapter}, \texttt{CheckIntegrityIpcAdapter})
+    \item bootstrap database tramite \codeword{ApplicationBootstrapAdapter}
+    \item registrazione token runtime \codeword{DIP\_PATH\_TOKEN}
+    \item registrazione adapter IPC (es. \codeword{BrowsingIpcAdapter}, \codeword{CheckIntegrityIpcAdapter})
 \end{enumerate}
 
 \noindent
-Nel bootstrap DB (\texttt{DatabaseBootstrap.ts}) viene registrato anche \texttt{SQLITE\_DB\_TOKEN} con la connessione SQLite runtime.
+Nel bootstrap DB (\codeword{DatabaseBootstrap.ts}) viene registrato anche \codeword{SQLITE\_DB\_TOKEN} con la connessione SQLite runtime.
 
 \subsubsection{Semantica transazionale condivisa}
 \noindent
-Le operazioni backend che aggiornano alberi di dati su piu livelli usano \texttt{ITransactionManager} con implementazione SQLite (\texttt{SqliteTransactionManager}):
+Le operazioni backend che aggiornano alberi di dati su piu livelli usano \codeword{ITransactionManager} con implementazione SQLite (\codeword{SqliteTransactionManager}):
 
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-    \item \texttt{BEGIN IMMEDIATE TRANSACTION}
+    \item \codeword{BEGIN IMMEDIATE TRANSACTION}
     \item esecuzione blocco applicativo
-    \item \texttt{COMMIT} su successo
-    \item \texttt{ROLLBACK} su errore
+    \item \codeword{COMMIT} su successo
+    \item \codeword{ROLLBACK} su errore
 \end{enumerate}
 
 \noindent
@@ -175,4 +175,4 @@ Questa semantica garantisce consistenza dei dati durante propagazioni gerarchich
 
 \subsubsection{Sicurezza preload}
 \noindent
-\texttt{preload.ts} consente IPC su prefissi autorizzati:\newline\texttt{ipc:search:}, \texttt{browse:}, \texttt{file:}, \texttt{check-integrity:}, \texttt{ipc:indexing:status}.
+\codeword{preload.ts} consente IPC su prefissi autorizzati:\newline\codeword{ipc:search:}, \codeword{browse:}, \codeword{file:}, \codeword{check-integrity:}, \codeword{ipc:indexing:status}.

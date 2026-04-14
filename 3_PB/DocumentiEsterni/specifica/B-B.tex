@@ -46,18 +46,18 @@ Le caratteristiche backend trasversali al container Main (stack tecnologico, lay
 
 \paragraph{Flusso gerarchico di navigazione.}
 \begin{center}
-  \texttt{BROWSE\_GET\_DIP\_BY\_ID} \\
+  \codeword{BROWSE\_GET\_DIP\_BY\_ID} \\
   $\downarrow$ \\
-  \texttt{BROWSE\_GET\_DOCUMENT\_CLASS\_BY\_DIP\_ID} \\
+  \codeword{BROWSE\_GET\_DOCUMENT\_CLASS\_BY\_DIP\_ID} \\
   $\downarrow$ \\
-  \texttt{BROWSE\_GET\_PROCESS\_BY\_DOCUMENT\_CLASS} \\
+  \codeword{BROWSE\_GET\_PROCESS\_BY\_DOCUMENT\_CLASS} \\
   $\downarrow$ \\
-  \texttt{BROWSE\_GET\_DOCUMENTS\_BY\_PROCESS} \\
+  \codeword{BROWSE\_GET\_DOCUMENTS\_BY\_PROCESS} \\
   $\downarrow$ \\
-  \texttt{BROWSE\_GET\_FILE\_BY\_DOCUMENT}
+  \codeword{BROWSE\_GET\_FILE\_BY\_DOCUMENT}
 \end{center}
 
-Contratto IPC definito in \texttt{ipc-channels.ts} e registrato in \texttt{BrowsingIpcAdapter.ts}:
+Contratto IPC definito in \codeword{ipc-channels.ts} e registrato in \codeword{BrowsingIpcAdapter.ts}:
 
 \begin{table}[H]
   \centering
@@ -103,7 +103,7 @@ Contratto IPC definito in \texttt{ipc-channels.ts} e registrato in \texttt{Brows
   \label{tab:browsing:ipc}
 \end{table}
 \noindent
-\textbf{Nota:} Il canale \texttt{BROWSE\_\allowbreak GET\_\allowbreak DIP\_\allowbreak BY\_\allowbreak DOCUMENT\_\allowbreak CLASS} è definito in \texttt{ipc-channels.ts} ma non registrato in \texttt{BrowsingIpcAdapter}.
+\textbf{Nota:} Il canale \codeword{BROWSE\_\allowbreak GET\_\allowbreak DIP\_\allowbreak BY\_\allowbreak DOCUMENT\_\allowbreak CLASS} è definito in \codeword{ipc-channels.ts} ma non registrato in \codeword{BrowsingIpcAdapter}.
 
 \subsubsection{Diagrammi architetturali (C3/C4)}
 \label{sec:browsing:diagrammi}
@@ -218,14 +218,14 @@ Ogni repository delega al DAO corrispondente il retrieval dei dati.
 \end{table}
 
 \noindent
-Inoltre: \texttt{save}, \texttt{updateIntegrityStatus} per persistenza; \texttt{searchDocument*}, 
-\texttt{getIndexedDocumentsCount} per DocumentRepository.
+Inoltre: \codeword{save}, \codeword{updateIntegrityStatus} per persistenza; \codeword{searchDocument*}, 
+\codeword{getIndexedDocumentsCount} per DocumentRepository.
 
 \subsubsection{Layer DAO}
 \label{sec:browsing:dao}
 
 \noindent
-Le interfacce \texttt{I*DAO} espongono metodi paralleli ai repository per il retrieval e query concrete eseguite in SQLite.
+Le interfacce \codeword{I*DAO} espongono metodi paralleli ai repository per il retrieval e query concrete eseguite in SQLite.
 
 \begin{table}[H]
   \centering
@@ -262,7 +262,7 @@ Le interfacce \texttt{I*DAO} espongono metodi paralleli ai repository per il ret
 \label{sec:browsing:entity}
 
 \noindent
-Modello di dominio. Ogni entity espone getter e \texttt{setIntegrityStatus}:
+Modello di dominio. Ogni entity espone getter e \codeword{setIntegrityStatus}:
 
 \begin{table}[H]
   \centering
@@ -320,7 +320,7 @@ Contratto dati IPC (restituiti dall'adapter al renderer):
 \end{table}
 
 \noindent
-\textbf{Nota:} Il converter genera eccezioni se \texttt{id} o FK sono \texttt{null} durante la conversione.
+\textbf{Nota:} Il converter genera eccezioni se \codeword{id} o FK sono \codeword{null} durante la conversione.
 
 
 \subsubsection{Mapping e conversioni}
@@ -349,23 +349,23 @@ Trasformazioni tra layer di persistenza, entity e DTO:
 \end{table}
 
 \noindent
-\texttt{MetadataMapper.fromFlatRows} ricostruisce l'albero da righe flat con controllo cicli/root.
+\codeword{MetadataMapper.fromFlatRows} ricostruisce l'albero da righe flat con controllo cicli/root.
 
 
 \subsubsection{Comportamenti runtime}
 \label{sec:browsing:runtime}
 
 \noindent
-\textbf{By-ID:} restituisce \texttt{null} se entity non trovata\\
+\textbf{By-ID:} restituisce \codeword{null} se entity non trovata\\
 \textbf{List:} restituisce array, anche vuoto\\
 \textbf{DTO:} conversione applicata nel boundary IPC prima della restituzione
 
-\paragraph{Lettura file buffer (\texttt{BROWSE\_GET\_FILE\_BUFFER\_BY\_ID}).}
+\paragraph{Lettura file buffer (\codeword{BROWSE\_GET\_FILE\_BUFFER\_BY\_ID}).}
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-  \item Recupera file entity tramite \texttt{IGetFileByIdUC}
-  \item Risolve percorso assoluto: \texttt{path.resolve(dipPath, file.getPath())}
-  \item Legge contenuto con \texttt{fs.readFileSync}
-  \item In caso di errore I/O: log e ritorno \texttt{null}
+  \item Recupera file entity tramite \codeword{IGetFileByIdUC}
+  \item Risolve percorso assoluto: \codeword{path.resolve(dipPath, file.getPath())}
+  \item Legge contenuto con \codeword{fs.readFileSync}
+  \item In caso di errore I/O: log e ritorno \codeword{null}
 \end{enumerate}
 
 
