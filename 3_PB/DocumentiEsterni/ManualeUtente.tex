@@ -200,8 +200,8 @@ Selezionando un nodo di tipo \textbf{classe documentale} (pallino rosso nell'alb
     \item \textbf{Nome della classe}: Indica il nome della classe documentale;
     \item \textbf{UUID della classe}: Identificativo univoco della classe documentale;
     \item \textbf{Stato verifica}: Indica se la classe è stata verificata o meno, e l'esito della verifica;
-    \item \textbf{Marcactura temporale}: Indica la data e l'ora di creazione della classe documentale.
-    \item \textbf{Lista dei processi}: Elenca i processi appartenenti alla classe, con la possibilità di cliccare su ciascun processo per visualizzarne i dettagli (sezione \ref{esplorazione ad albero}).
+    \item \textbf{Marcatura temporale}: Indica la data e l'ora di creazione della classe documentale;
+    \item \textbf{Lista dei processi}: Elenca i processi appartenenti alla classe, con la possibilità di cliccare su ciascun processo per visualizzarne i dettagli (sezione \ref{esplorazione ad albero});
 \end{itemize}
 
 \begin{figure}[H]
@@ -222,7 +222,7 @@ Selezionando un nodo di tipo \textbf{processo} (pallino verde nell'albero), l'in
         \item \textit{Processo di Versamento}: Indica le date di inizio/fine, gli operatori coinvolti (UUID attivatore/terminatore) e il canale di attivazione;
         \item \textit{Processo di Conservazione}: Dettaglia le tempistiche e le modalità di archiviazione definitiva.
     \end{itemize}
-    \item \textbf{Indice dei documenti (destra)}: Una tabella riassuntiva che elenca tutti i documenti contenuti nel processo. Per ogni riga è possibile cliccare sul pulsante \textbf{Visualizza} per saltare direttamente alla visualizzazione del singolo file.
+    \item \textbf{Indice dei documenti (destra)}: Una tabella riassuntiva che elenca tutti i documenti contenuti nel processo. Per ogni riga è possibile cliccare sul pulsante \textbf{Visualizza} per saltare direttamente alla visualizzazione del singolo documento.
 \end{itemize}
 
 \begin{figure}[H]
@@ -235,7 +235,7 @@ Selezionando un nodo di tipo \textbf{processo} (pallino verde nell'albero), l'in
 \subsubsection{Dettaglio del documento}
 Selezionando un file (principale o allegato), l'area centrale viene suddivisa per offrire una panoramica completa:
 \begin{itemize}
-    \item \textbf{metadati principali}: A sinistra è presente un pannello scorrevole che elenca i dati identificativi del documento (UUID, Nome, Oggetto, Descrizione) e le informazioni sulla sua formazione;
+    \item \textbf{Metadati principali}: A sinistra è presente un pannello scorrevole che elenca i dati identificativi del documento (UUID, Nome, Oggetto, Descrizione) e le informazioni sulla sua formazione;
     \item \textbf{Anteprima integrata}: A destra è presente un visualizzatore PDF interattivo. Tramite la barra degli strumenti superiore dell'anteprima, l'utente può scorrere le pagine, zoomare o ruotare il documento (Figura \ref{fig:anteprima}).;
 \end{itemize}
     
@@ -266,8 +266,10 @@ Per cercare all'interno del nome della classe o per ID del processo è possibile
 \subsubsection{Ricerca avanzata}
 A sinistra dei risultati è possibile aggiungere dei filtri pertinenti ai relativi metadati. Questi filtri possono essere nascosti tramite apposita linguetta, etichettata \textbf{Filtri}.\\
  Per applicare i filtri aggiuntivi premere il pulsante \textbf{Applica e Cerca} come mostrato in figura \ref{fig:ricerca_avanzata}.\\
+
 I filtri sono mutualmente esclusivi se non compatibili, in altri termini, l'utilizzo di un certo filtro potrebbe precludere l'utilizzo di un'altro, perchè non genererebbe sicuramente risultati. Questo per migliorare l'esperienza utente ed evitare risultati di ricerca vuoti.\\
-Per esempio, non è possibile compilare contemporaneamente un filtro dei documenti amministrativi o amministrativi informatici e uno delle aggregazioni, e viceversa. Anche la gestione dei soggetti dinamica, mostrando all'utente solo le opzioni pertinenti con gli altri filtri.
+Per esempio, non è possibile compilare contemporaneamente un filtro dei documenti amministrativi o amministrativi informatici e uno delle aggregazioni, e viceversa. \\
+Anche la gestione dei soggetti dinamica, mostrando all'utente solo le opzioni pertinenti con gli altri filtri.
 
 \begin{figure}[H]
     \centering
@@ -294,31 +296,34 @@ Per svuotare i filtri premere l'omonimo pulsante a sinistra del pulsante per la 
 \end{figure}
 
 \paragraph{Aggiunta soggetti}
-Tra i diversi filtri c'è la possibilità di aggiungere filtri soggetti. La compilazione è guidata e a step:
+Tra i diversi filtri c'è la possibilità di aggiungere filtri sui soggetti. La compilazione è guidata e a step:
 \begin{enumerate}
-    \item \textbf{Scelta del ruolo}: L'utente può scegliere un ruolo per il soggetto da inserire tra una serie di opzioni. Le opzioni si adattano in base al fatto se indicato o meno il tipo del documento che si sta cercando. 
+    \item \textbf{Scelta del ruolo}: L'utente può scegliere un ruolo per il soggetto da inserire tra una serie di opzioni. 
+    Le opzioni si adattano in base al tipo del documento che si sta cercando. 
 
     \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{img/ruolo_all.png}
+    \includegraphics[width=0.3\textwidth]{img/ruolo_all.png}
     \caption{Ruolo dei soggetti in assenza di indicazioni del tipo di documento.}
     \label{fig:rusoggetti}
     \end{figure}
     
-    \item \textbf{Scelta del tipo di soggetto}: L'utente può scegliere un ruolo per il tipo di soggetto da inserire tra una serie di opzioni. Le opzioni si adattano in base al fatto se inidcato o meno il tipo del documento che si sta cercando e al ruolo selezionato. 
+    \item \textbf{Scelta del tipo di soggetto}: L'utente può scegliere un ruolo per il tipo di soggetto da inserire tra una serie di opzioni.
+    Le opzioni si adattano in base al tipo di documento e al ruolo che si sta cercando. 
 
     \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{img/tipo_all.png}
+    \includegraphics[width=0.3\textwidth]{img/tipo_all.png}
     \caption{Tipo dei soggetti in assenza di indicazioni del tipo di documento e scegliendo mittente.}
     \label{fig:tipo_soggetti}
     \end{figure}
 
-    \item \textbf{Dettagli soggetto}: L'utente può compilare i dettagli per il tipo di soggetto da inserire. Le opzioni si adattano in base al fatto se indicato o meno il tipo del documento che si sta cercando e al ruolo e tipo selezionato. 
+    \item \textbf{Dettagli soggetto}: L'utente può compilare i dettagli per il tipo di soggetto da inserire. 
+    Le opzioni si adattano in base al tipo del documento, al ruolo e al soggetto selezionato. 
 
     \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{img/dettagli_all.png}
+    \includegraphics[width=0.3\textwidth]{img/dettagli_all.png}
     \caption{Tipo dei soggetti in assenza di indicazioni del tipo di documento e scegliendo mittente e PG.}
     \label{fig:dettagli_soggetti}
     \end{figure}
@@ -327,7 +332,8 @@ Tra i diversi filtri c'è la possibilità di aggiungere filtri soggetti. La comp
 In ogni momento della compilazione dei soggetti è possibile tornare alla scelta precedente o annullare del tutto l'inserimento
 
 \paragraph{Validazione dei filtri}
-Prima che la ricerca venga effettuata il DIPReader effettua una validazione dei filtri, controllando che nella compilazione vi siano errori logici. Nel caso in cui un filtro presenti un'irregolarità questa è segnalata da una messaggio che indica il motivo, come in figura. 
+Prima che la ricerca venga effettuata il DIPReader effettua una validazione dei filtri, controllando che nella compilazione non vi siano errori logici.
+ Nel caso in cui un filtro presenti un'irregolarità questa è segnalata da una messaggio che indica il motivo, come in figura. 
 
 \begin{figure}[H]
     \centering
@@ -337,7 +343,8 @@ Prima che la ricerca venga effettuata il DIPReader effettua una validazione dei 
 \end{figure}
 
 \subsubsection{Ricerca sematica} 
-Per abilitare la ricerca semantica è possibile spuntare l'apposita casella. Ora i risultati della ricerca comprenderanno elementi che sono semanticamente simili a ciò che è inserito nella barra di ricerca.
+Per abilitare la ricerca semantica è possibile spuntare l'apposita casella. Ora i risultati della ricerca comprenderanno elementi che sono semanticamente 
+simili a ciò che è inserito nella barra di ricerca.
 
  \begin{figure}[H]
     \centering
@@ -370,7 +377,7 @@ Se si desidera è possibile accedere, premendo l'elemento, ad una visione più d
 \subsection{Integrità} \label{integrità}
 Per accedere a questa sezione è possibile premere il pulsante "Sezione integrità" in alto a destra, contrassegnato dal simbolo di uno scudo. 
 In questa sezione è visibile il resoconto di tutti gli elementi per i quali è stata avviata una verifica d'integrità. Se si desidera è possibile 
-avviare una verifica d'integrità globale per l'intero contenuto del DIP. Per archivi più pesanti questa operazione potrebbe richiedere qualche minuto.
+avviare una verifica d'integrità globale per l'intero contenuto del DIP ( per archivi più pesanti questa operazione potrebbe richiedere qualche minuto ).
 
 \begin{figure}[H]
     \centering
@@ -379,7 +386,8 @@ avviare una verifica d'integrità globale per l'intero contenuto del DIP. Per ar
     \label{fig:integrita}
 \end{figure}
 
-Di seguito è possibile vedere un esempio di report di integrità. Possiamo vedere le classi analizzate, e nel caso ci fosse un errore è possibile vedere nello specifico quali documenti interessa l'errore.
+Di seguito è possibile vedere un esempio di report di integrità. Possiamo vedere le classi analizzate, e nel caso ci fosse un errore è possibile vedere 
+nello specifico quali documenti interessa l'errore.
 
 \begin{figure}[H]
     \centering
@@ -390,8 +398,8 @@ Di seguito è possibile vedere un esempio di report di integrità. Possiamo vede
 
 \subsection{Salvataggio documentale e stampa} \label {esport}
 
-L'utente può scaricare in locale o stampare i documenti conservati nel sistema. Il software supporta il salvataggio e la stampa sia del singolo file principale, che di interi pacchetti documentali, quindi il
-il documento principale e i suoi allegati.
+L'utente può scaricare in locale o stampare i documenti conservati nel sistema. Il software supporta il salvataggio e la stampa sia del singolo file 
+principale, che di interi pacchetti documentali, quindi il documento principale e i suoi allegati.
 
 
 \subsubsection{Procedura di scaricamento}
@@ -399,7 +407,7 @@ il documento principale e i suoi allegati.
 Lo scaricamento è disponibile esclusivamente per i nodi di tipo \textit{\glossario{Documento Padre}}. Per avviare il processo, seguire i passaggi indicati:
 
 \begin{enumerate}
-    \item \textbf{Selezione del documento}: Identificare nell'albero di navigazione il documento desiderato. Una volta selezionato, l'area centrale mostrerà i metadati e le azioni disponibili;
+    \item \textbf{Selezione del documento}: Selezionare nell'albero di navigazione il documento desiderato. Una volta selezionato, l'area centrale mostrerà i metadati e le azioni disponibili;
     \item \textbf{Attivazione comando}: Cliccare sul pulsante \textbf{Scarica documento} (contrassegnato dal colore verde) situato nella barra superiore delle azioni (Figura \ref{fig:barra_azioni});
 \end{enumerate}
 
@@ -422,8 +430,9 @@ Lo scaricamento è disponibile esclusivamente per i nodi di tipo \textit{\glossa
 \end{figure}
 
 \begin{enumerate}[resume]
-    \item \textbf{Selezione della cartella di destinazione}: Il sistema aprirà una finestra di dialogo che permette all'utente di scegliere la cartella in cui salvare i file scaricati. Se si tratta di un singolo 
-    file, il sistema permette, mediante un altro campo di testo, di modificare il nome del file prima di confermare l'operazione. In caso di scaricamento multiplo, i file vengono salvati con i nomi originali presenti nel DIP, all'interno della cartella selezionata.
+    \item \textbf{Selezione della cartella di destinazione}: Cliccato il tasto \textit{Scarica}, il sistema aprirà una finestra di dialogo che permette all'utente di scegliere la cartella in cui salvare i file da scaricare.
+     Se si tratta di un singolo file, il sistema permette, mediante un'altra finestra di dialogo, di modificare il nome del file prima di confermare l'operazione. In caso di scaricamento multiplo, i
+      file vengono salvati con i nomi originali presenti nel DIP, all'interno della cartella selezionata.
 \end{enumerate}
 
 \subsubsection{Stampa}
@@ -433,7 +442,7 @@ Come per la procedura di scaricamento, la funzionalità di stampa è disponibile
 Per avviare il processo, seguire i passaggi indicati:
 
 \begin{enumerate}
-    \item \textbf{Selezione del documento}: Identificare nell'albero di navigazione il file desiderato;
+    \item \textbf{Selezione del documento}: Selezionare nell'albero di navigazione il file desiderato;
     \item \textbf{Attivazione comando}: Cliccare sul pulsante \textbf{Stampa documento} situato nella barra superiore delle azioni (Figura 6). Il comando è identificato dall'icona di una stampante stilizzata;
     \item \textbf{Configurazione della stampa}: Il sistema aprirà una finestra di dialogo
         modale \textit{Seleziona i documenti da stampare} che elenca il file principale e tutti gli
@@ -448,14 +457,14 @@ Per avviare il processo, seguire i passaggi indicati:
 \end{figure}
 
 \begin{enumerate}[resume]
-    \item \textbf{Interfaccia di sistema}: Il software richiamerà automaticamente la finestra di dialogo nativa del sistema operativo (\textit{Print Dialog}). In questa fase è possibile:
+    \item \textbf{Interfaccia di sistema}: Cliccato il tasto \textit{Stampa}, il software richiamerà la finestra di dialogo nativa del sistema operativo (\textit{Print Dialog}). In questa fase è possibile:
     \begin{itemize}
         \item Selezionare la stampante di destinazione;
         \item Configurare le impostazioni di layout;
         \item Definire il numero di copie e l'intervallo di pagine da riprodurre.
     \end{itemize}
     Tale finestra verrà replicata per ogni singolo file selezionato, consentendone una gestione individuale della stampa e permettendo all'utente di confermare,annullare o 
-    modificare l'operazione ( cambio stampante ) per ciascun file.
+    modificare l'operazione per ciascun file.
     \end{enumerate}
 
 \subsubsection{Selezione Multipla e Allegati}
@@ -469,22 +478,21 @@ All'interno della finestra di selezione, l'utente ha il pieno controllo sugli el
 
 \subsubsection{Monitoraggio e Conclusione}
 
-Una volta avviata l'operazione, il software si metterà all'opera,, fornendo feedback in tempo reale:
+Una volta avviata l'operazione, il software si metterà all'opera, fornendo feedback in tempo reale:
 
 \begin{itemize}
     \item \textbf{Avanzamento}: In alto a destra comparirà una \glossario{barra di stato} che mostra l'elenco dei file in fase di scrittura e la conferma individuale per ogni elemento completato;
-    \item \textbf{Notifica finale}: Al termine dell'intera procedura, un messaggio di conferma indicherà il numero totale di file salvati con successo sul \glossario{file system} locale (Figura \ref{fig:notifica_export});
+    \item \textbf{Notifica finale}: Al termine dell'intera procedura, un messaggio di conferma indicherà il numero totale di file per la quale l'operazione ha avuto successo (Figura \ref{fig:notifica_export});
 \end{itemize}
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{img/notifica.png}
+    \includegraphics[width=0.5\textwidth]{img/notifica.png}
     \caption{Messaggi di feedback per la conferma del salvataggio.}
     \label{fig:notifica_export}
 \end{figure}
 \begin{itemize}
     \item \textbf{Destinazione}: I file vengono salvati nella cartella di destinazione predefinita del sistema o in quella selezionata tramite la finestra di dialogo, mantenendo i nomi originali dei file 
-    presenti nel DIP ( escluso il caso in cui si stia salvando un singolo file ).
+    presenti nel DIP ( escluso il caso di file singolo ).
 \end{itemize}
 
 \newpage
