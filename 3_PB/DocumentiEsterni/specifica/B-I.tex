@@ -89,7 +89,7 @@ Queste due componenti collaborano per gestire l'estrazione del testo dai file e 
 \paragraph{EmbeddingService}:
 \begin{itemize}
     \item \textbf{Descrizione}: business service che si occupa di gestire la generazione di vettori a partire dal path del file principale di un documento. Questo servizio non si occupa della persistenza in quanto violerebbe il principio di Single Reponsibility.
-    \item \codeword{\textbf{+ generateDocumentEmbedding(filePath: string)}: Promise<Float32Array | null>}: tramite \codeword{readTextFromStream} legge il contenuto del file principale del documento, che viene successivamente ridotto in chunk tramite \codeword{chunkText} e convertito in vettore tramite \codeword{WordEmbeddingPort}. Restituisce un array di float a 32 bit che rappresenta il vettore del documento, o null in caso di errore. Questo vettore è costruito come media dei vettori di ogni chunk del testo tramite \codeword{meanEmbedding}.
+    \item \codeword{\textbf{+ generateDocumentEmbedding(dipPath:string, filePath: string)}:} \\ \codeword{Promise<Float32Array | null>}: tramite \codeword{readTextFromStream} legge il contenuto del file principale del documento, che viene successivamente ridotto in chunk tramite \codeword{chunkText} e convertito in vettore tramite \codeword{WordEmbeddingPort}. Restituisce un array di float a 32 bit che rappresenta il vettore del documento, o null in caso di errore. Questo vettore è costruito come media dei vettori di ogni chunk del testo tramite \codeword{meanEmbedding}.
     \item \codeword{\textbf{+ setEmbeddingConfiguration(config: IEmbeddingConfiguration)}: void}: permette di aggiornare la configurazione per la generazione degli embedding, accettando in ingresso un oggetto che rispetta l'interfaccia \codeword{IEmbeddingConfiguration}.
     \item \codeword{\textbf{- readTextFromStream(filePath: string)}: Promise<string>}: legge il contenuto del file principale del documento a partire dal suo path tramite \\ \codeword{PackageReaderPort.readFileBytes}, restituendo una stringa di testo.
     \item \codeword{\textbf{- chunkText(text: string)}: string[]}: suddivide il testo in chunk di dimensione massima definita da \codeword{embeddingConfig.chunkSize}, restituendo un array di stringhe.
@@ -124,12 +124,14 @@ Queste due componenti collaborano per gestire l'estrazione del testo dai file e 
 \paragraph{PackageReaderService}:
 \begin{itemize}
     \item \textbf{Descrizione}: adapter che implementa \codeword{IPackageReaderPort}, responsabile della lettura del pacchetto DiP dal filesystem locale. Orchestr a il flusso di estrazione delle entità coordinando \codeword{DipParser}, \codeword{FileSystemPort} e \codeword{DataMapper}.
-    \item \codeword{\textbf{+ readDip(dipPath: string)}: Promise<Dip>}: legge il file \codeword{DiPIndex} dal percorso specificato, lo decodifica tramite \codeword{DipParser} e lo trasforma in entità \codeword{Dip} tramite \codeword{DataMapper}.
-    \item \codeword{\textbf{+ readDocumentClasses(dipPath: string)}: AsyncGenerator<DocumentClass>}: genera in modo asincrono le entità \codeword{DocumentClass} estratte dal pacchetto. Per ogni classe documentale, legge il file XML corrispondente, lo decodifica e lo trasforma tramite \codeword{DataMapper}.
-    \item \codeword{\textbf{+ readProcesses(dipPath: string)}: AsyncGenerator<Process>}: genera in modo asincrono le entità \codeword{Process} estratte dal pacchetto, leggendo e decodificando i file XML tramite \codeword{DipParser} e trasformandoli tramite \codeword{DataMapper}.
-    \item \codeword{\textbf{+ readDocuments(dipPath: string)}: AsyncGenerator<Document>}: genera in modo asincrono le entità \codeword{Document} estratte dal pacchetto, gestendo la lettura dei metadati e la mappatura dei file allegati.
-    \item \codeword{\textbf{+ readFiles(dipPath: string)}: AsyncGenerator<File>}: genera in modo asincrono le entità \codeword{File} estratte dal pacchetto, distinguendo tra file principale e allegati.
-    \item \codeword{\textbf{+ readFileBytes(filePath: string)}: Promise<Buffer>}: legge il contenuto binario di un file dal filesystem, utilizzato da \codeword{EmbeddingService} per l'estrazione del testo.
+    \item \codeword{\textbf{+ readDip()}: Promise<Dip>}: legge il file \codeword{DiPIndex} dal percorso specificato, lo decodifica tramite \codeword{DipParser} e lo trasforma in entità \codeword{Dip} tramite \codeword{DataMapper}.
+    \item \codeword{\textbf{+ readDocumentClasses()}: AsyncGenerator<DocumentClass>}: genera in modo asincrono le entità \codeword{DocumentClass} estratte dal pacchetto. Per ogni classe documentale presente in DipIndex.xml, ne viene eseguito il parsing e il mapping verso l'entità di dominio corrispondente tramite\codeword{DataMapper}.
+    \item \codeword{\textbf{+ readProcesses()}: AsyncGenerator<Process>}: genera in modo asincrono le entità \codeword{Process} estratte dal pacchetto, leggendo e decodificando i file XML che contengono i metadati aggiuntivi tramite \codeword{DipParser} e trasformandoli tramite \codeword{DataMapper}.
+    \item \codeword{\textbf{+ readDocuments()}: AsyncGenerator<Document>}: genera in modo asincrono le entità \codeword{Document} estratte dal pacchetto, gestendo la lettura dei metadati e la loro mappatura.
+    \item \codeword{\textbf{+ readFiles()}: AsyncGenerator<File>}: genera in modo asincrono le entità \codeword{File} estratte dal pacchetto, distinguendo tra file principale e allegati.
+    \item \codeword{\textbf{+ setDipPath(dipPath: string)}: void}: imposta il percorso del pacchetto DiP da cui leggere i dati, necessario per risolvere correttamente i percorsi relativi dei file all'interno del pacchetto.
+    \item \codeword{\textbf{- getOptionalMetadata(relativePath: string)}: Promise<any>}: metodo helper che, dato un percorso relativo, legge il file corrispondente all'interno del pacchetto, ne effettua il parsing tramite \codeword{DipParser} e restituisce i dati grezzi. Utilizzato per recuperare i metadati supplementari di processi, documenti e file.
+    \item \codeword{\textbf{- getParsedIndex()}: Promise<any>}: metodo helper che legge e decodifica il file \codeword{DiPIndex} tramite \codeword{DipParser} e mappato tramite \codeword{DataMapper}. Utilizzato come punto di partenza per l'estrazione delle entità del pacchetto. Questo elemento è presente in ogni pacchetto DiP.
 \end{itemize}
 
 \begin{figure}[H]
@@ -191,33 +193,17 @@ Durante il mapping, \codeword{DataMapper} estrae dal DiPIndex il percorso del fi
 \paragraph{IDataMapper}:
 \begin{itemize}
     \item \textbf{Descrizione}: interfaccia che definisce il contratto per la trasformazione dei dati grezzi estratti dai file XML nei modelli di dominio tipizzati. Utilizza \textbf{MapperRequest} per le entità che dispongono di metadati supplementari
-    \item \codeword{\textbf{+ mapDip(request: MapperRequest<DocumentClassXml>)}: DocumentClass}: trasforma i dati grezzi nelle entità \codeword{DocumentClass}, accedendo a metadati contestuali attraverso \codeword{MapperRequest}.
-    \item \codeword{\textbf{+ mapDocumentClasses(rawDipIndex: any)}: Process}: trasforma i dati grezzi nelle entità \codeword{Process}, utilizzando il contesto fornito da \codeword{MapperRequest} per correlazioni tra entità.
+    \item \codeword{\textbf{+ mapDip()}: DocumentClass}: trasforma i dati grezzi nelle entità \codeword{DocumentClass}, accedendo a metadati contestuali attraverso \codeword{MapperRequest}.
+    \item \codeword{\textbf{+ mapDocumentClasses()}: Process}: trasforma i dati grezzi nelle entità \codeword{Process}, utilizzando il contesto fornito da \codeword{MapperRequest} per correlazioni tra entità.
+    \item \codeword{\textbf{+ getProcessMappers()}: MapperRequest<Process>[]}: restituisce una lista di richieste di mapping per i processi, utilizzando il contesto fornito da \codeword{MapperRequest}.
+    \item \codeword{\textbf{+ getDocumentMappers()}: MapperRequest<Document>[]}: restituisce una lista di richieste di mapping per i documenti, utilizzando il contesto fornito da \codeword{MapperRequest}.
+    \item \codeword{\textbf{+ getFileMappers()}: MapperRequest<File>[]}: restituisce una lista di richieste di mapping per i file, utilizzando il cont
+    \item \codeword{\textbf{+ setRawDipIndex(rawDipIndex: any): void}}: setter per il contenuto grezzo del DiPIndex (JS object non tipizzato), necessario per poter estrarre successivamente le entità tramite gli altri metodi pubblici.
 \end{itemize}
 
 \paragraph{MapperRequest<T>}:
 \begin{itemize}
     \item \textbf{Descrizione}: interfaccia generica che incapsula i dati da trasformare e fornisce il contesto di esecuzione necessario per il mapping. Permette di passare informazioni addizionali al mapper senza modificare la firma dei metodi.
-    \item \codeword{\textbf{+ payload: T}}: il dato grezzo estratto dal file XML da trasformare nel modello di dominio.
-    \item \codeword{\textbf{+ context?: Record<string, any>}}: oggetto opzionale che contiene metadati contestuali (es. dipId, parentPath, processId) utili durante la trasformazione per stabilire correlazioni tra entità e arricchire il mapping con informazioni di relazione.
-    \item \textbf{Vantaggi}: consente di mantenere le firme dei metodi stabili pur permettendo l'espansione del contesto senza breaking changes, facilita il testing tramite iniection del contesto, e rende esplicite le dipendenze contestuali del mapping.
-\end{itemize}
-
-\paragraph{DataMapper}:
-\begin{itemize}
-    \item \textbf{Descrizione}: implementazione concreta di \codeword{IDataMapper} che effettua la trasformazione dei dati grezzi nei modelli di dominio, applicando le regole di business specifiche del contesto DiP. Collabora con \codeword{DocumentMetadataHashMapper} per la normalizzazione dei metadati.
-    \item \textbf{Responsabilità}:
-    \begin{itemize}
-        \item Mappatura delle strutture dati XML nelle entità di dominio fortemente tipizzate.
-        \item Gestione delle relazioni tra entità (es. documento-file, processo-documentclass).
-        \item Normalizzazione e validazione dei metadati estratti dal pacchetto.
-        \item Conversione dei tipi primitivi (stringhe, date, etc.) nei corretti tipi TypeScript.
-    \end{itemize}
-\end{itemize}
-
-\paragraph{DocumentMetadataHashMapper}:
-\begin{itemize}
-    \item \textbf{Descrizione}: utility class specializzata nella normalizzazione e nella trasformazione dei metadati dei documenti estratti dal pacchetto DiP. Converte la rappresentazione key-value irregolare in strutture coerenti per la persistenza.
-    \item \codeword{\textbf{+ normalizeMetadata(rawMetadata: Record<string, any>)}: Metadata[]}: normalizza i metadati grezzi, gestendo variabilità nella struttura e nei formati, e restituisce un array di entità \codeword{Metadata} fortemente tipizzate.
-    \item \textbf{Logica}: implementa regole di trasformazione specifiche per i metadati del contesto archivistico digitale, garantendo coerenza e correttezza dell'informazione.
+    \item \codeword{\textbf{+ metadataRelativePath: string}}: path relativo all'interno del pacchetto DiP that indica la posizione del file contenente i metadati supplementari per l'entità da mappare.
+    \item \codeword{\textbf{+ map: (rawMetadata: any) => T}}: lambda di mapping che trasforma i dati grezzi nei modelli di dominio.
 \end{itemize}
