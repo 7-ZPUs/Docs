@@ -137,7 +137,7 @@ Il sistema garantisce l'esecuzione sui seguenti sistemi operativi (o equivalenti
 \begin{itemize}
     \item Windows 10.
     \item MacOS 11.
-    \item Linux Ubuntu 20.04.
+    \item Linux Ubuntu 20.04 o distribuzioni equivalenti.
 \end{itemize}
 
 \subsection{Modalità di esecuzione}
@@ -167,7 +167,8 @@ Il software segue un modello di visualizzazione dei dati gerarchico. È concepit
 Le principali funzionalità offerte da \textit{DIPReader} per l'interazione con i pacchetti DIP includono:
 \begin{itemize}
     \item \textbf{Navigazione e Visualizzazione:} Esplorazione gerarchica (Classe documentale, Processo, Documento) all'interno del DIP e visualizzazione in anteprima dei formati di documenti supportati.
-    \item \textbf{Ricerca Avanzata e Semantica:} Ricerca all'interno dei metadati tramite filtri specifici avanzati e ricerca semantica dei documenti.
+    \item \textbf{Ricerca Avanzata:} Ricerca all'interno dei metadati tramite una barra di ricerca oppure un'ampia batteria di filtri specifici avanzati. 
+    \item \textbf{Ricerca Semantica:} Ricerca all'interno dei metadati tramite una ricerca semantica, o in altri termini, una ricerca per elementi contenti termini pertinenti al termine inserito. 
     \item \textbf{Verifica Integrità:} Controllo dello stato di verifica (Integro/Non Integro/Non Verificato) dei file contenuti nel DIP e generazione dei relativi report.
     \item \textbf{Estrazione ed Esportazione:} Possibilità di scaricare singolarmente o in blocco i documenti sul computer locale, stampare i file tramite le periferiche di sistema o esportare i report di verifica in PDF.
     \item \textbf{Verifica Firme e Processi:} Visualizzazione delle informazioni relative al processo di conservazione, versamento e allo stato dei dati di verifica, come firme digitali, sigilli elettronici e marcature temporali.
@@ -202,7 +203,7 @@ Questa sezione è visibile all'avvio del software, e presenta un breve riassunto
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{img/esplorazione.png}
+    \includegraphics[width=1\textwidth]{img/esplorazione.png}
     \caption{Schermata di benvenuto.}
     \label{fig:esplorazione}
 \end{figure}
@@ -219,14 +220,14 @@ In qualsiasi momento è possibile vedere a sinistra una sezione dedicata alla vi
 \begin{itemize}
     \item Il nodo radice DIP contiene le classi documentali
     \item Le classi documenti contengono i processi associati (pallino rosso)
-    \item I processi, che sono numerati in modo ordinato, contengono i file principali (pallino verde)
+    \item I processi, che sono contraddistini dalla data di creazione, contengono i file principali (pallino verde)
     \item I file principali contengono gli allegati (pallino azzurro) 
 \end{itemize}
 È possibile navigare questa sezione tramite il TAB. Se si desidera è possibile chiudere questa sezione tramite l'apposita linguetta "Albero" adiacente alla sezione. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{img/albero.png}
+    \includegraphics[width=1\textwidth]{img/albero.png}
     \caption{Albero di navigaizone evidenziato in rosso.}
     \label{fig:albero}
 \end{figure}
@@ -235,20 +236,62 @@ In qualsiasi momento è possibile vedere a sinistra una sezione dedicata alla vi
 Per accedere a questa sezione è possibile premere il pulsante "Ricerca" in alto a destra, contrassegnato da una lente di ingrandimento. 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{img/ricerca.png}
+    \includegraphics[width=1\textwidth]{img/ricerca.png}
     \caption{Pulsante di ricerca.}
     \label{fig:ricerca}
 \end{figure}
 Questa sezione permette di ricercare all'interno del DIP tramite le seguenti modalità:
+
+\subsubsection{Barra di ricerca}
+Per cercare all'interno del nome della classe o per ID del processo è possibile utilizzare la barra di ricerca, specificando tramite il pulsante d'opzione su quale campo si vuole compiere la ricerca.
+
+\subsubsection{Ricerca avanzata}
+A sinistra dei risultati è possibile aggiungere dei filtri pertinenti ai relativi metadati. Questi filtri possono essere nascosti tramite apposita linguetta, etichettata "filtri". Per applicare i filtri aggiuntivi premere il pulsante "Applica e Cerca" come mostrato in figura \ref{fig:ricerca_avanzata}.\\
+I filtri sono mutualmente esclusivi se non compatibili, in altri termini, l'utilizzo di un certo filtro potrebbe preclude l'utilizzo di un'altro, perchè non genererebbe sicuramente risultati di ricera. Per agevolare l'utente l'utilizzo di certi filtri disabilita l'utilizzo di altri filtri per i motivi sopra citati.
+Le sezioni di filtri sono le seguenti:
 \begin{itemize}
-    \item Per cercare all'interno del nome della classe o per ID del processo è possibile utilizzare la barra di ricerca, specificando tramite il pulsante d'opzione su quale campo si vuole compiere la ricerca. Per abilitare la ricerca semantica è possibile spuntare l'apposita casella, ora la ricerca includerà anche i risultati i cui campi specificati contengono termini nello stesso campo semantico, ovvero di significato simile, a quelli immessi nella barra di ricerca.
-    \item A sinistra dei risultati è possibile aggiungere dei filtri pertinenti ai relativi metadati. Questi filtri possono essere nascosti tramite apposita linguetta, etichettata "filtri". Per applicare i filtri aggiuntivi premere il pulsante "Applica e Cerca" come mostrato in figura \ref{fig:ricerca_avanzata}
-\end{itemize}
+    \item Comuni;
+    \item Dati Documento, DiDai;
+    \item Dati di Aggregazione;
+    \item Metadati Personalizzati;
+    \item Soggetti;
+\end{itemize}  
+Per svuotare i filtri premere l'omonimo pulsante a sinistra del pulsante per la ricerca avanzata. 
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{img/ricerca_avanzata.png}
+    \includegraphics[width=1\textwidth]{img/ricerca_avanzata.png}
     \caption{Pulsante per la ricerca avanzata.}
     \label{fig:ricerca_avanzata}
+\end{figure}
+\subsubsection{Ricerca sematica} 
+ Per abilitare la ricerca semantica è possibile spuntare l'apposita casella, ora la ricerca includerà i risultati i cui campi specificati contengono termini nello stesso campo semantico, ovvero di significato simile, a quelli immessi nella barra di ricerca.
+
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/ricerca_semantica_risultati.png}
+    \caption{Esempio di ricerca semantica con risultati.}
+    \label{fig:ricerca_avanzata_risultati}
+\end{figure}
+
+\subsubsection{Anteprima risultati}
+Una volta eseguita una ricerca è possibile vedere una lista di riultati, a meno che la ricerca non abbia trovato risultati.
+Per ogni risultato è disponibile una breve anteprima, i cui elementi sono i seguenti:
+\begin{itemize}
+    \item Il titolo; (1) 
+    \item l'ID; (2)
+    \item La tipologia di documento; (3)
+    \item Lo score appare se si utilizza la ricerca semantica e varia da 0 ad 1. Indica quanto il software è confidente che la ricerca sia pertinente; (4)
+    \item Pulsante di scaricamento; (5)
+    \item Pulsante di stampa (se disponibile); (6)
+\end{itemize}
+Se si desidera è possibile accedere, premendo l'anteprima, ad una visione dettagliata del risultato.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/anteprima_risultati.png}
+    \caption{Anteprima risultati.}
+    \label{fig:anteprima risulati}
 \end{figure}
 
 \subsection{Integrità} \label{integrità}
@@ -257,9 +300,18 @@ In questa sezione è visibile il resoconto di tutti gli elementi per i quali è 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{img/integrita.png}
+    \includegraphics[width=1\textwidth]{img/integrita.png}
     \caption{Pulsante per la verifica d'integrità (1), pulsante per verifica d'integrità globale (2).}
     \label{fig:integrita}
+\end{figure}
+
+Di seguito è possibile vedere un esempio di report di integrità. Possiamo vedere le classi analizzate, e nel caso ci fosse un errore è possibile vedere nello specifico quali documenti interessa l'errore.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/report_integrita.png}
+    \caption{Un esempio di report d'integrità.}
+    \label{fig:report_integrita}
 \end{figure}
 
 \subsection{Stampa e Salvataggio Documentale} \label {esport}
@@ -298,7 +350,7 @@ All'interno della finestra di selezione, l'utente ha il pieno controllo sugli el
 \begin{itemize}
     \item \textbf{Selezione Granulare}: È possibile spuntare o deselezionare singolarmente ogni file. Per impostazione predefinita, il sistema seleziona l'intero pacchetto (file principale + allegati);
     \item \textbf{Etichette di Tipologia}: Accanto a ogni nome file è presente un'etichetta identificativa (\textit{Principale} o \textit{Allegato}) per facilitare il riconoscimento dei contenuti;
-    \item \textbf{Conferma}: Il pulsante di conferma indica tra parentesi il numero totale di file pronti per lo scaricamento.
+    \item \textbf{Conferma}: Il pulsante di conferma "Scarica" indica tra parentesi il numero totale di file pronti per lo scaricamento.
 \end{itemize}
 
 \subsubsection{Monitoraggio e Conclusione}
@@ -307,7 +359,7 @@ Una volta avviata l'operazione, il software gestisce il trasferimento dei dati t
 
 \begin{itemize}
     \item \textbf{Avanzamento}: In alto a destra comparirà una barra di stato che mostra l'elenco dei file in fase di scrittura e la conferma individuale per ogni elemento completato;
-    \item \textbf{Notifica Finale}: Al termine dell'intera procedura, un messaggio di conferma indicherà il numero totale di documenti salvati con successo sul \glossario{file system} locale (Figura \ref{fig:notifica_export});
+    \item \textbf{Notifica Finale}: Al termine dell'intera procedura, un messaggio di conferma indicherà il numero totale di file salvati con successo sul \glossario{file system} locale (Figura \ref{fig:notifica_export});
 \end{itemize}
 
 \begin{figure}[H]
