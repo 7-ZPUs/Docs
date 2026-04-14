@@ -1,0 +1,150 @@
+@startuml
+' === Impostazioni per A4 Verticale ===
+scale max 1024 width
+page 1x2
+skinparam dpi 300
+
+' Sviluppo rigorosamente verticale
+skinparam classAttributeIconSize 0
+skinparam nodesep 40
+skinparam ranksep 70
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype ortho
+skinparam ArrowThickness 2
+skinparam ArrowColor #1F2937
+skinparam ArrowFontColor #111827
+skinparam ArrowFontSize 10
+skinparam ArrowFontStyle bold
+skinparam defaultTextAlignment left
+skinparam wrapWidth 220
+skinparam maxMessageSize 80
+skinparam handwritten false
+skinparam packageStyle rectangle
+allowmixing
+
+
+' ==========================================
+' LIVELLO 1: SMART COMPONENTS (Entry points)
+' ==========================================
+class DocumentViewerComponent << (C,#00AA00) Smart >> {
+  - facade: IDocumentFacade
+  + documentId: input<string>
+  + mimeType: input<MimeType>
+  + src: signal<Uint8Array | null>
+  + loading: signal<boolean>
+  + error: signal<AppError | null>
+  + closePreview: output<void>
+  + loadBlob(): Promise<void>
+}
+
+
+' ==========================================
+' LIVELLO 2: DUMB COMPONENTS (Presentational)
+' ==========================================
+
+  class PreviewPanelComponent << Dumb >>
+  class PreviewRendererComponent << Dumb >>
+  
+  class DocumentMetadataComponent << Dumb >>
+
+  class SubjectListComponent << Dumb >>
+
+
+' Composizione interna della feature
+DocumentViewerComponent --> PreviewPanelComponent : renders
+PreviewPanelComponent --> PreviewRendererComponent : relies on
+
+' ==========================================
+' LIVELLO 3: CONTRATTI E SERVICES (Facade)
+' ==========================================
+interface IDocumentFacade << Contract >> {
+  + getState(): Signal<DocumentState>
+  + loadDocument(id: string): Promise<void>
+  + getFileBlob(documentId: string): Promise<Uint8Array | null>
+}
+
+class DocumentFacade implements IDocumentFacade {
+  - ipcGateway: IIpcGateway
+  - cache: IpcCacheService
+  - state: signal<DocumentState>
+  + getState(): Signal<DocumentState>
+  + loadDocument(id: string): Promise<void>
+  + getFileBlob(documentId: string): Promise<Uint8Array | null>
+}
+
+
+
+' Injection
+DocumentViewerComponent --> IDocumentFacade : injects
+
+
+' ==========================================
+' LIVELLO MAPPING (Trasformazione Dati)
+' ==========================================
+class Mapper << Mapper >> {
+  + mapDocumentDtoToDetail(dto: DocumentDTO): DocumentDetail
+}
+
+class DocumentDTO << DTO >> {
+  + id: string
+  + metadata: any
+  + subjects: any[]
+  << IPC Payload >>
+}
+
+' Il Facade preleva il DTO tramite IPC e usa il mapper per convertirlo
+DocumentFacade ..> Mapper : uses
+DocumentFacade ..> DocumentDTO : fetches via IPC
+Mapper ..> DocumentDTO : takes
+Mapper ..> DocumentDetail : creates
+
+' ==========================================
+' LIVELLO 4: DOMAIN MODELS E STATO MAPPATO
+' ==========================================
+class DocumentState << (S,#DDDDDD) State >> {
+  + loading: boolean
+  + error: AppError | null
+}
+
+class DocumentDetail << (M,#FF7700) Model >> {
+  + documentId: string
+  + fileName: string
+  + mimeType: MimeType
+}
+
+note bottom of DocumentDetail
+  <b>Componenti omessi per leggibilità:</b>
+  * DocumentMetadata: 1
+  * RegistrationData: 0..1
+  * ClassificationInfo: 1
+  * FormatInfo: 1
+  * VerificationInfo: 1
+  * Subject: 0..*
+  * AttachmentData: 1
+  * ChangeTrackingData: 1
+  * AipInfo: 1
+  * CustomMetadataEntry: 0..*
+end note
+
+class DocumentMetadata << (M,#FF7700) Data >>
+
+class Subject << (M,#FF7700) Data >>
+
+' Mapping Strutturale
+DocumentFacade --> DocumentState : manages via signal
+DocumentState -->  DocumentDetail : contains
+
+DocumentDetail --> DocumentMetadata
+
+
+DocumentDetail --> Subject
+
+
+' Vincoli Formativi (I dumb components mostrano il proprio frammento di dominio)
+DocumentMetadataComponent .right.> DocumentMetadata : displays
+
+
+SubjectListComponent .left.> Subject : displays
+
+@enduml

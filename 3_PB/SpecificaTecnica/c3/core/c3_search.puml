@@ -1,0 +1,42 @@
+@startuml Component Diagram - Search
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Component Diagram - Search (search:classes, search:processes, search:documents, search:semantic, search:ai-state)
+
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam shadowing false
+skinparam wrapWidth 200
+skinparam nodesep 60
+skinparam ranksep 60
+
+Component_Ext(renderer,  "Renderer Process", "Angular / TypeScript", "Invia comandi di ricerca via IPC bridge.")
+Component_Ext(sqlite_db, "SQLite Database",  "SQLite3",              "Tabelle relazionali metadati e vettori embedding.")
+Component_Ext(ai_model,  "AI Model",         "ONNX / Local LLM",    "Modello locale per la generazione di word embedding.")
+
+Container_Boundary(main, "Main Process - Electron") {
+
+    Component(search_ipc, "SearchIpcAdapter", "Node.js / TypeScript", "Canali: search:classes, search:processes, search:documents, search:semantic, search:ai-state")
+
+    Component(uc_search_classi,    "SearchClassiDocumentaliUC", "Node.js / TypeScript", "Ricerca classi documentali per nome e metadati con filtri AND.")
+    Component(uc_search_processi,  "SearchProcessiUC",          "Node.js / TypeScript", "Ricerca processi archivistici per UUID e metadati con filtri AND.")
+    Component(uc_search_documenti, "SearchDocumentsUC",         "Node.js / TypeScript", "Ricerca documenti per metadati con filtri AND.")
+    Component(uc_search_semantic,  "SearchSemanticUC",          "Node.js / TypeScript", "Genera embedding della query e trova documenti per similarita' vettoriale.")
+
+    Component(pkg_search,   "PackageSearchPort",    "PackageSearchPort + SqlitePackageAdapter", "Ricerca keyword su classi, processi e documenti: searchClasses(name), searchProcesses(uuid), searchDocument(filters[]), searchDocumentSemantic(query).")
+    Component(ai_embedding, "WordEmbeddingPort", "WordEmbeddingPort + LocalAiAdapter",       "Genera vettori embedding usando il modello AI locale: generateEmbedding(text): Promise<Vector>.")
+}
+
+Rel_D(renderer,    search_ipc,          "search:*",                        "Electron IPC")
+Rel_D(search_ipc,  uc_search_classi,    "search:classes")
+Rel_D(search_ipc,  uc_search_processi,  "search:processes")
+Rel_D(search_ipc,  uc_search_documenti, "search:documents")
+Rel_D(search_ipc,  uc_search_semantic,  "search:semantic, search:ai-state")
+Rel_D(uc_search_classi,    pkg_search,   "searchClasses(name)")
+Rel_D(uc_search_processi,  pkg_search,   "searchProcesses(uuid)")
+Rel_D(uc_search_documenti, pkg_search,   "searchDocument(filters[])")
+Rel_D(uc_search_semantic,  ai_embedding, "generateEmbedding(query)")
+Rel_D(uc_search_semantic,  pkg_search,   "searchDocumentSemantic(vector)")
+Rel_D(pkg_search,   sqlite_db, "Read (SQL LIKE / KNN vettoriale)")
+Rel_D(ai_embedding, ai_model,  "Inference (generazione embedding)")
+
+@enduml

@@ -1,0 +1,44 @@
+@startuml C3_Main_File_Operations
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title C4 Model - Level 3 (Main Process Components: File Operations)
+
+LAYOUT_WITH_LEGEND()
+
+Container_Boundary(main_container, "Main Process") {
+  Component(file_ipc, "FileViewerIpcAdapter", "IPC Inbound Adapter", "Download, save and print channels")
+  Component(file_ucs, "File Use Cases", "Application Services", "ExportFileUC, PrintFileUC, GetFileContentUC")
+
+  Component(package_reader, "LocalPackageReaderAdapter", "Outbound Adapter", "Reads file bytes from DIP package")
+  Component(export_port, "LocalExportPort", "Outbound Adapter", "Writes file to selected destination")
+  Component(print_port, "PrintPort", "Outbound Adapter", "Print integration")
+  Component(file_repo, "FileRepository", "Repository", "File metadata lookup")
+}
+
+Container_Ext(renderer, "Renderer UI", "Angular", "Download, save and print actions")
+ContainerDb_Ext(sqlite, "SQLite", "File metadata persistence")
+System_Ext(local_fs, "Local File System", "DIP files and export directories")
+System_Ext(os_services, "OS Print and File Services", "Native print and file dialogs")
+
+Rel(renderer, file_ipc, "file:* channels")
+Rel(file_ipc, file_ucs, "execute")
+
+Rel(file_ucs, file_repo, "read metadata")
+Rel(file_ucs, package_reader, "read file bytes")
+Rel(file_ucs, export_port, "export file")
+Rel(file_ucs, print_port, "print file")
+
+Rel(file_repo, sqlite, "SQL read")
+Rel(package_reader, local_fs, "read streams")
+Rel(export_port, local_fs, "write output")
+Rel(print_port, os_services, "print")
+Rel(file_ipc, os_services, "save and open dialogs")
+
+note right of file_ucs
+Patterns:
+- Ports and Adapters
+- Repository for metadata
+- Adapter isolation for OS integrations
+end note
+
+@enduml
