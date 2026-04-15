@@ -64,11 +64,6 @@ document.addEventListener("scroll", () => {
 });
 
 const pdfLinks = document.querySelectorAll(".pdf-link");
-const pdfViewerWrapper = document.getElementById("pdf-viewer-wrapper");
-const pdfViewer = document.getElementById("pdf-viewer");
-const pdfDownloadLink = document.getElementById("pdf-download-link");
-const pdfTitle = document.getElementById("pdf-title");
-const pdfCloseButton = document.getElementById("pdf-close-button");
 
 const encodePath = (value) =>
   value
@@ -85,40 +80,8 @@ const resolvePdfUrl = (link) => {
     return `${baseUrl}${encodePath(fileName)}`;
   }
 
-  const fallbackPdf =
-    link.getAttribute("data-pdf") || link.getAttribute("href");
+  const fallbackPdf = link.dataset.pdf || link.getAttribute("href");
   return fallbackPdf && fallbackPdf !== "#" ? fallbackPdf : null;
-};
-
-const appendNewTabButton = (link, pdfUrl) => {
-  if (!pdfUrl) {
-    return;
-  }
-
-  const newTabButton = document.createElement("button");
-  newTabButton.type = "button";
-  newTabButton.className = "pdf-open-button";
-  newTabButton.setAttribute("aria-label", "Apri il PDF in una nuova scheda");
-  newTabButton.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pdf-open-button__icon" aria-hidden="true">
-            <path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"></path>
-            <path d="m21 3-9 9"></path>
-            <path d="M15 3h6v6"></path>
-        </svg>
-        <span class="pdf-open-button__label">Apri in nuova scheda</span>
-    `;
-  newTabButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    window.open(pdfUrl, "_blank", "noopener,noreferrer");
-  });
-
-  const container = link.closest(".pdf-item");
-  if (container) {
-    container.appendChild(newTabButton);
-  } else {
-    link.insertAdjacentElement("afterend", newTabButton);
-  }
 };
 
 pdfLinks.forEach((link) => {
@@ -126,40 +89,8 @@ pdfLinks.forEach((link) => {
 
   if (pdfUrl) {
     link.setAttribute("href", pdfUrl);
-    link.setAttribute("data-pdf", pdfUrl);
+    link.dataset.pdf = pdfUrl;
+    link.setAttribute("target", "_blank");
+    link.setAttribute("rel", "noopener noreferrer");
   }
-
-  appendNewTabButton(link, pdfUrl);
 });
-
-if (
-  pdfLinks.length &&
-  pdfViewerWrapper &&
-  pdfViewer &&
-  pdfDownloadLink &&
-  pdfTitle &&
-  pdfCloseButton
-) {
-  pdfLinks.forEach((link) => {
-    link.addEventListener("click", (event) => {
-      event.preventDefault();
-      const pdfPath = link.getAttribute("data-pdf");
-      const pdfName = link.textContent;
-
-      if (!pdfPath) {
-        return;
-      }
-
-      pdfViewer.setAttribute("data", pdfPath);
-      pdfDownloadLink.setAttribute("href", pdfPath);
-      pdfTitle.textContent = pdfName;
-
-      pdfViewerWrapper.style.display = "block";
-      pdfViewerWrapper.scrollIntoView({ behavior: "smooth" });
-    });
-  });
-
-  pdfCloseButton.addEventListener("click", () => {
-    pdfViewerWrapper.style.display = "none";
-  });
-}
