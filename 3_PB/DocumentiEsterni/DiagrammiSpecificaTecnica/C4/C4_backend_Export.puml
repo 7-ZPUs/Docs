@@ -13,21 +13,20 @@ interface IExportFileUC {
     + execute(fileId: number): Promise<ExportResult>
 }
 interface IExportFilesUC {
-    + execute(fileIds: number[], onProgress: 
+    + execute(fileIds: number[], onProgress:
     ProgressCallback): Promise<ExportFilesResult>
 }
 interface IPrintFileUC {
     + execute(fileId: number): Promise<ExportResult>
 }
 interface IPrintFilesUC {
-    + execute(fileIds: number[], onProgress: 
+    + execute(fileIds: number[], onProgress:
     ProgressCallback): Promise<ExportFilesResult>
 }
 
 class ExportFileUC {
     - fileRepo: IFileRepository
     - exportPort: IExportPort
-    - fileSystemProvider: IFileSystemPort
     - dialogPort: IDialogPort
     - dipPath: string
     + execute(fileId: number): Promise<ExportResult>
@@ -35,10 +34,9 @@ class ExportFileUC {
 class ExportFilesUC {
     - fileRepo: IFileRepository
     - exportPort: IExportPort
-    - fileSystemProvider: IFileSystemPort
     - dialogPort: IDialogPort
     - dipPath: string
-    + execute(fileIds: number[], onProgress: 
+    + execute(fileIds: number[], onProgress:
     ProgressCallback): Promise<ExportFilesResult>
 }
 class PrintFileUC {
@@ -52,7 +50,7 @@ class PrintFilesUC {
     - dipPath: string
     - printPort: IPrintPort
     - dialogPort: IDialogPort
-    + execute(fileIds: number[], onProgress: 
+    + execute(fileIds: number[], onProgress:
     ProgressCallback): Promise<ExportFilesResult>
 }
 
@@ -84,7 +82,6 @@ hide empty members
 class ExportFileUC {
     - fileRepo: IFileRepository
     - exportPort: IExportPort
-    - fileSystemProvider: IFileSystemPort
     - dialogPort: IDialogPort
     - dipPath: string
     + execute(fileId: number
@@ -93,11 +90,10 @@ class ExportFileUC {
 class ExportFilesUC {
     - fileRepo: IFileRepository
     - exportPort: IExportPort
-    - fileSystemProvider: IFileSystemPort
     - dialogPort: IDialogPort
     - dipPath: string
     + execute(fileIds: number[], onProgress:
-     ProgressCallback): Promise<ExportFilesResult>
+    ProgressCallback): Promise<ExportFilesResult>
 }
 class PrintFileUC {
     - fileRepo: IFileRepository
@@ -110,22 +106,13 @@ class PrintFilesUC {
     - dipPath: string
     - printPort: IPrintPort
     - dialogPort: IDialogPort
-    + execute(fileIds: number[], onProgress: 
+    + execute(fileIds: number[], onProgress:
     ProgressCallback): Promise<ExportFilesResult>
 }
 
-interface IFileSystemPort { }
 interface IExportPort { }
 interface IPrintPort { }
-
-interface IDialogPort {
-    + showSaveDialog(opts: 
-    SaveDialogOptions): Promise<SaveDialogResult>
-    + showFolderDialog(
-    ): Promise<FolderDialogResult>
-    + showConfirmPrint(fileCount: 
-    number): Promise<ConfirmPrintResult>
-}
+interface IDialogPort { }
 
 class ExportResult <<value object>> {
     + success: boolean
@@ -135,17 +122,15 @@ class ExportResult <<value object>> {
     + {static} ok(): ExportResult
     + {static} canceled(): ExportResult
     + {static} fail(code: string,
-     msg: string): ExportResult
+    msg: string): ExportResult
 }
 class ExportFilesResult <<value object>> {
     + canceled: boolean
     + results: ExportItemResult[]
 }
 
-ExportFileUC  --> IFileSystemPort : usa
 ExportFileUC  --> IExportPort     : usa
 ExportFileUC  --> IDialogPort     : usa
-ExportFilesUC --> IFileSystemPort : usa
 ExportFilesUC --> IExportPort     : usa
 ExportFilesUC --> IDialogPort     : usa
 PrintFileUC   --> IPrintPort      : usa
@@ -166,20 +151,20 @@ hide empty members
 
 interface IExportPort {
     + exportFile(stream: ReadableStream,
-     destPath: string): Promise<ExportResult>
+    destPath: string): Promise<ExportResult>
 }
 interface IPrintPort {
     + printSingle(absolutePath: string,
-     opts: PrintOptions): Promise<ExportResult>
+    opts: PrintOptions): Promise<ExportResult>
 }
 
 class LocalExportPort {
     + exportFile(stream: ReadableStream,
-     destPath: string): Promise<ExportResult>
+    destPath: string): Promise<ExportResult>
 }
 class PrintPort {
     + printSingle(absolutePath: string,
-     opts: PrintOptions): Promise<ExportResult>
+    opts: PrintOptions): Promise<ExportResult>
 }
 class ExportResult <<value object>> {
     + success: boolean
