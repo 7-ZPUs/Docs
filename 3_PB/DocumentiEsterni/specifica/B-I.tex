@@ -2,11 +2,11 @@
 
 \subsection{Panoramica}
 
-Il modulo di indicizzazione esplora il contenuto del pacchetto DiP e orchestra un flusso dati che va dal \codeword{PackageReaderPort} ai repository, garantendo persistenza efficiente delle entità estratte.
-L'orchestrazione è gestita da \codeword{IndexDipUC}, che riceve in modalità asincrona tramite \codeword{AsyncGenerator} le entità del pacchetto (DiP, DocumentClass, Process, Document, File) dal \codeword{PackageReaderPort}. Ogni entità viene elaborata e persistita nel corrispettivo repository (\codeword{dipRepository}, \codeword{documentClassRepository}, \codeword{processRepository}, \codeword{documentRepository}, \codeword{fileRepository}).
-Per i documenti, è previsto un trattamento speciale: il file principale (non gli allegati) subisce un processo di word embedding. L'estrazione del testo e la generazione dei vettori sono orchestrate da \codeword{EmbeddingService}, che interagisce con \codeword{WordEmbeddingPort} per convertire il contenuto testuale in vettori di embedding. Questi vettori vengono successivamente salvati in \codeword{VectorRepository}.
+Il modulo di indicizzazione esplora il contenuto del pacchetto DiP e orchestra un flusso dati che va dal \codeword{PackageReaderPort} ai repository, garantendo persistenza efficiente delle entità estratte. \\
+L'orchestrazione è gestita da \codeword{IndexDipUC}, che riceve in modalità asincrona tramite \codeword{AsyncGenerator} le entità del pacchetto (DiP, DocumentClass, Process, Document, File) dal \codeword{PackageReaderPort}. Ogni entità viene elaborata e persistita nel corrispettivo repository (\codeword{dipRepository}, \codeword{documentClassRepository}, \codeword{processRepository}, \codeword{documentRepository}, \codeword{fileRepository}).\\
+Per i documenti, è previsto un trattamento speciale: il file principale (non gli allegati) subisce un processo di word embedding. L'estrazione del testo e la generazione dei vettori sono orchestrate da \codeword{EmbeddingService}, che interagisce con \codeword{WordEmbeddingPort} per convertire il contenuto testuale in vettori di embedding. Questi vettori vengono successivamente salvati in \codeword{VectorRepository}.\\
 
-L'indicizzazione avviene in modalità asincrona, garantendo un utilizzo efficiente della memoria: le entità vengono elaborate e salvate man mano che vengono estratte dal pacchetto, senza attendere il completamento dell'esplorazione dell'intero contenuto.
+L'indicizzazione avviene in modalità asincrona, garantendo un utilizzo efficiente della memoria: le entità vengono elaborate e salvate man mano che vengono estratte dal pacchetto, senza attendere il completamento dell'esplorazione dell'intero contenuto.\\
 
 Il modulo espone una inbound port per l'avvio del processo di indicizzazione, attualmente utilizzata da \codeword{ApplicationBootstrap} in \codeword{main.ts}. Poiché il software è distribuito all'interno del pacchetto DiP stesso, l'indicizzazione viene eseguita automaticamente durante il bootstrap dell'applicazione, senza richiedere intervento manuale dell'utente.
 
