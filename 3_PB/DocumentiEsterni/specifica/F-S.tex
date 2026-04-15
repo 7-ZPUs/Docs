@@ -1,6 +1,6 @@
-\subsection{Componenti di Ricerca (Frontend)}
+\section{Frontend - Ricerca}
 
-\subsubsection{Architettura generale}
+\subsection{Architettura generale}
 La sezione di ricerca implementa un'architettura stratificata basata su due pattern fondamentali:
 \begin{itemize}
     \item \textbf{Smart \& Dumb Components}: separazione netta tra logica (SearchPageComponent) e presentazione (componenti figli).
@@ -30,7 +30,7 @@ La sezione di ricerca implementa un'architettura stratificata basata su due patt
 \end{itemize}
 
 
-\subsubsection{Layer di gestione dello stato e validazione}
+\subsection{Layer di gestione dello stato e validazione}
 
 \paragraph{AdvancedFilterPanelComponent e FilterRulesManager}
 
@@ -143,7 +143,7 @@ I metadati custom sono coppie chiave-valore personalizzate non previste dallo sc
 \end{enumerate}
 
 
-\subsubsection{Layer di visualizzazione dei risultati}
+\subsection{Layer di visualizzazione dei risultati}
 
 \paragraph{SearchResultFactory e Dynamic Component Instantiation}
 La visualizzazione dei risultati di ricerca deve adattarsi al tipo di entità ritornata. Poiché processi, classi, aggregazioni e documenti hanno strutture dati e esigenze di presentazione radicalmente diverse, è stato adottato il pattern \textit{Factory} con registry dinamico:
@@ -207,7 +207,7 @@ La visualizzazione dei risultati di ricerca deve adattarsi al tipo di entità ri
 \end{enumerate}
 
 
-\subsubsection{Layer di ricerca globale}
+\subsection{Layer di ricerca globale}
 
 \paragraph{SearchBarComponent e SearchBarRulesManager}
 \begin{figure}[H]
@@ -243,7 +243,7 @@ La search bar consente tre modalità di ricerca:
 \noindent Questi eventi sono catturati dal SearchPageComponent, che li instrada alla SearchFacade.
 
 
-\subsubsection{Conformità normativa e linee guida}
+\subsection{Conformità normativa e linee guida}
 Tutti i componenti di presentazione sono progettati per aderire all'Allegato 5 AGID, in particolare per struttura e denominazione dei metadati, ordine dei campi e obbligatorieta.
 
 \noindent La validazione della conformità è:
@@ -253,7 +253,7 @@ Tutti i componenti di presentazione sono progettati per aderire all'Allegato 5 A
     \item \textbf{Testabile}: ogni regola di filtro è una funzione pura, facilmente unit-testabile.
 \end{itemize}
 
-\subsubsection{Comunicazione IPC e Gateway Layer}
+\subsection{Comunicazione IPC e Gateway Layer}
 
 \paragraph{SearchIpcGateway e ISearchChannel}
 \begin{figure}[H]

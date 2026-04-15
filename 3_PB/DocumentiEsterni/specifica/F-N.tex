@@ -1,6 +1,6 @@
-\subsection{Componenti di Navigazione (Frontend)}
+\section{Frontend - Navigazione}
 
-\subsubsection{Descrizione}
+\subsection{Descrizione}
 Il modulo di navigazione realizza l'albero gerarchico del DIP ed e il punto di ingresso principale per la consultazione delle entita archivistiche. La gerarchia visualizzata segue il modello:
 \begin{center}
 DIP -> DocumentClass -> Process -> Document -> File
@@ -14,7 +14,7 @@ L'implementazione segue una separazione netta delle responsabilita:
 	\item \textbf{State reattivo}: la UI reagisce ai cambiamenti di stato di root, cache, loading e errori locali.
 \end{itemize}
 
-\subsubsection{Diagrammi condivisi (C1/C2/C3)}
+\subsection{Diagrammi condivisi (C1/C2/C3)}
 
 \begin{figure}[H]
 	\centering
@@ -37,7 +37,7 @@ L'implementazione segue una separazione netta delle responsabilita:
 	\label{fig:navigation:c3-component}
 \end{figure}
 
-\subsubsection{Architettura del modulo}
+\subsection{Architettura del modulo}
 
 \begin{table}[H]
 	\centering
@@ -67,7 +67,7 @@ L'implementazione segue una separazione netta delle responsabilita:
 	\label{tab:navigation:arch}
 \end{table}
 
-\subsubsection{Flussi operativi principali}
+\subsection{Flussi operativi principali}
 
 \paragraph{Bootstrap albero root}
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
@@ -102,7 +102,7 @@ L'implementazione segue una separazione netta delle responsabilita:
 	\item Angular Router naviga verso \codeword{/detail/:itemType/:itemId}.
 \end{enumerate}
 
-\subsubsection{Contratti principali}
+\subsection{Contratti principali}
 
 \paragraph{Stato della DipFacade}
 \begin{itemize}
@@ -143,7 +143,7 @@ L'implementazione segue una separazione netta delle responsabilita:
 	\codeword{: void}
 \end{itemize}
 
-\subsubsection{Canali IPC usati}
+\subsection{Canali IPC usati}
 
 \begin{table}[H]
 	\centering
@@ -171,7 +171,7 @@ L'implementazione segue una separazione netta delle responsabilita:
 	\label{tab:navigation:ipc}
 \end{table}
 
-\subsubsection{Cache, naming e gestione errori}
+\subsection{Cache, naming e gestione errori}
 
 \paragraph{Cache}
 \begin{itemize}

@@ -1,20 +1,20 @@
-\subsection{Componenti di Dettaglio (Frontend)}
-\subsubsection{Descrizione}
+\section{Frontend - Dettaglio}
+\subsection{Descrizione}
 All'interno di DIPReader la feature di dettaglio rappresenta il cuore della consultazione. Poiché un DIP aderisce allo standard OAIS, le entità che lo compongono all'interno dell'albero hanno una struttura ben definita non sempre trasversale a tutte le entità: processi, documenti informatici, documenti amministrativi informatici, aggregazioni documentali e le classi documentali che fungono da contenitori logici. La feature di dettaglio è quindi composta da più componenti, ognuna dedicata alla visualizzazione di una specifica entità, che condividono però un'interfaccia comune per poter essere utilizzata in modo intercambiabile all'interno dell'albero.\\
 
 Invece di duplicare le pagine di routing per ogni entità quindi è stata sviluppata la feature \codeword{Item-Detail} per sfruttare una singola rotta generica \codeword{/detail/:itemType/:itemId} che, a seconda del tipo di entità e dell'identificativo, renderizza il componente specifico per quella entità. Questo approccio implementa un design pattern di tipo strategy con polimorfismo statico, in cui la logica di selezione dell'entità da visualizzare è centralizzata e ben definita grazie alla tipizzazione statica di TypeScript, la scelta è stata dettata dalla considerazione che la struttura dei dati è ben definita e non si prevede l'aggiunta di nuovi tipi di entità in futuro, la possibilità di estensione riguarda invece i metadati delle entità.
 
-\subsubsection{Componente principale}
+\subsection{Componente principale}
 Il componente principale della feature è \codeword{ItemDetailPageComponent}, che agisce da orchestratore e si occupa di:
 \begin{itemize}
-    \item multiplexing dei Token delle facade delle singole entità e indirizzamento alla facade corretta, con un componente di fallback per coprire i casi di entità vuote come le classi documentali;
+    \item multiplexing dei Token delle facade delle singole entità e indirizzamento alla facade corretta, con il componente di fallback \codeword{NodeFallbackFacade} per coprire i casi di entità vuote come le classi documentali;
     \item adattamento del layout grafico a seconda del tipo di entità, per i documenti viene utilizzato un layout comprensivo di un'anteprima del file, mentre per aggregazioni e processi viene mostrato un indice dei documenti che li compongono;
 \end{itemize}
 
-\subsubsection{Componente dei metadati}
+\subsection{Componente dei metadati}
 Il componente \codeword{MetadataPanelComponent} decide quali componenti di metadati visualizzare in base al tipo di entità selezionata. Esso intercetta i dati passati dall'interfaccia dell'entità da visualizzare e in base ad essa decide quali componenti mostrare. Ad esempio, per i documenti sono presenti i componenti relativi alle informazioni del processo di conservazione, degli allegati, del formato del file, dei metadati custom, ecc., mentre per le aggregazioni e i processi vengono mostrati oltre ai metadati anche gli indici dei documenti che li compongono.
 
-\subsubsection{Componente di azioni sugli elementi}
+\subsection{Componente di azioni sugli elementi}
 Il componente \codeword{DocumentActionsComponent} crea la barra orizzontale di azioni che è possibile eseguire su un'entità, per tutte offre la verifica dell'integrità, per i documenti è anche possibile scaricarli o stamparli tramite il componente della feature di Export.
 
 \begin{figure}[H]
@@ -23,7 +23,7 @@ Il componente \codeword{DocumentActionsComponent} crea la barra orizzontale di a
     \caption{Diagramma delle classi tecnico della feature di dettaglio - struttura generale}
 \end{figure}
 
-\subsubsection{Componenti specifici per entità - DOCUMENT}
+\subsection{Componenti specifici per entità - DOCUMENT}
 È il modulo più denso di informazioni, ospita una notevole quantità di componenti \textit{dumb} per le sezioni specifiche dei metadati OAIS e i componenti per la visualizzazione dell'anteprima.
 
 \subparagraph{DocumentViewerComponent}
@@ -54,7 +54,7 @@ Rimangono rispettati quindi i principi di separazione dei compiti, single respon
     \caption{Diagramma delle classi tecnico della feature di dettaglio - entità Document}
 \end{figure}
 
-\subsubsection{Componenti specifici per entità - AGGREGATE}
+\subsection{Componenti specifici per entità - AGGREGATE}
 \subparagraph{\codeword{AggregateFacade}} Come per i documenti, è presente una facade dedicata per le aggregazioni che si occupa di orchestrare i servizi necessari a recuperare i dati e i metadati dell'entità (con collegamento ai canali IPC). Inoltre implementa un sistema di \textit{Fetch Retry Synchronization} per gestire situazioni in cui i dati non sono ancora disponibili al momento della richiesta.
 
 \subparagraph{Componenti \textit{dumb}}
@@ -72,7 +72,7 @@ Per le aggregazioni sono presenti componenti dedicati alla visualizzazione dei m
     \caption{Diagramma delle classi tecnico della feature di dettaglio - entità Aggregate}
 \end{figure}
 
-\subsubsection{Componenti specifici per entità - PROCESS}
+\subsection{Componenti specifici per entità - PROCESS}
 \subparagraph{\codeword{ProcessFacade}} Come per le aggregazioni, è presente una facade dedicata per i processi che si occupa di orchestrare i servizi necessari a recuperare i dati e i metadati dell'entità (con collegamento ai canali IPC). Anche in questo caso implementa un sistema di \textit{Fetch Retry Synchronization}.
 
 \subparagraph{Componente di presentazione}
