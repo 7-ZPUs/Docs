@@ -87,7 +87,7 @@
 \end{center}
 
 \noindent
-\textbf{Data:} 2026/2/19 \\
+\textbf{Data:} 2026/03/05 \\
 \textbf{Durata:} 20 minuti \\
 \textbf{Luogo:} Incontro online (Meet)
 
@@ -98,7 +98,6 @@
 \tableofcontents
 \newpage
 
-
 \section*{Partecipanti}
 \begin{itemize}[noitemsep]
     \item Fattoni Antonio 
@@ -108,79 +107,44 @@
     \item Rocco Matteo Alberto
     \item Soligo Lorenzo
     \item Vigolo Davide
-    \item Rossi Andrea
-    \item Sarra Luca
 \end{itemize}
 
 \section{Ordine del Giorno}
 \begin{enumerate}[noitemsep]
-    \item Stato avanzamento PoC
-    \item Analisi performance e indicizzazione
-    \item Ricerca semantica e scelta modelli
-    \item Interfaccia utente e usabilità
-    \item Prossimi passi
+    \item Risultato della RTB
+    \item Progressione del progetto: Progettazione
+    \item Ordine di priorità delle funzionalità da implementare
 \end{enumerate}
 
 \section{Svolgimento e Discussione}
 
-\subsection{Presentazione Poc}
+\subsection{Risultato della RTB}
+Il team ha presentato i risultati della RTB, evidenziando i miglioramenti da implementare e le criticità da risolvere.
+\\Ha quindi informato Sanmarco Informatica delle milestone programmate dal team e ha confermato la stima di fine progetto per la prima settimana di aprile.
 
-Il gruppo ha presentato una versione funzionante del Proof of Concept sviluppato tramite Electron e Angular.  
-L’applicativo è distribuibile tramite pacchetti portabili senza necessità di installazione, come richiesto dall'azienda.
+\subsection{Progressione del progetto: Progettazione}
+Prima di procedere con la codifica dell'MVP, il team deve completare la progettazione. Sono però emersi dei dubbi a riguardo.
+\subsubsection{Come rappresentare le caratteristiche di Angular e Electron?}
+Il team ha chiesto a Sanmarco Informatica se loro avessero esperienza con il C4 Model e come rappresentare le caratteristiche di Angular e Electron, in particolare l'implementazione nativa dell'MVVM di Angular e gli IPC per la comunicazione tra Angular e Electron.
+\\Non avendo ottenuto una risposta chiara, il team ha deciso di procedere con un incontro con il professore Cardin per chiarire questo punto.
 
-Le funzionalità principali sono:
-\begin{itemize}
-    \item Indicizzazione del contenuto del DIP.
-    \item Divisione chiara tra documenti e allegati.
-    \item Visualizzazione, apertura e download dei documenti.
-    \item Verifica integrità dei file.
-    \item Ricerca filtrata per metadati.
+\subsection{Ordine di priorità delle funzionalità da implementare}
+Il team ha chiesto a Sanmarco Informatica se avessero indicazioni sulle funzionalità da implementare con maggiore priorità. 
+\\L'elenco delle funzionalità obbligatorie sono quindi quelle indicate nella presentazione di capitolato:
+\begin{itemize}[noitemsep]
+    \item Ricerca per nel DIP
+    \item Verifica della validità dei documenti
+    \item Salvataggio dei risultati della ricerca
 \end{itemize}
-
-\subsection{Performance e Indicizzazione}
-
-È stato evidenziato un miglioramento importante delle performance:
-\begin{itemize}
-    \item Il tempo di indicizzazione di un indice da 1GB passa da 90 a 30 secondi.
-    \item Il tempo di risposta delle query passa da 70ms a 2ms.
-\end{itemize}
-
-Si è discusso della possibilità di ottimizzare ancora l’indicizzazione tramite:
-\begin{itemize}
-    \item Divisione tra tipi di metadato.
-    \item Caricamento parziale iniziale e completamento in background.
-    \item Aggiunta di una barra di avanzamento.
-\end{itemize}
-
-L’azienda ha confermato che il lavoro in background rappresenta una soluzione valida purché non impatti sull’operatività dell’utente.
-
-\subsection{Ricerca Semantica}
-
-La ricerca semantica è implementata tramite Transformers.js con modelli eseguiti interamente in locale, senza necessità di connessione.
-
-Attualmente è utilizzato un modello multilingua leggero.  
-È emersa la necessità di selezionare un modello con miglior rapporto tra peso e accuratezza, per ottenere risultati più coerenti.
-
-\subsection{Interfaccia Utente}
-
-L’interfaccia attuale è stata presentata come versione dimostrativa.  
-L’azienda ha suggerito di migliorare la leggibilità dei risultati tramite visualizzazione tabellare.
-
-Il gruppo ha confermato che nella versione definitiva verrà adottata un’interfaccia più user-friendly, in linea con il mockup condiviso in precedenza.
-
-\section{Domande e Risposte}
-
-Non sono emerse criticità particolari.  
-L’azienda ha confermato che il lavoro risulta in linea con quanto concordato e ha invitato il gruppo a richiedere ulteriori confronti qualora emergessero dubbi nelle prossime fasi di sviluppo.
+La stampa ha priorità inferiore seppure la sua implementazione non dovrebbbe essere particolarmente complessa.
 
 
 \section{Decisioni e Conclusione}
 
 Al termine dell’incontro il Team ha stabilito che:
 \begin{itemize}
-    \item si procederà con l’ottimizzazione dell’indicizzazione;
-    \item si valuterà un modello semantico più performante;
-    \item verrà migliorata la visualizzazione dei risultati in ottica di usabilità.
+    \item si procederà con la progettazione, chiarendo i dubbi con il professore Cardin;
+    \item si darà priorità alle funzionalità obbligatorie, lasciando la stampa come funzionalità secondaria;
 \end{itemize}
 
 \vfill
