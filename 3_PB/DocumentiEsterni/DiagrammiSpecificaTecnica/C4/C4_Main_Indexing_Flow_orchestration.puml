@@ -20,14 +20,14 @@ package "Orchestration" {
   }
 
   class IndexDipUC implements IIndexDipUC {
-    - packageReader: IPackageReaderPort
+    - packageReader: IPackageReaderService
     - embeddingService: IEmbeddingService
     + execute(dipPath: string): Promise<void>
   }
 }
 
 ApplicationBootstrap --> IIndexDipUC
-IndexDipUC --> IPackageReaderPort
+IndexDipUC --> IPackageReaderService
 IndexDipUC --> IEmbeddingService
 
 @enduml

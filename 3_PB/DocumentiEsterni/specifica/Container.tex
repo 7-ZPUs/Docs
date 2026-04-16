@@ -80,7 +80,7 @@ Le responsabilita principali sono la registrazione degli handler IPC, la risoluz
         \hline
         IPC frontend-backend & ipcMain.handle / ipcRenderer.invoke \\
         \hline
-        Architettura & Clean Architecture (layering) \\
+        Architettura & Hexagonal architecture \\
         \hline
     \end{tabularx}
 \end{table}
@@ -90,7 +90,8 @@ Le responsabilita principali sono la registrazione degli handler IPC, la risoluz
 \begin{enumerate}
     \item \textbf{IPC Adapter:} boundary verso renderer, gestione canali, mapping DTO.
     \item \textbf{Use Case:} thin orchestration layer, delega diretta ai repository.
-    \item \textbf{Repository:} astrazione accesso dati, delega ai DAO.
+    \item \textbf{Outbound port:} layer di astrazione per l'interazione con servizi esterni.
+    \item \textbf{Outbound adapter:} implementazione concreta delle porte verso p.e. database o filesystem.
     \item \textbf{DAO:} query SQL concrete, ricostruzione entity da righe.
     \item \textbf{Mapper:} trasformazione entity $\leftrightarrow$ DTO.
     \item \textbf{Entity / Value Objects:} modello di dominio.
@@ -98,23 +99,23 @@ Le responsabilita principali sono la registrazione degli handler IPC, la risoluz
 
 \subsubsection{Relazione con i principi SOLID}
 \begin{itemize}
-    \item \textbf{SRP:} ogni layer ha responsabilita esplicite e non sovrapposte.
+    \item \textbf{SRP:} ciascun componente ha un solo motivo per cambiare: ciascuna classe ha una responsabilità ben definita e limitata.
     \item \textbf{OCP:} nuovi use case o adapter possono essere aggiunti estendendo i contratti esistenti.
     \item \textbf{LSP e ISP:} i layer dipendono da interfacce coese e sostituibili.
-    \item \textbf{DIP:} il wiring runtime usa token DI e inversione delle dipendenze verso repository/servizi.
+    \item \textbf{DIP:} le concretizzazioni (adapters) dipendono da astrazioni (porte), non viceversa.
 \end{itemize}
 
-\subsubsection{Sequenza runtime generale}
+\subsubsection{Sequenza di interazione generica tra renderer e main}
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
     \item \textbf{Renderer invoca IPC:} \codeword{window.electronAPI.invoke(channel, payload)}.
     \item \textbf{Preload autorizza:} verifica prefissi consentiti e inoltra a \codeword{ipcRenderer.invoke}.
-    \item \textbf{Main process intercetta:} adapter registra e gestisce l'handler del canale.
-    \item \textbf{Risoluzione DI:} l'adapter risolve il use case richiesto dal container.
-    \item \textbf{Use case delega:} orchestration verso il repository.
-    \item \textbf{Repository delega:} accesso ai dati tramite DAO.
+    \item \textbf{Main process intercetta:} il main process riceve il messaggio IPC e delega all'handler del canale.
+    \item \textbf{Risoluzione DI:} Use case e outbound port vengono risolti tramite container tsyringe.
+    \item \textbf{Use case:} implementa la business logic e interagisce con le outbound port. 
+    \item \textbf{Outbound adapter:} implementazione concreta delle porte verso p.e. database o filesystem.
     \item \textbf{DAO esegue query:} interrogazione SQLite e ricostruzione entity.
-    \item \textbf{Conversione DTO:} mapping entity $\to$ DTO al boundary IPC.
-    \item \textbf{Risposta IPC:} il renderer riceve DTO o \codeword{null}.
+    \item \textbf{Conversione DTO:} Apposite classi mapper convertono da entità di dominio a DTO/Persistenza e viceversa.
+    \item \textbf{Risposta IPC:} il renderer riceve il risultato dell'elaborazione della richiesta.
 \end{enumerate}
 
 \subsubsection{Dependency Injection}
@@ -122,10 +123,10 @@ Le responsabilita principali sono la registrazione degli handler IPC, la risoluz
 Configurazione in \codeword{container.ts}:
 
 \begin{enumerate}
-    \item \textbf{Provider DB:} \codeword{DATABASE\_PROVIDER\_TOKEN} $\to$ \codeword{DatabaseProvider}.
-    \item \textbf{Repository tokens:} \codeword{*\_REPOSITORY\_TOKEN} per i vari aggregati.
+    \item \textbf{Provider DB:} \codeword{SQLITE\_DB\_TOKEN} $\to$ \codeword{BetterSqlite3.Database}.
+    \item \textbf{Outbound port tokens:} \codeword{*\_PORT\_TOKEN} per le interfacce dei servizi esterni.
     \item \textbf{DAO tokens:} \codeword{*\_DAO\_TOKEN} per le implementazioni concrete.
-    \item \textbf{Use case tokens:} \codeword{GET\_BY\_*} per le operazioni di retrieval.
+    \item \textbf{Use case tokens:} \codeword{GET\_BY\_*\_PORT\_TOKEN} per le operazioni di retrieval e in generale per le porte inbound.
 \end{enumerate}
 
 \subsubsection{Bootstrap e indicizzazione}
@@ -137,19 +138,9 @@ Configurazione in \codeword{container.ts}:
     \item Chiama \codeword{IndexDip.execute(dipPath)}.
 \end{enumerate}
 
-\noindent
-\textbf{IndexDip.execute} (popolamento DB):
-\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-    \item Insert: dip.
-    \item Insert: classi documentali.
-    \item Insert: processi (con metadati ricorsivi).
-    \item Insert: documenti (con metadati ricorsivi).
-    \item Insert: file.
-\end{enumerate}
-
 \subsubsection{Wiring runtime e registrazioni}
 \noindent
-In avvio applicazione (\codeword{main.ts}) il container runtime esegue:
+Durante l'avvio dell'applicazione electron, \codeword{main.ts} esegue:
 
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
     \item bootstrap database tramite \codeword{ApplicationBootstrapAdapter}
@@ -158,22 +149,4 @@ In avvio applicazione (\codeword{main.ts}) il container runtime esegue:
 \end{enumerate}
 
 \noindent
-Nel bootstrap DB (\codeword{DatabaseBootstrap.ts}) viene registrato anche \codeword{SQLITE\_DB\_TOKEN} con la connessione SQLite runtime.
-
-\subsubsection{Semantica transazionale condivisa}
-\noindent
-Le operazioni backend che aggiornano alberi di dati su piu livelli usano \codeword{ITransactionManager} con implementazione SQLite (\codeword{SqliteTransactionManager}):
-
-\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-    \item \codeword{BEGIN IMMEDIATE TRANSACTION}
-    \item esecuzione blocco applicativo
-    \item \codeword{COMMIT} su successo
-    \item \codeword{ROLLBACK} su errore
-\end{enumerate}
-
-\noindent
-Questa semantica garantisce consistenza dei dati durante propagazioni gerarchiche di stato.
-
-\subsubsection{Sicurezza preload}
-\noindent
-\codeword{preload.ts} consente IPC su prefissi autorizzati:\newline\codeword{ipc:search:}, \codeword{browse:}, \codeword{file:}, \codeword{check-integrity:}, \codeword{ipc:indexing:status}.
+Nel bootstrap DB (\codeword{DatabaseBootstrap.ts}) viene registrato anche il singleton \codeword{SQLITE\_DB\_TOKEN} per l'interazione con il database SQLite.

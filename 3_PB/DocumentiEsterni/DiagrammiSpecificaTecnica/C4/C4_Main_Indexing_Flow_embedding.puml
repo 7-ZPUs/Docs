@@ -15,7 +15,7 @@ package "Embedding" {
   }
 
   class EmbeddingService {
-    - packageReader: IPackageReaderPort
+    - packageReader: IPackageReaderService
     - embeddingAdapter: IWordEmbeddingPort
     + generateDocumentEmbedding(filePath: string): Promise<Float32Array | null>
     - readTextFromStream(filePath: string): Promise<string>
@@ -38,7 +38,7 @@ package "Embedding" {
 }
 
 EmbeddingService ..|> IEmbeddingService
-EmbeddingService --> IPackageReaderPort
+EmbeddingService --> IPackageReaderService
 EmbeddingService --> IWordEmbeddingPort
 WordEmbeddingPort ..|> IWordEmbeddingPort
 

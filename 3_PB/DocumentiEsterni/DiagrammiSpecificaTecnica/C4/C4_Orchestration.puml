@@ -20,7 +20,7 @@ title Orchestration - ApplicationBootstrap, IndexDipUC
   }
 
   class IndexDipUC implements IIndexDipUC {
-     - packageReader: IPackageReaderPort
+      - packageReader: IPackageReaderService
      - dipRepository: IDipRepository
      - documentClassRepository: IDocumentClassRepository
      - processRepository: IProcessRepository
@@ -43,10 +43,10 @@ title Orchestration - ApplicationBootstrap, IndexDipUC
 
 
 interface IEmbeddingService {}
-interface IPackageReaderPort {}
+interface IPackageReaderService {}
 
 ApplicationBootstrap --> IIndexDipUC
-IndexDipUC --> IPackageReaderPort
+IndexDipUC --> IPackageReaderService
 IndexDipUC --> IEmbeddingService
 IndexDipUC ..> IndexResult
 @enduml

@@ -9,8 +9,8 @@ hide empty members
 
 title Group 2 - LocalPackageReaderAdapter, FileSystemProvider, DataMapper, DipParser
 
-package "Reader Adapter" {
-  interface IPackageReaderPort {
+package "Reader Service" {
+  interface IPackageReaderService {
     + readDip(dipPath: string): Promise<Dip>
     + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
     + readProcesses(dipPath: string): AsyncGenerator<Process>
@@ -78,7 +78,7 @@ package "Reader Adapter" {
 
 class XMLParser <<external>>
 
-LocalPackageReaderAdapter ..|> IPackageReaderPort
+LocalPackageReaderAdapter ..|> IPackageReaderService
 LocalPackageReaderAdapter --> IDipParser
 LocalPackageReaderAdapter --> IDataMapper
 LocalPackageReaderAdapter --> IFileSystemProvider

@@ -7,10 +7,10 @@ skinparam packageStyle rectangle
 skinparam linetype ortho
 hide empty members
 
-title Reader Port - IPackageReaderPort
+title Reader Service - IPackageReaderService
 
-package "Reader Port" {
-  interface IPackageReaderPort {
+package "Reader Service" {
+  interface IPackageReaderService {
     + readDip(dipPath: string): Promise<Dip>
     + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
     + readProcesses(dipPath: string): AsyncGenerator<Process>

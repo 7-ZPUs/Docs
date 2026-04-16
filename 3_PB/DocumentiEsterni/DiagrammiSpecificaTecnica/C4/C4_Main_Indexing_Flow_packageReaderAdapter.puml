@@ -16,14 +16,14 @@ package "Orchestration" {
   }
 
   class IndexDipUC {
-    - packageReader: IPackageReaderPort
+    - packageReader: IPackageReaderService
     - embeddingService: IEmbeddingService
     + execute(dipPath: string): Promise<void>
   }
 }
 
-package "Reader Adapter" {
-  interface IPackageReaderPort {
+package "Reader Service" {
+  interface IPackageReaderService {
     + readDip(dipPath: string): Promise<Dip>
     + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
     + readProcesses(dipPath: string): AsyncGenerator<Process>
@@ -93,7 +93,7 @@ package "Reader Adapter" {
   }
 
   class EmbeddingService {
-    - packageReader: IPackageReaderPort
+    - packageReader: IPackageReaderService
     - embeddingAdapter: IWordEmbeddingPort
     + generateDocumentEmbedding(filePath: string): Promise<Float32Array | null>
     - readTextFromStream(filePath: string): Promise<string>
@@ -116,8 +116,8 @@ package "Reader Adapter" {
 }
 
 ApplicationBootstrap --> IndexDipUC
-IndexDipUC --> IPackageReaderPort
-LocalPackageReaderAdapter ..|> IPackageReaderPort
+IndexDipUC --> IPackageReaderService
+LocalPackageReaderAdapter ..|> IPackageReaderService
 LocalPackageReaderAdapter --> IDipParser
 LocalPackageReaderAdapter --> IDataMapper
 LocalPackageReaderAdapter --> IFileSystemProvider
@@ -127,7 +127,7 @@ DataMapper ..|> IDataMapper
 FileSystemProvider ..|> IFileSystemProvider
 IndexDipUC --> IEmbeddingService
 EmbeddingService ..|> IEmbeddingService
-EmbeddingService --> IPackageReaderPort
+EmbeddingService --> IPackageReaderService
 EmbeddingService --> IWordEmbeddingPort
 WordEmbeddingPort ..|> IWordEmbeddingPort
 

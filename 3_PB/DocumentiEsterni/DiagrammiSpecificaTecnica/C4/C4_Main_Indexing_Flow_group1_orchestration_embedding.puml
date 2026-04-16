@@ -7,7 +7,7 @@ skinparam packageStyle rectangle
 skinparam linetype ortho
 hide empty members
 
-title Group 1 - ApplicationBootstrap, IndexDipUC, EmbeddingService, PackageReaderPort
+title Group 1 - ApplicationBootstrap, IndexDipUC, EmbeddingService, PackageReaderService
 
 package "Orchestration" {
   class ApplicationBootstrap {
@@ -20,7 +20,7 @@ package "Orchestration" {
   }
 
   class IndexDipUC implements IIndexDipUC {
-    - packageReader: IPackageReaderPort
+    - packageReader: IPackageReaderService
     - embeddingService: IEmbeddingService
     + execute(dipPath: string): Promise<void>
   }
@@ -32,7 +32,7 @@ package "Embedding" {
   }
 
   class EmbeddingService {
-    - packageReader: IPackageReaderPort
+    - packageReader: IPackageReaderService
     - embeddingAdapter: IWordEmbeddingPort
     + generateDocumentEmbedding(filePath: string): Promise<Float32Array | null>
     - readTextFromStream(filePath: string): Promise<string>
@@ -54,8 +54,8 @@ package "Embedding" {
   }
 }
 
-package "Reader Port" {
-  interface IPackageReaderPort {
+package "Reader Service" {
+  interface IPackageReaderService {
     + readDip(dipPath: string): Promise<Dip>
     + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
     + readProcesses(dipPath: string): AsyncGenerator<Process>
@@ -66,10 +66,10 @@ package "Reader Port" {
 }
 
 ApplicationBootstrap --> IIndexDipUC
-IndexDipUC --> IPackageReaderPort
+IndexDipUC --> IPackageReaderService
 IndexDipUC --> IEmbeddingService
 EmbeddingService ..|> IEmbeddingService
-EmbeddingService --> IPackageReaderPort
+EmbeddingService --> IPackageReaderService
 EmbeddingService --> IWordEmbeddingPort
 WordEmbeddingPort ..|> IWordEmbeddingPort
 
