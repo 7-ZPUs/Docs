@@ -48,7 +48,7 @@ if (tabButtons.length && tabPanels.length) {
     });
   });
 
-  const firstTab = tabButtons[1];
+  const firstTab = tabButtons[0];
   if (firstTab) {
     firstTab.click();
   }
