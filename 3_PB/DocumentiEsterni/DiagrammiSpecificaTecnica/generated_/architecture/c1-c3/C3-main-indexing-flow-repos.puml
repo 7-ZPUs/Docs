@@ -8,12 +8,12 @@ LAYOUT_WITH_LEGEND()
 Container_Boundary(main_container, "Main Process") {
   Component(index_dip, "IndexDipUC", "Use Case", "Transactional indexing pipeline Dip -> Class -> Process -> Document -> File + vectors")
 
-  Component(dip_repo, "DipRepository", "Repository", "save Dip")
-  Component(class_repo, "DocumentClassRepository", "Repository", "save classes")
-  Component(process_repo, "ProcessRepository", "Repository", "save processes")
-  Component(doc_repo, "DocumentRepository", "Repository", "save documents")
-  Component(file_repo, "FileRepository", "Repository", "save files")
-  Component(vector_repo, "VectorRepository", "Repository", "save vectors")
+  Component(dip_repo, "SaveDipPort", "SaveDipPort", "save Dip")
+  Component(class_repo, "SaveDocumentClassPort", "SaveDocumentClassPort", "save classes")
+  Component(process_repo, "SaveProcessPort", "SaveProcessPort", "save processes")
+  Component(doc_repo, "SaveDocumentPort", "SaveDocumentPort", "save documents")
+  Component(file_repo, "SaveFilePort", "SaveFilePort", "save files")
+  Component(vector_repo, "SaveVectorPort", "SaveVectorPort", "save vectors")
 }
 
 ContainerDb_Ext(sqlite, "SQLite", "Persistence for entities and vectors")

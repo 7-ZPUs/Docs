@@ -20,13 +20,13 @@ title Orchestration - ApplicationBootstrap, IndexDipUC
   }
 
   class IndexDipUC implements IIndexDipUC {
-      - packageReader: IPackageReaderService
-     - dipRepository: IDipRepository
-     - documentClassRepository: IDocumentClassRepository
-     - processRepository: IProcessRepository
-     - documentRepository: IDocumentRepository
-     - fileRepository: IFileRepository
-     - vectorRepository: IVectorRepository
+     - packageReader: IPackageReaderService
+     - saveDipPort: ISaveDipPort
+     - saveDocumentClassPort: ISaveDocumentClassPort
+     - saveProcessPort: ISaveProcessPort
+     - saveDocumentPort: ISaveDocumentPort
+     - saveFilePort: ISaveFilePort
+     - saveVectorPort: ISaveVectorPort
      - embeddingService: IEmbeddingService
      + execute(dipPath: string): Promise<IndexResult>
      - indexDip(): Promise<IndexResult>
