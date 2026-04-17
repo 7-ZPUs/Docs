@@ -23,7 +23,7 @@ La verifica opera sui seguenti livelli:
 \end{enumerate}
 
 \noindent
-Ogni invocazione calcola lo stato del nodo root e dei suoi discendenti, con persistenza progressiva in SQLite tramite \codeword{updateIntegrityStatus(...)}.
+Ogni invocazione calcola lo stato del nodo root e dei suoi discendenti, con persistenza progressiva in SQLite tramite \codeword{IUpdate*IntegrityStatusPort}.
 
 \subsubsection{Organizzazione file backend}
 \label{sec:integrity:struttura}
@@ -43,9 +43,7 @@ Ogni invocazione calcola lo stato del nodo root e dei suoi discendenti, con pers
 		\hline
 		Service & \texttt{IntegrityVerificationService.ts}, \texttt{HashingService.ts} \\
 		\hline
-		Transaction manager & \texttt{SqliteTransactionManager.ts} \\
-		\hline
-		Repository & \texttt{I*Repository.ts}, \texttt{*Repository.ts} \\
+		Persistence & \texttt{IUpdate*IntegrityStatusPort.ts}, \texttt{*PersistenceAdapter}\\
 		\hline
 		DAO & \texttt{I*DAO.ts}, \texttt{*DAO.ts} \\
 		\hline
@@ -58,7 +56,7 @@ Ogni invocazione calcola lo stato del nodo root e dei suoi discendenti, con pers
 	\label{tab:integrity:struttura}
 \end{table}
 
-\subsubsection{Flusso end-to-end}
+\subsubsection{Flusso di verifica}
 \label{sec:integrity:flusso}
 
 \paragraph{Sequenza di verifica.}
@@ -66,7 +64,6 @@ Ogni invocazione calcola lo stato del nodo root e dei suoi discendenti, con pers
 	\item Il renderer invoca il canale \codeword{check-integrity:*}
 	\item \codeword{CheckIntegrityIpcAdapter} intercetta l'handler e risolve il use case
 	\item Il use case delega a \codeword{IntegrityVerificationService}
-	\item Il service esegue \codeword{runInTransaction(...)}
 	\item Il service verifica hash file e aggrega stati sui parent
 	\item Il service persiste gli stati sui livelli coinvolti
 	\item L'handler IPC ritorna \codeword{IntegrityStatusEnum}
@@ -112,39 +109,39 @@ Contratto IPC definito in \codeword{ipc-channels.ts} e registrato in \codeword{C
 \end{table}
 
 \noindent
-\textbf{Nota:} Il canale \codeword{INTEGRITY\_VERIFY} e definito in \codeword{ipc-channels.ts} ma non risulta registrato in \codeword{CheckIntegrityIpcAdapter}.
+\textbf{Nota:} Il canale \codeword{INTEGRITY\_VERIFY} è definito in \codeword{ipc-channels.ts} ma non risulta registrato in \codeword{CheckIntegrityIpcAdapter}.
 
-\subsubsection{Diagrammi architetturali (C3/C4)}
+\subsubsection{Diagrammi architetturali C4}
 \label{sec:integrity:diagrammi}
 
 \noindent
-Il flusso backend condiviso con il modulo Browsing e rappresentato in Figura~\ref{fig:browsing:c3-shared}. 
+Il flusso backend condiviso con il modulo Browsing e rappresentato in Figura~\ref{fig:browsing:c3-shared}.
 La vista focalizzata sul percorso di verifica integrita e mostrata in Figura~\ref{fig:integrity:c3-focused}.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/C3_Backend_Integrity_Verification.png}
+\includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/C3_Backend_Integrity_Verification.png}
 \caption{C3 del backend: focus sulla verifica integrita (CheckIntegrityIpcAdapter)}
 \label{fig:integrity:c3-focused}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{../../assets/outDiagrammiST/C4_Integrity_Domain.png}
+\includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/C4_Integrity_Domain.png}
 \caption{C4 del modulo Verifica Integrita - dominio e contratti}
 \label{fig:integrity:c4-domain}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/C4_Integrity_Backend.png}
+\includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/C4_Integrity_Backend.png}
 \caption{C4 del modulo Verifica Integrita - facade e componenti}
 \label{fig:integrity:c4-backend}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/C4_Integrity_Verification_Sequence.png}
+\includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/C4_Integrity_Verification_Sequence.png}
 \caption{Sequenza di verifica e propagazione degli stati}
 \label{fig:integrity:c4-sequence}
 \end{figure}
@@ -200,13 +197,11 @@ File: \codeword{IntegrityVerificationService.ts}.
 	\item \codeword{IDocumentClassRepository}
 	\item \codeword{IDipRepository}
 	\item \codeword{IHashingService}
-	\item \codeword{ITransactionManager}
 	\item \codeword{DIP\_PATH\_TOKEN}
 \end{enumerate}
 
 \paragraph{Regole operative.}
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-	\item Ogni API pubblica gira dentro \codeword{runInTransaction}
 	\item Se la root non esiste, viene lanciato errore
 	\item La verifica e ricorsiva nel sottoalbero
 	\item Ogni livello aggiorna \codeword{integrity\_status} via repository
@@ -257,11 +252,7 @@ File: \codeword{IntegrityVerificationService.ts}.
 \noindent
 Il service risolve il percorso con \codeword{path.resolve(dipPath, file.getPath())} prima della verifica hash.
 
-\paragraph{Transaction manager.}
-\noindent
-L'esecuzione avviene in \codeword{runInTransaction(work)}; in caso di errore durante la cascata e garantito rollback completo.
-
-\subsubsection{Layer Repository e DAO}
+\subsubsection{Layer di persistenza}
 \label{sec:integrity:repository_dao}
 
 \begin{table}[H]
@@ -271,17 +262,17 @@ L'esecuzione avviene in \codeword{runInTransaction(work)}; in caso di errore dur
 	\renewcommand{\arraystretch}{1.5}
 	\begin{tabularx}{\textwidth}{|l|Y|}
 		\hline
-		\textbf{Componente} & \textbf{Metodi rilevanti per verifica} \\
+		\textbf{Entità} & \textbf{Outbound ports rilevanti per verifica} \\
 		\hline
-		\texttt{IFileRepository / FileDAO} & \texttt{getById}, \texttt{getByDocumentId}, \texttt{updateIntegrityStatus} \\
+		\texttt{File} & \texttt{IGetFileByIdPort}, \texttt{IGetFileByDocumentIdPort}, \texttt{IUpdateFileIntegrityStatusPort} \\
 		\hline
-		\texttt{IDocumentRepository / DocumentDAO} & \texttt{getById}, \texttt{getByProcessId}, \texttt{updateIntegrityStatus} \\
+		\texttt{Documento} & \texttt{IGetDocumentByIdPort}, \texttt{IGetDocumentByProcessIdPort}, \texttt{IUpdateDocumentIntegrityStatusPort} \\
 		\hline
-		\texttt{IProcessRepository / ProcessDAO} & \texttt{getById}, \texttt{getByDocumentClassId}, \texttt{updateIntegrityStatus} \\
+		\texttt{Processo} & \texttt{IGetProcessByIdPort}, \texttt{IGetProcessByDocumentClassIdPort}, \texttt{IUpdateProcessIntegrityStatusPort} \\
 		\hline
-		\texttt{IDocumentClassRepository / DocumentClassDAO} & \texttt{getById}, \texttt{getByDipId}, \texttt{updateIntegrityStatus} \\
+		\texttt{Classe documentale} & \texttt{IGetDocumentClassByIdPort}, \texttt{IGetDocumentClassByDipIdPort}, \texttt{IUpdateDocumentClassIntegrityStatusPort} \\
 		\hline
-		\texttt{IDipRepository / DipDAO} & \texttt{getById}, \texttt{updateIntegrityStatus} \\
+		\texttt{Dip} & \texttt{IGetDipByIdPort}, \texttt{IUpdateDipIntegrityStatusPort} \\
 		\hline
 	\end{tabularx}
 	\caption{Repository e DAO coinvolti nella verifica integrita}
