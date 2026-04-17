@@ -124,11 +124,18 @@ class ExportResult <<value object>> {
     + {static} fail(code: string,
     msg: string): ExportResult
 }
+
+class ExportItemResult <<value object>> {
+    + fileId: number
+    + result: ExportResult
+}
+
 class ExportFilesResult <<value object>> {
-    + canceled: boolean
     + results: ExportItemResult[]
 }
 
+ExportItemResult --> ExportResult : contiene
+ExportFilesResult --> ExportItemResult : contiene
 ExportFileUC  --> IExportPort     : usa
 ExportFileUC  --> IDialogPort     : usa
 ExportFilesUC --> IExportPort     : usa
