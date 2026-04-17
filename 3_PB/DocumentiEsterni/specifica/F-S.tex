@@ -176,7 +176,7 @@ Il filtro dei soggetti è strutturato secondo il pattern Strategy per consentire
     \item Coerenza funzionale: un cambiamento nel back-end (nuovo ruolo, nuovo tipo di soggetto) si riflette solo nelle registry, non nella logica del componente.
 \end{itemize}
 
-I dettagli dei soggetti, come accennato sono poi gestiti in modo simile, tramite l'utilizzo della \codeword{ISubjectDetailStrategy} che grazie alle sue implemetnazioni specifiche permette la creazione dei filtri di dettaglio in modo dinamico.
+I dettagli dei soggetti, come accennato sono poi gestiti in modo simile, tramite l'utilizzo della \codeword{ISubjectDetailStrategy} che grazie alle sue implementazioni specifiche permette la creazione dei filtri di dettaglio in modo dinamico.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/subjectDTO.png}
@@ -196,9 +196,9 @@ La maggior parte dei filtri sono componenti dumb di presentazione, allineati all
     \end{itemize}
     Lo schema è stratificato: la validazione della classificazione (es., \codeword{codice} disponibile solo se \codeword{partizione} è compilata) è delegata al FilterRulesManager, non al componente.
     
-    \item[\codeword{DiDaiFiltersComponent}] Gestisce i filtri specifici per Documenti Informatici (DiI) e Documenti Amministrativi Informatici (DAI):
+    \item[\codeword{DiDaiFiltersComponent}] Gestisce i filtri specifici per Documenti Informatici (DI) e Documenti Amministrativi Informatici (DAI):
     \begin{itemize}
-        \item Tipologia di documento (enum ristretto ai soli tipi DiI/DAI).
+        \item Tipologia di documento (enum ristretto ai soli tipi DI/DAI).
         \item Modalità di formazione (pre-formati, post-formati, cartacei scansionati, ...).
         \item Nome, versione, ID del documento.
         \item Dati di formato (tipologia MIME, versione, estensione).
@@ -464,7 +464,7 @@ La validazione filtri è soggetta a crescita incrementale e vincoli trasversali.
 \end{figure}
 
 \paragraph{FilterValidatorService e FilterValidatorFn}
-La validazione non è un aspetto accessorio ma un layer dedicato. Il \codeword{FilterValidatorService} applica regole di validazione pure e composabili:
+La validazione non è un aspetto accessorio ma un layer dedicato. Il \codeword{FilterValidatorService} applica regole di validazione pure e componibili:
 
 \begin{itemize}
     \item \textbf{Pure Functions}: ogni regola è una funzione pura \codeword{FilterValidatorFn = (filters) -> ValidationResult}.
