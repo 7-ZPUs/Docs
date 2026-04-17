@@ -16,11 +16,11 @@ Container_Boundary(main_container, "Main Process") {
 
   Component(integrity_service, "IntegrityVerificationService", "Domain Service", "Hash verification and integrity computation")
 
-  Component(dip_repo, "DipRepository", "Repository", "Dip persistence")
-  Component(class_repo, "DocumentClassRepository", "Repository", "Class persistence")
-  Component(process_repo, "ProcessRepository", "Repository", "Process persistence")
-  Component(doc_repo, "DocumentRepository", "Repository", "Document persistence")
-  Component(file_repo, "FileRepository", "Repository", "File persistence")
+  Component(dip_repo, "DipPorts", "Outbound ports", "Dip persistence")
+  Component(class_repo, "DocumentClassPorts", "Outbound ports", "Class persistence")
+  Component(process_repo, "ProcessPorts", "Outbound ports", "Process persistence")
+  Component(doc_repo, "DocumentPorts", "Outbound ports", "Document persistence")
+  Component(file_repo, "FilePorts", "Outbound ports", "File persistence")
 
   Component(export_port, "LocalExportPort", "Outbound Adapter", "Writes files to user-selected path")
   Component(print_port, "PrintPort", "Outbound Adapter", "Print integration")
@@ -68,16 +68,5 @@ Rel(package_reader, local_fs, "read streams")
 Rel(export_port, local_fs, "write output")
 Rel(print_port, os_services, "print")
 Rel(file_ipc, os_services, "save/open dialogs")
-
-note right of integrity_ucs
-SOLID:
-- I: separate use-case interfaces per capability
-- D: use cases rely on repo/service abstractions
-
-Patterns:
-- Ports & Adapters
-- Repository
-- Adapter for OS integration
-end note
 
 @enduml

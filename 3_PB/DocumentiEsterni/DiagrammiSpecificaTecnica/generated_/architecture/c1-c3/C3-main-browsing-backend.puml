@@ -9,11 +9,11 @@ Container_Boundary(main_container, "Main Process") {
   Component(browsing_ipc, "BrowsingIpcAdapter", "IPC Inbound Adapter", "Read channels by id, status and hierarchy")
   Component(browse_ucs, "Browsing Use Cases", "Application Services", "GetById, GetByStatus, GetByParent")
 
-  Component(dip_repo, "DipRepository", "Repository", "Dip queries")
-  Component(class_repo, "DocumentClassRepository", "Repository", "Document class queries")
-  Component(process_repo, "ProcessRepository", "Repository", "Process queries")
-  Component(doc_repo, "DocumentRepository", "Repository", "Document queries")
-  Component(file_repo, "FileRepository", "Repository", "File queries")
+  Component(dip_repo, "DipPersistencePorts", "Outbound Ports", "Dip queries")
+  Component(class_repo, "DocumentClassPersistencePorts", "Outbound Ports", "Document class queries")
+  Component(process_repo, "ProcessPersistencePorts", "Outbound Ports", "Process queries")
+  Component(doc_repo, "DocumentPersistencePorts", "Outbound Ports", "Document queries")
+  Component(file_repo, "FilePersistencePorts", "Outbound Ports", "File queries")
 }
 
 Container_Ext(renderer, "Renderer UI", "Angular", "Browse tree and detail navigation")
@@ -33,15 +33,5 @@ Rel(class_repo, sqlite, "SQL read")
 Rel(process_repo, sqlite, "SQL read")
 Rel(doc_repo, sqlite, "SQL read")
 Rel(file_repo, sqlite, "SQL read")
-
-note right of browse_ucs
-SOLID:
-- S: thin wrappers over repository contracts
-- D: use cases depend on abstractions
-
-Patterns:
-- Repository
-- IPC inbound adapter
-end note
 
 @enduml

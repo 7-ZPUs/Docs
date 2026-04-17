@@ -183,11 +183,8 @@ Gli use case sono thin wrapper senza logica aggiuntiva; delegano direttamente al
   \label{tab:browsing:usecase}
 \end{table}
 
-\subsubsection{Layer Repository}
+\subsubsection{Persistence Layer}
 \label{sec:browsing:repository}
-
-\noindent
-Ogni repository delega al DAO corrispondente il retrieval dei dati.
 
 \begin{table}[H]
   \centering
@@ -196,36 +193,36 @@ Ogni repository delega al DAO corrispondente il retrieval dei dati.
   \renewcommand{\arraystretch}{1.5}
   \begin{tabularx}{\textwidth}{|l|l|Y|}
     \hline
-    \textbf{Repository} & \textbf{Implementazione} & \textbf{Metodi getter} \\
+    \textbf{Entità} & \textbf{Adapter} & \textbf{Porte} \\
     \hline
-    \texttt{IDipRepository} & \texttt{DipRepository.ts} & 
-      \texttt{ById}, \texttt{ByUuid}, \texttt{ByStatus} \\
+    \texttt{Dip} & \texttt{DipPersistenceAdapter.ts} & 
+      \texttt{IGetByIdPort}, \texttt{IGetByUuidPort}, \texttt{IGetByStatusPort} \\
     \hline
-    \texttt{IDocumentClassRepository} & \texttt{DocumentClassRepository.ts} & 
-      \texttt{ById}, \texttt{ByDipId}, \texttt{ByStatus} \\
+    \texttt{DocumentClass} & \texttt{DocumentClassPersistenceAdapter.ts} & 
+      \texttt{IGetByIdPort}, \texttt{IGetByDipIdPort}, \texttt{IGetByStatusPort} \\
     \hline
-    \texttt{IProcessRepository} & \texttt{ProcessRepository.ts} & 
-      \texttt{ById}, \texttt{ByDocumentClassId}, \texttt{ByStatus} \\
+    \texttt{Process} & \texttt{ProcessPersistenceAdapter.ts} & 
+      \texttt{IGetByIdPort}, \texttt{IGetByDocument ClassIdPort}, \texttt{IGetByStatusPort} \\
     \hline
-    \texttt{IDocumentRepository} & \texttt{DocumentRepository.ts} & 
-      \texttt{ById}, \texttt{ByProcessId}, \texttt{ByStatus} \\
+    \texttt{Document} & \texttt{DocumentRepository.ts} & 
+      \texttt{IGetByIdPort}, \texttt{IGetByProcessIdPort}, \texttt{IGetByStatusPort} \\
     \hline
-    \texttt{IFileRepository} & \texttt{FileRepository.ts} & 
-      \texttt{ById}, \texttt{ByDocumentId}, \texttt{ByStatus} \\
+    \texttt{File} & \texttt{FileRepository.ts} & 
+      \texttt{IGetByIdPort}, \texttt{IGetByDocumentIdPort}, \texttt{IGetByStatusPort} \\
     \hline
   \end{tabularx}
   \label{tab:browsing:repositories}
 \end{table}
 
 \noindent
-Inoltre: \codeword{save}, \codeword{updateIntegrityStatus} per persistenza; \codeword{searchDocument*}, 
-\codeword{getIndexedDocumentsCount} per DocumentRepository.
+Inoltre: \codeword{ISave*Port}, \codeword{IUpdate*IntegrityStatus} per ciascuna entità "*"; \codeword{searchDocument*}, 
+\codeword{getIndexedDocumentsCount} per Document.
 
 \subsubsection{Layer DAO}
 \label{sec:browsing:dao}
 
 \noindent
-Le interfacce \codeword{I*DAO} espongono metodi paralleli ai repository per il retrieval e query concrete eseguite in SQLite.
+I DAO espongono metodi equivalenti, che permettono di recuperare le entità dal database.
 
 \begin{table}[H]
   \centering
@@ -312,7 +309,7 @@ Contratto dati IPC (restituiti dall'adapter al renderer):
     \hline
     \texttt{FileDTO} & \texttt{id,\allowbreak documentId,\allowbreak filename,\allowbreak path,\allowbreak hash,\allowbreak integrityStatus,\allowbreak isMain} \\
     \hline
-    \texttt{MetadataDTO} & \texttt{name,\allowbreak value (scalare|MetadataDTO[]),\allowbreak type: MetadataType} \\
+    \texttt{MetadataDTO} & \texttt{name,\allowbreak value (string|MetadataDTO[]),\allowbreak type: MetadataType} \\
     \hline
   \end{tabularx}
   \caption{DTO schema (metadati caricati ricorsivamente)}
@@ -339,18 +336,14 @@ Trasformazioni tra layer di persistenza, entity e DTO:
     \textbf{Conversione} & \textbf{File} & \textbf{Funzioni} \\
     \hline
     Entity $\to$ DTO & \texttt{EntityToDtoConverter.ts} & 
-      \texttt{*ToDto} per dip, docClass, process, document, file, metadata \\
+      \texttt{*ToDto} per dip, documentClass, process, document, file, metadata \\
     \hline
     SQL $\to$ Entity & \texttt{*Mapper.ts} & 
-      \texttt{*Mapper} per dip, docClass, process, document, file, metadata \\
+      \texttt{*Mapper} per dip, documentClass, process, document, file, metadata \\
     \hline
   \end{tabularx}
   \label{tab:browsing:mapping}
 \end{table}
-
-\noindent
-\codeword{MetadataMapper.fromFlatRows} ricostruisce l'albero da righe flat con controllo cicli/root.
-
 
 \subsubsection{Comportamenti runtime}
 \label{sec:browsing:runtime}
