@@ -31,11 +31,11 @@ interface IGetCustomMetadataKeysUC {
     ): string[]
 }
 
-SearchIpcAdapter --> ISearchDocumentalClassUC : invoca
-SearchIpcAdapter --> ISearchProcessUC         : invoca
-SearchIpcAdapter --> ISearchDocumentsUC       : invoca
-SearchIpcAdapter --> ISearchSemanticUC        : invoca
-SearchIpcAdapter --> IGetCustomMetadataKeysUC : invoca
+SearchIpcAdapter --> ISearchDocumentalClassUC
+SearchIpcAdapter --> ISearchProcessUC        
+SearchIpcAdapter --> ISearchDocumentsUC      
+SearchIpcAdapter --> ISearchSemanticUC       
+SearchIpcAdapter --> IGetCustomMetadataKeysUC
 
 @enduml
 
@@ -51,10 +51,10 @@ interface ISearchDocumentClassUC {
 }
 class SearchDocumentClassUC {
     - searchPort: ISearchDocumentClassPort
-    + execute(name: string): DocumentClass[]
+    + searchDocumentalClasses(name: string): DocumentClass[]
 }
 interface ISearchDocumentClassPort {
-    + execute(name: 
+    + searchDocumentalClasses(name: 
     string): DocumentClass[]
 }
 
@@ -133,7 +133,7 @@ class SearchSemanticUC {
 }
 interface ISearchSimilarVectorsPort {
     + searchSimilarVectors( queryVector: Float32Array,
-    topK: number, ): Promise<Array<{ documentId: number; score: number }>>
+    topK: number, ): Promise<SemanticSearchMatch[]>
 }
 interface IGetDocumentByIdPort {
     + getById(id: number): Document | null
@@ -290,8 +290,8 @@ class DocumentDAO implements IDocumentDAO {
     + getIndexedDocumentsCount(): number
 }
 
-DocumentPersistenceAdapter --> IDocumentDAO : delega
-DocumentPersistenceAdapter ..> SemanticSearchResult : return
+DocumentPersistenceAdapter --> IDocumentDAO 
+DocumentPersistenceAdapter ..> SemanticSearchResult 
 
 @enduml
 
@@ -314,10 +314,10 @@ class DocumentMetadataQueryBuilder {
     - toJsonPath(path: string): string
 }
 
-DocumentDAO --> DocumentMetadataQueryBuilder : istanzia
-DocumentMetadataQueryBuilder --> SearchDocumentsQuery : riceve
-DocumentMetadataQueryBuilder --> SearchGroup          : visita
-DocumentMetadataQueryBuilder --> SearchCondition      : traduce
+DocumentDAO --> DocumentMetadataQueryBuilder
+DocumentMetadataQueryBuilder --> SearchDocumentsQuery
+DocumentMetadataQueryBuilder --> SearchGroup
+DocumentMetadataQueryBuilder --> SearchCondition
 
 @enduml
 
@@ -384,8 +384,8 @@ interface SearchCondition {
     + value: any
 }
 
-MetadataKeyMapper --> SearchGroup     : normalizza path
-MetadataKeyMapper --> SearchCondition : normalizza path
+MetadataKeyMapper --> SearchGroup    
+MetadataKeyMapper --> SearchCondition
 
 @enduml
 
@@ -412,8 +412,8 @@ class DocumentClassSearchResult {
 }
 
 DocumentClassSearchResult ..|> SearchResult
-DocumentClassMapper ..> DocumentClass             : riceve
-DocumentClassMapper ..> DocumentClassSearchResult : restituisce
+DocumentClassMapper ..> DocumentClass             
+DocumentClassMapper ..> DocumentClassSearchResult 
 
 @enduml
 
@@ -438,8 +438,8 @@ class ProcessSearchResult {
 }
 
 ProcessSearchResult ..|> SearchResult
-ProcessMapper ..> Process           : riceve
-ProcessMapper ..> ProcessSearchResult : restituisce
+ProcessMapper ..> Process           
+ProcessMapper ..> ProcessSearchResult 
 
 @enduml
 
@@ -468,8 +468,8 @@ class DocumentSearchResult {
 enum DocumentTypeEnum
 
 DocumentSearchResult ..|> SearchResult
-DocumentMapper ..> Document             : riceve
-DocumentMapper ..> DocumentSearchResult : restituisce
-DocumentMapper ..> DocumentTypeEnum     : usa
+DocumentMapper ..> Document            
+DocumentMapper ..> DocumentSearchResult 
+DocumentMapper ..> DocumentTypeEnum     
 
 @enduml

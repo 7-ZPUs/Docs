@@ -11,13 +11,11 @@ per la ricerca semantica. L'estrazione del testo e la generazione dei vettori so
 interagisce con \codeword{WordEmbeddingPort} per convertire il contenuto testuale in vettori di embedding. Questi vettori vengono
 successivamente salvati in una apposita tabella nel database.\\
 
-L'indicizzazione avviene in modalità asincrona, garantendo un utilizzo efficiente della memoria: le entità vengono elaborate e salvate man mano che vengono estratte dal pacchetto, senza attendere il completamento dell'esplorazione dell'intero contenuto.\\
+L'indicizzazione avviene in modalità asincrona, garantendo un utilizzo efficiente della memoria e della CPU (viste le numerose operazioni di I/O verso la memoria di massa): le entità vengono elaborate e salvate man mano che vengono estratte dal pacchetto, senza attendere il completamento dell'esplorazione dell'intero contenuto.\\
 
 Il modulo espone una inbound port per l'avvio del processo di indicizzazione, attualmente utilizzata da \codeword{ApplicationBootstrap} in \codeword{main.ts}. Poiché il software è distribuito all'interno del pacchetto DiP stesso, l'indicizzazione viene eseguita automaticamente durante il bootstrap dell'applicazione, senza richiedere intervento manuale dell'utente.
-
-\subsection{Componenti}
-
 \newpage
+\subsection{Componenti}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3-main-indexing-flow-no-repos/C3_Main_Indexing_Flow_No_Repos.png}
@@ -81,7 +79,7 @@ Viene spiegato in seguito come queste entità vengono gestite dal modulo di indi
 \end{itemize}
 
 \subsubsection{EmbeddingService, WordEmbeddingPort}
-Queste due componenti collaborano per gestire l'estrazione del testo dai file e la generazione dei vettori di embedding, che vengono poi restituiti a IndexDipUC per il salvataggio nella rispettiva \codeword{VectorRepository}.
+Queste due componenti collaborano per gestire l'estrazione del testo dai file e la generazione dei vettori di embedding, che vengono poi restituiti a \codeword{IndexDipUC} per il salvataggio tramite \codeword{ISaveVectorPort}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_Embedding/Class Diagram - Vertical Flow.png}
@@ -91,7 +89,7 @@ Queste due componenti collaborano per gestire l'estrazione del testo dai file e 
 
 \paragraph{EmbeddingService}:
 \begin{itemize}
-    \item \textbf{Descrizione}: business service che si occupa di gestire la generazione di vettori a partire dal path del file principale di un documento. Questo servizio non si occupa della persistenza in quanto violerebbe il principio di Single Reponsibility.
+    \item \textbf{Descrizione}: business service che si occupa di gestire la generazione di vettori a partire dal path del file principale di un documento. Questo servizio non si occupa della persistenza in quanto violerebbe il principio di Single Responsibility.
     \item \codeword{\textbf{+ generateDocumentEmbedding(dipPath:string, filePath: string)}:} \\ \codeword{Promise<Float32Array | null>}: tramite \codeword{readTextFromStream} legge il contenuto del file principale del documento, che viene successivamente ridotto in chunk tramite \codeword{chunkText} e convertito in vettore tramite \codeword{WordEmbeddingPort}. Restituisce un array di float a 32 bit che rappresenta il vettore del documento, o null in caso di errore. Questo vettore è costruito come media dei vettori di ogni chunk del testo tramite \codeword{meanEmbedding}.
     \item \codeword{\textbf{+ setEmbeddingConfiguration(config: IEmbeddingConfiguration)}: void}: permette di aggiornare la configurazione per la generazione degli embedding, accettando in ingresso un oggetto che rispetta l'interfaccia \codeword{IEmbeddingConfiguration}.
     \item \codeword{\textbf{- readTextFromStream(filePath: string)}: Promise<string>}: legge il contenuto del file principale del documento a partire dal suo path tramite \\ \codeword{PackageReaderPort.readFileBytes}, restituendo una stringa di testo.

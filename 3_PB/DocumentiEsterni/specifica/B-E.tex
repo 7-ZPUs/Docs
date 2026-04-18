@@ -11,15 +11,15 @@ L'orchestrazione è gestita da quattro Use Case dedicati:
 \codeword{ExportFileUC}, \codeword{ExportFilesUC}, \codeword{PrintFileUC} 
 e \codeword{PrintFilesUC}. Tutti ricevono uno o più identificativi numerici 
 dei file da elaborare, recuperano le relative entità tramite 
-\codeword{IFileRepository}, risolvono i percorsi assoluti all'interno del 
-pacchetto DiP e delegano l'operazione alle rispettive port outbound 
+\codeword{IGetFileByIdPort} e \codeword{IFileSystemPort}, risolvono i percorsi assoluti all'interno del 
+pacchetto DiP e delegano l'operazione alle rispettive porte outbound 
 (\codeword{IExportPort} e \codeword{IPrintPort}).
 
-Il punto di ingresso lato Electron è \codeword{FileViewerIpcAdapter}, che 
+Il punto di ingresso lato renderer è \codeword{FileViewerIpcAdapter}, che 
 registra i canali IPC su \codeword{ipcMain} e funge da ponte tra il 
-processo renderer e i Use Case del backend. Per le operazioni che richiedono 
+processo renderer e gli Use Case del backend. Per le operazioni che richiedono 
 interazione con l'utente (scelta del percorso di destinazione, conferma della 
-stampa multipla) i Use Case si affidano direttamente a \codeword{IDialogPort}, 
+stampa multipla) gli Use Case si affidano direttamente a \codeword{IDialogPort}, 
 che astrae le finestre di dialogo native del sistema operativo. 
 
 \subsection{Architettura del modulo}
@@ -78,20 +78,20 @@ tutti i canali IPC del modulo.
 
 \begin{figure}[H]
     \centering
-    \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Export/Export_IPC_Part2.png}}
+    \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Export/Export_IPC_Part2_Export.png}}
     \caption{Diagramma C3 – Componenti del modulo di export e stampa}
-    \label{fig:C3_export_print}
+    \label{fig:C3_export_export}
 \end{figure}
 
 Use Case che orchestra il processo di esportazione di un singolo file dal 
 pacchetto DiP verso il filesystem locale. Recupera l'entità \codeword{File} 
-tramite \codeword{IFileRepository}, apre la finestra di salvataggio nativa 
-tramite \codeword{IDialogPort}, ne risolve il percorso assoluto sorgente e 
-delega la scrittura su disco a \codeword{IExportPort}.
+tramite \codeword{IGetFileByIdPort}, apre la finestra di salvataggio nativa 
+tramite \codeword{IDialogPort}, ne risolve il percorso assoluto sorgente, e 
+delega la scrittura su disco a \codeword{IExportPort} tramite la stream ottenuta con \codeword{IFileSystemPort}.
 
 \codeword{+ execute(fileId: number): Promise<ExportResult>} : avvia 
 l'esportazione del file identificato da \codeword{fileId}. Se il file non 
-viene trovato nel repository restituisce un \codeword{ExportResult} di 
+viene trovato nel database, restituisce un \codeword{ExportResult} di 
 fallimento con codice \codeword{NOT\_FOUND}; se l'utente annulla il dialog 
 restituisce un \codeword{ExportResult.canceled()}.
 
@@ -101,7 +101,7 @@ Use Case che orchestra l'esportazione sequenziale di più file verso una
 directory di destinazione scelta dall'utente. Apre la finestra di selezione 
 cartella tramite \codeword{IDialogPort}, quindi itera sui \codeword{fileIds} 
 forniti eseguendo per ciascuno la risoluzione del percorso e la scrittura 
-tramite \codeword{IExportPort}. Il progresso viene notificato al chiamante 
+tramite \codeword{IExportPort} della stream ottenuta con \codeword{IFileSystemPort}. Il progresso viene notificato al chiamante 
 tramite la callback \codeword{onProgress} dopo ogni file elaborato.
 
 \codeword{+ execute(fileIds: number[], onProgress: ProgressCallback): 
@@ -109,23 +109,30 @@ Promise<ExportFilesResult>} : avvia l'esportazione multipla. Al termine
 restituisce un \codeword{ExportFileResults} con l'esito dettagliato 
 per ciascun file.
 
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Export/Export_IPC_Part2_Print.png}}
+    \caption{Diagramma C3 – Componenti del modulo di export e stampa}
+    \label{fig:C3_export_print}
+\end{figure}
+
 \paragraph{PrintFileUC}
 
 Use Case che orchestra la stampa di un singolo file. Recupera l'entità 
-\codeword{File} tramite \codeword{IFileRepository}, ne risolve il percorso 
+\codeword{File} tramite \codeword{IGetFileByIdPort}, ne risolve il percorso 
 assoluto all'interno del pacchetto DiP e delega la stampa a 
-\codeword{IPrintPort}.
+\codeword{IPrintPort}. Anche qui viene passato ad \codeword{IPrintPort} una stream ottenuta tramite \codeword{IFileSystemPort} per consentire l'accesso al contenuto del file.
 
 \codeword{+ execute(fileId: number): Promise<ExportResult>} : avvia la 
 stampa del file identificato da \codeword{fileId}. Se il file non viene 
-trovato nel repository, restituisce un \codeword{ExportResult} di fallimento.
+trovato nel database, restituisce un \codeword{ExportResult} di fallimento.
 
 \paragraph{PrintFilesUC}
 
 Use Case che orchestra la stampa sequenziale di più file. Mostra una 
 finestra di conferma tramite \codeword{IDialogPort} prima di procedere, 
 quindi itera sui \codeword{fileIds} forniti eseguendo per ciascuno la stampa 
-tramite \codeword{IPrintPort}.
+tramite \codeword{IPrintPort} della stream ottenuta con \codeword{IFileSystemPort}.
 
 \codeword{+ execute(fileIds: number[], onProgress: ProgressCallback): 
 Promise<ExportFilesResult>} : avvia la stampa multipla. Al termine restituisce 

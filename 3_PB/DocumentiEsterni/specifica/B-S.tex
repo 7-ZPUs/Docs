@@ -36,7 +36,7 @@ prima di essere restituiti al frontend, mantenendo il dominio disaccoppiato dal 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3-main-search-flow/C3_Main_Search_Flow_Repos.png}
-    \caption{Diagramma C3 – Componenti del modulo di ricerca (Repository e DAO)}
+    \caption{Diagramma C3 – Componenti del modulo di ricerca (Porte e DAO)}
     \label{fig:C3_search_repos}
 \end{figure}
 
@@ -86,7 +86,7 @@ I cinque Use Case del modulo implementano ciascuno un'interfaccia dedicata e del
 \end{figure}
 
 Implementa \codeword{ISearch\allowbreak Documental\allowbreak ClassUC}. Il metodo \codeword{execute(name: string): DocumentClass[]} invoca\\
-\codeword{IDocumentClassRepository.searchDocumentalClasses(name)} e restituisce le entità corrispondenti, senza logica aggiuntiva.
+\codeword{ISearchDocumentClassPort.searchDocumentalClasses} e restituisce le entità corrispondenti, senza logica aggiuntiva.
 
 \paragraph{SearchProcessUC}
 
@@ -97,8 +97,7 @@ Implementa \codeword{ISearch\allowbreak Documental\allowbreak ClassUC}. Il metod
     \label{fig:uc_search_process}
 \end{figure}
 
-Implementa \codeword{ISearchProcessUC}. Il metodo \codeword{execute(uuid: string): Process[]} invoca \codeword{IProcessRepository.searchProcesses(uuid)} 
-e restituisce le entità corrispondenti.
+Implementa \codeword{ISearchProcessUC}. Il metodo \codeword{execute(uuid: string): Process[]} invoca \codeword{ISearchProcessesPort.searchProcesses} e restituisce le entità corrispondenti.
 
 \paragraph{SearchDocumentsUC}
 
@@ -110,7 +109,7 @@ e restituisce le entità corrispondenti.
 \end{figure}
 
 Implementa \codeword{ISearchDocumentsUC}. Riceve un \codeword{SearchDocumentsQuery} già costruito dall'adapter. Il metodo 
-\codeword{execute(filters: SearchDocumentsQuery): Document[]} invoca \codeword{IDocumentRepository.searchDocument(filters)} e restituisce i documenti 
+\codeword{execute(filters: SearchDocumentsQuery): Document[]} invoca \codeword{ISearchDocumentsPort.searchDocument} e restituisce i documenti 
 corrispondenti ai criteri di filtro.
 
 \paragraph{SearchSemanticUC}
@@ -122,9 +121,9 @@ corrispondenti ai criteri di filtro.
     \label{fig:C3_search_no_repos}
 \end{figure}
 
-Implementa \codeword{ISearchSemanticUC}. Coordina \codeword{IWordEmbedding} per la generazione del vettore di query e \codeword{IVectorRepository} per 
+Implementa \codeword{ISearchSemanticUC}. Coordina \codeword{IWordEmbedding} per la generazione del vettore di query e \codeword{ISearchSimilarVectorsPort} per 
 la ricerca tra i vettori indicizzati. Il metodo \codeword{execute(query: string): Promise<SemanticSearchMatch[]>} converte la query in un vettore tramite 
-\codeword{IWordEmbedding.generateEmbedding()}, quindi delega la ricerca per similarità a \codeword{IVectorRepository} e restituisce un array di 
+\codeword{IWordEmbedding.generateEmbedding}, quindi delega la ricerca per similarità a \codeword{ISearchSimilarVectorsPort} e restituisce un array di 
 \codeword{SemanticSearchMatch}, ciascuno con il \codeword{Document} e il relativo \codeword{score} di similarità.
 
 \paragraph{GetCustomMetadataKeysUC}
@@ -137,7 +136,7 @@ la ricerca tra i vettori indicizzati. Il metodo \codeword{execute(query: string)
 \end{figure}
 
 Implementa \codeword{IGetCustomMetadataKeysUC}. Il metodo \codeword{execute(dipId: number | null): string[]} invoca 
-\\\codeword{IDocumentRepository.getDistinctCustomMetadataKeys(dipId)} e restituisce le chiavi distinte. Se \codeword{dipId}
+\\\codeword{IGetDistinctDocumentCustomMetadataKeysPort.getDistinctCustomMetadataKeys} e restituisce le chiavi distinte. Se \codeword{dipId}
  è \codeword{null}, le chiavi vengono recuperate sull'intero database senza filtrare per pacchetto.
 
 \subsubsection{Modelli di dominio per la ricerca}
@@ -152,7 +151,7 @@ Implementa \codeword{IGetCustomMetadataKeysUC}. Il metodo \codeword{execute(dipI
 \end{figure}
 
 Oggetto query che incapsula l'albero di filtri logici da applicare alla ricerca dei documenti. Viene costruito dall'adapter a partire dal 
-\codeword{SearchRequestDTO} validato e passato allo Use Case, che lo inoltra al Repository e poi al DAO.
+\codeword{SearchRequestDTO} validato e passato allo Use Case, che lo inoltra a \codeword{ISearchDocumentsPort} e dunque al DAO.
 
 \begin{itemize}
     \item \codeword{- filter: SearchGroup} : radice dell'albero di filtri.
@@ -262,40 +261,40 @@ Utility class che normalizza i path dei metadati dal frontend in PascalCase, gar
 Le outbound ports sono implementate dai rispettivi adapter, chedelegano le operazioni di persistenza ai rispettivi DAO, che interagiscono direttamente con 
 SQLite tramite \codeword{better-sqlite3}. I seguenti diagrammi delle classi, per motivi di leggibilità, riportano solo i metodi di rilievo per questa parte della specifica; in particolare ciascun \codeword{*PersistenceAdapter} viene rappresentato insieme alle sue caratteristiche che rientrano nel dominio della ricerca. Vengono esclusi dettagli specifici di altre funzionalità (p.e. salvataggio).
  
-\paragraph{DocumentClassRepository e DocumentClassDAO}
+\paragraph{ISearchDocumentClassPort e DocumentClassDAO}
  
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-6.png}
-    \caption{Diagramma delle classi – DocumentClassRepository e DAO}
+    \caption{Diagramma delle classi – ISearchDocumentClassPort e DAO}
     \label{fig:document_class_repo}
 \end{figure}
  
-\codeword{DocumentClassRepository} espone \codeword{searchDocumentalClasses(name)}, delegando a \codeword{DocumentClassDAO.search(name)}, che esegue la query 
+\codeword{ISearchDocumentClassPort} espone \codeword{searchDocumentalClasses(name)}, delegando a \codeword{DocumentClassDAO.search}, che esegue la query 
 e mappa le righe risultanti in entità \codeword{DocumentClass} tramite \\\codeword{DocumentClassMapper.fromPersistence()}.
  
-\paragraph{ProcessRepository e ProcessDAO}
+\paragraph{ISearchProcessesPort e ProcessDAO}
  
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-7.png}
-    \caption{Diagramma delle classi – ProcessRepository e DAO}
+    \caption{Diagramma delle classi – ISearchProcessesPort e DAO}
     \label{fig:process_repo}
 \end{figure}
  
-\codeword{ProcessRepository} espone \codeword{searchProcesses(uuid)}, delegando a \codeword{ProcessDAO.searchProcesses(uuid)}, che esegue la query e 
+\codeword{ISearchProcessesPort} espone \codeword{searchProcesses(uuid)}, delegando a \codeword{ProcessDAO.searchProcesses(uuid)}, che esegue la query e 
 mappa le righe risultanti in entità \codeword{Process}.
  
-\paragraph{DocumentRepository e DocumentDAO}
+\paragraph{ISearchDocumentsPort e DocumentDAO}
  
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-8.png}
-    \caption{Diagramma delle classi – DocumentRepository e DAO}
+    \caption{Diagramma delle classi – ISearchDocumentsPort e DAO}
     \label{fig:document_repo}
 \end{figure}
  
-\codeword{DocumentRepository} espone i seguenti metodi di ricerca:
+\codeword{ISearchDocumentsPort} espone i seguenti metodi di ricerca:
  
 \begin{itemize}
     \item \codeword{searchDocument(filters: SearchDocumentsQuery): Document[]} : delega a \\\codeword{DocumentDAO.searchDocument()}, che utilizza 

@@ -20,7 +20,8 @@ Il sistema cosi progettato consente di avere un backend facilmente estendibile e
     Per componenti riusabili in piu contesti (ad esempio export e stampa), l'integrazione avviene tramite Dependency Injection, evitando modifiche invasive alla struttura delle feature.\\
     E inoltre applicato il pattern Smart and Dumb Components, che separa la logica di coordinamento dalla presentazione pura.\\
     Infine il pattern MVVM incoraggiato dal framework Angular è stato adottato e implementato grazie all'utilizzo di Facade (controller), Componenti (view) e DTO (model).
-    \subsubsection{Stack tecnologico}
+
+\subsubsection{Stack tecnologico}
 
 \begin{table}[H]
     \centering
@@ -31,15 +32,13 @@ Il sistema cosi progettato consente di avere un backend facilmente estendibile e
         \hline
         \textbf{Componente} & \textbf{Tecnologia} \\
         \hline
-        Runtime desktop & Electron (main + renderer) \\
+        Runtime desktop & Electron \\
         \hline
-        Renderer core & TypeScript \\
+        Frontend framework & Angular\\
         \hline
-        Dependency Injection & Angular \\
+        Backend & Node.js (TypeScript) \\
         \hline
-        Routing & Angular Router \\
-        \hline
-        Accessibility & Angular A11y \\
+        Persistenza & SQLite \\
         \hline
     \end{tabularx}
 \end{table}
@@ -57,7 +56,7 @@ Il sistema cosi progettato consente di avere un backend facilmente estendibile e
 
 \subsubsection{Ruolo architetturale}
 Il container \textit{Main} ospita la logica backend e costituisce il punto di orchestrazione tra IPC, use case applicativi e persistenza su SQLite.
-Le responsabilita principali sono la registrazione degli handler IPC, la risoluzione delle dipendenze tramite container DI, il coordinamento dei repository/DAO e il bootstrap iniziale dei dati indicizzati.
+Le responsabilita principali sono la registrazione degli handler IPC, l'implementazione della business logic e il bootstrap iniziale dei dati indicizzati.
 
 \subsubsection{Stack tecnologico}
 
@@ -89,7 +88,7 @@ Le responsabilita principali sono la registrazione degli handler IPC, la risoluz
 
 \begin{enumerate}
     \item \textbf{IPC Adapter:} boundary verso renderer, gestione canali, mapping DTO.
-    \item \textbf{Use Case:} thin orchestration layer, delega diretta ai repository.
+    \item \textbf{Use Case:} business logic layer, utilizza servizi e porte outbound per ottenere il risultato.
     \item \textbf{Outbound port:} layer di astrazione per l'interazione con servizi esterni.
     \item \textbf{Outbound adapter:} implementazione concreta delle porte verso p.e. database o filesystem.
     \item \textbf{DAO:} query SQL concrete, ricostruzione entity da righe.

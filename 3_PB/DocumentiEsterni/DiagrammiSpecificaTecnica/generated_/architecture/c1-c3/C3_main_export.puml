@@ -3,7 +3,7 @@
 title Component Diagram - Export\n(file:download, file:print)
 
 LAYOUT_TOP_DOWN()
-skinparam linetype ortho
+skinparam linetype straight
 skinparam shadowing false
 skinparam wrapWidth 180
 skinparam nodesep 60
@@ -13,28 +13,28 @@ Component_Ext(renderer,   "Renderer Process", "Angular / TypeScript", "Invia com
 Component_Ext(filesystem, "File System",       "OS / Local Disk",      "Salvataggio file su disco utente.")
 
 Container_Boundary(main, "Main Process - Electron") {
-    Component(file_ipc,       "FileViewerIpcAdapter",   "Node.js / TypeScript", "Canali: FILE_DOWNLOAD, FILE_PRINT,\nFILE_SAVE_DIALOG, FILE_FOLDER_DIALOG")
-    Component(uc_export_file, "ExportFileUC",           "Node.js / TypeScript", "Recupera il file dal repository, risolve il percorso assoluto e delega l'esportazione su disco.")
-    Component(uc_print_file,  "PrintFileUC",            "Node.js / TypeScript", "Recupera il file dal repository, risolve il percorso assoluto e delega la stampa.")
-    Component(uc_export_files, "ExportFilesUC",           "Node.js / TypeScript", "Recupera i file dal repository, risolve i percorsi e delega l'esportazione su disco.")
-    Component(uc_print_files,  "PrintFilesUC",            "Node.js / TypeScript", "Recupera i file dal repository, risolve i percorsi e delega la stampa.")
-    Component(port_export,    "IExportPort",            "Interface",            "exportFile(stream, destPath): Promise<ExportResult>")
-    Component(port_print,     "IPrintPort",             "Interface",            "printSingle(absolutePath, opts): Promise<ExportResult>")
-    Component(local_export,   "LocalExportPort",        "Node.js / TypeScript", "Implementa IExportPort. Scrive lo stream su disco tramite pipeline Node.js.")
-    Component(print_port,     "PrintPort",              "Electron",             "Implementa IPrintPort. Crea una BrowserWindow nascosta e stampa il file tramite le API Electron.")
+    Component(file_ipc,       "FileViewerIpcAdapter",   "Node.js / TypeScript", "FILE_DOWNLOAD, FILE_PRINT,\nFILE_SAVE_DIALOG, FILE_FOLDER_DIALOG")
+    Component(uc_export_file, "ExportFileUC",           "Node.js / TypeScript", "Recupera il file, risolve il percorso assoluto e delega l'esportazione su disco.")
+    Component(uc_print_file,  "PrintFileUC",            "Node.js / TypeScript", "Recupera il file, risolve il percorso assoluto e delega la stampa.")
+    Component(uc_export_files, "ExportFilesUC",           "Node.js / TypeScript", "Recupera i file, risolve i percorsi e delega l'esportazione su disco.")
+    Component(uc_print_files,  "PrintFilesUC",            "Node.js / TypeScript", "Recupera i file, risolve i percorsi e delega la stampa.")
+    Component(port_export,    "ExportPort",            "Interface",            "exportFile(stream, destPath): Promise<ExportResult>")
+    Component(port_print,     "PrintPort",             "Interface",            "printSingle(absolutePath, opts): Promise<ExportResult>")
+    Component(filesystem_adapter, "FileSystemPort", "Outbound port", "recupera il contenuto dei file come stream")
 }
 
-Rel_D(renderer,       file_ipc,       "FILE_DOWNLOAD, FILE_PRINT, FILES_DOWNLOAD, FILES_PRINT", "Electron IPC")
-Rel_D(file_ipc,       uc_export_file, "FILE_DOWNLOAD")
-Rel_D(file_ipc,       uc_print_file,  "FILE_PRINT")
-Rel_D(file_ipc,       uc_export_files, "FILES_DOWNLOAD")
-Rel_D(file_ipc,       uc_print_files,  "FILES_PRINT")
-Rel_D(uc_export_file, port_export,    "exportFile(stream, destPath)")
-Rel_D(uc_print_file,  port_print,     "printSingle(absolutePath, opts)")
-Rel_D(uc_export_files, port_export,    "exportFile(stream, destPath)")
-Rel_D(uc_print_files,  port_print,     "printSingle(absolutePath, opts)")
-Rel_D(port_export,    local_export,   "implementa")
-Rel_D(port_print,     print_port,     "implementa")
-Rel_D(local_export,   filesystem,     "write (pipeline stream su disco)")
-
+Rel_D(renderer,       file_ipc,       "")
+Rel_D(file_ipc,       uc_export_file, "")
+Rel_D(file_ipc,       uc_print_file,  "")
+Rel_D(file_ipc,       uc_export_files, "")
+Rel_D(file_ipc,       uc_print_files,  "")
+Rel_D(uc_export_file, port_export,    "")
+Rel_D(uc_print_file,  port_print,     "")
+Rel_D(uc_export_files, port_export,    "")
+Rel_D(uc_print_files,  port_print,     "")
+Rel_D(port_export,   filesystem,     "")
+Rel_D(uc_export_file, filesystem_adapter, "")
+Rel_D(uc_print_file,  filesystem_adapter, "")
+Rel_D(uc_export_files, filesystem_adapter, "")
+Rel_D(uc_print_files,  filesystem_adapter, "")
 @enduml

@@ -3,17 +3,17 @@
 
 title C4 Model - Level 3 (Main Process Components: Indexing Flow - Repositories)
 
-LAYOUT_WITH_LEGEND()
+skinparam linetype straight
 
 Container_Boundary(main_container, "Main Process") {
   Component(index_dip, "IndexDipUC", "Use Case", "Transactional indexing pipeline Dip -> Class -> Process -> Document -> File + vectors")
 
-  Component(dip_repo, "SaveDipPort", "SaveDipPort", "save Dip")
-  Component(class_repo, "SaveDocumentClassPort", "SaveDocumentClassPort", "save classes")
-  Component(process_repo, "SaveProcessPort", "SaveProcessPort", "save processes")
-  Component(doc_repo, "SaveDocumentPort", "SaveDocumentPort", "save documents")
-  Component(file_repo, "SaveFilePort", "SaveFilePort", "save files")
-  Component(vector_repo, "SaveVectorPort", "SaveVectorPort", "save vectors")
+  Component(dip_repo, "SaveDipPort", "Outbound Port", "save Dip")
+  Component(class_repo, "SaveDocumentClassPort", "Outbound Port", "save classes")
+  Component(process_repo, "SaveProcessPort", "Outbound Port", "save processes")
+  Component(doc_repo, "SaveDocumentPort", "Outbound Port", "save documents")
+  Component(file_repo, "SaveFilePort", "Outbound Port", "save files")
+  Component(vector_repo, "SaveVectorPort", "Outbound Port", "save vectors")
 }
 
 ContainerDb_Ext(sqlite, "SQLite", "Persistence for entities and vectors")
