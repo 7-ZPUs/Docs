@@ -1,6 +1,7 @@
 @startuml
 title SearchIpcAdapter
 
+left to right direction
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
 hide empty members
@@ -45,20 +46,20 @@ skinparam classAttributeIconSize 0
 skinparam linetype ortho
 hide empty members
 
-interface ISearchDocumentalClassUC {
+interface ISearchDocumentClassUC {
     + execute(name: string): DocumentClass[]
 }
-class SearchDocumentalClassUC {
-    - repo: IDocumentClassRepository
+class SearchDocumentClassUC {
+    - searchPort: ISearchDocumentClassPort
     + execute(name: string): DocumentClass[]
 }
-interface IDocumentClassRepository {
-    + searchDocumentalClasses(name: 
+interface ISearchDocumentClassPort {
+    + execute(name: 
     string): DocumentClass[]
 }
 
-SearchDocumentalClassUC ..|> ISearchDocumentalClassUC
-SearchDocumentalClassUC --> IDocumentClassRepository : usa
+SearchDocumentClassUC ..|> ISearchDocumentClassUC
+SearchDocumentClassUC --> ISearchDocumentClassPort
 
 @enduml
 
@@ -74,15 +75,15 @@ interface ISearchProcessUC {
     + execute(uuid: string): Process[]
 }
 class SearchProcessUC {
-    - repo: IProcessRepository
-    + execute(uuid: string): Process[]
+     - searchPort: ISearchProcessesPort
+     + execute(uuid: string): Process[]
 }
-interface IProcessRepository {
+interface ISearchProcessesPort {
     + searchProcesses(uuid: string): Process[]
 }
 
 SearchProcessUC ..|> ISearchProcessUC
-SearchProcessUC --> IProcessRepository : usa
+SearchProcessUC --> ISearchProcessesPort
 
 @enduml
 
@@ -98,23 +99,24 @@ interface ISearchDocumentsUC {
     ) : Document[]
 }
 class SearchDocumentsUC {
-    - documentRepo: IDocumentRepository
+    - searchPort: ISearchDocumentsPort
     + execute(filters: SearchDocumentsQuery
     ) : Document[]
 }
-interface IDocumentRepository {
+interface ISearchDocumentsPort {
     + searchDocument(filters: SearchDocumentsQuery
     ) : Document[]
 }
 
 SearchDocumentsUC ..|> ISearchDocumentsUC
-SearchDocumentsUC --> IDocumentRepository : usa
+SearchDocumentsUC --> ISearchDocumentsPort
 
 @enduml
 
 @startuml
 title SearchSemanticUC
 
+left to right direction
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
 hide empty members
@@ -124,30 +126,28 @@ interface ISearchSemanticUC {
     string) : Promise<SemanticSearchMatch[]>
 }
 class SearchSemanticUC {
-    - documentRepo : IDocumentRepository
-    - vectorRepo: IVectorRepository
-    - aiAdapter: IWordEmbedding
-    + execute(query: string
-    ): Promise<SemanticSearchMatch[]>
+    - documentPort : IGetDocumentByIdPort
+    - vectorPort: ISearchSimilarVectorsPort
+    - wePort: IWordEmbeddingPort
+     + execute(query: string): Promise<SemanticSearchMatch[]>
 }
-interface IVectorRepository {
+interface ISearchSimilarVectorsPort {
     + searchSimilarVectors( queryVector: Float32Array,
     topK: number, ): Promise<Array<{ documentId: number; score: number }>>
 }
-interface IDocumentRepository {
-    + searchDocumentSemantic( queryVector: Float32Array
-     ): Promise<Array<{  document: Document; score: number }>>;
+interface IGetDocumentByIdPort {
+    + getById(id: number): Document | null
 }
-interface IWordEmbedding {
+interface IWordEmbeddingPort {
     + generateEmbedding(text: 
     string): Promise<Float32Array>
     + isInitialized(): boolean
 }
 
 SearchSemanticUC ..|> ISearchSemanticUC
-SearchSemanticUC --> IVectorRepository : usa
-SearchSemanticUC --> IWordEmbedding    : usa
-SearchSemanticUC --> IDocumentRepository : usa
+SearchSemanticUC --> ISearchSimilarVectorsPort
+SearchSemanticUC --> IWordEmbeddingPort
+SearchSemanticUC --> IGetDocumentByIdPort
 
 @enduml
 
@@ -162,94 +162,136 @@ interface IGetCustomMetadataKeysUC {
     + execute(dipId: number | null): string[]
 }
 class GetCustomMetadataKeysUC {
-    - documentRepo: IDocumentRepository
+    - metaPort: IGetDistinctDocumentCustomMetadataKeysPort
     + execute(dipId: number | null): string[]
 }
-interface IDocumentRepository {
+interface IGetDistinctDocumentCustomMetadataKeysPort {
     + getDistinctCustomMetadataKeys(dipId: number | null): string[]
 }
 
 GetCustomMetadataKeysUC ..|> IGetCustomMetadataKeysUC
-GetCustomMetadataKeysUC --> IDocumentRepository : usa
+GetCustomMetadataKeysUC --> IGetDistinctDocumentCustomMetadataKeysPort
 
 @enduml
 
 @startuml
-title DocumentClassRepository
+title ISearchDocumentClassPort
 
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
 hide empty members
 
-interface IDocumentClassRepository {
+interface ISearchDocumentClassPort {
     + searchDocumentalClasses(name: string): DocumentClass[]
 }
-class DocumentClassRepository {
-    - dao: DocumentClassDAO
+class DocumentClassPersistenceAdapter {
+    - dao: IDocumentClassDAO
     + searchDocumentalClasses(name: string): DocumentClass[]
 }
-class DocumentClassDAO {
+interface IDocumentClassDAO {
+    + search(name: string): DocumentClass[]
+}
+
+class DocumentClassDAO implements IDocumentClassDAO {
     - db: Database
     + search(name: string): DocumentClass[]
 }
 
-DocumentClassRepository ..|> IDocumentClassRepository
-DocumentClassRepository --> DocumentClassDAO : delega
+DocumentClassPersistenceAdapter ..|> ISearchDocumentClassPort
+DocumentClassPersistenceAdapter --> IDocumentClassDAO
 
 @enduml
 
 @startuml
-title ProcessRepository
+title ISearchProcessesPort
 
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
 hide empty members
 
-interface IProcessRepository {
+interface ISearchProcessesPort {
     + searchProcesses(uuid: string): Process[]
 }
-class ProcessRepository {
-    - dao: ProcessDAO
+class ProcessPersistenceAdapter {
+    - dao: IProcessDAO
     + searchProcesses(uuid: string): Process[]
 }
-class ProcessDAO {
+
+interface IProcessDAO {
+    + searchProcesses(uuid: string): Process[]
+}
+
+class ProcessDAO implements IProcessDAO {
     - db: Database
     + searchProcesses(uuid: string): Process[]
 }
 
-ProcessRepository ..|> IProcessRepository
-ProcessRepository --> ProcessDAO : delega
+ProcessPersistenceAdapter ..|> ISearchProcessesPort
+ProcessPersistenceAdapter --> IProcessDAO
 
 @enduml
 
 @startuml
-title DocumentRepository
+title ISearchDocumentPort, ISearchDocumentSemanticPort
 
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
 hide empty members
 
-interface IDocumentRepository {
-    + searchDocument(filters: SearchDocumentsQuery): Document[]
-    + getDistinctCustomMetadataKeys(dipId: number | null): string[]
-    + getIndexedDocumentsCount(): number
+interface ISearchDocumentPort {
+    + searchDocument(
+        filters: SearchDocumentsQuery
+    ): Document[]
 }
-class DocumentRepository {
+
+interface ISearchDocumentSemanticPort {
+    + searchSemanticDocuments(
+        queryVector: Float32Array
+    ): Document[]
+}
+
+interface IGetDistinctDocumentCustomMetadataKeysPort {
+    + getDistinctCustomMetadataKeys(
+        dipId: number | null
+    ): string[]
+}
+
+interface IGetIndexedDocumentsCountPort {
+    + getIndexedDocumentsCount(
+    ): number
+}
+
+class DocumentPersistenceAdapter implements ISearchDocumentPort, ISearchDocumentSemanticPort, IGetDistinctDocumentCustomMetadataKeysPort, IGetIndexedDocumentsCountPort {
     - dao: DocumentDAO
     + searchDocument(filters: SearchDocumentsQuery): Document[]
+    + searchSemanticDocuments(queryVector: Float32Array): SemanticSearchResult[]
     + getDistinctCustomMetadataKeys(dipId: number | null): string[]
     + getIndexedDocumentsCount(): number
 }
-class DocumentDAO {
+
+interface SemanticSearchResult {
+    documentId: number
+    score: number
+}
+
+interface IDocumentDAO {
+    + searchDocument(filters: SearchDocumentsQuery): Document[]
+    + searchDocumentSemantic(queryVector: Float32Array): SemanticSearchResult[]
+    + getDistinctCustomMetadataKeys(dipId: number | null): string[]
+    + getIndexedDocumentsCount(): number
+}
+
+class DocumentDAO implements IDocumentDAO {
     - db: Database
     - queryBuilder: DocumentMetadataQueryBuilder
     + searchDocument(filters: SearchDocumentsQuery): Document[]
+    + searchDocumentSemantic(queryVector: Float32Array): SemanticSearchResult[]
     + getDistinctCustomMetadataKeys(dipId: number | null): string[]
     + getIndexedDocumentsCount(): number
 }
 
-DocumentRepository ..|> IDocumentRepository
-DocumentRepository --> DocumentDAO : delega
+DocumentPersistenceAdapter --> IDocumentDAO : delega
+DocumentPersistenceAdapter ..> SemanticSearchResult : return
 
 @enduml
 

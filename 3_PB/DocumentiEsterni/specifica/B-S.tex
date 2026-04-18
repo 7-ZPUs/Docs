@@ -17,8 +17,8 @@ Il modulo supporta quattro modalità di ricerca principali:
     \codeword{SearchDocumentsQuery} tramite \codeword{MetadataKeyMapper}.
     \item \textbf{Ricerca semantica} – ricerca i \codeword{Document} per similarità vettoriale tramite \codeword{SearchSemanticUC}, 
     convertendo la query in un vettore di embedding tramite \codeword{IWordEmbedding} e calcolando la \textit{cosine similarity} 
-    rispetto ai vettori indicizzati tramite \codeword{IVectorRepository}.
-    \item \textbf{Ricerca chiavi di metadati} – recupera le chiavi di metadati personalizzati presenti nei documenti del pacchetto ( quindi nel Database ).
+    rispetto agli altri vettori presenti nel database.
+    \item \textbf{Ricerca chiavi di metadati} – recupera tutte le chiavi di metadati personalizzati presenti nei documenti del pacchetto (quindi nel Database).
 \end{itemize}
 
 I risultati vengono mappati in DTO (\codeword{DocumentSearchResult}, \codeword{ProcessSearchResult}, \codeword{DocumentClassSearchResult}) 
@@ -35,7 +35,7 @@ prima di essere restituiti al frontend, mantenendo il dominio disaccoppiato dal 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3-main-search-flow/C3_Main_Search_Flow_Repos.png}
+    \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3-main-search-flow/C3_Main_Search_Flow_Repos.png}
     \caption{Diagramma C3 – Componenti del modulo di ricerca (Repository e DAO)}
     \label{fig:C3_search_repos}
 \end{figure}
@@ -44,7 +44,7 @@ prima di essere restituiti al frontend, mantenendo il dominio disaccoppiato dal 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search.png}
+    \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search.png}
     \caption{Diagramma delle classi – SearchIpcAdapter}
     \label{fig:search_ipc_adapter}
 \end{figure}
@@ -53,8 +53,8 @@ prima di essere restituiti al frontend, mantenendo il dominio disaccoppiato dal 
 e instrada le richieste dal renderer process ai rispettivi Use Case, senza contenere logica di business.
 
 \paragraph{Metodo principale}
-\codeword{+ register(ipcMain: IpcMain): void} – metodo statico che registra tutti i canali IPC del modulo, invoca \codeword{execute()} 
-sul Use Case corrispondente e restituisce i risultati mappati in DTO.
+\codeword{+ register(ipcMain: IpcMain): void} – metodo statico che registra tutti i canali IPC del modulo. Questi ultimi invocheranno \codeword{execute()} 
+sul Use Case corrispondente una volta ricevuto il messaggio IPC, restituendo poi i risultati mappati in DTO.
 
 \paragraph{Canali registrati}
 
@@ -74,7 +74,7 @@ sul Use Case corrispondente e restituisce i risultati mappati in DTO.
 
 \subsubsection{Use Case di ricerca}
 
-I cinque Use Case del modulo implementano ciascuno un'interfaccia dedicata e delegano le operazioni di persistenza ai rispettivi repository, senza contenere logica infrastrutturale.
+I cinque Use Case del modulo implementano ciascuno un'interfaccia dedicata e delegano le operazioni di persistenza attraverso le rispettive porte outbound, senza contenere logica infrastrutturale. La loro responsabilità è dunque quella di implementare la business logic.
 
 \paragraph{SearchDocumentalClassUC}
 
@@ -257,16 +257,16 @@ Utility class che normalizza i path dei metadati dal frontend in PascalCase, gar
      nell'albero, inclusi i valori di condizioni \codeword{ELEM\_MATCH} con \codeword{SearchGroup} annidato.
 \end{itemize}
 
-\subsubsection{Repository e DAO di ricerca}
+\subsubsection{Outbound Ports e DAO di ricerca}
  
-I repository implementano il \textit{\textbf{pattern Repository}} delegando le operazioni di persistenza ai rispettivi DAO, che interagiscono direttamente con 
-SQLite tramite \codeword{better-sqlite3}.
+Le outbound ports sono implementate dai rispettivi adapter, chedelegano le operazioni di persistenza ai rispettivi DAO, che interagiscono direttamente con 
+SQLite tramite \codeword{better-sqlite3}. I seguenti diagrammi delle classi, per motivi di leggibilità, riportano solo i metodi di rilievo per questa parte della specifica; in particolare ciascun \codeword{*PersistenceAdapter} viene rappresentato insieme alle sue caratteristiche che rientrano nel dominio della ricerca. Vengono esclusi dettagli specifici di altre funzionalità (p.e. salvataggio).
  
 \paragraph{DocumentClassRepository e DocumentClassDAO}
  
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-6.png}
+    \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-6.png}
     \caption{Diagramma delle classi – DocumentClassRepository e DAO}
     \label{fig:document_class_repo}
 \end{figure}
@@ -278,7 +278,7 @@ e mappa le righe risultanti in entità \codeword{DocumentClass} tramite \\\codew
  
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-7.png}
+    \includegraphics[width=0.9\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-7.png}
     \caption{Diagramma delle classi – ProcessRepository e DAO}
     \label{fig:process_repo}
 \end{figure}
@@ -300,6 +300,7 @@ mappa le righe risultanti in entità \codeword{Process}.
 \begin{itemize}
     \item \codeword{searchDocument(filters: SearchDocumentsQuery): Document[]} : delega a \\\codeword{DocumentDAO.searchDocument()}, che utilizza 
     \codeword{DocumentMetadataQueryBuilder} per tradurre i filtri in una query ed eseguirla.
+    \item \codeword{searchSemanticDocuments(queryVector: Float32Array): }
     \item \codeword{getDistinctCustomMetadataKeys(dipId: number | null): string[]} : esegue la query e restituisce le chiavi di metadati personalizzati 
     distinte, deduplicate e ordinate alfabeticamente.
     \item \codeword{getIndexedDocumentsCount(): number} : esegue la query e restituisce il numero di documenti con vettore indicizzato, o 0 se la tabella non esiste.
