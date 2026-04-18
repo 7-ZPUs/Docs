@@ -1,44 +1,44 @@
 @startuml C3_Main_File_Operations
 !includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-title C4 Model - Level 3 (Main Process Components: File Operations)
+title Modello C4 - Livello 3 (Componenti processo Main: Operazioni file)
 
 LAYOUT_WITH_LEGEND()
 
-Container_Boundary(main_container, "Main Process") {
-  Component(file_ipc, "FileViewerIpcAdapter", "IPC Inbound Adapter", "Download, save and print channels")
-  Component(file_ucs, "File Use Cases", "Application Services", "ExportFileUC, PrintFileUC, GetFileContentUC")
+Container_Boundary(main_container, "Processo Main") {
+  Component(file_ipc, "FileViewerIpcAdapter", "Adapter IPC di ingresso", "Canali di download, salvataggio e stampa")
+  Component(file_ucs, "Use case File", "Servizi applicativi", "ExportFileUC, PrintFileUC, GetFileContentUC")
 
-  Component(package_reader, "LocalPackageReaderAdapter", "Outbound Adapter", "Reads file bytes from DIP package")
-  Component(export_port, "LocalExportPort", "Outbound Adapter", "Writes file to selected destination")
-  Component(print_port, "PrintPort", "Outbound Adapter", "Print integration")
-  Component(file_repo, "FileRepository", "Repository", "File metadata lookup")
+  Component(package_reader, "LocalPackageReaderAdapter", "Adapter outbound", "Legge byte file dal pacchetto DIP")
+  Component(export_port, "LocalExportPort", "Adapter outbound", "Scrive file nella destinazione selezionata")
+  Component(print_port, "PrintPort", "Adapter outbound", "Integrazione stampa")
+  Component(file_repo, "FileRepository", "Repository", "Ricerca metadati file")
 }
 
-Container_Ext(renderer, "Renderer UI", "Angular", "Download, save and print actions")
-ContainerDb_Ext(sqlite, "SQLite", "File metadata persistence")
-System_Ext(local_fs, "Local File System", "DIP files and export directories")
-System_Ext(os_services, "OS Print and File Services", "Native print and file dialogs")
+Container_Ext(renderer, "Renderer UI", "Angular", "Azioni di download, salvataggio e stampa")
+ContainerDb_Ext(sqlite, "SQLite", "Persistenza metadati file")
+System_Ext(local_fs, "File system locale", "File DIP e directory di export")
+System_Ext(os_services, "Servizi OS stampa e file", "Dialog nativi di stampa e file")
 
-Rel(renderer, file_ipc, "file:* channels")
-Rel(file_ipc, file_ucs, "execute")
+Rel(renderer, file_ipc, "canali file:*")
+Rel(file_ipc, file_ucs, "esegue")
 
-Rel(file_ucs, file_repo, "read metadata")
-Rel(file_ucs, package_reader, "read file bytes")
-Rel(file_ucs, export_port, "export file")
-Rel(file_ucs, print_port, "print file")
+Rel(file_ucs, file_repo, "legge metadati")
+Rel(file_ucs, package_reader, "legge byte file")
+Rel(file_ucs, export_port, "esporta file")
+Rel(file_ucs, print_port, "stampa file")
 
-Rel(file_repo, sqlite, "SQL read")
-Rel(package_reader, local_fs, "read streams")
-Rel(export_port, local_fs, "write output")
-Rel(print_port, os_services, "print")
-Rel(file_ipc, os_services, "save and open dialogs")
+Rel(file_repo, sqlite, "lettura SQL")
+Rel(package_reader, local_fs, "legge stream")
+Rel(export_port, local_fs, "scrive output")
+Rel(print_port, os_services, "stampa")
+Rel(file_ipc, os_services, "dialog salvataggio e apertura")
 
 note right of file_ucs
-Patterns:
-- Ports and Adapters
-- Repository for metadata
-- Adapter isolation for OS integrations
+Pattern:
+- Porte e adapter
+- Repository per metadati
+- Isolamento adapter per integrazioni OS
 end note
 
 @enduml

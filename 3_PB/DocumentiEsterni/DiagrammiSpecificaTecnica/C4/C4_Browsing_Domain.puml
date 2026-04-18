@@ -1,6 +1,6 @@
 @startuml C4_Browsing_Domain
 
-title C4 - Browsing Domain Model
+title C4 - Modello di dominio Browsing
 
 top to bottom direction
 skinparam classAttributeIconSize 0
@@ -75,24 +75,16 @@ package "Domain" {
   }
 }
 
-Dip "1" o-- "0..*" DocumentClass
-DocumentClass "1" o-- "0..*" Process
-Process "1" o-- "0..*" Document
-Document "1" o-- "0..*" File
-
-Process --> "1" Metadata : metadata
-Document --> "1" Metadata : metadata
-Metadata "1" o-- "0..*" Metadata : children
-
-note right of Dip
-Hierarchy used by browsing use cases:
+note top of Dip
+Gerarchia usata dai casi d'uso di browsing:
 Dip -> DocumentClass -> Process -> Document -> File
 end note
 
-note right of Process
-This diagram reflects domain entities in core/src/entity.
-Both id and parentUuid references are modeled because
-they are used in domain flows and persistence mapping.
+note bottom of File
+Questo diagramma rappresenta le entity di dominio in core/src/entity.
+Le entity non sono aggregate tra loro: mantengono solo
+riferimenti al padre (id/uuid) usati nei flussi di dominio
+e nel mapping di persistenza.
 end note
 
 @enduml

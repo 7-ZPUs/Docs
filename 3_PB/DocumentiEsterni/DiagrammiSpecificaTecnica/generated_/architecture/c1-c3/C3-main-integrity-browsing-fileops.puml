@@ -1,72 +1,72 @@
 @startuml C3_Main_Integrity_Browsing_FileOps
 !includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-title C4 Model - Level 3 (Main Process Components: Integrity, Browsing, File Operations)
+title Modello C4 - Livello 3 (Componenti processo Main: Integrita, Browsing, Operazioni file)
 
 LAYOUT_WITH_LEGEND()
 
-Container_Boundary(main_container, "Main Process") {
-  Component(browsing_ipc, "BrowsingIpcAdapter", "IPC Inbound Adapter", "Read/navigation channels by id/status/relations")
-  Component(integrity_ipc, "CheckIntegrityIpcAdapter", "IPC Inbound Adapter", "Integrity check channels for Dip/Class/Process/Document/File")
-  Component(file_ipc, "FileViewerIpcAdapter", "IPC Inbound Adapter", "Download/save/print dialogs and file operations")
+Container_Boundary(main_container, "Processo Main") {
+  Component(browsing_ipc, "BrowsingIpcAdapter", "Adapter IPC di ingresso", "Canali di lettura/navigazione per id/stato/relazioni")
+  Component(integrity_ipc, "CheckIntegrityIpcAdapter", "Adapter IPC di ingresso", "Canali di verifica integrita per Dip/Class/Process/Document/File")
+  Component(file_ipc, "FileViewerIpcAdapter", "Adapter IPC di ingresso", "Dialog di download/salvataggio/stampa e operazioni file")
 
-  Component(browse_ucs, "Browsing Use Cases", "Application Services", "GetById/GetByStatus/GetByParent for Dip/Class/Process/Document/File")
-  Component(integrity_ucs, "Integrity Use Cases", "Application Services", "Check integrity status across hierarchy")
-  Component(file_ucs, "File Use Cases", "Application Services", "ExportFileUC, PrintFileUC, GetFileContentUC")
+  Component(browse_ucs, "Use case Browsing", "Servizi applicativi", "GetById/GetByStatus/GetByParent per Dip/Class/Process/Document/File")
+  Component(integrity_ucs, "Use case Integrita", "Servizi applicativi", "Verifica stato di integrita lungo la gerarchia")
+  Component(file_ucs, "Use case File", "Servizi applicativi", "ExportFileUC, PrintFileUC, GetFileContentUC")
 
-  Component(integrity_service, "IntegrityVerificationService", "Domain Service", "Hash verification and integrity computation")
+  Component(integrity_service, "IntegrityVerificationService", "Servizio di dominio", "Verifica hash e calcolo dello stato di integrita")
 
-  Component(dip_repo, "DipPorts", "Outbound ports", "Dip persistence")
-  Component(class_repo, "DocumentClassPorts", "Outbound ports", "Class persistence")
-  Component(process_repo, "ProcessPorts", "Outbound ports", "Process persistence")
-  Component(doc_repo, "DocumentPorts", "Outbound ports", "Document persistence")
-  Component(file_repo, "FilePorts", "Outbound ports", "File persistence")
+  Component(dip_repo, "DipPorts", "Porte outbound", "Persistenza Dip")
+  Component(class_repo, "DocumentClassPorts", "Porte outbound", "Persistenza classi")
+  Component(process_repo, "ProcessPorts", "Porte outbound", "Persistenza processi")
+  Component(doc_repo, "DocumentPorts", "Porte outbound", "Persistenza documenti")
+  Component(file_repo, "FilePorts", "Porte outbound", "Persistenza file")
 
-  Component(export_port, "LocalExportPort", "Outbound Adapter", "Writes files to user-selected path")
-  Component(print_port, "PrintPort", "Outbound Adapter", "Print integration")
-  Component(package_reader, "FileSystemPort", "Outbound Adapter", "Reads file stream from DIP")
+  Component(export_port, "LocalExportPort", "Adapter outbound", "Scrive file nel percorso scelto dall'utente")
+  Component(print_port, "PrintPort", "Adapter outbound", "Integrazione stampa")
+  Component(package_reader, "FileSystemPort", "Adapter outbound", "Legge stream file dal DIP")
 }
 
-Container_Ext(renderer, "Renderer UI", "Angular", "Browse tree, integrity actions, download/print actions")
-ContainerDb_Ext(sqlite, "SQLite", "Entity and status persistence")
-System_Ext(local_fs, "Local File System", "DIP files and target export directories")
-System_Ext(os_services, "OS Print/File Services", "Native print and file dialogs")
+Container_Ext(renderer, "Renderer UI", "Angular", "Navigazione albero, azioni integrita, azioni download/stampa")
+ContainerDb_Ext(sqlite, "SQLite", "Persistenza entita e stati")
+System_Ext(local_fs, "File system locale", "File DIP e directory di export")
+System_Ext(os_services, "Servizi OS stampa/file", "Dialog nativi di stampa e file")
 
-Rel(renderer, browsing_ipc, "browse:* channels")
-Rel(renderer, integrity_ipc, "check-integrity:* channels")
-Rel(renderer, file_ipc, "file:* channels")
+Rel(renderer, browsing_ipc, "canali browse:*")
+Rel(renderer, integrity_ipc, "canali check-integrity:*")
+Rel(renderer, file_ipc, "canali file:*")
 
-Rel(browsing_ipc, browse_ucs, "execute")
-Rel(integrity_ipc, integrity_ucs, "execute")
-Rel(file_ipc, file_ucs, "execute")
+Rel(browsing_ipc, browse_ucs, "esegue")
+Rel(integrity_ipc, integrity_ucs, "esegue")
+Rel(file_ipc, file_ucs, "esegue")
 
-Rel(integrity_ucs, integrity_service, "verify")
+Rel(integrity_ucs, integrity_service, "verifica")
 
-Rel(browse_ucs, dip_repo, "read")
-Rel(browse_ucs, class_repo, "read")
-Rel(browse_ucs, process_repo, "read")
-Rel(browse_ucs, doc_repo, "read")
-Rel(browse_ucs, file_repo, "read")
+Rel(browse_ucs, dip_repo, "lettura")
+Rel(browse_ucs, class_repo, "lettura")
+Rel(browse_ucs, process_repo, "lettura")
+Rel(browse_ucs, doc_repo, "lettura")
+Rel(browse_ucs, file_repo, "lettura")
 
-Rel(integrity_ucs, dip_repo, "read/update status")
-Rel(integrity_ucs, class_repo, "read/update status")
-Rel(integrity_ucs, process_repo, "read/update status")
-Rel(integrity_ucs, doc_repo, "read/update status")
-Rel(integrity_ucs, file_repo, "read/update status")
+Rel(integrity_ucs, dip_repo, "lettura/aggiornamento stato")
+Rel(integrity_ucs, class_repo, "lettura/aggiornamento stato")
+Rel(integrity_ucs, process_repo, "lettura/aggiornamento stato")
+Rel(integrity_ucs, doc_repo, "lettura/aggiornamento stato")
+Rel(integrity_ucs, file_repo, "lettura/aggiornamento stato")
 
-Rel(file_ucs, package_reader, "read file bytes")
-Rel(file_ucs, export_port, "export file")
-Rel(file_ucs, print_port, "print file")
+Rel(file_ucs, package_reader, "legge byte file")
+Rel(file_ucs, export_port, "esporta file")
+Rel(file_ucs, print_port, "stampa file")
 
-Rel(dip_repo, sqlite, "SQL io")
-Rel(class_repo, sqlite, "SQL io")
-Rel(process_repo, sqlite, "SQL io")
-Rel(doc_repo, sqlite, "SQL io")
-Rel(file_repo, sqlite, "SQL io")
+Rel(dip_repo, sqlite, "I/O SQL")
+Rel(class_repo, sqlite, "I/O SQL")
+Rel(process_repo, sqlite, "I/O SQL")
+Rel(doc_repo, sqlite, "I/O SQL")
+Rel(file_repo, sqlite, "I/O SQL")
 
-Rel(package_reader, local_fs, "read streams")
-Rel(export_port, local_fs, "write output")
-Rel(print_port, os_services, "print")
-Rel(file_ipc, os_services, "save/open dialogs")
+Rel(package_reader, local_fs, "legge stream")
+Rel(export_port, local_fs, "scrive output")
+Rel(print_port, os_services, "stampa")
+Rel(file_ipc, os_services, "dialog salvataggio/apertura")
 
 @enduml

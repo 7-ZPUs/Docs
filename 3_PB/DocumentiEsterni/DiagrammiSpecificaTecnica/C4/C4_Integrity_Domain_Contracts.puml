@@ -1,0 +1,58 @@
+@startuml C4_Integrity_Domain_Contracts
+
+title C4 - Integrity Contracts (Shared Interfaces)
+
+top to bottom direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package "shared/errors" {
+  class AppError <<data>> {
+    +code: ErrorCode
+    +category: ErrorCategory
+    +severity: ErrorSeverity
+    +recoverable: boolean
+    +context?: string
+    +detail?: string
+  }
+
+  enum ErrorCode {
+    INTEGRITY_VERIFY_ERROR
+  }
+}
+
+package "shared/interfaces" {
+  interface IIpcGateway {
+    +invoke(channel: string, payload: unknown, cachePolicy: CachePolicy): unknown
+    +on(channel: string, handler: Handler): void
+  }
+
+  interface IIpcErrorHandlerService {
+    +toAppError(ipcError: unknown): AppError
+    +isFatal(error: AppError): boolean
+  }
+
+  interface ITelemetryService {
+    +trackEvent(type: EventType, payload: unknown): void
+    +trackError(error: AppError, context: string): void
+    +trackTiming(label: EventType, ms: number): void
+  }
+
+  interface ILiveAnnouncerService {
+    +announce(msg: string, politeness: string): void
+  }
+}
+
+IIpcErrorHandlerService ..> AppError : toAppError
+ITelemetryService ..> AppError : trackError
+AppError --> ErrorCode : code
+
+' Force vertical ordering for shared/interfaces stack.
+AppError -[hidden]down-> IIpcGateway
+IIpcGateway -[hidden]down-> IIpcErrorHandlerService
+IIpcErrorHandlerService -[hidden]down-> ITelemetryService
+ITelemetryService -[hidden]down-> ILiveAnnouncerService
+
+@enduml

@@ -14,33 +14,6 @@ Supporta inoltre getter alternativi per ID e stato di integrità.
 Le caratteristiche backend trasversali al container Main (stack tecnologico, layering, sequenza runtime generale, Dependency Injection, bootstrap e sicurezza preload) sono descritte in \nameref{sec:container:main}.
 
 
-\subsubsection{Organizzazione file backend}
-\label{sec:browsing:struttura}
-
-\begin{table}[H]
-  \centering
-  \footnotesize
-  \setlength{\tabcolsep}{4pt}
-  \renewcommand{\arraystretch}{1.5}
-  \begin{tabularx}{\textwidth}{|l|Y|}
-    \hline
-    \textbf{Layer} & \textbf{File} \\
-    \hline
-    Entry point IPC & \texttt{main.ts}, \texttt{preload.ts}, \texttt{ipc-channels.ts}, \newline \texttt{BrowsingIpcAdapter.ts} \\
-    \hline
-    Use case & \texttt{dip/*}, \texttt{classe-documentale/*}, \newline \texttt{process/*}, \texttt{document/*}, \texttt{file/*} \\
-    \hline
-    Repository & \texttt{I*Repository.ts}, \texttt{*Repository.ts} \\
-    \hline
-    DAO & \texttt{I*DAO.ts}, \texttt{*DAO.ts}, \texttt{mappers/*Mapper.ts} \\
-    \hline
-    Entity / DTO & \texttt{entity/*}, \texttt{dto/*}, \texttt{value-objects/*} \\
-    \hline
-    Database & \texttt{schema.sql}, \texttt{DatabaseBootstrap.ts}, \texttt{IndexDip.ts} \\
-    \hline
-  \end{tabularx}
-\end{table}
-
 \subsubsection{Flusso end-to-end}
 \label{sec:browsing:flusso}
 
@@ -131,7 +104,7 @@ Contratto IPC definito in \codeword{ipc-channels.ts} e registrato in \codeword{B
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{../../assets/outDiagrammiST/C4_Browsing_Domain.png}
+  \includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/C4_Browsing_Domain.png}
   \caption{C4 del modulo Browsing - modello di dominio}
   \label{fig:browsing:c4-domain}
 \end{figure}

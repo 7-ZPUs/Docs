@@ -1,11 +1,11 @@
 \newpage
-\section{Backend - Verifica Integrita}
+\section{Backend - Verifica integrità}
 
 \subsection{Panoramica}
 \label{sec:integrity}
 
 \noindent
-Il modulo Verifica Integrita esegue controlli su 5 livelli gerarchici:
+Il modulo Verifica integrità esegue controlli su 5 livelli gerarchici:
 File $\to$ Documento $\to$ Processo $\to$ Classe documentale $\to$ DIP.
 Il controllo puo essere avviato da qualsiasi livello e propaga lo stato nel sottoalbero interessato.
 
@@ -25,41 +25,10 @@ La verifica opera sui seguenti livelli:
 \noindent
 Ogni invocazione calcola lo stato del nodo root e dei suoi discendenti, con persistenza progressiva in SQLite tramite \codeword{IUpdate*IntegrityStatusPort}.
 
-\subsubsection{Organizzazione file backend}
-\label{sec:integrity:struttura}
-
-\begin{table}[H]
-	\centering
-	\footnotesize
-	\setlength{\tabcolsep}{4pt}
-	\renewcommand{\arraystretch}{1.5}
-	\begin{tabularx}{\textwidth}{|l|Y|}
-		\hline
-		\textbf{Layer} & \textbf{File} \\
-		\hline
-		Entry point IPC & \texttt{main.ts}, \texttt{preload.ts}, \texttt{ipc-channels.ts}, \newline \texttt{CheckIntegrityIpcAdapter.ts} \\
-		\hline
-		Use case & \texttt{*/ICheck*IntegrityStatusUC.ts}, \texttt{*/impl/Check*IntegrityStatusUC.ts} \\
-		\hline
-		Service & \texttt{IntegrityVerificationService.ts}, \texttt{HashingService.ts} \\
-		\hline
-		Persistence & \texttt{IUpdate*IntegrityStatusPort.ts}, \texttt{*PersistenceAdapter}\\
-		\hline
-		DAO & \texttt{I*DAO.ts}, \texttt{*DAO.ts} \\
-		\hline
-		Entity / DTO & \texttt{entity/*}, \texttt{dto/*} \\
-		\hline
-		Database & \texttt{schema.sql} (colonna \texttt{integrity\_status} su 5 tabelle) \\
-		\hline
-	\end{tabularx}
-	\caption{Organizzazione modulo Verifica Integrita}
-	\label{tab:integrity:struttura}
-\end{table}
-
 \subsubsection{Flusso di verifica}
 \label{sec:integrity:flusso}
 
-\paragraph{Sequenza di verifica.}
+\paragraph{Sequenza di verifica}
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
 	\item Il renderer invoca il canale \codeword{check-integrity:*}
 	\item \codeword{CheckIntegrityIpcAdapter} intercetta l'handler e risolve il use case
@@ -69,7 +38,7 @@ Ogni invocazione calcola lo stato del nodo root e dei suoi discendenti, con pers
 	\item L'handler IPC ritorna \codeword{IntegrityStatusEnum}
 \end{enumerate}
 
-\paragraph{Flusso gerarchico di propagazione.}
+\paragraph{Flusso gerarchico di propagazione}
 \begin{center}
 	\codeword{CHECK\_DIP\_INTEGRITY\_STATUS} \\
 	$\downarrow$ \\
@@ -104,47 +73,48 @@ Contratto IPC definito in \codeword{ipc-channels.ts} e registrato in \codeword{C
 		\hline
 	\end{tabular}
 	\end{adjustbox}
-	\caption{Contratto IPC del modulo Verifica Integrita}
+	\caption{Contratto IPC del modulo Verifica integrità}
 	\label{tab:integrity:ipc}
 \end{table}
 
 \noindent
-\textbf{Nota:} Il canale \codeword{INTEGRITY\_VERIFY} è definito in \codeword{ipc-channels.ts} ma non risulta registrato in \codeword{CheckIntegrityIpcAdapter}.
 
 \subsubsection{Diagrammi architetturali C4}
 \label{sec:integrity:diagrammi}
 
 \noindent
 Il flusso backend condiviso con il modulo Browsing e rappresentato in Figura~\ref{fig:browsing:c3-shared}.
-La vista focalizzata sul percorso di verifica integrita e mostrata in Figura~\ref{fig:integrity:c3-focused}.
+La vista focalizzata sul percorso di verifica integrità e mostrata in Figura~\ref{fig:integrity:c3-focused}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/C3_Backend_Integrity_Verification.png}
-\caption{C3 del backend: focus sulla verifica integrita (CheckIntegrityIpcAdapter)}
+\caption{C3 del backend: focus sulla verifica integrità (CheckIntegrityIpcAdapter)}
 \label{fig:integrity:c3-focused}
 \end{figure}
 
+\noindent
+Questo diagramma C3 mostra il percorso operativo completo della verifica: evento IPC in ingresso, delega ai use case e invocazione del servizio di dominio che coordina lettura e persistenza degli stati.
+
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/C4_Integrity_Domain.png}
-\caption{C4 del modulo Verifica Integrita - dominio e contratti}
+\includegraphics[width=0.90\textwidth]{../../assets/outDiagrammiST/C4_Integrity_Domain_Core.png}
+\caption{C4 del modulo Verifica Integrità - dominio (stato e risultati)}
 \label{fig:integrity:c4-domain}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/C4_Integrity_Backend.png}
-\caption{C4 del modulo Verifica Integrita - facade e componenti}
-\label{fig:integrity:c4-backend}
-\end{figure}
+\noindent
+Questo diagramma C4 descrive il modello dati del dominio integrità. Evidenzia report, risultati, progress e stato applicativo usati per rappresentare l'esito della verifica.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/C4_Integrity_Verification_Sequence.png}
-\caption{Sequenza di verifica e propagazione degli stati}
-\label{fig:integrity:c4-sequence}
+\includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/C4_Integrity_Domain_Contracts.png}
+\caption{C4 del modulo Verifica integrità - contratti shared/interfaces}
+\label{fig:integrity:c4-contracts}
 \end{figure}
+
+\noindent
+Questa vista C4 isola i contratti condivisi. Lo scopo e chiarire i boundary tra modulo integrità e servizi trasversali.
 
 \begin{figure}[H]
 \centering
@@ -152,6 +122,9 @@ La vista focalizzata sul percorso di verifica integrita e mostrata in Figura~\re
 \caption{Macchina a stati per l'algoritmo di aggregazione}
 \label{fig:integrity:c4-aggregation-state}
 \end{figure}
+
+\noindent
+La macchina a stati formalizza le regole di aggregazione: i risultati dei nodi figli vengono combinati per determinare lo stato del parent e propagare l'esito fino alla root.
 
 \subsubsection{Use Case: firme check}
 \label{sec:integrity:usecase}
@@ -179,7 +152,7 @@ I use case sono thin wrapper senza logica aggiuntiva; delegano direttamente a \c
 		\texttt{ICheckDipIntegrityStatusUC} & \texttt{execute(dipId: number): Promise<IntegrityStatusEnum>} \\
 		\hline
 	\end{tabularx}
-	\caption{Firme use case Verifica Integrita}
+	\caption{Firme use case Verifica integrità}
 	\label{tab:integrity:usecase}
 \end{table}
 
@@ -189,26 +162,26 @@ I use case sono thin wrapper senza logica aggiuntiva; delegano direttamente a \c
 \noindent
 File: \codeword{IntegrityVerificationService.ts}.
 
-\paragraph{Dipendenze iniettate.}
+\noindent
+Le interazioni del servizio sono rappresentate nelle Figure~\ref{fig:integrity:c4-domain} e~\ref{fig:integrity:c4-contracts}, che descrivono rispettivamente dominio e contratti shared/interfaces.
+
+\paragraph{Interazioni tra classi}
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-	\item \codeword{IFileRepository}
-	\item \codeword{IDocumentRepository}
-	\item \codeword{IProcessRepository}
-	\item \codeword{IDocumentClassRepository}
-	\item \codeword{IDipRepository}
-	\item \codeword{IHashingService}
-	\item \codeword{DIP\_PATH\_TOKEN}
+	\item \codeword{CheckIntegrityIpcAdapter} riceve i canali \codeword{check-integrity:*} e inoltra ogni richiesta al relativo use case
+	\item I use case \codeword{ICheck*IntegrityStatusUC} delegano direttamente a \codeword{IntegrityVerificationService}
+	\item \codeword{IntegrityVerificationService} recupera il nodo richiesto dal repository, attraversa ricorsivamente i discendenti e aggiorna lo stato dei nodi visitati
+	\item Per i nodi file, il service usa \codeword{HashingService} per il confronto hash e determina lo stato locale
+	\item Gli stati vengono aggregati verso il parent e persistiti progressivamente fino al nodo da cui è partita la richiesta (fino alla root se la verifica è fatta sull'intero DIP)
 \end{enumerate}
 
-\paragraph{Regole operative.}
+\paragraph{Regole operative}
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
 	\item Se la root non esiste, viene lanciato errore
 	\item La verifica e ricorsiva nel sottoalbero
 	\item Ogni livello aggiorna \codeword{integrity\_status} via repository
 \end{enumerate}
 
-\subsubsection{Regole di aggregazione}
-\label{sec:integrity:aggregation}
+\paragraph{Regole di aggregazione}\mbox{}\
 
 \noindent
 \textbf{Caso 1:} nessun figlio $\to$ \codeword{VALID}\\
@@ -216,7 +189,8 @@ File: \codeword{IntegrityVerificationService.ts}.
 \textbf{Caso 3:} nessun \codeword{INVALID} ma almeno un \codeword{UNKNOWN} $\to$ \codeword{UNKNOWN}\\
 \textbf{Caso 4:} tutti \codeword{VALID} $\to$ \codeword{VALID}
 
-\paragraph{Semantica per livello.}
+
+\paragraph{Metodi per livello di IntegrationVerificationService}\
 \begin{table}[H]
 	\centering
 	\footnotesize
@@ -244,11 +218,11 @@ File: \codeword{IntegrityVerificationService.ts}.
 \subsubsection{Hashing e transazioni nel modulo}
 \label{sec:integrity:infra}
 
-\paragraph{HashingService.}
+\paragraph{HashingService}
 \noindent
 \codeword{checkFileIntegrity(filePath, expectedHash)} legge bytes, calcola SHA-256, converte digest Base64 e confronta con l'hash atteso.
 
-\paragraph{Path assoluto file.}
+\paragraph{Path assoluto file}
 \noindent
 Il service risolve il percorso con \codeword{path.resolve(dipPath, file.getPath())} prima della verifica hash.
 
@@ -275,7 +249,7 @@ Il service risolve il percorso con \codeword{path.resolve(dipPath, file.getPath(
 		\texttt{Dip} & \texttt{IGetDipByIdPort}, \texttt{IUpdateDipIntegrityStatusPort} \\
 		\hline
 	\end{tabularx}
-	\caption{Repository e DAO coinvolti nella verifica integrita}
+	\caption{Repository e DAO coinvolti nella verifica integrità}
 	\label{tab:integrity:repo-dao}
 \end{table}
 
