@@ -58,7 +58,7 @@ Invoca invece metodi della SearchFacade, che:
     \item Aggiorna lo stato reattivo consumato dalla View (\codeword{getState()} + aggiornamenti su \codeword{state}).
 \end{enumerate}
 
-\noindent Questo garantisce che la View rimanga dichiarativa e focalizzata sulla UX, mentre il ViewModel centralizza il comportamento. La validazione non è concentrata in un solo punto: la SearchPageComponent esegue un controllo immediato per la UX, mentre la SearchFacade riafferma la validazione prima dell'esecuzione effettiva della ricerca.
+\noindent Questo garantisce che la View rimanga dichiarativa e focalizzata sulla UX, mentre il ViewModel centralizza il comportamento. La validazione non è concentrata in un solo punto: la SearchPageComponent esegue un controllo immediato per la UX, mentre la SearchFacade riafferma la validazione prima dell'esecuzione effettiva della ricerca. questa seconda validazione è effettuata dall'utilizzo dell'interfaccia di validazione \codeword{FilterValidator}, che consente di mantenere la logica di validazione completamente separata dalla presentazione, e facilmente testabile in isolamento.
 
 \paragraph{Metodi chiave della SearchFacade}
 
