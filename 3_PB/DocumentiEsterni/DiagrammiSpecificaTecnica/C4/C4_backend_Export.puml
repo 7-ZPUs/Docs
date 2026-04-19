@@ -174,21 +174,30 @@ class ExportResult <<value object>> {
     + {static} fail(code: string,
     msg: string): ExportResult
 }
-interface ExportFilesResult {
-    + canceled: boolean
+
+class ExportItemResult <<value object>> {
+    + fileId: number
+    + result: ExportResult
+}
+
+class ExportFilesResult <<value object>> {
     + results: ExportItemResult[]
 }
 
-PrintFileUC  --> IPrintPort       
-PrintFilesUC --> IPrintPort       
-PrintFilesUC --> IDialogPort      
-PrintFileUC  --> IGetFileByIdPort 
-PrintFilesUC --> IGetFileByIdPort 
-PrintFileUC  --> IFileSystemPort  
-PrintFilesUC --> IFileSystemPort  
+ExportItemResult --> ExportResult : contiene
+ExportFilesResult --> ExportItemResult : contiene
+ExportFileUC  --> IExportPort     : usa
+ExportFileUC  --> IDialogPort     : usa
+ExportFilesUC --> IExportPort     : usa
+ExportFilesUC --> IDialogPort     : usa
+PrintFileUC   --> IPrintPort      : usa
+PrintFilesUC  --> IPrintPort      : usa
+PrintFilesUC  --> IDialogPort     : usa
 
-PrintFileUC  ..> ExportResult      : <<returns>>
-PrintFilesUC ..> ExportFilesResult : <<returns>>
+ExportFileUC  ..> ExportResult      : <<returns>>
+ExportFilesUC ..> ExportFilesResult : <<returns>>
+PrintFileUC   ..> ExportResult      : <<returns>>
+PrintFilesUC  ..> ExportFilesResult : <<returns>>
 @enduml
 
 @startuml Export_IPC_Part3

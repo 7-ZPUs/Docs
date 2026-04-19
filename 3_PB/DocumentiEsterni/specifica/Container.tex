@@ -9,10 +9,93 @@ La progettazione del sistema \textit{DIPReader} è stata guidata dai principi di
 \end{figure}
 
 \subsection{Renderer}
-\subsubsection{Struttura architetturale}
-Il container \textit{Renderer} è responsabile della presentazione dell'interfaccia utente e dell'interazione con l'utente. 
-Il processo renderer ospita l'applicazione Angular, eseguita dal motore Chromium di Electron. Il frontend è sviluppato come SPA (Single Page Application) e segue un'architettura a componenti, con una chiara separazione tra logica di presentazione e logica di coordinamento. È inoltre applicato il pattern Smart and Dumb Components, che separa la logica di orchestrazione dalla presentazione pura.\\
-Infine, essendo l'applicazione sviluppata in Angular, adotta il pattern MVVM (Model View ViewModel) per la gestione della UI.
+    \subsubsection{Struttura architetturale}
+    Il container \textit{Renderer} è responsabile della presentazione dell'interfaccia utente e dell'interazione con l'utente. 
+    Per la gestione dell'interfaccia è stata adottata una struttura a componenti. Ogni feature espone componenti di presentazione e servizi dedicati al coordinamento della logica applicativa lato UI.\\
+    Poiche le interazioni tra i componenti di presentazione sono limitate, ogni componente e mantenuto disaccoppiato dagli altri. 
+    I punti di contatto principali sono il routing e i canali IPC, usati per coordinare la navigazione e la comunicazione con il backend.\\
+    Per componenti riusabili in piu contesti (ad esempio export e stampa), l'integrazione avviene tramite Dependency Injection, evitando modifiche invasive alla struttura delle feature.\\
+    
+    \subsubsection{Pattern adottati}
+    Per risolvere la complessità della gestione dello stato e delle interazioni, sono stati adottati i seguenti pattern architetturali:
+    \begin{itemize}
+        \item \textbf{Smart and Dumb Components}
+        \item \textbf{MVVM}
+        \item \textbf{Dependency Injection}
+        \item \textbf{Strategy}
+        \item \textbf{Facade}
+    \end{itemize}
+    Vengono di seguito descritti i pattern. Per i dettagli di implementazioni si rimanda alle sezioni dedicate alle feature frontend.
+    
+    \paragraph{Smart and Dumb Components}
+    \subparagraph{Problema}
+        La gestione dello stato e della logica di coordinamento in un'applicazione complessa può portare a componenti monolitici e difficili da mantenere.
+    \subparagraph{Soluzione}
+        Separare i componenti in "smart" (container) che gestiscono la logica e lo stato, e "dumb" (presentational) che si occupano solo della presentazione e dell'interazione con l'utente. I componenti smart comunicano con i le facades, che a loro volta interagiscono con i servizi e i canali IPC per recuperare i dati e coordinare le operazioni.
+    \subparagraph{Implementazioni}
+        Il pattern è stato implementato in tutte le feature estese, nella ricerca e nelle operazioni di dettaglio. \\
+        Nella ricerca, i componenti smart sono responsabili di gestire le interazioni con i filtri, regole di ordinamento e paginazione dei componenti dumb, rappresentati dai filtri.
+        \\ Nella visualizzazione del dettaglio, i componenti smart si occupano di gestire le diverse paginazione in base al tipo di documento da presentare. 
+
+    \paragraph{Dependency Injection}
+    \subparagraph{Problema}
+        La gestione delle dipendenze in un'applicazione complessa può portare a codice rigido e difficile da testare.
+    \subparagraph{Soluzione}
+        Utilizzare un container di dependency injection per gestire le istanze dei servizi e le loro dipendenze, riducendo il coupling tra i componenti.
+    \subparagraph{Implementazioni}
+        Il framework Angular fornisce un sistema di dependency injection integrato, che è stato utilizzato per gestire le dipendenze tra componenti, servizi e canali IPC.
+        Nel rispetto del Liskov Substitution Principle, si è scelto di iniettare i token delle interfacce dei servizi, invece delle implementazioni concrete, per garantire un basso accoppiamento e facilitare la sostituibilità dei componenti.
+
+    \paragraph{Strategy}
+    \subparagraph{Problema}
+        La gestione di comportamenti variabili in base al contesto (ad esempio, diverse modalità di visualizzazione o interazione) può portare a codice complesso e difficile da mantenere.
+    \subparagraph{Soluzione}
+        Utilizzare il pattern Strategy per definire una famiglia di algoritmi o comportamenti intercambiabili, incapsulandoli in classi separate e rendendoli facilmente sostituibili.
+    \subparagraph{Implementazioni}
+        Il pattern Strategy è stato adottato per gestire le diverse modalità di visualizzazione dei documenti, consentendo di definire strategie specifiche per ogni tipo di documento e di selezionare la strategia appropriata in fase di runtime.
+        \\ Nella validazione dei filtri è stato adottato il pattern Strategy per definire diverse strategie di validazione in base al tipo di filtro, consentendo di estendere facilmente le regole di validazione senza modificare il codice esistente.\\
+        Similarmente è stato fatto per la gestione dei filtri di soggetti, che presentano relazioni precise definite dagli standard AGID.
+
+    \paragraph{Facade}
+    \subparagraph{Problema}
+        La gestione della logica di coordinamento può essere complessa e portare a componenti con responsabilità multiple.
+    \subparagraph{Soluzione}
+        Utilizzare il pattern Facade per creare un'interfaccia semplificata che nasconda la complessità della logica di coordinamento, consentendo ai componenti di interagire con un'interfaccia più semplice e focalizzata.
+    \subparagraph{Implementazioni}
+        Il pattern Facade è stato adottato per coordinare le interazioni tra i componenti smart e i servizi, fornendo un'interfaccia semplificata per recuperare i dati e gestire le operazioni.
+
+    \paragraph{MVVM}
+    \subparagraph{Problema}
+        La gestione dello stato in modo dinamico e reattivo può portare a codice complesso e difficile da mantenere, soprattutto quando la logica di presentazione è strettamente legata alla logica di business come nel caso del frontend.
+    \subparagraph{Soluzione}
+        Utilizzare il pattern MVVM (Model-View-ViewModel) per separare la logica di presentazione (View) dalla logica di business (Model) attraverso un intermediario (ViewModel), che gestisce lo stato e le interazioni in modo reattivo.
+    \subparagraph{Implementazioni}
+        Il pattern MVVM è stato adottato e implementato grazie all'utilizzo di Facade (controller), Componenti (view) e DTO (model). Le Facade fungono da ViewModel, gestendo lo stato e le interazioni con i servizi e i canali IPC, mentre i componenti di presentazione si occupano solo della visualizzazione e dell'interazione con l'utente, mantenendo una chiara separazione tra logica di presentazione e logica di business.
+
+    \subsubsection{Stack tecnologico}
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{|l|Y|}
+        \hline
+        \textbf{Componente} & \textbf{Tecnologia} \\
+        \hline
+        Runtime desktop & Electron (main + renderer) \\
+        \hline
+        Renderer core & TypeScript \\
+        \hline
+        Dependency Injection & Angular \\
+        \hline
+        Routing & Angular Router \\
+        \hline
+        Accessibility & Angular A11y \\
+        \hline
+    \end{tabularx}
+\end{table}
+
 \subsubsection{Relazione con i principi SOLID}
 \begin{itemize}
     \item \textbf{SRP:} ogni componente ha una sola responsabilità.

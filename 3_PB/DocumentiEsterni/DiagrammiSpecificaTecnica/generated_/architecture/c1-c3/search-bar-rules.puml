@@ -22,10 +22,6 @@ skinparam maxMessageSize 100
 
 package "Renderer App (Angular)" {
   class "SearchBarComponent" as SearchBar {
-    +onSubmit(): void
-    +ngOnChanges(changes: SimpleChanges): void
-    +ngOnDestroy(): void
-    --
     +query: SearchQuery | null
     +isSearching: boolean
     +queryChanged: EventEmitter<SearchQuery>
@@ -33,6 +29,10 @@ package "Renderer App (Angular)" {
     +form: FormGroup
     +isSemanticForced: boolean
     -destroy$: Subject<void>
+    --
+    +onSubmit(): void
+    +ngOnChanges(changes: SimpleChanges): void
+    +ngOnDestroy(): void
   }
 
   class "SearchBarRulesManager" as Rules {

@@ -30,10 +30,10 @@ package "Renderer App (Angular)" {
   }
 
   class "FilterValidatorService" as ValidatorService {
+    -strategies: IFilterValidationStrategy[]
+    --
     +registerStrategy(strategy: IFilterValidationStrategy): void
     +validate(filters: PartialSearchFilters): ValidationResult
-    --
-    -strategies: IFilterValidationStrategy[]
   }
 
   interface "FilterValidatorFn" as ValidatorFn {

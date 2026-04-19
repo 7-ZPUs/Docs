@@ -22,6 +22,15 @@ skinparam maxMessageSize 150
 
 package "Renderer App (Angular)" {
   class "AdvancedFilterPanelComponent" as Panel {
+    -panelForm: FormGroup
+    -filters: SearchFilters
+    -currentValidationResult: ValidationResult | null
+    -subjectResetCounter: number
+    -uiState: FilterUIState
+    -validator?: FilterValidatorFn
+    -externalValidation: ValidationResult | null
+    -customMetadataKeys: string[]
+    --
     +ngOnInit(): void
     +onCommonFiltersChanged(values: CommonFilterValues): void
     +onDiDaiFiltersChanged(values: DiDaiFilterValues): void
@@ -33,15 +42,6 @@ package "Renderer App (Angular)" {
     +validateAndEmit(formValues: any): void
     +currentDocContext: DocContext
     +effectiveValidationResult: ValidationResult | null
-    --
-    -panelForm: FormGroup
-    -filters: SearchFilters
-    -currentValidationResult: ValidationResult | null
-    -subjectResetCounter: number
-    -uiState: FilterUIState
-    -validator?: FilterValidatorFn
-    -externalValidation: ValidationResult | null
-    -customMetadataKeys: string[]
   }
 
   class "FilterRulesManager" as RulesManager {
