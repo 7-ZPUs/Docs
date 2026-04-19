@@ -1,9 +1,6 @@
 \newpage
 \section{Architettura dei container}
 La progettazione del sistema \textit{DIPReader} è stata guidata dai principi di modularità, scalabilità e manutenibilità, con l'obiettivo di creare un'architettura che possa evolversi nel tempo e adattarsi a nuove esigenze e normative AGID.\\
-In particolare, è stata completamente scorporata la logica di business dalla logica di presentazione, esponendo come unico punto di accesso comune gli \textit{IPC channel}.\\
-Il sistema cosi progettato consente di avere un backend facilmente estendibile e modificabile, capace di adattarsi alla struttura del DIP. Il frontend risulta disaccoppiato dal backend e organizzato in componenti di presentazione sostituibili, in modo da facilitare evoluzione funzionale e manutenzione.\\
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/DiagrammaC2(1).png}
@@ -12,37 +9,10 @@ Il sistema cosi progettato consente di avere un backend facilmente estendibile e
 \end{figure}
 
 \subsection{Renderer}
-    \subsubsection{Struttura architetturale}
-    Il container \textit{Renderer} è responsabile della presentazione dell'interfaccia utente e dell'interazione con l'utente. 
-    Per la gestione dell'interfaccia è stata adottata una struttura a componenti. Ogni feature espone componenti di presentazione e servizi dedicati al coordinamento della logica applicativa lato UI.\\
-    Poiche le interazioni tra i componenti di presentazione sono limitate, ogni componente e mantenuto disaccoppiato dagli altri. 
-    I punti di contatto principali sono il routing e i canali IPC, usati per coordinare la navigazione e la comunicazione con il backend.\\
-    Per componenti riusabili in piu contesti (ad esempio export e stampa), l'integrazione avviene tramite Dependency Injection, evitando modifiche invasive alla struttura delle feature.\\
-    E inoltre applicato il pattern Smart and Dumb Components, che separa la logica di coordinamento dalla presentazione pura.\\
-    Infine il pattern MVVM incoraggiato dal framework Angular è stato adottato e implementato grazie all'utilizzo di Facade (controller), Componenti (view) e DTO (model).
-
-\subsubsection{Stack tecnologico}
-
-\begin{table}[H]
-    \centering
-    \footnotesize
-    \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.3}
-    \begin{tabularx}{\textwidth}{|l|Y|}
-        \hline
-        \textbf{Componente} & \textbf{Tecnologia} \\
-        \hline
-        Runtime desktop & Electron \\
-        \hline
-        Frontend framework & Angular\\
-        \hline
-        Backend & Node.js (TypeScript) \\
-        \hline
-        Persistenza & SQLite \\
-        \hline
-    \end{tabularx}
-\end{table}
-
+\subsubsection{Struttura architetturale}
+Il container \textit{Renderer} è responsabile della presentazione dell'interfaccia utente e dell'interazione con l'utente. 
+Il processo renderer ospita l'applicazione Angular, eseguita dal motore Chromium di Electron. Il frontend è sviluppato come SPA (Single Page Application) e segue un'architettura a componenti, con una chiara separazione tra logica di presentazione e logica di coordinamento. È inoltre applicato il pattern Smart and Dumb Components, che separa la logica di orchestrazione dalla presentazione pura.\\
+Infine, essendo l'applicazione sviluppata in Angular, adotta il pattern MVVM (Model View ViewModel) per la gestione della UI.
 \subsubsection{Relazione con i principi SOLID}
 \begin{itemize}
     \item \textbf{SRP:} ogni componente ha una sola responsabilità.
@@ -57,76 +27,26 @@ Il sistema cosi progettato consente di avere un backend facilmente estendibile e
 \subsubsection{Ruolo architetturale}
 Il container \textit{Main} ospita la logica backend e costituisce il punto di orchestrazione tra IPC, use case applicativi e persistenza su SQLite.
 Le responsabilita principali sono la registrazione degli handler IPC, l'implementazione della business logic e il bootstrap iniziale dei dati indicizzati.
-
-\subsubsection{Stack tecnologico}
-
-\begin{table}[H]
-    \centering
-    \footnotesize
-    \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.3}
-    \begin{tabularx}{\textwidth}{|l|Y|}
-        \hline
-        \textbf{Componente} & \textbf{Tecnologia} \\
-        \hline
-        Runtime desktop & Electron (main + renderer) \\
-        \hline
-        Backend core & TypeScript \\
-        \hline
-        Dependency Injection & tsyringe \\
-        \hline
-        Database & better-sqlite3 \\
-        \hline
-        IPC frontend-backend & ipcMain.handle / ipcRenderer.invoke \\
-        \hline
-        Architettura & Hexagonal architecture \\
-        \hline
-    \end{tabularx}
-\end{table}
+In particolare, l'architettura del main process è stata organizzata in maniera tale da definire solamente le entità di un pacchetto DiP, gestendo invece i metadati in maniera generica. Questo permetterà in un futuro di evolvere il sistema per supportare nuovi tipi di schema di metadati, senza dover modificare o aggiungere nessuna componente o entità al backend.
 
 \subsubsection{Layer architetturali}
-
 \begin{enumerate}
     \item \textbf{IPC Adapter:} boundary verso renderer, gestione canali, mapping DTO.
     \item \textbf{Use Case:} business logic layer, utilizza servizi e porte outbound per ottenere il risultato.
     \item \textbf{Outbound port:} layer di astrazione per l'interazione con servizi esterni.
     \item \textbf{Outbound adapter:} implementazione concreta delle porte verso p.e. database o filesystem.
     \item \textbf{DAO:} query SQL concrete, ricostruzione entity da righe.
-    \item \textbf{Mapper:} trasformazione entity $\leftrightarrow$ DTO.
+    \item \textbf{Mapper:} trasformazione DTO $\leftrightarrow$ Entity $\leftrightarrow$ Persistence.
     \item \textbf{Entity / Value Objects:} modello di dominio.
 \end{enumerate}
 
 \subsubsection{Relazione con i principi SOLID}
 \begin{itemize}
-    \item \textbf{SRP:} ciascun componente ha un solo motivo per cambiare: ciascuna classe ha una responsabilità ben definita e limitata.
+    \item \textbf{SRP:} ciascun componente ha un solo motivo per cambiare: ciascuna classe ha una responsabilità ben definita e limitata. Sinonimo di coesione: un classe è coesa se le classi client che la utilizzano usano tutti i metodi della classe.
     \item \textbf{OCP:} nuovi use case o adapter possono essere aggiunti estendendo i contratti esistenti.
     \item \textbf{LSP e ISP:} i layer dipendono da interfacce coese e sostituibili.
     \item \textbf{DIP:} le concretizzazioni (adapters) dipendono da astrazioni (porte), non viceversa.
 \end{itemize}
-
-\subsubsection{Sequenza di interazione generica tra renderer e main}
-\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-    \item \textbf{Renderer invoca IPC:} \codeword{window.electronAPI.invoke(channel, payload)}.
-    \item \textbf{Preload autorizza:} verifica prefissi consentiti e inoltra a \codeword{ipcRenderer.invoke}.
-    \item \textbf{Main process intercetta:} il main process riceve il messaggio IPC e delega all'handler del canale.
-    \item \textbf{Risoluzione DI:} Use case e outbound port vengono risolti tramite container tsyringe.
-    \item \textbf{Use case:} implementa la business logic e interagisce con le outbound port. 
-    \item \textbf{Outbound adapter:} implementazione concreta delle porte verso p.e. database o filesystem.
-    \item \textbf{DAO esegue query:} interrogazione SQLite e ricostruzione entity.
-    \item \textbf{Conversione DTO:} Apposite classi mapper convertono da entità di dominio a DTO/Persistenza e viceversa.
-    \item \textbf{Risposta IPC:} il renderer riceve il risultato dell'elaborazione della richiesta.
-\end{enumerate}
-
-\subsubsection{Dependency Injection}
-\noindent
-Configurazione in \codeword{container.ts}:
-
-\begin{enumerate}
-    \item \textbf{Provider DB:} \codeword{SQLITE\_DB\_TOKEN} $\to$ \codeword{BetterSqlite3.Database}.
-    \item \textbf{Outbound port tokens:} \codeword{*\_PORT\_TOKEN} per le interfacce dei servizi esterni.
-    \item \textbf{DAO tokens:} \codeword{*\_DAO\_TOKEN} per le implementazioni concrete.
-    \item \textbf{Use case tokens:} \codeword{GET\_BY\_*\_PORT\_TOKEN} per le operazioni di retrieval e in generale per le porte inbound.
-\end{enumerate}
 
 \subsubsection{Bootstrap e indicizzazione}
 \noindent
@@ -146,6 +66,3 @@ Durante l'avvio dell'applicazione electron, \codeword{main.ts} esegue:
     \item registrazione token runtime \codeword{DIP\_PATH\_TOKEN}
     \item registrazione adapter IPC (es. \codeword{BrowsingIpcAdapter}, \codeword{CheckIntegrityIpcAdapter})
 \end{enumerate}
-
-\noindent
-Nel bootstrap DB (\codeword{DatabaseBootstrap.ts}) viene registrato anche il singleton \codeword{SQLITE\_DB\_TOKEN} per l'interazione con il database SQLite.
