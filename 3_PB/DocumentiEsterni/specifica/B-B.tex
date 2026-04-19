@@ -120,7 +120,7 @@ Contratto IPC definito in \codeword{ipc-channels.ts} e registrato in \codeword{B
 \label{sec:browsing:usecase}
 
 \noindent
-Gli use case sono thin wrapper senza logica aggiuntiva; delegano direttamente al repository corrispondente.
+Gli use case sono thin wrapper senza logica aggiuntiva; delegano direttamente alla porta outbound corrispondente.
 
 \paragraph{Interfacce per aggregato.}
 
@@ -177,10 +177,10 @@ Gli use case sono thin wrapper senza logica aggiuntiva; delegano direttamente al
     \texttt{Process} & \texttt{ProcessPersistenceAdapter.ts} & 
       \texttt{IGetByIdPort}, \texttt{IGetByDocument ClassIdPort}, \texttt{IGetByStatusPort} \\
     \hline
-    \texttt{Document} & \texttt{DocumentRepository.ts} & 
+    \texttt{Document} & \texttt{DocumentPersistenceAdapter.ts} & 
       \texttt{IGetByIdPort}, \texttt{IGetByProcessIdPort}, \texttt{IGetByStatusPort} \\
     \hline
-    \texttt{File} & \texttt{FileRepository.ts} & 
+    \texttt{File} & \texttt{FilePersistenceAdapter.ts} & 
       \texttt{IGetByIdPort}, \texttt{IGetByDocumentIdPort}, \texttt{IGetByStatusPort} \\
     \hline
   \end{tabularx}

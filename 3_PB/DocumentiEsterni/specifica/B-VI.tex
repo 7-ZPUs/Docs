@@ -169,7 +169,7 @@ Le interazioni del servizio sono rappresentate nelle Figure~\ref{fig:integrity:c
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
 	\item \codeword{CheckIntegrityIpcAdapter} riceve i canali \codeword{check-integrity:*} e inoltra ogni richiesta al relativo use case
 	\item I use case \codeword{ICheck*IntegrityStatusUC} delegano direttamente a \codeword{IntegrityVerificationService}
-	\item \codeword{IntegrityVerificationService} recupera il nodo richiesto dal repository, attraversa ricorsivamente i discendenti e aggiorna lo stato dei nodi visitati
+	\item \codeword{IntegrityVerificationService} recupera il nodo richiesto dal database mediante le rispettive porte outbound, attraversa ricorsivamente i discendenti e aggiorna lo stato dei nodi visitati
 	\item Per i nodi file, il service usa \codeword{HashingService} per il confronto hash e determina lo stato locale
 	\item Gli stati vengono aggregati verso il parent e persistiti progressivamente fino al nodo da cui è partita la richiesta (fino alla root se la verifica è fatta sull'intero DIP)
 \end{enumerate}
@@ -178,7 +178,7 @@ Le interazioni del servizio sono rappresentate nelle Figure~\ref{fig:integrity:c
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
 	\item Se la root non esiste, viene lanciato errore
 	\item La verifica e ricorsiva nel sottoalbero
-	\item Ogni livello aggiorna \codeword{integrity\_status} via repository
+	\item Ogni livello aggiorna \codeword{integrity\_status} via \codeword{IUpdate*IntegrityStatusPort}
 \end{enumerate}
 
 \paragraph{Regole di aggregazione}\mbox{}\
@@ -249,7 +249,7 @@ Il service risolve il percorso con \codeword{path.resolve(dipPath, file.getPath(
 		\texttt{Dip} & \texttt{IGetDipByIdPort}, \texttt{IUpdateDipIntegrityStatusPort} \\
 		\hline
 	\end{tabularx}
-	\caption{Repository e DAO coinvolti nella verifica integrità}
+	\caption{Outbound ports coinvolte nella verifica integrità}
 	\label{tab:integrity:repo-dao}
 \end{table}
 
