@@ -258,7 +258,7 @@ Utility class che normalizza i path dei metadati dal frontend in PascalCase, gar
 
 \subsubsection{Outbound Ports e DAO di ricerca}
  
-Le outbound ports sono implementate dai rispettivi adapter, chedelegano le operazioni di persistenza ai rispettivi DAO, che interagiscono direttamente con 
+Le outbound ports sono implementate dai rispettivi adapter, che delegano le operazioni di persistenza ai rispettivi DAO, che interagiscono direttamente con 
 SQLite tramite \codeword{better-sqlite3}. I seguenti diagrammi delle classi, per motivi di leggibilità, riportano solo i metodi di rilievo per questa parte della specifica; in particolare ciascun \codeword{*PersistenceAdapter} viene rappresentato insieme alle sue caratteristiche che rientrano nel dominio della ricerca. Vengono esclusi dettagli specifici di altre funzionalità (p.e. salvataggio).
  
 \paragraph{ISearchDocumentClassPort e DocumentClassDAO}
@@ -270,8 +270,8 @@ SQLite tramite \codeword{better-sqlite3}. I seguenti diagrammi delle classi, per
     \label{fig:document_class_repo}
 \end{figure}
  
-\codeword{ISearchDocumentClassPort} espone \codeword{searchDocumentalClasses(name)}, delegando a \codeword{DocumentClassDAO.search}, che esegue la query 
-e mappa le righe risultanti in entità \codeword{DocumentClass} tramite \\\codeword{DocumentClassMapper.fromPersistence()}.
+\codeword{ISearchDocumentClassPort} espone \codeword{searchDocumentalClasses(name)}, delegando a \codeword{DocumentClassDAO.search}, che esegue la query.
+Mappa poi le righe risultanti in entità \codeword{DocumentClass} tramite \\\codeword{DocumentClassMapper.fromPersistence()}.
  
 \paragraph{ISearchProcessesPort e ProcessDAO}
  
@@ -282,8 +282,8 @@ e mappa le righe risultanti in entità \codeword{DocumentClass} tramite \\\codew
     \label{fig:process_repo}
 \end{figure}
  
-\codeword{ISearchProcessesPort} espone \codeword{searchProcesses(uuid)}, delegando a \codeword{ProcessDAO.searchProcesses(uuid)}, che esegue la query e 
-mappa le righe risultanti in entità \codeword{Process}.
+\codeword{ISearchProcessesPort} espone \codeword{searchProcesses(uuid)}, delegando a \codeword{ProcessDAO.searchProcesses(uuid)}, che esegue la query.
+Mappa poi le righe risultanti in entità \codeword{Process}.
  
 \paragraph{ISearchDocumentsPort e DocumentDAO}
  
