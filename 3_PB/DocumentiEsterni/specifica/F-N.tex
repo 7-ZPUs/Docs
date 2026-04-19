@@ -60,7 +60,7 @@ L'implementazione segue una separazione netta delle responsabilita:
 		\hline
 		Backend & \texttt{preload.ts} / \texttt{main.ts} & Boundary Electron, allowlist canali, bridge invoke/on e registrazione adapter IPC. \\
 		\hline
-		Backend & \texttt{BrowsingIpcAdapter} + UseCase + Repository + DAO & Esecuzione query browse su SQLite e conversione entity -> DTO. \\
+		Backend & \texttt{BrowsingIpcAdapter} + UseCase + Outbound Port + DAO & Esecuzione query browse su SQLite e conversione entity -> DTO. \\
 		\hline
 	\end{tabularx}
 	\caption{Architettura tecnica del modulo Navigazione}
@@ -74,7 +74,7 @@ L'implementazione segue una separazione netta delle responsabilita:
 	\item \codeword{AppShellComponent} o \codeword{DipExplorerComponent} avvia l'inizializzazione dei nodi root.
 	\item \codeword{DipFacade.loadRootNodes(dipId)} imposta \codeword{phase=loading}.
 	\item \codeword{IpcGateway.getRootDip} invoca \codeword{BROWSE\_GET\_DIP\_BY\_ID}.
-	\item Il backend risolve la richiesta via \codeword{BrowsingIpcAdapter} e catena UseCase -> Repository -> DAO.
+	\item Il backend risolve la richiesta via \codeword{BrowsingIpcAdapter} e catena UseCase -> Outbound Port -> DAO.
 	\item La facade aggiorna \codeword{phase=ready} e popola \codeword{rootNodes}.
 \end{enumerate}
 
