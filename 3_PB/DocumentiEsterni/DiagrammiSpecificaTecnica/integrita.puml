@@ -1,0 +1,59 @@
+@startuml Integrita_Cascata
+
+title Verifica Integrita DIP - Cascata Gerarchica e Aggregazione
+top to bottom direction
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam packageStyle rectangle
+skinparam linetype ortho
+skinparam rectangle {
+  RoundCorner 12
+}
+
+legend left
+Flusso di verifica:
+1) Verifica hash solo sui File
+2) Aggregazione verso l alto su ogni livello
+3) Persistenza stato a ogni livello nello stesso scope transazionale
+endlegend
+
+frame "Transazione unica (BEGIN IMMEDIATE -> COMMIT | ROLLBACK)" {
+  rectangle "DIP" as Dip #EAF7FF
+  rectangle "DocumentClass" as DocClass #EAF7FF
+  rectangle "Process" as Process #EAF7FF
+  rectangle "Document" as Document #EAF7FF
+  rectangle "File" as File #EAF7FF
+
+  rectangle "HashingService\nSHA256(file) vs hash atteso" as Hash #FFF4DD
+  database "SQLite\nintegrity_status" as Db #F6F6F6
+
+  Dip -down-> DocClass : contiene 0..*
+  DocClass -down-> Process : contiene 0..*
+  Process -down-> Document : contiene 0..*
+  Document -down-> File : contiene 0..*
+
+  File --> Hash : checkFileIntegrity(path, hash)
+  Hash --> File : VALID | INVALID | UNKNOWN
+
+  File -up-> Document : aggregateStatuses(file[])
+  Document -up-> Process : aggregateStatuses(document[])
+  Process -up-> DocClass : aggregateStatuses(process[])
+  DocClass -up-> Dip : aggregateStatuses(class[])
+
+  File ..> Db : update file.integrity_status
+  Document ..> Db : update document.integrity_status
+  Process ..> Db : update process.integrity_status
+  DocClass ..> Db : update document_class.integrity_status
+  Dip ..> Db : update dip.integrity_status
+}
+
+note right of Dip
+Regola aggregazione (ordine priorita):
+1. Se esiste INVALID -> INVALID
+2. Altrimenti se esiste UNKNOWN -> UNKNOWN
+3. Altrimenti -> VALID
+4. Lista figli vuota -> VALID
+end note
+
+@enduml
