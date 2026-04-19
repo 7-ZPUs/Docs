@@ -185,20 +185,18 @@ interface ISearchDocumentClassPort {
     + searchDocumentalClasses(name: string): DocumentClass[]
 }
 class DocumentClassPersistenceAdapter {
-    - dao: IDocumentClassDAO
+    - dao: DocumentClassDAO
+    - mapper: DocumentClassMapper
     + searchDocumentalClasses(name: string): DocumentClass[]
 }
-interface IDocumentClassDAO {
-    + search(name: string): DocumentClass[]
-}
 
-class DocumentClassDAO implements IDocumentClassDAO {
+class DocumentClassDAO {
     - db: Database
-    + search(name: string): DocumentClass[]
+    + search(name: string): DocumentClassPersistenceRow[]
 }
 
 DocumentClassPersistenceAdapter ..|> ISearchDocumentClassPort
-DocumentClassPersistenceAdapter --> IDocumentClassDAO
+DocumentClassPersistenceAdapter --> DocumentClassDAO
 
 @enduml
 
@@ -213,21 +211,18 @@ interface ISearchProcessesPort {
     + searchProcesses(uuid: string): Process[]
 }
 class ProcessPersistenceAdapter {
-    - dao: IProcessDAO
+    - dao: ProcessDAO
+    - mapper: ProcessMapper
     + searchProcesses(uuid: string): Process[]
 }
 
-interface IProcessDAO {
-    + searchProcesses(uuid: string): Process[]
-}
-
-class ProcessDAO implements IProcessDAO {
+class ProcessDAO {
     - db: Database
-    + searchProcesses(uuid: string): Process[]
+    + searchProcesses(uuid: string): ProcessPersistenceAggregate[]
 }
 
 ProcessPersistenceAdapter ..|> ISearchProcessesPort
-ProcessPersistenceAdapter --> IProcessDAO
+ProcessPersistenceAdapter --> ProcessDAO
 
 @enduml
 
@@ -247,7 +242,7 @@ interface ISearchDocumentPort {
 interface ISearchDocumentSemanticPort {
     + searchSemanticDocuments(
         queryVector: Float32Array
-    ): Document[]
+    ): Array<SemanticSearchResult[]>
 }
 
 interface IGetDistinctDocumentCustomMetadataKeysPort {
@@ -263,35 +258,23 @@ interface IGetIndexedDocumentsCountPort {
 
 class DocumentPersistenceAdapter implements ISearchDocumentPort, ISearchDocumentSemanticPort, IGetDistinctDocumentCustomMetadataKeysPort, IGetIndexedDocumentsCountPort {
     - dao: DocumentDAO
+    - mapper: DocumentMapper
     + searchDocument(filters: SearchDocumentsQuery): Document[]
     + searchSemanticDocuments(queryVector: Float32Array): SemanticSearchResult[]
     + getDistinctCustomMetadataKeys(dipId: number | null): string[]
     + getIndexedDocumentsCount(): number
 }
 
-interface SemanticSearchResult {
-    documentId: number
-    score: number
-}
-
-interface IDocumentDAO {
-    + searchDocument(filters: SearchDocumentsQuery): Document[]
-    + searchDocumentSemantic(queryVector: Float32Array): SemanticSearchResult[]
-    + getDistinctCustomMetadataKeys(dipId: number | null): string[]
-    + getIndexedDocumentsCount(): number
-}
-
-class DocumentDAO implements IDocumentDAO {
+class DocumentDAO {
     - db: Database
     - queryBuilder: DocumentMetadataQueryBuilder
-    + searchDocument(filters: SearchDocumentsQuery): Document[]
-    + searchDocumentSemantic(queryVector: Float32Array): SemanticSearchResult[]
+    + searchDocument(filters: SearchDocumentsQuery): DocumentJsonPersistenceRow[]
+    + searchDocumentSemantic(queryVector: Float32Array): { row: DocumentJsonPersistenceRow; score: number }
     + getDistinctCustomMetadataKeys(dipId: number | null): string[]
     + getIndexedDocumentsCount(): number
 }
 
-DocumentPersistenceAdapter --> IDocumentDAO 
-DocumentPersistenceAdapter ..> SemanticSearchResult 
+DocumentPersistenceAdapter --> DocumentDAO 
 
 @enduml
 
@@ -304,7 +287,7 @@ hide empty members
 
 class DocumentDAO {
     - queryBuilder: DocumentMetadataQueryBuilder
-    + searchDocument(filters: SearchDocumentsQuery): Document[]
+    + searchDocument(filters: SearchDocumentsQuery): DocumentJsonPersistenceRow[]
 }
 class DocumentMetadataQueryBuilder {
     + build(filters: SearchDocumentsQuery): {sql: string, params: unknown[]}
