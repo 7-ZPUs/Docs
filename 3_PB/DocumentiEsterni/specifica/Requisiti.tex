@@ -1,0 +1,842 @@
+\section{Requisiti soddisfatti}
+
+\subsection{Introduzione}
+I requisiti vengono classificati secondo le seguenti categorie:
+\begin{itemize}
+    \item \textbf{Requisiti Funzionali (F)}: descrivono le funzionalità del sistema
+    \item \textbf{Requisiti di Qualità (Q)}: descrivono le caratteristiche qualitative del sistema
+    \item \textbf{Requisiti di Vincolo (V)}: descrivono i vincoli tecnologici e normativi
+\end{itemize}
+
+Ogni requisito è identificato da un codice univoco nella forma:
+\begin{center}
+R-[ID]-[Tipo]-[Priorità]
+\end{center}
+
+Dove:
+\begin{itemize}
+    \item \textbf{ID}: numero progressivo del requisito
+    \item \textbf{Tipo}: F (Funzionale), Q (Qualità), V (Vincolo)
+    \item \textbf{Priorità}: Ob (Obbligatorio), De (Desiderabile), Op (Opzionale)
+\end{itemize}
+
+\newpage
+
+\subsection{Requisiti soddisfatti}
+
+\setlength{\LTleft}{0cm}
+\renewcommand{\arraystretch}{1.3}
+
+\rowcolors{2}{gray!15}{white}
+\begin{longtable}{|p{2.5cm}|p{9.5cm}|p{2.5cm}|}
+\hline
+\rowcolor{zpusgreen!30}
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endfirsthead
+\rowcolor{zpusgreen!30}
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonti} \\
+\hline
+\endhead
+R-1-F-Ob & L'utente deve poter visualizzare l'elenco di classi documentali nel DIP & Soddisfatto \\
+\hline
+R-2-F-Ob & In caso non vi siano classi documentali nel DIP, l'utente deve poter visualizzare un messaggio di errore & Soddisfatto \\
+\hline
+R-3-F-Ob & Quando viene selezionata una classe documentale, l'utente deve poter visualizzare ciascuna classe documentale all'interno dell'elenco & Soddisfatto \\
+\hline
+R-4-F-Ob & L'utente deve poter visualizzare il nome della classe documentale & Soddisfatto \\
+\hline
+R-5-F-Ob & L'utente deve poter visualizzare lo stato di verifica della classe documentale & Soddisfatto \\
+\hline
+R-6-F-Ob & L'utente deve poter visualizzare la marcatura temporale della classe documentale & Soddisfatto \\
+\hline
+R-7-F-Ob & L'utente deve poter visualizzare l'elenco dei processi associati alla classe documentale & Soddisfatto \\
+\hline
+R-8-F-Ob & In caso non vi siano processi associati alla classe documentale, l'utente deve poter visualizzare un messaggio di errore & Soddisfatto \\
+\hline
+R-9-F-Ob & Quando viene selezionato un processo, l'utente deve poter visualizzare ciascun processo all'interno dell'elenco & Soddisfatto \\
+\hline
+R-10-F-Ob & L'utente deve poter visualizzare il nome del processo & Soddisfatto \\
+\hline
+R-11-F-Ob & L'utente deve poter visualizzare l'elenco di documenti associati a un processo & Soddisfatto \\
+\hline
+R-12-F-Ob & In caso non vi siano documenti associati al processo, l'utente deve poter visualizzare un messaggio di errore & Soddisfatto \\
+\hline
+R-13-F-Ob & Quando viene selezionato un documento, l'utente deve poter visualizzare ciascun documento all'interno dell'elenco & Soddisfatto \\
+\hline
+R-14-F-Ob & L'utente deve poter visualizzare il nome del documento & Soddisfatto \\
+\hline
+R-15-F-Ob & L'utente deve poter visualizzare lo stato di verifica del documento & Soddisfatto \\
+\hline
+R-16-F-Ob & L'utente deve poter visualizzare la marcatura temporale del documento & Soddisfatto \\
+\hline
+R-17-F-Ob & L'utente deve poter essere informato se un elenco di elementi del DIP risulta vuoto & Soddisfatto \\
+\hline
+R-18-F-Ob & L'utente deve poter visualizzare se il risultato dello stato di verifica di un elemento è "Non valido" & Soddisfatto \\
+\hline
+R-19-F-Ob & L'utente deve poter visualizzare se il risultato dello stato di verifica di un elemento è "Valido" & Soddisfatto \\
+\hline
+R-20-F-Ob & L'utente deve poter visualizzare se il risultato dello stato di verifica di un elemento è "Non verificato" & Soddisfatto \\
+\hline
+R-21-F-Ob & L'utente deve poter visualizzare l'anteprima di un documento selezionato & Soddisfatto \\
+\hline
+R-22-F-Ob & Se il documento selezionato non è visualizzabile in anteprima, l'utente deve poter visualizzare un messaggio di avviso & Soddisfatto \\
+\hline
+R-23-F-Ob & L'utente deve poter ricercare un documento, un processo, o una classe documentale & Soddisfatto \\
+\hline
+R-24-F-Ob & L'utente può cercare una classe documentale esclusivamente per nome & Soddisfatto \\
+\hline
+R-25-F-Op & L'utente deve poter effettuare una ricerca semantica basata sui metadati dei documenti presenti nel DIP & Soddisfatto \\
+\hline
+R-26-F-Op & L'utente deve poter visualizzare lo stato dell'indicizzazione semantica & Non soddisfatto \\
+\hline
+R-27-F-Op & L'utente deve poter visualizzare se lo stato dell'indicizzazione semantica è "Non completata" & Non soddisfatto \\
+\hline
+R-28-F-Op & L'utente deve poter visualizzare se lo stato dell'indicizzazione semantica è "Completata" & Non soddisfatto \\
+\hline
+R-29-F-Ob & Il sistema deve rendere disponibile un campo di ricerca & Soddisfatto \\
+\hline
+R-30-F-Ob & Il sistema deve comunicare all'utente quando inserisce un valore non valido nel campo di ricerca & Soddisfatto \\
+\hline
+R-31-F-Ob & Il sistema deve rendere disponibile l'opzione di ricerca per documenti & Soddisfatto \\
+\hline
+R-32-F-Ob & Il sistema deve rendere disponibile l'opzione di ricerca per processi & Soddisfatto \\
+\hline
+R-33-F-Ob & L'utente può cercare un processo esclusivamente per uuid & Soddisfatto \\
+\hline
+R-34-F-Ob & Il sistema deve rendere disponibile l'opzione di ricerca per classi documentali & Soddisfatto \\
+\hline
+R-35-F-Ob & Il sistema deve rendere disponibile la ricerca avanzata con filtri & Soddisfatto \\
+\hline
+R-36-F-Ob & Il sistema deve rendere disponibile la sezione di filtri di ricerca comuni & Soddisfatto \\
+\hline
+R-37-F-Ob & Il sistema deve rendere disponibile la sezione di filtri di ricerca specifici per tipo documentale & Soddisfatto \\
+\hline
+R-38-F-Ob & Il sistema deve rendere disponibile la sezione di filtri di ricerca specifici per metadati custom & Soddisfatto \\
+\hline
+R-39-F-Ob & Il sistema deve permettere di applicare più filtri contemporaneamente & Soddisfatto \\
+\hline
+R-40-F-Ob & Il sistema deve permettere di rimuovere i filtri applicati & Soddisfatto \\
+\hline
+R-41-F-Ob & Il sistema deve permettere di rimuovere tutti i filtri applicati & Soddisfatto \\
+\hline
+R-42-F-Ob & Il sistema deve permettere di selezionare filtri per tipo documentale per un singolo tipo di documento & Soddisfatto \\
+\hline
+R-43-F-Ob & Il sistema deve permettere di specificare il valore per i filtri per tipo Documento Informatico e Amministrativo Informatico & Soddisfatto \\
+\hline
+R-44-F-Ob & Il sistema deve racchiudere i filtri di ricerca comuni in una sezione espandibile dedicata & Soddisfatto \\
+\hline
+R-45-F-Ob & Il sistema deve racchiudere i filtri di ricerca specifici per tipo documentale in una sezione espandibile dedicata & Soddisfatto \\
+\hline
+R-46-F-Ob & Il sistema deve racchiudere i filtri di ricerca specifici per metadati custom in una sezione espandibile dedicata & Soddisfatto \\
+\hline
+R-47-F-Ob & Il sistema deve permettere di visualizzare i filtri comuni applicabili & Soddisfatto \\
+\hline
+R-48-F-Ob & Il sistema deve permettere di selezionare per la compilazione e l'aggiunta alla ricerca i filtri comuni & Soddisfatto \\
+\hline
+R-49-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Chiave Descrittiva" & Soddisfatto \\
+\hline
+R-50-F-Ob & L'utente deve poter inserire il valore per il campo "Oggetto" & Soddisfatto \\
+\hline
+R-51-F-Ob & L'utente deve poter inserire il valore per il campo "Parole chiave" & Soddisfatto \\
+\hline
+R-52-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Classificazione" & Soddisfatto \\
+\hline
+R-53-F-Ob & L'utente deve poter inserire il valore per il campo "Indice di classificazione" & Soddisfatto \\
+\hline
+R-54-F-Ob & L'utente deve poter inserire il valore per il campo "Descrizione" & Soddisfatto \\
+\hline
+R-55-F-Ob & L'utente deve poter inserire il valore per il campo "Piano di classificazione" & Soddisfatto \\
+\hline
+R-56-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Tempo di conservazione" & Soddisfatto \\
+\hline
+R-57-F-Ob & L'utente deve poter inserire il valore per il filtro "Tempo di conservazione" & Soddisfatto \\
+\hline
+R-58-F-Ob & L'utente deve poter selezionare l'opzione "Perenne" per il filtro "Tempo di conservazione" & Soddisfatto \\
+\hline
+R-59-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Note" & Soddisfatto \\
+\hline
+R-60-F-Ob & L'utente deve poter inserire il valore per il filtro "Note" & Soddisfatto \\
+\hline
+R-61-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Tipo di documento" & Soddisfatto \\
+\hline
+R-62-F-Ob & L'utente deve poter selezionare il valore "Documento informatico" per il filtro "Tipo di documento" & Soddisfatto \\
+\hline
+R-63-F-Ob & L'utente deve poter selezionare il valore "Documento amministrativo informatico" per il filtro "Tipo di documento" & Soddisfatto \\
+\hline
+R-64-F-Ob & L'utente deve poter selezionare il valore "Aggregazione documentale" per il filtro "Tipo di documento" & Soddisfatto \\
+\hline
+R-65-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro comune "Soggetto" & Soddisfatto \\
+\hline
+R-66-F-Ob & L'utente deve poter inserire il valore per il filtro "Soggetto" & Soddisfatto \\
+\hline
+R-67-F-Ob & L'utente deve poter inserire il valore per il filtro Ruolo del Soggetto & Soddisfatto \\
+\hline
+R-68-F-Ob & L'utente deve poter inserire il valore per il filtro "Tipo soggetto" in base al ruolo selezionato & Soddisfatto \\
+\hline
+
+R-69-F-Ob & Il sistema deve rendere disponibile una sezione per il filtro "Dettagli" del Soggetto & Soddisfatto \\
+\hline
+R-70-F-Ob & Se il soggetto selezionato è di tipo "PAI", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Denominazione Amministrazione/Codice IPA", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & Soddisfatto \\
+\hline
+R-71-F-Ob & L'utente deve poter inserire il valore per il campo "Denominazione Amministrazione/Codice IPA" & Soddisfatto \\
+\hline
+R-72-F-Ob & L'utente deve poter inserire il valore per il campo "Denominazione Amministrazione AOO/Codice IPA AOO" & Soddisfatto \\
+\hline
+R-73-F-Ob & L'utente deve poter inserire il valore per il campo "Denominazione Amministrazione UOR/Codice IPA UOR" & Soddisfatto \\
+\hline
+R-74-F-Ob & L'utente deve poter inserire il valore per il campo "Indirizzi digitali di riferimento" & Soddisfatto \\
+
+\hline
+R-75-F-Ob & Se il soggetto selezionato è di tipo "PAE", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Denominazione Amministrazione", "Denominazione Ufficio" e "Indirizzi digitali di riferimento" & Soddisfatto \\
+\hline
+R-76-F-Ob & L'utente deve poter inserire il valore per il campo "Denominazione Amministrazione" & Soddisfatto \\
+\hline
+R-77-F-Ob & L'utente deve poter inserire il valore per il campo "Denominazione Ufficio" & Soddisfatto \\
+\hline
+R-78-F-Ob & Se il soggetto selezionato è di tipo "AS", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Cognome", "Nome", "Codice Fiscale", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & Soddisfatto \\
+\hline
+R-79-F-Ob & L'utente deve poter inserire il valore per il campo "Cognome" & Soddisfatto \\
+\hline
+R-80-F-Ob & L'utente deve poter inserire il valore per il campo "Nome" & Soddisfatto \\
+\hline
+R-81-F-Ob & L'utente deve poter inserire il valore per il campo "Codice Fiscale/Partita IVA" & Soddisfatto \\
+\hline
+R-82-F-Ob & Se il soggetto selezionato è di tipo "PG", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Denominazione Organizzazione", "Codice Fiscale/Partita IVA", "Denominazione Ufficio" e "Indirizzi digitali di riferimento" & Soddisfatto \\
+\hline
+R-83-F-Ob & L'utente deve poter inserire il valore per il campo "Denominazione Organizzazione" & Soddisfatto \\
+\hline
+R-84-F-Ob & Se il soggetto selezionato è di tipo "PF", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Cognome", "Nome" e "Indirizzi digitali di riferimento" & Soddisfatto \\
+
+\hline
+R-85-F-Ob & Se il soggetto selezionato è di tipo "RUP", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per i campi "Cognome", "Nome", "Codice Fiscale" "Denominazione Amministrazione/Codice IPA", "Denominazione Amministrazione AOO/Codice IPA AOO", "Denominazione Amministrazione UOR/Codice IPA UOR" e "Indirizzi digitali di riferimento" & Soddisfatto \\
+\hline
+R-86-F-Ob & Se il soggetto selezionato è di tipo "SW", all'interno della sezione del filtro "Dettagli" del Soggetto, l'utente deve poter inserire il valore per il campo "Denominazione Sistema" & Soddisfatto \\
+\hline
+R-87-F-Ob & L'utente deve poter inserire il valore per il campo "Denominazione Sistema" & Soddisfatto \\
+\hline
+R-88-F-Ob & All'interno di una ricerca con filtri, l'utente deve poter visualizzare il nome del campo in una lista & Soddisfatto \\
+\hline
+R-89-F-Ob & All'interno della sezione di filtri per tipo documentale, il sistema deve permettere di selezionare i filtri specifici per il tipo "Documento Informatico e Amministrativo Informatico" & Soddisfatto \\
+
+\hline
+R-90-F-Ob & Per il Documento Informatico e Amministrativo Informatico, il sistema deve rendere disponibile una sezione per il filtro "Dati di Registrazione" & Soddisfatto \\
+\hline
+R-91-F-Ob & L'utente deve poter inserire il valore per il campo "Tipologia di Flusso" & Soddisfatto \\
+\hline
+R-92-F-Ob & L'utente deve poter specificare la tipologia "Entrata" per la Tipologia di Flusso & Soddisfatto \\
+\hline
+R-93-F-Ob & L'utente deve poter specificare la tipologia "Uscita" per la Tipologia di Flusso & Soddisfatto \\
+\hline
+R-94-F-Ob & L'utente deve poter specificare la tipologia "Interno" per la Tipologia di Flusso & Soddisfatto \\
+\hline
+R-95-F-Ob & L'utente deve poter inserire il valore per il campo "Tipo di Registro" & Soddisfatto \\
+\hline
+R-96-F-Ob & L'utente deve poter specificare la tipologia "Nessuno" per il Tipo di Registro & Soddisfatto \\
+\hline
+R-97-F-Ob & L'utente deve poter specificare la tipologia "Protocollo Ordinario/Protocollo Emergenza" per il Tipo di Registro & Soddisfatto \\
+\hline
+R-98-F-Ob & L'utente deve poter specificare la tipologia "Repertorio/Registro" per il Tipo di Registro & Soddisfatto \\
+\hline
+R-99-F-Ob & L'utente deve poter inserire il valore per il campo "Data di Registrazione" & Soddisfatto \\
+\hline
+R-100-F-Ob & L'utente deve poter inserire il valore per il campo "Numero Documento" & Soddisfatto \\
+\hline
+R-101-F-Ob & L'utente deve poter inserire il valore per il campo "Codice Registro" & Soddisfatto \\
+\hline
+
+R-102-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Tipologia Documentale" & Soddisfatto \\
+\hline
+
+R-103-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Modalità di Formazione" & Soddisfatto \\
+\hline
+R-104-F-Ob & L'utente deve poter specificare la modalità "Ex novo" per il filtro "Modalità di Formazione" & Soddisfatto \\
+\hline
+R-105-F-Ob & L'utente deve poter specificare la modalità "Acquisizione da altro documento o supporto informatico" per il filtro "Modalità di Formazione" & Soddisfatto \\
+\hline
+R-106-F-Ob & L'utente deve poter specificare la modalità "Memorizzazione su supporto informatico in formato digitale" per il filtro "Modalità di Formazione" & Soddisfatto \\
+\hline
+R-107-F-Ob & L'utente deve poter specificare la modalità "Generazione o raggruppamento in forma statica" per il filtro "Modalità di Formazione" & Soddisfatto \\
+
+\hline
+R-108-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Campo Riservato" tra "Sì" o "No" & Soddisfatto \\
+\hline
+R-109-F-Ob & Per il Documento Informatico e Amministrativo Informatico, il sistema deve rendere disponibile una sezione per il filtro "Identificativo del Formato" & Soddisfatto \\
+\hline
+R-110-F-Ob & L'utente deve poter inserire il valore per il campo "Formato" all'interno della sezione del filtro "Identificativo del Formato" & Soddisfatto \\
+\hline
+R-111-F-Ob & L'utente deve poter inserire il valore per il campo "Nome Prodotto" all'interno della sezione del filtro "Identificativo del Formato" & Soddisfatto \\
+\hline
+R-112-F-Ob & L'utente deve poter inserire il valore per il campo "Versione Prodotto" all'interno della sezione del filtro "Identificativo del Formato" & Soddisfatto \\
+\hline
+R-113-F-Ob & L'utente deve poter inserire il valore per il campo "Produttore" all'interno della sezione del filtro "Identificativo del Formato" & Soddisfatto \\
+\hline
+
+R-114-F-Ob & Per il Documento Informatico e Amministrativo Informatico, il sistema deve rendere disponibile una sezione per il filtro "Dati di Verifica" & Soddisfatto \\
+\hline
+R-115-F-Ob & L'utente deve poter inserire il valore per il campo "Firmato Digitalmente" all'interno della sezione del filtro "Dati di Verifica" tra "Sì" o "No" & Soddisfatto \\
+\hline
+R-116-F-Ob & L'utente deve poter inserire il valore per il campo "Sigillato Elettronicamente" all'interno della sezione del filtro "Dati di Verifica" tra "Sì" o "No" & Soddisfatto \\
+\hline
+R-117-F-Ob & L'utente deve poter inserire il valore per il campo "Marcatura Temporale" all'interno della sezione del filtro "Dati di Verifica" tra "Sì" o "No" & Soddisfatto \\
+\hline
+R-118-F-Ob & L'utente deve poter inserire il valore per il campo "Conformità copie immagine su supporto informatico" all'interno della sezione del filtro "Dati di Verifica" tra "Sì" o "No" & Soddisfatto \\
+\hline
+
+
+R-119-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Nome del Documento" & Soddisfatto \\
+\hline
+R-120-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Versione del Documento" & Soddisfatto \\
+\hline
+R-121-F-Ob & Per il Documento Informatico e Amministrativo Informatico, l'utente deve poter inserire il valore per il filtro "Identificativo del Documento Primario" & Soddisfatto \\
+\hline
+R-122-F-Ob & Per il Documento Informatico e Amministrativo Informatico, il sistema deve rendere disponibile una sezione per il filtro "Tracciatura Modifiche di Documento" & Soddisfatto \\
+\hline
+R-123-F-Ob & L'utente deve poter inserire il valore per il campo "Tipo di Modifica" all'interno della sezione del filtro "Tracciatura Modifiche di Documento" & Soddisfatto \\
+\hline
+R-124-F-Ob & L'utente deve poter specificare il valore "Annullamento" per il campo "Tipo di Modifica" all'interno della sezione del filtro "Tracciatura Modifiche di Documento" & Soddisfatto \\
+\hline
+R-125-F-Ob & L'utente deve poter specificare il valore "Rettifica" per il campo "Tipo di Modifica" all'interno della sezione del filtro "Tracciatura Modifiche di Documento" & Soddisfatto \\
+\hline
+R-126-F-Ob & L'utente deve poter specificare il valore "Integrazione" per il campo "Tipo di Modifica" all'interno della sezione del filtro "Tracciatura Modifiche di Documento" & Soddisfatto \\
+\hline
+R-127-F-Ob & L'utente deve poter specificare il valore "Annotazione" per il campo "Tipo di Modifica" all'interno della sezione del filtro "Tracciatura Modifiche di Documento" & Soddisfatto \\
+\hline
+R-128-F-Ob & L'utente deve poter inserire il valore per il campo "Data/Ora della Modifica" all'interno della sezione del filtro "Tracciatura Modifiche di Documento" & Soddisfatto \\
+\hline
+R-129-F-Ob & L'utente deve poter inserire il valore per il campo "Identificativo Documento versione precedente" all'interno della sezione del filtro "Tracciatura Modifiche di Documento" & Soddisfatto \\
+\hline
+
+R-130-F-Ob & All'interno della sezione di filtri per tipo documentale, il sistema deve permettere di selezionare i filtri specifici per il tipo "Aggregazione Documentale Informatica" & Soddisfatto \\
+\hline
+
+R-131-F-Ob & Per l'Aggregazione Documentale Informatica, il sistema deve rendere disponibili per la compilazione e l'aggiunta alla ricerca i filtri specifici & Soddisfatto \\
+\hline
+R-132-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Tipo di Aggregazione" & Soddisfatto \\
+\hline
+R-133-F-Ob & L'utente deve poter specificare il valore "Fascicolo" per il campo "Tipo di Aggregazione" all'interno della sezione del filtro "Tipo di Aggregazione" & Soddisfatto \\
+\hline
+R-134-F-Ob & L'utente deve poter specificare il valore "Serie Documentale" per il campo "Tipo di Aggregazione" all'interno della sezione del filtro "Tipo di Aggregazione" & Soddisfatto \\
+\hline
+R-135-F-Ob & L'utente deve poter specificare il valore "Serie di Fascicoli" per il campo "Tipo di Aggregazione" all'interno della sezione del filtro "Tipo di Aggregazione" & Soddisfatto \\
+\hline
+
+R-136-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Identificativo dell'Aggreagazione Documentale" & Soddisfatto \\
+\hline
+R-137-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Tipologia di Fascicolo" & Soddisfatto \\
+\hline
+R-138-F-Ob & L'utente deve poter specificare il valore "Affare" per il campo "Tipologia di Fascicolo" & Soddisfatto \\
+\hline
+R-139-F-Ob & L'utente deve poter specificare il valore "Attività" per il campo "Tipologia di Fascicolo" & Soddisfatto \\
+\hline
+R-140-F-Ob & L'utente deve poter specificare il valore "Persona Fisica" per il campo "Tipologia di Fascicolo" & Soddisfatto \\
+\hline
+R-141-F-Ob & L'utente deve poter specificare il valore "Persona Giuridica" per il campo "Tipologia di Fascicolo" & Soddisfatto \\
+\hline
+R-142-F-Ob & L'utente deve poter specificare il valore "Procedimento Amministrativo" per il campo "Tipologia di Fascicolo" & Soddisfatto \\
+
+\hline
+R-143-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Id Aggregazione Primario" & Soddisfatto \\
+\hline
+R-144-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Data Apertura" & Soddisfatto \\
+\hline
+R-145-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Data Chiusura" & Soddisfatto \\
+\hline
+R-146-F-Ob & Per l'Aggregazione Documentale Informatica, il sistema deve rendere disponibile una sezione per il filtro "Procedimento Amministrativo" & Soddisfatto \\
+\hline
+R-147-F-Ob & L'utente deve poter inserire il valore per il campo "Materia/Argomento/Struttura" all'interno della sezione del filtro "Procedimento Amministrativo" & Soddisfatto \\
+\hline
+R-148-F-Ob & L'utente deve poter inserire il valore per il campo "Procedimento" all'interno della sezione del filtro "Procedimento Amministrativo" & Soddisfatto \\
+\hline
+R-149-F-Ob & L'utente deve poter inserire il valore per il campo "Catalogo Procedimenti" all'interno della sezione del filtro "Procedimento Amministrativo" & Soddisfatto \\
+\hline
+
+
+R-150-F-Ob & Per l'Aggregazione Documentale Informatica, all'interno della sezione del filtro "Procedimento Amministrativo", il sistema deve rendere disponibile una sezione per il campo "Fase" & Soddisfatto \\
+\hline
+R-151-F-Ob & L'utente deve poter inserire il valore per il campo "Tipo Fase" all'interno della sezione del filtro "Fase" & Soddisfatto \\
+\hline
+R-152-F-Ob & L'utente deve poter specificare il valore "Preparatoria" per il campo "Tipo Fase" & Soddisfatto \\
+\hline
+R-153-F-Ob & L'utente deve poter specificare il valore "Istruttoria" per il campo "Tipo Fase" & Soddisfatto \\
+\hline
+R-154-F-Ob & L'utente deve poter specificare il valore "Consultiva" per il campo "Tipo Fase" & Soddisfatto \\
+\hline
+R-155-F-Ob & L'utente deve poter specificare il valore "Decisoria" per il campo "Tipo Fase" & Soddisfatto \\
+\hline
+R-156-F-Ob & L'utente deve poter specificare il valore "Integrazione dell'efficacia" per il campo "Tipo Fase" & Soddisfatto \\
+\hline
+R-157-F-Ob & L'utente deve inserire il valore per il campo "Data Inizio Fase" all'interno della sezione del filtro "Fase" & Soddisfatto \\
+\hline
+R-158-F-Ob & L'utente deve inserire il valore per il campo "Data Fine Fase" all'interno della sezione del filtro "Fase" & Soddisfatto \\
+
+
+\hline
+R-159-F-Ob & Per l'Aggregazione Documentale Informatica, il sistema deve rendere disponibile una sezione per il filtro "Assegnazione" & Soddisfatto \\
+\hline
+R-160-F-Ob & L'utente deve poter inserire il valore per il campo "Assegnazione" all'interno della sezione del filtro "Assegnazione" & Soddisfatto \\
+\hline
+R-161-F-Ob & L'utente deve poter inserire il valore "Tipo Assegnazione" per il campo "Assegnazione" & Soddisfatto \\
+\hline
+R-162-F-Ob & L'utente deve poter specificare il valore "Per competenza" per il campo "Tipo Assegnazione" all'interno della sezione del filtro "Assegnazione" & Soddisfatto \\
+\hline
+R-163-F-Ob & L'utente deve poter specificare il valore "Per conoscenza" per il campo "Tipo Assegnazione" all'interno della sezione del filtro "Assegnazione" & Soddisfatto \\
+\hline
+R-164-F-Ob & L'utente deve poter inserire il valore per il campo "Data Inizio Assegnazione" all'interno della sezione del filtro "Assegnazione" & Soddisfatto \\
+\hline
+R-165-F-Ob & L'utente deve poter inserire il valore per il campo "Data Fine Assegnazione" all'interno della sezione del filtro "Assegnazione" & Soddisfatto \\
+\hline
+
+
+R-166-F-Ob & Per l'Aggregazione Documentale Informatica, l'utente deve poter inserire il valore per il filtro "Progressivo Aggregazione" & Soddisfatto \\
+\hline
+R-167-F-Ob & All'interno della sezione di filtri per custom metadata, il sistema deve permettere di selezionare i filtri specifici per i metadata presenti & Soddisfatto \\
+\hline
+R-168-F-Ob & Per ciascun custom metadata, l'utente deve poter inserire il nome del metadato e il relativo valore & Soddisfatto \\
+\hline
+R-169-F-Ob & Quando viene eseguita una ricerca, l'utente deve poter visualizzare i risultati della ricerca & Soddisfatto \\
+\hline
+R-170-F-Ob & L'utente deve poter visualizzare per ogni risultato le informazioni rilevanti: Nome del documento o aggregazione, Data di registrazione/creazione del documento/aggregazione, Tipo di elemento tra Documento, Aggregazione, Processo o Classe Documentale & Soddisfatto \\
+\hline
+R-171-F-Ob & L'utente deve poter visualizzare il nome del documento o aggregazione & Soddisfatto \\
+\hline
+R-172-F-Ob & L'utente deve poter visualizzare il tipo del documento o aggregazione & Soddisfatto \\
+\hline
+R-173-F-Ob & Se la ricerca non produce risultati, l'utente deve poter visualizzare un messaggio di avviso & Soddisfatto \\
+\hline
+R-174-F-Ob & Il sistema deve prevenire l'inserimento di valori testuali non validi & Soddisfatto \\
+\hline
+R-175-F-Ob & Il sistema deve prevenire l'inserimento di valori numerici non validi & Soddisfatto \\
+\hline
+R-176-F-Ob & L'utente deve essere informato quando il formato del valore data inserito non è valido & Soddisfatto \\
+\hline
+R-177-F-Ob & L'utente deve essere informato quando il formato del valore numerico positivo inserito non è valido & Soddisfatto \\
+\hline
+R-178-F-Ob & L'utente deve poter salvare il documento in locale in una cartella selezionata & Soddisfatto \\
+\hline
+R-179-F-Ob & L'utente deve poter salvare più file in una cartella selezionata & Soddisfatto \\
+\hline
+R-180-F-Ob & Se il salvataggio di uno o più documenti fallisce, l'utente deve poter visualizzare un messaggio di errore & Soddisfatto \\
+\hline
+R-181-F-Ob & L'utente deve poter stampare un documento & Soddisfatto \\
+\hline
+R-182-F-Op & L'utente deve poter stampare un insieme di documenti & Non soddisfatto \\
+\hline
+R-183-F-Op & Se la stampa di uno o più documenti fallisce, l'utente deve poter visualizzare un messaggio di stampa non avvenuta & Soddisfatto \\
+\hline
+R-184-F-Ob & Se la stampa non è disponibile, l'utente deve poter visualizzare un messaggio di stampa non avvenuta & Soddisfatto \\
+\hline
+R-185-F-Ob & L'utente deve poter avviare la verifica del DIP & Soddisfatto \\
+\hline
+R-186-F-Ob & L'utente deve poter visualizzare lo stato di verifica del DIP & Soddisfatto \\
+\hline
+R-187-F-Ob & L'utente deve poter avviare la verifica della classe documentale & Soddisfatto\\
+\hline
+R-188-F-Ob & L'utente deve poter visualizzare lo stato di verifica della classe documentale & Soddisfatto \\
+\hline
+R-189-F-Ob & L'utente deve poter avviare la verifica dell'integrità processo & Soddisfatto \\
+\hline
+R-190-F-Ob & L'utente deve poter visualizzare lo stato di verifica dell'integrità processo & Soddisfatto \\
+\hline
+R-191-F-Ob & L'utente deve poter avviare la verifica del documento & Soddisfatto \\
+\hline
+R-192-F-Ob & L'utente deve poter visualizzare lo stato di verifica del documento & Soddisfatto \\
+\hline
+R-193-F-Ob & L'utente deve poter visualizzare il report di integrità del DIP completo con le informazioni aggregate & Soddisfatto \\
+\hline
+R-194-F-Ob & L'utente deve poter visualizzare il conteggio totale delle classi documentali verificate nel report del DIP & Soddisfatto \\
+\hline
+R-195-F-Ob & L'utente deve poter visualizzare il numero di processi validi (stato "Valido") in colore verde nel report del DIP & Soddisfatto \\
+\hline
+R-196-F-Ob & L'utente deve poter visualizzare il numero di processi non validi (stato "Non Valido") in colore rosso nel report del DIP & Soddisfatto \\
+\hline
+R-197-F-Ob & L'utente deve poter visualizzare l'elenco dei processi validi indicando nome e identificativo dei documenti corrotti per ciascuna & Soddisfatto \\
+\hline
+R-198-F-Ob & L'utente deve poter visualizzare il processo non valido indicando nome e numero di documenti corrotti & Soddisfatto \\
+\hline
+R-199-F-Op & L'utente deve poter visualizzare la data e l'ora di inizio della verifica del DIP nel formato "GG/MM/AAAA HH:MM:SS" & Non soddisfatto \\
+\hline
+R-200-F-Op & L'utente deve essere informato con un messaggio nel caso in cui non vi siano classi corrotte & Non soddisfatto \\
+\hline
+R-201-F-Op & L'utente deve poter visualizzare il report di integrità dettagliato per una singola classe documentale & Non soddisfatto \\
+\hline
+R-202-F-Ob & L'utente deve poter visualizzare il conteggio dei processi verificati all'interno della classe documentale & Soddisfatto \\
+\hline
+R-203-F-Ob & L'utente deve poter visualizzare il numero di processi integri (stato "Valido") in colore verde nella classe documentale & Soddisfatto \\
+\hline
+R-204-F-Ob & L'utente deve poter visualizzare il numero di processi corrotti (stato "Non Valido") in colore rosso nella classe documentale & Soddisfatto \\
+\hline
+R-205-F-Ob & L'utente deve poter visualizzare la lista dei processi corrotti con il relativo numero di documenti compromessi & Soddisfatto \\
+\hline
+R-206-F-Ob & L'utente deve poter visualizzare il singolo processo corrotto con il relativo numero di documenti compromessi & Soddisfatto \\
+\hline
+R-207-F-Op & L'utente deve poter visualizzare la data e l'ora di inizio della verifica della classe nel formato "GG/MM/AAAA HH:MM:SS" & Soddisfatto \\
+\hline
+R-208-F-Op & L'utente deve essere informato che tutti i processi sono integri & Soddisfatto \\
+\hline
+R-209-F-Op & L'utente deve poter visualizzare il report di integrità dettagliato di un singolo processo & Soddisfatto \\
+\hline
+R-210-F-Op & L'utente deve poter visualizzare il conteggio dei documenti verificati all'interno del processo selezionato & Soddisfatto \\
+\hline
+R-211-F-Op & L'utente deve poter visualizzare il numero di documenti integri (stato "Valido") in colore verde nel processo selezionato & Soddisfatto \\
+\hline
+R-212-F-Op & L'utente deve poter visualizzare il numero di documenti corrotti (stato "Non Valido") in colore rosso nel processo selezionato & Soddisfatto \\
+\hline
+R-213-F-Op & L'utente deve poter visualizzare la lista dei documenti corrotti & Soddisfatto \\
+\hline
+R-214-F-Op & L'utente deve poter visualizzare i singoli documenti corrotti della lista dei documenti corrotti, con i dettagli dell'errore & Soddisfatto \\
+\hline
+R-215-F-Op & L'utente deve poter visualizzare la data e l'ora di inizio della verifica del processo nel formato "GG/MM/AAAA HH:MM:SS" & Soddisfatto \\
+\hline
+R-216-F-Op & L'utente deve essere avvisato che tutti i documenti sono integri tramite un messaggio & Soddisfatto \\
+\hline
+R-217-F-Op & L'utente deve poter visualizzare il report di integrità di un singolo documento & Soddisfatto \\
+\hline
+R-218-F-Op & L'utente deve poter visualizzare il nome del documento all'interno del report di integrità & Soddisfatto \\
+\hline
+R-219-F-Ob & L'utente deve poter visualizzare lo stato della verifica (Valido / Non Valido) per il documento selezionato & Soddisfatto \\
+\hline
+R-220-F-Op & L'utente deve poter visualizzare la data e l'ora di inizio della verifica del documento nel formato "GG/MM/AAAA HH:MM:SS" & Soddisfatto \\
+\hline
+R-221-F-Op & L'utente deve poter visualizzare la descrizione tecnica del dettaglio dell'errore per i documenti con stato "Non Valido" & Soddisfatto \\
+\hline
+R-222-F-Op & L'utente deve poter avviare la conversione del report di verifica visualizzato in formato PDF & Soddisfatto \\
+\hline
+R-223-F-Op & L'utente deve essere informato con un messaggio di errore qualora la generazione del file PDF non vada a buon fine & Soddisfatto \\
+\hline
+R-224-F-Ob & L'utente deve poter scaricare un file in una cartella locale previa selezione della cartella di destinazione & Soddisfatto \\
+\hline
+R-225-F-Ob & L'utente deve essere informato con un messaggio di conferma indicando il percorso di destinazione al termine del salvataggio & Soddisfatto \\
+\hline
+R-226-F-Op & Il sistema deve impedire il salvataggio di file all'interno della cartella sorgente del DIP per preservarne l'integrità & Soddisfatto \\
+\hline
+R-227-F-Op & L'utente deve essere informato con un errore specifico se l'utente tenta di scaricare un file nel percorso protetto del DIP & Soddisfatto \\
+\hline
+R-228-F-Ob & L'utente deve poter visualizzare le informazioni dell'AiP di provenienza di un documento selezionato & Soddisfatto \\
+\hline
+R-229-F-Ob & L'utente deve poter visualizzare la classe documentale di appartenenza dell'AiP relativo al documento selezionato & Soddisfatto \\
+\hline
+R-230-F-Ob & L'utente deve poter visualizzare lo UUID dell'AiP relativo al documento selezionato & Soddisfatto \\
+\hline
+R-231-F-Ob & L'utente deve poter visualizzare le informazioni del processo di conservazione dell'AiP & Soddisfatto \\
+\hline
+R-232-F-Ob & L'utente deve poter visualizzare la data di inizio di un processo o sessione & Soddisfatto \\
+\hline
+R-233-F-Ob & L'utente deve poter visualizzare la data di fine di un processo o sessione se presente & Soddisfatto \\
+\hline
+R-234-F-Op & Se il processo o la sessione non è ancora terminato/a, al posto della data di fine l'utente deve essere informato con un messaggio che indica l'assenza della data di fine & Soddisfatto \\
+\hline
+R-235-F-Ob & L'utente deve poter visualizzare lo UUID dell'utente attivatore di un processo o sessione & Soddisfatto \\
+\hline
+R-236-F-Ob & L'utente deve poter visualizzare lo UUID dell'utente terminatore di un processo o sessione & Soddisfatto \\
+\hline
+R-237-F-Op & Se il processo o la sessione non è ancora terminato/a, al posto dello UUID dell'utente terminatore l'utente deve essere informato con un messaggio che indica l'assenza dello UUID & Soddisfatto \\
+\hline
+R-238-F-Ob & L'utente deve poter visualizzare il nome del canale di attivazione di un processo o sessione & Soddisfatto \\
+\hline
+R-239-F-Ob & L'utente deve poter visualizzare il nome del canale di terminazione di un processo o sessione & Soddisfatto \\
+\hline
+R-240-F-Op & Se il processo o la sessione non è ancora terminato/a, al posto del nome del canale di terminazione l'utente deve essere informato con un messaggio che indica l'assenza del nome del canale di terminazione & Soddisfatto \\
+\hline
+R-241-F-Ob & L'utente deve poter visualizzare lo stato di un processo o sessione & Soddisfatto \\
+\hline
+R-242-F-Ob & L'utente deve poter visualizzare le informazioni della sessione di versamento del processo di conservazione selezionato & Soddisfatto \\
+\hline
+R-243-F-Ob & L'utente deve poter visualizzare la data di inizio della sessione di versamento & Soddisfatto \\
+\hline
+R-244-F-Ob & L'utente deve poter visualizzare la data di fine della sessione di versamento & Soddisfatto \\
+\hline
+R-245-F-Op & Se la sessione di versamento non è ancora terminata, al posto della data di fine l'utente deve essere informato con un messaggio che indica l'assenza della data di fine & Soddisfatto \\
+\hline
+R-246-F-Ob & L'utente deve poter visualizzare lo UUID dell'utente attivatore della sessione di versamento & Soddisfatto \\
+\hline
+R-247-F-Ob & L'utente deve poter visualizzare lo UUID dell'utente terminatore della sessione di versamento & Soddisfatto \\
+\hline
+R-248-F-Op & Se la sessione di versamento non è ancora terminata, al posto dello UUID dell'utente terminatore l'utente deve essere informato con un messaggio che indica l'assenza dello UUID & Soddisfatto \\
+\hline
+R-249-F-Ob & L'utente deve poter visualizzare il nome del canale di attivazione della sessione di versamento & Soddisfatto \\
+\hline
+R-250-F-Ob & L'utente deve poter visualizzare il nome del canale di terminazione della sessione di versamento & Soddisfatto \\
+\hline
+R-251-F-Op & Se la sessione di versamento non è ancora terminata, al posto del nome del canale di terminazione l'utente deve essere informato con un messaggio che indica l'assenza del nome del canale di terminazione & Soddisfatto \\
+\hline
+R-252-F-Ob & L'utente deve poter visualizzare lo stato della sessione di versamento & Soddisfatto \\
+\hline
+R-253-F-Ob & L'utente deve poter visualizzare le informazioni della sessione di conservazione del processo di conservazione selezionato & Soddisfatto \\
+\hline
+R-254-F-Ob & L'utente deve poter visualizzare la data di inizio della sessione di conservazione & Soddisfatto \\
+\hline
+R-255-F-Ob & L'utente deve poter visualizzare la data di fine della sessione di conservazione & Soddisfatto \\
+\hline
+R-256-F-Op & Se la sessione di conservazione non è ancora terminata, al posto della data di fine l'utente deve essere informato con un messaggio che indica l'assenza della data di fine & Soddisfatto \\
+\hline
+R-257-F-Ob & L'utente deve poter visualizzare lo UUID dell'utente attivatore della sessione di conservazione & Soddisfatto \\
+\hline
+R-258-F-Ob & L'utente deve poter visualizzare lo UUID dell'utente terminatore della sessione di conservazione & Soddisfatto \\
+\hline
+R-259-F-Op & Se la sessione di conservazione non è ancora terminata, al posto dello UUID dell'utente terminatore l'utente deve essere informato con un messaggio che indica l'assenza dello UUID & Soddisfatto \\
+\hline
+R-260-F-Ob & L'utente deve poter visualizzare il nome del canale di attivazione della sessione di conservazione & Soddisfatto \\
+\hline
+R-261-F-Ob & L'utente deve poter visualizzare il nome del canale di terminazione della sessione di conservazione & Soddisfatto \\
+\hline
+R-262-F-Op & Se la sessione di conservazione non è ancora terminata, al posto del nome del canale di terminazione l'utente deve essere informato con un messaggio che indica l'assenza del nome del canale di terminazione & Soddisfatto \\
+\hline
+R-263-F-Ob & L'utente deve poter visualizzare lo stato della sessione di conservazione & Soddisfatto \\
+\hline
+R-264-F-Ob & L'utente deve poter visualizzare la descrizione del documento selezionato & Soddisfatto \\
+\hline
+R-265-F-Ob & L'utente deve poter visualizzare la lista dei soggetti coinvolti nel documento selezionato & Soddisfatto \\
+\hline
+R-266-F-Ob & Per ogni soggetto coinvolto nel documento, l'utente deve poter visualizzare il ruolo del soggetto nel documento & Soddisfatto \\
+\hline
+R-267-F-Ob & Per ogni soggetto coinvolto nel documento, l'utente deve poter visualizzare il tipo di soggetto & Soddisfatto \\
+\hline
+R-268-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente deve poter visualizzare tutti i dati legati a questo tipo di soggetto & Soddisfatto \\
+\hline
+R-269-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente deve poter visualizzare il nome del soggetto & Soddisfatto \\
+\hline
+R-270-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente deve poter visualizzare il cognome del soggetto & Soddisfatto \\
+\hline
+R-271-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente deve poter visualizzare il codice fiscale del soggetto & Soddisfatto \\
+\hline
+R-272-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Fisica, l'utente deve poter visualizzare gli indirizzi digitali di riferimento del soggetto & Soddisfatto \\
+\hline
+R-273-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente deve poter visualizzare tutti i dati legati a questo tipo di soggetto & Soddisfatto \\
+\hline
+R-274-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente deve poter visualizzare la denominazione dell'organizzazione del soggetto & Soddisfatto \\
+\hline
+R-275-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente deve poter visualizzare la partita IVA del soggetto & Soddisfatto \\
+\hline
+R-276-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente deve poter visualizzare il codice fiscale del soggetto & Soddisfatto \\
+\hline
+R-277-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente deve poter visualizzare la denominazione dell'ufficio del soggetto & Soddisfatto \\
+\hline
+R-278-F-Ob & Se il soggetto coinvolto nel documento è di tipo Persona Giuridica, l'utente deve poter visualizzare gli indirizzi digitali di riferimento del soggetto & Soddisfatto \\
+\hline
+R-279-F-Ob & Se il soggetto coinvolto nel documento è di tipo AS, l'utente deve poter visualizzare tutti i dati legati a questo tipo di soggetto & Soddisfatto \\
+\hline
+R-280-F-Ob & Se il soggetto coinvolto nel documento è di tipo AS, l'utente deve poter visualizzare il cognome del soggetto & Soddisfatto \\
+\hline
+R-281-F-Ob & Se il soggetto coinvolto nel documento è di tipo AS, l'utente deve poter visualizzare il nome del soggetto & Soddisfatto \\
+\hline
+R-282-F-Ob & Se il soggetto coinvolto nel documento è di tipo AS, l'utente deve poter visualizzare il codice fiscale del soggetto & Soddisfatto \\
+\hline
+R-283-F-Ob & Se il soggetto coinvolto nel documento è di tipo AS, l'utente deve poter visualizzare la denominazione dell'organizzazione del soggetto & Soddisfatto \\
+\hline
+R-284-F-Ob & Se il soggetto coinvolto nel documento è di tipo AS, l'utente deve poter visualizzare la denominazione dell'ufficio del soggetto & Soddisfatto \\
+\hline
+R-285-F-Ob & Se il soggetto coinvolto nel documento è di tipo AS, l'utente deve poter visualizzare gli indirizzi digitali di riferimento del soggetto & Soddisfatto \\
+\hline
+R-286-F-Ob &Se il soggetto coinvolto nel documento è di tipo PAI, l'utente deve poter visualizzare tutti i dati legati a questo tipo di soggetto& Soddisfatto \\
+\hline
+R-287-F-Ob & Se il soggetto coinvolto nel documento è di tipo PAI, l'utente deve poter visualizzare la denominazione dell'amministrazione e il codice IPA del soggetto & Soddisfatto \\
+\hline
+R-288-F-Ob & Se il soggetto coinvolto nel documento è di tipo PAI, l'utente deve poter visualizzare la denominazione dell'amministrazione AOO e il codice IPA AOO del soggetto & Soddisfatto \\
+\hline
+R-289-F-Ob & Se il soggetto coinvolto nel documento è di tipo PAI, l'utente deve poter visualizzare la denominazione dell'amministrazione UOR e il codice IPA UOR del soggetto & Soddisfatto \\
+\hline
+R-290-F-Ob & Se il soggetto coinvolto nel documento è di tipo PAI, l'utente deve poter visualizzare gli indirizzi digitali di riferimento del soggetto & Soddisfatto \\
+\hline
+R-291-F-Ob & Se il soggetto coinvolto nel documento è di tipo PAE, l'utente deve poter visualizzare tutti i dati legati a questo tipo di soggetto & Soddisfatto \\
+\hline
+R-292-F-Ob & Se il soggetto coinvolto nel documento è di tipo PAE, l'utente deve poter visualizzare la denominazione dell'amministrazione del soggetto & Soddisfatto \\
+\hline
+R-293-F-Ob & Se il soggetto coinvolto nel documento è di tipo PAE, l'utente deve poter visualizzare la denominazione dell'ufficio del soggetto & Soddisfatto \\
+\hline
+R-294-F-Ob & Se il soggetto coinvolto nel documento è di tipo PAE, l'utente deve poter visualizzare gli indirizzi digitali di riferimento del soggetto & Soddisfatto \\
+\hline
+R-295-F-Ob & Se il soggetto coinvolto nel documento è di tipo SW, l'utente deve poter visualizzare tutti i dati legati a questo tipo di soggetto & Soddisfatto \\
+\hline
+R-296-F-Ob & Se il soggetto coinvolto nel documento è di tipo SW, l'utente deve poter visualizzare la denominazione del sistema del soggetto & Soddisfatto \\
+\hline
+R-297-F-Ob & L'utente deve poter visualizzare l'indice di classificazione del documento selezionato & Soddisfatto \\
+\hline
+R-298-F-Ob & L'utente deve poter visualizzare la descrizione dell'indice di classificazione del documento selezionato & Soddisfatto \\
+\hline
+R-299-F-Ob & L'utente deve poter visualizzare l'URI del piano di classificazione del documento selezionato & Soddisfatto \\
+\hline
+R-300-F-Ob & Se il documento selezionato ha un tempo di conservazione diverso da quello assegnato all'aggregazione documentale informatica a cui appartiene, l'utente deve poter visualizzare il tempo di conservazione effettivo del documento & Soddisfatto \\
+\hline
+R-301-F-Ob & Se il tempo di conservazione del documento coincide con quello assegnato all'aggregazione documentale a cui appartiene, l'utente deve essere informato con un messaggio che indica questa coincidenza & Soddisfatto \\
+\hline
+R-302-F-Ob & L'utente deve poter visualizzare le note relative al documento selezionato & Soddisfatto \\
+\hline
+R-303-F-Ob & Se le note del documento sono assenti o vuote, l'utente deve essere informato con un messaggio che indica l'assenza delle note & Soddisfatto \\
+\hline
+R-304-F-Ob & L'utente deve poter visualizzare la tipologia di flusso del documento selezionato & Soddisfatto \\
+\hline
+R-305-F-Ob & L'utente deve poter visualizzare il tipo di registro del documento selezionato & Soddisfatto \\
+\hline
+R-306-F-Ob & L'utente deve poter visualizzare la data di registrazione del documento selezionato & Soddisfatto \\
+\hline
+R-307-F-Ob & L'utente deve poter visualizzare la data di registrazione del documento non protocollato selezionato & Soddisfatto \\
+\hline
+R-308-F-Ob & L'utente deve poter visualizzare la data di protocollazione del documento protocollato selezionato & Soddisfatto \\
+\hline
+R-309-F-Ob & L'utente deve poter visualizzare il numero del documento selezionato & Soddisfatto \\
+\hline
+R-310-F-Ob & L'utente deve poter visualizzare il numero di registrazione del documento non protocollato selezionato & Soddisfatto \\
+\hline
+R-311-F-Ob & L'utente deve poter visualizzare il numero di protocollo del documento protocollato selezionato & Soddisfatto \\
+\hline
+R-312-F-Ob & L'utente deve poter visualizzare il codice identificativo del registro di appartenenza del documento selezionato & Soddisfatto \\
+\hline
+R-313-F-Ob & L'utente deve poter visualizzare la tipologia documentale del documento selezionato & Soddisfatto \\
+\hline
+R-314-F-Ob & L'utente deve poter visualizzare la modalità di formazione del documento selezionato & Soddisfatto \\
+\hline
+R-315-F-Ob & L'utente deve poter visualizzare lo stato di riservatezza del documento selezionato & Soddisfatto \\
+\hline
+R-316-F-Ob & L'utente deve poter visualizzare il tipo di formato del documento selezionato & Soddisfatto \\
+\hline
+R-317-F-Ob & L'utente deve poter visualizzare il nome del prodotto software che ha generato il documento selezionato & Soddisfatto \\
+\hline
+R-318-F-Ob & L'utente deve poter visualizzare la versione del prodotto software che ha generato il documento selezionato & Soddisfatto \\
+\hline
+R-319-F-Ob & L'utente deve poter visualizzare il produttore del software che ha generato il documento selezionato & Soddisfatto \\
+\hline
+R-320-F-Ob & L'utente deve poter visualizzare le informazioni di verifica del documento selezionato & Soddisfatto \\
+\hline
+R-321-F-Ob & L'utente deve poter visualizzare se il documento selezionato è firmato digitalmente & Soddisfatto \\
+\hline
+R-322-F-Ob & L'utente deve poter visualizzare se il documento selezionato è sigillato elettronicamente & Soddisfatto \\
+\hline
+R-323-F-Ob & L'utente deve poter visualizzare se il documento selezionato è dotato di marcatura temporale & Soddisfatto \\
+\hline
+R-324-F-Ob & L'utente deve poter visualizzare se vi è conformità alle copie immagine su supporto informatico del documento selezionato & Soddisfatto \\
+\hline
+R-325-F-Ob & L'utente deve poter visualizzare la versione del documento selezionato & Soddisfatto \\
+\hline
+R-326-F-Ob & L'utente deve poter visualizzare il nome del documento selezionato & Soddisfatto \\
+\hline
+R-327-F-Ob & L'utente deve poter visualizzare le informazioni degli allegati del documento selezionato & Soddisfatto \\
+\hline
+R-328-F-Ob & L'utente deve poter visualizzare il numero di allegati del documento selezionato & Soddisfatto \\
+\hline
+R-329-F-Ob & L'utente deve poter visualizzare il singolo allegato & Soddisfatto \\
+\hline
+R-330-F-Ob & Se il documento ha almeno un allegato, l'utente deve poter visualizzare l'identificativo di ciascun allegato & Soddisfatto \\
+\hline
+R-331-F-Op & Se l'informazione sull'identificativo dell'allegato non è disponibile, l'utente deve essere informato con un messaggio di errore & Soddisfatto \\
+\hline
+R-332-F-Op & Se il documento ha almeno un allegato, l'utente deve poter visualizzare la descrizione di ciascun allegato & Soddisfatto \\
+\hline
+R-333-F-Op & Se l'informazione sulla descrizione dell'allegato non è disponibile, l'utente deve essere informato con un messaggio di errore & Soddisfatto \\
+\hline
+R-334-F-Ob & Se il documento non ha allegati, l'utente deve essere informato con un messaggio che indica l'assenza degli allegati & Soddisfatto \\
+\hline
+R-335-F-Ob & L'utente deve poter visualizzare tutte le informazioni sulle modifiche di un documento & Soddisfatto \\
+\hline
+R-336-F-Ob & L'utente deve poter visualizzare il tipo di modifica per ogni modifica del documento selezionato tra: Annullamento, Rettifica, Integrazione e Annotazione & Soddisfatto \\
+\hline
+R-337-F-Ob & L'utente deve poter visualizzare le informazioni del soggetto autore di ogni modifica del documento selezionato & Soddisfatto \\
+\hline
+R-338-F-Ob & L'utente deve poter visualizzare la data e l'ora di ogni modifica del documento selezionato & Soddisfatto \\
+\hline
+R-339-F-Ob & L'utente deve poter visualizzare l'identificativo del documento alla versione precedente alla modifica & Soddisfatto \\
+\hline
+R-340-F-Ob & L'utente deve poter visualizzare il tipo di aggregazione dell'aggregazione documentale selezionata tra: Fascicolo, Serie Documentale e Serie di Fascicoli & Soddisfatto \\
+\hline
+R-341-F-Ob & L'utente deve poter visualizzare l'identificativo dell'aggregazione documentale selezionata & Soddisfatto \\
+\hline
+R-342-F-Ob & L'utente deve poter visualizzare la tipologia di fascicolo dell'aggregazione documentale selezionata tra: Affare, Attività, Persona Fisica, Persona Giuridica e Procedimento Amministrativo & Soddisfatto \\
+\hline
+R-343-F-Ob & L'utente deve poter visualizzare il tipo di assegnazione dell'aggregazione documentale selezionata tra: Per competenza e Per conoscenza & Soddisfatto \\
+\hline
+R-344-F-Ob & L'utente deve poter visualizzare le informazioni del soggetto assegnatario dell'aggregazione documentale selezionata &  Soddisfatto \\
+\hline
+R-345-F-Ob & L'utente deve poter visualizzare la data e l'ora di inizio dell'assegnazione dell'aggregazione documentale selezionata & Soddisfatto \\
+\hline
+R-346-F-Ob & L'utente deve poter visualizzare la data e l'ora di fine dell'assegnazione dell'aggregazione documentale selezionata & Soddisfatto \\
+\hline
+R-347-F-Ob & L'utente deve poter visualizzare la data di apertura dell'aggregazione documentale selezionata & Soddisfatto \\
+\hline
+R-348-F-Ob & L'utente deve poter visualizzare la data di chiusura dell'aggregazione documentale selezionata & Soddisfatto \\
+\hline
+R-349-F-Ob & L'utente deve poter visualizzare il progressivo dell'aggregazione documentale selezionata & Soddisfatto \\
+\hline
+R-350-F-Ob & L'utente deve poter visualizzare le informazioni del procedimento amministrativo dell'aggregazione documentale selezionata & Soddisfatto \\
+\hline
+R-351-F-Ob & L'utente deve poter visualizzare l'indice della materia/argomento/struttura per la quale sono catalogati i procedimenti dell'aggregazione documentale selezionata & Soddisfatto \\
+\hline
+R-352-F-Ob & L'utente deve poter visualizzare la denominazione del procedimento amministrativo dell'aggregazione documentale selezionata & Soddisfatto \\
+\hline
+R-353-F-Ob & L'utente deve poter visualizzare il catalogo dei procedimenti come URI di pubblicazione dell'aggregazione documentale selezionata & Soddisfatto \\
+\hline
+R-354-F-Ob & L'utente deve poter visualizzare la lista delle fasi del procedimento amministrativo dell'aggregazione documentale selezionata & Soddisfatto \\
+\hline
+R-355-F-Ob & L'utente deve poter visualizzare le singole fasi della lista delle fasi del procedimento amministrativo dell'aggregazione documentale selezionata complete di dati della fase & Soddisfatto \\
+\hline
+R-356-F-Ob & Per ogni fase del procedimento amministrativo, l'utente deve poter visualizzare il tipo di fase tra: Preparatoria, Istruttoria, Consultiva, Decisoria o deliberativa e Integrazione dell'efficacia & Soddisfatto \\
+\hline
+R-357-F-Ob & Per ogni fase del procedimento amministrativo, l'utente deve poter visualizzare la data e l'ora di inizio della fase & Soddisfatto \\
+\hline
+R-358-F-Ob & Per ogni fase del procedimento amministrativo, l'utente deve poter visualizzare la data e l'ora di fine della fase & Soddisfatto \\
+\hline
+R-359-F-Ob & L'utente deve poter visualizzare l'indice dei documenti contenuti nell'aggregazione documentale selezionata & Soddisfatto \\
+\hline
+R-360-F-Ob & L'utente deve poter visualizzare ogni voce dell'indice dei documenti dell'aggregazione documentale selezionata & Soddisfatto \\
+\hline
+R-361-F-Ob & Per ogni voce dell'indice dei documenti dell'aggregazione, l'utente deve poter visualizzare il tipo di documento contenuto & Soddisfatto \\
+\hline
+R-362-F-Ob & Per ogni voce dell'indice dei documenti dell'aggregazione, l'utente deve poter visualizzare l'identificativo del documento contenuto & Soddisfatto \\
+\hline
+R-363-F-Op & L'utente deve poter visualizzare la posizione fisica dell'aggregazione documentale selezionata & Soddisfatto \\
+\hline
+R-364-F-Ob & L'utente deve poter visualizzare l'identificativo dell'aggregazione primaria dell'aggregazione documentale selezionata & Soddisfatto \\
+\hline
+R-365-F-Ob & L'utente deve poter visualizzare il tempo di conservazione dell'aggregazione documentale selezionata & Soddisfatto \\
+\hline
+R-366-F-Ob & L'utente deve poter visualizzare la lista dei metadati custom del documento selezionato & Soddisfatto \\
+\hline
+R-367-F-Ob & L'utente deve poter visualizzare le informazioni di ciascun metadato custom del documento selezionato & Soddisfatto \\
+\hline
+R-368-F-Ob & L'utente deve poter visualizzare il nome di ciascun metadato custom del documento selezionato & Soddisfatto \\
+\hline
+R-369-F-Ob & L'utente deve poter visualizzare il valore di ciascun metadato custom del documento selezionato & Soddisfatto \\
+\hline
+R-370-F-Ob & Se il documento selezionato non dispone di metadati custom, l'utente deve essere informato con un messaggio che indica l'assenza dei metadati custom & Soddisfatto \\
+\hline
+R-371-F-Ob & L'utente deve poter visualizzare i dati di registrazione del documento selezionato & Soddisfatto \\
+\hline
+R-372-F-Ob & L'utente deve poter visualizzare informazioni di classificazione del documento selezionato & Soddisfatto \\
+\hline
+R-373-F-Ob & L'utente deve poter visualizzare informazioni e informazioni sul formato del documento e sul prodotto software che lo ha generato & Soddisfatto \\
+\hline
+R-374-F-Ob & L'utente deve poter visualizzare ogni ruolo disponibile per il tipo di documento selezionato & Soddisfatto \\
+\hline
+R-375-F-Ob & L'utente deve poter visualizzare il nome del ruolo nella lista dei ruoli disponibili per il tipo di documento selezionato & Soddisfatto \\
+\hline
+R-376-F-Ob & L'utente deve poter visualizzare i tipi di soggetto per ogni soggetto disponibile per il ruolo selezionato & Soddisfatto \\
+\hline
+R-377-F-Ob & L'utente deve poter visualizzare il nome del tipo di soggetto nella lista dei tipi di soggetto disponibili per il ruolo selezionato & Soddisfatto \\
+\hline
+R-378-F-Ob & L'utente deve poter visualizzare l'elenco dei campi specifici per aggregazione documentale disponibili & Soddisfatto \\
+\hline
+R-379-F-Ob & L'utente deve poter visualizzare l'elenco dei campi specifici per DI/DAI disponibili & Soddisfatto \\
+\hline
+R-380-F-Ob & Il sistema deve fornire una sezione dedicata per la consultazione dei report di integrità, presentati in modo chiaro e comprensibile & Soddisfatto \\
+\hline
+\rowcolor{white}
+\caption{Requisiti soddisfatti}
+\label{tab:req-funzionali}
+\end{longtable}
+
+\subsubsection{Riassunto}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|l|c|c|}
+\hline
+\rowcolor{zpusgreen!30}
+\textbf{Tipologia requisiti} & \textbf{Soddisfatti} & \textbf{Non soddisfatti} \\
+\hline
+Funzionali obbligatori & 340 & 0 \\
+\hline
+Funzionali opzionali & 33 & 7 \\
+\hline
+Totale & 373 & 7 \\
+\hline
+\end{tabular}
+\end{center}
