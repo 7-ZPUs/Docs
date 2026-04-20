@@ -1,0 +1,55 @@
+@startuml
+title Subject Criteria - code level
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+
+package "shared/domain/metadata/search-subject-filters-models" {
+  class SubjectCriteria <<union>>
+
+  interface SubjectDetails <<marker>>
+
+  package "Subject detail payloads" {
+    interface PAIDetails <<model>> {
+    +denominazione: string | null
+    +codiceIPA: string | null
+    +denominazioneAOO: string | null
+    +codiceIPAAOO: string | null
+    +denominazioneUOR: string | null
+    +codiceIPAUOR: string | null
+    +indirizziDigitali: string[] | null
+    }
+  }
+
+  package "Subject field strategies" {
+    class SubjectFieldDefinition <<model>> {
+      +key: string
+      +label: string
+      +type: FilterFieldType
+      +required: boolean
+      +options?: Array<{ label: string; value: any }>
+    }
+
+    interface ISubjectDetailStrategy {
+      +getFields(): SubjectFieldDefinition[]
+    }
+
+    class PAIStrategy <<strategy>>
+  }
+}
+
+SubjectCriteria ..> PAIDetails : PAI variant
+
+PAIDetails --|> SubjectDetails
+
+SubjectCriteria -[hidden]-> SubjectDetails
+SubjectDetails -[hidden]-> PAIDetails
+
+PAIStrategy ..|> ISubjectDetailStrategy
+
+ISubjectDetailStrategy -[hidden]-> PAIStrategy
+
+PAIStrategy --> PAIDetails : field mapping
+
+@enduml

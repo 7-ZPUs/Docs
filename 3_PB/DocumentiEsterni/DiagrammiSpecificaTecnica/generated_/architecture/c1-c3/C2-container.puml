@@ -1,0 +1,76 @@
+@startuml C2_DipReader_Container
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title C4 Model - Level 2 (Container)
+
+LAYOUT_WITH_LEGEND()
+
+Person(user, "Utente autorizzato", "Usa l'app desktop per importare, cercare e consultare documenti")
+Person(auditor, "Auditor / Responsabile conservazione", "Verifica integrita e audit del pacchetto")
+
+System_Boundary(dip_reader_system, "DIP Reader Desktop Application") {
+
+  Container(renderer, "Renderer UI", "Angular + TypeScript", "UI, filtri di ricerca, visualizzazione risultati e metadati")
+
+  Container(preload, "Preload Bridge (core/src/preload.ts)", "Electron contextBridge", "Bridge sicuro tra renderer e main con allowlist canali IPC")
+
+  Container(main, "Main Process Runtime (main.ts)", "Electron + Node.js + TypeScript", "Lifecycle app, bootstrap, registrazione IPC adapters")
+
+  Container(di, "Composition Root (core/src/container.ts)", "tsyringe", "Registrazione token e wiring dipendenze")
+
+  Container(core, "Application + Domain Layer", "TypeScript (hexagonal style)", "Use case, servizi di dominio, interfacce/porte")
+
+  Container(adapters, "Infrastructure Layer", "Repositories + DAO + adapters", "Implementazioni porte: SQLite, filesystem DIP, embeddings, export/print")
+
+  ContainerDb(sqlite, "DIP Database", "SQLite (+ sqlite-vss)", "Metadati, relazioni archivistiche, stati integrita, vettori")
+}
+
+System_Ext(local_fs, "Local File System", "Cartelle DIP, XML/metadata e file binari")
+System_Ext(ai_runtime, "Local Embedding Runtime", "@xenova/transformers + ONNX Runtime")
+System_Ext(os_services, "OS Services", "Open/Save/Print tramite integrazione sistema operativo")
+
+Rel(user, renderer, "Interagisce con")
+Rel(auditor, renderer, "Controlla risultati verifica")
+
+Rel(renderer, preload, "Invoca API bridge", "IElectronContextBridge")
+Rel(preload, main, "IPC invoke/on", "canali condivisi")
+
+Rel(main, di, "container.resolve(token)")
+Rel(di, core, "Inietta dipendenze via interfacce")
+Rel(core, adapters, "Dipende da astrazioni e implementazioni registrate")
+
+Rel(adapters, sqlite, "Legge/scrive")
+Rel(adapters, local_fs, "Legge DIP + stream file")
+Rel(adapters, ai_runtime, "Genera embedding / similarita")
+Rel(adapters, os_services, "Export / open / print")
+
+Rel(main, core, "Esegue use case via adapter IPC")
+
+note right of core
+SOLID nel container Core:
+- S: servizi separati per indexing, search, integrity, file operations
+- O: estensione tramite nuovi use case/port senza cambiare i client
+- L: adapter concreti sostituibili rispettando contratti
+- I: interfacce specifiche (repo, reader, embedding, print, export)
+- D: use case dipendono da astrazioni, non da dettagli infrastrutturali
+
+Pattern:
+- Hexagonal (Ports & Adapters)
+- Dependency Injection (composition root)
+- Repository + DAO
+- Adapter pattern (IPC, FS, AI, OS)
+- Facade/Gateway lato renderer
+end note
+
+note bottom of preload
+Security boundary: contextIsolation + channel allowlist.
+Il renderer non accede direttamente alle API Node.
+end note
+
+note bottom of renderer
+Nota runtime attuale:
+in app.config.ts il token SEMANTIC_INDEX_STATUS_TOKEN
+e fornito con useValue mock (status READY).
+end note
+
+@enduml

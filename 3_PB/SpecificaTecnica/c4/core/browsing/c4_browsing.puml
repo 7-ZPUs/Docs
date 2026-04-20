@@ -1,0 +1,270 @@
+@startuml
+title Code Diagram - Browsing Component
+
+skinparam linetype ortho
+skinparam shadowing false
+skinparam wrapWidth 220
+skinparam classAttributeIconSize 0
+
+' ─────────────────────────────────────────────
+'  DOMAIN ENTITIES  (core/domain/entities)
+' ─────────────────────────────────────────────
+package "core/domain/entities" {
+
+    class ClasseDocumentale {
+        - id: number
+        - uuid: string
+        - name: string
+        - timestamp: Date
+        - integrityStatus: IntegrityStatus
+        + getId(): number
+        + getUuid(): string
+        + getName(): string
+        + getTimestamp(): Date
+        + getIntegrityStatus(): IntegrityStatus
+        + setIntegrityStatus(status: IntegrityStatus): void
+    }
+
+    class Processo {
+        - id: number
+        - uuid: string
+        - integrityStatus: IntegrityStatus
+        - metadata: Metadata[]
+        + getId(): number
+        + getUuid(): string
+        + getIntegrityStatus(): IntegrityStatus
+        + setIntegrityStatus(status: IntegrityStatus): void
+        + getMetadata(): Metadata[]
+    }
+
+    class Documento {
+        - id: number
+        - uuid: string
+        - type: string
+        - integrityStatus: IntegrityStatus
+        - metadata: Metadata[]
+        + getId(): number
+        + getUuid(): string
+        + getType(): string
+        + getIntegrityStatus(): IntegrityStatus
+        + getMetadata(): Metadata[]
+    }
+
+    class File {
+        - id: number
+        - uuid: string
+        - hash: string
+        - integrityStatus: IntegrityStatus
+        - isMain: boolean
+        + getId(): number
+        + getUuid(): string
+        + getHash(): string
+        + getIntegrityStatus(): IntegrityStatus
+        + setIntegrityStatus(status: IntegrityStatus): void
+    }
+
+    enum IntegrityStatus {
+        VALID,
+        INVALID,
+        UNKNOWN
+    }
+}
+
+' ─────────────────────────────────────────────
+'  PORT  (core/domain/ports)
+' ─────────────────────────────────────────────
+package "core/domain/ports" {
+
+    interface PackageBrowsingPort {
+        + getClasses(): Promise<ClasseDocumentale[]>
+        + getProcessesByClass(classId: number): Promise<Processo[]>
+        + getDocumentsByProcess(processId: number): Promise<Documento[]>
+        + getFilesByDocument(documentId: number): Promise<File[]>
+        + getClassById(id: number): Promise<ClasseDocumentale>
+        + getProcessById(id: number): Promise<Processo>
+        + getDocumentById(id: number): Promise<Documento>
+        + getFileById(id: number): Promise<File>
+        + getDocumentClassByStatus(status: IntegrityStatus): Promise<ClasseDocumentale[]>
+        + getProcessesByStatus(status: IntegrityStatus): Promise<Processo[]>
+        + getDocumentsByStatus(status: IntegrityStatus): Promise<Documento[]>
+        + getFilesByStatus(status: IntegrityStatus): Promise<File[]>
+    }
+}
+
+' ─────────────────────────────────────────────
+'  USE CASES  (core/application/use-cases)
+' ─────────────────────────────────────────────
+package "core/application/use-cases/browsing" {
+
+    class GetClassesByDipUC {
+        - browsingPort: PackageBrowsingPort
+        + constructor(browsingPort: PackageBrowsingPort)
+        + execute(dipId: number): Promise<ClasseDocumentale[]>
+    }
+
+    class GetProcessesByClassUC {
+        - browsingPort: PackageBrowsingPort
+        + constructor(browsingPort: PackageBrowsingPort)
+        + execute(classId: number): Promise<Processo[]>
+    }
+
+    class GetDocumentsByProcessUC {
+        - browsingPort: PackageBrowsingPort
+        + constructor(browsingPort: PackageBrowsingPort)
+        + execute(processId: number): Promise<Documento[]>
+    }
+
+    class GetFilesByDocumentUC {
+        - browsingPort: PackageBrowsingPort
+        + constructor(browsingPort: PackageBrowsingPort)
+        + execute(documentId: number): Promise<File[]>
+    }
+
+    class GetDocumentClassByIdUC {
+        - browsingPort: PackageBrowsingPort
+        + constructor(browsingPort: PackageBrowsingPort)
+        + execute(id: number): Promise<ClasseDocumentale>
+    }
+
+    class GetProcessByIdUC {
+        - browsingPort: PackageBrowsingPort
+        + constructor(browsingPort: PackageBrowsingPort)
+        + execute(id: number): Promise<Processo>
+    }
+
+    class GetDocumentByIdUC {
+        - browsingPort: PackageBrowsingPort
+        + constructor(browsingPort: PackageBrowsingPort)
+        + execute(id: number): Promise<Documento>
+    }
+
+    class GetFileByIdUC {
+        - browsingPort: PackageBrowsingPort
+        + constructor(browsingPort: PackageBrowsingPort)
+        + execute(id: number): Promise<File>
+    }
+
+    class GetClassiDocumentaliByStatusUC {
+        - browsingPort: PackageBrowsingPort
+        + constructor(browsingPort: PackageBrowsingPort)
+        + execute(status: IntegrityStatus): Promise<ClasseDocumentale[]>
+    }
+
+    class GetProcessiByStatusUC {
+        - browsingPort: PackageBrowsingPort
+        + constructor(browsingPort: PackageBrowsingPort)
+        + execute(status: IntegrityStatus): Promise<Processo[]>
+    }
+
+    class GetDocumentiByStatusUC {
+        - browsingPort: PackageBrowsingPort
+        + constructor(browsingPort: PackageBrowsingPort)
+        + execute(status: IntegrityStatus): Promise<Documento[]>
+    }
+
+    class GetFilesByStatusUC {
+        - browsingPort: PackageBrowsingPort
+        + constructor(browsingPort: PackageBrowsingPort)
+        + execute(status: IntegrityStatus): Promise<File[]>
+    }
+}
+
+' ─────────────────────────────────────────────
+'  IPC ADAPTER  (core/infrastructure/ipc)
+' ─────────────────────────────────────────────
+package "core/infrastructure/ipc" {
+
+    class BrowsingIpcAdapter {
+        - getClassesByDip: GetClassesByDipUC
+        - getProcessesByClass: GetProcessesByClassUC
+        - getDocumentsByProcess: GetDocumentsByProcessUC
+        - getFilesByDocument: GetFilesByDocumentUC
+        - getClassById: GetDocumentClassByIdUC
+        - getProcessById: GetProcessByIdUC
+        - getDocumentById: GetDocumentByIdUC
+        - getFileById: GetFileByIdUC
+        - getClassesByStatus: GetClassiDocumentaliByStatusUC
+        - getProcessesByStatus: GetProcessiByStatusUC
+        - getDocumentsByStatus: GetDocumentiByStatusUC
+        - getFilesByStatus: GetFilesByStatusUC
+        + constructor(...)
+        + register(ipcMain: IpcMain): void
+        - handleGetByClass(classId: number): Promise<ClasseDocumentale[]>
+        - handleGetByProcess(processId: number): Promise<Documento[]>
+        - handleGetByDocument(documentId: number): Promise<File[]>
+        - handleGetClassById(id: number): Promise<ClasseDocumentale>
+        - handleGetProcessById(id: number): Promise<Processo>
+        - handleGetDocumentById(id: number): Promise<Documento>
+        - handleGetFileById(id: number): Promise<File>
+        - handleGetClassByStatus(status: IntegrityStatus): Promise<ClasseDocumentale[]>
+        - handleGetProcessByStatus(status: IntegrityStatus): Promise<Processo[]>
+        - handleGetDocumentByStatus(status: IntegrityStatus): Promise<Documento[]>
+    }
+}
+
+' ─────────────────────────────────────────────
+'  INFRASTRUCTURE ADAPTER  (core/infrastructure/adapters)
+' ─────────────────────────────────────────────
+package "core/infrastructure/adapters" {
+
+    class SqlitePackageAdapter {
+        - db: Database
+        + constructor(db: Database)
+        + getClasses(): Promise<ClasseDocumentale[]>
+        + getProcessesByClass(classId: number): Promise<Processo[]>
+        + getDocumentsByProcess(processId: number): Promise<Documento[]>
+        + getFilesByDocument(documentId: number): Promise<File[]>
+        + getClassById(id: number): Promise<ClasseDocumentale>
+        + getProcessById(id: number): Promise<Processo>
+        + getDocumentById(id: number): Promise<Documento>
+        + getFileById(id: number): Promise<File>
+        + getDocumentClassByStatus(status: IntegrityStatus): Promise<ClasseDocumentale[]>
+        + getProcessesByStatus(status: IntegrityStatus): Promise<Processo[]>
+        + getDocumentsByStatus(status: IntegrityStatus): Promise<Documento[]>
+        + getFilesByStatus(status: IntegrityStatus): Promise<File[]>
+    }
+}
+
+' ─────────────────────────────────────────────
+'  RELATIONSHIPS
+' ─────────────────────────────────────────────
+
+' IPC Adapter -> Use Cases
+BrowsingIpcAdapter --> GetClassesByDipUC
+BrowsingIpcAdapter --> GetProcessesByClassUC
+BrowsingIpcAdapter --> GetDocumentsByProcessUC
+BrowsingIpcAdapter --> GetFilesByDocumentUC
+BrowsingIpcAdapter --> GetDocumentClassByIdUC
+BrowsingIpcAdapter --> GetProcessByIdUC
+BrowsingIpcAdapter --> GetDocumentByIdUC
+BrowsingIpcAdapter --> GetFileByIdUC
+BrowsingIpcAdapter --> GetClassiDocumentaliByStatusUC
+BrowsingIpcAdapter --> GetProcessiByStatusUC
+BrowsingIpcAdapter --> GetDocumentiByStatusUC
+BrowsingIpcAdapter --> GetFilesByStatusUC
+
+' Use Cases -> Port (dependency injection)
+GetClassesByDipUC           ..> PackageBrowsingPort : uses
+GetProcessesByClassUC       ..> PackageBrowsingPort : uses
+GetDocumentsByProcessUC     ..> PackageBrowsingPort : uses
+GetFilesByDocumentUC        ..> PackageBrowsingPort : uses
+GetDocumentClassByIdUC      ..> PackageBrowsingPort : uses
+GetProcessByIdUC            ..> PackageBrowsingPort : uses
+GetDocumentByIdUC           ..> PackageBrowsingPort : uses
+GetFileByIdUC               ..> PackageBrowsingPort : uses
+GetClassiDocumentaliByStatusUC ..> PackageBrowsingPort : uses
+GetProcessiByStatusUC       ..> PackageBrowsingPort : uses
+GetDocumentiByStatusUC      ..> PackageBrowsingPort : uses
+GetFilesByStatusUC          ..> PackageBrowsingPort : uses
+
+' Infrastructure -> Port (implementation)
+SqlitePackageAdapter ..|> PackageBrowsingPort : implements
+
+' Port / Adapter -> Domain Entities
+PackageBrowsingPort ..> ClasseDocumentale
+PackageBrowsingPort ..> Processo
+PackageBrowsingPort ..> Documento
+PackageBrowsingPort ..> File
+PackageBrowsingPort ..> IntegrityStatus
+
+@enduml

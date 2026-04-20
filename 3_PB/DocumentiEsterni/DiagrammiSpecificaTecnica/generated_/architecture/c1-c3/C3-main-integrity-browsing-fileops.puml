@@ -1,0 +1,72 @@
+@startuml C3_Main_Integrity_Browsing_FileOps
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Modello C4 - Livello 3 (Componenti processo Main: Integrita, Browsing, Operazioni file)
+
+LAYOUT_WITH_LEGEND()
+
+Container_Boundary(main_container, "Processo Main") {
+  Component(browsing_ipc, "BrowsingIpcAdapter", "Adapter IPC di ingresso", "Canali di lettura/navigazione per id/stato/relazioni")
+  Component(integrity_ipc, "CheckIntegrityIpcAdapter", "Adapter IPC di ingresso", "Canali di verifica integrita per Dip/Class/Process/Document/File")
+  Component(file_ipc, "FileViewerIpcAdapter", "Adapter IPC di ingresso", "Dialog di download/salvataggio/stampa e operazioni file")
+
+  Component(browse_ucs, "Use case Browsing", "Servizi applicativi", "GetById/GetByStatus/GetByParent per Dip/Class/Process/Document/File")
+  Component(integrity_ucs, "Use case Integrita", "Servizi applicativi", "Verifica stato di integrita lungo la gerarchia")
+  Component(file_ucs, "Use case File", "Servizi applicativi", "ExportFileUC, PrintFileUC, GetFileContentUC")
+
+  Component(integrity_service, "IntegrityVerificationService", "Servizio di dominio", "Verifica hash e calcolo dello stato di integrita")
+
+  Component(dip_repo, "DipPorts", "Porte outbound", "Persistenza Dip")
+  Component(class_repo, "DocumentClassPorts", "Porte outbound", "Persistenza classi")
+  Component(process_repo, "ProcessPorts", "Porte outbound", "Persistenza processi")
+  Component(doc_repo, "DocumentPorts", "Porte outbound", "Persistenza documenti")
+  Component(file_repo, "FilePorts", "Porte outbound", "Persistenza file")
+
+  Component(export_port, "LocalExportPort", "Adapter outbound", "Scrive file nel percorso scelto dall'utente")
+  Component(print_port, "PrintPort", "Adapter outbound", "Integrazione stampa")
+  Component(package_reader, "FileSystemPort", "Adapter outbound", "Legge stream file dal DIP")
+}
+
+Container_Ext(renderer, "Renderer UI", "Angular", "Navigazione albero, azioni integrita, azioni download/stampa")
+ContainerDb_Ext(sqlite, "SQLite", "Persistenza entita e stati")
+System_Ext(local_fs, "File system locale", "File DIP e directory di export")
+System_Ext(os_services, "Servizi OS stampa/file", "Dialog nativi di stampa e file")
+
+Rel(renderer, browsing_ipc, "canali browse:*")
+Rel(renderer, integrity_ipc, "canali check-integrity:*")
+Rel(renderer, file_ipc, "canali file:*")
+
+Rel(browsing_ipc, browse_ucs, "esegue")
+Rel(integrity_ipc, integrity_ucs, "esegue")
+Rel(file_ipc, file_ucs, "esegue")
+
+Rel(integrity_ucs, integrity_service, "verifica")
+
+Rel(browse_ucs, dip_repo, "lettura")
+Rel(browse_ucs, class_repo, "lettura")
+Rel(browse_ucs, process_repo, "lettura")
+Rel(browse_ucs, doc_repo, "lettura")
+Rel(browse_ucs, file_repo, "lettura")
+
+Rel(integrity_ucs, dip_repo, "lettura/aggiornamento stato")
+Rel(integrity_ucs, class_repo, "lettura/aggiornamento stato")
+Rel(integrity_ucs, process_repo, "lettura/aggiornamento stato")
+Rel(integrity_ucs, doc_repo, "lettura/aggiornamento stato")
+Rel(integrity_ucs, file_repo, "lettura/aggiornamento stato")
+
+Rel(file_ucs, package_reader, "legge byte file")
+Rel(file_ucs, export_port, "esporta file")
+Rel(file_ucs, print_port, "stampa file")
+
+Rel(dip_repo, sqlite, "I/O SQL")
+Rel(class_repo, sqlite, "I/O SQL")
+Rel(process_repo, sqlite, "I/O SQL")
+Rel(doc_repo, sqlite, "I/O SQL")
+Rel(file_repo, sqlite, "I/O SQL")
+
+Rel(package_reader, local_fs, "legge stream")
+Rel(export_port, local_fs, "scrive output")
+Rel(print_port, os_services, "stampa")
+Rel(file_ipc, os_services, "dialog salvataggio/apertura")
+
+@enduml

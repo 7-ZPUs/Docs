@@ -1,0 +1,78 @@
+@startuml search-bar-rules-code-l4
+' C4 L4 (Code) - SearchBar + Rules Manager
+' Scope: renderer/src/app/feature/search/ui/dumb/search-bar.component
+
+title C4 Level 4 (Code) - SearchBarComponent and SearchBarRulesManager
+
+allowmixing
+top to bottom direction
+
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+skinparam defaultTextAlignment left
+skinparam linetype ortho
+skinparam ArrowThickness 2
+skinparam ArrowColor #1F2937
+skinparam ArrowFontColor #111827
+skinparam ArrowFontSize 10
+skinparam ArrowFontStyle bold
+skinparam wrapWidth 220
+skinparam maxMessageSize 100
+
+package "Renderer App (Angular)" {
+  class "SearchBarComponent" as SearchBar {
+    +query: SearchQuery | null
+    +isSearching: boolean
+    +queryChanged: EventEmitter<SearchQuery>
+    +searchRequested: EventEmitter<void>
+    +form: FormGroup
+    +isSemanticForced: boolean
+    -destroy$: Subject<void>
+    --
+    +onSubmit(): void
+    +ngOnChanges(changes: SimpleChanges): void
+    +ngOnDestroy(): void
+  }
+
+  class "SearchBarRulesManager" as Rules {
+    +evaluate(isSemantic: boolean, requestedType: SearchQueryType): SearchBarState
+  }
+
+  class "SearchBarState" as RulesState <<value object>> {
+    +isSemanticForced: boolean
+    +activeType: SearchQueryType
+  }
+
+  class "Reactive FormGroup" as FormGroup <<angular>>
+  class "FormBuilder" as FormBuilder <<angular>>
+  class "RxJS Subject<void>" as DestroySubject <<rxjs>>
+  class "takeUntil(destroy$)" as TakeUntil <<rxjs operator>>
+
+  class "SearchPageComponent" as SearchPage <<parent smart component>>
+}
+
+package "Shared Domain" {
+  class "SearchQuery" as SearchQuery
+  class "SearchQueryType" as SearchQueryType
+}
+
+
+SearchBar --> FormBuilder : build form controls
+SearchBar --> FormGroup : valueChanges subscription
+FormGroup --> TakeUntil : stream lifecycle
+TakeUntil --> DestroySubject : stop on destroy
+
+SearchBar --> Rules : evaluate(isSemantic, type)
+Rules --> RulesState : returns { forced flag, active type }
+RulesState --> SearchQueryType : activeType
+
+SearchBar --> SearchQuery : emits queryChanged
+SearchBar --> SearchPage : queryChanged / searchRequested
+SearchPage --> SearchBar : @Input query / isSearching
+
+SearchBar --> SearchQueryType : UI radio values (CLASS_NAME, PROCESS_ID, FREE)
+SearchBar --> FormGroup : disable/enable when isSearching changes
+
+
+@enduml

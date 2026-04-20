@@ -1,0 +1,51 @@
+@startuml Class Diagram - Main Indexing Flow - Group 2
+
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+hide empty members
+
+title Group 2 - PackageReaderService, FileSystemPort, DataMapper, DipParser
+
+  interface IPackageReaderService {
+    + readDip(): Promise<Dip>
+    + readDocumentClasses(): AsyncGenerator<DocumentClass>
+    + readProcesses(): AsyncGenerator<Process>
+    + readDocuments(): AsyncGenerator<Document>
+    + readFiles(): AsyncGenerator<File>
+    + setDipPath(dipPath: string): void
+  }
+
+  class PackageReaderService {
+    - dipPath: string
+    - parser: IDipParser
+    - fileSystemProvider: IFileSystemPort
+    - mapper: IDataMapper
+    + readDip(): Promise<Dip>
+    + readDocumentClasses(): AsyncGenerator<DocumentClass>
+    + readProcesses(): AsyncGenerator<Process>
+    + readDocuments(): AsyncGenerator<Document>
+    + readFiles(): AsyncGenerator<File>
+    + setDipPath(dipPath: string): void;
+    - resolveDipIndexFilename(): Promise<string>
+    - getParsedIndex(): Promise<any>
+    - getOptionalMetadata(relativePath: string): Promise<any>
+  }
+
+  interface IDipParser {
+  }
+
+  interface IDataMapper {
+  }
+
+  interface IFileSystemPort {
+  }
+
+PackageReaderService ..|> IPackageReaderService
+PackageReaderService --> IDipParser
+PackageReaderService --> IDataMapper
+PackageReaderService --> IFileSystemPort
+
+@enduml

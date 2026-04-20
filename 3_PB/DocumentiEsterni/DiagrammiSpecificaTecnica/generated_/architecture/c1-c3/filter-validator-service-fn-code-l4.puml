@@ -1,0 +1,111 @@
+@startuml filter-validator-service-fn-code-l4
+' C4 L4 (Code) - Filter Validator Service and Validator Fn
+' Scope: renderer/src/app/feature/validation/contracts/filter-validator.interface.ts
+'        renderer/src/app/feature/validation/services/filter-validator.service.ts
+
+title C4 Level 4 (Code) - FilterValidatorService and ValidatorFn
+
+allowmixing
+top to bottom direction
+
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+skinparam defaultTextAlignment left
+skinparam linetype ortho
+skinparam ArrowThickness 2
+skinparam ArrowColor #1F2937
+skinparam ArrowFontColor #111827
+skinparam ArrowFontSize 10
+skinparam ArrowFontStyle bold
+skinparam wrapWidth 220
+skinparam maxMessageSize 100
+skinparam nodesep 35
+skinparam ranksep 45
+
+package "Renderer App (Angular)" {
+  interface "IFilterValidator" as FilterValidator {
+    +validate(filters: PartialSearchFilters): ValidationResult
+    +registerStrategy(strategy: IFilterValidationStrategy): void
+  }
+
+  class "FilterValidatorService" as ValidatorService {
+    -strategies: IFilterValidationStrategy[]
+    --
+    +registerStrategy(strategy: IFilterValidationStrategy): void
+    +validate(filters: PartialSearchFilters): ValidationResult
+  }
+
+  interface "FilterValidatorFn" as ValidatorFn {
+    +(filters: PartialSearchFilters): ValidationResult
+  }
+
+  interface "IFilterValidationStrategy" as ValidationStrategy {
+    +validate(filters: PartialSearchFilters): Map<string, ValidationError[]>
+  }
+
+  class "Strategy Registry" as StrategyRegistry <<composite>> {
+    RegistryContradictionValidationStrategy
+    FormationModeContradictionStrategy
+    DateTimeCoherenceValidationStrategy
+    SearchRangeValidationStrategy
+    AggregationContradictionStrategy
+  }
+
+  class "SearchPageComponent" as SearchPage <<caller>>
+  class "AdvancedFilterPanelComponent" as AdvancedPanel <<caller>>
+}
+
+package "Shared Domain" {
+  class "PartialSearchFilters" as PartialSearchFilters
+  class "ValidationResult" as ValidationResult
+  class "ValidationError" as ValidationError
+}
+
+FilterValidator <|.. ValidatorService
+ValidatorService --> StrategyRegistry : registers in ctor
+ValidatorService --> ValidationStrategy : validate() each strategy
+ValidatorService --> PartialSearchFilters : input
+ValidatorService --> ValidationResult : output
+ValidatorService --> ValidationError : aggregates errors
+
+ValidatorFn --> ValidationResult : return type
+ValidatorFn --> PartialSearchFilters : input
+AdvancedPanel --> ValidatorFn : @Input validator
+SearchPage --> FilterValidator : inject via token
+SearchPage --> ValidatorService : runtime provider
+
+ValidationStrategy --> PartialSearchFilters : inspects
+ValidationStrategy --> ValidationError : returns field errors
+
+
+newpage
+
+title C4 Level 4 (Code) - Validation Runtime Flow
+
+package "FilterValidatorService::validate()" {
+  class "Start" as Start
+  class "Loop strategies" as Loop
+  class "strategy.validate(filters)" as StrategyValidate
+  class "merge field errors" as Merge
+  class "Return ValidationResult" as Return
+}
+
+Start --> Loop
+Loop --> StrategyValidate
+StrategyValidate --> Merge
+Merge --> Loop : next strategy
+Loop --> Return : no more strategies
+
+note right of Merge
+Errors are accumulated by field key,
+not replaced.
+end note
+
+note right of Return
+Result object:
+- isValid = true when no errors
+- errors = Map<string, ValidationError[]>
+end note
+
+@enduml

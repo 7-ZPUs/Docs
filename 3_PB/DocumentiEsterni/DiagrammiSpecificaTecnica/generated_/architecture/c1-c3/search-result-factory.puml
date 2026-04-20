@@ -1,0 +1,76 @@
+@startuml search-result-factory-strategy-code-l4
+title C4 Level 4 (Code) - Search Result Factory as Strategy Dispatcher
+
+allowmixing
+top to bottom direction
+
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+skinparam defaultTextAlignment left
+skinparam linetype ortho
+skinparam ArrowThickness 2
+skinparam wrapWidth 200
+skinparam maxMessageSize 120
+
+package "Renderer App (Angular)" {
+  class "SearchResultsComponent" as SearchResults {
+    +getComponent(result: ISearchResult): Type<ISearchResultItemComponent>
+    +getInputs(result: ISearchResult): Record<string, unknown>
+    -factory: SearchResultFactoryService
+  }
+
+  class "SearchResultFactoryService" as Factory {
+    -componentRegistry: Record<string, Type<ISearchResultItemComponent>>
+    -normalizeType(type: string): string
+    +getComponentForType(type: string): Type<ISearchResultItemComponent>
+  }
+
+  interface "ISearchResultItemComponent" as ItemStrategy {
+    +result: ISearchResult
+    +onSelectAction(res: ISearchResult): void
+  }
+
+  package "Strategy Implementations" as StrategyImpl {
+    class "DocumentResultCardComponent" as DocumentCard <<concrete strategy>>
+    class "AggregateResultCardComponent" as AggregateCard <<concrete strategy>>
+    class "ProcessResultCardComponent" as ProcessCard <<concrete strategy>>
+    class "ClassResultCardComponent" as ClassCard <<concrete strategy>>
+  }
+
+  class "componentRegistry" as Registry <<strategy map>> {
+    DOCUMENTO_INFORMATICO -> DocumentResultCardComponent
+    DOCUMENTO_AMMINISTRATIVO_INFORMATICO -> DocumentResultCardComponent
+    AGGREGAZIONE_DOCUMENTALE -> AggregateResultCardComponent
+    PROCESS / PROCESSO -> ProcessResultCardComponent
+    CLASS / CLASSE -> ClassResultCardComponent
+  }
+
+  class "Angular Runtime\nngComponentOutlet" as NgOutlet <<runtime>>
+}
+
+package "Shared Domain" {
+  interface "ISearchResult" as SearchResult
+}
+
+SearchResults -down-> Factory : getComponentForType(...)
+Factory -down-> Registry : lookup(normalizeType(type))
+Factory -down-> DocumentCard : fallback
+
+Factory -down-> ItemStrategy : returns component type
+DocumentCard ..|> ItemStrategy
+AggregateCard ..|> ItemStrategy
+ProcessCard ..|> ItemStrategy
+ClassCard ..|> ItemStrategy
+
+SearchResults -down-> NgOutlet : instantiate selected component
+SearchResults --> SearchResult : result input
+
+DocumentCard -[hidden]down-> AggregateCard
+AggregateCard -[hidden]down-> ProcessCard
+ProcessCard -[hidden]down-> ClassCard
+Registry -[hidden]down-> ItemStrategy
+
+
+@enduml
+

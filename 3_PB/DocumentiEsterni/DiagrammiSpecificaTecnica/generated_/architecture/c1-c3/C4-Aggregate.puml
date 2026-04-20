@@ -1,0 +1,115 @@
+@startuml
+' === Impostazioni per A4 Verticale ===
+scale max 1024 width
+page 1x2
+skinparam pageMargin 10
+skinparam dpi 300
+
+' Sviluppo rigorosamente verticale
+top to bottom direction
+skinparam classAttributeIconSize 0
+skinparam nodesep 40
+skinparam ranksep 70
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype ortho
+skinparam ArrowThickness 2
+skinparam ArrowColor #1F2937
+skinparam ArrowFontColor #111827
+skinparam ArrowFontSize 10
+skinparam ArrowFontStyle bold
+skinparam defaultTextAlignment left
+skinparam wrapWidth 220
+skinparam maxMessageSize 80
+skinparam handwritten false
+skinparam packageStyle rectangle
+allowmixing
+
+
+' ==========================================
+' LIVELLO 2: DUMB COMPONENTS (Presentational)
+' ==========================================
+class DocumentIndexComponent << Dumb >>
+class AdminProcedureComponent << Dumb >>
+
+
+' ==========================================
+' LIVELLO 3: CONTRATTI E SERVICES (Facade)
+' ==========================================
+interface IAggregateFacade << Contract >> {
+  + getState(): Signal<AggregateState>
+  + loadAggregate(id: string): Promise<void>
+}
+
+class AggregateFacade implements IAggregateFacade {
+  - ipcGateway: IIpcGateway
+  - cache: IpcCacheService
+  - state: signal<AggregateState>
+  + getState(): Signal<AggregateState>
+  + loadAggregate(id: string): Promise<void>
+}
+
+' ==========================================
+' LIVELLO MAPPING (Trasformazione Dati)
+' ==========================================
+class Mapper << Mapper >> {
+  + mapProcessDtoToAggregateDetail(rawData: any): AggregateDetailDTO
+}
+
+class ProcessDTO << DTO >> {
+  + uuid: string
+  + metadata: any
+  << IPC Payload >>
+}
+
+' Il Facade preleva il DTO tramite IPC e usa il mapper per convertirlo
+AggregateFacade ..> Mapper : uses
+AggregateFacade ..> ProcessDTO : fetches via IPC
+Mapper ..> ProcessDTO : takes
+Mapper ..> AggregateDetailDTO : creates
+
+' ==========================================
+' LIVELLO 4: DOMAIN MODELS E STATO MAPPATO
+' ==========================================
+class AggregateState << State >> {
+  + loading: boolean
+  + error: AppError | null
+}
+
+class AggregateDetailDTO << Model >> {
+  + idAggPrimario: string
+  + tipologiaFascicolo: TipologiaFascicoloEnum
+  + dataApertura: string
+  + dataChiusura: string
+  + progressivo: number
+}
+
+note bottom of AggregateDetailDTO
+  <b>Sottomodelli omessi per leggibilità:</b>
+  * IdAggDTO: 1
+  * SoggettoDTO: 0..*
+  * AssegnazioneDTO: 1
+  * ClassificazioneDTO: 1
+  * ChiaveDescrittivaDTO: 1
+  * ProcedimentoAmministrativoDTO: 0..1
+  * DocumentIndexEntryDTO: 0..*
+  * ProcessSummaryDTO: 0..1
+  * CustomMetadataEntry: 0..*
+  * SoggettoDTO: 0..*
+end note
+
+class DocumentIndexEntryDTO << Data >>
+class ProcedimentoAmministrativoDTO << Data >>
+
+' Mapping Strutturale dello Stato
+AggregateFacade --> AggregateState : manages via signal
+AggregateState --> AggregateDetailDTO : contains
+
+' Decomposizione del modello principale (esemplificativa per i Dumb Components)
+AggregateDetailDTO <-down- DocumentIndexEntryDTO
+AggregateDetailDTO <-right- ProcedimentoAmministrativoDTO
+
+' Vincoli Formativi (Quale Dumb Component visualizza quale DTO)
+DocumentIndexComponent .down.> DocumentIndexEntryDTO : displays
+AdminProcedureComponent .right.> ProcedimentoAmministrativoDTO : displays
+@enduml
