@@ -1,0 +1,200 @@
+\documentclass[a4paper,12pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+\setlength\parindent{0pt}
+
+\definecolor{lightblack}{gray}{0.35}
+\newcommand{\glossario}[1]{\textit{#1}\textsubscript{\textbf{\textit{\textcolor{lightblack}{G}}}}}
+
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Interno Gruppo di Progetto}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 2026/03/27 \\
+\textbf{Durata:} 1 ora\\
+\textbf{Luogo:} Incontro online (Discord)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+\section{Retrospettiva}
+Il gruppo ha dedicato l’intero Sprint 9 alla fase di codifica, raggiungendo a oggi il completamento di tutte le componenti di backend, comprensive di test unitari, e delle componenti di frontend, fatta eccezione per alcuni test unitari ancora mancanti.\\
+
+Si osserva quindi un leggero ritardo nella fase di codifica, dovuto principalmente alla complessità di alcune componenti e alla necessità di effettuare più iterazioni per raggiungere una versione stabile del codice.\\
+
+La pipeline di integrazione continua è stata aggiornata per includere i test unitari del frontend e del backend, in modo da garantire che ogni modifica al codice venga verificata automaticamente ad ogni pull request.\\
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Modifica durata Sprint.
+    \item Divisione dei ruoli.
+    \item Stato Avanzamento Lavori.
+\end{enumerate}
+
+\subsection{Modifica durata Sprint}
+Data la necessità di completare la fase di implementazione entro la data di consegna del 2026/04/10, si è deciso di modificare la durata dello Sprint da 2 settimane a 1 settimana. In questo modo sarà possibile avere un feedback più rapido sulle attività svolte e adattare il piano di lavoro in modo più efficiente.
+
+
+\subsection{Divisione dei ruoli}
+La divisione dei ruoli è la seguente:
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Membro} & \textbf{Ruolo} \\
+    \hline
+    Fattoni Antonio & \begin{tabular}[c]{@{}c@{}} Progettista \\ Programmatore \end{tabular} \\
+    \hline
+    Georgescu Diana & \begin{tabular}[c]{@{}c@{}} Amministratore \\ Progettista \\ Programmatore \end{tabular} \\
+    \hline
+    Gingillino Aaron & \begin{tabular}[c]{@{}c@{}} Progettista \\ Programmatore \end{tabular} \\
+    \hline
+    Laoud Zakaria & \begin{tabular}[c]{@{}c@{}} Progettista \\ Programmatore \end{tabular} \\
+    \hline
+    Rocco Matteo A. & \begin{tabular}[c]{@{}c@{}} Responsabile \\ Progettista \\ Programmatore \end{tabular} \\
+    \hline
+    Soligo Lorenzo & \begin{tabular}[c]{@{}c@{}} Progettista \\ Programmatore \end{tabular} \\
+    \hline
+    Vigolo Davide & \begin{tabular}[c]{@{}c@{}} Progettista \\ Programmatore \end{tabular} \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+Ogni membro sarà verificatore.
+
+\subsection{Stato Avanzamento Lavori}
+
+\subsubsection{Codifica}
+Si prevede di effettuare il merge di tutte le branch di sviluppo entro la giornata del 2026/03/30, per poter procedere con l'integrazione.\\
+
+L'assegnazione delle task di verifica di ciascuna componente rispecchia la divisione adoperata per la verifica della progettazione delle componenti, per mantenere coerenza tra le fasi di sviluppo e verifica.\\
+
+
+\subsubsection{Specifica Tecnica}
+Si prevede di terminare la stesura della Specifica Tecnica entro la fine dello Sprint. La procedura di stesura e verifica è la stessa del processo di codifica.
+
+\subsubsection{Manuale Utente}
+Si prevede di iniziare la stesura del Manuale Utente in modo da avere una prima versione completa entro la fine dello Sprint.
+
+\subsubsection{Lettera di presentazione}
+Si prevede di produrre la lettera di presentazione per la candidatura alla milestone PB entro fine Sprint.
+
+\section{Decisioni}
+\begin{enumerate}
+    \item Modifica durata Sprint da 2 settimane a 1 settimana.
+    \item Completamento test d'integrazione e sistema.
+    \item Scrittura e completamento Specifica Tecnica.
+    \item Scrittura e completamento Manuale Utente.
+    \item Scrittura e completamento Lettera di presentazione per candidatura PB.
+\end{enumerate}
+
+\section{Tabella delle Decisioni}
+
+\begin{table}[H]
+    \begin{adjustwidth}{-4cm}{-4cm}
+    \centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Decisione} & \textbf{To Do} & \textbf{Jira Issue} & \textbf{Membro assegnato} & \textbf{Verificatore} \\
+    \hline
+    \#0 & \begin{tabular}{@{}c@{}} Scrittura verbale\\ interno \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-366}{DIPR-366} & Rocco Matteo A. & Georgescu Diana \\
+    \hline
+    \#0 & \begin{tabular}{@{}c@{}} Scrittura verbale\\ esterno 2026-04-02 \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-369}{DIPR-369} & Rocco Matteo A. & Gingillino Aaron \\
+    \hline
+    \#0 & \begin{tabular}{@{}c@{}} Preventivo\\ Sprint 10 \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-371}{DIPR-371} & Rocco Matteo A. & Gingillino Aaron \\
+    \hline
+    \#0 & \begin{tabular}{@{}c@{}} Consuntivo\\ Sprint 10 \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-373}{DIPR-373} & Rocco Matteo A. & Georgescu Diana \\
+    \hline
+    \#0 & \begin{tabular}{@{}c@{}} Aggiornamento \\ Piano di \\ Qualifica \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-386}{DIPR-386} & Vigolo Davide & Rocco Matteo A. \\
+    \hline
+    \#3 & \begin{tabular}{@{}c@{}} SpT: \\modulo indexing \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-381}{DIPR-381} & Vigolo Davide & Fattoni Antonio \\
+    \hline
+    \#3 & \begin{tabular}{@{}c@{}} SpT: \\modulo browsing \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-382}{DIPR-382} & Fattoni Antonio & Vigolo Davide \\
+    \hline
+    \#3 & \begin{tabular}{@{}c@{}} SpT: \\modulo search\\ ed export \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-383}{DIPR-383} & Laoud Zakaria & Rocco Matteo A. \\
+    \hline
+    \#3 & \begin{tabular}{@{}c@{}} SpT: \\modulo search \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-376}{DIPR-376} & Soligo Lorenzo & Georgescu Diana \\
+    \hline
+    \#3 & \begin{tabular}{@{}c@{}} SpT: \\modulo document\\ detail \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-377}{DIPR-377} & Rocco Matteo A. & Gingillino Aaron \\
+    \hline
+    \#3 & \begin{tabular}{@{}c@{}} SpT: \\modulo aggregate\\ detail \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-378}{DIPR-378} & Rocco Matteo A. & Gingillino Aaron \\
+    \hline
+    \#3 & \begin{tabular}{@{}c@{}} SpT: \\modulo import \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-379}{DIPR-379} & Georgescu Diana & Soligo Lorenzo \\
+    \hline
+    \#3 & \begin{tabular}{@{}c@{}} SpT: \\modulo navigazione \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-380}{DIPR-380} & Gingillino Aaron & Georgescu Diana \\
+    \hline
+    \#3 & \begin{tabular}{@{}c@{}} SpT: \\modulo integrità \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-375}{DIPR-375} & Rocco Matteo A. & Laoud Zakaria \\
+    \hline
+    \#4 & \begin{tabular}{@{}c@{}} Scrittura \\ manuale utente \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-396}{DIPR-396} & Rocco Matteo A. & Laoud Zakaria \\
+    \hline
+    \#5 & \begin{tabular}{@{}c@{}} Scrittura lettera \\ di presentazione \end{tabular} & \href{https://7zpus.atlassian.net/browse/DIPR-384}{DIPR-384} & Rocco Matteo A. & Soligo Lorenzo \\
+    \hline
+\end{tabular}
+    \end{adjustwidth}
+\end{table}
+
+\vfill
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}

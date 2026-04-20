@@ -1,0 +1,186 @@
+ \documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian, provide=*]{babel}
+\usepackage[sfdefault]{atkinson}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage[table]{xcolor}
+\usepackage{longtable}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Esterno Gruppo di Progetto e Sanmarco Informatica}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 2026/04/09 \\
+\textbf{Durata:} 40 minuti \\
+\textbf{Luogo:} incontro online ( Meet )
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+
+\newpage
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio
+    \item Georgescu Diana
+    \item Gingillino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+    \item Rossi Andrea
+    \item Sarra Luca
+\end{itemize}
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Dimostrazione della versione finale dell'MVP.
+    \item Esecuzione dei test di accettazione da parte dell'azienda.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section{Svolgimento e Discussione}
+
+Durante l'incontro il Team ha presentato la versione finale dell'MVP. L'azienda
+ha potuto testare con mano il prodotto, confermando la copertura dei
+test di accettazione.
+
+\subsection{Griglia dei test di accettazione}
+\renewcommand{\arraystretch}{1.2}
+\rowcolors{2}{gray!15}{white}
+\begin{longtable}{|p{1.5cm}|p{8.5cm}|c|}
+    \hline
+    \rowcolor{zpusgreen!30}
+    \textbf{Codice} & \textbf{Descrizione}                                                                                                     & \textbf{Implementato}      \\
+    \hline
+    \endfirsthead
+    \rowcolor{zpusgreen!30}
+    \textbf{Codice} & \textbf{Descrizione}                                                                                                     & \textbf{Implementato}      \\
+    \hline
+    \endhead
+    TA-1            & Verificare che l'utente possa accedere al sistema e consultare i documenti al suo interno                                & SI                         \\
+    \hline
+    TA-2            & Verificare che l'utente possa navigare tra le cartelle e i file del DIP in modo intuitivo                                & SI                         \\
+    \hline
+    TA-3            & Verificare che l'utente possa visualizzare i dettagli di una cartella selezionata                                        & SI                         \\
+    \hline
+    TA-4            & Verificare che l'utente possa selezionare uno o più file per poterli stampare o salvare                                  & SI, la scelta è vincolata  \\
+    \hline
+    TA-5            & Verificare che l'utente possa visualizzare un'anteprima di un file selezionato                                           & SI                         \\
+    \hline
+    TA-6            & Verificare che l'utente possa verificare l'autenticità e l'integrità di un elemento                                      & SI                         \\
+    \hline
+    TA-7            & Verificare che l'utente possa visualizzare il contenuto di un elemento selezionato                                       & SI                         \\
+    \hline
+    TA-8            & Verificare che l'utente possa ricercare un file all'interno del DIP                                                      & SI                         \\
+    \hline
+    TA-9            & Verificare che l'utente possa salvare uno o più file selezionati nel proprio dispositivo                                 & SI                         \\
+    \hline
+    TA-10           & Verificare che l'utente possa stampare uno o più file selezionati                                                        & SI                         \\
+    \hline
+    TA-11           & Verificare che l'utente possa filtrare la ricerca degli elementi del DIP per attributi specifici                         & SI                         \\
+    \hline
+    TA-12           & Verificare che l'utente possa effettuare una ricerca semantica basata su parole chiave e metadati degli elementi del DIP & SI                         \\
+    \hline
+    \rowcolor{white}
+    \caption{Test di accettazione}
+    \label{tab:test-accettazione}
+\end{longtable}
+
+\section{Miglioramenti di UI/UX}
+In fase di dimostrazione sono emersi alcuni spunti di miglioramento, presi subito in carico dal team:
+\begin{itemize}[noitemsep]
+    \item Rendere coerente l'uso di nomi spaziati dei metadati
+    \item Controllare le spaziature per i valori dei metadati
+    \item Nella sezione di verifica, indicare non solo l'elemento che ha fatto scattare l'anomalia, ma anche processo e classe per evitare confusione all'utente
+    \item Nella scelta dell'inserimento dei metadati custom, consentire all'utente di scegliere da un elenco predefinito di metadati, quelli già presenti all'interno del DIP.
+\end{itemize}
+\section{Conclusione}
+Vista la completa copertura dei test di accettazione, l'azienda ha approvato la
+versione attuale dell'MVP, confermando che il prodotto soddisfa i requisiti
+stabiliti e le aspettative del cliente al 90\%. 
+\\Il team è già a lavoro per aggiungere i miglioramenti previsti e rimane in contatto aggiornando l'azienda del completamento dei miglioramenti.
+
+\section{Implementazione dei miglioramenti}
+Il team ha concluso l'implementazione dei miglioramenti previsti il giorno 2026/04/10, aggiungendo questa sezione del verbale.
+Le modifiche riguradano:
+\begin{itemize}
+    \item Coerenza nell'uso di nomi spaziati dei metadati
+    \item Controllo delle spaziature per i valori dei metadati
+    \item Indicazione del processo e della classe che hanno fatto scattare l'anomalia nella sezione di verifica
+    \item Scelta dell'inserimento dei metadati custom tramite un elenco predefinito di metadati già presenti all'interno del DIP.
+    \item Modifica della funzionalità di stampa, invocando direttamente il sistema operativo per la stampa dei file, invece che appoggiarsi al lettore PDF predefinito del sistema.
+\end{itemize}
+L'azienda è stata aggiornata quindi via email con il caricamento nelle cartelle Drive condivise del verbale di riunione per l'approvazione della versione finale dell'MVP e la conseguente comunicazione di revisione PB.
+ \vfill
+\begin{flushleft}
+    \begin{tabular}{@{}p{0.5in}p{2in}@{}}
+        Data: & \hrulefill \\
+    \end{tabular}
+
+    \vspace{1em}
+
+    \begin{tabular}{@{}p{0.5in}p{2in}@{}}
+        Firma: & \hrulefill                 \\
+               & [Sanmarco Informatica SPA] \\
+    \end{tabular}
+\end{flushleft}
+
+\begin{flushright}
+    \textit{7-ZPUs}
+\end{flushright}
+
+\end{document}
