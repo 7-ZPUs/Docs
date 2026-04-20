@@ -35,8 +35,9 @@ La progettazione del sistema \textit{DIPReader} è stata guidata dai principi di
     \subparagraph{Implementazioni}
         Il pattern è stato implementato in tutte le feature estese, nella ricerca e nelle operazioni di dettaglio. \\
         Nella ricerca, i componenti smart sono responsabili di gestire le interazioni con i filtri, regole di ordinamento e paginazione dei componenti dumb, rappresentati dai filtri.
-        \\ Nella visualizzazione del dettaglio, i componenti smart si occupano di gestire le diverse paginazione in base al tipo di documento da presentare. 
-
+        \\ Nella visualizzazione del dettaglio, i componenti smart si occupano di gestire le diverse paginazione in base al tipo di documento da presentare.
+        \\ La presenza di attributi pubblici è necessaria per Angular, che richiede che le proprietà utilizzate nei template siano pubbliche.
+QueryType
     \paragraph{Dependency Injection}
     \subparagraph{Problema}
         La gestione delle dipendenze in un'applicazione complessa può portare a codice rigido e difficile da testare.
