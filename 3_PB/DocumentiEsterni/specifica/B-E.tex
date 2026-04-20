@@ -106,7 +106,7 @@ tramite la callback \codeword{onProgress} dopo ogni file elaborato.
 
 \codeword{+ execute(fileIds: number[], onProgress: ProgressCallback): 
 Promise<ExportFilesResult>} : avvia l'esportazione multipla. Al termine 
-restituisce un \codeword{ExportFileResults} con l'esito dettagliato 
+restituisce un \codeword{ExportFilesResult} con l'esito dettagliato 
 per ciascun file.
 
 \begin{figure}[H]
@@ -129,9 +129,7 @@ trovato nel database, restituisce un \codeword{ExportResult} di fallimento.
 
 \paragraph{PrintFilesUC}
 
-Use Case che orchestra la stampa sequenziale di più file. Mostra una 
-finestra di conferma tramite \codeword{IDialogPort} prima di procedere, 
-quindi itera sui \codeword{fileIds} forniti eseguendo per ciascuno la stampa 
+Use Case che orchestra la stampa sequenziale di più file. Itera sui \codeword{fileIds} forniti eseguendo per ciascuno la stampa 
 tramite \codeword{IPrintPort} della stream ottenuta con \codeword{IFileSystemPort}.
 
 \codeword{+ execute(fileIds: number[], onProgress: ProgressCallback): 
@@ -144,6 +142,7 @@ Value object che rappresenta l'esito di un'operazione singola di export o
 stampa, contenendo le informazioni necessarie a diagnosticare eventuali errori.
 
 \begin{itemize}
+    \item \codeword{+ fileId: number}: indica l'id del documento a cui si riferisce.
     \item \codeword{+ success: boolean} : indica se l'operazione è stata 
     completata con successo.
     \item \codeword{+ canceled?: boolean} : presente e \codeword{true} se 
@@ -169,21 +168,8 @@ export o stampa, utilizzato da \codeword{ExportFilesUC} e
 \codeword{PrintFilesUC}.
 
 \begin{itemize}
-    \item \codeword{+ results: ExportItemResult[]} : array contenente l'esito 
-    per ciascun file elaborato, con \codeword{fileId} e \codeword{result} 
-    che descrive l'esito specifico di quel file.
-\end{itemize}
-
-\subsubsubsection{ExportItemResult}
-
-Value object che rappresenta l'esito di una singola operazione 
-all'interno di un'elaborazione multipla.
-
-\begin{itemize}
-    \item \codeword{+ fileId: number} : identificativo del file elaborato.
-    \item \codeword{+ result: ExportResult} : esito dell'operazione 
-    sul file, contenente le informazioni di successo, cancellazione 
-    o errore.
+    \item \codeword{+ results: ExportResult[]} : array contenente l'esito 
+    per ciascun file elaborato.
 \end{itemize}
 
 \subsubsection{LocalExportPort e PrintPort}
@@ -243,11 +229,6 @@ finestre di dialogo native del sistema operativo.
     mostra la finestra di selezione di una directory. Restituisce il percorso 
     della cartella selezionata oppure \codeword{canceled} se 
     l'operazione viene annullata.
-    \item \codeword{+ showConfirmPrint(fileCount: number): 
-    Promise<ConfirmPrintResult>} : mostra una finestra di conferma prima di 
-    avviare una stampa multipla, informando l'utente del numero di file 
-    coinvolti. Restituisce l'esito della scelta dell'utente (confermato o 
-    annullato).
 \end{itemize}
 
 \paragraph{ElectronDialogPort}
@@ -255,5 +236,4 @@ finestre di dialogo native del sistema operativo.
 Adapter outbound che implementa \codeword{IDialogPort} utilizzando le API 
 native di Electron. Fa da ponte tra la logica applicativa e il modulo 
 \codeword{dialog} di Electron, delegando a \codeword{dialog.showSaveDialog}, 
-\codeword{dialog.showOpenDialog} e \codeword{dialog.showMessageBox} 
-rispettivamente per le tre operazioni esposte dall'interfaccia.
+\codeword{dialog.showOpenDialog} rispettivamente per le operazioni esposte dall'interfaccia.

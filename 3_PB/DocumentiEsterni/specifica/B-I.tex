@@ -118,7 +118,7 @@ Queste due componenti collaborano per gestire l'estrazione del testo dai file e 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_Main_Indexing_PackageReader/Class Diagram - Main Indexing Flow - Group 2.png}
-        \caption{Diagramma delle classi - Dettaglio dell'orchestrazione del processo di indicizzazione}
+        \caption{Diagramma delle classi - PackageReaderService}
     \label{fig:C4_orchestrazione_reading}
 \end{figure}
 
@@ -138,7 +138,7 @@ Queste due componenti collaborano per gestire l'estrazione del testo dai file e 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_Main_Indexing_Parser/Class Diagram - Main Indexing Flow - Group 2.png}
-        \caption{Diagramma delle classi - Dettaglio dell'orchestrazione del processo di indicizzazione}
+        \caption{Diagramma delle classi - Parser}
     \label{fig:C4_orchestrazione_reading}
 \end{figure}
 
@@ -157,7 +157,7 @@ Queste due componenti collaborano per gestire l'estrazione del testo dai file e 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_Main_Indexing_Flow_FsProvider/Class Diagram - Main Indexing Flow - Group 2.png}
-        \caption{Diagramma delle classi - Dettaglio dell'orchestrazione del processo di indicizzazione}
+        \caption{Diagramma delle classi - FileSystemPort}
     \label{fig:C4_orchestrazione_reading}
 \end{figure}
 
@@ -180,7 +180,7 @@ Queste due componenti collaborano per gestire l'estrazione del testo dai file e 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_Main_Indexing_Flow_DataMapper/Class Diagram - Main Indexing Flow - Group 2.png}
-        \caption{Diagramma delle classi - Dettaglio dell'orchestrazione del processo di indicizzazione}
+        \caption{Diagramma delle classi - DataMapper}
     \label{fig:C4_orchestrazione_reading}
 \end{figure}
 
@@ -209,3 +209,12 @@ Durante il mapping, \codeword{DataMapper} estrae dal DiPIndex il percorso del fi
     \item \codeword{\textbf{+ metadataRelativePath: string}}: path relativo all'interno del pacchetto DiP that indica la posizione del file contenente i metadati supplementari per l'entità da mappare.
     \item \codeword{\textbf{+ map: (rawMetadata: any) => T}}: lambda di mapping che trasforma i dati grezzi nei modelli di dominio.
 \end{itemize}
+
+\paragraph{VectorPersistenceAdapter}:
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-16.png}
+        \caption{Diagramma delle classi - VectorPersistenceAdapter}
+    \label{fig:C4_orchestrazione_vector_persistence}
+\end{figure}

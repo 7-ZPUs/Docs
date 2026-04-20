@@ -233,16 +233,10 @@ skinparam classAttributeIconSize 0
 skinparam linetype ortho
 hide empty members
 
-interface ISearchDocumentPort {
-    + searchDocument(
+interface ISearchDocumentsPort {
+    + searchDocuments(
         filters: SearchDocumentsQuery
     ): Document[]
-}
-
-interface ISearchDocumentSemanticPort {
-    + searchSemanticDocuments(
-        queryVector: Float32Array
-    ): Array<SemanticSearchResult[]>
 }
 
 interface IGetDistinctDocumentCustomMetadataKeysPort {
@@ -256,11 +250,10 @@ interface IGetIndexedDocumentsCountPort {
     ): number
 }
 
-class DocumentPersistenceAdapter implements ISearchDocumentPort, ISearchDocumentSemanticPort, IGetDistinctDocumentCustomMetadataKeysPort, IGetIndexedDocumentsCountPort {
+class DocumentPersistenceAdapter implements ISearchDocumentsPort, IGetDistinctDocumentCustomMetadataKeysPort, IGetIndexedDocumentsCountPort {
     - dao: DocumentDAO
     - mapper: DocumentMapper
-    + searchDocument(filters: SearchDocumentsQuery): Document[]
-    + searchSemanticDocuments(queryVector: Float32Array): SemanticSearchResult[]
+    + searchDocuments(filters: SearchDocumentsQuery): Document[]
     + getDistinctCustomMetadataKeys(dipId: number | null): string[]
     + getIndexedDocumentsCount(): number
 }
@@ -268,8 +261,7 @@ class DocumentPersistenceAdapter implements ISearchDocumentPort, ISearchDocument
 class DocumentDAO {
     - db: Database
     - queryBuilder: DocumentMetadataQueryBuilder
-    + searchDocument(filters: SearchDocumentsQuery): DocumentJsonPersistenceRow[]
-    + searchDocumentSemantic(queryVector: Float32Array): { row: DocumentJsonPersistenceRow; score: number }
+    + searchDocuments(filters: SearchDocumentsQuery): DocumentJsonPersistenceRow[]
     + getDistinctCustomMetadataKeys(dipId: number | null): string[]
     + getIndexedDocumentsCount(): number
 }
@@ -454,5 +446,62 @@ DocumentSearchResult ..|> SearchResult
 DocumentMapper ..> Document            
 DocumentMapper ..> DocumentSearchResult 
 DocumentMapper ..> DocumentTypeEnum     
+
+@enduml
+
+@startuml
+title ISearchSimilarVectorsPort
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+hide empty members
+
+interface ISearchSimilarVectorsPort {
+    + searchSimilarVectors(vector: number[]): Vector[]
+}
+class VectorPersistenceAdapter {
+    - dao: VectorDAO
+    + searchSimilarVectors(queryVector: Float32Array,topK: number): SearchSemanticResult[]
+}
+
+class VectorDAO {
+    - db: Database
+    + searchSimilarVectors(queryVector: Float32Array,topK: number): SearchSemanticResult[];
+}
+
+VectorPersistenceAdapter ..|> ISearchSimilarVectorsPort
+VectorPersistenceAdapter --> VectorDAO
+
+@enduml
+
+@startuml
+
+title VectorPersistenceAdapter
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+hide empty members
+
+interface ISaveVectorPort {
+  saveVector(vector: Vector): void;
+}
+class VectorPersistenceAdapter {
+    - dao: VectorDAO
+    + saveVector(vector: Vector): void
+}
+
+class VectorDAO {
+    - db: Database
+    + save(vector: Vector): void
+}
+
+class Vector {
+    - documentId: number
+    - embedding: Float32Array
+    + getDocumentId(): number
+    + getEmbedding(): Float32Array
+}
+
+VectorPersistenceAdapter ..|> ISaveVectorPort
+VectorPersistenceAdapter --> VectorDAO
 
 @enduml

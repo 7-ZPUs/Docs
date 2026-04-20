@@ -59,7 +59,7 @@ class PrintFilesUC {
 }
 
 class ExportResult <<value object>> {}
-class ExportFilesResult <<value object>> {}
+interface ExportFilesResult <<value object>> {}
 
 FileViewerIpcAdapter --> IExportFileUC
 FileViewerIpcAdapter --> IExportFilesUC
@@ -109,6 +109,7 @@ interface IFileSystemPort { }
 interface IGetFileByIdPort { }
 
 class ExportResult <<value object>> {
+    + fileId: number
     + success: boolean
     + canceled?: boolean
     + errorCode?: string
@@ -120,7 +121,7 @@ class ExportResult <<value object>> {
 }
 interface ExportFilesResult {
     + canceled: boolean
-    + results: ExportItemResult[]
+    + results: ExportResult[]
 }
 
 ExportFileUC  --> IExportPort      
@@ -160,42 +161,18 @@ class PrintFilesUC {
 }
 
 interface IPrintPort { }
-interface IDialogPort { }
 interface IFileSystemPort { }
 interface IGetFileByIdPort { }
+interface ExportFilesResult {}
 
-class ExportResult <<value object>> {
-    + success: boolean
-    + canceled?: boolean
-    + errorCode?: string
-    + errorMessage?: string
-    + {static} ok(): ExportResult
-    + {static} canceled(): ExportResult
-    + {static} fail(code: string,
-    msg: string): ExportResult
-}
+ExportFilesResult --> ExportResult : 1..*   
+PrintFileUC   --> IPrintPort      
+PrintFilesUC  --> IPrintPort      
+PrintFileUC --> IGetFileByIdPort
+PrintFilesUC --> IGetFileByIdPort
+PrintFileUC --> IFileSystemPort
+PrintFilesUC --> IFileSystemPort
 
-class ExportItemResult <<value object>> {
-    + fileId: number
-    + result: ExportResult
-}
-
-class ExportFilesResult <<value object>> {
-    + results: ExportItemResult[]
-}
-
-ExportItemResult --> ExportResult : contiene
-ExportFilesResult --> ExportItemResult : contiene
-ExportFileUC  --> IExportPort     : usa
-ExportFileUC  --> IDialogPort     : usa
-ExportFilesUC --> IExportPort     : usa
-ExportFilesUC --> IDialogPort     : usa
-PrintFileUC   --> IPrintPort      : usa
-PrintFilesUC  --> IPrintPort      : usa
-PrintFilesUC  --> IDialogPort     : usa
-
-ExportFileUC  ..> ExportResult      : <<returns>>
-ExportFilesUC ..> ExportFilesResult : <<returns>>
 PrintFileUC   ..> ExportResult      : <<returns>>
 PrintFilesUC  ..> ExportFilesResult : <<returns>>
 @enduml
@@ -224,6 +201,7 @@ class PrintPort {
     opts: PrintOptions): Promise<ExportResult>
 }
 class ExportResult <<value object>> {
+    + fileId: number
     + success: boolean
     + canceled?: boolean
     + errorCode?: string
@@ -248,12 +226,10 @@ hide empty members
 interface IDialogPort {
     + showSaveDialog(opts: SaveDialogOptions): Promise<SaveDialogResult>
     + showFolderDialog(): Promise<FolderDialogResult>
-    + showConfirmPrint(fileCount: number): Promise<ConfirmPrintResult>
 }
 class ElectronDialogPort {
     + showSaveDialog(opts: SaveDialogOptions): Promise<SaveDialogResult>
     + showFolderDialog(): Promise<FolderDialogResult>
-    + showConfirmPrint(fileCount: number): Promise<ConfirmPrintResult>
 }
 
 ElectronDialogPort ..|> IDialogPort

@@ -65,7 +65,7 @@ sul Use Case corrispondente una volta ricevuto il messaggio IPC, restituendo poi
     \item \codeword{SEARCH\_DOCUMENTS} : ricerca strutturata tramite filtri. Valida il \codeword{SearchRequestDTO} con Zod, normalizza i path dei metadati 
     tramite \codeword{MetadataKeyMapper.\allowbreak mapGroup()}, costruisce un \codeword{SearchDocumentsQuery} e delega a \codeword{ISearchDocumentsUC}. I risultati vengono
      mappati tramite \codeword{DocumentMapper.toSearchResult()}.
-    \item \codeword{SEARCH\_SEMANTIC} : ricerca semantica testuale, delegando a \codeword{ISearchSemanticUC} e mappando i risultati (con score di similarità) 
+    \item \codeword{SEARCH\_SEMANTIC} : ricerca semantica testuale, delegando a \codeword{ISearchSemanticUC} e mappando i risultati (con score di similarità, con un valore da 0 a 1) 
     tramite \codeword{DocumentMapper.toSearchResult()}.
     \item \codeword{SEARCH\_FULLTEXT} : ricerca full-text polimorfica che, in base al \codeword{SearchQueryType} della query (\codeword{PROCESS\_ID}, 
     \codeword{CLASS\_NAME}, \codeword{FREE}), instrada la richiesta al Use Case appropriato.
@@ -289,21 +289,31 @@ Mappa poi le righe risultanti in entità \codeword{Process}.
  
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-8.png}
+    \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-8.png}
     \caption{Diagramma delle classi – ISearchDocumentsPort e DAO}
     \label{fig:document_repo}
 \end{figure}
  
-\codeword{ISearchDocumentsPort} espone i seguenti metodi di ricerca:
+\codeword{DocumentPersistenceAdapter} implementa i seguenti metodi di ricerca:
  
 \begin{itemize}
-    \item \codeword{searchDocument(filters: SearchDocumentsQuery): Document[]} : delega a \\\codeword{DocumentDAO.searchDocument()}, che utilizza 
+    \item \codeword{searchDocuments(filters: SearchDocumentsQuery): Document[]} : delega a \\\codeword{DocumentDAO.searchDocument()}, che utilizza 
     \codeword{DocumentMetadataQueryBuilder} per tradurre i filtri in una query ed eseguirla.
-    \item \codeword{searchSemanticDocuments(queryVector: Float32Array): SemanticSearchResult[]}
     \item \codeword{getDistinctCustomMetadataKeys(dipId: number | null): string[]} : esegue la query e restituisce le chiavi di metadati personalizzati 
     distinte, deduplicate e ordinate alfabeticamente.
     \item \codeword{getIndexedDocumentsCount(): number} : esegue la query e restituisce il numero di documenti con vettore indicizzato, o 0 se la tabella non esiste.
 \end{itemize}
+
+\paragraph{ISearchSimilarVectorsPort e VectorDAO}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-15.png}
+    \caption{Diagramma delle classi – ISearchSimilarVectorsPort e DAO}
+    \label{fig:vector_repo}
+\end{figure}
+
+\codeword{ISearchSimilarVectorsPort} espone \codeword{searchSimilarVectors(queryVector: Float32Array, topK: number): SemanticSearchResult[]}, che delega a \codeword{VectorDAO.searchSimilarVectors(queryVector, topK)}. Quest'ultimo esegue la query di similarità vettoriale utilizzando la funzione \codeword{vector\_similarity} di SQLite, mappa i risultati in \codeword{SemanticSearchResult} (contenente il \codeword{Document} e il \codeword{score} di similarità) e restituisce un array ordinato per score decrescente.
 
 \subsubsection{DocumentMetadataQueryBuilder}
  
