@@ -24,7 +24,7 @@ interface ISearchDocumentsUC {
 }
 interface ISearchSemanticUC {
     + execute(query: string
-    ): Promise<SemanticSearchMatch[]>
+    ): Promise<SemanticSearchResult[]>
 }
 interface IGetCustomMetadataKeysUC {
     + execute(dipId: number | null
@@ -123,17 +123,17 @@ hide empty members
 
 interface ISearchSemanticUC {
     + execute(query: 
-    string) : Promise<SemanticSearchMatch[]>
+    string) : Promise<SemanticSearchResult[]>
 }
 class SearchSemanticUC {
     - documentPort : IGetDocumentByIdPort
     - vectorPort: ISearchSimilarVectorsPort
     - wePort: IWordEmbeddingPort
-     + execute(query: string): Promise<SemanticSearchMatch[]>
+     + execute(query: string): Promise<SemanticSearchResult[]>
 }
 interface ISearchSimilarVectorsPort {
     + searchSimilarVectors( queryVector: Float32Array,
-    topK: number, ): Promise<SemanticSearchMatch[]>
+    topK: number, ): Promise<SemanticSearchResult[]>
 }
 interface IGetDocumentByIdPort {
     + getById(id: number): Document | null
@@ -227,7 +227,7 @@ ProcessPersistenceAdapter --> ProcessDAO
 @enduml
 
 @startuml
-title ISearchDocumentPort, ISearchDocumentSemanticPort
+title DocumentPersistenceAdapter
 
 skinparam classAttributeIconSize 0
 skinparam linetype ortho

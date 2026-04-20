@@ -122,9 +122,9 @@ corrispondenti ai criteri di filtro.
 \end{figure}
 
 Implementa \codeword{ISearchSemanticUC}. Coordina \codeword{IWordEmbedding} per la generazione del vettore di query e \codeword{ISearchSimilarVectorsPort} per 
-la ricerca tra i vettori indicizzati. Il metodo \codeword{execute(query: string): Promise<SemanticSearchMatch[]>} converte la query in un vettore tramite 
+la ricerca tra i vettori indicizzati. Il metodo \codeword{execute(query: string): Promise<SemanticSearchResult[]>} converte la query in un vettore tramite 
 \codeword{IWordEmbedding.generateEmbedding}, quindi delega la ricerca per similarità a \codeword{ISearchSimilarVectorsPort} e restituisce un array di 
-\codeword{SemanticSearchMatch}, ciascuno con il \codeword{Document} e il relativo \codeword{score} di similarità.
+\codeword{SemanticSearchResult}, ciascuno con il \codeword{Document} e il relativo \codeword{score} di similarità.
 
 \paragraph{GetCustomMetadataKeysUC}
 
@@ -299,7 +299,7 @@ Mappa poi le righe risultanti in entità \codeword{Process}.
 \begin{itemize}
     \item \codeword{searchDocument(filters: SearchDocumentsQuery): Document[]} : delega a \\\codeword{DocumentDAO.searchDocument()}, che utilizza 
     \codeword{DocumentMetadataQueryBuilder} per tradurre i filtri in una query ed eseguirla.
-    \item \codeword{searchSemanticDocuments(queryVector: Float32Array): }
+    \item \codeword{searchSemanticDocuments(queryVector: Float32Array): SemanticSearchResult[]}
     \item \codeword{getDistinctCustomMetadataKeys(dipId: number | null): string[]} : esegue la query e restituisce le chiavi di metadati personalizzati 
     distinte, deduplicate e ordinate alfabeticamente.
     \item \codeword{getIndexedDocumentsCount(): number} : esegue la query e restituisce il numero di documenti con vettore indicizzato, o 0 se la tabella non esiste.
