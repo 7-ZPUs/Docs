@@ -22,6 +22,12 @@ skinparam ranksep 50
 
 package "Renderer App (Angular)" {
   class "SubjectFiltersComponent" as SubjectFilters {
+    +docContext: DocContext
+    +subject: SubjectCriteria[]
+    +resetCounter: number
+    +subjectChanged: EventEmitter<SubjectCriteria[]>
+    -currentStrategy: IDocContextStrategy
+    --
     +ngOnChanges(changes: SimpleChanges): void
     +startWizard(): void
     +setRole(role: SubjectRoleType): void
@@ -29,13 +35,7 @@ package "Renderer App (Angular)" {
     +onDetailsChanged(details: any): void
     +addSubjectToList(): void
     +removeSubject(index: number): void
-    +resetWizard(): void
-    --
-    +docContext: DocContext
-    +subject: SubjectCriteria[]
-    +resetCounter: number
-    +subjectChanged: EventEmitter<SubjectCriteria[]>
-    -currentStrategy: IDocContextStrategy
+    +resetWizard(): void   
   }
 
   class "DOC_CONTEXT_STRATEGY_REGISTRY" as ContextRegistry <<strategy registry>> {

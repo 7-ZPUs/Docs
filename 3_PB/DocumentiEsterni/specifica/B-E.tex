@@ -27,7 +27,7 @@ che astrae le finestre di dialogo native del sistema operativo.
 \begin{figure}[H]
     \centering
     \makebox[\textwidth][c]{\includegraphics[width=0.9\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3_main_export/Component Diagram - Export.png}}
-    \caption{Diagramma C3 – Componenti del modulo di export e stampa}
+    \caption{Diagramma delle componenti – Componenti del modulo di export e stampa}
     \label{fig:C3_export_print}
 \end{figure}
 
@@ -79,7 +79,7 @@ tutti i canali IPC del modulo.
 \begin{figure}[H]
     \centering
     \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Export/Export_IPC_Part2_Export.png}}
-    \caption{Diagramma C3 – Componenti del modulo di export e stampa}
+    \caption{Diagramma delle componenti – Componenti del modulo di export e stampa}
     \label{fig:C3_export_export}
 \end{figure}
 
@@ -112,7 +112,7 @@ per ciascun file.
 \begin{figure}[H]
     \centering
     \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Export/Export_IPC_Part2_Print.png}}
-    \caption{Diagramma C3 – Componenti del modulo di export e stampa}
+    \caption{Diagramma delle componenti – Componenti del modulo di export e stampa}
     \label{fig:C3_export_print}
 \end{figure}
 
@@ -165,15 +165,25 @@ stampa, contenendo le informazioni necessarie a diagnosticare eventuali errori.
 \subsubsection{ExportFilesResult}
 
 Value object che rappresenta l'esito aggregato di un'operazione multipla di 
-export o stampa, condiviso da \codeword{ExportFilesUC} e 
+export o stampa, utilizzato da \codeword{ExportFilesUC} e 
 \codeword{PrintFilesUC}.
 
 \begin{itemize}
-    \item \codeword{+ canceled: boolean} : indica se l'operazione è stata 
-    annullata dall'utente prima dell'elaborazione.
     \item \codeword{+ results: ExportItemResult[]} : array contenente l'esito 
-    per ciascun file elaborato, con \codeword{fileId}, \codeword{success} e 
-    l'eventuale \codeword{error}.
+    per ciascun file elaborato, con \codeword{fileId} e \codeword{result} 
+    che descrive l'esito specifico di quel file.
+\end{itemize}
+
+\subsubsubsection{ExportItemResult}
+
+Value object che rappresenta l'esito di una singola operazione 
+all'interno di un'elaborazione multipla.
+
+\begin{itemize}
+    \item \codeword{+ fileId: number} : identificativo del file elaborato.
+    \item \codeword{+ result: ExportResult} : esito dell'operazione 
+    sul file, contenente le informazioni di successo, cancellazione 
+    o errore.
 \end{itemize}
 
 \subsubsection{LocalExportPort e PrintPort}

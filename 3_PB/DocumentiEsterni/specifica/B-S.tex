@@ -29,14 +29,14 @@ prima di essere restituiti al frontend, mantenendo il dominio disaccoppiato dal 
 \begin{figure}[H]
     \centering
     \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3-main-search-flow/C3_Main_Search_Flow_No_Repos.png}}
-    \caption{Diagramma C3 – Componenti del modulo di ricerca}
+    \caption{Diagramma delle componenti – Componenti del modulo di ricerca}
     \label{fig:C3_search_no_repos}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3-main-search-flow/C3_Main_Search_Flow_Repos.png}
-    \caption{Diagramma C3 – Componenti del modulo di ricerca (Porte e DAO)}
+    \caption{Diagramma delle componenti – Componenti del modulo di ricerca (Porte e DAO)}
     \label{fig:C3_search_repos}
 \end{figure}
 
@@ -117,14 +117,14 @@ corrispondenti ai criteri di filtro.
 \begin{figure}[H]
     \centering
     \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-4.png}}
-    \caption{Diagramma C3 – Componenti del modulo di ricerca}
+    \caption{Diagramma delle componenti – Componenti del modulo di ricerca}
     \label{fig:C3_search_no_repos}
 \end{figure}
 
 Implementa \codeword{ISearchSemanticUC}. Coordina \codeword{IWordEmbedding} per la generazione del vettore di query e \codeword{ISearchSimilarVectorsPort} per 
-la ricerca tra i vettori indicizzati. Il metodo \codeword{execute(query: string): Promise<SemanticSearchMatch[]>} converte la query in un vettore tramite 
+la ricerca tra i vettori indicizzati. Il metodo \codeword{execute(query: string): Promise<SemanticSearchResult[]>} converte la query in un vettore tramite 
 \codeword{IWordEmbedding.generateEmbedding}, quindi delega la ricerca per similarità a \codeword{ISearchSimilarVectorsPort} e restituisce un array di 
-\codeword{SemanticSearchMatch}, ciascuno con il \codeword{Document} e il relativo \codeword{score} di similarità.
+\codeword{SemanticSearchResult}, ciascuno con il \codeword{Document} e il relativo \codeword{score} di similarità.
 
 \paragraph{GetCustomMetadataKeysUC}
 
@@ -299,7 +299,7 @@ Mappa poi le righe risultanti in entità \codeword{Process}.
 \begin{itemize}
     \item \codeword{searchDocument(filters: SearchDocumentsQuery): Document[]} : delega a \\\codeword{DocumentDAO.searchDocument()}, che utilizza 
     \codeword{DocumentMetadataQueryBuilder} per tradurre i filtri in una query ed eseguirla.
-    \item \codeword{searchSemanticDocuments(queryVector: Float32Array): }
+    \item \codeword{searchSemanticDocuments(queryVector: Float32Array): SemanticSearchResult[]}
     \item \codeword{getDistinctCustomMetadataKeys(dipId: number | null): string[]} : esegue la query e restituisce le chiavi di metadati personalizzati 
     distinte, deduplicate e ordinate alfabeticamente.
     \item \codeword{getIndexedDocumentsCount(): number} : esegue la query e restituisce il numero di documenti con vettore indicizzato, o 0 se la tabella non esiste.

@@ -11,7 +11,7 @@ La sezione di ricerca implementa un'architettura stratificata basata su due patt
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/renderer-search-dataflow-l3-page1.png}
-        \caption{Diagramma C3 - Data flow della funzionalità di ricerca}
+        \caption{Diagramma delle componenti - Data flow della funzionalità di ricerca}
     \label{fig:C3_dataflow}
 \end{figure}
 
@@ -30,6 +30,89 @@ La sezione di ricerca implementa un'architettura stratificata basata su due patt
 \end{itemize}
 
 
+\subsection{Applicazione del pattern MVVM tramite SearchFacade e DTO}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/searchfacade.png}
+    \caption{Diagramma della SearchFacade}
+    \label{fig:search_facade}
+\end{figure}
+
+In questa funzionalità la struttura MVVM è applicata in modo pragmatico usando \textit{Smart \& Dumb Components} + \textit{Facade}.
+La SearchFacade svolge il ruolo di \textbf{ViewModel applicativo} nel senso operativo del termine: espone stato reattivo tramite \codeword{Signal}, centralizza i comandi e incapsula l'orchestrazione tra validazione, IPC, telemetria e gestione degli errori.
+
+\begin{itemize}
+    \item \textbf{View}: SearchPageComponent e componenti dumb (SearchBarComponent, AdvancedFilterPanelComponent, SearchResultsComponent) responsabili di rendering, input utente ed emissione eventi.
+    \item \textbf{ViewModel}: SearchFacade, che espone stato reattivo (SearchState), chiavi di metadati custom, comandi (search, searchAdvanced, searchSemantic, cancelSearch, retry) e logica di validazione/error handling.
+    \item \textbf{Model}: contratti e strutture dati del dominio ricerca (SearchQuery, SearchFilters, SearchState, ValidationError, ISearchResult) e DTO scambiati tramite il gateway IPC.
+\end{itemize}
+
+\paragraph{Ruolo della SearchFacade come ViewModel}
+La SearchPageComponent non accede direttamente a servizi infrastrutturali o al canale IPC.\\
+Invoca invece metodi della SearchFacade, che:
+\begin{enumerate}
+    \item Riceve eventi della View (\codeword{setQuery()}, \codeword{setFilters()}).
+    \item Espone validazione sincrona dei filtri (\codeword{validateFilters()}) e persistenza degli errori nello stato tramite la pipeline interna \codeword{validateAndStoreErrors()}.
+    \item Orchestra i casi d'uso di ricerca (\codeword{search()}, \codeword{searchAdvanced()}, \codeword{searchSemantic()}) con debounce, abort, retry e controllo del prerequisito semantico.
+    \item Aggiorna lo stato reattivo consumato dalla View (\codeword{getState()} + aggiornamenti su \codeword{state}).
+\end{enumerate}
+
+\noindent Questo garantisce che la View rimanga dichiarativa e focalizzata sulla UX, mentre il ViewModel centralizza il comportamento. La validazione non è concentrata in un solo punto: la SearchPageComponent esegue un controllo immediato per la UX, mentre la SearchFacade riafferma la validazione prima dell'esecuzione effettiva della ricerca. questa seconda validazione è effettuata dall'utilizzo dell'interfaccia di validazione \codeword{FilterValidator}, che consente di mantenere la logica di validazione completamente separata dalla presentazione, e facilmente testabile in isolamento.
+
+\paragraph{Metodi chiave della SearchFacade}
+
+\begin{itemize}
+    \item \textbf{Esporre lo stato alla View}: \codeword{getState()} e \codeword{getCustomMetadataKeys()}.
+    \item \textbf{Mutare lo stato da input utente}: \codeword{setQuery()} e \codeword{setFilters()}.
+    \item \textbf{Comandi di ricerca}: \codeword{search()}, \codeword{searchAdvanced(filters)}, \codeword{searchSemantic(query)}.
+    \item \textbf{Controllo esecuzione}: \codeword{cancelSearch()} e \codeword{retry()}.
+    \item \textbf{Metadati custom}: \codeword{loadCustomMetadataKeys(dipId)} per popolare le chiavi usate dai filtri dinamici.
+    \item \textbf{Pipeline interna asincrona}: \codeword{executeFullTextSearch()}, \codeword{executeAdvancedSearch()}, \codeword{executeSemanticSearch()}.
+    \item \textbf{Lifecycle della request}: \codeword{prepareForSearch()} $\rightarrow$ \codeword{handleSuccess()/handleError()} $\rightarrow$ \codeword{cleanupSearch()}.
+\end{itemize}
+
+\noindent In termini operativi, quando la View invoca \codeword{onSearchRequested()} in \codeword{SearchPageComponent}, il flusso tipico diventa:
+\codeword{SearchPageComponent.onSearchRequested()} $\rightarrow$ validazione UI con \codeword{filterValidator.validate()} $\rightarrow$ scelta tra \codeword{searchFacade.search()} e \codeword{searchFacade.searchSemantic()} $\rightarrow$ validazione/stato nella facade $\rightarrow$ \codeword{execute*Search()} $\rightarrow$ \codeword{handleSuccess()} $\rightarrow$ update di \codeword{SearchState.results}.
+
+\paragraph{Pipeline DTO e separazione dei modelli}
+Il flusso dati distingue esplicitamente tre forme del dato:
+\begin{enumerate}
+    \item \textbf{UI Model}: SearchQuery/SearchFilters costruiti dalla View.
+    \item \textbf{Transport Model (DTO)}: SearchRequestDTO creato nel gateway/adapter per la chiamata IPC.
+    \item \textbf{Result Model}: ISearchResult[] restituito dal backend, poi riassorbito nello stato SearchState.results.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/search-dto.png}
+        \caption{Diagramma delle classi - Esposizione DTO di ricerca}
+    \label{fig:C4_dto_mapping}
+\end{figure}
+
+
+\noindent La SearchFacade non dipende dal formato wire/protocollo IPC, ma da interfacce (ISearchChannel).\\
+Il mapping tra modelli UI e DTO è confinato nel gateway/adapter, preservando il principio di responsabilità singola. Questo separa chiaramente la logica di presentazione dal formato di trasporto.
+
+\paragraph{Benefici architetturali}
+\begin{itemize}
+    \item \textbf{Accoppiamento ridotto}: cambiamenti nel protocollo backend impattano gateway e mapper, non i componenti UI.
+    \item \textbf{Testabilità elevata}: SearchFacade testabile con mock di ISearchChannel, validator e servizi trasversali.
+    \item \textbf{Evolvibilità}: nuovi campi filtro o nuove strategie di ricerca si introducono estendendo modelli/mapper senza rifattorizzare la View.
+\end{itemize}
+
+\paragraph{Flusso end-to-end MVVM (event-driven)}
+\begin{enumerate}
+    \item La View emette evento di ricerca (query/filtri).
+    \item La SearchPageComponent esegue una prima validazione immediata per la UX.
+    \item La SearchFacade valida nuovamente i criteri e normalizza lo stato prima dell'esecuzione.
+    \item Il gateway converte UI Model in DTO e invoca IPC.
+    \item Il backend risponde con risultati serializzati.
+    \item La SearchFacade aggiorna SearchState.
+    \item La View si aggiorna automaticamente e delega la resa dei risultati alla SearchResultFactory.
+\end{enumerate}
+
+
 \subsection{Layer di gestione dello stato e validazione}
 
 \paragraph{AdvancedFilterPanelComponent e FilterRulesManager}
@@ -37,7 +120,7 @@ La sezione di ricerca implementa un'architettura stratificata basata su due patt
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/advanced-filter-panel-code-l4.png}
-        \caption{Diagramma C4 - AdvancedFilterPanel e gestione dinamica dei filtri}
+        \caption{Diagramma delle classi - AdvancedFilterPanel e gestione dinamica dei filtri}
     \label{fig:C4_advanced_filter}
 \end{figure}
 
@@ -48,11 +131,11 @@ Il pannello filtri avanzati è responsabile della raccolta e gestione dello stat
     \item Applicare regole di validazione dinamiche tramite il FilterRulesManager.
 \end{itemize}
 
-\noindent Il \codeword{FilterRulesManager} implementa la logica di validazione contestuale: poiché i campi pertinenti variano in base al tipo di documento selezionato (identificato dal DocContext), questo componente:
+\noindent Il \codeword{FilterRulesManager} implementa la logica di validazione contestuale: poiché i campi pertinenti variano in base al \codeword{DocContext}, questo componente:
 \begin{itemize}
     \item Definisce quali filtri sono visibili, obbligatori o opzionali.
-    \item Applica vincoli di coerenza (ad es., un campo di un tipo specifico non deve essere compilato se quel tipo un altro tipo è già selezionato).
-    \item Puo disabilitare/abilitare dinamicamente i campi senza ricaricare il DOM, garantendo una UX fluida.
+    \item Applica vincoli di coerenza tra campi correlati, ad esempio dipendenze tra classificazione, metadati strutturati e tipi di soggetto.
+    \item Può disabilitare o abilitare dinamicamente i campi senza ricaricare il DOM, garantendo una UX fluida.
 \end{itemize}
 
 \paragraph{SubjectsFilterComponent e Strategy Registry}
@@ -60,16 +143,16 @@ Il pannello filtri avanzati è responsabile della raccolta e gestione dello stat
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/subject-filters-strategy-registry-code-l4.png}
-        \caption{Diagramma C4 - SubjectsFilterComponent e SubjectType Strategy Registry}
+        \caption{Diagramma delle classi - SubjectsFilterComponent e SubjectType Strategy Registry}
     \label{fig:C4_subject_filters_strategy}
 \end{figure}
 
 Il filtro dei soggetti è strutturato secondo il pattern Strategy per consentire comportamenti specializzati per ogni contesto documentale:
 
 \begin{enumerate}
-    \item \textbf{Role Strategy Registry}: in base al DocContext e al tipo di documento, viene selezionata la configurazione di ruoli consentiti. Ad esempio, un documento DiPIndex può avere ruoli (creatore, responsabile) diversi da un'aggregazione (responsabile della procedura, responsabile di fase).
+    \item \textbf{Role Strategy Registry}: in base al \codeword{DocContext} e al tipo di documento, viene selezionata la configurazione di ruoli consentiti. Ad esempio, un documento DiPIndex può avere ruoli diversi da un'aggregazione, con regole di visibilità e obbligatorietà differenti.
     
-    \item \textbf{SubjectType Detail Field Registry}: per ogni SubjectType (persona fisica, persona giuridica, ente pubblico), viene mantenuta una registry che associa il tipo ai campi di dettaglio richiesti. Questa consente la generazione \textit{dichiarativa} del form, evitando logiche condizionali sparse nel codice.
+    \item \textbf{SubjectType Detail Field Registry}: per ogni \codeword{SubjectType} (persona fisica, persona giuridica, ente pubblico), viene mantenuta una registry che associa il tipo ai campi di dettaglio richiesti. Questa consente la generazione \textit{dichiarativa} del form, evitando logiche condizionali sparse nel codice.
     
     \item \textbf{Wizard guidato}: il componente orchestra un flusso step-by-step:
     \begin{itemize}
@@ -93,6 +176,14 @@ Il filtro dei soggetti è strutturato secondo il pattern Strategy per consentire
     \item Coerenza funzionale: un cambiamento nel back-end (nuovo ruolo, nuovo tipo di soggetto) si riflette solo nelle registry, non nella logica del componente.
 \end{itemize}
 
+I dettagli dei soggetti, come accennato sono poi gestiti in modo simile, tramite l'utilizzo della \codeword{ISubjectDetailStrategy} che grazie alle sue implementazioni specifiche permette la creazione dei filtri di dettaglio in modo dinamico.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/subjectDTO.png}
+        \caption{Diagramma delle classi - SubjectDetail strategy. Esempio PAI}
+    \label{fig:C4_subject_filters_strategy}
+\end{figure}
+
 \paragraph{Componenti di filtro semplici}
 La maggior parte dei filtri sono componenti dumb di presentazione, allineati alle specifiche AGID e alle linee guida Sanmarco Informatica:
 
@@ -103,11 +194,11 @@ La maggior parte dei filtri sono componenti dumb di presentazione, allineati all
         \item Chiave descrittiva (campo di testo libero).
         \item Classificazione con sottocampi (partizione, categoria, codice).
     \end{itemize}
-    Lo schema è stratificato: la validazione della classificazione (es., "codice" disponibile solo se "partizione" è compilata) è delegata al FilterRulesManager, non al componente.
+    Lo schema è stratificato: la validazione della classificazione (es., \codeword{codice} disponibile solo se \codeword{partizione} è compilata) è delegata al FilterRulesManager, non al componente.
     
-    \item[\codeword{DiDaiFiltersComponent}] Gestisce i filtri specifici per Documenti Informatici (DiI) e Documenti Amministrativi Informatici (DAI):
+    \item[\codeword{DiDaiFiltersComponent}] Gestisce i filtri specifici per Documenti Informatici (DI) e Documenti Amministrativi Informatici (DAI):
     \begin{itemize}
-        \item Tipologia di documento (enum ristretto ai soli tipi DiI/DAI).
+        \item Tipologia di documento (enum ristretto ai soli tipi DI/DAI).
         \item Modalità di formazione (pre-formati, post-formati, cartacei scansionati, ...).
         \item Nome, versione, ID del documento.
         \item Dati di formato (tipologia MIME, versione, estensione).
@@ -133,7 +224,7 @@ I metadati custom sono coppie chiave-valore personalizzate non previste dallo sc
     
     \item \textbf{Implementazione}: il componente:
     \begin{itemize}
-        \item Interroga un servizio (GetCustomMetadataKeysUC dal back-end) per recuperare la lista di chiavi popolate.
+        \item Interroga un servizio del back-end per recuperare la lista di chiavi effettivamente popolate.
         \item Popola un'autocomplete o una select renderizzata dinamicamente.
         \item Consente all'utente di filtrare documenti per chiave e valore.
         \item Valida l'input (es., no valori null, lunghezza massima).
@@ -145,13 +236,25 @@ I metadati custom sono coppie chiave-valore personalizzate non previste dallo sc
 
 \subsection{Layer di visualizzazione dei risultati}
 
+\paragraph{Pattern applicati}
+\begin{itemize}
+    \item \textbf{Factory Pattern}: selezione del componente di rendering in base al tipo risultato.
+    \item \textbf{Strategy via registry}: associazione tipo-entita $\rightarrow$ componente specializzato, estendibile senza modificare la view principale.
+    \item \textbf{Single Responsibility}: ogni card di risultato conosce solo il proprio modello dati.
+\end{itemize}
+
+\paragraph{Motivazione della scelta}
+La vista risultati gestisce entita eterogenee (documenti, processi, classi, aggregazioni) con semantiche diverse.
+Un approccio condizionale unico nel template (catena di \codeword{@if}/\codeword{switch}) aumenterebbe accoppiamento e costo di manutenzione.
+La Factory mantiene il rendering modulare e allinea l'implementazione al principio Open/Closed.
+
 \paragraph{SearchResultFactory e Dynamic Component Instantiation}
 La visualizzazione dei risultati di ricerca deve adattarsi al tipo di entità ritornata. Poiché processi, classi, aggregazioni e documenti hanno strutture dati e esigenze di presentazione radicalmente diverse, è stato adottato il pattern \textit{Factory} con registry dinamico:
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.95\textwidth]{../../assets/outDiagrammiST/search-result-factory-strategy-code-l4.png}
-        \caption{Diagramma C4 - SearchResultFactory e componenti di visualizzazione specializzati}
+        \caption{Diagramma delle classi - SearchResultFactory e componenti di visualizzazione specializzati}
     \label{fig:C4_result_factory}
 \end{figure}
 
@@ -167,34 +270,38 @@ La visualizzazione dei risultati di ricerca deve adattarsi al tipo di entità ri
     \begin{description}
         \item[\codeword{ProcessResultComponent}] Visualizza informazioni essenziali del processo:
         \begin{itemize}
-            \item ID processo (copiabile).
-            \item Descrizione breve.
-            \item Numero documenti associati.
+            \item Icona del processo.
+            \item UUID del processo (copiabile).
+            \item Data di apertura.
+            \item Badge di integrità.
             \item Link all'apertura del processo.
         \end{itemize}
         No azioni di download/stampa (non applicabili ai processi).
         
         \item[\codeword{DocumentResultComponent}] Visualizza metadati e azioni specifiche per documenti:
         \begin{itemize}
-            \item Anteprima miniatura (se disponibile).
-            \item Titolo, descrizione, formato.
+            \item Icona del documento.
+            \item Titolo
+            \item UUID del documento (copiabile).
             \item Data creazione, autore (da metadati AGID).
-            \item Azioni contestuali: apri anteprima, scarica, stampa, mostra metadati.
+            \item Badge di integrità.
+            \item Azioni contestuali: scarica, stampa.
         \end{itemize}
         
         \item[\codeword{AggregateResultComponent}] Visualizza dati di aggregazione:
         \begin{itemize}
+            \item Icona dell'aggregazione.
             \item Tipo aggregazione (fascicolo/procedimento).
-            \item ID e data apertura.
-            \item Numero documenti e sotto-aggregazioni.
-            \item Link all'apertura dell'aggregazione.
+            \item UUID dell'aggregazione (copiabile).
+            \item Badge di integrità.
         \end{itemize}
         
         \item[\codeword{ClassResultComponent}] Visualizza metadati di classe documentale:
         \begin{itemize}
-            \item Codice e descrizione.
-            \item Periodo di conservazione.
-            \item Numero documenti in classe.
+            \item Icona della classe.
+            \item Nome classe.
+            \item UUID della classe (copiabile).
+            \item Badge di integrità.
         \end{itemize}
     \end{description}
     
@@ -209,11 +316,21 @@ La visualizzazione dei risultati di ricerca deve adattarsi al tipo di entità ri
 
 \subsection{Layer di ricerca globale}
 
+\paragraph{Pattern applicati}
+\begin{itemize}
+    \item \textbf{Smart \& Dumb Components}: SearchBar come componente presentazionale/event-emitter, orchestrazione nel container.
+    \item \textbf{Rules Manager}: \codeword{SearchBarRulesManager} per incapsulare le regole di normalizzazione della barra di ricerca.
+    \item \textbf{Facade orchestration}: instradamento finale degli eventi verso SearchFacade, che mantiene lo stato consistente e applica il controllo del prerequisito semantico.
+\end{itemize}
+
+\paragraph{Motivazione della scelta}
+La ricerca globale combina logica UX (mode switching), vincoli funzionali (semantic search selettiva) e gestione dello stato. Concentrare le regole di normalizzazione nel \codeword{SearchBarRulesManager} evita duplicazioni nei componenti UI e riduce regressioni quando si introducono nuove modalità di ricerca.
+
 \paragraph{SearchBarComponent e SearchBarRulesManager}
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/search-bar-rules-code-l4.png}
-        \caption{Diagramma C4 - SearchBarComponent e SearchBarRulesManager}
+        \caption{Diagramma delle classi - SearchBarComponent e SearchBarRulesManager}
     \label{fig:C4_search_bar_rules}
 \end{figure}
 La search bar consente tre modalità di ricerca:
@@ -228,10 +345,9 @@ La search bar consente tre modalità di ricerca:
 
 \noindent Il \codeword{SearchBarRulesManager} incapsula la logica di:
 \begin{itemize}
-    \item Determinazione della modalità di ricerca in base all'input (euristiche: "se input match UUID pattern $\to$ ricerca ID").
-    \item Abilitazione/disabilitazione della ricerca semantica per tipo di risultato. Attualmente è abilitata \textit{solo} per documenti; estendere a processi richiederebbe configurazione nel servizio, non nel componente.
-    \item Gestione dello stato di loading durante l'embedding vettoriale (che può impiegare millisecondi su CPU).
-    \item Caching dei risultati (opzionale, per evitare query ridondanti).
+    \item Normalizzazione della query in base all'input (ad esempio, riconoscimento di un ID o forzatura della ricerca semantica quando il toggle è attivo).
+    \item Scelta del tipo effettivo da inviare alla facade, evitando di lasciare lo stato della form in una combinazione incoerente.
+    \item La facade applica poi il prerequisito semantico: \codeword{searchSemantic()} viene eseguita solo quando lo stato dell'indice è \codeword{READY}; in caso contrario la richiesta viene ignorata senza chiamare IPC.
 \end{itemize}
 
 \noindent Il componente di presentazione pura emette eventi:
@@ -244,6 +360,17 @@ La search bar consente tre modalità di ricerca:
 
 
 \subsection{Conformità normativa e linee guida}
+
+\paragraph{Pattern applicati}
+\begin{itemize}
+    \item \textbf{Rule-based validation}: regole esplicite e verificabili, applicate in modo coerente ai filtri.
+    \item \textbf{Configuration/Strategy driven}: attivazione dinamica di campi e vincoli in base al \codeword{DocContext}.
+\end{itemize}
+
+\paragraph{Motivazione della scelta}
+La conformita AGID richiede ripetibilita, auditabilita e tracciabilita delle regole.
+Un approccio basato su regole centralizzate consente verifiche sistematiche, facilita i test e limita il rischio di divergenze tra UI e normativa.
+
 Tutti i componenti di presentazione sono progettati per aderire all'Allegato 5 AGID, in particolare per struttura e denominazione dei metadati, ordine dei campi e obbligatorieta.
 
 \noindent La validazione della conformità è:
@@ -255,21 +382,30 @@ Tutti i componenti di presentazione sono progettati per aderire all'Allegato 5 A
 
 \subsection{Comunicazione IPC e Gateway Layer}
 
+\paragraph{Pattern applicati}
+\begin{itemize}
+    \item \textbf{Gateway/Adapter Pattern}: \codeword{SearchIpcGateway} traduce richieste UI in chiamate IPC.
+    \item \textbf{DTO Mapping}: separazione tra modello UI e modello di trasporto backend.
+    \item \textbf{Dependency Inversion}: SearchFacade dipende da \codeword{ISearchChannel}, non da implementazioni concrete.
+\end{itemize}
+
+\paragraph{Motivazione della scelta}
+Il canale IPC è un confine architetturale tra renderer e main process. Isolare serializzazione, gestione errori e caching nel gateway evita contaminazione infrastrutturale nel ViewModel e rende il sistema più testabile ed evolutivo.
+
 \paragraph{SearchIpcGateway e ISearchChannel}
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/search-ipc-gateway-channel-code-l4-page1.png}
-        \caption{Diagramma C4 - SearchIpcGateway e comunicazione IPC}
+        \caption{Diagramma delle classi - SearchIpcGateway e comunicazione IPC}
     \label{fig:C4_search_ipc_gateway}
 \end{figure}
-Il SearchIpcGateway implementa ISearchChannel, fungendo da adapter tra il layer UI (SearchFacade) e il back-end tramite Electron IPC.\\
+Il SearchIpcGateway implementa \codeword{ISearchChannel}, fungendo da adapter tra il layer UI (SearchFacade) e il back-end tramite Electron IPC.\\
 Responsabilità:
 \begin{enumerate}
     \item \textbf{Mapping DTO}: converte SearchQuery/SearchFilters (modello UI) in SearchRequestDTO (modello back-end) tramite toSearchRequestDTO().
-    
-    \item \textbf{Caching}: mantiene cache a TTL 5 minuti per risultati di ricerca identici, riducendo overhead IPC.
-    
+    \item \textbf{Caching}: mantiene una cache locale con TTL di \codeword{300 000} ms per risultati di ricerca e chiavi custom identici, riducendo overhead IPC.
     \item \textbf{Error Handling}: cattura errori IPC e li trasforma in AppError normalizzati per il layer UI.
+    \item \textbf{Invalidazione per abort}: quando una richiesta viene interrotta, il gateway invalida i prefissi di cache correlati alla richiesta in corso.
 \end{enumerate}
 
 Interfaccia:
@@ -284,20 +420,20 @@ Interfaccia:
 
 \paragraph{Flusso IPC}
 \begin{enumerate}
-    \item SearchFacade richiama gateway.search(query, abortSignal).
+    \item SearchFacade richiama \codeword{gateway.search(query, abortSignal)} oppure la variante advanced/semantic a seconda dello stato della View.
     \item Gateway:
     \begin{enumerate}
-        \item Verifica cache con cacheKey = hash(query).
+        \item Verifica cache con chiavi distinte per ricerca testuale, avanzata, semantica e metadati custom.
         \item Se HIT: restituisce cached results.
-        \item Se MISS: invoca contextBridge.invoke(SEARCH\_CHANNEL, searchRequestDTO).
+        \item Se MISS: invoca \codeword{contextBridge.invoke(...)} sul canale IPC corretto.
         \item Aspetta risposta dal Main Process.
         \item Salva in cache se successo.
         \item Emette risultati via Observable.
     \end{enumerate}
-    \item SearchFacade aggiorna signal<SearchState>.results.
+    \item SearchFacade aggiorna \codeword{SearchState.results} tramite \codeword{handleSuccess()} e notifica telemetria e live announcer.
     \item SearchResultsComponent visualizza dinamicamente tramite SearchResultFactory.
 \end{enumerate}
-Ognuno degli UC backend restituisce ISearchResult[], che viene serializzato e rimandato al renderer via IPC per la visualizzazione.
+Ogni use case di ricerca restituisce \codeword{ISearchResult[]}, che viene serializzato e rimandato al renderer via IPC per la visualizzazione. La cache del gateway è autonoma rispetto ad altri meccanismi di cache del sistema e non viene invalidata automaticamente da processi esterni se non tramite abort o scadenza TTL.
 
 \paragraph{Vantaggi dell'approccio}
 \begin{itemize}
@@ -310,36 +446,45 @@ Ognuno degli UC backend restituisce ISearchResult[], che viene serializzato e ri
 
 \subsection{Validazione Filtri}
 
+\paragraph{Pattern applicati}
+\begin{itemize}
+    \item \textbf{Functional Core}: regole espresse come funzioni pure \codeword{FilterValidatorFn}.
+    \item \textbf{Composition Pattern}: combinazione di regole semplici in validazioni piu complesse.
+    \item \textbf{Strategy Pattern}: selezione di regole specifiche in base al sottoinsieme di filtri attivi.
+\end{itemize}
+
+\paragraph{Motivazione della scelta}
+La validazione filtri è soggetta a crescita incrementale e vincoli trasversali. Un modello composabile e funzionale riduce effetti collaterali, favorisce test unitari granulari e consente di introdurre nuove regole senza riscrivere il flusso esistente.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/filter-validator-service-fn-code-l4-page1.png}
-        \caption{Diagramma C4 - FilterValidatorService e FilterValidatorFn}
-    \label{fig:C4_search_ipc_gateway}
+        \caption{Diagramma delle classi - FilterValidatorService e FilterValidatorFn}
+    \label{fig:C4_search_ipc_gateway_C4}
 \end{figure}
 
 \paragraph{FilterValidatorService e FilterValidatorFn}
-La validazione non è un aspetto casuale ma un layer dedicato.
- Il FilterValidatorService applica regole di validazione pure e composabili:
+La validazione non è un aspetto accessorio ma un layer dedicato. Il \codeword{FilterValidatorService} applica regole di validazione pure e componibili:
 
 \begin{itemize}
-    \item \textbf{Pure Functions}: ogni regola è una funzione pura FilterValidatorFn = (filters) → ValidationResult.
-    \item \textbf{Composizione}: regole si combinano (AND/OR) per validazioni complesse.
-    \item \textbf{Error Mapping}: ValidationError[] contiene campo, messaggio, severity (ERROR | WARNING).
+    \item \textbf{Pure Functions}: ogni regola è una funzione pura \codeword{FilterValidatorFn = (filters) -> ValidationResult}.
+    \item \textbf{Composizione}: le regole si combinano tramite registry e composizione esplicita per coprire validazioni semplici e cross-field.
+    \item \textbf{Error Mapping}: \codeword{ValidationError[]} contiene campo, messaggio e severity (\codeword{ERROR} | \codeword{WARNING}).
 \end{itemize}
 
 Esempi di regole:
 \begin{itemize}
-    \item Se DiDaiFilters.tipologia è compilata, allora modalitàFormazione è obbligatoria.
-    \item Se SubjectFilter include PERSONA\_FISICA, allora codFiscale è obbligatorio.
-    \item Se AggregateFilters.dataApertura è compilata, allora dataChiusura >= dataApertura.
-    \item CommonFilters.annoInizio >= 1900 (vincolo AGID).
+    \item Se \codeword{DiDaiFilters.tipologia} è compilata, allora \codeword{modalitàFormazione} è obbligatoria.
+    \item Se il filtro soggetti include \codeword{PERSONA\_FISICA}, allora \codeword{codFiscale} è obbligatorio.
+    \item Se \codeword{AggregateFilters.dataApertura} è compilata, allora \codeword{dataChiusura >= dataApertura}.
+    \item \codeword{CommonFilters.annoInizio >= 1900} come vincolo coerente con la validazione di dominio.
 \end{itemize}
-Inoltre anche in questo caso l'utilizzo di un pattern Strategy consente di applicare regole specifiche in base ai filtri presi in considerazione. Questo permette di aggiungere nuove regole senza modificare il codice esistente, ma semplicemente aggiungendo nuove funzioni di validazione e registrandole nella registry.
+Inoltre il pattern Strategy consente di applicare regole specifiche in base ai filtri presi in considerazione. Questo permette di aggiungere nuove regole senza modificare il codice esistente, ma registrando nuove funzioni di validazione nella registry.
 
 \paragraph{ValidationError e Stato di Errore}
-Lo stato di ricerca mantiene una Map<fieldName, ValidationError> che:
+Lo stato di ricerca mantiene una \codeword{Map<fieldName, ValidationError>} che:
 \begin{itemize}
-    \item Permette visualizzazione inline degli errori nei componenti dumb.
-    \item È aggiornata dinamicamente durante la compilazione (non solo al submit).
-    \item È resettata prima di una nuova ricerca.
+    \item Permette la visualizzazione inline degli errori nei componenti dumb.
+    \item È aggiornata dinamicamente durante la compilazione, non solo al submit.
+    \item È popolata dalla facade a partire dal risultato della validazione e viene sostituita a ogni nuova esecuzione.
 \end{itemize}

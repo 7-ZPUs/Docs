@@ -46,7 +46,7 @@ Rel(word_embedding, ai_runtime, "Inference")
 
 title C4 Model - Level 3 (Search Flow - Repository & DAO Detail)
 
-skinparam linetype ortho
+skinparam linetype straight
 
 Container_Boundary(main_container, "Main Process") {
   together {
@@ -55,24 +55,12 @@ Container_Boundary(main_container, "Main Process") {
   Component(process_repo, "SearchProcessPort", "Outbound port", "Process data access")
   Component(vector_repo, "SearchSimilarVectorsPort", "Outbound port", "Semantic search with vector similarity")
   }
-
-  together{
-  Component(doc_dao, "DocumentDAO", "DAO", "SQL queries for documents, metadata JSON and vector similarity")
-  Component(doc_class_dao, "DocumentClassDAO", "DAO", "SQL queries for document classes")
-  Component(process_dao, "ProcessDAO", "DAO", "SQL queries for processes")
-  Component(vector_dao, "VectorDAO", "DAO", "SQL queries for vector operations, e.g. similarity search")
-  }
 }
 
 ContainerDb_Ext(sqlite, "SQLite", "Relational metadata + document vectors")
 
-Rel(doc_repo, doc_dao, "delegates")
-Rel(doc_class_repo, doc_class_dao, "delegates")
-Rel(process_repo, process_dao, "delegates")
-Rel(vector_repo, vector_dao, "delegates")
-
-Rel(doc_dao, sqlite, "SQL read")
-Rel(doc_class_dao, sqlite, "SQL read")
-Rel(process_dao, sqlite, "SQL read")
-Rel(vector_dao, sqlite, "SQL read (vss)")
+Rel(doc_repo, sqlite, "SQL read")
+Rel(doc_class_repo, sqlite, "SQL read")
+Rel(process_repo, sqlite, "SQL read")
+Rel(vector_repo, sqlite, "SQL read (vss)")
 @enduml
