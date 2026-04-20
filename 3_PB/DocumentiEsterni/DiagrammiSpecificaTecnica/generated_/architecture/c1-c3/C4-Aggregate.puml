@@ -52,11 +52,11 @@ class AggregateFacade implements IAggregateFacade {
 ' ==========================================
 ' LIVELLO MAPPING (Trasformazione Dati)
 ' ==========================================
-class Mapper << (U,#FFCC00) Mapper >> {
+class Mapper << Mapper >> {
   + mapProcessDtoToAggregateDetail(rawData: any): AggregateDetailDTO
 }
 
-class ProcessDTO << (D,#FF99AA) DTO >> {
+class ProcessDTO << DTO >> {
   + uuid: string
   + metadata: any
   << IPC Payload >>
@@ -71,12 +71,12 @@ Mapper ..> AggregateDetailDTO : creates
 ' ==========================================
 ' LIVELLO 4: DOMAIN MODELS E STATO MAPPATO
 ' ==========================================
-class AggregateState << (S,#DDDDDD) State >> {
+class AggregateState << State >> {
   + loading: boolean
   + error: AppError | null
 }
 
-class AggregateDetailDTO << (M,#FF7700) Model >> {
+class AggregateDetailDTO << Model >> {
   + idAggPrimario: string
   + tipologiaFascicolo: TipologiaFascicoloEnum
   + dataApertura: string
@@ -98,8 +98,8 @@ note bottom of AggregateDetailDTO
   * SoggettoDTO: 0..*
 end note
 
-class DocumentIndexEntryDTO << (M,#FF7700) Data >>
-class ProcedimentoAmministrativoDTO << (M,#FF7700) Data >>
+class DocumentIndexEntryDTO << Data >>
+class ProcedimentoAmministrativoDTO << Data >>
 
 ' Mapping Strutturale dello Stato
 AggregateFacade --> AggregateState : manages via signal
