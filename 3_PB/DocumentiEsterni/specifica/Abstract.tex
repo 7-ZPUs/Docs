@@ -17,9 +17,29 @@
         \centering
         \begin{tabular}{|c|c|c|c|c|}
             \hline
-            \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione}                                                                             \\
+            \textbf{Versione} & \textbf{Data} & \textbf{Autore} & \textbf{Verificatore} & \textbf{Descrizione} \\
             \hline
-            0.1.0             & 2026/02/28    & Laoud Zakaria   & Georgescu Diana       & \begin{tabular}[c]{@{}c@{}} Creazione del documento\\ e stesura struttura iniziale \end{tabular} \\
+            1.0.0 & 2026/04/14 & Georgescu Diana &   & \begin{tabular}[c]{@{}c@{}} Approvazione finale\\ del documento \end{tabular} \\
+            \hline
+            0.10.0 & 2026/04/13 & Rocco Matteo A. & Laoud Zakaria & \begin{tabular}[c]{@{}c@{}} [FRONTEND]: Modulo\\ verifica integrità \end{tabular} \\
+            \hline
+            0.9.0 & 2026/04/13 & Vigolo Davide & Fattoni Antonio & \begin{tabular}[c]{@{}c@{}} [BACKEND]: Modulo\\di Indexing \end{tabular} \\
+            \hline
+            0.8.0 & 2026/04/12 & Gingillino Aaron & Georgescu Diana & \begin{tabular}[c]{@{}c@{}} [FRONTEND]: Modulo\\ di Navigazione \end{tabular} \\
+            \hline
+            0.7.0 & 2026/04/12 & Georgescu Diana & Soligo Lorenzo & \begin{tabular}[c]{@{}c@{}} [FRONTEND]: Modulo\\ di Import \end{tabular} \\
+            \hline
+            0.6.0 & 2026/04/12 & Rocco Matteo A. & Gingillino Aaron & \begin{tabular}[c]{@{}c@{}} [FRONTEND]: Modulo\\ Aggregate Detail \end{tabular} \\
+            \hline
+            0.5.0 & 2026/04/11 & Rocco Matteo A. & Vigolo Davide & \begin{tabular}[c]{@{}c@{}} [FRONTEND]: Modulo\\ Document Detail \end{tabular} \\
+            \hline
+            0.4.0 & 2026/04/10 & Fattoni Antonio & Vigolo Davide & \begin{tabular}[c]{@{}c@{}} [BACKEND]: Modulo\\ di Browsing \end{tabular} \\
+            \hline
+            0.3.0 & 2026/04/08 & Soligo Lorenzo & Georgescu Diana & \begin{tabular}[c]{@{}c@{}} [FRONTEND]: Modulo\\ di Ricerca \end{tabular} \\
+            \hline
+            0.2.0 & 2026/04/06 & Laoud Zakaria & Georgescu Diana & \begin{tabular}[c]{@{}c@{}} [BACKEND]: Modulo\\Search and Export \end{tabular} \\
+            \hline
+            0.1.0 & 2026/02/28 & Laoud Zakaria & Georgescu Diana & \begin{tabular}[c]{@{}c@{}} Creazione del documento\\ e stesura struttura iniziale \end{tabular} \\
             \hline
         \end{tabular}
     \end{adjustwidth}
@@ -140,7 +160,8 @@ In particolare:
 Questi principi sono applicati in modo coerente lungo i container \textit{Renderer} e \textit{Main},
 con l'obiettivo di garantire testabilita, manutenibilita e robustezza del prodotto.
 
-\section{Linguaggio di Programmazione: TypeScript}
+\section{Tecnologie}
+\subsection{Typescript}
 \begin{table}[H]
     \centering
     \begin{tabularx}{\textwidth}{|m{3cm}|m{2cm}|X|}
@@ -154,7 +175,7 @@ con l'obiettivo di garantire testabilita, manutenibilita e robustezza del prodot
     \caption{Dettagli sulla scelta di TypeScript come linguaggio di programmazione}
 \end{table}
 
-\subsection{Deployment: Electron}
+\subsection{Electron}
 \begin{table}[H]
     \centering
     \begin{tabularx}{\textwidth}{|m{3cm}|m{2cm}|X|}
@@ -168,7 +189,7 @@ con l'obiettivo di garantire testabilita, manutenibilita e robustezza del prodot
     \caption{Dettagli sulla scelta di Electron come piattaforma di deployment}
 \end{table}
 
-\subsection{Framework Frontend: Angular}
+\subsection{Angular}
 \begin{table}[H]
     \centering
     \begin{tabularx}{\textwidth}{|m{3cm}|m{2cm}|X|}
@@ -191,7 +212,7 @@ con l'obiettivo di garantire testabilita, manutenibilita e robustezza del prodot
         \rowcolor{zpusgreen!30}
         \textbf{Scelta} & \textbf{Versione} & \textbf{Motivazione}                                                                                                                                                                                                                                                                                                             \\
         \hline
-        Better SQLite   & 12.8.0            & SQLite è un database relazionale che non richiede un server separato e può essere integrato direttamente nell'applicazione, facilitando lo sviluppo e il deployment. La sua leggerezza e portabilità lo rendono adatto a un'ampia gamma di piattaforme, garantendo la compatibilità con i requisiti di portabilità del progetto. \\
+        better-sqlite3   & 12.8.0            & SQLite è un database relazionale che non richiede un server separato e può essere integrato direttamente nell'applicazione, facilitando lo sviluppo e il deployment. La sua leggerezza e portabilità lo rendono adatto a un'ampia gamma di piattaforme, garantendo la compatibilità con i requisiti di portabilità del progetto. \\
         \hline
         sqlite-vss      & 0.1.2             & Scelto per la sua capacità di fornire una versione virtuale di SQLite, che consente di eseguire query su dati in memoria senza la necessità di creare un database fisico dei vettori per la ricerca semantica, semplificando così l'integrazione con il sistema.                                                                 \\
         \hline
@@ -240,19 +261,24 @@ con l'obiettivo di garantire testabilita, manutenibilita e robustezza del prodot
 I vincoli di progetto, come specificato nell'Analisi dei Requisiti, richiedono che il sistema sia portabile, facile da usare e autoconsistente.
 Il caso d'uso principale del sistema è quello di un utente che desidera esplorare e interrogare un DIP per estrarre documenti fiscali e non, potendone verificare la validità e autenticità.\\
 
-\subsection{Modello architetturale}
-I vincoli di progetto hanno guidato la progettazione del sistema, influenzando le scelte tecnologiche e architetturali. Il sistema progettato quindi è pensato per non utilizzare tecnologie che richiedano installazioni o configurazioni complesse da parte dell'utente. I servizi offerti sono tutti accessibili in assenza di connettività, complesa la ricerca semantica. \\
-Gli unici attori esterni coinvolti sono il file \textit{system locale} da cui viene letto il DIP e il sistema operativo per l'interazione con la stampante e il download dei file.
+\section{Architettura}
+\subsection{Architettura logica}
+Il sistema è progettato con un'\textbf{architettura di backend esagonale}. Questa scelta deriva dalla sua capacità di garantire il rispetto dei principi SOLID, in particolare il Dependency Inversion Principle.
+La regola principale è che la business logic non deve dipendere da dettagli di implementazione; al contrario, i dettagli di implementazione devono dipendere da astrazioni, che sono utilizzate dalla logica di business.
+La struttura si può riassumere in 3 livelli principali:
+\begin{itemize}
+    \item \textbf{Domain Layer:} contiene la logica di business, rappresentata da servizi, modelli di dominio e interfacce che definiscono i contratti per l'accesso ai dati e l'esecuzione delle operazioni principali del sistema.
+    \item \textbf{Inbound ports:} le interfacce che definiscono i contratti per l'interazione con sistemi esterni, in questo caso specifico: il processo renderer (frontend).
+    \item \textbf{Outbound ports:} le interfacce che definiscono i contratti per l'interazione con il layer infrastrutturale o sistemi esterni, necessari per l'espletamento di una determinata funzione.
+    \item \textbf{Adapters:} possono esssere sia inbound che outbound. Nel caso di porte inbound, essi si occupano per l'appunto di adattare le richieste provenienti da esterni (p.e. richieste HTTP o in questo caso messaggi IPC) in un formato compatibile con la business logic. Nel caso di porte outbound, invece, si occupano di implementare le interfacce definite dalle porte stesse, fornendo dunque l'implementazione specifica per una determinata interazione (p.e. accesso a database, chiamate a servizi esterni).
+\end{itemize}
+Questa architettura favorisce la modularità, la testabilità e la manutenibilità del sistema. Per realizzare questa architettura al meglio è stata adottata in maniera capillare la tecnica della Dependency Injection, permettendo così di delegare la responsabilità di creazione degli oggetti e risoluzione delle dipendenze ad una componente di terze parti dedicata (in questo caso tsyringe). Questo permette di mantenere il codice pulito e indipendente dalle implementazioni specifiche.
+
+\subsection{Architettura di deployment}
+L'architettura di deployment scelta per il sistema è quella \textbf{monolitica}. Questa scelta è motivata dalla natura del progetto e delle esigenze espresse dalla committente. Il software è infatti un'applicazione desktop autocontenuta, il che fa naturalmente propendere per un architettura monolitica. Viene di seguito riportato il diagramma C4 di contesto del sistema, che mostra le interazioni tra il software e i sistemi esterni.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/DiagrammaC1.png}
-        \caption{Diagramma C1 - Contesto del sistema \textit{DIPReader}}
+            \caption{Diagramma di sistema - Contesto del sistema \textit{DIPReader}}
     \label{fig:C1_system}
 \end{figure}
-
-\subsection{Descrizione degli attori esterni}
-Gli unici attori esterni come già detto sono:
-\begin{itemize}
-    \item il file system locale da cui viene letto il DIP
-    \item il sistema operativo per l'interazione con la stampante e il download dei file
-\end{itemize}

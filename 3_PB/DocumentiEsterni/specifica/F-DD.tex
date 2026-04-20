@@ -1,21 +1,8 @@
-\subsection{Componenti di Dettaglio (Frontend)}
-\subsubsection{Descrizione}
-All'interno di DIPReader la feature di dettaglio rappresenta il cuore della consultazione. Poiché un DIP aderisce allo standard OAIS, le entità che lo compongono all'interno dell'albero hanno una struttura ben definita non sempre trasversale a tutte le entità: processi, documenti informatici, documenti amministrativi informatici, aggregazioni documentali e le classi documentali che fungono da contenitori logici. La feature di dettaglio è quindi composta da più componenti, ognuna dedicata alla visualizzazione di una specifica entità, che condividono però un'interfaccia comune per poter essere utilizzata in modo intercambiabile all'interno dell'albero.\\
-
-Invece di duplicare le pagine di routing per ogni entità quindi è stata sviluppata la feature \textit{Item-Detail} per sfruttare una singola rotta generica \textit{/detail/:itemType/:itemId} che, a seconda del tipo di entità e dell'identificativo, renderizza il componente specifico per quella entità. Questo approccio implementa un design pattern di tipo strategy con polimorfismo statico, in cui la logica di selezione dell'entità da visualizzare è centralizzata e ben definita grazie alla tipizzazione statica di TypeScript, la scelta è stata dettata dalla considerazione che la struttura dei dati è ben definita e non si prevede l'aggiunta di nuovi tipi di entità in futuro, la possibilità di estensione riguarda invece i metadati delle entità.
-
-\subsubsection{Componente principale}
-Il componente principale della feature è \textit{ItemDetailPageComponent}, che agisce da orchestratore e si occupa di:
-\begin{itemize}
-    \item multiplexing dei Token delle facade delle singole entità e indirizzamento alla facade corretta, con un componente di fallback per coprire i casi di entità vuote come le classi documentali;
-    \item adattamento del layout grafico a seconda del tipo di entità, per i documenti viene utilizzato un layout comprensivo di un'anteprima del file, mentre per aggregazioni e processi viene mostrato un indice dei documenti che li compongono;
-\end{itemize}
-
-\subsubsection{Componente dei metadati}
-Il componente \textit{MetadataPanelComponent} decide quali componenti di metadati visualizzare in base al tipo di entità selezionata. Esso intercetta i dati passati dall'interfaccia dell'entità da visualizzare e in base ad essa decide quali componenti mostrare. Ad esempio, per i documenti sono presenti i componenti relativi alle informazioni del processo di conservazione, degli allegati, del formato del file, dei metadati custom, ecc., mentre per le aggregazioni e i processi vengono mostrati oltre ai metadati anche gli indici dei documenti che li compongono.
-
-\subsubsection{Componente di azioni sugli elementi}
-Il componente \textit{DocumentActionsComponent} crea la barra orizzontale di azioni che è possibile eseguire su un'entità, per tutte offre la verifica dell'integrità, per i documenti è anche possibile scaricarli o stamparli tramite il componente della feature di Export.
+\section{Frontend - Dettaglio}
+\subsection{Descrizione generica architetturale}
+La feature di dettaglio è il cuore della consultazione in DIPReader: permette all'utente di visualizzare i metadati e il contenuto di qualsiasi nodo dell'albero gerarchico di un DIP. Le entità visualizzabili sono di natura profondamente eterogenea: un documento porta con sé decine di sezioni di metadati OAIS, un fascicolo ha struttura procedurale, un processo si articola in sessioni di conservazione e versamento, mentre nodi come la classe documentale, il DIP radice e i file fisici non possiedono una struttura ricca abbastanza da giustificare un layout specializzato.\\
+Questa eterogeneità ha guidato le principali scelte architetturali: anziché proliferare pagine di routing distinte per ogni entità, il sistema adotta una rotta parametrica generica \codeword{/detail/:itemType/:itemId} che serve come unico punto di ingresso per tutti i tipi di nodo. La selezione del layout, dei componenti da renderizzare e della facade da interrogare viene effettuata a runtime in modo dichiarativo, sfruttando il sistema di Dependency Injection di Angular e i Signal reattivi come state management interno.
+Il risultato è un modulo in cui la logica di presentazione è completamente separata dalla logica applicativa, ogni facade è sostituibile senza modificare la UI, e ogni componente di presentazione è riutilizzabile in contesti diversi senza alcun accoppiamento diretto.
 
 \begin{figure}[H]
     \centering
@@ -23,30 +10,99 @@ Il componente \textit{DocumentActionsComponent} crea la barra orizzontale di azi
     \caption{Diagramma delle classi tecnico della feature di dettaglio - struttura generale}
 \end{figure}
 
-\subsubsection{Componenti specifici per entità - DOCUMENT}
-È il modulo più denso di informazioni, ospita una notevole quantità di componenti \textit{dumb} per le sezioni specifiche dei metadati OAIS e i componenti per la visualizzazione dell'anteprima.
+\subsection{Routing e Dependency Injection}
+Il file \codeword{item-detail.routes} definisce la rotta \codeword{{ path: ':itemType/:itemId' }} e, nel campo \codeword{providers}, registra tutte le implementazioni concrete dei token d'interfaccia richiesti dai componenti figli:
+\begin{verbatim}
+providers: [
+  { provide: AGGREGATE_FACADE_TOKEN, useClass: AggregateFacade },
+  { provide: PROCESS_FACADE_TOKEN,   useClass: ProcessFacade   },
+  { provide: DOCUMENT_FACADE_TOKEN,  useClass: DocumentFacade  },
+  { provide: NODE_FALLBACK_FACADE_TOKEN, useClass: NodeFallbackFacade },
+  { provide: OUTPUT_FACADE_TOKEN,    useClass: OutputFacade    },
+  { provide: INTEGRITY_FACADE_TOKEN, useClass: IntegrityFacade },
+]
+\end{verbatim}
+Questo meccanismo realizza il Dependency Inversion Principle nella sua forma più pura: i componenti dipendono esclusivamente da astrazioni (i token), mentre le implementazioni concrete vengono iniettate dall'esterno al momento dell'attivazione della rotta. Le classi concrete (\codeword{AggregateFacade}, \codeword{ProcessFacade}, \codeword{DocumentFacade}, \codeword{NodeFallbackFacade}) non sono né importate né istanziate direttamente dai componenti che le usano, garantendo che la UI sia indipendente da qualsiasi dettaglio implementativo del layer applicativo.\\
+La scelta di registrare i provider a livello di rotta, anziché a livello globale \texttt{(providedIn: 'root')}, ha due effetti architetturali rilevanti: ogni navigazione verso un nodo di dettaglio crea istanze fresche delle facade (e del loro stato), e il codice delle feature viene caricato solo quando la rotta viene attivata (lazy loading), riducendo il bundle iniziale dell'applicazione.
+\subparagraph{Guard di disambiguazione AGGREGATE/PROCESS}
+La rotta applica un \codeword{CanActivateFn} denominato \codeword{legacyAggregateToProcessGuard}. Questa guard risolve un problema di struttura dati: alcuni nodi del backend, pur essendo di tipo PROCESS, possono arrivare al frontend etichettati come AGGREGATE se provenienti da versioni precedenti del formato. La guard interroga il backend via IPC per ispezionare i metadati del processo: se il payload non contiene i metadati tipici di una aggregazione documentale (TipoAggregazione, TipologiaFascicolo, IdAggregazione), esegue un redirect verso la rotta PROCESS corretta. Questo preserva la separazione delle responsabilità e garantisce che ciascuna facade gestisca solo i dati del tipo per cui è progettata.
 
-\subparagraph{DocumentViewerComponent}
-Il componente \textit{DocumentViewerComponent} è responsabile della visualizzazione dell'anteprima del documento, supporta i formati PDF, XML, JPEG, PNG e testo semplice. Se il formato del documento non è supportato, interviene la logica di gestione degli errori unificata che restituisce un \textit{AppError}.
+\subsection{Componente principale}
+Il componente Smart della feature è \codeword{ItemDetailPageComponent}. Implementa il pattern MVVM espresso da Angular: la View è il template, il ViewModel sono i Signal, il Model sono i DTO restituiti dalle facade.
+Il componente riceve dalla rotta due parametri: \codeword{itemType} (il tipo di nodo tra DOCUMENT, AGGREGATE, PROCESS, DIP, DOCUMENT\_CLASS e FILE) e \codeword{itemId} (l'identificativo numerico del nodo). 
 
-\subparagraph{Schede metadati}
-Ogni sottoinsieme dei metadati nel formato XML viene visualizzato in un componente dedicato:
+\subparagraph{Multiplexing tramite Signal}
+Anziché utilizzare un sistema di \texttt{if-else}, \codeword{ItemDetailPageComponent} usa i Signal calcolati per selezionare in modo dichiarativo lo stato e il layout da visualizzare:
 \begin{itemize}
-    \item \textit{document-metadata}: identificativo, livello di riservatezza, hash del documento;
-    \item \textit{aip-info}: fornisce le proprietà di storicizzazione a lungo termine e riporta le informazioni di conservazione a norma;
-    \item \textit{attachments}: mostra l'elenco degli allegati associati al documento, con la relativa impronta crittografica;
-    \item \textit{change-tracking}: proprietà di versionamento;
-    \item \textit{classification-info}: restituisce l'indice e il piano di classificazione secondo i registri della PA;
-    \item \textit{format-info}: mostra il formato MIME del documento;
-    \item \textit{registration-data}: mostra i dati di registrazione del documento, sia protocollato che non protocollato;
-    \item \textit{subject-list}: mostra i soggetti coinvolti nella produzione del documento, con i relativi ruoli;
-    \item \textit{verification-info}: mostra i risultati dell'ultima verifica di integrità eseguita sul documento;
-    \item \textit{custom-metadata}: mostra i metadati custom definiti dall'ente, con un formato standard chiave-valore.
+    \item \codeword{isLoading()} restituisce \texttt{true} se la facade corrispondente al tipo corrente ha \texttt{loading: true};
+    \item \codeword{currentError()} riporta l'\codeword{AppError} prodotto dalla facade attiva;
+    \item \codeword{pageTitle()} costruisce il titolo della pagina leggendo il campo appropriato in base al tipo: il nome del file per i documenti, l'UUID del processo, la tipologia di fascicolo per gli aggregati.
+    \item \codeword{actionableItemType()} distingue i tipi complessi (DOCUMENT, AGGREGATE, PROCESS) da quelli semplici (DIP, DOCUMENT\_CLASS, FILE) per decidere se mostrare o nascondere la barra delle azioni, e per questi ultimi di conseguenza si attiva \codeword{isFallbackRoute()}.
+\end{itemize}
+Questo approccio soddisfa il Single Responsibility Principle: il componente non conosce i dettagli di nessuna facade, sa solo quale segnale leggere in base al tipo corrente.
+
+\subsection{Pattern Facade e gestione dello stato}
+Ogni entità complessa (documento, aggregato, processo) è servita da una facade dedicata che implementa una interfaccia specifica e gestisce uno stato interno tramite Angular Signals. Le tre interfacce — \codeword{IDocumentFacade}, \codeword{IAggregateFacade}, \codeword{IProcessFacade} — condividono lo stesso contratto di base:
+\begin{verbatim}
+interface IEntityFacade {
+  getState(): Signal<EntityState>;
+  loadEntity(id: string): Promise<void>;
+}
+\end{verbatim}
+
+Lo stato è modellato come un record con tre campi: detail (il DTO trasformato), loading (flag booleano) e error (un AppError normalizzato). Lo stato è esposto come Signal in sola lettura tramite \codeword{state.asReadonly()}, impedendo alle componenti Dumb di modificarlo direttamente e rispettando il principio di unidirectional data flow.
+
+\subparagraph{Strategia Cache-First e gestione della concorrenza}
+Tutte le facade implementano una strategia cache-first mediante \codeword{IpcCacheService}: prima di invocare il backend via IPC, consultano la cache locale con una chiave prefissata per tipo e ID (es. 'document:123'). In caso di cache hit, lo stato viene aggiornato immediatamente senza latenza IPC. Il \textit{Time To Live} è di 5 minuti per i metadati e di 1 minuto per i blob binari (nel caso dei documenti).
+La gestione della concorrenza avviene tramite il pattern del requestId incrementale: ogni chiamata a \codeword{loadEntity()} incrementa un contatore \codeword{activeLoadRequestId} e, prima di aggiornare lo stato, verifica che il contatore corrisponda ancora all'invocazione corrente. In caso contrario, il risultato viene silenziosamente scartato.
+
+\subparagraph{Fetch Retry Synchronization}
+\codeword{AggregateFacade} e \codeword{ProcessFacade} implementano una logica di Fetch Retry Synchronization per l'elenco dei documenti figli. Questo è reso necessario da una race condition osservata: i documenti associati a un processo possono non essere ancora disponibili nella risposta IPC al momento del caricamento del processo stesso, a causa della latenza del database. La facade effettua una prima chiamata e, se la lista risulta vuota, attende 120 ms ed esegue un secondo tentativo prima di aggiornare lo stato con un array vuoto. Questo comportamento è isolato nella facade (in \codeword{fetchDocumentsByProcessWithRetry}) e completamente trasparente alla UI.
+\codeword{ProcessFacade} arricchisce ulteriormente il dettaglio del processo eseguendo il recupero dei documenti figli e il recupero della classe documentale di appartenenza.
+
+\subsection{Componente di azioni sugli elementi}
+\codeword{DocumentActionsComponent} è il componente Smart responsabile della barra delle azioni, visibile per tutti i tipi di nodo "azionabili". Dipende da due facade iniettate tramite token: \codeword{OUTPUT\_FACADE\_TOKEN} per le azioni di export e stampa, e \codeword{INTEGRITY\_FACADE\_TOKEN} per la verifica dell'integrità crittografica.
+Il componente gestisce il proprio stato di verifica tramite un Signal. Il Signal calcolato \codeword{verificationStatus()} fonde lo stato prodotto da una verifica esplicita con lo stato iniziale passato dal parent tramite \texttt{@Input}, con priorità al valore più recente. In questo modo la UI rimane coerente sia al primo caricamento sia dopo una verifica eseguita dall'utente.
+La presenza del pulsante di export è condizionata al tipo di entità: solo per i documenti viene renderizzato \codeword{ExportPageComponent}, rispettando il principio per cui non ha senso esportare direttamente un processo o un fascicolo.
+
+\subsection{Componente dei metadati}
+\codeword{MetadataPanelComponent} è il componente Smart che funge da compositore del pannello laterale dei metadati. Riceve tramite \texttt{@Input} il tipo di entità (\codeword{itemType}) e il dato corrispondente (documentData, aggregateData o processData), e decide tramite \texttt{@switch} quali sotto-componenti renderizzare.
+Questo componente applica il principio Open/Closed: aggiungere il supporto a un nuovo tipo di entità (ad esempio, in futuro, un tipo FILE con metadati ricchi) richiede solo di aggiungere un nuovo \texttt{@case} al template e un nuovo componente Dumb, senza modificare la logica esistente.
+Per i documenti, il pannello compone in sequenza tutti i sotto-componenti specializzati per sezione:
+\begin{itemize}
+    \item \codeword{DocumentMetadataComponent}: identificativo, riservatezza, hash, nome, oggetto.
+    \item \codeword{RegistrationDataComponent}: dati di registrazione protocollata e non protocollata.
+    \item \codeword{ClassificationInfoComponent}: indice e piano di classificazione AGID.
+    \item \codeword{FormatInfoComponent}: tipo MIME, prodotto, versione.
+    \item \codeword{VerificationInfoComponent}: firme digitali, sigillo, marcatura temporale.
+    \item \codeword{AttachmentsComponent}: allegati e relative impronte crittografiche.
+    \item \codeword{ChangeTrackingComponent}: versionamento e modifiche rilevate.
+    \item \codeword{AipInfoComponent}: classe documentale, UUID AIP, sessione di conservazione.
+    \item \codeword{SubjectListComponent}: soggetti coinvolti nella produzione, con tipi e ruoli.
+    \item \codeword{CustomMetadataComponent}: metadati non standard in formato chiave-valore, con logica di normalizzazione dei nomi.
+\end{itemize}
+Per gli aggregati, il pannello compone:
+\begin{itemize}
+    \item \codeword{AggregateMetadataComponent}: tipologia, identificativo, date di apertura/chiusura, progressivo, classificazione.
+    \item \codeword{AdminProcedureComponent}: procedimento amministrativo con fasi e URI.
+    \item \codeword{AggregateSubjectListComponent}: soggetti coinvolti nell'aggregazione.
+    \item \codeword{CustomMetadataComponent}: metadati custom dell'aggregazione.
 \end{itemize}
 
-\subparagraph{Interfacce/Dominio/Servizi/Mappers}
-Come per tutte le feature, sono presenti le interfacce per i servizi, i servizi stessi, i mappers per adattare i dati restituiti dal backend al formato utilizzato dai componenti e le interfacce per i DTO estrate dagli schema XSD forniti e dalla documentazione AGID sui metadati. \\
-Rimangono rispettati quindi i principi di separazione dei compiti, single responsibility e inversion of control.
+Per i processi, il pannello delega interamente a \codeword{ProcessMetadataComponent}, che raggruppa internamente le sezioni di overview, sessione di versamento, sessione di conservazione, classe documentale di appartenenza e metadati custom in card distinte.
+Ogni sotto-componente del pannello rispetta il pattern Dumb Component: riceve esclusivamente input e non effettua mai chiamate a servizi, gateway o facade. Questa scelta garantisce la massima riusabilità poiché ogni componente può essere testato isolatamente fornendo i soli dati di input.
+
+\subsection{NodeFallbackFacade e NodeFallbackPanelComponent}
+I nodi di tipo DIP, DOCUMENT\_CLASS e FILE non dispongono di una struttura di metadati sufficientemente ricca da giustificare componenti dedicati. Per questi tipi è stata implementata la \codeword{NodeFallbackFacade} (\codeword{INodeFallbackFacade}), un'unica facade che gestisce il caricamento e la presentazione di qualsiasi tipo di nodo semplice.\\
+La facade mappa ciascun tipo a un modello \codeword{NodeFallbackDetail} uniforme, composto da: tipo del nodo, etichetta leggibile, titolo, sottotitolo, lista di campi chiave-valore e un'eventuale sezione di elementi correlati navigabili. Per la classe documentale, ad esempio, la facade esegue due chiamate IPC in sequenza: recupera la classe per ID e poi i processi figli, costruendo la sezione correlata con link navigabili a ciascun processo. Per i file, normalizza il nome del file estraendo l'ultimo segmento del path. Per il DIP radice, espone UUID e stato di integrità.\\
+Il componente Dumb \codeword{NodeFallbackPanelComponent} si limita a renderizzare \codeword{NodeFallbackDetail} in un layout generico con header, lista di campi e sezione correlata. Quando l'utente clicca su un elemento correlato, emette un evento con il tipo e l'ID del nodo target; \codeword{ItemDetailPageComponent} intercetta l'evento e naviga verso la rotta corretta tramite \codeword{Router.navigate(buildDetailRoute(...))}. In questo modo il componente Dumb non conosce nulla del routing dell'applicazione.
+
+\subsection{Mapper e trasformazione dati}
+Ogni feature dispone di un modulo mapper dedicato (\texttt{document.mapper.ts}, \texttt{aggregate.mapper.ts}, \texttt{process.mapper.ts}) responsabile della trasformazione da DTO IPC (struttura piatta prodotta dal backend) al modello di dominio frontend (\codeword{DocumentDetail}, \codeword{AggregateDetailDTO}, \codeword{ProcessDetail}).
+I mapper adottano \codeword{MetadataExtractor}: un'utility condivisa che accetta l'albero di metadati grezzo JSON e offre metodi di accesso tipizzato (\texttt{getString}, \texttt{getNumber}, \texttt{findValue}, \texttt{extractCustomDataPairs}). Questo disaccoppia la logica di estrazione dal layout specifico del JSON, rendendo i mapper resilienti alle variazioni strutturali dei metadati e facilmente testabili in isolamento.\\
+
+\codeword{DocumentFacade} include una logica aggiuntiva di fallback per il \codeword{MimeType}: se il mapper non riesce a estrarre il tipo MIME dai metadati del documento, interroga il backend per il file fisico associato e ricava il formato dall'estensione del filename. Questo gestisce i casi di documenti con metadati incompleti.
+
 
 \begin{figure}[H]
     \centering
@@ -54,17 +110,6 @@ Rimangono rispettati quindi i principi di separazione dei compiti, single respon
     \caption{Diagramma delle classi tecnico della feature di dettaglio - entità Document}
 \end{figure}
 
-\subsubsection{Componenti specifici per entità - AGGREGATE}
-\subparagraph{\textit{AggregateFacade}} Come per i documenti, è presente una facade dedicata per le aggregazioni che si occupa di orchestrare i servizi necessari a recuperare i dati e i metadati dell'entità (con collegamento ai canali IPC). Inoltre implementa un sistema di \textit{Fetch Retry Synchronization} per gestire situazioni in cui i dati non sono ancora disponibili al momento della richiesta.
-
-\subparagraph{Componenti \textit{dumb}}
-Per le aggregazioni sono presenti componenti dedicati alla visualizzazione dei metadati specifici:
-\begin{itemize}
-    \item \textit{admin-procedure}: indica il procedimento a cui il fascicolo appartiene, nonché lo stato di avanzamento e le relative fasi;
-    \item \textit{aggregate-metadata}: mostra i metadati specifici dell'aggregazione, come Tipo, Progressivo, Classificazione, ecc.;
-    \item \textit{aggregate-subjects}: mostra i soggetti coinvolti nella produzione dell'aggregazione, con i relativi ruoli, differiscono leggermente dai soggetti dei documenti;
-    \item \textit{document-index}: mostra l'indice dei documenti che compongono l'aggregazione, con collegamento alla relativa pagina di dettaglio.
-\end{itemize}
 
 \begin{figure}[H]
     \centering
@@ -72,11 +117,6 @@ Per le aggregazioni sono presenti componenti dedicati alla visualizzazione dei m
     \caption{Diagramma delle classi tecnico della feature di dettaglio - entità Aggregate}
 \end{figure}
 
-\subsubsection{Componenti specifici per entità - PROCESS}
-\subparagraph{\textit{ProcessFacade}} Come per le aggregazioni, è presente una facade dedicata per i processi che si occupa di orchestrare i servizi necessari a recuperare i dati e i metadati dell'entità (con collegamento ai canali IPC). Anche in questo caso implementa un sistema di \textit{Fetch Retry Synchronization}.
-
-\subparagraph{Componente di presentazione}
-\textit{Process-Metadata-Component} in questo caso è l'unico componente specifico per i processi, mostra i metadati specifici dell'entità con un formato \textit{card-based}, lo stato di verifica e informazioni sulla classe documentale di appartenenza.
 
 \begin{figure}[H]
     \centering

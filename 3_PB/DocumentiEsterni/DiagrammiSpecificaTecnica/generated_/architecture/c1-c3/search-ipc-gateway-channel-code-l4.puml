@@ -27,11 +27,6 @@ package "Renderer App (Angular)" {
   }
 
   class "SearchIpcGateway" as Gateway {
-    +search(q: SearchQuery, s: AbortSignal): Observable<ISearchResult[]>
-    +searchAdvanced(f: SearchFilters, s: AbortSignal): Observable<ISearchResult[]>
-    +searchSemantic(q: SearchQuery, s: AbortSignal): Observable<ISearchResult[]>
-    +getCustomMetadataKeys(dipId: number | null, s: AbortSignal): Observable<string[]>
-    --
     -CACHE_TTL_MS: number
     -contextBridge: IElectronContextBridge
     -cache: ICacheService
@@ -39,6 +34,11 @@ package "Renderer App (Angular)" {
     -invoke<T>(channel, payload, signal, cachePrefix): Observable<T>
     -cancelAndInvalidate(cacheKeyPrefix: string): void
     -ensureResultType(results, fallbackType): ISearchResult[]
+    --
+    +search(q: SearchQuery, s: AbortSignal): Observable<ISearchResult[]>
+    +searchAdvanced(f: SearchFilters, s: AbortSignal): Observable<ISearchResult[]>
+    +searchSemantic(q: SearchQuery, s: AbortSignal): Observable<ISearchResult[]>
+    +getCustomMetadataKeys(dipId: number | null, s: AbortSignal): Observable<string[]>
   }
 
   class "SearchFacade" as Facade <<caller>>

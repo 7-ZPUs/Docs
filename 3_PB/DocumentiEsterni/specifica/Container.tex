@@ -1,13 +1,10 @@
 \newpage
 \section{Architettura dei container}
 La progettazione del sistema \textit{DIPReader} è stata guidata dai principi di modularità, scalabilità e manutenibilità, con l'obiettivo di creare un'architettura che possa evolversi nel tempo e adattarsi a nuove esigenze e normative AGID.\\
-In particolare, è stata completamente scorporata la logica di business dalla logica di presentazione, esponendo come unico punto di accesso comune gli \textit{IPC channel}.\\
-Il sistema cosi progettato consente di avere un backend facilmente estendibile e modificabile, capace di adattarsi alla struttura del DIP. Il frontend risulta disaccoppiato dal backend e organizzato in componenti di presentazione sostituibili, in modo da facilitare evoluzione funzionale e manutenzione.\\
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.2\textwidth]{../../assets/outDiagrammiST/DiagrammaC2(1).png}
-        \caption{Diagramma C2 - Container del sistema \textit{DIPReader}}
+    \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/DiagrammaC2(1).png}
+        \caption{Diagramma dei container - Container del sistema \textit{DIPReader}}
     \label{fig:C2_container}
 \end{figure}
 
@@ -18,30 +15,62 @@ Il sistema cosi progettato consente di avere un backend facilmente estendibile e
     Poiche le interazioni tra i componenti di presentazione sono limitate, ogni componente e mantenuto disaccoppiato dagli altri. 
     I punti di contatto principali sono il routing e i canali IPC, usati per coordinare la navigazione e la comunicazione con il backend.\\
     Per componenti riusabili in piu contesti (ad esempio export e stampa), l'integrazione avviene tramite Dependency Injection, evitando modifiche invasive alla struttura delle feature.\\
-    E inoltre applicato il pattern Smart and Dumb Components, che separa la logica di coordinamento dalla presentazione pura.\\
-    \subsubsection{Stack tecnologico}
+    
+    \subsubsection{Pattern adottati}
+    Per risolvere la complessità della gestione dello stato e delle interazioni, sono stati adottati i seguenti pattern architetturali:
+    \begin{itemize}
+        \item \textbf{Smart and Dumb Components}
+        \item \textbf{MVVM}
+        \item \textbf{Dependency Injection}
+        \item \textbf{Strategy}
+        \item \textbf{Facade}
+    \end{itemize}
+    Vengono di seguito descritti i pattern. Per i dettagli di implementazioni si rimanda alle sezioni dedicate alle feature frontend.
+    
+    \paragraph{Smart and Dumb Components}
+    \subparagraph{Problema}
+        La gestione dello stato e della logica di coordinamento in un'applicazione complessa può portare a componenti monolitici e difficili da mantenere.
+    \subparagraph{Soluzione}
+        Separare i componenti in "smart" (container) che gestiscono la logica e lo stato, e "dumb" (presentational) che si occupano solo della presentazione e dell'interazione con l'utente. I componenti smart comunicano con i le facades, che a loro volta interagiscono con i servizi e i canali IPC per recuperare i dati e coordinare le operazioni.
+    \subparagraph{Implementazioni}
+        Il pattern è stato implementato in tutte le feature estese, nella ricerca e nelle operazioni di dettaglio. \\
+        Nella ricerca, i componenti smart sono responsabili di gestire le interazioni con i filtri, regole di ordinamento e paginazione dei componenti dumb, rappresentati dai filtri.
+        \\ Nella visualizzazione del dettaglio, i componenti smart si occupano di gestire le diverse paginazione in base al tipo di documento da presentare. 
 
-\begin{table}[H]
-    \centering
-    \footnotesize
-    \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.3}
-    \begin{tabularx}{\textwidth}{|l|Y|}
-        \hline
-        \textbf{Componente} & \textbf{Tecnologia} \\
-        \hline
-        Runtime desktop & Electron (main + renderer) \\
-        \hline
-        Renderer core & TypeScript \\
-        \hline
-        Dependency Injection & Angular \\
-        \hline
-        Routing & Angular Router \\
-        \hline
-        Accessibility & Angular A11y \\
-        \hline
-    \end{tabularx}
-\end{table}
+    \paragraph{Dependency Injection}
+    \subparagraph{Problema}
+        La gestione delle dipendenze in un'applicazione complessa può portare a codice rigido e difficile da testare.
+    \subparagraph{Soluzione}
+        Utilizzare un container di dependency injection per gestire le istanze dei servizi e le loro dipendenze, riducendo il coupling tra i componenti.
+    \subparagraph{Implementazioni}
+        Il framework Angular fornisce un sistema di dependency injection integrato, che è stato utilizzato per gestire le dipendenze tra componenti, servizi e canali IPC.
+        Nel rispetto del Liskov Substitution Principle, si è scelto di iniettare i token delle interfacce dei servizi, invece delle implementazioni concrete, per garantire un basso accoppiamento e facilitare la sostituibilità dei componenti.
+
+    \paragraph{Strategy}
+    \subparagraph{Problema}
+        La gestione di comportamenti variabili in base al contesto (ad esempio, diverse modalità di visualizzazione o interazione) può portare a codice complesso e difficile da mantenere.
+    \subparagraph{Soluzione}
+        Utilizzare il pattern Strategy per definire una famiglia di algoritmi o comportamenti intercambiabili, incapsulandoli in classi separate e rendendoli facilmente sostituibili.
+    \subparagraph{Implementazioni}
+        Il pattern Strategy è stato adottato per gestire le diverse modalità di visualizzazione dei documenti, consentendo di definire strategie specifiche per ogni tipo di documento e di selezionare la strategia appropriata in fase di runtime.
+        \\ Nella validazione dei filtri è stato adottato il pattern Strategy per definire diverse strategie di validazione in base al tipo di filtro, consentendo di estendere facilmente le regole di validazione senza modificare il codice esistente.\\
+        Similarmente è stato fatto per la gestione dei filtri di soggetti, che presentano relazioni precise definite dagli standard AGID.
+
+    \paragraph{Facade}
+    \subparagraph{Problema}
+        La gestione della logica di coordinamento può essere complessa e portare a componenti con responsabilità multiple.
+    \subparagraph{Soluzione}
+        Utilizzare il pattern Facade per creare un'interfaccia semplificata che nasconda la complessità della logica di coordinamento, consentendo ai componenti di interagire con un'interfaccia più semplice e focalizzata.
+    \subparagraph{Implementazioni}
+        Il pattern Facade è stato adottato per coordinare le interazioni tra i componenti smart e i servizi, fornendo un'interfaccia semplificata per recuperare i dati e gestire le operazioni.
+
+    \paragraph{MVVM}
+    \subparagraph{Problema}
+        La gestione dello stato in modo dinamico e reattivo può portare a codice complesso e difficile da mantenere, soprattutto quando la logica di presentazione è strettamente legata alla logica di business come nel caso del frontend.
+    \subparagraph{Soluzione}
+        Utilizzare il pattern MVVM (Model-View-ViewModel) per separare la logica di presentazione (View) dalla logica di business (Model) attraverso un intermediario (ViewModel), che gestisce lo stato e le interazioni in modo reattivo.
+    \subparagraph{Implementazioni}
+        Il pattern MVVM è stato adottato e implementato grazie all'utilizzo di Facade (viewModel), Componenti UI (view), servizi e DTO (model). Le Facade fungono da ViewModel, gestendo lo stato e le interazioni con i servizi e i canali IPC sfruttando i DTO comuni, mentre i componenti di presentazione si occupano solo della visualizzazione e dell'interazione con l'utente, mantenendo una chiara separazione tra logica di presentazione e logica di business.
 
 \subsubsection{Relazione con i principi SOLID}
 \begin{itemize}
@@ -56,76 +85,27 @@ Il sistema cosi progettato consente di avere un backend facilmente estendibile e
 
 \subsubsection{Ruolo architetturale}
 Il container \textit{Main} ospita la logica backend e costituisce il punto di orchestrazione tra IPC, use case applicativi e persistenza su SQLite.
-Le responsabilita principali sono la registrazione degli handler IPC, la risoluzione delle dipendenze tramite container DI, il coordinamento dei repository/DAO e il bootstrap iniziale dei dati indicizzati.
-
-\subsubsection{Stack tecnologico}
-
-\begin{table}[H]
-    \centering
-    \footnotesize
-    \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.3}
-    \begin{tabularx}{\textwidth}{|l|Y|}
-        \hline
-        \textbf{Componente} & \textbf{Tecnologia} \\
-        \hline
-        Runtime desktop & Electron (main + renderer) \\
-        \hline
-        Backend core & TypeScript \\
-        \hline
-        Dependency Injection & tsyringe \\
-        \hline
-        Database & better-sqlite3 \\
-        \hline
-        IPC frontend-backend & ipcMain.handle / ipcRenderer.invoke \\
-        \hline
-        Architettura & Clean Architecture (layering) \\
-        \hline
-    \end{tabularx}
-\end{table}
+Le responsabilita principali sono la registrazione degli handler IPC, l'implementazione della business logic e il bootstrap iniziale dei dati indicizzati.
+In particolare, l'architettura del main process è stata organizzata in maniera tale da definire solamente le entità di un pacchetto DiP, gestendo invece i metadati in maniera generica. Questo permetterà in un futuro di evolvere il sistema per supportare nuovi tipi di schema di metadati, senza dover modificare o aggiungere nessuna componente o entità al backend.
 
 \subsubsection{Layer architetturali}
-
 \begin{enumerate}
     \item \textbf{IPC Adapter:} boundary verso renderer, gestione canali, mapping DTO.
-    \item \textbf{Use Case:} thin orchestration layer, delega diretta ai repository.
-    \item \textbf{Repository:} astrazione accesso dati, delega ai DAO.
+    \item \textbf{Use Case:} business logic layer, utilizza servizi e porte outbound per ottenere il risultato.
+    \item \textbf{Outbound port:} layer di astrazione per l'interazione con servizi esterni.
+    \item \textbf{Outbound adapter:} implementazione concreta delle porte verso p.e. database o filesystem.
     \item \textbf{DAO:} query SQL concrete, ricostruzione entity da righe.
-    \item \textbf{Mapper:} trasformazione entity $\leftrightarrow$ DTO.
+    \item \textbf{Mapper:} trasformazione DTO $\leftrightarrow$ Entity $\leftrightarrow$ Persistence.
     \item \textbf{Entity / Value Objects:} modello di dominio.
 \end{enumerate}
 
 \subsubsection{Relazione con i principi SOLID}
 \begin{itemize}
-    \item \textbf{SRP:} ogni layer ha responsabilita esplicite e non sovrapposte.
+    \item \textbf{SRP:} ciascun componente ha un solo motivo per cambiare: ciascuna classe ha una responsabilità ben definita e limitata. Sinonimo di coesione: un classe è coesa se le classi client che la utilizzano usano tutti i metodi della classe.
     \item \textbf{OCP:} nuovi use case o adapter possono essere aggiunti estendendo i contratti esistenti.
     \item \textbf{LSP e ISP:} i layer dipendono da interfacce coese e sostituibili.
-    \item \textbf{DIP:} il wiring runtime usa token DI e inversione delle dipendenze verso repository/servizi.
+    \item \textbf{DIP:} le concretizzazioni (adapters) dipendono da astrazioni (porte), non viceversa.
 \end{itemize}
-
-\subsubsection{Sequenza runtime generale}
-\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-    \item \textbf{Renderer invoca IPC:} \texttt{window.electronAPI.invoke(channel, payload)}.
-    \item \textbf{Preload autorizza:} verifica prefissi consentiti e inoltra a \texttt{ipcRenderer.invoke}.
-    \item \textbf{Main process intercetta:} adapter registra e gestisce l'handler del canale.
-    \item \textbf{Risoluzione DI:} l'adapter risolve il use case richiesto dal container.
-    \item \textbf{Use case delega:} orchestration verso il repository.
-    \item \textbf{Repository delega:} accesso ai dati tramite DAO.
-    \item \textbf{DAO esegue query:} interrogazione SQLite e ricostruzione entity.
-    \item \textbf{Conversione DTO:} mapping entity $\to$ DTO al boundary IPC.
-    \item \textbf{Risposta IPC:} il renderer riceve DTO o \texttt{null}.
-\end{enumerate}
-
-\subsubsection{Dependency Injection}
-\noindent
-Configurazione in \texttt{container.ts}:
-
-\begin{enumerate}
-    \item \textbf{Provider DB:} \texttt{DATABASE\_PROVIDER\_TOKEN} $\to$ \texttt{DatabaseProvider}.
-    \item \textbf{Repository tokens:} \texttt{*\_REPOSITORY\_TOKEN} per i vari aggregati.
-    \item \textbf{DAO tokens:} \texttt{*\_DAO\_TOKEN} per le implementazioni concrete.
-    \item \textbf{Use case tokens:} \texttt{GET\_BY\_*} per le operazioni di retrieval.
-\end{enumerate}
 
 \subsubsection{Bootstrap e indicizzazione}
 \noindent
@@ -133,46 +113,15 @@ Configurazione in \texttt{container.ts}:
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
     \item Ricrea database zero.
     \item Applica schema.
-    \item Chiama \texttt{IndexDip.execute(dipPath)}.
-\end{enumerate}
-
-\noindent
-\textbf{IndexDip.execute} (popolamento DB):
-\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-    \item Insert: dip.
-    \item Insert: classi documentali.
-    \item Insert: processi (con metadati ricorsivi).
-    \item Insert: documenti (con metadati ricorsivi).
-    \item Insert: file.
+    \item Chiama \codeword{IndexDip.execute(dipPath)}.
 \end{enumerate}
 
 \subsubsection{Wiring runtime e registrazioni}
 \noindent
-In avvio applicazione (\texttt{main.ts}) il container runtime esegue:
+Durante l'avvio dell'applicazione electron, \codeword{main.ts} esegue:
 
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-    \item bootstrap database tramite \texttt{ApplicationBootstrapAdapter}
-    \item registrazione token runtime \texttt{DIP\_PATH\_TOKEN}
-    \item registrazione adapter IPC (es. \texttt{BrowsingIpcAdapter}, \texttt{CheckIntegrityIpcAdapter})
+    \item bootstrap database tramite \codeword{ApplicationBootstrapAdapter}
+    \item registrazione token runtime \codeword{DIP\_PATH\_TOKEN}
+    \item registrazione adapter IPC (es. \codeword{BrowsingIpcAdapter}, \codeword{CheckIntegrityIpcAdapter})
 \end{enumerate}
-
-\noindent
-Nel bootstrap DB (\texttt{DatabaseBootstrap.ts}) viene registrato anche \texttt{SQLITE\_DB\_TOKEN} con la connessione SQLite runtime.
-
-\subsubsection{Semantica transazionale condivisa}
-\noindent
-Le operazioni backend che aggiornano alberi di dati su piu livelli usano \texttt{ITransactionManager} con implementazione SQLite (\texttt{SqliteTransactionManager}):
-
-\begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-    \item \texttt{BEGIN IMMEDIATE TRANSACTION}
-    \item esecuzione blocco applicativo
-    \item \texttt{COMMIT} su successo
-    \item \texttt{ROLLBACK} su errore
-\end{enumerate}
-
-\noindent
-Questa semantica garantisce consistenza dei dati durante propagazioni gerarchiche di stato.
-
-\subsubsection{Sicurezza preload}
-\noindent
-\texttt{preload.ts} consente IPC su prefissi autorizzati:\newline\texttt{ipc:search:}, \texttt{browse:}, \texttt{file:}, \texttt{check-integrity:}, \texttt{ipc:indexing:status}.

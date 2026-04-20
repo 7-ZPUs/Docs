@@ -50,13 +50,13 @@ class DocumentActionsComponent << Smart >> {
   + initialVerificationStatus: input<string>
 }
 
-class MetadataPanelComponent << Dumb >> {
+class MetadataPanelComponent << Smart >> {
   + itemType: input<'AGGREGATE' | 'DOCUMENT' | 'PROCESS'>
   + aggregateData: input<AggregateDetailDTO>
   + documentData: input<DocumentDetail>
 }
 
-class NodeFallbackPanelComponent << Dumb >> {
+class NodeFallbackPanelComponent << Smart >> {
   + detail: input<NodeFallbackDetail>
 }
 
@@ -111,12 +111,12 @@ IProcessFacade -[hidden]down- IDocumentFacade
 ' ==========================================
 ' LIVELLO DI DOMINIO E STATO
 ' ==========================================
-class NodeFallbackState << (S,#DDDDDD) State >> {
+class NodeFallbackState << State >> {
   + loading: boolean
   + error: AppError | null
 }
 
-class NodeFallbackDetail << (M,#FF7700) Model >> {
+class NodeFallbackDetail << Model >> {
   + type: NodeFallbackItemType
   + typeLabel: string
   + title: string
@@ -125,7 +125,7 @@ class NodeFallbackDetail << (M,#FF7700) Model >> {
   + hint?: string
 }
 
-class NodeFallbackRelatedSection << (M,#FF7700) Model >> {
+class NodeFallbackRelatedSection << Model >> {
   + title: string
   + emptyMessage: string
   + items: NodeFallbackRelatedItem[]

@@ -1,5 +1,5 @@
 @startuml Export_IPC_Part1
-title Diagramma delle Classi — FileViewerIpcAdapter, Use Cases, ExportResult
+title Diagramma delle Classi — FileViewerIpcAdapter e Use Cases
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
 left to right direction
@@ -10,91 +10,171 @@ class FileViewerIpcAdapter {
 }
 
 interface IExportFileUC {
-    + execute(fileId: number, targetPath: string): Promise<ExportResult>
+    + execute(fileId: number): Promise<ExportResult>
+}
+interface IExportFilesUC {
+    + execute(fileIds: number[], onProgress:
+    ProgressCallback): Promise<ExportFilesResult>
 }
 interface IPrintFileUC {
     + execute(fileId: number): Promise<ExportResult>
 }
-interface IDialogPort {
-    + showSaveDialog(opts: SaveDialogOptions): Promise<SaveDialogResult>
-    + showFolderDialog(): Promise<FolderDialogResult>
-    + showConfirmPrint(fileCount: number): Promise<ConfirmPrintResult>
+interface IPrintFilesUC {
+    + execute(fileIds: number[], onProgress:
+    ProgressCallback): Promise<ExportFilesResult>
 }
+
 class ExportFileUC {
-    - fileRepo: IFileRepository
+    - filePort: IGetFileByIdPort
     - exportPort: IExportPort
-    - packageReader: IFileSystemPort
+    - dialogPort: IDialogPort
     - dipPath: string
-    + execute(fileId: number, targetPath: string): Promise<ExportResult>
-}
-class PrintFileUC {
-    - fileRepo: IFileRepository
-    - dipPath: string
-    - printPort: IPrintPort
+    - fileSystemPort: IFileSystemPort
     + execute(fileId: number): Promise<ExportResult>
 }
-class ExportResult <<value object>> {}
+class ExportFilesUC {
+    - filePort: IGetFileByIdPort
+    - exportPort: IExportPort
+    - dialogPort: IDialogPort
+    - dipPath: string
+    - fileSystemPort: IFileSystemPort
+    + execute(fileIds: number[], onProgress:
+    ProgressCallback): Promise<ExportFilesResult>
+}
+class PrintFileUC {
+    - filePort: IGetFileByIdPort
+    - dipPath: string
+    - printPort: IPrintPort
+    - fileSystemPort: IFileSystemPort
+    + execute(fileId: number): Promise<ExportResult>
+}
+class PrintFilesUC {
+    - filePort: IGetFileByIdPort
+    - dipPath: string
+    - printPort: IPrintPort
+    - dialogPort: IDialogPort
+    - fileSystemPort: IFileSystemPort
+    + execute(fileIds: number[], onProgress:
+    ProgressCallback): Promise<ExportFilesResult>
+}
 
-FileViewerIpcAdapter --> IExportFileUC : invoca
-FileViewerIpcAdapter --> IPrintFileUC  : invoca
-FileViewerIpcAdapter --> IDialogPort   : invoca
-PrintFileUC  ..|> IPrintFileUC 
-PrintFileUC  ..> ExportResult : <<returns>>
-ExportFileUC ..> ExportResult : <<returns>>
-ExportFileUC ..|> IExportFileUC 
+class ExportResult <<value object>> {}
+interface ExportFilesResult <<value object>> {}
+
+FileViewerIpcAdapter --> IExportFileUC
+FileViewerIpcAdapter --> IExportFilesUC
+FileViewerIpcAdapter --> IPrintFileUC
+FileViewerIpcAdapter --> IPrintFilesUC
+
+
+ExportFileUC  ..|> IExportFileUC
+ExportFilesUC ..|> IExportFilesUC
+PrintFileUC   ..|> IPrintFileUC
+PrintFilesUC  ..|> IPrintFilesUC
+
+ExportFileUC  ..> ExportResult      : <<returns>>
+ExportFilesUC ..> ExportFilesResult : <<returns>>
+PrintFileUC   ..> ExportResult      : <<returns>>
+PrintFilesUC  ..> ExportFilesResult : <<returns>>
 @enduml
 
-@startuml Export_IPC_Part2
-title Diagramma delle Classi — Use Cases e Ports
+@startuml Export_IPC_Part2_Export
+title Diagramma delle Classi — Use Cases e Ports (Export)
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
 hide empty members
 
 class ExportFileUC {
-    - fileRepo: IFileRepository
+    - filePort: IGetFileByIdPort
     - exportPort: IExportPort
-    - packageReader: IFileSystemPort
+    - dialogPort: IDialogPort
     - dipPath: string
-    + execute(fileId: number, 
-    targetPath: string): Promise<ExportResult>
+    - fileSystemPort: IFileSystemPort
+    + execute(fileId: number
+    ): Promise<ExportResult>
 }
-class PrintFileUC {
-    - fileRepo: IFileRepository
+class ExportFilesUC {
+    - filePort: IGetFileByIdPort
+    - exportPort: IExportPort
+    - dialogPort: IDialogPort
     - dipPath: string
-    - printPort: IPrintPort
-    + execute(fileId: 
-    number): Promise<ExportResult>
+    - fileSystemPort: IFileSystemPort
+    + execute(fileIds: number[], onProgress:
+    ProgressCallback): Promise<ExportFilesResult>
 }
+
+interface IExportPort { }
+interface IDialogPort { }
 interface IFileSystemPort { }
-interface IExportPort {
-    + exportFile(stream: ReadableStream,
-     destPath: string): Promise<ExportResult>
-}
-interface IPrintPort {
-    + printSingle(absolutePath: string, 
-    opts: PrintOptions): Promise<ExportResult>
-}
-interface IDialogPort {
-    + showSaveDialog(opts: 
-    SaveDialogOptions): Promise<SaveDialogResult>
-    + showFolderDialog
-    (): Promise<FolderDialogResult>
-    + showConfirmPrint(fileCount: 
-    number): Promise<ConfirmPrintResult>
-}
+interface IGetFileByIdPort { }
+
 class ExportResult <<value object>> {
+    + fileId: number
     + success: boolean
+    + canceled?: boolean
     + errorCode?: string
     + errorMessage?: string
     + {static} ok(): ExportResult
-    + {static} fail(code: string, msg: string): ExportResult
+    + {static} canceled(): ExportResult
+    + {static} fail(code: string,
+    msg: string): ExportResult
+}
+interface ExportFilesResult {
+    + canceled: boolean
+    + results: ExportResult[]
 }
 
-ExportFileUC --> IFileSystemPort : usa
-ExportFileUC --> IExportPort     : usa
-PrintFileUC  --> IPrintPort      : usa
-ExportFileUC ..> ExportResult : <<returns>>
-PrintFileUC  ..> ExportResult : <<returns>>
+ExportFileUC  --> IExportPort      
+ExportFileUC  --> IDialogPort      
+ExportFilesUC --> IExportPort      
+ExportFilesUC --> IDialogPort      
+ExportFileUC  --> IGetFileByIdPort 
+ExportFilesUC --> IGetFileByIdPort 
+ExportFileUC  --> IFileSystemPort  
+ExportFilesUC --> IFileSystemPort  
+
+ExportFileUC  ..> ExportResult      : <<returns>>
+ExportFilesUC ..> ExportFilesResult : <<returns>>
+@enduml
+
+@startuml Export_IPC_Part2_Print
+title Diagramma delle Classi — Use Cases e Ports (Print)
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+hide empty members
+
+class PrintFileUC {
+    - filePort: IGetFileByIdPort
+    - dipPath: string
+    - printPort: IPrintPort
+    - fileSystemPort: IFileSystemPort
+    + execute(fileId: number): Promise<ExportResult>
+}
+class PrintFilesUC {
+    - filePort: IGetFileByIdPort
+    - dipPath: string
+    - printPort: IPrintPort
+    - dialogPort: IDialogPort
+    - fileSystemPort: IFileSystemPort
+    + execute(fileIds: number[], onProgress:
+    ProgressCallback): Promise<ExportFilesResult>
+}
+
+interface IPrintPort { }
+interface IFileSystemPort { }
+interface IGetFileByIdPort { }
+interface ExportFilesResult {}
+
+ExportFilesResult --> ExportResult : 1..*   
+PrintFileUC   --> IPrintPort      
+PrintFilesUC  --> IPrintPort      
+PrintFileUC --> IGetFileByIdPort
+PrintFilesUC --> IGetFileByIdPort
+PrintFileUC --> IFileSystemPort
+PrintFilesUC --> IFileSystemPort
+
+PrintFileUC   ..> ExportResult      : <<returns>>
+PrintFilesUC  ..> ExportFilesResult : <<returns>>
 @enduml
 
 @startuml Export_IPC_Part3
@@ -104,33 +184,35 @@ skinparam linetype ortho
 hide empty members
 
 interface IExportPort {
-    + exportFile(stream: ReadableStream, 
+    + exportFile(stream: ReadableStream,
     destPath: string): Promise<ExportResult>
 }
 interface IPrintPort {
-    + printSingle(absolutePath: string, 
+    + printSingle(absolutePath: string,
     opts: PrintOptions): Promise<ExportResult>
 }
 
 class LocalExportPort {
-    + exportFile(stream: ReadableStream, 
+    + exportFile(stream: ReadableStream,
     destPath: string): Promise<ExportResult>
 }
 class PrintPort {
-    + printSingle(absolutePath: string, 
+    + printSingle(absolutePath: string,
     opts: PrintOptions): Promise<ExportResult>
 }
 class ExportResult <<value object>> {
+    + fileId: number
     + success: boolean
+    + canceled?: boolean
     + errorCode?: string
     + errorMessage?: string
     + {static} ok(): ExportResult
-    + {static} fail(code: string, 
-    msg: string): ExportResult
+    + {static} canceled(): ExportResult
+    + {static} fail(code: string, msg: string): ExportResult
 }
 
-LocalExportPort       ..|> IExportPort
-PrintPort             ..|> IPrintPort
+LocalExportPort ..|> IExportPort
+PrintPort       ..|> IPrintPort
 LocalExportPort ..> ExportResult : <<returns>>
 PrintPort       ..> ExportResult : <<returns>>
 @enduml
@@ -141,18 +223,14 @@ skinparam classAttributeIconSize 0
 skinparam linetype ortho
 hide empty members
 
-class ElectronDialogPort {
-    + showSaveDialog(opts: SaveDialogOptions): Promise<SaveDialogResult>
-    + showFolderDialog(): Promise<FolderDialogResult>
-    + showConfirmPrint(fileCount: number): Promise<ConfirmPrintResult>
-}
 interface IDialogPort {
     + showSaveDialog(opts: SaveDialogOptions): Promise<SaveDialogResult>
     + showFolderDialog(): Promise<FolderDialogResult>
-    + showConfirmPrint(fileCount: number): Promise<ConfirmPrintResult>
+}
+class ElectronDialogPort {
+    + showSaveDialog(opts: SaveDialogOptions): Promise<SaveDialogResult>
+    + showFolderDialog(): Promise<FolderDialogResult>
 }
 
-
-ElectronDialogPort    ..|> IDialogPort
-
+ElectronDialogPort ..|> IDialogPort
 @enduml

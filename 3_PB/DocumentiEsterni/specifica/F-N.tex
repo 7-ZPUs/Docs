@@ -1,6 +1,6 @@
-\subsection{Componenti di Navigazione (Frontend)}
+\section{Frontend - Navigazione}
 
-\subsubsection{Descrizione}
+\subsection{Descrizione}
 Il modulo di navigazione realizza l'albero gerarchico del DIP ed e il punto di ingresso principale per la consultazione delle entita archivistiche. La gerarchia visualizzata segue il modello:
 \begin{center}
 DIP -> DocumentClass -> Process -> Document -> File
@@ -8,36 +8,36 @@ DIP -> DocumentClass -> Process -> Document -> File
 
 L'implementazione segue una separazione netta delle responsabilita:
 \begin{itemize}
-	\item \textbf{Facade Pattern}: \textit{DipFacade} coordina stato, caricamenti e retry.
-	\item \textbf{Gateway Pattern}: \textit{IpcGateway} incapsula la comunicazione IPC con il backend.
+	\item \textbf{Facade Pattern}: \codeword{DipFacade} coordina stato, caricamenti e retry.
+	\item \textbf{Gateway Pattern}: \codeword{IpcGateway} incapsula la comunicazione IPC con il backend.
 	\item \textbf{Smart/Dumb Components}: componenti smart per orchestrazione, componenti dumb per sola presentazione del nodo.
 	\item \textbf{State reattivo}: la UI reagisce ai cambiamenti di stato di root, cache, loading e errori locali.
 \end{itemize}
 
-\subsubsection{Diagrammi condivisi (C1/C2/C3)}
+\subsection{Diagrammi condivisi (C1/C2/C3)}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.85\textwidth]{../../assets/outDiagrammiST/C4_Navigation_Context.png}
-	\caption{Diagramma C1 - System Context del modulo Albero di Navigazione}
+	\caption{Diagramma di sistema - System Context del modulo Albero di Navigazione}
 	\label{fig:navigation:c1-context}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.85\textwidth]{../../assets/outDiagrammiST/C4_Navigation_Container.png}
-	\caption{Diagramma C2 - Container View del modulo Albero di Navigazione}
+	\caption{Diagramma dei container - Container View del modulo Albero di Navigazione}
 	\label{fig:navigation:c2-container}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{../../assets/outDiagrammiST/C4_Navigation_Component.png}
-	\caption{Diagramma C3 - Component View del modulo Albero di Navigazione}
+	\caption{Diagramma delle componenti - Component View del modulo Albero di Navigazione}
 	\label{fig:navigation:c3-component}
 \end{figure}
 
-\subsubsection{Architettura del modulo}
+\subsection{Architettura del modulo}
 
 \begin{table}[H]
 	\centering
@@ -60,90 +60,90 @@ L'implementazione segue una separazione netta delle responsabilita:
 		\hline
 		Backend & \texttt{preload.ts} / \texttt{main.ts} & Boundary Electron, allowlist canali, bridge invoke/on e registrazione adapter IPC. \\
 		\hline
-		Backend & \texttt{BrowsingIpcAdapter} + UseCase + Repository + DAO & Esecuzione query browse su SQLite e conversione entity -> DTO. \\
+		Backend & \texttt{BrowsingIpcAdapter} + UseCase + Outbound Port + DAO & Esecuzione query browse su SQLite e conversione entity -> DTO. \\
 		\hline
 	\end{tabularx}
 	\caption{Architettura tecnica del modulo Navigazione}
 	\label{tab:navigation:arch}
 \end{table}
 
-\subsubsection{Flussi operativi principali}
+\subsection{Flussi operativi principali}
 
 \paragraph{Bootstrap albero root}
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-	\item \texttt{AppShellComponent} o \texttt{DipExplorerComponent} avvia l'inizializzazione dei nodi root.
-	\item \texttt{DipFacade.loadRootNodes(dipId)} imposta \texttt{phase=loading}.
-	\item \texttt{IpcGateway.getRootDip} invoca \texttt{BROWSE\_GET\_DIP\_BY\_ID}.
-	\item Il backend risolve la richiesta via \texttt{BrowsingIpcAdapter} e catena UseCase -> Repository -> DAO.
-	\item La facade aggiorna \texttt{phase=ready} e popola \texttt{rootNodes}.
+	\item \codeword{AppShellComponent} o \codeword{DipExplorerComponent} avvia l'inizializzazione dei nodi root.
+	\item \codeword{DipFacade.loadRootNodes(dipId)} imposta \codeword{phase=loading}.
+	\item \codeword{IpcGateway.getRootDip} invoca \codeword{BROWSE\_GET\_DIP\_BY\_ID}.
+	\item Il backend risolve la richiesta via \codeword{BrowsingIpcAdapter} e catena UseCase -> Outbound Port -> DAO.
+	\item La facade aggiorna \codeword{phase=ready} e popola \codeword{rootNodes}.
 \end{enumerate}
 
 \paragraph{Espansione nodo}
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-	\item \texttt{DipTree.toggleNode(node)} marca il nodo come espanso/collassato.
-	\item Se il nodo non e in cache, \texttt{DipFacade.loadChildren(node)} avvia il caricamento.
-	\item La facade aggiorna \texttt{loadingNodeIds} e pulisce eventuali errori pregressi sul nodo.
-	\item \texttt{IpcGateway.getChildren} effettua dispatch per tipo nodo:
+	\item \codeword{DipTree.toggleNode(node)} marca il nodo come espanso/collassato.
+	\item Se il nodo non e in cache, \codeword{DipFacade.loadChildren(node)} avvia il caricamento.
+	\item La facade aggiorna \codeword{loadingNodeIds} e pulisce eventuali errori pregressi sul nodo.
+	\item \codeword{IpcGateway.getChildren} effettua dispatch per tipo nodo:
 	\begin{itemize}
-		\item dip -> \texttt{BROWSE\_GET\_DOCUMENT\_CLASS\_BY\_DIP\_ID}
-		\item documentClass -> \texttt{BROWSE\_GET\_PROCESS\_BY\_DOCUMENT\_CLASS}
-		\item process -> \texttt{BROWSE\_GET\_DOCUMENTS\_BY\_PROCESS}
-		\item document -> \texttt{BROWSE\_GET\_FILE\_BY\_DOCUMENT}
+		\item dip -> \codeword{BROWSE\_GET\_DOCUMENT\_CLASS\_BY\_DIP\_ID}
+		\item documentClass -> \codeword{BROWSE\_GET\_PROCESS\_BY\_DOCUMENT\_CLASS}
+		\item process -> \codeword{BROWSE\_GET\_DOCUMENTS\_BY\_PROCESS}
+		\item document -> \codeword{BROWSE\_GET\_FILE\_BY\_DOCUMENT}
 		\item file -> nessun figlio
 	\end{itemize}
-	\item Al successo i figli sono salvati in \texttt{nodeCache}; al fallimento in \texttt{nodeChildrenErrors}.
+	\item Al successo i figli sono salvati in \codeword{nodeCache}; al fallimento in \codeword{nodeChildrenErrors}.
 \end{enumerate}
 
 \paragraph{Selezione nodo e routing}
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
-	\item \texttt{DipTree.selectNode(node)} emette \texttt{nodeSelected}.
-	\item AppShell/DipExplorer mappano il tipo nodo con \texttt{mapDipNodeTypeToDetailItemType()}.
-	\item \texttt{buildDetailRoute(itemType, node.id)} costruisce la route target.
-	\item Angular Router naviga verso \texttt{/detail/:itemType/:itemId}.
+	\item \codeword{DipTree.selectNode(node)} emette \codeword{nodeSelected}.
+	\item AppShell/DipExplorer mappano il tipo nodo con \codeword{mapDipNodeTypeToDetailItemType()}.
+	\item \codeword{buildDetailRoute(itemType, node.id)} costruisce la route target.
+	\item Angular Router naviga verso \codeword{/detail/:itemType/:itemId}.
 \end{enumerate}
 
-\subsubsection{Contratti principali}
+\subsection{Contratti principali}
 
 \paragraph{Stato della DipFacade}
 \begin{itemize}
-	\item \texttt{phase}: stato globale della feature (\texttt{ready|loading|idle}).
-	\item \texttt{rootNodes}: nodi radice mostrati in albero.
-	\item \texttt{nodeCache}: figli gia caricati per parent.
-	\item \texttt{loadingNodeIds}: set dei nodi in caricamento.
-	\item \texttt{nodeChildrenErrors}: errori locali per nodo.
-	\item \texttt{rootError}: errore di bootstrap root.
+	\item \codeword{phase}: stato globale della feature (\codeword{ready|loading|idle}).
+	\item \codeword{rootNodes}: nodi radice mostrati in albero.
+	\item \codeword{nodeCache}: figli gia caricati per parent.
+	\item \codeword{loadingNodeIds}: set dei nodi in caricamento.
+	\item \codeword{nodeChildrenErrors}: errori locali per nodo.
+	\item \codeword{rootError}: errore di bootstrap root.
 \end{itemize}
 
 \paragraph{Nodo di navigazione}
 \begin{itemize}
-	\item \texttt{name: string}
-	\item \texttt{id: number}
-	\item \texttt{type: dip|documentClass|process|document|file}
-	\item \texttt{hasChildren: boolean}
-	\item \texttt{timestamp?: string}
+	\item \codeword{name: string}
+	\item \codeword{id: number}
+	\item \codeword{type: dip|documentClass|process|document|file}
+	\item \codeword{hasChildren: boolean}
+	\item \codeword{timestamp?: string}
 \end{itemize}
 
 \paragraph{Firme metodi chiave}
 \begin{itemize}
-	\item \texttt{DipFacade.getState()}\\
-	\texttt{: Signal<DipState>}
-	\item \texttt{DipFacade.loadRootNodes(dipId: number)}\\
-	\texttt{: Promise<void>}
-	\item \texttt{DipFacade.loadChildren(target: number}\\
-	\texttt{| DipTreeNode): Promise<void>}
-	\item \texttt{IpcGateway.getRootDip(dipId: number)}\\
-	\texttt{: Promise<DipTreeNode>}
-	\item \texttt{IpcGateway.getChildren(parent: DipTreeNode)}\\
-	\texttt{: Promise<DipTreeNode[]>}
-	\item \texttt{DipTree.toggleNode(node: DipTreeNode)}\\
-	\texttt{: void}
-	\item \texttt{DipTree.retryNode(node: DipTreeNode)}\\
-	\texttt{: void}
-	\item \texttt{DipTree.selectNode(node: DipTreeNode)}\\
-	\texttt{: void}
+	\item \codeword{DipFacade.getState()}\\
+	\codeword{: Signal<DipState>}
+	\item \codeword{DipFacade.loadRootNodes(dipId: number)}\\
+	\codeword{: Promise<void>}
+	\item \codeword{DipFacade.loadChildren(target: number}\\
+	\codeword{| DipTreeNode): Promise<void>}
+	\item \codeword{IpcGateway.getRootDip(dipId: number)}\\
+	\codeword{: Promise<DipTreeNode>}
+	\item \codeword{IpcGateway.getChildren(parent: DipTreeNode)}\\
+	\codeword{: Promise<DipTreeNode[]>}
+	\item \codeword{DipTree.toggleNode(node: DipTreeNode)}\\
+	\codeword{: void}
+	\item \codeword{DipTree.retryNode(node: DipTreeNode)}\\
+	\codeword{: void}
+	\item \codeword{DipTree.selectNode(node: DipTreeNode)}\\
+	\codeword{: void}
 \end{itemize}
 
-\subsubsection{Canali IPC usati}
+\subsection{Canali IPC usati}
 
 \begin{table}[H]
 	\centering
@@ -171,14 +171,14 @@ L'implementazione segue una separazione netta delle responsabilita:
 	\label{tab:navigation:ipc}
 \end{table}
 
-\subsubsection{Cache, naming e gestione errori}
+\subsection{Cache, naming e gestione errori}
 
 \paragraph{Cache}
 \begin{itemize}
-	\item Cache nel renderer tramite \texttt{IpcCacheService}.
-	\item TTL del gateway: \texttt{600000 ms}.
-	\item Chiave nodo composta: \texttt{type:id}.
-	\item Strutture correlate: \texttt{nodeCache}, \texttt{loadingNodeIds}, \texttt{nodeChildrenErrors}.
+	\item Cache nel renderer tramite \codeword{IpcCacheService}.
+	\item TTL del gateway: \codeword{600000 ms}.
+	\item Chiave nodo composta: \codeword{type:id}.
+	\item Strutture correlate: \codeword{nodeCache}, \codeword{loadingNodeIds}, \codeword{nodeChildrenErrors}.
 \end{itemize}
 
 \paragraph{Naming}
@@ -190,8 +190,8 @@ L'implementazione segue una separazione netta delle responsabilita:
 
 \paragraph{Error handling}
 \begin{itemize}
-	\item Errori root: \texttt{rootError} e \texttt{phase=idle}.
-	\item Errori figli: isolamento per nodo in \texttt{nodeChildrenErrors}.
+	\item Errori root: \codeword{rootError} e \codeword{phase=idle}.
+	\item Errori figli: isolamento per nodo in \codeword{nodeChildrenErrors}.
 	\item Retry nodo dedicato senza bloccare altri rami dell'albero.
-	\item Normalizzazione errori IPC tramite \texttt{IpcErrorHandlerService}.
+	\item Normalizzazione errori IPC tramite \codeword{IpcErrorHandlerService}.
 \end{itemize}

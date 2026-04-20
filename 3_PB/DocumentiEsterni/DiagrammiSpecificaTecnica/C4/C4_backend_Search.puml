@@ -1,6 +1,7 @@
 @startuml
 title SearchIpcAdapter
 
+left to right direction
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
 hide empty members
@@ -10,32 +11,31 @@ class SearchIpcAdapter {
 }
 
 interface ISearchDocumentalClassUC {
-    + execute(name: string)
-    : DocumentClass[]
+    + execute(name: 
+    string): DocumentClass[]
 }
 interface ISearchProcessUC {
-    + execute(uuid: string)
-    : Process[]
+    + execute(uuid: 
+    string) : Process[]
 }
 interface ISearchDocumentsUC {
-    + execute(filters
-    : SearchDocumentsQuery)
-    : Document[]
+    + execute(filters : SearchDocumentsQuery
+    ) : Document[]
 }
 interface ISearchSemanticUC {
-    + execute(query: string)
-    : Promise<SemanticSearchMatch[]>
+    + execute(query: string
+    ): Promise<SemanticSearchResult[]>
 }
 interface IGetCustomMetadataKeysUC {
-    + execute(dipId: number | null)
-    : string[]
+    + execute(dipId: number | null
+    ): string[]
 }
 
-SearchIpcAdapter --> ISearchDocumentalClassUC : invoca
-SearchIpcAdapter --> ISearchProcessUC         : invoca
-SearchIpcAdapter --> ISearchDocumentsUC       : invoca
-SearchIpcAdapter --> ISearchSemanticUC        : invoca
-SearchIpcAdapter --> IGetCustomMetadataKeysUC : invoca
+SearchIpcAdapter --> ISearchDocumentalClassUC
+SearchIpcAdapter --> ISearchProcessUC        
+SearchIpcAdapter --> ISearchDocumentsUC      
+SearchIpcAdapter --> ISearchSemanticUC       
+SearchIpcAdapter --> IGetCustomMetadataKeysUC
 
 @enduml
 
@@ -46,20 +46,20 @@ skinparam classAttributeIconSize 0
 skinparam linetype ortho
 hide empty members
 
-interface ISearchDocumentalClassUC {
+interface ISearchDocumentClassUC {
     + execute(name: string): DocumentClass[]
 }
-class SearchDocumentalClassUC {
-    - repo: IDocumentClassRepository
-    + execute(name: string): DocumentClass[]
+class SearchDocumentClassUC {
+    - searchPort: ISearchDocumentClassPort
+    + searchDocumentalClasses(name: string): DocumentClass[]
 }
-interface IDocumentClassRepository {
-    + searchDocumentalClasses(name: string)
-    : DocumentClass[]
+interface ISearchDocumentClassPort {
+    + searchDocumentalClasses(name: 
+    string): DocumentClass[]
 }
 
-SearchDocumentalClassUC ..|> ISearchDocumentalClassUC
-SearchDocumentalClassUC --> IDocumentClassRepository : usa
+SearchDocumentClassUC ..|> ISearchDocumentClassUC
+SearchDocumentClassUC --> ISearchDocumentClassPort
 
 @enduml
 
@@ -75,15 +75,15 @@ interface ISearchProcessUC {
     + execute(uuid: string): Process[]
 }
 class SearchProcessUC {
-    - repo: IProcessRepository
-    + execute(uuid: string): Process[]
+     - searchPort: ISearchProcessesPort
+     + execute(uuid: string): Process[]
 }
-interface IProcessRepository {
+interface ISearchProcessesPort {
     + searchProcesses(uuid: string): Process[]
 }
 
 SearchProcessUC ..|> ISearchProcessUC
-SearchProcessUC --> IProcessRepository : usa
+SearchProcessUC --> ISearchProcessesPort
 
 @enduml
 
@@ -95,53 +95,59 @@ skinparam linetype ortho
 hide empty members
 
 interface ISearchDocumentsUC {
-    + execute(filters: SearchDocumentsQuery)
-    : Document[]
+    + execute(filters: SearchDocumentsQuery
+    ) : Document[]
 }
 class SearchDocumentsUC {
-    - documentRepo: IDocumentRepository
-    + execute(filters: SearchDocumentsQuery)
-    : Document[]
+    - searchPort: ISearchDocumentsPort
+    + execute(filters: SearchDocumentsQuery
+    ) : Document[]
 }
-interface IDocumentRepository {
-    + searchDocument(filters: SearchDocumentsQuery)
-    : Document[]
+interface ISearchDocumentsPort {
+    + searchDocument(filters: SearchDocumentsQuery
+    ) : Document[]
 }
 
 SearchDocumentsUC ..|> ISearchDocumentsUC
-SearchDocumentsUC --> IDocumentRepository : usa
+SearchDocumentsUC --> ISearchDocumentsPort
 
 @enduml
 
 @startuml
 title SearchSemanticUC
 
+left to right direction
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
 hide empty members
 
 interface ISearchSemanticUC {
     + execute(query: 
-    string) : Promise<SemanticSearchMatch[]>
+    string) : Promise<SemanticSearchResult[]>
 }
 class SearchSemanticUC {
-    - documentRepo: IDocumentRepository
-    - aiAdapter: IWordEmbedding
-    + execute(query: string): Promise<SemanticSearchMatch[]>
+    - documentPort : IGetDocumentByIdPort
+    - vectorPort: ISearchSimilarVectorsPort
+    - wePort: IWordEmbeddingPort
+     + execute(query: string): Promise<SemanticSearchResult[]>
 }
-interface IDocumentRepository {
-    + searchDocumentSemantic(v: Float32Array
-    ) : Promise<Array<{document,score}>>
+interface ISearchSimilarVectorsPort {
+    + searchSimilarVectors( queryVector: Float32Array,
+    topK: number, ): Promise<SemanticSearchResult[]>
 }
-interface IWordEmbedding {
+interface IGetDocumentByIdPort {
+    + getById(id: number): Document | null
+}
+interface IWordEmbeddingPort {
     + generateEmbedding(text: 
     string): Promise<Float32Array>
     + isInitialized(): boolean
 }
 
 SearchSemanticUC ..|> ISearchSemanticUC
-SearchSemanticUC --> IDocumentRepository : usa
-SearchSemanticUC --> IWordEmbedding      : usa
+SearchSemanticUC --> ISearchSimilarVectorsPort
+SearchSemanticUC --> IWordEmbeddingPort
+SearchSemanticUC --> IGetDocumentByIdPort
 
 @enduml
 
@@ -156,97 +162,111 @@ interface IGetCustomMetadataKeysUC {
     + execute(dipId: number | null): string[]
 }
 class GetCustomMetadataKeysUC {
-    - documentRepo: IDocumentRepository
+    - metaPort: IGetDistinctDocumentCustomMetadataKeysPort
     + execute(dipId: number | null): string[]
 }
-interface IDocumentRepository {
+interface IGetDistinctDocumentCustomMetadataKeysPort {
     + getDistinctCustomMetadataKeys(dipId: number | null): string[]
 }
 
 GetCustomMetadataKeysUC ..|> IGetCustomMetadataKeysUC
-GetCustomMetadataKeysUC --> IDocumentRepository : usa
+GetCustomMetadataKeysUC --> IGetDistinctDocumentCustomMetadataKeysPort
 
 @enduml
 
 @startuml
-title DocumentClassRepository
+title ISearchDocumentClassPort
 
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
 hide empty members
 
-interface IDocumentClassRepository {
+interface ISearchDocumentClassPort {
     + searchDocumentalClasses(name: string): DocumentClass[]
 }
-class DocumentClassRepository {
+class DocumentClassPersistenceAdapter {
     - dao: DocumentClassDAO
+    - mapper: DocumentClassMapper
     + searchDocumentalClasses(name: string): DocumentClass[]
 }
+
 class DocumentClassDAO {
     - db: Database
-    + search(name: string): DocumentClass[]
+    + search(name: string): DocumentClassPersistenceRow[]
 }
 
-DocumentClassRepository ..|> IDocumentClassRepository
-DocumentClassRepository --> DocumentClassDAO : delega
+DocumentClassPersistenceAdapter ..|> ISearchDocumentClassPort
+DocumentClassPersistenceAdapter --> DocumentClassDAO
 
 @enduml
 
 @startuml
-title ProcessRepository
+title ISearchProcessesPort
 
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
 hide empty members
 
-interface IProcessRepository {
+interface ISearchProcessesPort {
     + searchProcesses(uuid: string): Process[]
 }
-class ProcessRepository {
+class ProcessPersistenceAdapter {
     - dao: ProcessDAO
+    - mapper: ProcessMapper
     + searchProcesses(uuid: string): Process[]
 }
+
 class ProcessDAO {
     - db: Database
-    + searchProcesses(uuid: string): Process[]
+    + searchProcesses(uuid: string): ProcessPersistenceAggregate[]
 }
 
-ProcessRepository ..|> IProcessRepository
-ProcessRepository --> ProcessDAO : delega
+ProcessPersistenceAdapter ..|> ISearchProcessesPort
+ProcessPersistenceAdapter --> ProcessDAO
 
 @enduml
 
 @startuml
-title DocumentRepository
+title DocumentPersistenceAdapter
 
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
 hide empty members
 
-interface IDocumentRepository {
-    + searchDocument(filters: SearchDocumentsQuery): Document[]
-    + searchDocumentSemantic(v: Float32Array): Promise<Array<{document,score}>>
-    + getDistinctCustomMetadataKeys(dipId: number | null): string[]
-    + getIndexedDocumentsCount(): number
+interface ISearchDocumentsPort {
+    + searchDocuments(
+        filters: SearchDocumentsQuery
+    ): Document[]
 }
-class DocumentRepository {
+
+interface IGetDistinctDocumentCustomMetadataKeysPort {
+    + getDistinctCustomMetadataKeys(
+        dipId: number | null
+    ): string[]
+}
+
+interface IGetIndexedDocumentsCountPort {
+    + getIndexedDocumentsCount(
+    ): number
+}
+
+class DocumentPersistenceAdapter implements ISearchDocumentsPort, IGetDistinctDocumentCustomMetadataKeysPort, IGetIndexedDocumentsCountPort {
     - dao: DocumentDAO
-    + searchDocument(filters: SearchDocumentsQuery): Document[]
-    + searchDocumentSemantic(v: Float32Array): Promise<Array<{document,score}>>
+    - mapper: DocumentMapper
+    + searchDocuments(filters: SearchDocumentsQuery): Document[]
     + getDistinctCustomMetadataKeys(dipId: number | null): string[]
     + getIndexedDocumentsCount(): number
 }
+
 class DocumentDAO {
     - db: Database
     - queryBuilder: DocumentMetadataQueryBuilder
-    + searchDocument(filters: SearchDocumentsQuery): Document[]
-    + searchDocumentSemantic(v: Float32Array): Promise<Array<{document,score}>>
+    + searchDocuments(filters: SearchDocumentsQuery): DocumentJsonPersistenceRow[]
     + getDistinctCustomMetadataKeys(dipId: number | null): string[]
     + getIndexedDocumentsCount(): number
 }
 
-DocumentRepository ..|> IDocumentRepository
-DocumentRepository --> DocumentDAO : delega
+DocumentPersistenceAdapter --> DocumentDAO 
 
 @enduml
 
@@ -259,7 +279,7 @@ hide empty members
 
 class DocumentDAO {
     - queryBuilder: DocumentMetadataQueryBuilder
-    + searchDocument(filters: SearchDocumentsQuery): Document[]
+    + searchDocument(filters: SearchDocumentsQuery): DocumentJsonPersistenceRow[]
 }
 class DocumentMetadataQueryBuilder {
     + build(filters: SearchDocumentsQuery): {sql: string, params: unknown[]}
@@ -269,10 +289,10 @@ class DocumentMetadataQueryBuilder {
     - toJsonPath(path: string): string
 }
 
-DocumentDAO --> DocumentMetadataQueryBuilder : istanzia
-DocumentMetadataQueryBuilder --> SearchDocumentsQuery : riceve
-DocumentMetadataQueryBuilder --> SearchGroup          : visita
-DocumentMetadataQueryBuilder --> SearchCondition      : traduce
+DocumentDAO --> DocumentMetadataQueryBuilder
+DocumentMetadataQueryBuilder --> SearchDocumentsQuery
+DocumentMetadataQueryBuilder --> SearchGroup
+DocumentMetadataQueryBuilder --> SearchCondition
 
 @enduml
 
@@ -284,7 +304,8 @@ skinparam linetype ortho
 hide empty members
 
 class SearchDocumentsQuery {
-    + filter: SearchGroup
+    - filter: SearchGroup
+    + getFilter(): SearchGroup
     + isTooDeep(maxDepth: number): boolean
     - calculateDepth(group: SearchGroup, depth: number): number
 }
@@ -327,8 +348,6 @@ hide empty members
 class MetadataKeyMapper {
     + {static} toPascalCase(key: string): string
     + {static} mapGroup(group: SearchGroup): SearchGroup
-    + {static} mapFilters(filters: MetadataFilter[]): MetadataFilter[]
-    + {static} fromLegacyFilters(filters: MetadataFilter[]): SearchGroup
 }
 interface SearchGroup {
     + logicOperator: LogicOperator
@@ -340,8 +359,8 @@ interface SearchCondition {
     + value: any
 }
 
-MetadataKeyMapper --> SearchGroup    : normalizza path
-MetadataKeyMapper --> SearchCondition : normalizza path
+MetadataKeyMapper --> SearchGroup    
+MetadataKeyMapper --> SearchCondition
 
 @enduml
 
@@ -353,19 +372,23 @@ skinparam linetype ortho
 hide empty members
 
 class DocumentClassMapper {
-    + {static} toSearchResult(dc: DocumentClass): DocumentClassSearchResult
+    + {static} toSearchResult(dc: DocumentClass
+    ): DocumentClassSearchResult
 }
 class DocumentClass
-class DocumentClassSearchResult {
+interface SearchResult {
     + id: number
     + uuid: string
-    + integrityStatus: string
+    + integrityStatus: IntegrityStatusEnum
+}
+class DocumentClassSearchResult {
     + name: string
     + type: string
 }
 
-DocumentClassMapper ..> DocumentClass           : riceve
-DocumentClassMapper ..> DocumentClassSearchResult : restituisce
+DocumentClassSearchResult ..|> SearchResult
+DocumentClassMapper ..> DocumentClass             
+DocumentClassMapper ..> DocumentClassSearchResult 
 
 @enduml
 
@@ -380,15 +403,18 @@ class ProcessMapper {
     + {static} toSearchResult(p: Process): ProcessSearchResult
 }
 class Process
-class ProcessSearchResult {
+interface SearchResult {
     + id: number
     + uuid: string
-    + integrityStatus: string
+    + integrityStatus: IntegrityStatusEnum
+}
+class ProcessSearchResult {
     + type: string
 }
 
-ProcessMapper ..> Process           : riceve
-ProcessMapper ..> ProcessSearchResult : restituisce
+ProcessSearchResult ..|> SearchResult
+ProcessMapper ..> Process           
+ProcessMapper ..> ProcessSearchResult 
 
 @enduml
 
@@ -404,18 +430,78 @@ class DocumentMapper {
     - {static} mapRootMetadataType(metadata: Metadata): DocumentTypeEnum
 }
 class Document
-class DocumentSearchResult {
+interface SearchResult {
     + id: number
     + uuid: string
-    + integrityStatus: string
+    + integrityStatus: IntegrityStatusEnum
+}
+class DocumentSearchResult {
     + name: string
     + type: DocumentTypeEnum
     + score: number | null
 }
 enum DocumentTypeEnum
 
-DocumentMapper ..> Document           : riceve
-DocumentMapper ..> DocumentSearchResult : restituisce
-DocumentMapper ..> DocumentTypeEnum     : usa
+DocumentSearchResult ..|> SearchResult
+DocumentMapper ..> Document            
+DocumentMapper ..> DocumentSearchResult 
+DocumentMapper ..> DocumentTypeEnum     
+
+@enduml
+
+@startuml
+title ISearchSimilarVectorsPort
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+hide empty members
+
+interface ISearchSimilarVectorsPort {
+    + searchSimilarVectors(vector: number[]): Vector[]
+}
+class VectorPersistenceAdapter {
+    - dao: VectorDAO
+    + searchSimilarVectors(queryVector: Float32Array,topK: number): SearchSemanticResult[]
+}
+
+class VectorDAO {
+    - db: Database
+    + searchSimilarVectors(queryVector: Float32Array,topK: number): SearchSemanticResult[];
+}
+
+VectorPersistenceAdapter ..|> ISearchSimilarVectorsPort
+VectorPersistenceAdapter --> VectorDAO
+
+@enduml
+
+@startuml
+
+title VectorPersistenceAdapter
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+hide empty members
+
+interface ISaveVectorPort {
+  saveVector(vector: Vector): void;
+}
+class VectorPersistenceAdapter {
+    - dao: VectorDAO
+    + saveVector(vector: Vector): void
+}
+
+class VectorDAO {
+    - db: Database
+    + save(vector: Vector): void
+}
+
+class Vector {
+    - documentId: number
+    - embedding: Float32Array
+    + getDocumentId(): number
+    + getEmbedding(): Float32Array
+}
+
+VectorPersistenceAdapter ..|> ISaveVectorPort
+VectorPersistenceAdapter --> VectorDAO
 
 @enduml
