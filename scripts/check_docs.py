@@ -42,7 +42,7 @@ def calculate_gulpease(text):
 
     # 6. RIMOZIONE COMMENTI E AMBIENTI NON TESTUALI
     text = re.sub(r'(?<!\\)%.*', '', text)
-    for env in ['tabular', 'table', 'figure', 'adjustwidth', 'spacing', 'center', 'tcolorbox', 'longtable']:
+    for env in ['tabular', 'table', 'figure', 'adjustwidth', 'spacing', 'center', 'tcolorbox']:
         text = re.sub(r'\\begin\{' + env + r'\}.*?\\end\{' + env + r'\}', '', text, flags=re.DOTALL)
 
     # 7. ESTRAZIONE TESTO DA COMANDI NIDIFICATI (ul, textbf, glossario)
@@ -60,18 +60,15 @@ def calculate_gulpease(text):
     # Mantieni solo lettere, numeri e punteggiatura terminativa
     clean_text = re.sub(r'[^\w\s\.\,\!\?\'\’]', '', text, flags=re.UNICODE)
     clean_text = re.sub(r'\s+', ' ', clean_text).strip()
-    print(clean_text)
 
     # 9. CALCOLO METRICHE
     words_list = re.findall(r'\w+', clean_text)
     words = len(words_list) or 1
     sentences = len(re.findall(r'[.!?]+', clean_text)) or 1
-    words = len(re.findall(r'\w+', clean_text)) or 1
-    letters = len(re.findall(r'[a-zA-Z]', clean_text))
+    letters = sum(len(w) for w in words_list)
     
-    # Formula Gulpease
     index = 89 - 10 * (letters / words) + 300 * (sentences / words)
-    return index
+    return index, clean_text
 
 def check_latex(filepath):
     # Compilazione veloce (draftmode) per verificare la sintassi
@@ -80,24 +77,75 @@ def check_latex(filepath):
     
     result = subprocess.run(
         ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "-draftmode", filepath_name],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        text=True, encoding='utf-8', errors='replace',
         cwd=filepath_dir
     )
     print(result.stdout)
     return result.returncode == 0
 
 def check_spelling(text):
-    # Usa aspell con dizionario italiano
-    # Se esiste un file 'whitelist.txt', lo usa come dizionario personale
-    cmd = ['aspell','-t', '-l', 'it', 'list']
-    if os.path.exists('scripts/aspell_whitelist.txt'):
-        cmd.append('--personal=./scripts/aspell_whitelist.txt')
+    """
+    Controlla gli errori ortografici usando due aspell separati:
+    1. Aspell italiano con whitelist personale
+    2. Aspell inglese per le parole non italiane
+    Restituisce una lista di tuple (parola, riga, contesto) per ogni errore
+    """
+    try:
+        if not text.strip():
+            return []
         
-    process = subprocess.Popen(
-        cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True
-    )
-    stdout, _ = process.communicate(input=text)
-    return set(stdout.split())
+        # Run aspell Italian with whitelist
+        p_it = subprocess.Popen(
+            ["aspell", "list", "--lang=it", "--encoding=utf-8", "--personal=./scripts/aspell_whitelist.pws"],
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            text=True, encoding='utf-8', errors='replace'
+        )
+        out_it, _ = p_it.communicate(input=text)
+        errors_it = set(w.strip() for w in out_it.splitlines() if w.strip())
+        
+        # Run aspell English
+        p_en = subprocess.Popen(
+            ["aspell", "list", "--lang=en", "--encoding=utf-8"],
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            text=True, encoding='utf-8', errors='replace'
+        )
+        out_en, _ = p_en.communicate(input=text)
+        errors_en = set(w.strip() for w in out_en.splitlines() if w.strip())
+        
+        # Only words not recognized in EITHER language are errors (intersection)
+        error_words = errors_it & errors_en
+        
+        if not error_words:
+            print(f"Parole non riconosciute: 0")
+            return []
+        
+        # Find line and context for each error
+        lines = text.split('\n')
+        error_details = []
+        
+        for word in error_words:
+            # Case-insensitive search
+            word_pattern = re.compile(r'\b' + re.escape(word) + r'\b', re.IGNORECASE)
+            for line_num, line in enumerate(lines, 1):
+                if word_pattern.search(line):
+                    # Extract context (up to 60 chars around the word)
+                    match = word_pattern.search(line)
+                    start = max(0, match.start() - 30)
+                    end = min(len(line), match.end() + 30)
+                    context = line[start:end].strip()
+                    if start > 0:
+                        context = '...' + context
+                    if end < len(line):
+                        context = context + '...'
+                    error_details.append((word, line_num, context))
+                    break  # Only report first occurrence
+        
+        print(f"Parole non riconosciute: {len(error_details)}")
+        return error_details
+    except Exception as e:
+        print(f"⚠️ Errore durante lo spellcheck: {e}")
+        return []
 
 def main():
     # Prende i file passati come argomenti (es. da glob nello yaml)
@@ -130,7 +178,7 @@ def main():
             overall_success = False
 
         # 2. GULPEASE CHECK
-        score = calculate_gulpease(content)
+        score, clean_text = calculate_gulpease(content)
         print(f"Indice Gulpease: {score:.2f}")
         if score < 60:
             print(f"❌ ERRORE: Leggibilità insufficiente (< 60)")
@@ -139,21 +187,29 @@ def main():
             print("Leggibilità: OK")
 
         # 3. SPELLCHECK
-        errors = check_spelling(content)
+        errors = check_spelling(clean_text)
         if errors:
-            print(f"❌ ERRORE: Trovati {len(errors)} errori di spelling.")
-            parole_errate_totali.update(errors)
+            for word, line_num, context in errors:
+                print(f"  Riga {line_num}: '{word}' in \"{context}\"")
+                parole_errate_totali.add(word)
             overall_success = False
         else:
             print("Spellcheck: OK")
 
     if not overall_success:
-        print("\nUno o più controlli falliti. Il merge è bloccato.")
-        parole_errate = '\n'.join(list(parole_errate_totali))
-        print(f"Parole errate totali trovate: \n{parole_errate}\n")
+        print("\n" + "="*60)
+        print("❌ UNO O PIÙ CONTROLLI FALLITI")
+        print("="*60)
+        if parole_errate_totali:
+            print(f"\nRiepilogo parole errate ({len(parole_errate_totali)}):")
+            for word in sorted(parole_errate_totali):
+                print(f"  • {word}")
+        print()
         sys.exit(1)
     else:
-        print("\nTutti i controlli passati con successo!")
+        print("\n" + "="*60)
+        print("✓ TUTTI I CONTROLLI PASSATI CON SUCCESSO!")
+        print("="*60)
 
 if __name__ == "__main__":
     main()
