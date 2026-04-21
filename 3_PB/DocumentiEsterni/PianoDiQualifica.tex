@@ -453,7 +453,7 @@ Suddividiamo le metriche secondo raggruppamenti logici qui di seguito elencati e
        \hline
         MPD-12 & Complessità ciclomatica & $\leq$15 & $\leq$10 \\
         \hline
-        MPD-13 & Accoppiamento tra classi & $\leq$0.4 & $\leq$0.2 \\
+        MPD-13 & Accoppiamento tra classi & $\leq$10 & $\leq$5 \\
         \hline
         MPD-14 & Code Smells & $\leq$15 & 0 \\
         \hline
@@ -1846,6 +1846,116 @@ Nel secondo Sprint si è verificato un rischio imprevedibile: un membro del grup
 \end{figure}
 Si nota un calo iniziale, corrispondentemente al periodo di instabilità generale del progetto. Successivamente, grazie a misure correttive e ai controlli automatici di alcune metriche si è raggiunta la stabilità. Questo anche grazie alla crescente attenzione rivolta al soddisfacimento delle metriche di qualità.
 
+\subsection{MPD-1, MPD-2, MPD-3: Requisiti obbligatori, opzionali, desiderabili soddisfatti}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/MPD-1-2-3.png}
+    \caption{MPD-1, MPD-2, MPD-3: Requisiti obbligatori, opzionali, desiderabili soddisfatti}
+    \label{mpd-1-2-3}
+\end{figure}
+Il gruppo ha soddisfatto tutti i requisiti obbligatori. Alcuni requisiti opzionali non sono stati soddisfatti, principalmente a causa di limitazioni di tempo, tuttavia la maggior parte è stata soddisfatta. Per quanto riguarda l'unico requisito desiderabile, è stato soddisfatto.\\
+
+\subsection{MPD-4: Broken Links}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/mpd-4.png}
+    \caption{MPD-4: Broken Links}
+    \label{mpd-4}
+\end{figure}
+Nel contesto dell'applicazione i link rotti rappresentano collegamenti ai diversi componenti del layer frontend non funzionanti. Nel momento di picco di sviluppo la metrica è aumentata poiché il gruppo stava implementando le diverse funzionalità in maniera asincrona, senza preoccuparsi di collegare immediatamente i componenti. Successivamente, con l'avanzamento del progetto e la stabilizzazione del codice, il numero di link rotti è diminuito fino a raggiungere zero.\\
+
+\subsection{MPD-5: Branch Coverage}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/mpd-5.png}
+    \caption{MPD-5: Branch Coverage}
+    \label{mpd-5}
+\end{figure}
+La coverage è rimasta stabile sopra all'80\% per quasi ogni branch di sviluppo, con alcune eccezioni che si avvicinano comunque molto a questo valore. Si può notare che la misurazione della metrica ha permesso di rilevare e correggere le carenze dei branch di Navigazione e Import, confermando l'importanza di monitorare costantemente la qualità del codice.\\
+
+\subsection{MPD-6: Statement Coverage}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/mpd-6.png}
+    \caption{MPD-6: Statement Coverage}
+    \label{mpd-6}
+\end{figure}
+Lo statement coverage è rimasto stabilmente sopra all'80\% nei periodi finali grazie all'implementazione dei test in concomitanza con lo sviluppo del codice, senza delegare la scrittura dei test a fasi successive. Questo approccio è un'alternativa al test-driven development, che il gruppo ha ritenuto troppo rigido e limitante in fase di sviluppo iniziale in cui è stato necessario esplorare diversi approcci per implementare le funzionalità.\\
+
+\subsection{MPD-7: Profondità di navigazione}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/mpd-7.png}
+    \caption{MPD-7: Profondità di navigazione}
+    \label{mpd-7}
+\end{figure}
+La metrica di profondità di navigazione è indicatore diretto dell'usabilità del prodotto. Tenendo considerazione di questo aspetto, l'interfaccia utente prevede la massima profondità di navigazione nell'albero del DIP, che richiede al massimo 5 click per raggiungere qualsiasi elemento. Avendo definito questa profondità massima, la metrica è rimasta stabile durante tutto il progetto.\\
+
+\subsection{MPD-8: Indexing Time}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/mpd-8.png}
+    \caption{MPD-8: Indexing Time}
+    \label{mpd-8}
+\end{figure}
+La metrica di indexing time è stata monitorata utilizzando lo stesso pacchetto DIP di test di dimensione 5GB. Nelle prime fasi di sviluppo l'indicizzazione era ancora ereditata dal POC, e dunque non ottimizzata. Con l'avanzamento del progetto e l'implementazione di un sistema di indicizzazione più efficiente, il tempo di indicizzazione è diminuito significativamente, per poi calare ulteriormente con il refactoring e l'unione delle transazioni in una unica verso il database SQLite.\\
+
+\subsection{MPD-9: Search Time}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/mpd-9.png}
+    \caption{MPD-9: Search Time}
+    \label{mpd-9}
+\end{figure}
+La metrica di search time è stata monitorata utilizzando lo stesso pacchetto DIP di test di dimensione 5GB. Nelle prime fasi di sviluppo il tempo di ricerca era ancora ereditato dal POC. Con il refactoring del database SQLite e l'ottimizzazione delle query, il tempo di ricerca è diminuito significativamente.
+
+\subsection{MPD-10: Average CPU Usage}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/mpd-10.png}
+    \caption{MPD-10: Average CPU Usage}
+    \label{mpd-10}
+\end{figure}
+L'utilizzo di CPU si è rivelato irrisorio fin da subito, il gruppo ha comunque mantenuto l'attenzione su questa metrica per evitare l'introduzione di bug che potessero causarne un aumento che sarebbe rimasto irrisolto.
+
+\subsection{MPD-11: Peak Memory Usage}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/mpd-11.png}
+    \caption{MPD-11: Peak Memory Usage}
+    \label{mpd-11}
+\end{figure}
+L'utilizzo di memoria è rimasto in larga parte vincolato dalla distribuzione Electron dell'applicazione, che prevede un limite inferiore di 300/400MB. Durante lo sviluppo la metrica è variata in maniera contenuta, senza mostrare criticità anche in situazioni di stress.\\
+
+
+\subsection{MPD-12: Complessità ciclomatica}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/mpd-12-1.png}
+    \caption{MPD-12: Complessità ciclomatica Frontend}
+    \label{mpd-12}
+\end{figure}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/mpd-12-2.png}
+    \caption{MPD-12: Complessità ciclomatica Backend}
+    \label{mpd-12}
+\end{figure}
+Il gruppo ha deciso di monitorare la complessità ciclomatica suddivisa per funzionalità di frontend e backend, in modo da fornire un quadro dettagliato e significativo pur rimanendo comprensibile e fruibile senza riportare la complessità per singolo file. Nel complesso il gruppo è riuscito a rispettare la soglia desiderabile di 15. Le eccezioni che si possono notare lato Backend sono risultato della presenza di poche specifiche funzioni che per natura richiedono un numero elevato di branch e non rappresentano un allarme per la qualità del codice. 
+
+\subsection{MPD-13: Accoppiamento tra classi}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/mpd-13.png}
+    \caption{MPD-13: Accoppiamento tra classi}
+    \label{mpd-13}
+\end{figure}
+L'accoppiamento tra classi è rimasto stabile durante tutto il progetto per via della progettazione iniziale che ha previsto un design destinato a non mutare, con un numero di dipendenze per classe che si è mantenuto al di sotto della soglia desiderabile di 5. 
+
+\subsection{MPD-14: Code Smells}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/mpd-14.png}
+    \caption{MPD-14: Code Smells}
+    \label{mpd-14}
+\end{figure}
+Lo strumento SonarQube ha permesso di monitorare code smells e di intervenire per correggerli. Gli avvisi significativi sono stati risolti tempestivamente, mentre altri che non rappresentavano un rischio per la qualità del codice ma semplicemente consigli di nomenclatura o di stile sono stati ignorati per ottimizzare il tempo a disposizione.\\
+
+\subsection{MPD-15: Sistemi Operativi supportati}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/mpd-15.png}
+    \caption{MPD-15: Sistemi Operativi supportati}
+    \label{mpd-15}
+\end{figure}
+Lo sviluppo si è svolto maggiormente su sistemi operativi Windows e Linux, con integrazione finale delle dipendenze necessarie per la build funzionante anche su macOS. La compatibilità finale quindi è stata raggiunta e verificata per tutti e tre i sistemi operativi principali.\\
 
 \vfill
 
