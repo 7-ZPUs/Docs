@@ -249,7 +249,7 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
         \rowcolor{zpusgreen!30}
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
-        MPC-8 & Deployment frequency & - & 1/gg \\
+        MPC-8 & Deployment frequency & - & 1/settimana \\
         \hline
         MPC-9 & Requirements Stability Index & $\geq$70\% & 100\% \\
         \hline
@@ -257,7 +257,7 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
         \hline
         MPC-11 & SV (Sprint Velocity) & $\geq$80 \% SV medio ultimi N sprint & 90\% – 110\% SV medio ultimi N sprint \\
         \hline
-        MPC-12 & Burndown Adherence & $\leq$20\% & $\leq$10\% \\
+        MPC-12 & Burndown Adherence & $\pm$1.6 o $\pm$0.7 & $\pm$1 \\
         \hline
     \end{tabular}
     \caption{Metriche di qualità di processo - Sviluppo}
@@ -1781,6 +1781,14 @@ Si può apprezzare dal grafico un quadro generale di quanto detto fino ad ora.
 Si osserva un aumento dell EAC nella fase iniziale, con un suo successivo rientro
 e un lieve rialzo nelle ultime due settimane. \\
 
+\subsection{MPC-8: Deployment frequency}
+\begin{figure}[H] %DA FARE 
+    \includegraphics[width=\textwidth]{../../assets/pdq/deployment_frequency.png}
+    \caption{MPC-8: Deployment frequency}
+    \label{deployment_frequency}
+\end{figure}
+Il deployment è avvenuto, come era naturale che fosse, nelle fasi finali del progetto. Il gruppo ha effettuato il primo deployment una volta effettuato la prima integrazione dei componenti. Il successivo deployment è stato in corrispondenza dell'incontro con la proponente il giorno 9 di Aprile. In seguito alle modifiche proposte dall'azienda, è stato effettuato un terzo deployment, che ha portato alla versione finale del PoC. In questo ultimo caso, le release sono state pubblicate in versione eseguibile anche per Windows e MacOs, oltre che per Linux.\\
+
 \subsection{MPC-9: Requirements Stability Index}
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{../../assets/pdq/rsi.png}
@@ -1804,12 +1812,14 @@ Per garantire un limite minimo, nelle settimane 7--10 (SPRINT 4) è stato introd
 un controllo automatico che accetta in repository solo documenti con Gulpease $\geq$ 60.
 
 \subsection{MPC-11: Sprint Velocity}
-\begin{figure}[H]
+\begin{figure}[H] %Dati presenti nel cruscotto
     \includegraphics[width=\textwidth]{../../assets/pdq/sv.png}
     \caption{MPC-11: Sprint Velocity}
     \label{sv}
 \end{figure}
-La Sprint Velocity permette di misurare la quantità di lavoro completata durante uno sprint. Vediamo che il gruppo ha aumentato la produttività nel corso del progetto fino allo sprint 5. C'è stato in seguito, un calo di produttività che è da attribuire alle vacanze natalizie per lo sprint 6 e la sessione per lo sprint 7. Entrambi fattori di rischio previsti.
+La Sprint Velocity permette di misurare la quantità di lavoro completata durante uno sprint. Vediamo che il gruppo ha aumentato la produttività nel corso del progetto fino allo sprint 5. C'è stato in seguito, un calo di produttività che è da attribuire alle vacanze natalizie per lo sprint 6 e la sessione per lo sprint 7. Entrambi fattori di rischio previsti.\\
+Un ulteriore aumento è stato registrato in corrispondenza dell'avvicinamento alla data prevista per la consegna, con un picco nello sprint 11.\\
+
 
 \subsection{MPC-12: Burndown Chart}
 \begin{figure}[H]
@@ -1817,7 +1827,12 @@ La Sprint Velocity permette di misurare la quantità di lavoro completata durant
     \caption{MPC-12: Burndown Chart}
     \label{bc}
 \end{figure}
-Il Burndown Chart mostra quanto lavoro c'è ancora da svolgere all'interno di uno sprint, e qual'è l'andamento ideale per completare tutto il lavoro dello sprint. Nel nostro caso individuiamo un aumento delle attività da fare che coincide con la riunione interna di metà sprint, nella quale vengono solitamente aggiunte nuove task.
+Il Burndown Chart mostra quanti work item sono ancora da svolgere all'interno di uno sprint, e qual'è l'andamento ideale per completare tutto il lavoro dello sprint. Nel nostro caso individuiamo un aumento delle attività da fare che coincide con la riunione interna di metà sprint, nella quale vengono solitamente aggiunte nuove task. Questo è molto visibile nello sprint 8.
+\\ A partire dallo sprint 10 la durata degli sprint è stata ridotta a 1 settimana. È facilmente osservabile come il gruppo abbia seguito un andamento molto vicino a quello descritto dalla linea ideale descritta da Jira.\\
+Quest'ultima infatti è una retta definita a tratti che va dal numero di work item all'inizio dello sprint a 0 alla fine dello sprint, senza considerare il weekend com giorni lavorativi. Il gruppo come descritto nelle norme di progetto si dava un margine per il caricamento delle task su Jira. Questo spiega la crescita del numero di work item nelle prime fasi degli sprint.
+
+Può essere quindi generato un grafico che rapporti la quantità di lavoro svolta con quella pianificata, mostrando un andamento sia molto vicino o superiore a quello ideale.\\
+Si può inoltre notare che con il passaggio a sprint più brevi lo svolgimento delle attività ha seguito uno sviluppo più vicino a quello ideale.
 
 \subsection{MPC-14: Correttezza ortografica}
 \begin{figure}[H]
@@ -1827,6 +1842,13 @@ Il Burndown Chart mostra quanto lavoro c'è ancora da svolgere all'interno di un
 \end{figure}
 Gli errori ortografici sono stati gestiti in maniera analoga e parallela al Gulpease Index. Il gruppo ha deciso di non accettare documenti con errori ortografici, implementando un controllo automatico. Si osserva infatti come al termine della nona settimana i documenti risultano corretti.\\
 
+\subsection{MPC-16: Test success rate}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/tsr.png}
+    \caption{MPC-16: Test success rate}
+    \label{tsr}
+\end{figure}
+Il Test Success Rate mostra la percentuale di test superati rispetto al totale di test eseguiti. Il gruppo ha mantenuto un tasso che nella maggior parte dei casi è 100\%. I cali di questa metrica sono da attribuire ai merge dei diversi moduli che hanno introdotto bug.
 
 \subsection{MPC-18: Rischi non previsti}
 \begin{figure}[H]
@@ -1836,6 +1858,7 @@ Gli errori ortografici sono stati gestiti in maniera analoga e parallela al Gulp
 \end{figure}
 Il gruppo ha registrato due rischi imprevisti in due Sprint diversi. Il primo, coerente con i dati mostrati, è stato causato dalla sottostima delle attività.
 Nel secondo Sprint si è verificato un rischio imprevedibile: un membro del gruppo è stato indisposto. Nello sprint 6 invece è stato riscontrato, coerentemente con quanto descritto in §\ref{crsc_ev_pv_ac}, uno sforamento dei costi inatteso. \\
+Per gli sprint successivi sono stati registrati rischi che però erano stati previsti all'inizio delle attività. Questo denota una migliore capacità di previsione, prevenendo l'insorgere di rischi guardando al passato e alle lezioni apprese.\\
 
 
 \subsection{MPC-19: Metriche soddisfatte}
