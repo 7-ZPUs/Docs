@@ -2160,7 +2160,8 @@ conformità con lo standard ISO/IEC 12207.
 \metricdef{MPC-5}{Schedule Performance Index (SPI)}{Indice di efficienza della pianificazione. Un valore $< 1$ indica che il progetto è in ritardo.}
 \metricformula{SPI = \frac{EV}{PV}}
 
-\metricdef{MPC-6}{Estimate to Complete}{Rappresenta l'ammontare rimanente stimato per completare il progetto}
+\metricdef{MPC-6}{Estimate to Complete}
+{Rappresenta l'ammontare rimanente stimato per completare il progetto}
 \metricformula{ETC = EAC-AC}
 
 \metricdef{MPC-7}{Estimate at Completion (EAC)}{Stima totale dei costi alla fine del progetto, basata sulle performance attuali.}
@@ -2168,44 +2169,54 @@ conformità con lo standard ISO/IEC 12207.
 
 \paragraph{Processo di Sviluppo}
 
-\metricdef{MPC-8}{Deployment Frequency}{Frequenza con cui il team rilascia nuove versioni del software, potenzialmente trasportabili in produzione.}
+\metricdef{MPC-8}{Deployment Frequency}
+{Frequenza con cui il team rilascia nuove versioni del software, potenzialmente trasportabili in produzione.}
 \metricformula{DF = \frac{\text{Numero di deployment}}{\text{Periodo di tempo}}}
 
-\metricdef{MPC-9}{Requirements Stability Index}{Rappresenta la stabilità dei requisiti del prodotto software nel tempo.}
+\metricdef{MPC-9}{Requirements Stability Index}
+{Rappresenta la stabilità dei requisiti del prodotto software nel tempo.}
 \metricformula{RSI = \frac{\#\text{Req originali} - (\#\text{Req modificati} + \#\text{Req eliminati} + \#\text{Req aggiunti})}{\#\text{Req originali}} \cdot 100}
 
-\metricdef{MPC-10}{Average Build Time}{Tempo medio impiegato per completare il processo di build e test automatici.}
+\metricdef{MPC-10}{Average Build Time}
+{Tempo medio impiegato per completare il processo di build e test automatici.}
 \metricformula{T_{avg} = \frac{\sum_{i=1}^{n} T_{build\_i}}{n}}
 
 \paragraph{Processo di Documentazione}
 
-\metricdef{MPC-11}{Indice di Gulpease}{Indice che valuta la leggibilità di un testo in lingua italiana. Valori bassi indicano bassa leggibilità.}
+\metricdef{MPC-11}{Indice di Gulpease}
+{Indice che valuta la leggibilità di un testo in lingua italiana. Valori bassi indicano bassa leggibilità.}
 \metricformula{G = 89 + \frac{300 \times (\#\text{Frasi}) - 10 \times (\#\text{Lettere})}{\#\text{Parole}}}
 
-\metricdef{MPC-12}{Correttezza Ortografica}{Misura la densità di errori ortografici presenti nella documentazione.}
+\metricdef{MPC-12}{Correttezza Ortografica}
+{Misura la densità di errori ortografici presenti nella documentazione.}
 \metricformula{C = \#\text{errori ortografici}}
 
 \paragraph{Processo di Verifica}
 
-\metricdef{MPC-13}{Code review turnaround time}{Tempo medio impiegato per completare una revisione del codice in vista di una Pull Request.}
+\metricdef{MPC-13}{Code review turnaround time}
+{Tempo medio impiegato per completare una revisione del codice in vista di una Pull Request.}
 \metricformula{CRT = \frac{\sum_{i=1}^{n} T_{review\_i}}{n}} $T_{review\_i}$ tempo impiegato per completare la revisione della PR $i$.
 
-\metricdef{MPC-14}{Test success rate}{Percentuale di test superati rispetto al totale dei test eseguiti.}
+\metricdef{MPC-14}{Test success rate}
+{Percentuale di test superati rispetto al totale dei test eseguiti.}
 \metricformula{TSR = \left( \frac{\#\text{Test superati}}{\#\text{Test eseguiti}} \right) \times 100}
 
-\metricdef{MPC-15}{Code Coverage}{Percentuale di codice coperta da test}
+\metricdef{MPC-15}{Code Coverage}
+{Percentuale di codice coperta da test}
 \metricformula{CC = \frac{\#\text{LOC testate}}{\#\text{LOC totali}} \times 100}
 
 \subsubsection{Processi Organizzativi}
 
 \paragraph{Processo di Gestione dei Rischi} \label{gestione_rischi_operativi}
 
-\metricdef{MPC-16}{Rischi non previsti}{Numero di rischi non previsti ad inizio periodo, per ciascun periodo di progetto.}
+\metricdef{MPC-16}{Rischi non previsti}
+{Numero di rischi non previsti ad inizio periodo, per ciascun periodo di progetto.}
 \metricformula{RNP_i = \#\text{Rischi non previsti nel periodo } i}
 
 \paragraph{Processo di Gestione della qualità}
 
-\metricdef{MPC-17}{Metriche soddisfatte}{Percentuale di metriche di qualità che vengono soddisfatte in un determinato istante di tempo.}
+\metricdef{MPC-17}{Metriche soddisfatte}
+{Percentuale di metriche di qualità che vengono soddisfatte in un determinato istante di tempo.}
 \metricformula{MS = \left( \frac{\#\text{Metriche soddisfatte}}{\#\text{Metriche totali}} \right) \times 100}
 
 \subsection{Qualità di Prodotto} \label{qualita_prodotto}
@@ -2214,54 +2225,68 @@ intrinseca del prodotto software, basandosi sul modello ISO/IEC 9126.
 
 \subsubsection{Funzionalità}
 
-\metricdef{MPD-1}{Requisiti obbligatori soddisfatti}{Percentuale di requisiti funzionali obbligatori implementati e testati.}
+\metricdef{MPD-1}{Requisiti obbligatori soddisfatti}
+{Percentuale di requisiti funzionali obbligatori implementati e testati.}
 \metricformula{R\textsubscript{ob} = \left( \frac{\text{Requisiti obbligatori soddisfatti}}{\text{Requisiti obbligatori totali}} \right) \times 100}
 
-\metricdef{MPD-2}{Requisiti opzionali soddisfatti}{Percentuale di requisiti funzionali opzionali implementati e testati.}
+\metricdef{MPD-2}{Requisiti opzionali soddisfatti}
+{Percentuale di requisiti funzionali opzionali implementati e testati.}
 \metricformula{R\textsubscript{op} = \left( \frac{\text{Requisiti opzionali soddisfatti}}{\text{Requisiti opzionali totali}} \right) \times 100}
 
-\metricdef{MPD-3}{Requisiti desiderabili soddisfatti}{Percentuale di requisiti funzionali desiderabili implementati e testati.}
+\metricdef{MPD-3}{Requisiti desiderabili soddisfatti}
+{Percentuale di requisiti funzionali desiderabili implementati e testati.}
 \metricformula{R\textsubscript{de} = \left( \frac{\text{Requisiti desiderabili soddisfatti}}{\text{Requisiti desiderabili totali}} \right) \times 100}
 
 \subsubsection{Affidabilità}
 
-\metricdef{MPD-4}{Broken links}{Numero di riferimenti ipertestuali all'interno dell'applicazione che non portano alla risorsa corretta o non portano ad alcuna risorsa.}
+\metricdef{MPD-4}{Broken links}
+{Numero di riferimenti ipertestuali all'interno dell'applicazione che non portano alla risorsa corretta o non portano ad alcuna risorsa.}
 \metricformula{BL = \#\text{Broken Links}}
 
-\metricdef{MPD-5}{Branch Coverage}{Percentuale di rami decisionali (if, switch, loop) percorsi durante i test.}
+\metricdef{MPD-5}{Branch Coverage}
+{Percentuale di rami decisionali (if, switch, loop) percorsi durante i test.}
 \metricformula{BC = \left( \frac{\text{Rami testati}}{\text{Rami totali}} \right) \times 100}
 
-\metricdef{MPD-6}{Statement Coverage}{Percentuale di istruzioni (statements) del codice sorgente eseguite durante i test automatici.}
+\metricdef{MPD-6}{Statement Coverage}
+{Percentuale di istruzioni (statements) del codice sorgente eseguite durante i test automatici.}
 \metricformula{SC = \left( \frac{\text{Istruzioni testate}}{\text{Istruzioni totali}} \right) \times 100}
 
 \subsubsection{Usabilità}
 
-\metricdef{MPD-7}{Profondità di Navigazione}{Numero massimo di click necessari per raggiungere una qualsiasi pagina di contenuto partendo dalla vista principale.}
+\metricdef{MPD-7}{Profondità di Navigazione}
+{Numero massimo di click necessari per raggiungere una qualsiasi pagina di contenuto partendo dalla vista principale.}
 \metricformula{\max_{i \in I} \text{Click}_i \quad \begin{array}{l} (\text{dove } I = \text{insieme delle pagine}) \\ (\text{dove } \text{Click}_i = \text{numero di click per raggiungere la pagina } i) \end{array}}
 
 \subsubsection{Efficienza}
 
-\metricdef{MPD-8}{Indexing time}{Tempo di \glossario{indicizzazione} per un DiP di dimensioni standard (1-4GB).}
+\metricdef{MPD-8}{Indexing time}
+{Tempo di \glossario{indicizzazione} per un DiP di dimensioni standard (1-4GB).}
 \metricformula{IT = \text{Tempo di indicizzazione (secondi)}}
 
-\metricdef{MPD-9}{Search Time}{Tempo medio di risposta per un set di query predefinite.}
+\metricdef{MPD-9}{Search Time}
+{Tempo medio di risposta per un set di query predefinite.}
 \metricformula{ST = \sum_{i=1}^{n} \frac{\text{Tempo di risposta}_i}{n} \quad \begin{array}{l} (\text{dove } n = \text{numero di query}) \\ (\text{dove }i = \text{indice della query}) \end{array}}
 
-\metricdef{MPD-10}{Average CPU usage}{Percentuale media di utilizzo della CPU durante l'esecuzione del software. Si considera un campione di misurazioni effettuate in condizioni di carico (durante l'indicizzazione o la ricerca) nonché in idle. Quest'ultimo per assicurare che il software non consumi risorse inutilmente quando non è in uso.}
+\metricdef{MPD-10}{Average CPU usage}
+{Percentuale media di utilizzo della CPU durante l'esecuzione del software. Si considera un campione di misurazioni effettuate in condizioni di carico (durante l'indicizzazione o la ricerca) nonché in idle. Quest'ultimo per assicurare che il software non consumi risorse inutilmente quando non è in uso.}
 \metricformula{CPU_{avg} = \sum_{i=1}^{n} \frac{\text{Utilizzo CPU}_i}{n} \quad (\text{dove }n = \text{numero di misurazioni})}
 
-\metricdef{MPD-11}{Peak memory usage}{Massima quantità di memoria RAM utilizzata durante l'esecuzione del software. Permette di individuare eventuale scarsa gestione delle risorse.}
+\metricdef{MPD-11}{Peak memory usage}
+{Massima quantità di memoria RAM utilizzata durante l'esecuzione del software. Permette di individuare eventuale scarsa gestione delle risorse.}
 \metricformula{MEM_{peak} = \max(\text{Utilizzo RAM}_i) \quad (\text{dove }i = 1, \dots, n, \text{istante di tempo } i)}
 
 \subsubsection{Manutenibilità}
 
-\metricdef{MPD-12}{Complessità Ciclomatica}{Misura la complessità del flusso di controllo del codice. Valori superiori a 15 indicano codice difficile da testare e manutenere.}
+\metricdef{MPD-12}{Complessità Ciclomatica}
+{Misura la complessità del flusso di controllo del codice. Valori superiori a 15 indicano codice difficile da testare e manutenere.}
 \metricformula{M = E - N + 2P \quad (\text{dove } E=\text{archi}, N=\text{nodi}, P=\text{componenti connessi})}
 
-\metricdef{MPD-13}{Accoppiamento tra Classi (CBO)}{Numero di classi a cui una determinata classe è accoppiata (usa o è usata da). Un valore alto indica scarsa modularità.}
+\metricdef{MPD-13}{Accoppiamento tra Classi (CBO)}
+{Numero di classi a cui una determinata classe è accoppiata (usa o è usata da). Un valore alto indica scarsa modularità.}
 \metricformula{CBO = \frac{\#\text{Dipendenze}}{\#\text{Componenti}}}
 
-\metricdef{MPD-14}{Code smells}{Numero di code smells, misurato ogni 1000 righe di codice (KLOC). I code smells sono indicatori di potenziali problemi di design o implementazione.}
+\metricdef{MPD-14}{Code smells}
+{Numero di code smells, misurato ogni 1000 righe di codice (KLOC). I code smells sono indicatori di potenziali problemi di design o implementazione.}
 
 \subsubsection{Portabilità}
 
