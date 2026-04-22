@@ -1,0 +1,78 @@
+<mxfile host="app.diagrams.net" modified="2026-04-11T10:00:00.000Z" agent="Copilot" version="24.7.17" editor="draw.io">
+  <diagram id="C2Container" name="C2 Container">
+    <mxGraphModel dx="1800" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="user" value="Utente autorizzato" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="210" width="40" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="auditor" value="Auditor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="390" width="40" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="boundary" value="DIP Reader Desktop Application" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="80" width="1350" height="760" as="geometry" />
+        </mxCell>
+
+        <mxCell id="renderer" value="Renderer UI\nAngular + TypeScript\nSearch/filter/result views" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="250" y="180" width="250" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="preload" value="Preload Bridge (core/src/preload.ts)\ncontextBridge + IPC allowlist" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="560" y="180" width="250" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="main" value="Main Process Runtime (main.ts)\nElectron + Node.js\nbootstrap + IPC adapter registration" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="870" y="180" width="280" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="di" value="Composition Root (core/src/container.ts)\ntsyringe DI container" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="250" y="340" width="260" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="core" value="Application + Domain Layer\nUse case + domain services + ports" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="560" y="340" width="320" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="adapters" value="Infrastructure Layer\nRepositories + DAO + adapters" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="930" y="340" width="290" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sqlite" value="DIP Database\nSQLite + sqlite-vss" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="340" width="230" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="fs" value="Local File System\nDIP folders and files" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="500" width="230" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ai" value="Local AI Runtime\nTransformers + ONNX" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="620" width="230" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="os" value="OS Services\nopen/save/print" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="740" width="230" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="note" value="SOLID + Patterns\nS: separazione use case\nO: estensione con nuove porte\nL: adapter sostituibili\nI: interfacce verticali specifiche\nD: dipendenza da astrazioni\n\nHexagonal, DI, Repository+DAO, Adapter, Facade/Gateway" style="shape=note;whiteSpace=wrap;html=1;size=14;" vertex="1" parent="1">
+          <mxGeometry x="250" y="520" width="620" height="210" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" value="uses" style="endArrow=block;html=1;" edge="1" parent="1" source="user" target="renderer"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" value="audit" style="endArrow=block;html=1;" edge="1" parent="1" source="auditor" target="renderer"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" value="IElectronContextBridge" style="endArrow=block;html=1;" edge="1" parent="1" source="renderer" target="preload"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" value="IPC" style="endArrow=block;html=1;" edge="1" parent="1" source="preload" target="main"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" value="resolve" style="endArrow=block;html=1;" edge="1" parent="1" source="main" target="di"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e6" value="inject" style="endArrow=block;html=1;" edge="1" parent="1" source="di" target="core"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e7" value="ports" style="endArrow=block;html=1;" edge="1" parent="1" source="core" target="adapters"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e8" value="sqlite io" style="endArrow=block;html=1;" edge="1" parent="1" source="adapters" target="sqlite"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e9" value="file io" style="endArrow=block;html=1;" edge="1" parent="1" source="adapters" target="fs"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e10" value="embeddings" style="endArrow=block;html=1;" edge="1" parent="1" source="adapters" target="ai"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e11" value="open/save/print" style="endArrow=block;html=1;" edge="1" parent="1" source="adapters" target="os"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

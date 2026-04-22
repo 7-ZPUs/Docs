@@ -1,0 +1,59 @@
+@startuml C4_Integrity_Backend
+
+title C4 - Integrity Backend (facade and components)
+
+top to bottom direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package "shared/services" {
+  class IpcGateway
+  class IpcErrorHandlerService
+  class TelemetryService
+  class LiveAnnouncerService
+}
+
+package "integrity/facade" {
+  class IntegrityFacade {
+    +getState(): IntegrityState
+    +isVerifying(): boolean
+    +verifyDip(): void
+    +verifyClass(classId: string): void
+    +verifyProcess(processId: string): void
+    +verifyDocument(documentId: string): void
+    +reset(): void
+  }
+}
+
+package "integrity/components" {
+  class IntegrityPageComponent
+  class IntegrityTriggerComponent
+  class VerificationProgressComponent
+  class IntegrityReportPanelComponent
+  class IntegrityFailureDetailComponent
+}
+
+IntegrityFacade -down-> IpcGateway : invoke verify channels
+IntegrityFacade -down-> IpcErrorHandlerService : map IPC errors
+IntegrityFacade -down-> TelemetryService : track events and timings
+IntegrityFacade -down-> LiveAnnouncerService : accessibility feedback
+
+IntegrityPageComponent -down-> IntegrityFacade : request verify and read state
+IntegrityPageComponent --> IntegrityTriggerComponent : trigger
+IntegrityPageComponent --> VerificationProgressComponent : progress
+IntegrityPageComponent --> IntegrityReportPanelComponent : report
+IntegrityReportPanelComponent --> IntegrityFailureDetailComponent : failure detail
+
+note right of IntegrityFacade
+verify* methods are guarded by isVerifying.
+If true, the request returns immediately.
+end note
+
+note bottom of IntegrityFacade
+Verify channels are no-cache because checks mutate status.
+Domain types and contracts are in C4_Integrity_Domain.
+end note
+
+@enduml

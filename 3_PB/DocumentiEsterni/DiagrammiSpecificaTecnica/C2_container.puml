@@ -1,0 +1,56 @@
+@startuml Container Diagram – DIPReader
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Container Diagram – DIPReader
+
+Person(user, "Utente", "Revisore, archivista o cittadino che necessita di consultare e verificare l'archivio.")
+System_Ext(filesystem, "File System Locale", "Fornisce il pacchetto DIP originario e funge da destinazione per i file esportati/scaricati.")
+System_Ext(printer, "Stampante", "Dispositivo di output per la stampa dei documenti.")
+
+System_Boundary(dipreader_app, "DIPReader App (Electron)") {
+
+    Container(renderer, "Renderer Process", "Angular, TypeScript", "Fornisce l'interfaccia visiva per la navigazione, la ricerca e la visualizzazione dei documenti. Comunica con il Main Process solo tramite Context Bridge.")
+
+    Container_Boundary(main, "Main Process") {
+
+        Container(import_service, "Import & Indexing Service", "Node.js, TypeScript", "Orchestratore del pipeline: legge il DIP dal filesystem, effettua il parsing XML e coordina l'indicizzazione relazionale e semantica.")
+
+        Container(query_service, "Query Service", "Node.js, TypeScript", "Gestisce le query di ricerca testuale e semantica esponendo un'interfaccia uniforme ISearchEngine verso il dispatcher IPC.")
+
+        Container(verification_service, "Verification Service", "Node.js, TypeScript", "Verifica l'integrità dei file (hash), la validità delle firme digitali e dei sigilli elettronici.")
+
+        Container(export_service, "Export & Print Service", "Node.js, TypeScript", "Gestisce l'estrazione dei file dal DIP verso il filesystem locale e l'invio alla stampante.")
+
+        Container(ipc_dispatcher, "IPC Dispatcher", "Node.js, TypeScript", "Smista i messaggi IPC in arrivo dal Renderer verso il servizio competente tramite canali IPC dedicati per funzionalità.")
+
+        Container(llm_inference, "LLM Inference Engine", "ONNX Runtime, TypeScript", "Gestisce il caricamento e l'inferenza dei modelli AI locali (.onnx). Servizio condiviso iniettato da Import e Query Service.")
+    }
+
+    ContainerDb(sqlite_db, "SQLite Database", "SQLite3 + sqlite-vss extension", "Unico file database che ospita:\n- Tabelle relazionali dei metadati AGID indicizzati\n- Tabelle virtuali VSS per i vettori semantici")
+
+    note right of sqlite_db
+      Un singolo file .db fisico.
+      La separazione logica relazionale/vettoriale
+      è gestita a livello applicativo dai repository.
+    end note
+}
+
+Rel(user, renderer, "Interagisce con l'interfaccia grafica")
+Rel(renderer, ipc_dispatcher, "Invia comandi e riceve dati", "Electron IPC / Context Bridge")
+Rel(ipc_dispatcher, import_service, "Richieste di importazione DIP")
+Rel(ipc_dispatcher, query_service, "Query di ricerca")
+Rel(ipc_dispatcher, verification_service, "Richieste di verifica")
+Rel(ipc_dispatcher, export_service, "Richieste di esportazione/stampa")
+
+Rel(import_service, sqlite_db, "Scrive metadati e vettori", "IMetadataRepository / IVectorRepository")
+Rel(query_service, sqlite_db, "Legge metadati e vettori", "IMetadataRepository / IVectorRepository")
+Rel(verification_service, sqlite_db, "Legge metadati per verifica", "IMetadataRepository")
+Rel(query_service, llm_inference, "Genera embeddings per ricerca semantica")
+Rel(import_service, llm_inference, "Genera embeddings in fase di indicizzazione")
+
+Rel(import_service, filesystem, "Legge l'archivio DIP", "Node.js fs / IFileReader")
+Rel(verification_service, filesystem, "Legge file per ricalcolo hash", "IFileReader")
+Rel(export_service, filesystem, "Salva i file estratti", "Node.js fs")
+Rel(export_service, printer, "Invia documenti per la stampa")
+
+@enduml

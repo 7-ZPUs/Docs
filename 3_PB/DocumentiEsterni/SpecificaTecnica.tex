@@ -1,0 +1,148 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage[sfdefault]{atkinson}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{chngpage}
+\usepackage{pdflscape}
+\usepackage{tocloft}
+\usepackage{longtable}
+\usepackage{ltablex}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage[table]{xcolor}
+\usepackage{color,soul}
+\usepackage[most]{tcolorbox}
+\usepackage{nameref}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{tabularx}
+\usepackage{adjustbox}
+% Colori ZPUS - Verde, Nero, Bianco
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+\definecolor{codewordcolor}{RGB}{49, 127, 69}
+
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+
+\hypersetup{
+    linkcolor=black,
+    urlcolor=blue
+}
+
+\definecolor{lightblack}{gray}{0.35}
+\newcommand{\glossario}[1]{\textit{#1}\textsubscript{\textbf{\textit{\textcolor{lightblack}{G}}}}}
+\newcommand{\ped}[1]{\textsubscript{#1}}
+\newcommand{\codeword}[1]{{\textcolor{codewordcolor}{\textit{#1}}}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\def\UrlBreaks{\do\_\do\,\do\:\do\-\do\.\do\/}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{\rightmark}
+\rhead{7-ZPUs}
+\lfoot{Specifica Tecnica}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+\renewcommand{\contentsname}{Indice}
+\renewcommand{\listoftables}{Elenco delle tabelle}
+\renewcommand{\listoffigures}{Elenco delle immagini}
+
+\geometry{margin=2.5cm}
+\setstretch{1.1}
+
+\titleclass{\subsubsubsection}{straight}[\subsection]
+
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
+\renewcommand\theparagraph{\thesubsubsubsection.\arabic{paragraph}} % optional; useful if paragraphs are to be numbered
+
+\titleformat{\subsubsubsection}
+  {\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
+\titlespacing*{\subsubsubsection}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{5}{\z@}%
+  {3.25ex \@plus1ex \@minus.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{6}{\parindent}%
+  {3.25ex \@plus1ex \@minus .2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\def\toclevel@subsubsubsection{4}
+\def\toclevel@paragraph{5}
+%\def\toclevel@paragraph{6}
+\def\toclevel@subparagraph{6}
+\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
+\def\l@paragraph{\@dottedtocline{5}{10em}{5em}}
+\def\l@subparagraph{\@dottedtocline{6}{14em}{6em}}
+\makeatother
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+\titleformat{\section}{\LARGE\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}
+\titleformat{\paragraph}{\large\bfseries}{\theparagraph}{1em}{}
+\titleformat{\subparagraph}{\normalsize\bfseries}{\thesubparagraph}{1em}{}
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+
+\pagenumbering{roman}
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{specifica/Abstract.tex}
+\input{specifica/Container.tex}
+\input{specifica/F-VI.tex} % Verifica Integrità
+\input{specifica/F-S.tex}  % Search 
+\input{specifica/F-DD.tex} % Document Details
+\input{specifica/F-N.tex}  % Navigazione 
+\input{specifica/B-I.tex}  % Indexing 
+\input{specifica/B-B.tex}  % Browsing 
+\input{specifica/B-S.tex}
+\input{specifica/B-E.tex}
+\input{specifica/B-VI.tex} % Verifica Integrità
+\input{specifica/Requisiti.tex}
+\end{document}
+
+
+%\section{Progettazione di dettaglio}
+%
+%\subsection{[Componente 1]}
+%    \subsubsection{Diagramma delle classi}
+%    \subsubsection{Lista delle classi}
+%        \paragraph{[Classe 1.1]}
+%        \paragraph{[Classe 1.2]}
+%        \paragraph{[Classe 1.n]}
+%    \subsubsection{Diagramma delle classi}
+%    \subsubsection{Lista delle classi}
+%        \paragraph{[Classe 2.1]}
+%        \paragraph{[Classe 2.2]}
+%        \paragraph{[Classe 2.n]}
+%
+\end{document}

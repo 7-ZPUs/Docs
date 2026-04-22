@@ -1,0 +1,63 @@
+@startuml
+title Search Request DTOs - code level
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+
+package "shared/domain/metadata/search.models" {
+  class SearchRequestDTO <<DTO>> {
+    +filter: SearchGroupDTO
+  }
+
+  class SearchGroupDTO <<DTO>> {
+    +logicOperator: "AND" | "OR"
+    +items: Array<SearchGroupDTO | SearchConditionDTO>
+  }
+
+  class SearchConditionDTO <<DTO>> {
+    +path: string
+    +operator: "EQ" | "GT" | "LT" | "LIKE" | "IN" | "ELEM_MATCH"
+    +value: any
+  }
+
+  class SearchFilters <<model>> {
+    +subject: SubjectCriteria[]
+  }
+
+  class SearchQuery <<model>> {
+    +text: string
+    +type: SearchQueryType
+    +useSemanticSearch: boolean
+  }
+}
+
+package "shared/domain/metadata/partial-filters-models" {
+  class PartialSearchFilters <<model>> {
+    +common: CommonFilterValues
+    +diDai: DiDaiFilterValues
+    +aggregate: AggregateFilterValues
+    +customMeta: CustomFilterValues[] | null
+  }
+}
+
+package "shared/domain/metadata" {
+  class CommonFilterValues <<model>>
+
+  class DiDaiFilterValues <<model>>
+
+  class AggregateFilterValues <<model>>
+
+  class CustomFilterValues <<model>>
+}
+
+SearchRequestDTO --> SearchGroupDTO
+SearchGroupDTO "1" o-- "1..*" SearchConditionDTO : items
+SearchFilters --|> PartialSearchFilters
+PartialSearchFilters *-- CommonFilterValues
+PartialSearchFilters *-- DiDaiFilterValues
+PartialSearchFilters *-- AggregateFilterValues
+PartialSearchFilters *-- CustomFilterValues
+
+
+@enduml

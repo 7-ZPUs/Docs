@@ -1,0 +1,169 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{setspace}
+\usepackage{chngpage}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Colori ZPUS
+\definecolor{zpusgreen}{RGB}{4, 138, 55}
+\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
+\definecolor{zpusblack}{RGB}{0, 0, 0}
+\definecolor{zpuswhite}{RGB}{255, 255, 255}
+\definecolor{zpuslightgray}{RGB}{245, 245, 245}
+
+\newtcolorbox{headerbox}{
+    colback=zpusgreen,
+    colframe=zpusdarkgreen,
+    arc=0pt,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpuswhite}\bfseries\large,
+    center
+}
+
+\newtcolorbox{infobox}{
+    colback=zpuslightgray,
+    colframe=zpusgreen,
+    arc=4pt,
+    boxrule=2pt,
+    left=6pt,
+    right=6pt,
+    top=8pt,
+    bottom=8pt,
+    fontupper=\color{zpusblack}
+}
+
+\pagestyle{fancy}
+\setlength{\headwidth}{\textwidth}
+\fancyhfoffset[L,R]{0pt}
+\lhead{}
+\rhead{7-ZPUs}
+\lfoot{}
+\rfoot{\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+
+\renewcommand{\contentsname}{Indice}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\mdseries\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=9.5cm]{../../../assets/logo7zpus.jpg}\\
+    \small\hspace{10cm} 7zpus.swe@gmail.com\\
+    \Large \textbf{Verbale Esterno Gruppo di Progetto e Sanmarco Informatica}\\
+    \vspace{0.5cm}
+\end{center}
+
+\noindent
+\textbf{Data:} 2026/03/05 \\
+\textbf{Durata:} 20 minuti \\
+\textbf{Luogo:} Incontro online (Meet)
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+
+\tableofcontents
+\newpage
+
+\section*{Partecipanti}
+\begin{itemize}[noitemsep]
+    \item Fattoni Antonio 
+    \item Georgescu Diana
+    \item Gingillino Aaron
+    \item Laoud Zakaria
+    \item Rocco Matteo Alberto
+    \item Soligo Lorenzo
+    \item Vigolo Davide
+\end{itemize}
+
+\section{Ordine del Giorno}
+\begin{enumerate}[noitemsep]
+    \item Risultato della RTB
+    \item Progressione del progetto: Progettazione
+    \item Ordine di priorità delle funzionalità da implementare
+\end{enumerate}
+
+\section{Svolgimento e Discussione}
+
+\subsection{Risultato della RTB}
+Il team ha presentato i risultati della RTB, evidenziando i miglioramenti da implementare e le criticità da risolvere.
+\\Ha quindi informato Sanmarco Informatica delle milestone programmate dal team e ha confermato la stima di fine progetto per la prima settimana di aprile.
+
+\subsection{Progressione del progetto: Progettazione}
+Prima di procedere con la codifica dell'MVP, il team deve completare la progettazione. Sono però emersi dei dubbi a riguardo.
+\subsubsection{Come rappresentare le caratteristiche di Angular e Electron?}
+Il team ha chiesto a Sanmarco Informatica se loro avessero esperienza con il C4 Model e come rappresentare le caratteristiche di Angular e Electron, in particolare l'implementazione nativa dell'MVVM di Angular e gli IPC per la comunicazione tra Angular e Electron.
+\\Non avendo ottenuto una risposta chiara, il team ha deciso di procedere con un incontro con il professore Cardin per chiarire questo punto.
+
+\subsection{Ordine di priorità delle funzionalità da implementare}
+Il team ha chiesto a Sanmarco Informatica se avessero indicazioni sulle funzionalità da implementare con maggiore priorità. 
+\\L'elenco delle funzionalità obbligatorie sono quindi quelle indicate nella presentazione di capitolato:
+\begin{itemize}[noitemsep]
+    \item Ricerca per nel DIP
+    \item Verifica della validità dei documenti
+    \item Salvataggio dei risultati della ricerca
+\end{itemize}
+La stampa ha priorità inferiore seppure la sua implementazione non dovrebbbe essere particolarmente complessa.
+
+
+\section{Decisioni e Conclusione}
+
+Al termine dell’incontro il Team ha stabilito che:
+\begin{itemize}
+    \item si procederà con la progettazione, chiarendo i dubbi con il professore Cardin;
+    \item si darà priorità alle funzionalità obbligatorie, lasciando la stampa come funzionalità secondaria;
+\end{itemize}
+
+\vfill
+
+\begin{flushleft}
+\begin{tabular}{@{}p{0.5in}p{2in}@{}}
+Data: & \hrulefill \\
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{@{}p{0.5in}p{2in}@{}}
+Firma: & \hrulefill \\
+& [Sanmarco Informatica SPA] \\
+\end{tabular}
+\end{flushleft}
+
+\begin{flushright}
+\textit{7-ZPUs}
+\end{flushright}
+
+\end{document}

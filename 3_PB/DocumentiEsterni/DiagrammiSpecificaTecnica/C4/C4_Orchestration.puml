@@ -1,0 +1,52 @@
+@startuml Class Diagram - Main Indexing Flow - Orchestration
+
+top to bottom direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+hide empty members
+
+title Orchestration - ApplicationBootstrap, IndexDipUC
+
+
+  class ApplicationBootstrap {
+    - indexDipUC: IndexDipUC
+    + bootstrap(dipPath: string): Promise<void>
+  }
+
+  interface IIndexDipUC {
+    + execute(dipPath: string): Promise<void>
+  }
+
+  class IndexDipUC implements IIndexDipUC {
+     - packageReader: IPackageReaderService
+     - saveDipPort: ISaveDipPort
+     - saveDocumentClassPort: ISaveDocumentClassPort
+     - saveProcessPort: ISaveProcessPort
+     - saveDocumentPort: ISaveDocumentPort
+     - saveFilePort: ISaveFilePort
+     - saveVectorPort: ISaveVectorPort
+     - embeddingService: IEmbeddingService
+     + execute(dipPath: string): Promise<IndexResult>
+     - indexDip(): Promise<IndexResult>
+     - indexDocumentClasses(): Promise<IndexResult>
+     - indexProcesses(): Promise<IndexResult>
+     - indexDocuments(): Promise<IndexResult>
+     - indexFiles(): Promise<IndexResult>
+     - indexMainFileVector(file: File): Promise<void>
+  }
+
+  interface IndexResult{
+     - success: boolean
+  }
+
+
+interface IEmbeddingService {}
+interface IPackageReaderService {}
+
+ApplicationBootstrap --> IIndexDipUC
+IndexDipUC --> IPackageReaderService
+IndexDipUC --> IEmbeddingService
+IndexDipUC ..> IndexResult
+@enduml

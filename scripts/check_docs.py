@@ -26,7 +26,7 @@ def calculate_gulpease(text):
     
     # Gestione interna agli \item: trasforma i ":" in "." e aggiunge il punto finale
     def clean_items(match):
-        item_content = match.group(1)
+        item_content = match.group(1) 
         # Sostituisce i due punti con punti fermi all'interno del punto elenco
         item_content = item_content.replace(':', '.')
         # Assicura che il punto elenco termini con un punto

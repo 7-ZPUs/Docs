@@ -1,0 +1,19 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+title System Context – DIPReader
+
+Person(user, "Utente", "Revisore, archivista o cittadino che necessita di consultare e verificare l'archivio.")
+System(dipreader, "DIPReader", "Applicazione desktop portable che permette di indicizzare, consultare, verificare ed esportare pacchetti DIP. Funziona completamente offline.")
+System_Ext(filesystem, "File System Locale", "Fornisce il pacchetto DIP originario e funge da destinazione per i file esportati/scaricati.")
+System_Ext(printer, "Stampante", "Dispositivo di output per la stampa dei documenti.")
+
+Rel(user, dipreader, "Consulta, ricerca e verifica")
+Rel(dipreader, filesystem, "Legge il pacchetto DIP e salva le esportazioni", "Node.js fs")
+Rel(dipreader, printer, "Invia documenti per la stampa")
+
+note right of dipreader
+  Nessuna connessione internet richiesta.
+  Nessuna installazione o privilegi di amministratore richiesti.
+end note
+
+@enduml

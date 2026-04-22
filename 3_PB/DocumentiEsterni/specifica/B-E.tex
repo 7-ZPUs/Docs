@@ -1,0 +1,239 @@
+\section{Backend – Export e Stampa}
+
+\subsection{Panoramica}
+
+Il modulo di export e stampa gestisce due flussi distinti ma correlati: 
+l'esportazione di file dal pacchetto DiP verso il filesystem locale 
+dell'utente, e la stampa di uno o più file tramite il sistema di stampa 
+nativo del sistema operativo.
+
+L'orchestrazione è gestita da quattro Use Case dedicati: 
+\codeword{ExportFileUC}, \codeword{ExportFilesUC}, \codeword{PrintFileUC} 
+e \codeword{PrintFilesUC}. Tutti ricevono uno o più identificativi numerici 
+dei file da elaborare, recuperano le relative entità tramite 
+\codeword{IGetFileByIdPort} e \codeword{IFileSystemPort}, risolvono i percorsi assoluti all'interno del 
+pacchetto DiP e delegano l'operazione alle rispettive porte outbound 
+(\codeword{IExportPort} e \codeword{IPrintPort}).
+
+Il punto di ingresso lato renderer è \codeword{FileViewerIpcAdapter}, che 
+registra i canali IPC su \codeword{ipcMain} e funge da ponte tra il 
+processo renderer e gli Use Case del backend. Per le operazioni che richiedono 
+interazione con l'utente (scelta del percorso di destinazione, conferma della 
+stampa multipla) gli Use Case si affidano direttamente a \codeword{IDialogPort}, 
+che astrae le finestre di dialogo native del sistema operativo. 
+
+\subsection{Architettura del modulo}
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=0.9\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3_main_export/Component Diagram - Export.png}}
+    \caption{Diagramma delle componenti – Componenti del modulo di export e stampa}
+    \label{fig:C3_export_print}
+\end{figure}
+
+\subsection{Componenti}
+
+\subsubsection{FileViewerIpcAdapter}
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Export/Export_IPC_Part1.png}}
+    \caption{Diagramma delle classi – FileViewerIpcAdapter, Use Case e ExportResult}
+    \label{fig:export_ipc_part1}
+\end{figure}
+
+\codeword{FileViewerIpcAdapter} è l'adapter IPC che registra i canali di 
+comunicazione tra il processo renderer e il processo main di Electron, 
+esponendo le funzionalità di export e stampa al frontend. Risolve le 
+dipendenze \codeword{IExportFileUC}, \codeword{IExportFilesUC}, 
+\codeword{IPrintFileUC} e \codeword{IPrintFilesUC}.
+
+\paragraph{Metodo principale}
+
+\codeword{+ register(ipcMain: IpcMain): void} – metodo statico che registra 
+tutti i canali IPC del modulo.
+
+\paragraph{Canali registrati}
+
+\begin{itemize}
+    \item \codeword{FILE\_DOWNLOAD} – avvia l'esportazione di un singolo file 
+    dato il suo \codeword{fileId}, delegando a \codeword{ExportFileUC.execute()}.
+    \item \codeword{FILE\_DOWNLOAD\_MANY} – avvia l'esportazione multipla dati 
+    i \codeword{fileIds}, delegando a \codeword{ExportFilesUC.execute()}. 
+    Fornisce al Use Case una callback \codeword{onProgress} che invia eventi 
+    \codeword{FILE\_DOWNLOAD\_PROGRESS} al renderer tramite 
+    \codeword{event.sender.send}.
+    \item \codeword{FILE\_PRINT} – avvia la stampa di un file dato il suo 
+    \codeword{fileId}, delegando a \codeword{PrintFileUC.execute()}.
+    \item \codeword{FILE\_PRINT\_MANY} – avvia la stampa multipla dati i 
+    \codeword{fileIds}, delegando a \codeword{PrintFilesUC.execute()}. 
+    Fornisce al Use Case una callback \codeword{onProgress} che invia eventi 
+    \codeword{FILE\_PRINT\_PROGRESS} al renderer tramite 
+    \codeword{event.sender.send}.
+\end{itemize}
+
+\subsubsection{Use Case}
+
+\paragraph{ExportFileUC}
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Export/Export_IPC_Part2_Export.png}}
+    \caption{Diagramma delle componenti – Componenti del modulo di export e stampa}
+    \label{fig:C3_export_export}
+\end{figure}
+
+Use Case che orchestra il processo di esportazione di un singolo file dal 
+pacchetto DiP verso il filesystem locale. Recupera l'entità \codeword{File} 
+tramite \codeword{IGetFileByIdPort}, apre la finestra di salvataggio nativa 
+tramite \codeword{IDialogPort}, ne risolve il percorso assoluto sorgente, e 
+delega la scrittura su disco a \codeword{IExportPort} tramite la stream ottenuta con \codeword{IFileSystemPort}.
+
+\codeword{+ execute(fileId: number): Promise<ExportResult>} : avvia 
+l'esportazione del file identificato da \codeword{fileId}. Se il file non 
+viene trovato nel database, restituisce un \codeword{ExportResult} di 
+fallimento con codice \codeword{NOT\_FOUND}; se l'utente annulla il dialog 
+restituisce un \codeword{ExportResult.canceled()}.
+
+\paragraph{ExportFilesUC}
+
+Use Case che orchestra l'esportazione sequenziale di più file verso una 
+directory di destinazione scelta dall'utente. Apre la finestra di selezione 
+cartella tramite \codeword{IDialogPort}, quindi itera sui \codeword{fileIds} 
+forniti eseguendo per ciascuno la risoluzione del percorso e la scrittura 
+tramite \codeword{IExportPort} della stream ottenuta con \codeword{IFileSystemPort}. Il progresso viene notificato al chiamante 
+tramite la callback \codeword{onProgress} dopo ogni file elaborato.
+
+\codeword{+ execute(fileIds: number[], onProgress: ProgressCallback): 
+Promise<ExportFilesResult>} : avvia l'esportazione multipla. Al termine 
+restituisce un \codeword{ExportFilesResult} con l'esito dettagliato 
+per ciascun file.
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Export/Export_IPC_Part2_Print.png}}
+    \caption{Diagramma delle componenti – Componenti del modulo di export e stampa}
+    \label{fig:C3_export_print}
+\end{figure}
+
+\paragraph{PrintFileUC}
+
+Use Case che orchestra la stampa di un singolo file. Recupera l'entità 
+\codeword{File} tramite \codeword{IGetFileByIdPort}, ne risolve il percorso 
+assoluto all'interno del pacchetto DiP e delega la stampa a 
+\codeword{IPrintPort}. Anche qui viene passato ad \codeword{IPrintPort} una stream ottenuta tramite \codeword{IFileSystemPort} per consentire l'accesso al contenuto del file.
+
+\codeword{+ execute(fileId: number): Promise<ExportResult>} : avvia la 
+stampa del file identificato da \codeword{fileId}. Se il file non viene 
+trovato nel database, restituisce un \codeword{ExportResult} di fallimento.
+
+\paragraph{PrintFilesUC}
+
+Use Case che orchestra la stampa sequenziale di più file. Itera sui \codeword{fileIds} forniti eseguendo per ciascuno la stampa 
+tramite \codeword{IPrintPort} della stream ottenuta con \codeword{IFileSystemPort}.
+
+\codeword{+ execute(fileIds: number[], onProgress: ProgressCallback): 
+Promise<ExportFilesResult>} : avvia la stampa multipla. Al termine restituisce 
+un \codeword{ExportFilesResult} con l'esito dettagliato per ciascun file.
+
+\subsubsection{ExportResult}
+
+Value object che rappresenta l'esito di un'operazione singola di export o 
+stampa, contenendo le informazioni necessarie a diagnosticare eventuali errori.
+
+\begin{itemize}
+    \item \codeword{+ fileId: number}: indica l'id del documento a cui si riferisce.
+    \item \codeword{+ success: boolean} : indica se l'operazione è stata 
+    completata con successo.
+    \item \codeword{+ canceled?: boolean} : presente e \codeword{true} se 
+    l'operazione è stata annullata dall'utente tramite dialog.
+    \item \codeword{+ errorCode?: string} : codice identificativo dell'errore, 
+    presente solo in caso di fallimento.
+    \item \codeword{+ errorMessage?: string} : messaggio descrittivo 
+    dell'errore, presente solo in caso di fallimento.
+    \item \codeword{+ static ok(): ExportResult} : factory method che 
+    restituisce un'istanza di successo.
+    \item \codeword{+ static canceled(): ExportResult} : factory method che 
+    restituisce un'istanza che rappresenta la cancellazione da parte 
+    dell'utente.
+    \item \codeword{+ static fail(errorCode: string, errorMessage: string): 
+    ExportResult} : factory method che restituisce un'istanza di fallimento 
+    con il codice e il messaggio forniti.
+\end{itemize}
+
+\subsubsection{ExportFilesResult}
+
+Value object che rappresenta l'esito aggregato di un'operazione multipla di 
+export o stampa, utilizzato da \codeword{ExportFilesUC} e 
+\codeword{PrintFilesUC}.
+
+\begin{itemize}
+    \item \codeword{+ results: ExportResult[]} : array contenente l'esito 
+    per ciascun file elaborato.
+\end{itemize}
+
+\subsubsection{LocalExportPort e PrintPort}
+
+\paragraph{LocalExportPort}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Export/Export_IPC_Part3.png}
+    \caption{Diagramma delle classi – Infrastructure Layer: adapter e port}
+    \label{fig:export_ipc_part3}
+\end{figure}
+
+Adapter outbound che implementa \codeword{IExportPort}, responsabile della 
+scrittura del contenuto di un file su disco tramite le API di streaming di 
+Node.js.
+
+\codeword{+ exportFile(stream: NodeJS.ReadableStream, destPath: string): 
+Promise<ExportResult>} : riceve uno stream leggibile e lo scrive nel percorso 
+di destinazione tramite \codeword{createWriteStream}. In caso di errore, 
+restituisce un \codeword{ExportResult} di fallimento.
+
+\paragraph{PrintPort}
+
+Adapter outbound che implementa \codeword{IPrintPort}, responsabile della 
+stampa di un singolo file tramite le API native di Electron. Crea una 
+\codeword{BrowserWindow} nascosta, carica il file tramite il protocollo 
+\codeword{file://} e invoca la stampa al termine del rendering.
+
+\codeword{+ printSingle(absolutePath: string, opts: 
+\allowbreak WebContentsPrintOptions): \allowbreak Promise<ExportResult>} : 
+carica il file nel percorso indicato all'interno di una finestra Electron 
+ e avvia la stampa con le opzioni fornite. Terminata l'operazione, 
+restituisce un \codeword{ExportResult} che ne descrive l'esito.
+
+\subsubsection{IDialogPort ed ElectronDialogPort}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Export/Export_IPC_Part4.png}
+    \caption{Diagramma delle classi – Infrastructure Layer: adapter e port}
+    \label{fig:export_ipc_part3_dialog}
+\end{figure}
+
+\paragraph{IDialogPort}
+
+Interfaccia outbound che astrae le interazioni con l'utente che richiedono 
+finestre di dialogo native del sistema operativo.
+
+\begin{itemize}
+    \item \codeword{+ showSaveDialog(opts: SaveDialogOptions): 
+    Promise<SaveDialogResult>} : mostra la finestra di salvataggio nativa con 
+    le opzioni fornite (es.\ filtri estensione, percorso predefinito). 
+    Restituisce il percorso scelto dall'utente oppure un flag 
+    \codeword{canceled} se l'operazione viene annullata.
+    \item \codeword{+ showFolderDialog(): Promise<FolderDialogResult>} : 
+    mostra la finestra di selezione di una directory. Restituisce il percorso 
+    della cartella selezionata oppure \codeword{canceled} se 
+    l'operazione viene annullata.
+\end{itemize}
+
+\paragraph{ElectronDialogPort}
+
+Adapter outbound che implementa \codeword{IDialogPort} utilizzando le API 
+native di Electron. Fa da ponte tra la logica applicativa e il modulo 
+\codeword{dialog} di Electron, delegando a \codeword{dialog.showSaveDialog}, 
+\codeword{dialog.showOpenDialog} rispettivamente per le operazioni esposte dall'interfaccia.

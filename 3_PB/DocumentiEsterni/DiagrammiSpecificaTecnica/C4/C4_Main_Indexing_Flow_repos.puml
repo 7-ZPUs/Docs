@@ -1,0 +1,172 @@
+@startuml Class Diagram - Main Indexing Flow - Repositories
+
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+hide empty members
+
+title Class Diagram - Main Indexing Flow - Repositories
+
+package "Orchestration" {
+  class IndexDipUC {
+    - dipRepository: IDipRepository
+    - documentClassRepository: IDocumentClassRepository
+    - processRepository: IProcessRepository
+    - documentRepository: IDocumentRepository
+    - fileRepository: IFileRepository
+    - vectorRepository: IVectorRepository
+    + execute(dipPath: string): Promise<void>
+  }
+}
+
+package "Persistence" {
+  interface IDipRepository {
+    + getById(id: number): Dip | null
+    + getByUuid(uuid: string): Dip | null
+    + save(dip: Dip): Dip
+    + getByStatus(status: IntegrityStatusEnum): Dip[]
+    + updateIntegrityStatus(id: number, status: IntegrityStatusEnum): void
+  }
+
+  class DipRepository {
+    - db: SQLiteDatabase
+    + getById(id: number): Dip | null
+    + getByUuid(uuid: string): Dip | null
+    + save(dip: Dip): Dip
+    + getByStatus(status: IntegrityStatusEnum): Dip[]
+    + updateIntegrityStatus(id: number, status: IntegrityStatusEnum): void
+  }
+
+  interface IDocumentClassRepository {
+    + getById(id: number): DocumentClass | null
+    + getByDipId(dipId: number): DocumentClass[]
+    + getByStatus(status: IntegrityStatusEnum): DocumentClass[]
+    + save(documentClass: DocumentClass): DocumentClass
+    + updateIntegrityStatus(id: number, status: IntegrityStatusEnum): void
+    + searchDocumentalClasses(name: string): DocumentClass[]
+  }
+
+  class DocumentClassRepository {
+    - db: SQLiteDatabase
+    + getById(id: number): DocumentClass | null
+    + getByDipId(dipId: number): DocumentClass[]
+    + getByStatus(status: IntegrityStatusEnum): DocumentClass[]
+    + save(documentClass: DocumentClass): DocumentClass
+    + updateIntegrityStatus(id: number, status: IntegrityStatusEnum): void
+    + searchDocumentalClasses(name: string): DocumentClass[]
+  }
+
+  interface IProcessRepository {
+    + getById(id: number): Process | null
+    + getByDocumentClassId(documentClassId: number): Process[]
+    + getByStatus(status: IntegrityStatusEnum): Process[]
+    + save(process: Process): Process
+    + updateIntegrityStatus(id: number, status: IntegrityStatusEnum): void
+    + searchProcesses(uuid: string): Process[]
+  }
+
+  class ProcessRepository {
+    - db: SQLiteDatabase
+    + getById(id: number): Process | null
+    + getByDocumentClassId(documentClassId: number): Process[]
+    + getByStatus(status: IntegrityStatusEnum): Process[]
+    + save(process: Process): Process
+    + updateIntegrityStatus(id: number, status: IntegrityStatusEnum): void
+    + searchProcesses(uuid: string): Process[]
+  }
+
+  interface IDocumentRepository {
+    + getById(id: number): Document | null
+    + getByProcessId(processId: number): Document[]
+    + getByStatus(status: IntegrityStatusEnum): Document[]
+    + save(document: Document): Document
+    + updateIntegrityStatus(id: number, status: IntegrityStatusEnum): void
+    + searchDocument(filters: SearchDocumentsQuery): Document[]
+    + searchDocumentSemantic(queryVector: Float32Array): Promise<Array<{ document: Document; score: number }>>
+    + getDistinctCustomMetadataKeys(dipId: number | null): string[]
+    + getIndexedDocumentsCount(): number
+  }
+
+  class DocumentRepository {
+    - db: SQLiteDatabase
+    + getById(id: number): Document | null
+    + getByProcessId(processId: number): Document[]
+    + getByStatus(status: IntegrityStatusEnum): Document[]
+    + save(document: Document): Document
+    + updateIntegrityStatus(id: number, status: IntegrityStatusEnum): void
+    + searchDocument(filters: SearchDocumentsQuery): Document[]
+    + searchDocumentSemantic(queryVector: Float32Array): Promise<Array<{ document: Document; score: number }>>
+    + getDistinctCustomMetadataKeys(dipId: number | null): string[]
+    + getIndexedDocumentsCount(): number
+  }
+
+  interface IFileRepository {
+    + getById(id: number): File | null
+    + getByDocumentId(documentId: number): File[]
+    + getByStatus(status: IntegrityStatusEnum): File[]
+    + save(file: File): File
+    + updateIntegrityStatus(id: number, status: IntegrityStatusEnum): void
+  }
+
+  class FileRepository {
+    - db: SQLiteDatabase
+    + getById(id: number): File | null
+    + getByDocumentId(documentId: number): File[]
+    + getByStatus(status: IntegrityStatusEnum): File[]
+    + save(file: File): File
+    + updateIntegrityStatus(id: number, status: IntegrityStatusEnum): void
+  }
+
+  interface IVectorRepository {
+    + saveVector(vector: Vector): Promise<void>
+    + getVector(documentId: number): Promise<Float32Array | null>
+    + searchSimilarVectors(queryVector: Float32Array, topK: number): Promise<Array<{ documentId: number; score: number }>>
+  }
+
+  class VectorRepository {
+    - db: SQLiteDatabase
+    + saveVector(vector: Vector): Promise<void>
+    + getVector(documentId: number): Promise<Float32Array | null>
+    + searchSimilarVectors(queryVector: Float32Array, topK: number): Promise<Array<{ documentId: number; score: number }>>
+  }
+}
+
+class Dip <<external>>
+class DocumentClass <<external>>
+class Process <<external>>
+class Document <<external>>
+class File <<external>>
+class Vector <<external>>
+class SQLiteDatabase <<external>>
+class SearchDocumentsQuery <<external>>
+class IntegrityStatusEnum <<external>>
+
+IndexDipUC --> IDipRepository
+IndexDipUC --> IDocumentClassRepository
+IndexDipUC --> IProcessRepository
+IndexDipUC --> IDocumentRepository
+IndexDipUC --> IFileRepository
+IndexDipUC --> IVectorRepository
+
+DipRepository ..|> IDipRepository
+DocumentClassRepository ..|> IDocumentClassRepository
+ProcessRepository ..|> IProcessRepository
+DocumentRepository ..|> IDocumentRepository
+FileRepository ..|> IFileRepository
+VectorRepository ..|> IVectorRepository
+
+DipRepository --> SQLiteDatabase
+DocumentClassRepository --> SQLiteDatabase
+ProcessRepository --> SQLiteDatabase
+DocumentRepository --> SQLiteDatabase
+FileRepository --> SQLiteDatabase
+VectorRepository --> SQLiteDatabase
+IndexDipUC --> DocumentClass
+IndexDipUC --> Process
+IndexDipUC --> Document
+IndexDipUC --> File
+IndexDipUC --> Vector
+
+@enduml

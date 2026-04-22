@@ -1,0 +1,70 @@
+@startuml C3_Renderer_Navigation_Detail_Integrity_Export
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title C4 Model - Level 3 (Renderer Components: Navigation + Detail + Integrity + Export)
+
+Container_Boundary(renderer_container, "Renderer (Angular)") {
+  Component(app_shell, "AppShellComponent", "Smart UI Component", "Layout, sidebar tree, route switch browse/search/integrity")
+  Component(dip_facade, "DipFacade", "Application Facade", "Caricamento nodi root/children e stato albero")
+  Component(nav_gateway, "IpcGateway (navigation)", "Adapter/Gateway", "Browse IPC calls e mapping DipTreeNode")
+
+  Component(item_detail_page, "ItemDetailPageComponent", "Smart UI Component", "Mostra dettaglio per tipo nodo e coordina action components")
+  Component(node_fallback_facade, "NodeFallbackFacade", "Application Facade", "Fallback dettaglio per DIP/DOCUMENT_CLASS/FILE")
+  Component(generic_ipc_gateway, "ElectronIpcGateway", "Adapter/Gateway", "Gateway IPC generico via token")
+
+  Component(integrity_dashboard, "IntegrityDashboardComponent", "Smart UI Component", "Dashboard verifica integrita")
+  Component(integrity_facade, "IntegrityFacade", "Application Facade", "verifyDip/verifyItem + overview stats")
+  Component(integrity_gateway, "IntegrityIpcGateway", "Adapter/Gateway", "Canali check-integrity + browse correlati")
+
+  Component(export_page, "ExportPageComponent", "Smart UI Component", "Flussi export/print singolo e multiplo")
+  Component(export_facade, "ExportFacade", "Application Facade", "Queue, progress, esiti export/print")
+  Component(export_gateway, "ExportIpcGateway", "Adapter/Gateway", "file:download/save-dialog/folder-dialog/print")
+  Component(export_state, "ExportState", "State Store", "Signals per fase, progresso, errori, queue")
+
+  Component(cache_service, "IpcCacheService", "Infrastructure Service", "Cache IPC")
+  Component(error_handler, "IpcErrorHandlerService", "Infrastructure Service", "Traduzione errori")
+  Component(context_bridge, "IElectronContextBridge", "Port", "Bridge abstraction")
+}
+
+Container_Ext(preload_bridge, "Electron Preload Bridge", "contextBridge", "window.electronAPI/api/electron")
+Container_Ext(main_ipc, "Main IPC Adapters", "Electron Main", "BrowsingIpcAdapter + CheckIntegrityIpcAdapter + FileViewerIpcAdapter")
+
+Rel(app_shell, dip_facade, "loadRootNodes/loadChildren")
+Rel(dip_facade, nav_gateway, "query nodes")
+Rel(nav_gateway, context_bridge, "invoke")
+
+Rel(item_detail_page, node_fallback_facade, "loadNode fallback")
+Rel(node_fallback_facade, generic_ipc_gateway, "invoke browse:*")
+
+Rel(integrity_dashboard, integrity_facade, "loadOverview/verify")
+Rel(integrity_facade, integrity_gateway, "check + browse")
+
+Rel(export_page, export_facade, "onExport/onPrint")
+Rel(export_facade, export_gateway, "exportFile/printFile/getFileDto")
+Rel(export_facade, export_state, "update phase/progress/results")
+
+Rel(nav_gateway, cache_service, "cache browse queries")
+Rel(node_fallback_facade, cache_service, "cache detail")
+Rel(integrity_facade, cache_service, "invalidate after checks")
+Rel(nav_gateway, error_handler, "handle")
+Rel(node_fallback_facade, error_handler, "handle")
+Rel(integrity_facade, error_handler, "handle")
+
+Rel(integrity_gateway, preload_bridge, "window.electronAPI.invoke")
+Rel(export_gateway, preload_bridge, "window.electronAPI.invoke/on")
+Rel(context_bridge, preload_bridge, "bridge call")
+Rel(preload_bridge, main_ipc, "ipc invoke/on")
+
+note right of app_shell
+SOLID:
+- S: smart components delegano a facade
+- O: nuove feature aggiungono facade/gateway senza rompere UI esistente
+- D: token-based DI in app config/routes
+
+Pattern:
+- Facade + Gateway
+- Caching decorator style at gateway/facade boundary
+- Smart/Dumb component split
+end note
+
+@enduml
