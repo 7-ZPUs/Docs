@@ -253,7 +253,7 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
         \hline
         MPC-9 & Requirements Stability Index & $\geq$70\% & 100\% \\
         \hline
-        MPC-10 & Average build time & $\leq$15 min & $\leq$10 min \\
+        MPC-10 & Average build time & $\leq$3 min & $\leq$1 min \\
         \hline
         MPC-11 & SV (Sprint Velocity) & $\geq$80 \% SV medio ultimi N sprint & 90\% – 110\% SV medio ultimi N sprint \\
         \hline
@@ -1801,19 +1801,14 @@ Questo ha fatto sì che non si sia reso spesso necessario modificare, aggiungere
 Una correzione è stata però necessaria in seguito alla revisione da parte del professor Cardin, portando ad un'analisi più precisa per quanto riguarda i requisiti non funzionali. In questo caso, è stato necessario modificare alcuni requisiti funzionali per garantire la coerenza con i requisiti non funzionali, portando ad un calo dell'indice.\\
 
 
-\subsection{MPC-10: Indice di Gulpease}
-DA FARE
+\subsection{MPC-10: Average build time}
 \begin{figure}[H]
-    \includegraphics[width=\textwidth]{../../assets/pdq/gfi.png}
-    \caption{MPC-10: Indice di Gulpease}
-    \label{gfi}
+    \includegraphics[width=\textwidth]{../../assets/pdq/avg_build_time.png}
+    \caption{MPC-10: Average build time}
+    \label{avg_build_time}
 \end{figure}
-Il gruppo misura l'Indice di Gulpease per garantire la leggibilità, soprattutto
-dei documenti rivolti ad esterni. Nelle fasi iniziali non è stata posta particolare
-attenzione, ma i risultati sono stati comunque buoni. Un'eccezione sono le
-Norme di Progetto: più descrittive e con pochi elenchi, mostrano valori inferiori.
-Per garantire un limite minimo, nelle settimane 7--10 (SPRINT 4) è stato introdotto
-un controllo automatico che accetta in repository solo documenti con Gulpease $\geq$ 60.
+Dal grafico si osserva un aumento del tempo di build, dovuto all'aumento di complessità del progetto e alla crescita del numero di componenti. 
+Il gruppo ha poi ridotto il tempo di build, ottimizzando le configurazioni e i processi di build a partire dalla settimana 21.
 
 \subsection{MPC-11: Sprint Velocity}
 \begin{figure}[H]
@@ -1823,7 +1818,6 @@ un controllo automatico che accetta in repository solo documenti con Gulpease $\
 \end{figure}
 La Sprint Velocity permette di misurare la quantità di lavoro completata durante uno sprint. Vediamo che il gruppo ha aumentato la produttività nel corso del progetto fino allo sprint 5. C'è stato in seguito, un calo di produttività che è da attribuire alle vacanze natalizie per lo sprint 6 e la sessione per lo sprint 7. Entrambi fattori di rischio previsti.\\
 Un ulteriore aumento è stato registrato in corrispondenza dell'avvicinamento alla data prevista per la consegna, con un picco nello sprint 11.\\
-
 
 \subsection{MPC-12: Burndown Chart}
 \begin{figure}[H]
@@ -1843,6 +1837,18 @@ Si può inoltre notare che con il passaggio a sprint più brevi lo svolgimento d
     \label{bc}
 \end{figure}
 
+\subsection{MPC-13: Indice di Gulpease}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/gfi.png}
+    \caption{MPC-13: Indice di Gulpease}
+    \label{gfi}
+\end{figure}
+Il gruppo misura l'Indice di Gulpease per garantire la leggibilità, soprattutto
+dei documenti rivolti ad esterni. Nelle fasi iniziali non è stata posta particolare
+attenzione, ma i risultati sono stati comunque buoni. Un'eccezione sono le
+Norme di Progetto: più descrittive e con pochi elenchi, mostrano valori inferiori.
+Per garantire un limite minimo, nelle settimane 7--10 (SPRINT 4) è stato introdotto
+un controllo automatico che accetta in repository solo documenti con Gulpease $\geq$ 60.
 
 \subsection{MPC-14: Correttezza ortografica}
 DA FARE
@@ -1852,6 +1858,7 @@ DA FARE
     \label{eo}
 \end{figure}
 Gli errori ortografici sono stati gestiti in maniera analoga e parallela al Gulpease Index. Il gruppo ha deciso di non accettare documenti con errori ortografici, implementando un controllo automatico. Si osserva infatti come al termine della nona settimana i documenti risultano corretti.\\
+Similmtente, anche nella seconda parte del progetto si è mantenuta l'attenzione su questo aspetto, controllando automaticamente che i documenti non presentassero errori ortografici e arrivando a una correttezza completa nelle ultime settimane di lavoro.\\
 
 \subsection{MPC-16: Test success rate}
 \begin{figure}[H]
