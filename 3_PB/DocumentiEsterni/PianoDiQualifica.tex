@@ -249,15 +249,15 @@ Ogni termine tecnico o con particolare significato nell'ambito dell'\glossario{I
         \rowcolor{zpusgreen!30}
         \textbf{Codice} & \textbf{Nome metrica} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{accettabile} \end{tabular} & \begin{tabular}[c]{@{}c@{}}  \textbf{Valore}\\\textbf{desiderabile} \end{tabular} \\
         \hline
-        MPC-8 & Deployment frequency & - & 1/gg \\
+        MPC-8 & Deployment frequency & - & 1/settimana \\
         \hline
         MPC-9 & Requirements Stability Index & $\geq$70\% & 100\% \\
         \hline
-        MPC-10 & Average build time & $\leq$15 min & $\leq$10 min \\
+        MPC-10 & Average build time & $\leq$3 min & $\leq$1 min \\
         \hline
         MPC-11 & SV (Sprint Velocity) & $\geq$80 \% SV medio ultimi N sprint & 90\% – 110\% SV medio ultimi N sprint \\
         \hline
-        MPC-12 & Burndown Adherence & $\leq$20\% & $\leq$10\% \\
+        MPC-12 & Burndown Adherence & $\pm$1.6 o $\pm$0.7 & $\pm$1 \\
         \hline
     \end{tabular}
     \caption{Metriche di qualità di processo - Sviluppo}
@@ -481,6 +481,377 @@ Suddividiamo le metriche secondo raggruppamenti logici qui di seguito elencati e
 \end{table}
 
 \section{Strategie di test}
+
+\subsection{Test di unità}
+
+\setlength{\LTleft}{-0.4cm}
+\renewcommand{\arraystretch}{1.2}
+\rowcolors{2}{gray!15}{white}
+\begin{longtable}{|p{2.5cm}|p{2.0cm}|p{10.5cm}|}
+\hline
+\rowcolor{zpusgreen!30}
+\textbf{ID Test} & \textbf{Stato} & \textbf{Posizioni (File e Titolo)} \\
+\hline
+\endfirsthead
+\rowcolor{zpusgreen!30}
+\textbf{ID Test} & \textbf{Stato} & \textbf{Posizioni (File e Titolo)} \\
+\hline
+\endhead
+ TU-C-1 & \ok & \f{core/test/dao/DipDAO.spec.ts} \\
+\hline
+ TU-C-2 & \ok & \f{core/test/dao/DocumentClassDAO.spec.ts} \\
+\hline
+ TU-C-3 & \ok & \f{core/test/dao/DocumentDAO.spec.ts} \\
+\hline
+ TU-C-4 & \ok & \f{core/test/dao/FileDAO.spec.ts} \\
+\hline
+ TU-C-5 & \ok & \f{core/test/dao/mappers/DipMapper.spec.ts} \\
+\hline
+ TU-C-6 & \ok & \f{core/test/dao/mappers/DocumentClassMapper.spec.ts} \\
+\hline
+ TU-C-7 & \ok & \f{core/test/dao/mappers/DocumentMapper.spec.ts} \\
+\hline
+ TU-C-8 & \ok & \f{core/test/dao/mappers/FileMapper.spec.ts} \\
+\hline
+ TU-C-9 & \ok & \f{core/test/dao/mappers/MetadataKeyMapper.spec.ts} \\
+\hline
+ TU-C-10 & \ok & \f{core/test/dao/mappers/MetadataMapper.spec.ts} \\
+\hline
+ TU-C-11 & \ok & \f{core/test/dao/mappers/ProcessMapper.spec.ts} \\
+\hline
+ TU-C-12 & \ok & \f{core/test/dao/MetadataHelper.spec.ts} \\
+\hline
+ TU-C-13 & \ok & \f{core/test/dao/ProcessDAO.spec.ts} \\
+\hline
+ TU-C-14 & \ok & \f{core/test/dao/query/DocumentMetadataQueryBuilder.spec.ts} \\
+\hline
+ TU-C-15 & \ok & \f{core/test/dao/VectorDAO.spec.ts} \\
+\hline
+ TU-C-16 & \ok & \f{core/test/entity/Dip.spec.ts} \\
+\hline
+ TU-C-17 & \ok & \f{core/test/entity/Document.spec.ts} \\
+\hline
+ TU-C-18 & \ok & \f{core/test/entity/DocumentClass.spec.ts} \\
+\hline
+ TU-C-19 & \ok & \f{core/test/entity/File.spec.ts} \\
+\hline
+ TU-C-20 & \ok & \f{core/test/entity/Process.spec.ts} \\
+\hline
+ TU-C-21 & \ok & \f{core/test/ipc/BrowsingIpcAdapter.spec.ts} \\
+\hline
+ TU-C-22 & \ok & \f{core/test/ipc/CheckIntegrityIpcAdapter.spec.ts} \\
+\hline
+ TU-C-23 & \ok & \f{core/test/ipc/FileViewerIpcAdapter.spec.ts} \\
+\hline
+ TU-C-24 & \ok & \f{core/test/ipc/SearchIpcAdapter.spec.ts} \\
+\hline
+ TU-C-25 & \ok & \f{core/test/repo/impl/DipRepository.spec.ts} \\
+\hline
+ TU-C-26 & \ok & \f{core/test/repo/impl/DocumentClassRepository.spec.ts} \\
+\hline
+ TU-C-27 & \ok & \f{core/test/repo/impl/DocumentRepository.spec.ts} \\
+\hline
+ TU-C-28 & \ok & \f{core/test/repo/impl/EntityToDtoConverter.spec.ts} \\
+\hline
+ TU-C-29 & \ok & \f{core/test/repo/impl/FileRepository.spec.ts} \\
+\hline
+ TU-C-30 & \ok & \f{core/test/repo/impl/LocalExportPort.spec.ts} \\
+\hline
+ TU-C-31 & \ok & \f{core/test/repo/impl/LocalPackageReaderAdapter.test.ts} \\
+\hline
+ TU-C-32 & \ok & \f{core/test/repo/impl/PrintPort.spec.ts} \\
+\hline
+ TU-C-33 & \ok & \f{core/test/repo/impl/ProcessRepository.spec.ts} \\
+\hline
+ TU-C-34 & \ok & \f{core/test/repo/impl/SearchSemanticIntegration.spec.ts} \\
+\hline
+ TU-C-35 & \ok & \f{core/test/repo/impl/SearchSemanticScore.spec.ts} \\
+\hline
+ TU-C-36 & \ok & \f{core/test/repo/impl/SqliteTransactionManager.test.ts} \\
+\hline
+ TU-C-37 & \ok & \f{core/test/repo/impl/utils/DataMapper.test.ts} \\
+\hline
+TU-C-38 & \ok & \f{core/test/repo/impl/utils/ensureArray.test.ts} \\
+\hline
+ TU-C-39 & \ok & \f{core/test/repo/impl/utils/FileSystemProvider.test.ts} \\
+\hline
+ TU-C-40 & \ok & \f{core/test/repo/impl/utils/XmlDipParser.test.ts} \\
+\hline
+ TU-C-41 & \ok & \f{core/test/repo/impl/VectorRepository.test.ts} \\
+\hline
+ TU-C-42 & \ok & \f{core/test/scripts/DownloadModels.spec.ts} \\
+\hline
+ TU-C-43 & \ok & \f{core/test/services/impl/EmbeddingService.spec.ts} \\
+\hline
+ TU-C-44 & \ok & \f{core/test/services/impl/HashingService.spec.ts} \\
+\hline
+ TU-C-45 & \ok & \f{core/test/services/impl/IntegrityVerificationService.spec.ts} \\
+\hline
+ TU-C-46 & \ok & \f{core/test/services/impl/SemanticSearchReal.spec.ts} \\
+\hline
+ TU-C-47 & \ok & \f{core/test/services/impl/WordEmbedding.spec.ts} \\
+\hline
+ TU-C-48 & \ok & \f{core/test/use-case/classe-documentale/impl/DocumentClassUseCases.spec.ts} \\
+\hline
+ TU-C-49 & \ok & \f{core/test/use-case/dip/impl/DipUseCases.spec.ts} \\
+\hline
+ TU-C-50 & \ok & \f{core/test/use-case/document/impl/DocumentUseCases.spec.ts} \\
+\hline
+ TU-C-51 & \ok & \f{core/test/use-case/file/impl/FileUseCases.spec.ts} \\
+\hline
+ TU-C-52 & \ok & \f{core/test/use-case/process/impl/ProcessUseCases.spec.ts} \\
+\hline
+ TU-C-53 & \ok & \f{core/test/use-case/search/SearchDocumentalClassUseCases.spec.ts} \\
+\hline
+ TU-C-54 & \ok & \f{core/test/use-case/search/SearchProcessUseCases.spec.ts} \\
+\hline
+ TU-C-55 & \ok & \f{core/test/use-case/search/SearchUseCases.spec.ts} \\
+\hline
+ TU-C-56 & \ok & \f{core/test/use-case/utils/indexing/impl/IndexDip.test.ts} \\
+\hline
+ TU-R-1 & \ok & \f{renderer/src/app/app.config.spec.ts} \\
+\hline
+ TU-R-2 & \ok & \f{renderer/src/app/app.routes.spec.ts} \\
+\hline
+ TU-R-3 & \ok & \f{renderer/src/app/app.spec.ts} \\
+\hline
+ TU-R-4 & \ok & \f{renderer/src/app/core/services/electron-logging-gateway.spec.ts} \\
+\hline
+ TU-R-5 & \ok & \f{renderer/src/app/core/services/ipc.cache.service.spec.ts} \\
+\hline
+ TU-R-6 & \ok & \f{renderer/src/app/core/services/ipc-error-handler.service.spec.ts} \\
+\hline
+ TU-R-7 & \ok & \f{renderer/src/app/core/services/telemetry.service.spec.ts} \\
+\hline
+ TU-R-8 & \ok & \f{renderer/src/app/features/aggregate/mappers/aggregate.mapper.spec.ts} \\
+\hline
+ TU-R-9 & \ok & \f{renderer/src/app/features/aggregate/services/aggregate.facade.spec.ts} \\
+\hline
+ TU-R-10 & \ok & \f{renderer/src/app/features/classe-documentale/classe-documentale-api.service.spec.ts} \\
+\hline
+ TU-R-11 & \ok & \f{renderer/src/app/features/document/mappers/document.mapper.spec.ts} \\
+\hline
+ TU-R-12 & \ok & \f{renderer/src/app/features/document/services/document.facade.spec.ts} \\
+\hline
+ TU-R-13 & \ok & \f{renderer/src/app/features/export-manager/domain/export.state.spec.ts} \\
+\hline
+ TU-R-14 & \ok & \f{renderer/src/app/features/export-manager/infrastructure/export-ipc-gateway.spec.ts} \\
+\hline
+ TU-R-15 & \ok & \f{renderer/src/app/features/export-manager/services/export.facade.spec.ts} \\
+\hline
+ TU-R-16 & \ok & \f{renderer/src/app/features/export-manager/ui/dumb/export-progress/export-progress.component.spec.ts} \\
+\hline
+ TU-R-17 & \ok & \f{renderer/src/app/features/export-manager/ui/dumb/export-result/export-result.component.spec.ts} \\
+\hline
+ TU-R-18 & \ok & \f{renderer/src/app/features/export-manager/ui/smart/export-page/export-page.component.spec.ts} \\
+\hline
+ TU-R-19 & \ok & \f{renderer/src/app/features/item-detail/services/node-fallback.facade.spec.ts} \\
+\hline
+ TU-R-20 & \ok & \f{renderer/src/app/features/item-detail/ui/dumb/document-toolbar/document-toolbar.component.spec.ts} \\
+\hline
+ TU-R-21 & \ok & \f{renderer/src/app/features/item-detail/ui/smart/document-actions/document-actions.component.spec.ts} \\
+\hline
+TU-R-22 & \ok & \f{renderer/src/app/features/item-detail/ui/smart/item-detail-page/item-detail-page.component.spec.ts} \\
+\hline
+TU-R-23 & \ok & \f{renderer/src/app/features/loading/components/loading-component/loading-component.spec.ts} \\
+\hline
+TU-R-24 & \ok & \f{renderer/src/app/features/loading/services/loading-service.spec.ts} \\
+\hline
+TU-R-25 & \ok & \f{renderer/src/app/features/navigation/domain/navigation-routing.spec.ts} \\
+\hline
+TU-R-26 & \ok & \f{renderer/src/app/features/navigation/services/dip-facade.spec.ts} \\
+\hline
+TU-R-27 & \ok & \f{renderer/src/app/features/navigation/services/ipc-gateway.spec.ts} \\
+\hline
+TU-R-28 & \ok & \f{renderer/src/app/features/navigation/ui/dumb/dip-tree-node.component.spec.ts} \\
+\hline
+TU-R-29 & \ok & \f{renderer/src/app/features/navigation/ui/dumb/inline-error-component.spec.ts} \\
+\hline
+TU-R-30 & \ok & \f{renderer/src/app/features/navigation/ui/smart/app-shell.component.spec.ts} \\
+\hline
+TU-R-31 & \ok & \f{renderer/src/app/features/navigation/ui/smart/dip-explorer.component.spec.ts} \\
+\hline
+TU-R-32 & \ok & \f{renderer/src/app/features/navigation/ui/smart/dip-tree.component.spec.ts} \\
+\hline
+TU-R-33 & \ok & \f{renderer/src/app/features/process/components/process-metadata/process-metadata.component.spec.ts} \\
+\hline
+TU-R-34 & \ok & \f{renderer/src/app/features/process/mappers/process.mapper.spec.ts} \\
+\hline
+TU-R-35 & \ok & \f{renderer/src/app/features/process/services/process.facade.spec.ts} \\
+\hline
+TU-R-36 & \ok & \f{renderer/src/app/features/search/adapters/indexing-ipc-gateway.spec.ts} \\
+\hline
+TU-R-37 & \ok & \f{renderer/src/app/features/search/adapters/search-ipc-gateway.spec.ts} \\
+\hline
+TU-R-38 & \ok & \f{renderer/src/app/features/search/adapters/search-request.mapper.custommeta.spec.ts} \\
+\hline
+TU-R-39 & \ok & \f{renderer/src/app/features/search/adapters/search-request.mapper.spec.ts} \\
+\hline
+TU-R-40 & \ok & \f{renderer/src/app/features/search/services/search-facade.spec.ts} \\
+\hline
+TU-R-41 & \ok & \f{renderer/src/app/features/search/services/search-result-factory.service.spec.ts} \\
+\hline
+TU-R-42 & \ok & \f{renderer/src/app/features/search/services/semantic-index-facade.spec.ts} \\
+\hline
+TU-R-43 & \ok & \f{renderer/src/app/features/search/strategies/aggregate-context.strategy.spec.ts} \\
+\hline
+TU-R-44 & \ok & \f{renderer/src/app/features/search/strategies/all-context.strategy.spec.ts} \\
+\hline
+TU-R-45 & \ok & \f{renderer/src/app/features/search/strategies/dai-context.strategy.spec.ts} \\
+\hline
+TU-R-46 & \ok & \f{renderer/src/app/features/search/strategies/di-context.strategy.spec.ts} \\
+\hline
+TU-R-47 & \ok & \f{renderer/src/app/features/search/ui/dumb/aggregate-filters.component/aggregate-filters.component.spec.ts} \\
+\hline
+TU-R-48 & \ok & \f{renderer/src/app/features/search/ui/dumb/async-state-wrapper.component/async-state-wrapper.component.spec.ts} \\
+\hline
+TU-R-49 & \ok & \f{renderer/src/app/features/search/ui/dumb/common-filters.component/common-filters.component.spec.ts} \\
+\hline
+TU-R-50 & \ok & \f{renderer/src/app/features/search/ui/dumb/custom-meta-filters.component/custom-meta-filters.component.logic.spec.ts} \\
+\hline
+TU-R-51 & \ok & \f{renderer/src/app/features/search/ui/dumb/custom-meta-filters.component/custom-meta-filters.component.spec.ts} \\
+\hline
+TU-R-52 & \ok & \f{renderer/src/app/features/search/ui/dumb/di-dai-filters.component/di-dai-filters.component.spec.ts} \\
+\hline
+TU-R-53 & \ok & \f{renderer/src/app/features/search/ui/dumb/field-error.component/field-error.component.spec.ts} \\
+\hline
+TU-R-54 & \ok & \f{renderer/src/app/features/search/ui/dumb/filter-value-input.component/filter-value-input.component.spec.ts} \\
+\hline
+TU-R-55 & \ok & \f{renderer/src/app/features/search/ui/dumb/inline-error.component/inline-error.component.spec.ts} \\
+\hline
+TU-R-56 & \ok & \f{renderer/src/app/features/search/ui/dumb/result-types/aggregate-result-card.component/aggregate-result-card.component.spec.ts} \\
+\hline
+TU-R-57 & \ok & \f{renderer/src/app/features/search/ui/dumb/result-types/class-result-card.component/class-result-card.component.spec.ts} \\
+\hline
+TU-R-58 & \ok & \f{renderer/src/app/features/search/ui/dumb/result-types/document-result-card.component/document-result-card.component.spec.ts} \\
+\hline
+TU-R-59 & \ok & \f{renderer/src/app/features/search/ui/dumb/result-types/process-result-card.component/process-result-card.component.spec.ts} \\
+\hline
+TU-R-60 & \ok & \f{renderer/src/app/features/search/ui/dumb/search-bar.component/search-bar.component.spec.ts} \\
+\hline
+TU-R-61 & \ok & \f{renderer/src/app/features/search/ui/dumb/search-bar.component/search-bar-rules.manager.spec.ts} \\
+\hline
+TU-R-62 & \ok & \f{renderer/src/app/features/search/ui/dumb/search-results.component/search-results.component.spec.ts} \\
+\hline
+TU-R-63 & \ok & \f{renderer/src/app/features/search/ui/dumb/semantic-index-status.component/semantic-index-status.component.spec.ts} \\
+\hline
+TU-R-64 & \ok & \f{renderer/src/app/features/search/ui/dumb/subject-detail-form.component/subject-detail-form.component.spec.ts} \\
+\hline
+TU-R-65 & \ok & \f{renderer/src/app/features/search/ui/dumb/subject-filters.component/subject-filters.component.spec.ts} \\
+\hline
+TU-R-66 & \ok & \f{renderer/src/app/features/search/ui/smart/advanced-filter-panel/advanced-filter-panel.spec.ts} \\
+\hline
+TU-R-67 & \ok & \f{renderer/src/app/features/search/ui/smart/advanced-filter-panel/filter-rules.manager.spec.ts} \\
+\hline
+TU-R-68 & \ok & \f{renderer/src/app/features/search/ui/smart/search-page/search-page.component.spec.ts} \\
+\hline
+TU-R-69 & \ok & \f{renderer/src/app/features/search/utilities/integrity-status.utility.spec.ts} \\
+\hline
+TU-R-70 & \ok & \f{renderer/src/app/features/validation/services/filter-validator.service.spec.ts} \\
+\hline
+TU-R-71 & \ok & \f{renderer/src/app/features/validation/strategies/aggregation-contradiction.strategy.spec.ts} \\
+\hline
+TU-R-72 & \ok & \f{renderer/src/app/features/validation/strategies/date-time-coherence-validation.strategy.spec.ts} \\
+\hline
+TU-R-73 & \ok & \f{renderer/src/app/features/validation/strategies/formation-mode-contradiction.strategy.spec.ts} \\
+\hline
+TU-R-74 & \ok & \f{renderer/src/app/features/validation/strategies/registry-contradiction-validation.strategy.spec.ts} \\
+\hline
+TU-R-75 & \ok & \f{renderer/src/app/features/validation/strategies/search-range-validation.strategy.spec.ts} \\
+\hline
+TU-R-76 & \ok & \f{renderer/src/app/features/verification/infrastructure/integrity-ipc.gateway.spec.ts} \\
+\hline
+TU-R-77 & \ok & \f{renderer/src/app/features/verification/services/integrity.facade.spec.ts} \\
+\hline
+TU-R-78 & \ok & \f{renderer/src/app/features/verification/ui/dumb/integrity-summary-cards/integrity-summary-cards.component.spec.ts} \\
+\hline
+TU-R-79 & \ok & \f{renderer/src/app/features/verification/ui/dumb/integrity-valid-panel/integrity-valid-panel.component.spec.ts} \\
+\hline
+TU-R-80 & \ok & \f{renderer/src/app/features/verification/ui/smart/integrity-dashboard/integrity-dashboard.component.spec.ts} \\
+\hline
+TU-R-81 & \ok & \f{renderer/src/app/shared/components/error-dialog/error-dialog.component.spec.ts} \\
+\hline
+TU-R-82 & \ok & \f{renderer/src/app/shared/infrastructure/electron-logging-gateway.spec.ts} \\
+\hline
+TU-R-83 & \ok & \f{renderer/src/app/shared/infrastructure/ipc.cache.service.spec.ts} \\
+\hline
+TU-R-84 & \ok & \f{renderer/src/app/shared/infrastructure/ipc-error-handler.service.spec.ts} \\
+\hline
+TU-R-85 & \ok & \f{renderer/src/app/shared/infrastructure/telemetry.service.spec.ts} \\
+\hline
+TU-R-86 & \ok & \f{renderer/src/app/shared/services/electron-logging-gateway.spec.ts} \\
+\hline
+TU-R-87 & \ok & \f{renderer/src/app/shared/services/ipc.cache.service.spec.ts} \\
+\hline
+TU-R-88 & \ok & \f{renderer/src/app/shared/services/ipc-error-handler.service.spec.ts} \\
+\hline
+TU-R-89 & \ok & \f{renderer/src/app/shared/services/live-announcer.service.spec.ts} \\
+\hline
+TU-R-90 & \ok & \f{renderer/src/app/shared/services/telemetry.service.spec.ts} \\
+\hline
+TU-R-91 & \ok & \f{renderer/src/app/shared/ui/dumb/empty-state.component/empty-state.component.spec.ts} \\
+\hline
+TU-R-92 & \ok & \f{renderer/src/app/shared/utils/custom-metadata-label.util.spec.ts} \\
+\hline
+TU-R-93 & \ok & \f{renderer/src/app/shared/utils/display-file-name.util.spec.ts} \\
+\hline
+TU-R-94 & \ok & \f{renderer/src/app/shared/utils/document-index.util.spec.ts} \\
+\hline
+TU-R-95 & \ok & \f{renderer/src/app/shared/utils/metadata-nodes.util.spec.ts} \\
+\hline
+\rowcolor{white}
+\caption{Report test di unità}
+\label{tab:test-unita}
+\end{longtable}
+
+
+\subsection{Test di integrazione}
+
+\setlength{\LTleft}{-0.4cm}
+\renewcommand{\arraystretch}{1.2}
+\rowcolors{2}{gray!15}{white}
+\begin{longtable}{|p{2.5cm}|p{2.0cm}|p{10.5cm}|}
+\hline
+\rowcolor{zpusgreen!30}
+\textbf{ID Test} & \textbf{Stato} & \textbf{Posizioni (File e Titolo)} \\
+\hline
+\endfirsthead
+\rowcolor{zpusgreen!30}
+\textbf{ID Test} & \textbf{Stato} & \textbf{Posizioni (File e Titolo)} \\
+\hline
+\endhead
+IT-C-001 & \ok & \f{core/test/dao/query/DocumentMetadataQueryBuilder.integration.spec.ts}                              \\ 
+\hline
+IT-C-002 & \ok & \f{core/test/repo/impl/LocalPackageReaderAdapter.integration.test.ts}                                 \\ 
+\hline
+IT-C-003 & \ok & \f{core/test/services/impl/IntegrityVerificationService.integration.spec.ts}                          \\ 
+\hline
+IT-C-004 & \ok & \f{core/test/use-case/search/SearchUseCases.integration.spec.ts}                                      \\ 
+\hline
+IT-C-005 & \ok & \f{core/test/use-case/utils/indexing/impl/IndexDip.integration.spec.ts}                               \\ 
+\hline
+IT-R-001 & \ok & \f{renderer/src/app/features/search/adapters/indexing-ipc-gateway.spec.ts}                            \\ 
+\hline
+IT-R-002 & \ok & \f{renderer/src/app/features/search/integration test/advanced-filter-panel.integration.spec.ts}       \\ 
+\hline
+IT-R-003 & \ok & \f{renderer/src/app/features/search/integration test/facade-validation.integration.spec.ts}           \\ 
+\hline
+IT-R-004 & \ok & \f{renderer/src/app/features/search/integration test/facade-validation-mock-serv.integration.spec.ts} \\ 
+\hline
+IT-R-005 & \ok & \f{renderer/src/app/features/search/integration test/filter-validator.integration.spec.ts}            \\ 
+\hline
+IT-R-006 & \ok & \f{renderer/src/app/features/search/integration test/result-redirecting.integration.spec.ts}          \\ 
+\hline
+IT-R-007 & \ok & \f{renderer/src/app/features/search/integration test/search-flow.integration.spec.ts}                 \\ 
+\hline
+IT-R-008 & \ok & \f{renderer/src/app/features/verification/integration/integrity-end-to-end.integration.spec.ts}       \\ 
+\hline
+IT-R-009 & \ok & \f{renderer/src/app/features/navigation/integration/navigation-empty-state.integration.spec.ts}       \\ 
+\hline
+\rowcolor{white}
+\caption{Report test di integrazione}
+\label{tab:test-integrazione}
+\end{longtable}
 
 \subsection{Test di sistema}
 
@@ -1781,19 +2152,66 @@ Si può apprezzare dal grafico un quadro generale di quanto detto fino ad ora.
 Si osserva un aumento dell EAC nella fase iniziale, con un suo successivo rientro
 e un lieve rialzo nelle ultime due settimane. \\
 
+\subsection{MPC-8: Deployment frequency}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/deploy.png}
+    \caption{MPC-8: Deployment frequency}
+    \label{deployment_frequency}
+\end{figure}
+Il deployment è avvenuto, come era naturale che fosse, nelle fasi finali del progetto. Il gruppo ha effettuato il primo deployment una volta effettuato la prima integrazione dei componenti. Il successivo deployment è stato in corrispondenza dell'incontro con la proponente il giorno 9 di Aprile. In seguito alle modifiche proposte dall'azienda, è stato effettuato un terzo deployment, che ha portato alla versione finale del PoC. In questo ultimo caso, le release sono state pubblicate in versione eseguibile anche per Windows e MacOs, oltre che per Linux.\\
+
 \subsection{MPC-9: Requirements Stability Index}
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{../../assets/pdq/rsi.png}
     \caption{MPC-9: Requirements Stability Index}
     \label{rsi}
 \end{figure}
-Dal grafico si osserva che, all'inizio, la stabilità dei requisiti è rimasta costante mentre il gruppo definiva le Norme di Progetto e i requisiti non erano ancora esplorati. Successivamente si è verificato un calo significativo: l'attenzione si è spostata sullo studio del dominio applicativo e sulle aspettative della \glossario{proponente}. La scarsa conoscenza del dominio e la continua selezione e revisione dei requisiti, anche per motivi di fattibilità, hanno generato instabilità. La proponente non ha imposto vincoli rigidi sulle funzionalità; di conseguenza i requisiti sono stati proposti e discussi in modo progressivo. Questo ha fatto sì che non si sia reso spesso necessario modificare, aggiungere o eliminare requisiti, e l'indice si è stabilizzato nella fase finale. Nella dodicesima settimana sono stati aggiunti dei requisiti per raggiungere il massimo livello di dettaglio, portando ad un lieve calo della metrica. \\
+Dal grafico si osserva che, all'inizio, la stabilità dei requisiti è rimasta costante mentre il gruppo definiva le Norme di Progetto e i requisiti non erano ancora esplorati. Successivamente si è verificato un calo significativo: l'attenzione si è spostata sullo studio del dominio applicativo e sulle aspettative della \glossario{proponente}. 
+La scarsa conoscenza del dominio e la continua selezione e revisione dei requisiti, anche per motivi di fattibilità, hanno generato instabilità. La proponente non ha imposto vincoli rigidi sulle funzionalità; di conseguenza i requisiti sono stati proposti e discussi in modo progressivo. 
+Questo ha fatto sì che non si sia reso spesso necessario modificare, aggiungere o eliminare requisiti, e l'indice si è stabilizzato nella fase finale. Nella dodicesima settimana sono stati aggiunti dei requisiti per raggiungere il massimo livello di dettaglio, portando ad un lieve calo della metrica. \\
+Una correzione è stata però necessaria in seguito alla revisione da parte del professor Cardin, portando ad un'analisi più precisa per quanto riguarda i requisiti non funzionali. In questo caso, è stato necessario modificare alcuni requisiti funzionali per garantire la coerenza con i requisiti non funzionali, portando ad un calo dell'indice.\\
 
 
-\subsection{MPC-10: Indice di Gulpease}
+\subsection{MPC-10: Average build time}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/avg_build_time.png}
+    \caption{MPC-10: Average build time}
+    \label{avg_build_time}
+\end{figure}
+Dal grafico si osserva un aumento del tempo di build, dovuto all'aumento di complessità del progetto e alla crescita del numero di componenti. 
+Il gruppo ha poi ridotto il tempo di build, ottimizzando le configurazioni e i processi di build a partire dalla settimana 21.
+
+\subsection{MPC-11: Sprint Velocity}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/sprint_velocity.png}
+    \caption{MPC-11: Sprint Velocity}
+    \label{sv}
+\end{figure}
+La Sprint Velocity permette di misurare la quantità di lavoro completata durante uno sprint. Vediamo che il gruppo ha aumentato la produttività nel corso del progetto fino allo sprint 5. C'è stato in seguito, un calo di produttività che è da attribuire alle vacanze natalizie per lo sprint 6 e la sessione per lo sprint 7. Entrambi fattori di rischio previsti.\\
+Un ulteriore aumento è stato registrato in corrispondenza dell'avvicinamento alla data prevista per la consegna, con un picco nello sprint 11.\\
+
+\subsection{MPC-12: Burndown Chart}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/burndown.png}
+    \caption{MPC-12: Burndown Chart}
+    \label{bc}
+\end{figure}
+Il Burndown Chart mostra quanti work item sono ancora da svolgere all'interno di uno sprint, e qual'è l'andamento ideale per completare tutto il lavoro dello sprint. Nel nostro caso individuiamo un aumento delle attività da fare che coincide con la riunione interna di metà sprint, nella quale vengono solitamente aggiunte nuove task. Questo è molto visibile nello sprint 8.
+\\ A partire dallo sprint 10 la durata degli sprint è stata ridotta a 1 settimana. È facilmente osservabile come il gruppo abbia seguito un andamento molto vicino a quello descritto dalla linea ideale descritta da Jira.\\
+Quest'ultima infatti è una retta definita a tratti che va dal numero di work item all'inizio dello sprint a 0 alla fine dello sprint, senza considerare il weekend com giorni lavorativi. Il gruppo come descritto nelle norme di progetto si dava un margine per il caricamento delle task su Jira. Questo spiega la crescita del numero di work item nelle prime fasi degli sprint.
+
+Può essere quindi generato un grafico che rapporti la quantità di lavoro svolta con quella pianificata, mostrando un andamento sia molto vicino o superiore a quello ideale.\\
+Si può inoltre notare che con il passaggio a sprint più brevi lo svolgimento delle attività ha seguito uno sviluppo più vicino a quello ideale.
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/burndown2.png}
+    \caption{MPC-12: Burndown Chart Adherence}
+    \label{bc}
+\end{figure}
+
+\subsection{MPC-13: Indice di Gulpease}
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{../../assets/pdq/gfi.png}
-    \caption{MPC-10: Indice di Gulpease}
+    \caption{MPC-13: Indice di Gulpease}
     \label{gfi}
 \end{figure}
 Il gruppo misura l'Indice di Gulpease per garantire la leggibilità, soprattutto
@@ -1803,39 +2221,33 @@ Norme di Progetto: più descrittive e con pochi elenchi, mostrano valori inferio
 Per garantire un limite minimo, nelle settimane 7--10 (SPRINT 4) è stato introdotto
 un controllo automatico che accetta in repository solo documenti con Gulpease $\geq$ 60.
 
-\subsection{MPC-11: Sprint Velocity}
-\begin{figure}[H]
-    \includegraphics[width=\textwidth]{../../assets/pdq/sv.png}
-    \caption{MPC-11: Sprint Velocity}
-    \label{sv}
-\end{figure}
-La Sprint Velocity permette di misurare la quantità di lavoro completata durante uno sprint. Vediamo che il gruppo ha aumentato la produttività nel corso del progetto fino allo sprint 5. C'è stato in seguito, un calo di produttività che è da attribuire alle vacanze natalizie per lo sprint 6 e la sessione per lo sprint 7. Entrambi fattori di rischio previsti.
-
-\subsection{MPC-12: Burndown Chart}
-\begin{figure}[H]
-    \includegraphics[width=\textwidth]{../../assets/pdq/bc.png}
-    \caption{MPC-12: Burndown Chart}
-    \label{bc}
-\end{figure}
-Il Burndown Chart mostra quanto lavoro c'è ancora da svolgere all'interno di uno sprint, e qual'è l'andamento ideale per completare tutto il lavoro dello sprint. Nel nostro caso individuiamo un aumento delle attività da fare che coincide con la riunione interna di metà sprint, nella quale vengono solitamente aggiunte nuove task.
-
 \subsection{MPC-14: Correttezza ortografica}
+DA FARE
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{../../assets/pdq/eo.png}
     \caption{MPC-14: Correttezza ortografica}
     \label{eo}
 \end{figure}
 Gli errori ortografici sono stati gestiti in maniera analoga e parallela al Gulpease Index. Il gruppo ha deciso di non accettare documenti con errori ortografici, implementando un controllo automatico. Si osserva infatti come al termine della nona settimana i documenti risultano corretti.\\
+Similmtente, anche nella seconda parte del progetto si è mantenuta l'attenzione su questo aspetto, controllando automaticamente che i documenti non presentassero errori ortografici e arrivando a una correttezza completa nelle ultime settimane di lavoro.\\
 
+\subsection{MPC-16: Test success rate}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{../../assets/pdq/passing_test.png}
+    \caption{MPC-16: Test success rate}
+    \label{tsr}
+\end{figure}
+Il Test Success Rate mostra la percentuale di test superati rispetto al totale di test eseguiti. Il gruppo ha mantenuto un tasso che nella maggior parte dei casi è 100\%. I cali di questa metrica sono da attribuire ai merge dei diversi moduli che hanno introdotto bug.
 
 \subsection{MPC-18: Rischi non previsti}
 \begin{figure}[H]
-    \includegraphics[width=\textwidth]{../../assets/pdq/rnp.png}
+    \includegraphics[width=\textwidth]{../../assets/pdq/rischi_imprevisti.png}
     \caption{MPC-18: Rischi non previsti}
     \label{rnp}
 \end{figure}
 Il gruppo ha registrato due rischi imprevisti in due Sprint diversi. Il primo, coerente con i dati mostrati, è stato causato dalla sottostima delle attività.
 Nel secondo Sprint si è verificato un rischio imprevedibile: un membro del gruppo è stato indisposto. Nello sprint 6 invece è stato riscontrato, coerentemente con quanto descritto in §\ref{crsc_ev_pv_ac}, uno sforamento dei costi inatteso. \\
+Per gli sprint successivi sono stati registrati rischi che però erano stati previsti all'inizio delle attività. Questo denota una migliore capacità di previsione, prevenendo l'insorgere di rischi guardando al passato e alle lezioni apprese.\\
 
 
 \subsection{MPC-19: Metriche soddisfatte}
@@ -1844,7 +2256,8 @@ Nel secondo Sprint si è verificato un rischio imprevedibile: un membro del grup
     \caption{MPC-19: Metriche soddisfatte}
     \label{ms}
 \end{figure}
-Si nota un calo iniziale, corrispondentemente al periodo di instabilità generale del progetto. Successivamente, grazie a misure correttive e ai controlli automatici di alcune metriche si è raggiunta la stabilità. Questo anche grazie alla crescente attenzione rivolta al soddisfacimento delle metriche di qualità.
+Si nota un calo iniziale, corrispondentemente al periodo di instabilità generale del progetto. Successivamente, grazie a misure correttive e ai controlli automatici di alcune metriche si è raggiunta la stabilità. Questo anche grazie alla crescente attenzione rivolta al soddisfacimento delle metriche di qualità.\\
+Similmente, si osserva una diminuizione in corrispondenza dell'inserimento di nuove metriche, che però è stata rapidamente recuperata, come nel primo periodo.\\
 
 \subsection{MPD-1, MPD-2, MPD-3: Requisiti obbligatori, opzionali, desiderabili soddisfatti}
 
