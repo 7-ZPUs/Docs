@@ -5,8 +5,8 @@ from datetime import datetime
 
 # --- CONFIGURAZIONE ---
 # Percorso relativo per arrivare alla cartella dei documenti dallo script:
-PATH_DOCUMENTI = os.path.join("..", "..", "2_RTB") 
-NOME_FILE_GLOSSARIO = "Glossario.tex"
+PATH_DOCUMENTI = os.path.join("..", "..", "3_PB", "DocumentiInterni") 
+NOME_FILE_GLOSSARIO = "glossario.tex"
 OUTPUT_LOG = "log_glossario.txt" 
 COMANDO_GLOSSARIO_DOCS = r'\\glossario\{' 
 REGEX_DEFINIZIONE_GLOSSARIO = r'\\item\s*\\textbf\{(.+?)\}'
