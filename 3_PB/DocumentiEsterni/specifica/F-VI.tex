@@ -1,10 +1,10 @@
 \section{Frontend - Verifica Integrità}
 \subsection{Descrizione}
-La funzionalità di \glossario{verifica} \glossario{integrità} garantisce la correttezza e l'autenticità dei pacchetti DIP, verificando ricorsivamente l'integrità crittografica (generalmente hash \glossario{SHA-256}) dei file contenuti, propagando poi il risultato alla gerarchia documentale.
+La funzionalità di \glossario{verifica} \glossario{integrità} garantisce la correttezza e l'autenticità dei pacchetti DIP, verificando ricorsivamente l'integrità crittografica (generalmente hash SHA-256) dei file contenuti, propagando poi il risultato alla gerarchia documentale.
 
 Per gestire l'albero delle dipendenze documentali sono stati adottati diversi design patterns:
 \begin{itemize}
-    \item \textbf{Facade Pattern}: tutta la logica dello state management è isolata in \textit{integrity.facade.ts}. In questo modo la facade agisce come \glossario{single-source-of-truth} per tutti i componenti di UI, inoltre coordina le chiamate ai servizi e gestisce lo stato interno \textit{isVerifying} e di invalidazione della cache quando necessario.
+    \item \textbf{Facade Pattern}: tutta la logica dello state management è isolata in \textit{integrity.facade.ts}. In questo modo la facade agisce come single-source-of-truth per tutti i componenti di UI, inoltre coordina le chiamate ai servizi e gestisce lo stato interno \textit{isVerifying} e di invalidazione della cache quando necessario.
     \item \textbf{Angular Signals}: Angular contribuisce con il suo sistema di state management reattivo basato su Signals, che permette di aggiornare automaticamente la UI in risposta ai cambiamenti di stato senza dover programmarne manualmente l'implementazione e limita l'aggiornamento solo ai componenti interessati, migliorando le performance.
     \item \textbf{Gateway Pattern}: come per le altre funzionalità, anche per la verifica integrità è stato adottato il Gateway Pattern per isolare la logica di comunicazione con il backend attraverso \textit{integrity-ipc-gateway.ts}.
     \item \textbf{Smart/Dumb Components}: i componenti di presentazione (dumb) sono responsabili solo della visualizzazione dei dati e dell'emissione di eventi, mentre i componenti smart gestiscono la logica di business e le interazioni con la facade. In questo modo si ottiene una separazione chiara delle responsabilità e una maggiore riusabilità dei componenti di presentazione.

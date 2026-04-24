@@ -158,7 +158,7 @@ In particolare:
       \item \textbf{Open/Closed Principle (OCP):} l'estensione di funzionalita avviene prevalentemente tramite nuove implementazioni (es. \glossario{adapter}/\glossario{gateway}/componenti specializzati) senza modificare i contratti esistenti.
       \item \textbf{Liskov Substitution Principle (LSP):} i componenti dipendono da \glossario{interfacce} e \glossario{token di iniezione}, favorendo la sostituibilita delle implementazioni.
       \item \textbf{Interface Segregation Principle (ISP):} le interfacce sono granulari e orientate al caso d'uso, evitando dipendenze inutili.
-      \item \textbf{Dependency Inversion Principle (DIP):} i livelli alti dipendono da astrazioni e non da classi concrete, grazie alla \glossario{Dependency Injection}.
+      \item \textbf{Dependency Inversion Principle (DIP):} i livelli alti dipendono da astrazioni e non da classi concrete, grazie alla Dependency Injection.
 \end{itemize}
 Questi principi sono applicati in modo coerente lungo i container \textit{Renderer} e \textit{Main},
 con l'obiettivo di garantire testabilita, manutenibilita e robustezza del prodotto.
@@ -266,14 +266,14 @@ Il caso d'uso principale del sistema è quello di un utente che desidera esplora
 
 \section{Architettura}
 \subsection{Architettura logica}
-Il sistema è progettato con un'\textbf{\glossario{architettura di backend esagonale}}. Questa scelta deriva dalla sua capacità di garantire il rispetto dei principi SOLID, in particolare il Dependency Inversion Principle.
+Il sistema è progettato con un'\textbf{architettura di backend esagonale}. Questa scelta deriva dalla sua capacità di garantire il rispetto dei principi SOLID, in particolare il Dependency Inversion Principle.
 La regola principale è che la business logic non deve dipendere da dettagli di implementazione; al contrario, i dettagli di implementazione devono dipendere da astrazioni, che sono utilizzate dalla logica di business.
 La struttura si può riassumere in 3 livelli principali:
 \begin{itemize}
     \item \textbf{Domain Layer:} contiene la logica di business, rappresentata da servizi, modelli di dominio e interfacce che definiscono i contratti per l'accesso ai dati e l'esecuzione delle operazioni principali del sistema.
     \item \textbf{Inbound ports:} le interfacce che definiscono i contratti per l'interazione con sistemi esterni, in questo caso specifico: il processo renderer (frontend).
     \item \textbf{Outbound ports:} le interfacce che definiscono i contratti per l'interazione con il layer infrastrutturale o sistemi esterni, necessari per l'espletamento di una determinata funzione.
-    \item \textbf{Adapters:} possono esssere sia inbound che outbound. Nel caso di porte inbound, essi si occupano per l'appunto di adattare le richieste provenienti da esterni (p.e. richieste HTTP o in questo caso messaggi \glossario{IPC}) in un \glossario{formato} compatibile con la business logic. Nel caso di porte outbound, invece, si occupano di implementare le interfacce definite dalle porte stesse, fornendo dunque l'implementazione specifica per una determinata interazione (p.e. accesso a database, chiamate a servizi esterni).
+    \item \textbf{Adapters:} possono esssere sia inbound che outbound. Nel caso di porte inbound, essi si occupano per l'appunto di adattare le richieste provenienti da esterni (p.e. richieste HTTP o in questo caso messaggi IPC) in un \glossario{formato} compatibile con la business logic. Nel caso di porte outbound, invece, si occupano di implementare le interfacce definite dalle porte stesse, fornendo dunque l'implementazione specifica per una determinata interazione (p.e. accesso a database, chiamate a servizi esterni).
 \end{itemize}
 Questa architettura favorisce la modularità, la testabilità e la manutenibilità del sistema. Per realizzare questa architettura al meglio è stata adottata in maniera capillare la tecnica della Dependency Injection, permettendo così di delegare la responsabilità di creazione degli oggetti e risoluzione delle dipendenze ad una componente di terze parti dedicata (in questo caso tsyringe). Questo permette di mantenere il codice pulito e indipendente dalle implementazioni specifiche.
 

@@ -19,7 +19,7 @@ La sezione di ricerca implementa un'architettura stratificata basata su due patt
 \begin{enumerate}
     \item Risolve le dipendenze tramite Angular Dependency Injection (iniettando interfacce di servizi, non implementazioni concrete, applicando il principio di sostituzione di Liskov).
     \item Delega alla SearchFacade tutta la logica di orchestrazione tra servizi: validazione, gestione dello stato, routing.
-    \item Espone al template esclusivamente @Input/@Output properties, mantenendo la componente come contenitore logico \glossario{puro}.
+    \item Espone al template esclusivamente @Input/@Output properties, mantenendo la componente come contenitore logico puro.
 \end{enumerate}
 
 \noindent Questo approccio garantisce:
@@ -152,7 +152,7 @@ Il filtro dei soggetti è strutturato secondo il pattern Strategy per consentire
 \begin{enumerate}
     \item \textbf{Role Strategy Registry}: in base al \codeword{DocContext} e al tipo di documento, viene selezionata la configurazione di ruoli consentiti. Ad esempio, un documento DiPIndex può avere ruoli diversi da un'aggregazione, con regole di visibilità e obbligatorietà differenti.
     
-    \item \textbf{SubjectType Detail Field Registry}: per ogni \codeword{SubjectType} (persona fisica, persona giuridica, ente pubblico), viene mantenuta una \glossario{registry} che associa il tipo ai campi di dettaglio richiesti. Questa consente la generazione \textit{dichiarativa} del form, evitando logiche condizionali sparse nel codice.
+    \item \textbf{SubjectType Detail Field Registry}: per ogni \codeword{SubjectType} (persona fisica, persona giuridica, ente pubblico), viene mantenuta una registry che associa il tipo ai campi di dettaglio richiesti. Questa consente la generazione \textit{dichiarativa} del form, evitando logiche condizionali sparse nel codice.
     
     \item \textbf{Wizard guidato}: il componente orchestra un flusso step-by-step:
     \begin{itemize}
@@ -185,7 +185,7 @@ I dettagli dei soggetti, come accennato sono poi gestiti in modo simile, tramite
 \end{figure}
 
 \paragraph{Componenti di filtro semplici}
-La maggior parte dei filtri sono componenti dumb di presentazione, allineati alle \glossario{specifiche AGID} e alle linee guida Sanmarco Informatica:
+La maggior parte dei filtri sono componenti dumb di presentazione, allineati alle specifiche AGID e alle linee guida Sanmarco Informatica:
 
 \begin{description}
     \item[\codeword{CommonFiltersComponent}] Gestisce i filtri applicabili a \textbf{tutti} i tipi di documento:
@@ -262,8 +262,8 @@ La visualizzazione dei risultati di ricerca deve adattarsi al tipo di entità ri
     \item \textbf{SearchResultFactory}: componente factory che:
     \begin{itemize}
         \item Interroga il tipo di risultato ricevuto (DocumentResult, ProcessResult, AggregateResult, ClassResult).
-        \item Consulta una registry configurata \textit{a \glossario{compile-time}} che associa tipo $\to$ componente di visualizzazione.
-        \item Istanzia e proietta il componente corretto nel \glossario{template} tramite \codeword{ng-container} e \codeword{ngComponentOutlet}.
+        \item Consulta una registry configurata \textit{a ompile-time} che associa tipo $\to$ componente di visualizzazione.
+        \item Istanzia e proietta il componente corretto nel template tramite \codeword{ng-container} e \codeword{ngComponentOutlet}.
     \end{itemize}
     
     \item \textbf{Componenti di visualizzazione specializzati}:
@@ -338,7 +338,7 @@ La search bar consente tre modalità di ricerca:
 \begin{enumerate}
     \item \textbf{Ricerca per ID}: inserimento dell'ID di processo; ricerca esatta nel back-end.
     
-    \item \textbf{Ricerca per nome}: inserimento di nome di classe o metadato; ricerca con \glossario{wildcard}.
+    \item \textbf{Ricerca per nome}: inserimento di nome di classe o metadato; ricerca con wildcard.
     
     \item \textbf{Ricerca semantica}: ricerca full-text su documenti usando \glossario{embedding vettoriali} (modello Xenova \codeword{paraphrase-multilingual-MiniLM-L12-v2}, eseguito nel browser tramite ONNX Runtime).
 \end{enumerate}
@@ -423,7 +423,7 @@ Interfaccia:
     \item SearchFacade richiama \codeword{gateway.search(query, abortSignal)} oppure la variante advanced/semantic a seconda dello stato della View.
     \item Gateway:
     \begin{enumerate}
-        \item Verifica cache con \glossario{chiavi} distinte per ricerca testuale, avanzata, semantica e metadati custom.
+        \item Verifica cache con chiavi distinte per ricerca testuale, avanzata, semantica e metadati custom.
         \item Se HIT: restituisce cached results.
         \item Se MISS: invoca \codeword{contextBridge.invoke(...)} sul canale IPC corretto.
         \item Aspetta risposta dal Main Process.
@@ -440,7 +440,7 @@ Ogni use case di ricerca restituisce \codeword{ISearchResult[]}, che viene seria
     \item \textbf{Separation of Concerns}: UI non conosce dettagli back-end, gateway non conosce dettagli UI.
     \item \textbf{Performance}: caching riduce IPC overhead.
     \item \textbf{Testabilità}: gateway è mockabile, backend è testabile in isolamento.
-    \item \textbf{Resilienza}: error handling e abort signals gestiscono \glossario{edge cases}.
+    \item \textbf{Resilienza}: error handling e abort signals gestiscono edge cases.
 \end{itemize}
 
 
