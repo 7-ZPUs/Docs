@@ -31,7 +31,7 @@ Ogni invocazione calcola lo stato del nodo root e dei suoi discendenti, con pers
 \paragraph{Sequenza di verifica}
 \begin{enumerate}[labelwidth=0.8cm,leftmargin=1cm]
 	\item Il renderer invoca il canale \codeword{check-integrity:*}
-	\item \codeword{CheckIntegrityIpcAdapter} intercetta l'handler e risolve il use case
+	\item \codeword{CheckIntegrityIpcAdapter} intercetta l'\glossario{handler} e risolve il use case
 	\item Il use case delega a \codeword{IntegrityVerificationService}
 	\item Il service verifica hash file e aggrega stati sui parent
 	\item Il service persiste gli stati sui livelli coinvolti
@@ -130,7 +130,7 @@ La macchina a stati formalizza le regole di aggregazione: i risultati dei nodi f
 \label{sec:integrity:usecase}
 
 \noindent
-I use case sono thin wrapper senza logica aggiuntiva; delegano direttamente a \codeword{IntegrityVerificationService}.
+I use case sono \glossario{thin wrapper} senza logica aggiuntiva; delegano direttamente a \codeword{IntegrityVerificationService}.
 
 \begin{table}[H]
 	\centering
