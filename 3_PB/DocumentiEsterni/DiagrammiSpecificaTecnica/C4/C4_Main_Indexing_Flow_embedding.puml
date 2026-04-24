@@ -1,0 +1,45 @@
+@startuml Class Diagram - Main Indexing Flow - Embedding
+
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+hide empty members
+
+title Embedding - EmbeddingService, WordEmbeddingPort
+
+package "Embedding" {
+  interface IEmbeddingService {
+    + generateDocumentEmbedding(filePath: string): Promise<Float32Array | null>
+  }
+
+  class EmbeddingService {
+    - packageReader: IPackageReaderService
+    - embeddingAdapter: IWordEmbeddingPort
+    + generateDocumentEmbedding(filePath: string): Promise<Float32Array | null>
+    - readTextFromStream(filePath: string): Promise<string>
+    - chunkText(text: string, size: number, overlap: number): string[]
+    - meanEmbedding(embeddings: Float32Array[]): Float32Array | null
+  }
+
+  interface IWordEmbeddingPort {
+    + generateEmbedding(text: string): Promise<Float32Array>
+    + isInitialized(): boolean
+  }
+
+  class WordEmbeddingPort {
+    - embedder: unknown
+    - initialized: boolean
+    + initialize(): Promise<void>
+    + generateEmbedding(text: string): Promise<Float32Array>
+    + isInitialized(): boolean
+  }
+}
+
+EmbeddingService ..|> IEmbeddingService
+EmbeddingService --> IPackageReaderService
+EmbeddingService --> IWordEmbeddingPort
+WordEmbeddingPort ..|> IWordEmbeddingPort
+
+@enduml

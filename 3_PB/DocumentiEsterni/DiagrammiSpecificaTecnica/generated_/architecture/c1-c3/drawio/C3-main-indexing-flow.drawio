@@ -1,0 +1,34 @@
+<mxfile host="app.diagrams.net" modified="2026-04-11T10:30:00.000Z" agent="Copilot" version="24.7.17" editor="draw.io">
+  <diagram id="C3Indexing" name="C3 Main Indexing Flow">
+    <mxGraphModel dx="1800" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080" math="0" shadow="0">
+      <root>
+        <mxCell id="0" /><mxCell id="1" parent="0" />
+        <mxCell id="boundary" value="Main Process - Indexing Components" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;dashed=1;" vertex="1" parent="1"><mxGeometry x="140" y="70" width="1400" height="820" as="geometry" /></mxCell>
+        <mxCell id="main" value="main.ts lifecycle" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="30" y="170" width="100" height="70" as="geometry" /></mxCell>
+        <mxCell id="bootstrap" value="ApplicationBootstrap" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="220" y="170" width="230" height="70" as="geometry" /></mxCell>
+        <mxCell id="indexdip" value="IndexDipUC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="500" y="170" width="170" height="70" as="geometry" /></mxCell>
+        <mxCell id="tx" value="SqliteTransactionManager" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1"><mxGeometry x="710" y="170" width="230" height="70" as="geometry" /></mxCell>
+        <mxCell id="reader" value="LocalPackageReaderAdapter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="220" y="310" width="240" height="70" as="geometry" /></mxCell>
+        <mxCell id="mapper" value="DataMapper + XmlDipParser" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1"><mxGeometry x="490" y="310" width="230" height="70" as="geometry" /></mxCell>
+        <mxCell id="chunker" value="EmbeddingService" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1"><mxGeometry x="760" y="310" width="180" height="70" as="geometry" /></mxCell>
+        <mxCell id="embed" value="WordEmbedding" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1"><mxGeometry x="970" y="310" width="180" height="70" as="geometry" /></mxCell>
+        <mxCell id="repos" value="Dip/Class/Process/Document/File/Vector Repositories" style="shape=process;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="220" y="450" width="590" height="90" as="geometry" /></mxCell>
+        <mxCell id="sqlite" value="SQLite" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="860" y="460" width="170" height="80" as="geometry" /></mxCell>
+        <mxCell id="fs" value="Local File System" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="1070" y="460" width="190" height="80" as="geometry" /></mxCell>
+        <mxCell id="ai" value="AI Runtime" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="1300" y="460" width="170" height="80" as="geometry" /></mxCell>
+        <mxCell id="note" value="SOLID + Patterns\nS: indexing orchestration in one use case\nD: abstractions for reader/repo/chunker\nPorts & Adapters + transaction boundary" style="shape=note;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="220" y="610" width="560" height="160" as="geometry" /></mxCell>
+        <mxCell id="e1" value="bootstrap" style="endArrow=block;html=1;" edge="1" parent="1" source="main" target="bootstrap"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" value="execute" style="endArrow=block;html=1;" edge="1" parent="1" source="bootstrap" target="indexdip"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" value="transaction" style="endArrow=block;html=1;" edge="1" parent="1" source="indexdip" target="tx"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" value="read*" style="endArrow=block;html=1;" edge="1" parent="1" source="indexdip" target="reader"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" value="map/parse" style="endArrow=block;html=1;" edge="1" parent="1" source="reader" target="mapper"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e6" value="save" style="endArrow=block;html=1;" edge="1" parent="1" source="indexdip" target="repos"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e7" value="embed" style="endArrow=block;html=1;" edge="1" parent="1" source="indexdip" target="chunker"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e8" value="generate" style="endArrow=block;html=1;" edge="1" parent="1" source="chunker" target="embed"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e9" value="sql" style="endArrow=block;html=1;" edge="1" parent="1" source="repos" target="sqlite"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e10" value="read" style="endArrow=block;html=1;" edge="1" parent="1" source="reader" target="fs"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e11" value="inference" style="endArrow=block;html=1;" edge="1" parent="1" source="embed" target="ai"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

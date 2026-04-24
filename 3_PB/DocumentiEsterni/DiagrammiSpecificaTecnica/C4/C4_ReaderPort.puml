@@ -1,0 +1,23 @@
+@startuml Class Diagram - Main Indexing Flow - Reader Port
+
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+hide empty members
+
+title Reader Service - IPackageReaderService
+
+package "Reader Service" {
+  interface IPackageReaderService {
+    + readDip(dipPath: string): Promise<Dip>
+    + readDocumentClasses(dipPath: string): AsyncGenerator<DocumentClass>
+    + readProcesses(dipPath: string): AsyncGenerator<Process>
+    + readDocuments(dipPath: string): AsyncGenerator<Document>
+    + readFiles(dipPath: string): AsyncGenerator<File>
+    + readFileBytes(filePath: string): Promise<NodeJS.ReadableStream>
+  }
+}
+
+@enduml

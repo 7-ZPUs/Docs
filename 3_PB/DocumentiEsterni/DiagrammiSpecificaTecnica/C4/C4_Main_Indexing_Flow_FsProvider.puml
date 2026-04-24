@@ -1,0 +1,31 @@
+@startuml Class Diagram - Main Indexing Flow - Group 2
+
+top to bottom direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+hide empty members
+
+title FileSystemPort, IFileSystemPort
+
+
+  interface IFileSystemPort {
+    + readFile(filePath: string): Promise<Uint8Array>
+    + openReadStream(filePath: string): Promise<NodeJS.ReadableStream>
+    + readTextFile(filePath: string): Promise<string>
+    + exists(filePath: string): Promise<boolean>
+    + listFiles(dirPath: string): Promise<string[]>
+  }
+
+  class FileSystemPort {
+    + readFile(filePath: string): Promise<Uint8Array>
+    + openReadStream(filePath: string): Promise<NodeJS.ReadableStream>
+    + readTextFile(filePath: string): Promise<string>
+    + exists(filePath: string): Promise<boolean>
+    + listFiles(dirPath: string): Promise<string[]>
+  }
+
+IFileSystemPort <|.. FileSystemPort
+
+@enduml

@@ -1,0 +1,507 @@
+@startuml C4 – Class Diagram: Document Detail Module (DIPReader)
+
+title C4 – Class Diagram: Document Detail Module\nDIPReader · UC-7..8, UC-19..25, UC-29, UC-34..35, UC-38..58, UC-71
+
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+'══════════════════════════════════════════════════════════
+' DOMAIN – ENUMS
+'══════════════════════════════════════════════════════════
+package "document/domain" {
+
+  enum SubjectType {
+    PF
+    PG
+    AS
+    PAI
+    PAE
+    SW
+  }
+
+  enum MimeType {
+    PDF
+    IMAGE
+    TEXT
+    UNSUPPORTED
+  }
+
+  enum OutputAction {
+    SAVE
+    SAVE_MULTIPLE
+    PRINT
+    PRINT_MULTIPLE
+    DOWNLOAD
+    EXPORT_PDF
+  }
+
+  '══════════════════════════════════════════════════════
+  ' DOMAIN – CLASSI DATI
+  '══════════════════════════════════════════════════════
+  class DocumentDetail <<data>> {
+    +documentId: string
+    +fileName: string
+    +mimeType: MimeType
+  }
+
+  class DocumentMetadata <<data>> {
+    +nome: string
+    +descrizione: string
+    +note?: string
+    +tipoDocumentale: string
+    +modalitaFormazione: string
+    +riservatezza: string
+    +versione: string
+    +conservazioneEreditata?: string
+  }
+
+  class RegistrationData <<data>> {
+    +flusso: string
+    +tipoRegistro: string
+    +data: string
+    +numero: string
+    +codice: string
+  }
+
+  class ClassificationInfo <<data>> {
+    +indice: string
+    +descrizione: string
+    +uriPiano: string
+  }
+
+  class FormatInfo <<data>> {
+    +tipo: string
+    +prodotto: string
+    +versione: string
+    +produttore: string
+  }
+
+  class VerificationInfo <<data>> {
+    +firmaDigitale: string
+    +sigillo: string
+    +marcaturaTemporale: string
+    +conformitaCopie: string
+  }
+
+  class Subject <<data>> {
+    +ruolo: string
+    +tipo: SubjectType
+    +campiSpecifici: Record<string, string>
+  }
+
+  class AttachmentData <<data>> {
+    +numero: number
+    +allegati: AttachmentEntry[]
+  }
+
+  class AttachmentEntry <<data>> {
+    +id: string
+    +descrizione: string
+  }
+
+  class ChangeTrackingData <<data>> {
+    +tipo: string
+    +soggetto: string
+    +data: string
+    +idVersionePrecedente: string
+  }
+
+  class CustomMetadataEntry <<data>> {
+    +nome: string
+    +valore: string
+  }
+
+  class AipInfo <<data>> {
+    +classeDocumentale: string
+    +uuid: string
+  }
+
+  class ConservationProcessData <<data>> {
+    +processo: string
+    +sessione: string
+    +dataInizio: string
+    +dataFine?: string
+    +uuidTerminatore?: string
+    +canaleTerminazione?: string
+  }
+
+  class DocumentState <<data>> {
+    +detail: DocumentDetail | null
+    +loading: boolean
+    +error: AppError | null
+  }
+
+  class OutputContext <<data>> {
+    +tipo: string
+    +documentId?: string
+    +documentName?: string
+    +mimeType?: MimeType
+  }
+}
+
+'══════════════════════════════════════════════════════════
+' SHARED ERRORS
+'══════════════════════════════════════════════════════════
+package "shared/errors" {
+
+  class AppError <<data>> {
+    +code: ErrorCode
+    +category: ErrorCategory
+    +severity: ErrorSeverity
+    +recoverable: boolean
+    +context?: string
+    +detail?: string
+  }
+
+  enum ErrorCode {
+    DOC_NOT_FOUND
+    DOC_BLOB_LOAD_ERROR
+    DOC_FORMAT_UNSUPPORTED
+    OUTPUT_IO_ERROR
+    OUTPUT_SOURCE_FOLDER_FORBIDDEN
+    OUTPUT_PRINT_ERROR
+    OUTPUT_FORMAT_NOT_PRINTABLE
+    OUTPUT_PDF_GENERATION_ERROR
+    OUTPUT_DOWNLOAD_ERROR
+  }
+}
+
+'══════════════════════════════════════════════════════════
+' INTERFACCE
+'══════════════════════════════════════════════════════════
+package "shared/interfaces" {
+
+  interface IIpcGateway {
+    +invoke(channel: string, payload: unknown, cachePolicy: CachePolicy): unknown
+    +on(channel: string, handler: Handler): void
+  }
+
+  interface IDocumentFacade {
+    +loadDocument(id: string): void
+    +getFileBlob(documentId: string): Uint8Array
+    +getState(): DocumentState
+  }
+
+  interface IOutputFacade {
+    +save(context: OutputContext): void
+    +saveMultiple(context: OutputContext): void
+    +print(context: OutputContext): void
+    +printMultiple(context: OutputContext): void
+    +exportPdf(context: OutputContext): void
+    +download(context: OutputContext): void
+  }
+
+  interface IIntegrityFacade {
+    +verifyDocument(documentId: string): void
+    +isVerifying(): boolean
+  }
+}
+
+'══════════════════════════════════════════════════════════
+' FACADE
+'══════════════════════════════════════════════════════════
+package "document/facade" {
+
+  class DocumentFacade {
+    -state: DocumentState
+    -ipcGateway: IIpcGateway
+    -ipcErrorHandler: IpcErrorHandlerService
+    -telemetry: TelemetryService
+    +loadDocument(id: string): void
+    +getFileBlob(documentId: string): Uint8Array
+    +getState(): DocumentState
+  }
+
+  class OutputFacade {
+    -ipcGateway: IIpcGateway
+    -ipcErrorHandler: IpcErrorHandlerService
+    -notificationService: NotificationService
+    -liveAnnouncer: ILiveAnnouncerService
+    +save(context: OutputContext): void
+    +saveMultiple(context: OutputContext): void
+    +print(context: OutputContext): void
+    +printMultiple(context: OutputContext): void
+    +exportPdf(context: OutputContext): void
+    +download(context: OutputContext): void
+  }
+}
+
+DocumentFacade ..|> IDocumentFacade
+OutputFacade   ..|> IOutputFacade
+
+'══════════════════════════════════════════════════════════
+' COMPONENTI
+'══════════════════════════════════════════════════════════
+package "document/components" {
+
+  class DocumentDetailPageComponent {
+    -documentFacade: IDocumentFacade
+    +documentId: string
+  }
+
+  class DocumentViewerComponent {
+    -documentFacade: IDocumentFacade
+    +documentId: string
+    +mimeType: MimeType
+    +fileName: string
+    -src: Uint8Array | null
+    +onUnsupportedFormat(): void
+  }
+
+  class PreviewPanelComponent {
+    +src: Uint8Array | null
+    +loading: boolean
+    +error: AppError | null
+    +mimeType: MimeType
+    +onUnsupportedFormat(): void
+  }
+
+  class PreviewRendererComponent {
+    +src: Uint8Array
+    +mimeType: MimeType
+    +onUnsupportedFormat(): void
+  }
+
+  class MetadataPanelComponent {
+    +documentDetail: DocumentDetail
+  }
+
+  class DocumentActionsComponent {
+    -outputFacade: IOutputFacade
+    -integrityFacade: IIntegrityFacade
+    +documentId: string
+    +documentName: string
+    +mimeType: MimeType
+    +onActionRequested(action: OutputAction): void
+    +onVerifyIntegrity(): void
+  }
+
+  class OutputToolbarComponent {
+    +context: OutputContext
+    +onActionRequested(): OutputAction
+  }
+
+  class FolderPickerDialogComponent {
+    -accessibilityService: AccessibilityService
+    +selectedPath: string
+    +isSourceFolderBlocked: boolean
+    +validate(): boolean
+    +onConfirm(): string
+    +onCancel(): void
+  }
+
+  class ErrorDialogComponent {
+    +error: AppError
+    +onRetry(): void
+    +onClose(): void
+  }
+
+  ' ── Metadata sections ─────────────────────────────────
+  class DocumentMetadataComponent {
+    +metadata: DocumentMetadata
+    +hasConservazioneEreditata: boolean
+  }
+
+  class RegistrationDataComponent {
+    +data: RegistrationData
+  }
+
+  class ClassificationInfoComponent {
+    +data: ClassificationInfo
+  }
+
+  class FormatInfoComponent {
+    +data: FormatInfo
+  }
+
+  class VerificationInfoComponent {
+    +data: VerificationInfo
+  }
+
+  class SubjectListComponent {
+    +subjects: Subject[]
+  }
+
+  class SubjectCardComponent {
+    +subject: Subject
+    +campiVisibili: string[]
+  }
+
+  class AttachmentsComponent {
+    +data: AttachmentData
+    +hasAttachments: boolean
+  }
+
+  class ChangeTrackingComponent {
+    +data: ChangeTrackingData
+  }
+
+  class CustomMetadataComponent {
+    +entries: CustomMetadataEntry[]
+    +hasEntries: boolean
+  }
+
+  class AipInfoComponent {
+    +data: AipInfo
+  }
+
+  class ConservationProcessComponent {
+    +data: ConservationProcessData
+    +hasDataFine: boolean
+    +hasUuidTerminatore: boolean
+    +hasCanaleTerminazione: boolean
+  }
+
+  class OptionalFieldAbsentComponent {
+    +message: string
+    +uc?: string
+  }
+}
+
+'══════════════════════════════════════════════════════════
+' RELAZIONI – DOMAIN TYPES
+'══════════════════════════════════════════════════════════
+
+DocumentDetail "1" *-- "1"    DocumentMetadata
+DocumentDetail "1" *-- "1"    RegistrationData
+DocumentDetail "1" *-- "1"    ClassificationInfo
+DocumentDetail "1" *-- "1"    FormatInfo
+DocumentDetail "1" *-- "1"    VerificationInfo
+DocumentDetail "1" *-- "0..*" Subject
+DocumentDetail "1" *-- "1"    AttachmentData
+DocumentDetail "1" *-- "1"    ChangeTrackingData
+DocumentDetail "1" *-- "0..*" CustomMetadataEntry
+DocumentDetail "1" *-- "1"    AipInfo
+DocumentDetail "1" *-- "1"    ConservationProcessData
+
+AttachmentData "1" *-- "0..*" AttachmentEntry
+
+Subject        --> SubjectType  : tipo
+OutputContext  --> MimeType     : mimeType
+
+DocumentState "1" o-- "0..1" DocumentDetail : detail
+DocumentState "1" o-- "0..1" AppError       : error
+
+'══════════════════════════════════════════════════════════
+' RELAZIONI – FACADE
+'══════════════════════════════════════════════════════════
+
+DocumentFacade "1" *-- "1" DocumentState : state
+DocumentFacade      -->    IIpcGateway   : <<inject>>
+OutputFacade        -->    IIpcGateway   : <<inject>>
+OutputFacade       ..>     OutputContext : <<uses>>
+OutputFacade       ..>     AppError      : <<produces>>
+
+'══════════════════════════════════════════════════════════
+' RELAZIONI – PAGE
+'══════════════════════════════════════════════════════════
+
+DocumentDetailPageComponent --> IDocumentFacade         : <<inject>>
+DocumentDetailPageComponent ..> DocumentState           : <<reads>>
+DocumentDetailPageComponent "1" --> "1" DocumentViewerComponent  : documentId, mimeType, fileName
+DocumentDetailPageComponent "1" --> "1" MetadataPanelComponent   : documentDetail
+DocumentDetailPageComponent "1" --> "1" DocumentActionsComponent : documentId, documentName, mimeType
+
+'══════════════════════════════════════════════════════════
+' RELAZIONI – COMPOSITE DocumentViewer
+'══════════════════════════════════════════════════════════
+
+DocumentViewerComponent --> IDocumentFacade             : <<inject>>
+DocumentViewerComponent "1" --> "1" PreviewPanelComponent    : src, loading, error, mimeType
+DocumentViewerComponent "1" --> "1" DocumentActionsComponent : documentId, mimeType
+DocumentViewerComponent "1" --> "1" ErrorDialogComponent     : AppError(DOC_FORMAT_UNSUPPORTED\nDOC_BLOB_LOAD_ERROR)
+
+PreviewPanelComponent   "1" --> "1" PreviewRendererComponent : src, mimeType
+PreviewRendererComponent     ..>    MimeType                 : switch (Strategy)
+PreviewRendererComponent     -->    PreviewPanelComponent    : onUnsupportedFormat()
+PreviewPanelComponent        -->    DocumentViewerComponent  : onUnsupportedFormat()
+
+'══════════════════════════════════════════════════════════
+' RELAZIONI – COMPOSITE MetadataPanel
+'══════════════════════════════════════════════════════════
+
+MetadataPanelComponent "1" --> "1"    DocumentMetadataComponent    : metadata
+MetadataPanelComponent "1" --> "1"    RegistrationDataComponent    : data
+MetadataPanelComponent "1" --> "1"    ClassificationInfoComponent  : data
+MetadataPanelComponent "1" --> "1"    FormatInfoComponent          : data
+MetadataPanelComponent "1" --> "1"    VerificationInfoComponent    : data
+MetadataPanelComponent "1" --> "1"    SubjectListComponent         : subjects[]
+MetadataPanelComponent "1" --> "1"    AttachmentsComponent         : data
+MetadataPanelComponent "1" --> "1"    ChangeTrackingComponent      : data
+MetadataPanelComponent "1" --> "1"    CustomMetadataComponent      : entries[]
+MetadataPanelComponent "1" --> "1"    AipInfoComponent             : data
+MetadataPanelComponent "1" --> "1"    ConservationProcessComponent : data
+
+SubjectListComponent   "1" --> "0..*" SubjectCardComponent         : subjects
+SubjectCardComponent        ..>       SubjectType                  : switch (Strategy)
+
+DocumentMetadataComponent    "1" --> "0..2" OptionalFieldAbsentComponent : UC-46, UC-47
+ConservationProcessComponent "1" --> "0..3" OptionalFieldAbsentComponent : UC-39.3, UC-39.6, UC-39.9
+AttachmentsComponent         "1" --> "0..1" OptionalFieldAbsentComponent : UC-57.3
+CustomMetadataComponent      "1" --> "0..1" OptionalFieldAbsentComponent : UC-71
+
+'══════════════════════════════════════════════════════════
+' RELAZIONI – DocumentActions
+'══════════════════════════════════════════════════════════
+
+DocumentActionsComponent --> IOutputFacade              : <<inject>>
+DocumentActionsComponent --> IIntegrityFacade           : <<inject>>
+DocumentActionsComponent ..> OutputContext              : <<creates>>
+DocumentActionsComponent ..> OutputAction               : <<uses>>
+DocumentActionsComponent "1" --> "1" OutputToolbarComponent      : context
+DocumentActionsComponent "1" --> "1" FolderPickerDialogComponent : selezione path
+
+OutputFacade "1" --> "1" ErrorDialogComponent : AppError OUTPUT_*
+
+'══════════════════════════════════════════════════════════
+' NOTE
+'══════════════════════════════════════════════════════════
+
+note top of PreviewRendererComponent
+  STRATEGY su MimeType
+  ──────────────────────────────────────────
+  Switch su mimeType:
+    PDF        → PDF viewer
+    IMAGE      → image viewer
+    TEXT       → text viewer
+    UNSUPPORTED → onUnsupportedFormat()
+end note
+
+note top of SubjectCardComponent
+  STRATEGY su SubjectType
+  ──────────────────────────────────────────
+  Switch su subject.tipo:
+    PF / PG / AS / PAI / PAE / SW
+    → campi specifici per tipo
+end note
+
+note right of ConservationProcessComponent
+  CAMPO OPZIONALE vs ERRORE DI SISTEMA
+  ──────────────────────────────────────────
+  OptionalFieldAbsentComponent NON è AppError:
+  il campo è legittimamente assente nel DIP.
+  Distinto da AppError (crash IPC/IO).
+end note
+
+note bottom of DocumentFacade
+  CACHE IPC
+  ──────────────────────────────────────────
+  getDocumentMetadata → cache-first TTL 5min
+  getFileBlob         → cache-first TTL 1min
+  getAipInfo          → cache-first TTL 5min
+end note
+
+note bottom of OutputToolbarComponent
+  Emette onActionRequested(): OutputAction.
+  DocumentActionsComponent riceve l'azione
+  e chiama OutputFacade direttamente.
+end note
+
+note bottom of FolderPickerDialogComponent
+  Aperto da DocumentActionsComponent.
+  Un Service non deve istanziare componenti UI.
+end note
+
+@enduml

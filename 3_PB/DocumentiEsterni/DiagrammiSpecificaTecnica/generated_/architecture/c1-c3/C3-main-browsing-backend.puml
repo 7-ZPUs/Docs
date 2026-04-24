@@ -1,0 +1,37 @@
+@startuml C3_Main_Browsing_Backend
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Modello C4 - Livello 3 (Componenti processo Main: Backend Browsing)
+
+LAYOUT_WITH_LEGEND()
+
+Container_Boundary(main_container, "Processo Main") {
+  Component(browsing_ipc, "BrowsingIpcAdapter", "Adapter IPC di ingresso", "Canali di lettura per id, stato e gerarchia")
+  Component(browse_ucs, "Use case Browsing", "Servizi applicativi", "GetById, GetByStatus, GetByParent")
+
+  Component(dip_repo, "DipPersistencePorts", "Porte outbound", "Query Dip")
+  Component(class_repo, "DocumentClassPersistencePorts", "Porte outbound", "Query classi documentali")
+  Component(process_repo, "ProcessPersistencePorts", "Porte outbound", "Query processi")
+  Component(doc_repo, "DocumentPersistencePorts", "Porte outbound", "Query documenti")
+  Component(file_repo, "FilePersistencePorts", "Porte outbound", "Query file")
+}
+
+Container_Ext(renderer, "Renderer UI", "Angular", "Navigazione albero e dettaglio")
+ContainerDb_Ext(sqlite, "SQLite", "Persistenza entita")
+
+Rel(renderer, browsing_ipc, "canali browse:*")
+Rel(browsing_ipc, browse_ucs, "esegue")
+
+Rel(browse_ucs, dip_repo, "lettura")
+Rel(browse_ucs, class_repo, "lettura")
+Rel(browse_ucs, process_repo, "lettura")
+Rel(browse_ucs, doc_repo, "lettura")
+Rel(browse_ucs, file_repo, "lettura")
+
+Rel(dip_repo, sqlite, "lettura SQL")
+Rel(class_repo, sqlite, "lettura SQL")
+Rel(process_repo, sqlite, "lettura SQL")
+Rel(doc_repo, sqlite, "lettura SQL")
+Rel(file_repo, sqlite, "lettura SQL")
+
+@enduml

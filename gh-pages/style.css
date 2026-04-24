@@ -348,41 +348,85 @@ a:focus-visible {
     transition: background 0.2s ease;
 }
 
+.documentation-shell {
+    display: grid;
+    grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.documentation-nav {
+    position: sticky;
+    top: 110px;
+    align-self: start;
+}
+
+.documentation-content {
+    min-width: 0;
+}
+
 .tablist {
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
     background: rgba(5, 15, 10, 0.65);
-    padding: 0.75rem;
+    padding: 0.9rem;
     border-radius: 18px;
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .tablist .content-selector {
-    flex: 1;
-    border: none;
-    background: transparent;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    padding: 0.85rem 1rem;
-    border-radius: 12px;
-    transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-    cursor: pointer;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
 }
 
-.tablist .content-selector:hover,
-.tablist .content-selector:focus-visible {
-    color: var(--text-primary);
-    background: rgba(46, 204, 113, 0.12);
-}
-
-.tablist .content-selector.active {
-    color: var(--bg-base);
-    background: var(--accent);
+.tablist .content-selector.active,
+.tablist-versions .content-selector.active {
+    background: linear-gradient(135deg, var(--accent) 0%, #1fa75c 100%);
+    color: #04110a;
+    border-color: transparent;
     box-shadow: 0 10px 30px rgba(46, 204, 113, 0.35);
 }
 
+.previous-versions {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
+.previous-versions summary {
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    transition: color 0.2s ease, background 0.2s ease;
+    user-select: none;
+    font-weight: 500;
+}
+
+.previous-versions summary:hover {
+    color: var(--text-primary);
+    background: rgba(46, 204, 113, 0.08);
+}
+
+.previous-versions summary::marker {
+    color: var(--text-secondary);
+}
+
+.tablist-versions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.75rem 0 0;
+    margin-left: 0.5rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    padding-left: 0.75rem;
+}
+
+.tablist-versions .content-selector {
+    width: 100%;
+}
 .tab-panels {
     display: grid;
     gap: 1.5rem;
@@ -398,6 +442,28 @@ a:focus-visible {
 
 .tab-panels article:first-of-type {
     display: block;
+}
+
+@media (max-width: 960px) {
+    .documentation-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .documentation-nav {
+        position: static;
+    }
+
+    .tablist,
+    .tablist-versions {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .tablist .content-selector,
+    .tablist-versions .content-selector {
+        width: auto;
+        flex: 1 1 160px;
+    }
 }
 
 details {

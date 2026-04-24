@@ -1,0 +1,413 @@
+@startuml Class Diagram - Import Flow
+!theme plain
+skinparam classAttributeIconSize 0
+skinparam classFontSize 12
+skinparam classFontStyle bold
+skinparam classBackgroundColor #1E2A1E
+skinparam classFontColor #D4E8D4
+skinparam classBorderColor #4A7A4A
+skinparam classArrowColor #7FBF7F
+skinparam classHeaderBackgroundColor #2A3D2A
+skinparam noteBackgroundColor #2A3020
+skinparam noteFontColor #C8D8A0
+skinparam noteBorderColor #6A7A40
+skinparam linetype ortho
+skinparam arrowThickness 1.2
+
+title Class Diagram — Import Flow\n(UC-1, UC-2, UC-3, UC-6, UC-7, UC-8, UC-11, UC-35, UC-36)
+
+
+' PRESENTATION — Smart Components
+
+class DipLoadingPageComponent {
+    - importFacade: ImportFacade
+    - importState: Signal<ImportState>
+    --
+    + ngOnInit(): void
+    + onRetry(): void
+}
+
+note bottom of DipLoadingPageComponent
+    Visibile quando importState.phase
+    è "idle" o "loading".
+    Nascosta quando phase === "ready".
+    UC-35 Scarica file → onRetry()
+    UC-36 Errore scaricamento → mostra errore
+end note
+
+class DipTreeComponent {
+    - importFacade: ImportFacade
+    - rootNodes: Signal<DipTreeNode[]>
+    - expandedIds: Set<string>
+    - flatNodes: FlatNode[]
+    - loadingNodes: Set<string>
+    --
+    + toggleNode(nodeId: string): void
+    + loadChildren(nodeId: string): void
+    + computeFlatNodes(): FlatNode[]
+    + onNodeSelected(node: DipTreeNode): void
+}
+
+note bottom of DipTreeComponent
+    Legge Signal<ImportState>.rootNodes.
+    Lazy: loadChildren() on-demand al click.
+    UC-1  Visualizza elenco classi documentali
+    UC-2  Visualizza elenco processi
+    UC-3  Visualizza elenco documenti
+    UC-6  isEmpty() → mostra stato vuoto
+end note
+
+class DipTreeNodeComponent {
+    - node: DipTreeNode
+    - isExpanded: boolean
+    - isLoading: boolean
+    --
+    + onToggle(): void
+    + onClick(): void
+}
+
+note bottom of DipTreeNodeComponent
+    UC-1.1.1  Visualizza nome classe
+    UC-2.1.1  Visualizza Id processo
+    UC-3.1.1  Visualizza nome documento
+end note
+
+class AsyncStateWrapperComponent {
+    - loading: boolean
+    - error: AppError | null
+    - empty: boolean
+    --
+    + ngOnChanges(): void
+}
+
+note right of AsyncStateWrapperComponent
+    Wrapper riutilizzabile per stati
+    loading / error / empty.
+    UC-6  empty → messaggio lista vuota
+    UC-36 error → mostra InlineErrorComponent
+end note
+
+class InlineErrorComponent {
+    - error: AppError | null
+    --
+    + onRetry(): void
+}
+
+note right of InlineErrorComponent
+    UC-36 Errore scaricamento file
+    Mostra messaggio + pulsante retry
+end note
+
+class DocumentPreviewComponent {
+    - importFacade: ImportFacade
+    - selectedDocument: Signal<DipTreeNode | null>
+    - previewAvailable: boolean
+    --
+    + ngOnInit(): void
+    + loadPreview(node: DipTreeNode): void
+}
+
+note right of DocumentPreviewComponent
+    UC-7  Visualizza anteprima documento
+    UC-8  Formato non supportato →
+          mostra messaggio fallback
+end note
+
+
+' FACADE — centro del flusso import
+
+class ImportFacade {
+    - state: Signal<ImportState>
+    - ipcGateway: IpcGateway
+    - ipcErrorHandlerService: IpcErrorHandlerService
+    - notificationService: NotificationService
+    - auditLogger: AuditLogger
+    - performanceMonitor: PerformanceMonitor
+    - liveAnnouncerService: LiveAnnouncerService
+    --
+    + state(): Signal<ImportState>
+    + loadRootNodes(): void
+    + loadChildren(nodeId: string): void
+    + selectDocument(node: DipTreeNode): void
+    + retryLoad(): void
+    + clearCache(): void
+}
+
+note right of ImportFacade
+    facade
+    ....
+    UC-1   loadRootNodes() → classi documentali
+    UC-2   loadChildren()  → processi di una classe
+    UC-3   loadChildren()  → documenti di un processo
+    UC-6   state.isEmpty() → phase = EMPTY
+    UC-11  state.indicizzazione → StatoIndicizzazione
+    UC-35  loadRootNodes() / loadChildren() → scarica file
+    UC-36  ipcErrorHandler → errore scaricamento
+end note
+
+
+' STATE
+
+class ImportState {
+    - phase: ImportPhase
+    - rootNodes: DipTreeNode[]
+    - nodeCache: Map<NodeId, DipTreeNode[]>
+    - nodeChildrenErrors: Map<NodeId, AppError>
+    - selectedDocument: DipTreeNode | null
+    - indicizzazione: StatoIndicizzazione
+    - loading: boolean
+    - error: AppError | null
+    --
+    + isEmpty(): boolean
+}
+
+note right of ImportState
+    Stato reattivo centrale osservato da
+    tutti i componenti via Signal<ImportState>.
+    nodeCache: evita richieste IPC duplicate
+    nodeChildrenErrors: errori lazy loading
+end note
+
+enum ImportPhase {
+    IDLE
+    LOADING
+    READY
+    EMPTY
+    ERROR
+}
+
+note bottom of ImportPhase
+    UC-6   EMPTY  → lista vuota
+    UC-35  LOADING → caricamento in corso
+    UC-36  ERROR  → scaricamento fallito
+end note
+
+enum StatoIndicizzazione {
+    COMPLETATA
+    NON_COMPLETATA
+}
+
+note bottom of StatoIndicizzazione
+    UC-11   Stato indicizzazione semantica
+    UC-11.1 COMPLETATA
+    UC-11.2 NON_COMPLETATA
+end note
+
+
+' DATA CLASSES — Domain Model
+
+class DipTreeNode {
+    - id: string
+    - type: NodeType
+    - label: string
+    - hasChildren: boolean
+    - children: DipTreeNode[]
+    - parentId: string | null
+    --
+    + isLeaf(): boolean
+}
+
+note right of DipTreeNode
+    Nodo generico dell'albero DIP.
+    type discrimina ClasseDocumentale,
+    Processo o Documento.
+end note
+
+enum NodeType {
+    CLASSE_DOCUMENTALE
+    PROCESSO
+    DOCUMENTO
+}
+
+note bottom of NodeType
+    UC-1  CLASSE_DOCUMENTALE
+    UC-2  PROCESSO
+    UC-3  DOCUMENTO
+end note
+
+class ClasseDocumentale {
+    - id: string
+    - nome: string
+    --
+    + getNome(): string
+}
+
+note right of ClasseDocumentale
+    UC-1.1.1 Visualizza nome classe documentale
+end note
+
+class Processo {
+    - id: string
+    - idProcesso: string
+    --
+    + getIdProcesso(): string
+}
+
+note right of Processo
+    UC-2.1.1 Visualizza Id processo
+end note
+
+class Documento {
+    - id: string
+    - nome: string
+    - formato: string
+    - anteprimaDisponibile: boolean
+    --
+    + getNome(): string
+    + isAnteprimaDisponibile(): boolean
+}
+
+note right of Documento
+    UC-3.1.1  Visualizza nome documento
+    UC-7      anteprimaDisponibile = true
+    UC-8      anteprimaDisponibile = false
+end note
+
+class FlatNode {
+    - id: string
+    - label: string
+    - level: number
+    - expandable: boolean
+    - type: NodeType
+}
+
+note right of FlatNode
+    Struttura flat per il rendering
+    del tree material (CDK FlatTreeControl)
+end note
+
+class AppError {
+    - code: ErrorCode
+    - category: ErrorCategory
+    - context: string
+    - message: string
+    - recoverable: boolean
+    - detail: string
+}
+
+enum ErrorCode {
+    LOAD_ROOT_FAILED
+    LOAD_CHILDREN_FAILED
+    PREVIEW_UNAVAILABLE
+    DOWNLOAD_FAILED
+}
+
+note bottom of ErrorCode
+    UC-36 LOAD_ROOT_FAILED
+    UC-36 LOAD_CHILDREN_FAILED
+    UC-8  PREVIEW_UNAVAILABLE
+    UC-35 DOWNLOAD_FAILED
+end note
+
+
+' IPC LAYER
+
+class IpcGateway {
+    + getClasses(): Promise<ClasseDocumentale[]>
+    + getProcesses(classId: string): Promise<Processo[]>
+    + getDocuments(processId: string): Promise<Documento[]>
+    + loadChildren(nodeId: string): Promise<DipTreeNode[]>
+    + downloadFile(nodeId: string): Promise<Blob>
+}
+
+note right of IpcGateway
+    Chiama Main Process via Electron IPC.
+    getClasses()   → UC-1 carica classi documentali
+    getProcesses() → UC-2 carica processi
+    getDocuments() → UC-3 carica documenti
+    loadChildren() → lazy loading nodi figli
+    downloadFile() → UC-35 scarica file documento
+end note
+
+class IpcErrorHandlerService {
+    + handleError(err: AppError): AppError
+    + isRecoverable(err: AppError): boolean
+}
+
+
+class IpcDispatcher {
+    + invoke<T>(channel: string, handler: Data<T>): Promise<T>
+    + on<T>(channel: string, handler: (data: T) => void): void
+}
+
+
+' SUPPORT SERVICES
+
+class NotificationService {
+    + notifySuccess(msg: string): void
+    + notifyError(msg: string): void
+    + toast(msg: string): void
+    + modal(msg: string): void
+}
+
+class AuditLogger {
+    + log(event: AuditEvent): void
+}
+
+class PerformanceMonitor {
+    + measure(label: string, fn: () => Promise<void>): Promise<void>
+    + log(): void
+}
+
+class LiveAnnouncerService {
+    + announce(msg: string, politeness?: "polite" | "assertive"): void
+}
+
+note right of LiveAnnouncerService
+    Accessibilità: annuncia agli screen reader
+    il completamento del caricamento DIP.
+end note
+
+
+' RELAZIONI
+
+' Presentation → Facade
+DipLoadingPageComponent --> ImportFacade : loadRootNodes() / retryLoad()
+DipTreeComponent --> ImportFacade : loadChildren() / selectDocument()
+DocumentPreviewComponent --> ImportFacade : legge selectedDocument
+
+' Presentation → State (Signal)
+DipLoadingPageComponent --> ImportState : legge Signal<ImportState>
+DipTreeComponent --> ImportState : legge Signal<ImportState>.rootNodes
+AsyncStateWrapperComponent --> ImportState : legge loading / error / empty
+DocumentPreviewComponent --> ImportState : legge selectedDocument
+
+' Presentation composizione
+DipTreeComponent "1" *-- "many" DipTreeNodeComponent : compone
+DipTreeComponent --> AsyncStateWrapperComponent : usa
+AsyncStateWrapperComponent --> InlineErrorComponent : mostra se error
+
+' Facade → State
+ImportFacade --> ImportState : aggiorna via Signal
+
+' Facade → IPC
+ImportFacade --> IpcGateway : delega chiamate DIP
+ImportFacade --> IpcErrorHandlerService : gestisce errori IPC
+
+' Facade → Services
+ImportFacade --> NotificationService : notifyError / notifySuccess
+ImportFacade --> AuditLogger : log load / select
+ImportFacade --> PerformanceMonitor : misura latenza IPC
+ImportFacade --> LiveAnnouncerService : annuncia caricamento
+
+' IPC
+IpcGateway --> IpcDispatcher : usa
+IpcGateway --> IpcErrorHandlerService : propaga AppError
+IpcErrorHandlerService --> NotificationService : notifica utente
+PerformanceMonitor --> AuditLogger : arricchisce log
+
+' State composizione
+ImportState --> ImportPhase : usa
+ImportState --> StatoIndicizzazione : usa
+ImportState --> DipTreeNode : contiene rootNodes
+ImportState --> AppError : contiene error
+
+' Data model
+DipTreeNode --> NodeType : usa
+DipTreeNode --> FlatNode : si appiattisce in
+ClasseDocumentale --|> DipTreeNode : specializza
+Processo --|> DipTreeNode : specializza
+Documento --|> DipTreeNode : specializza
+AppError --> ErrorCode : usa
+
+@enduml

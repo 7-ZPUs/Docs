@@ -1,0 +1,142 @@
+@startuml search-ipc-gateway-channel-code-l4
+
+title C4 Level 4 (Code) - SearchIpcGateway and ISearchChannel
+
+allowmixing
+top to bottom direction
+
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+skinparam defaultTextAlignment left
+skinparam linetype ortho
+skinparam ArrowThickness 2
+skinparam ArrowColor #1F2937
+skinparam ArrowFontColor #111827
+skinparam ArrowFontSize 10
+skinparam ArrowFontStyle bold
+skinparam wrapWidth 220
+skinparam maxMessageSize 110
+
+package "Renderer App (Angular)" {
+  interface "ISearchChannel" as SearchChannel {
+    +search(query: SearchQuery, signal: AbortSignal): Observable<ISearchResult[]>
+    +searchAdvanced(filters: SearchFilters, signal: AbortSignal): Observable<ISearchResult[]>
+    +searchSemantic(query: SearchQuery, signal: AbortSignal): Observable<ISearchResult[]>
+    +getCustomMetadataKeys(dipId: number | null, signal: AbortSignal): Observable<string[]>
+  }
+
+  class "SearchIpcGateway" as Gateway {
+    -CACHE_TTL_MS: number
+    -contextBridge: IElectronContextBridge
+    -cache: ICacheService
+    -errorHandler: IErrorHandler
+    -invoke<T>(channel, payload, signal, cachePrefix): Observable<T>
+    -cancelAndInvalidate(cacheKeyPrefix: string): void
+    -ensureResultType(results, fallbackType): ISearchResult[]
+    --
+    +search(q: SearchQuery, s: AbortSignal): Observable<ISearchResult[]>
+    +searchAdvanced(f: SearchFilters, s: AbortSignal): Observable<ISearchResult[]>
+    +searchSemantic(q: SearchQuery, s: AbortSignal): Observable<ISearchResult[]>
+    +getCustomMetadataKeys(dipId: number | null, s: AbortSignal): Observable<string[]>
+  }
+
+  class "SearchFacade" as Facade <<caller>>
+
+  interface "IElectronContextBridge" as ContextBridge {
+    +invoke<T>(channel: string, payload: unknown, signal: AbortSignal): Promise<T>
+  }
+
+  interface "ICacheService" as CacheService {
+    +get<T>(key: string): T | null
+    +set<T>(key: string, value: T, ttlMs: number): void
+    +invalidatePrefix(prefix: string): void
+  }
+
+  interface "IErrorHandler" as ErrorHandler {
+    +handle(error: any): AppError
+  }
+
+  class "toSearchRequestDTO()" as Mapper <<function>>
+}
+
+package "Shared Domain" {
+  class "Search Domain Types" as DomainTypes {
+    SearchQuery
+    SearchFilters
+    SearchRequestDTO
+    SearchQueryType
+    ISearchResult
+    Observable<T>
+    AbortSignal
+  }
+}
+
+package "Electron Main Process" {
+  class "SearchIpcAdapter" as IpcAdapter <<IPC handler>>
+}
+
+SearchChannel <|.. Gateway
+Facade --> SearchChannel : uses contract via token
+
+Gateway --> CacheService : cache get/set/invalidatePrefix
+Gateway --> ContextBridge : invoke(channel, payload, signal)
+Gateway --> ErrorHandler : normalize invoke errors
+Gateway --> Mapper : map advanced filters to DTO
+Gateway --> DomainTypes : derive fallback type and ensureResultType
+
+Gateway --> DomainTypes : query/filter payloads + Observable/AbortSignal
+Mapper --> DomainTypes : output SearchRequestDTO
+ContextBridge --> IpcAdapter : ipc:search:* / metadata keys
+
+note right of Gateway
+Channel mapping:
+- ipc:search:text
+- ipc:search:advanced
+- ipc:search:semantic
+- search:get-custom-metadata-keys
+
+Caching:
+- key built from JSON payload
+- TTL = 300000 ms
+- abort invalidates by prefix
+end note
+
+newpage
+
+title C4 Level 4 (Code) - invoke() Runtime Flow (Gateway)
+
+package "SearchIpcGateway::invoke<T>()" {
+  class "Start" as Start
+  class "Check signal.aborted" as AbortedCheck
+  class "cancelAndInvalidate(prefix)" as Invalidate
+  class "add abort listener" as AddListener
+  class "contextBridge.invoke(...)" as Invoke
+  class "observer.next + complete" as Success
+  class "errorHandler.handle(err)" as NormalizeErr
+  class "observer.error" as EmitErr
+  class "remove abort listener" as Cleanup
+}
+
+Start --> AbortedCheck
+AbortedCheck --> Invalidate : already aborted
+AbortedCheck --> AddListener : active signal
+AddListener --> Invoke
+Invoke --> Success : resolved and not aborted
+Invoke --> NormalizeErr : rejected and not aborted
+NormalizeErr --> EmitErr
+Success --> Cleanup
+EmitErr --> Cleanup
+
+note right of Invalidate
+Abort path:
+- invalidate cache prefix
+- complete observer
+end note
+
+note right of Cleanup
+Always removes abort listener
+to avoid memory leaks.
+end note
+
+@enduml

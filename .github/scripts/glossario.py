@@ -322,7 +322,7 @@ def generate_html(glossary):
 
 def main():
     # Percorso del file LaTeX di input
-    latex_file = Path('../../2_RTB/Glossario.tex')
+    latex_file = Path('../../3_PB/DocumentiInterni/Glossario.tex')
     
     if not latex_file.exists():
         # Fallback per test o se il file non è nella stessa cartella

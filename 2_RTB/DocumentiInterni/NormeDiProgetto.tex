@@ -738,28 +738,172 @@ Per questo artefatto si lascia ampio margine di manovra, in quanto non è richie
     \end{adjustwidth}
 \end{table}
 
-% \subsubsection{Attività: Progettazione del prodotto}
-% Il fornitore si impegna di progettare il software in modo coerente ai requisiti del prodotto, in modo da ricercare la correttezza per costruzione piuttosto che per correzione.
-% Questa sezione sarà integrata e ampliata in seguito all'approvazione RTB e con il conseguente inizio delle nuove attività di processo.
-% \paragraph{Procedure di progettazione del prodotto}
-% Il fornitore deve seguire una serie di procedure per progettare il prodotto:
-% \begin{enumerate}
-%     \item \textbf{Definizione dell'architettura Software}: progettazione delle principali componenti del sistema e delle loro interazioni, con particolare attenzione alla struttura complessiva piuttosto che ai dettagli implementativi;
-%     \item \textbf{Progettazione dettagliata del Software}: sviluppo del progetto delle singole componenti Software fino all'individuazione delle unità elementari;
-%    \end{enumerate}
+\subsection{Codifica}
+Questa sezione descrive le norme di codifica adottate nel progetto MVP con l'obiettivo di:
+\begin{itemize}
+  \item mantenere il codice coerente tra i vari moduli (Electron core, Angular renderer, shared);
+  \item facilitare manutenzione, refactoring e test;
+  \item supportare un'architettura ispirata alla Clean Architecture, con dominio separato da infrastruttura e UI.
+\end{itemize}
 
-% \subsubsection{Attività: Sviluppo del prodotto}
-% Il fornitore si impegna di seguire la progettazione in modo da avere corrispondenza tra requisiti previsti e funzionalità implementate, sviluppando secondo i principi SOLID e le best practice specifiche delle tecnologie scelte.
-% Questa sezione sarà integrata e ampliata in seguito all'approvazione RTB e con il conseguente inizio delle nuove attività di processo.
-% \paragraph{Procedure di sviluppo del prodotto}
-% Il fornitore deve seguire una serie di procedure lo sviluppo efficiente, allineato e corretto del software:
-% \begin{enumerate}
-%     \item \textbf{Sviluppo e verifica del Software}: realizzazione delle unità che costituiscono le componenti progettate, accompagnata da test specifici per verificarne il corretto funzionamento;
-%     \item \textbf{Integrazione delle componenti Software}: assemblaggio delle diverse parti in componenti complete, supportato da test di integrazione per garantirne il comportamento corretto;
-%     \item \textbf{Test di qualificazione del Software}: esecuzione di test dedicati per verificare che il Software soddisfi i requisiti e gli obiettivi di qualità prefissati;
-%     \item \textbf{Integrazione del Sistema}: combinazione di tutte le componenti realizzate nel Sistema finale;
-%     \item \textbf{Test di qualificazione del Sistema}: verifica dell'intero Sistema attraverso test complessivi per accertarne il corretto funzionamento;
-% \end{enumerate}    
+\subsubsection{Formattazione del codice}
+
+\begin{itemize}
+  \item \textbf{TypeScript:} Tutto il codice applicativo è in TypeScript: entità e use case in \texttt{core/}, componenti Angular in \texttt{renderer/}, contratti IPC in \texttt{shared/}. \\
+    \textit{Motivo}: type safety uniforme e migliore supporto tooling.
+
+  \item \textbf{Linting centralizzato (ESLint)}
+    \begin{itemize}
+      \item Root: \texttt{eslint.config.mjs} usa \texttt{typescript-eslint} con preset \\ \texttt{recommended} e \texttt{project} puntato al \texttt{tsconfig.json} root.
+      \item Renderer: \texttt{eslint.config.mjs} usa \texttt{typescript-eslint} +  \\ \texttt{@angular-eslint}.
+    \end{itemize}
+    Questo per automatizzare la verifica di stile e di errori comuni, con regole consistenti tra backend e frontend.
+
+  \item \textbf{Variabili inutilizzate:} La regola \texttt{@typescript-eslint/no-unused-vars} è impostata su \texttt{warn}. Parametri/variabili volutamente non usati devono iniziare con \texttt{\_} (pattern configurato). \\
+    In questo modo possiamo mantenere il codice pulito senza bloccare la build e rendere espliciti i casi intenzionali.
+
+  \item \textbf{Formattazione generale}
+    \begin{itemize}
+      \item Indentazione e spaziature affidate a formatter IDE + ESLint.
+      \item Uso coerente di \texttt{import} ES module e path relativi stabili.
+      \item Commenti JSDoc solo dove chiariscono il ruolo architetturale.
+    \end{itemize}
+    Questo per rendere il codice più leggibile e ridurre le discussioni sullo stile.
+\end{itemize}
+
+\subsubsection{Buone pratiche di programmazione adottate}
+
+\begin{itemize}
+  \item \textbf{Separazione dominio / infrastruttura / UI}
+    \begin{itemize}
+      \item \texttt{core/src/entity/} contiene entità di dominio ricche con logica e factory \texttt{fromDB}.
+      \item \texttt{core/src/repo/impl/} contiene l'accesso al DB che traduce righe in entità.
+      \item \texttt{core/src/ipc/} fa da adapter tra IPC e use case.
+      \item \texttt{renderer/src/app/} contiene esclusivamente UI Angular e servizi di front-end.
+    \end{itemize}
+    Il dominio non dipende da Electron, SQLite o Angular; è più testabile e sostituibile.
+
+  \item \textbf{DTO separati dalle entità: }In \texttt{core/src/dto/} ci sono DTO specifici per i flussi di ingresso/uscita.
+    Le entità espongono metodi \texttt{toDTO()} che producono strutture trasferibili via IPC, con il vincolo documentato che \texttt{toDTO()} va usato solo negli adapter IPC.
+    In questo modo evitiamo che UI e trasporto ``inquinino'' il modello di dominio e centraliziamo la logica di serializzazione.
+
+  \item \textbf{Value object per concetti chiave: }\texttt{Metadata} in \texttt{value-objects/} incapsula nome, valore e tipo, con metodo \texttt{toDTO()}.
+    Inoltre usiamo enum come \texttt{IntegrityStatusEnum} rappresentano stati ben definiti (\texttt{VALID}, \texttt{INVALID}, \texttt{UNKNOWN}), manteniamo la norma di scrivere le enum in maiuscolo.\\
+  
+    \item \textbf{Dipendenza da interfacce e IoC container}
+    \begin{itemize}
+      \item Repository e servizi sono definiti tramite interfacce e token Symbol.
+      \item Le implementazioni concrete sono annotate con \texttt{@injectable()} e risolte tramite \texttt{tsyringe}.
+    \end{itemize}
+
+  \item \textbf{Metodo ``thin'' negli adapter IPC: }\texttt{CreateIpcAdapter} registra i canali IPC usando \texttt{IpcChannels} e delega immediatamente ai rispettivi use case, restituendo solo \texttt{toDTO()} per mantenere gli adapter sottili, con logica applicativa concentrata in use case e dominio.
+\end{itemize}
+
+\subsubsection{Convenzioni sulla nomenclatura}
+In generale, i nomi di file, funzioni e variabili devono essere il più parlanti possibile, per rendere il codice facile da comprendere.
+
+\paragraph{Dominio e core}
+
+\begin{itemize}
+  \item \textbf{Entità di dominio}
+    \begin{itemize}
+      \item Nome in PascalCase, singolare: \texttt{Dip}, \texttt{Document}, \texttt{DocumentClass}, \texttt{File}, \texttt{Process}.
+      \item Collocate in \texttt{core/src/entity/} con 1 file per entità.
+    \end{itemize}
+
+  \item \textbf{DTO}
+    \begin{itemize}
+      \item File con suffisso \texttt{DTO.ts} in \texttt{core/src/dto/}.
+      \item Tipi: \texttt{CreateXxxDTO} per input in creazione; \texttt{XxxDTO} per rappresentazioni complete.
+    \end{itemize}
+
+  \item \textbf{Repository}
+    \begin{itemize}
+      \item Interfacce in \texttt{core/src/repo/} con prefisso \texttt{I}.
+      \item Token per il container in \texttt{UPPER\_SNAKE\_CASE}.
+      \item Implementazioni in \texttt{core/src/repo/impl/}\\ con nome dell'entità + \texttt{Repository}: \texttt{DocumentRepository}.
+    \end{itemize}
+
+  \item \textbf{Servizi di dominio/infrastruttura}
+    \begin{itemize}
+      \item Interfacce in \texttt{core/src/services/} con prefisso \texttt{I}.
+      \item Implementazioni in \texttt{core/src/services/impl/} con nome descrittivo: \texttt{CryptoHashingService}.
+    \end{itemize}
+
+  \item \textbf{Use case}
+    \begin{itemize}
+      \item Cartelle in \texttt{core/src/use-case/}.
+      \item Interfacce nominate \texttt{ICreateXxxUC}, \texttt{IGetXxxUC}, ecc.
+      \item Implementazioni in sottocartella \texttt{impl/} con suffisso \texttt{UC}.
+    \end{itemize}
+\end{itemize}
+
+\paragraph{Angular renderer}
+
+\begin{itemize}
+  \item \textbf{Componenti}
+    \begin{itemize}
+      \item Root: classe \texttt{App} in \texttt{app.ts} con \texttt{@Component(\{...\})}, \\ template \texttt{app.html}, stile \texttt{app.scss}.
+      \item Ulteriori componenti seguono il pattern Angular: PascalCase + suffisso \texttt{Component} per la classe; selector elemento \texttt{app-...} in kebab-case (convalidato da \texttt{@angular-eslint/component-selector}).
+    \end{itemize}
+
+  \item \textbf{Servizi Angular}
+    \begin{itemize}
+      \item PascalCase + suffisso \texttt{Service} (es. \texttt{ClasseDocumentaleApiService}).
+      \item I servizi che parlano con Electron usano un wrapper \texttt{window.electronAPI} tipizzato, esponendo metodi di alto livello (\texttt{findAll}, \texttt{findById}).
+    \end{itemize}
+    Così da isolare i dettagli di IPC dal resto della UI e mantenere un contratto chiaro con il backend.
+
+  \item \textbf{Routing e configurazione: }\texttt{app.config.ts} e \texttt{app.routes.ts} concentrano la definizione dell'app e delle route standalone. \\
+\end{itemize}
+
+\paragraph{Contratti shared e IPC}
+
+\begin{itemize}
+  \item \textbf{Canali IPC}
+    \begin{itemize}
+      \item Definiti unicamente in \texttt{shared/ipc-channels.ts} dentro l'oggetto \\ \texttt{IpcChannels}.
+      \item Chiavi in \texttt{UPPER\_SNAKE\_CASE}.
+      \item Valori stringa nel formato \texttt{<domain>:<action>}.
+    \end{itemize}
+
+  \item \textbf{Tipo \texttt{IpcChannel: }}Export di \texttt{IpcChannel} come union dei valori di \texttt{IpcChannels}, per garantire type safety su canali IPC. \\
+\end{itemize}
+
+\subsubsection{Convenzioni sulla struttura di cartelle e dei file}
+
+\begin{itemize}
+  \item \textbf{Root del repository}
+    \begin{itemize}
+      \item Configurazione e orchestrazione: \texttt{main.ts} (Electron), \texttt{tsconfig.json}, \texttt{eslint.config.mjs}, \texttt{vitest.config.ts}.
+    \end{itemize}
+
+  \item \textbf{\texttt{core/}}
+    \begin{itemize}
+      \item \texttt{src/entity/}: entità di dominio.
+      \item \texttt{src/dto/}: DTO per ogni entità principale.
+      \item \texttt{src/value-objects/}: value object e enum.
+      \item \texttt{src/repo/}: interfacce repository + token; \texttt{src/repo/impl/}: implementazioni concrete.
+      \item \texttt{src/services/}: interfacce servizi; \texttt{src/services/impl/}: implementazioni.
+      \item \texttt{src/use-case/}: cartelle per ambito con interfacce e \texttt{impl/}.
+      \item \texttt{src/ipc/}: adapter IPC in ingresso e, se necessario, in uscita.
+    \end{itemize}
+
+  \item \textbf{\texttt{renderer/}}
+    \begin{itemize}
+      \item \texttt{src/app/}:
+        \begin{itemize}
+          \item file applicativi principali: \texttt{app.ts}, \texttt{app.html}, \texttt{app.scss},\\ \texttt{app.config.ts}, \texttt{app.routes.ts};
+          \item \texttt{features/}: una cartella per feature verticale, contenente il relativo servizio API e, progressivamente, componenti e routing specifici.
+        \end{itemize}
+    \end{itemize}
+
+  \item \textbf{\texttt{shared/}}
+    \begin{itemize}
+      \item \texttt{ipc-channels.ts}: unica sorgente di verità per i nomi dei canali IPC e per il tipo \texttt{IpcChannel}.
+      \item Estendibile con ulteriori tipi condivisi, se necessario, mantenendo la stessa filosofia: niente logica, solo contratti.
+    \end{itemize}
+\end{itemize}
 
 \section{Processi di Supporto} \label{processi_supporto}
 I processi di supporto sono complementari ai processi primari. Questi processi

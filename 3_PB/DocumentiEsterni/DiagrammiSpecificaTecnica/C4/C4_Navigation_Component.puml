@@ -1,0 +1,75 @@
+@startuml C4_Navigation_Component
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title C4 Model - Level 3 (Navigation Tree Components)
+
+LAYOUT_WITH_LEGEND()
+
+Container_Boundary(renderer_container, "Renderer - Navigation Feature") {
+  Component(app_shell, "AppShellComponent", "Smart UI Component", "Shell principale e route wiring")
+  Component(dip_explorer, "DipExplorerComponent", "Smart UI Component", "Pagina browse e bootstrap root")
+  Component(dip_tree, "DipTree", "Smart UI Component", "Rendering albero flat, select/toggle/retry")
+  Component(tree_node, "DipTreeNodeComponent", "Dumb UI Component", "Nodo presentazionale")
+
+  Component(dip_facade, "DipFacade", "Application Facade", "Stato albero, load root/children, retry")
+  Component(nav_gateway, "IpcGateway", "Adapter/Gateway", "Dispatch canali browse e mapping DTO")
+  Component(cache_service, "IpcCacheService", "Infrastructure Service", "Cache TTL in renderer")
+  Component(error_handler, "IpcErrorHandlerService", "Infrastructure Service", "Normalizzazione errori IPC")
+  Component(nav_routing, "navigation-routing.ts", "Routing Helper", "Map node type -> detail route")
+  Component(node_key, "node-key.ts", "Utility", "Chiavi type:id per stato e cache")
+}
+
+Container_Boundary(main_container, "Electron Boundary") {
+  Component(preload_bridge, "Preload Bridge", "contextBridge", "window.electronAPI invoke/on")
+  Component(browse_adapter, "BrowsingIpcAdapter", "IPC Adapter", "Handler canali browse")
+  Component(getter_ucs, "Getter Use Cases", "Application Services", "GET_BY_ID / GET_BY_PARENT")
+  Component(repositories, "Repositories", "Repository Layer", "Recupero gerarchia")
+  Component(dao_layer, "DAO Layer", "Persistence Layer", "Query SQL")
+  Component(dto_converter, "EntityToDtoConverter", "Mapper", "entity -> DTO")
+}
+
+ContainerDb_Ext(sqlite, "SQLite", "Gerarchia browse")
+
+Rel(app_shell, dip_tree, "render rootNodes + selected")
+Rel(dip_explorer, dip_tree, "render rootNodes + selected")
+Rel(dip_tree, tree_node, "render nodi")
+Rel(tree_node, dip_tree, "toggle/select/retry events")
+
+Rel(app_shell, dip_facade, "loadRootNodes")
+Rel(dip_explorer, dip_facade, "loadRootNodes")
+Rel(dip_tree, dip_facade, "loadChildren(node)")
+Rel(dip_tree, node_key, "buildNodeKey(type:id)")
+Rel(app_shell, nav_routing, "map type -> detail route")
+Rel(dip_explorer, nav_routing, "map type -> detail route")
+
+Rel(dip_facade, nav_gateway, "getRootDip/getChildren")
+Rel(nav_gateway, cache_service, "get/set TTL")
+Rel(nav_gateway, error_handler, "handle(error)")
+Rel(nav_gateway, preload_bridge, "invoke(browse:*)")
+
+Rel(preload_bridge, browse_adapter, "ipcMain.handle(channel)")
+Rel(browse_adapter, getter_ucs, "execute")
+Rel(getter_ucs, repositories, "getById/getByParent")
+Rel(repositories, dao_layer, "SQL operations")
+Rel(dao_layer, sqlite, "SELECT hierarchy rows")
+Rel(browse_adapter, dto_converter, "entity -> DTO")
+Rel(browse_adapter, preload_bridge, "response DTO/null")
+
+note right of dip_facade
+State gestito:
+- phase
+- rootNodes
+- nodeCache
+- loadingNodeIds
+- nodeChildrenErrors
+end note
+
+note right of nav_gateway
+Dispatch per tipo nodo:
+dip -> classi
+class -> process
+process -> document
+document -> file
+end note
+
+@enduml

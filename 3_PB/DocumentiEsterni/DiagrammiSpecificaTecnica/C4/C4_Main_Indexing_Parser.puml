@@ -1,0 +1,25 @@
+@startuml Class Diagram - Main Indexing Flow - Group 2
+
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+hide empty members
+
+title IDipParser,DipParser
+  interface IDipParser {
+    + parse(rawContent: string): any
+  }
+
+  class XmlDipParser {
+    - parser: XMLParser
+    + parse(rawContent: string): any
+  }
+
+class XMLParser <<external>>
+
+IDipParser <|.. XmlDipParser
+XmlDipParser --> XMLParser
+
+@enduml
