@@ -11,7 +11,7 @@ La progettazione del sistema \textit{DIPReader} è stata guidata dai principi di
 \subsection{Renderer}
     \subsubsection{Struttura architetturale}
     Il container \textit{Renderer} è responsabile della presentazione dell'interfaccia utente e dell'interazione con l'utente. 
-    Per la gestione dell'interfaccia è stata adottata una struttura a componenti. Ogni feature espone componenti di presentazione e servizi dedicati al coordinamento della logica applicativa lato UI.\\
+    Per la gestione dell'interfaccia è stata adottata una struttura a componenti. Ogni \glossario{feature} espone componenti di presentazione e servizi dedicati al coordinamento della logica applicativa lato UI.\\
     Poiche le interazioni tra i componenti di presentazione sono limitate, ogni componente e mantenuto disaccoppiato dagli altri. 
     I punti di contatto principali sono il routing e i canali IPC, usati per coordinare la navigazione e la comunicazione con il backend.\\
     Per componenti riusabili in piu contesti (ad esempio export e stampa), l'integrazione avviene tramite Dependency Injection, evitando modifiche invasive alla struttura delle feature.\\
@@ -54,7 +54,7 @@ QueryType
         Utilizzare il pattern Strategy per definire una famiglia di algoritmi o comportamenti intercambiabili, incapsulandoli in classi separate e rendendoli facilmente sostituibili.
     \subparagraph{Implementazioni}
         Il pattern Strategy è stato adottato per gestire le diverse modalità di visualizzazione dei documenti, consentendo di definire strategie specifiche per ogni tipo di documento e di selezionare la strategia appropriata in fase di runtime.
-        \\ Nella validazione dei filtri è stato adottato il pattern Strategy per definire diverse strategie di validazione in base al tipo di filtro, consentendo di estendere facilmente le regole di validazione senza modificare il codice esistente.\\
+        \\ Nella \glossario{validazione} dei filtri è stato adottato il pattern Strategy per definire diverse strategie di validazione in base al tipo di \glossario{filtro}, consentendo di estendere facilmente le regole di validazione senza modificare il codice esistente.\\
         Similarmente è stato fatto per la gestione dei filtri di soggetti, che presentano relazioni precise definite dagli standard AGID.
 
     \paragraph{Facade}
@@ -85,9 +85,9 @@ QueryType
 \label{sec:container:main}
 
 \subsubsection{Ruolo architetturale}
-Il container \textit{Main} ospita la logica backend e costituisce il punto di orchestrazione tra IPC, use case applicativi e persistenza su SQLite.
+Il container \textit{Main} ospita la logica backend e costituisce il punto di orchestrazione tra IPC, \glossario{use case} applicativi e persistenza su SQLite.
 Le responsabilita principali sono la registrazione degli handler IPC, l'implementazione della business logic e il bootstrap iniziale dei dati indicizzati.
-In particolare, l'architettura del main process è stata organizzata in maniera tale da definire solamente le entità di un pacchetto DiP, gestendo invece i metadati in maniera generica. Questo permetterà in un futuro di evolvere il sistema per supportare nuovi tipi di schema di metadati, senza dover modificare o aggiungere nessuna componente o entità al backend.
+In particolare, l'architettura del main process è stata organizzata in maniera tale da definire solamente le entità di un pacchetto DiP, gestendo invece i \glossario{metadati} in maniera generica. Questo permetterà in un futuro di evolvere il sistema per supportare nuovi tipi di schema di metadati, senza dover modificare o aggiungere nessuna componente o entità al backend.
 
 \subsubsection{Layer architetturali}
 \begin{enumerate}

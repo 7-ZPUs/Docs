@@ -1,6 +1,6 @@
 \section{Frontend - Dettaglio}
 \subsection{Descrizione generica architetturale}
-La feature di dettaglio è il cuore della consultazione in DIPReader: permette all'utente di visualizzare i metadati e il contenuto di qualsiasi nodo dell'albero gerarchico di un DIP. Le entità visualizzabili sono di natura profondamente eterogenea: un documento porta con sé decine di sezioni di metadati \glossario{OAIS}, un fascicolo ha struttura procedurale, un processo si articola in sessioni di conservazione e versamento, mentre nodi come la classe documentale, il DIP radice e i file fisici non possiedono una struttura ricca abbastanza da giustificare un layout specializzato.\\
+La feature di dettaglio è il cuore della consultazione in DIPReader: permette all'utente di visualizzare i metadati e il contenuto di qualsiasi nodo dell'albero gerarchico di un DIP. Le entità visualizzabili sono di natura profondamente eterogenea: un documento porta con sé decine di sezioni di metadati \glossario{OAIS}, un fascicolo ha struttura procedurale, un processo si articola in sessioni di conservazione e \glossario{versamento}, mentre nodi come la classe documentale, il DIP radice e i file fisici non possiedono una struttura ricca abbastanza da giustificare un layout specializzato.\\
 Questa eterogeneità ha guidato le principali scelte architetturali: anziché proliferare pagine di routing distinte per ogni entità, il sistema adotta una rotta parametrica generica \codeword{/detail/:itemType/:itemId} che serve come unico punto di ingresso per tutti i tipi di nodo. La selezione del layout, dei componenti da renderizzare e della facade da interrogare viene effettuata a runtime in modo dichiarativo, sfruttando il sistema di Dependency Injection di Angular e i Signal reattivi come state management interno.
 Il risultato è un modulo in cui la logica di presentazione è completamente separata dalla logica applicativa, ogni facade è sostituibile senza modificare la UI, e ogni componente di presentazione è riutilizzabile in contesti diversi senza alcun accoppiamento diretto.
 
@@ -25,7 +25,7 @@ providers: [
 Questo meccanismo realizza il Dependency Inversion Principle nella sua forma più pura: i componenti dipendono esclusivamente da astrazioni (i token), mentre le implementazioni concrete vengono iniettate dall'esterno al momento dell'attivazione della rotta. Le classi concrete (\codeword{AggregateFacade}, \codeword{ProcessFacade}, \codeword{DocumentFacade}, \codeword{NodeFallbackFacade}) non sono né importate né istanziate direttamente dai componenti che le usano, garantendo che la UI sia indipendente da qualsiasi dettaglio implementativo del layer applicativo.\\
 La scelta di registrare i provider a livello di rotta, anziché a livello globale \texttt{(providedIn: 'root')}, ha due effetti architetturali rilevanti: ogni navigazione verso un nodo di dettaglio crea istanze fresche delle facade (e del loro stato), e il codice delle feature viene caricato solo quando la rotta viene attivata (lazy loading), riducendo il \glossario{bundle} iniziale dell'applicazione.
 \subparagraph{Guard di disambiguazione AGGREGATE/PROCESS}
-La rotta applica un \codeword{CanActivateFn} denominato \codeword{legacyAggregateToProcessGuard}. Questa guard risolve un problema di struttura dati: alcuni nodi del backend, pur essendo di tipo PROCESS, possono arrivare al frontend etichettati come AGGREGATE se provenienti da versioni precedenti del formato. La guard interroga il backend via IPC per ispezionare i metadati del processo: se il payload non contiene i metadati tipici di una aggregazione documentale (TipoAggregazione, TipologiaFascicolo, IdAggregazione), esegue un redirect verso la rotta PROCESS corretta. Questo preserva la separazione delle responsabilità e garantisce che ciascuna facade gestisca solo i dati del tipo per cui è progettata.
+La rotta applica un \codeword{CanActivateFn} denominato \codeword{legacyAggregateToProcessGuard}. Questa guard risolve un problema di struttura dati: alcuni nodi del backend, pur essendo di tipo PROCESS, possono arrivare al frontend etichettati come AGGREGATE se provenienti da versioni precedenti del formato. La guard interroga il backend via IPC per ispezionare i metadati del processo: se il payload non contiene i metadati tipici di una \glossario{aggregazione documentale} (TipoAggregazione, TipologiaFascicolo, IdAggregazione), esegue un redirect verso la rotta PROCESS corretta. Questo preserva la separazione delle responsabilità e garantisce che ciascuna facade gestisca solo i dati del tipo per cui è progettata.
 
 \subsection{Componente principale}
 Il componente Smart della feature è \codeword{ItemDetailPageComponent}. Implementa il pattern MVVM espresso da Angular: la View è il template, il ViewModel sono i Signal, il Model sono i DTO restituiti dalle facade.
@@ -71,25 +71,25 @@ Questo componente applica il principio Open/Closed: aggiungere il supporto a un 
 Per i documenti, il pannello compone in sequenza tutti i sotto-componenti specializzati per sezione:
 \begin{itemize}
     \item \codeword{DocumentMetadataComponent}: identificativo, riservatezza, hash, nome, oggetto.
-    \item \codeword{RegistrationDataComponent}: dati di registrazione protocollata e non protocollata.
-    \item \codeword{ClassificationInfoComponent}: indice e piano di classificazione AGID.
+    \item \codeword{RegistrationDataComponent}: \glossario{dati di registrazione} protocollata e non protocollata.
+    \item \codeword{ClassificationInfoComponent}: indice e \glossario{piano di classificazione} AGID.
     \item \codeword{FormatInfoComponent}: tipo MIME, prodotto, versione.
-    \item \codeword{VerificationInfoComponent}: firme digitali, sigillo, marcatura temporale.
+    \item \codeword{VerificationInfoComponent}: firme digitali, sigillo, \glossario{marcatura temporale}.
     \item \codeword{AttachmentsComponent}: allegati e relative impronte crittografiche.
     \item \codeword{ChangeTrackingComponent}: versionamento e modifiche rilevate.
-    \item \codeword{AipInfoComponent}: classe documentale, UUID AIP, sessione di conservazione.
+    \item \codeword{AipInfoComponent}: classe documentale, \glossario{UUID} \glossario{AIP}, sessione di conservazione.
     \item \codeword{SubjectListComponent}: soggetti coinvolti nella produzione, con tipi e ruoli.
     \item \codeword{CustomMetadataComponent}: metadati non standard in formato chiave-valore, con logica di normalizzazione dei nomi.
 \end{itemize}
 Per gli aggregati, il pannello compone:
 \begin{itemize}
     \item \codeword{AggregateMetadataComponent}: tipologia, identificativo, date di apertura/chiusura, progressivo, classificazione.
-    \item \codeword{AdminProcedureComponent}: procedimento amministrativo con fasi e URI.
+    \item \codeword{AdminProcedureComponent}: \glossario{procedimento amministrativo} con fasi e URI.
     \item \codeword{AggregateSubjectListComponent}: soggetti coinvolti nell'aggregazione.
     \item \codeword{CustomMetadataComponent}: metadati custom dell'aggregazione.
 \end{itemize}
 
-Per i processi, il pannello delega interamente a \codeword{ProcessMetadataComponent}, che raggruppa internamente le sezioni di overview, sessione di versamento, sessione di conservazione, classe documentale di appartenenza e metadati custom in card distinte.
+Per i processi, il pannello delega interamente a \codeword{ProcessMetadataComponent}, che raggruppa internamente le sezioni di overview, \glossario{sessione di versamento}, sessione di conservazione, classe documentale di appartenenza e metadati custom in card distinte.
 Ogni sotto-componente del pannello rispetta il pattern Dumb Component: riceve esclusivamente input e non effettua mai chiamate a servizi, gateway o facade. Questa scelta garantisce la massima riusabilità poiché ogni componente può essere testato isolatamente fornendo i soli dati di input.
 
 \subsection{NodeFallbackFacade e NodeFallbackPanelComponent}
