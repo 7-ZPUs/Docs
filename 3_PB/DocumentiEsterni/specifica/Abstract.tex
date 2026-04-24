@@ -60,16 +60,16 @@
 \section{Introduzione}
 
 \subsection{Obiettivo del documento}
-L’obiettivo del presente documento è descrivere in modo rigoroso le scelte
+L’obiettivo del presente \glossario{documento} è descrivere in modo rigoroso le scelte
 tecnologiche e l’architettura del prodotto \textit{DIPReader}, adottando il
-modello di progettazione \textit{C4}.\\ L’analisi verrà condotta partendo dalla
+modello di \glossario{progettazione} \textit{C4}.\\ L’analisi verrà condotta partendo dalla
 descrizione del contesto applicativo, per poi approfondire la struttura dei
 container, delle componenti e, infine, del codice, al fine di fornire una
 rappresentazione completa, coerente e sistematica del sistema.
 
 \subsection{Glossario}
 Ogni termine tecnico o con un significato particolare nell’ambito
-dell’Ingegneria del Software, utilizzato nella documentazione di progetto, è
+dell’\glossario{Ingegneria del Software}, utilizzato nella documentazione di \glossario{progetto}, è
 definito nell’apposito documento
 \href{https://7-zpus.github.io/Docs/assets/3_PB/DocumentiInterni/Glossario.pdf}{Glossario
 }\ped{(v2.0.0)}.
@@ -144,9 +144,9 @@ definito nell’apposito documento
 \newpage
 \section{Tecnologie utilizzate}
 La scelta delle tecnologie è stata guidata dalla necessità di rispettare i
-vincoli richiesti dalla proponente legati ad autoconsistenza, portabilità e
+vincoli richiesti dalla \glossario{proponente} legati ad autoconsistenza, portabilità e
 facilità d'uso, nonché da considerazioni relative alla facilità di sviluppo,
-alla disponibilità di risorse e alla compatibilità con i requisiti funzionali e
+alla disponibilità di risorse e alla compatibilità con i \glossario{requisiti} funzionali e
 non funzionali del sistema.\\
 
 \subsection{Criteri architetturali e principi di progettazione}
@@ -217,7 +217,7 @@ con l'obiettivo di garantire testabilita, manutenibilita e robustezza del prodot
         \hline
         better-sqlite3   & 12.8.0            & SQLite è un database relazionale che non richiede un server separato e può essere integrato direttamente nell'applicazione, facilitando lo sviluppo e il deployment. La sua leggerezza e portabilità lo rendono adatto a un'ampia gamma di piattaforme, garantendo la compatibilità con i requisiti di portabilità del progetto. \\
         \hline
-        sqlite-vss      & 0.1.2             & Scelto per la sua capacità di fornire una versione virtuale di SQLite, che consente di eseguire query su dati in memoria senza la necessità di creare un database fisico dei vettori per la ricerca semantica, semplificando così l'integrazione con il sistema.                                                                 \\
+        sqlite-vss      & 0.1.2             & Scelto per la sua capacità di fornire una versione virtuale di SQLite, che consente di eseguire \glossario{query} su dati in memoria senza la necessità di creare un database fisico dei vettori per la \glossario{ricerca semantica}, semplificando così l'integrazione con il sistema.                                                                 \\
         \hline
         ONNX Runtime    & 1.17.3            & Scelto per la sua capacità di eseguire modelli di machine learning in modo efficiente e flessibile, supportando una vasta gamma di modelli e framework, facilitando l'integrazione di funzionalità di intelligenza artificiale nel prodotto.                                                                                     \\
         \hline
@@ -237,7 +237,7 @@ con l'obiettivo di garantire testabilita, manutenibilita e robustezza del prodot
         \hline
         SonarQube          & 2026.2            & Scelto per la sua capacità di identificare e segnalare pattern di codice problematici, migliorando la qualità del codice e facilitando la manutenzione del progetto. Integrato nella pipeline di sviluppo, SonarQube consente di monitorare costantemente la qualità del codice, identificando potenziali bug, vulnerabilità e problemi di manutenzione, contribuendo così a garantire un prodotto finale robusto e affidabile. \\
         \hline
-        Prettier        & 2.9.3             & Scelto per la sua capacità di formattare automaticamente il codice in modo coerente, migliorando la leggibilità e facilitando la collaborazione tra i membri del team. Prettier supporta una vasta gamma di linguaggi e può essere facilmente integrato con editor di codice e strumenti di sviluppo, semplificando il processo di mantenimento di uno stile di codifica uniforme. \\
+        Prettier        & 2.9.3             & Scelto per la sua capacità di formattare automaticamente il codice in modo coerente, migliorando la leggibilità e facilitando la collaborazione tra i membri del team. Prettier supporta una vasta gamma di linguaggi e può essere facilmente integrato con editor di codice e strumenti di sviluppo, semplificando il \glossario{processo} di mantenimento di uno stile di codifica uniforme. \\
         \hline
 
     \end{tabularx}
@@ -252,7 +252,7 @@ con l'obiettivo di garantire testabilita, manutenibilita e robustezza del prodot
         \rowcolor{zpusgreen!30}
         \textbf{Scelta} & \textbf{Versione} & \textbf{Motivazione}                                                                                                                                                                                                                                                                                                                                                  \\
         \hline
-        Vitest          & 2.3.1            & Scelto per la sua capacità di fornire un ambiente di test per applicazioni JavaScript e per il suo controllo dei componenti di Mock. \\
+        Vitest          & 2.3.1            & Scelto per la sua capacità di fornire un ambiente di \glossario{test} per applicazioni JavaScript e per il suo controllo dei componenti di Mock. \\
         \hline
         Playwright        & 1.59.1             & Scelto per la sua capacità di fornire un ambiente di test per applicazioni web, con possibilità di testare flussi completi di interazione utente. Utilizzato quindi per i test E2E. \\
         \hline
@@ -261,8 +261,8 @@ con l'obiettivo di garantire testabilita, manutenibilita e robustezza del prodot
 \end{table}
 
 \section{Contesto del sistema}
-I vincoli di progetto, come specificato nell'Analisi dei Requisiti, richiedono che il sistema sia portabile, facile da usare e autoconsistente.
-Il caso d'uso principale del sistema è quello di un utente che desidera esplorare e interrogare un DIP per estrarre documenti fiscali e non, potendone verificare la validità e autenticità.\\
+I vincoli di progetto, come specificato nell'\glossario{Analisi dei Requisiti}, richiedono che il sistema sia portabile, facile da usare e autoconsistente.
+Il caso d'uso principale del sistema è quello di un utente che desidera esplorare e interrogare un \glossario{DIP} per estrarre documenti fiscali e non, potendone verificare la validità e autenticità.\\
 
 \section{Architettura}
 \subsection{Architettura logica}
@@ -273,12 +273,12 @@ La struttura si può riassumere in 3 livelli principali:
     \item \textbf{Domain Layer:} contiene la logica di business, rappresentata da servizi, modelli di dominio e interfacce che definiscono i contratti per l'accesso ai dati e l'esecuzione delle operazioni principali del sistema.
     \item \textbf{Inbound ports:} le interfacce che definiscono i contratti per l'interazione con sistemi esterni, in questo caso specifico: il processo renderer (frontend).
     \item \textbf{Outbound ports:} le interfacce che definiscono i contratti per l'interazione con il layer infrastrutturale o sistemi esterni, necessari per l'espletamento di una determinata funzione.
-    \item \textbf{Adapters:} possono esssere sia inbound che outbound. Nel caso di porte inbound, essi si occupano per l'appunto di adattare le richieste provenienti da esterni (p.e. richieste HTTP o in questo caso messaggi IPC) in un formato compatibile con la business logic. Nel caso di porte outbound, invece, si occupano di implementare le interfacce definite dalle porte stesse, fornendo dunque l'implementazione specifica per una determinata interazione (p.e. accesso a database, chiamate a servizi esterni).
+    \item \textbf{Adapters:} possono esssere sia inbound che outbound. Nel caso di porte inbound, essi si occupano per l'appunto di adattare le richieste provenienti da esterni (p.e. richieste HTTP o in questo caso messaggi IPC) in un \glossario{formato} compatibile con la business logic. Nel caso di porte outbound, invece, si occupano di implementare le interfacce definite dalle porte stesse, fornendo dunque l'implementazione specifica per una determinata interazione (p.e. accesso a database, chiamate a servizi esterni).
 \end{itemize}
 Questa architettura favorisce la modularità, la testabilità e la manutenibilità del sistema. Per realizzare questa architettura al meglio è stata adottata in maniera capillare la tecnica della Dependency Injection, permettendo così di delegare la responsabilità di creazione degli oggetti e risoluzione delle dipendenze ad una componente di terze parti dedicata (in questo caso tsyringe). Questo permette di mantenere il codice pulito e indipendente dalle implementazioni specifiche.
 
 \subsection{Architettura di deployment}
-L'architettura di deployment scelta per il sistema è quella \textbf{monolitica}. Questa scelta è motivata dalla natura del progetto e delle esigenze espresse dalla committente. Il software è infatti un'applicazione desktop autocontenuta, il che fa naturalmente propendere per un architettura monolitica. Viene di seguito riportato il diagramma C4 di contesto del sistema, che mostra le interazioni tra il software e i sistemi esterni.
+L'architettura di deployment scelta per il sistema è quella \textbf{monolitica}. Questa scelta è motivata dalla natura del progetto e delle esigenze espresse dalla \glossario{committente}. Il software è infatti un'applicazione desktop autocontenuta, il che fa naturalmente propendere per un architettura monolitica. Viene di seguito riportato il diagramma C4 di contesto del sistema, che mostra le interazioni tra il software e i sistemi esterni.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../assets/outDiagrammiST/DiagrammaC1.png}
