@@ -1,6 +1,6 @@
 \section{Frontend - Verifica Integrità}
 \subsection{Descrizione}
-La funzionalità di verifica integrità garantisce la correttezza e l'autenticità dei pacchetti DIP, verificando ricorsivamente l'integrità crittografica (generalmente hash SHA-256) dei file contenuti, propagando poi il risultato alla gerarchia documentale.
+La funzionalità di \glossario{verifica} \glossario{integrità} garantisce la correttezza e l'autenticità dei pacchetti DIP, verificando ricorsivamente l'integrità crittografica (generalmente hash SHA-256) dei file contenuti, propagando poi il risultato alla gerarchia documentale.
 
 Per gestire l'albero delle dipendenze documentali sono stati adottati diversi design patterns:
 \begin{itemize}
@@ -16,7 +16,7 @@ Il componente di presentazione è rappresentato da \textit{integrity-dashboard.c
 
 \subsection{Componenti di presentazione}
 \subparagraph{Integrity-Summary-Cards} Questo \textit{dumb component} include tre card che visualizzano il numero di processi verificati validi, non validi e ancora da verificare.
-\subparagraph{Integrity-Valid-Panel} Questo \textit{dumb component} raccoglie gli elementi verificati, validi e non validi, ponendo la visualizzazione di questi ultimi in cima alla lista. La logica di presentazione degli elementi varia in base al tipo di nodo e allo stato di verifica dei nodi di pari livello, ad esempio se un documento è stato verificato valido la lista lo includerà e rappresenterà come documento, mentre se oltre ad esso sono stati verificati tutti gli altri documenti di pari livello (ovvero dello stesso processo) e sono risultati tutti validi, allora il componente mostrerà un riepilogo del processo invece che dei singoli documenti. In questo modo si ottiene una visualizzazione più compatta e intuitiva dello stato di verifica integrità dell'intero pacchetto. Per i nodi non validi la lista non si limiterà a etichettarli in base al loro livello nell'alberatura documentale, ma mostrerà l'intero percorso del nodo a partire dal livello più alto (cioè la classe documentale) fino al nodo stesso in stile "matrioska", in modo da evidenziare immediatamente la posizione del nodo non valido.
+\subparagraph{Integrity-Valid-Panel} Questo \textit{dumb component} raccoglie gli elementi verificati, validi e non validi, ponendo la visualizzazione di questi ultimi in cima alla lista. La logica di presentazione degli elementi varia in base al tipo di nodo e allo stato di verifica dei nodi di pari livello, ad esempio se un documento è stato verificato valido la lista lo includerà e rappresenterà come documento, mentre se oltre ad esso sono stati verificati tutti gli altri documenti di pari livello (ovvero dello stesso processo) e sono risultati tutti validi, allora il componente mostrerà un riepilogo del processo invece che dei singoli documenti. In questo modo si ottiene una visualizzazione più compatta e intuitiva dello stato di verifica integrità dell'intero pacchetto. Per i nodi non validi la lista non si limiterà a etichettarli in base al loro livello nell'alberatura documentale, ma mostrerà l'intero percorso del nodo a partire dal livello più alto (cioè la \glossario{classe documentale}) fino al nodo stesso in stile "matrioska", in modo da evidenziare immediatamente la posizione del nodo non valido.
 
 \begin{figure}[H]
     \centering
