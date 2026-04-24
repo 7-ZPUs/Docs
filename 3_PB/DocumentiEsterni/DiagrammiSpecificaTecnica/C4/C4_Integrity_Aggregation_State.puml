@@ -1,0 +1,53 @@
+@startuml C4_Integrity_Aggregation_State
+
+title C4 - State: aggregateStatuses e propagazione gerarchica
+
+top to bottom direction
+skinparam linetype ortho
+skinparam ArrowFontSize 12
+skinparam state {
+  FontSize 13
+  Padding 14
+}
+
+state "Carica figli" as CaricaFigli
+state "Decidi stato" as Decisione <<choice>>
+state "VALID" as StatoValid
+state "INVALID" as StatoInvalid
+state "UNKNOWN" as StatoUnknown
+state "Persisti stato" as Persisti
+state "Risali al parent" as Risali
+state "Completato" as Completato
+
+[*] --> CaricaFigli : start(rootId, level)
+CaricaFigli --> Decisione
+
+Decisione --> StatoInvalid : esiste INVALID
+Decisione --> StatoUnknown : nessun INVALID\ned esiste UNKNOWN
+Decisione --> StatoValid : nessun figlio
+Decisione --> StatoValid : tutti VALID
+
+StatoValid : status = VALID
+StatoInvalid : status = INVALID
+StatoUnknown : status = UNKNOWN
+
+StatoValid --> Persisti
+StatoInvalid --> Persisti
+StatoUnknown --> Persisti
+
+Persisti : updateIntegrityStatus(nodeId, status)
+Persisti --> Risali : parent esiste
+Persisti --> Completato : parent assente
+
+Risali : nodeId = parentId
+Risali --> CaricaFigli
+
+Completato : return stato root
+Completato --> [*]
+
+note right of CaricaFigli
+  Livelli coperti:
+  File -> Document -> Process -> DocumentClass -> Dip
+end note
+
+@enduml

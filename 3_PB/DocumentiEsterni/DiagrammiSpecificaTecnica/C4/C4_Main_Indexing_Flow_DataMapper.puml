@@ -1,0 +1,41 @@
+@startuml Class Diagram - Main Indexing Flow - Group 2
+
+top to bottom direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+hide empty members
+
+
+title DataMapper, IDataMapper
+
+  interface IDataMapper {
+    + mapDip(): Dip
+    + mapDocumentClasses(): DocumentClass[]
+    + getProcessMappers(): MapperRequest[]
+    + getDocumentMappers(): MapperRequest[]
+    + getFileMappers(): MapperRequest[]
+    + setRawDipIndex(rawDipIndex: any): void
+  }
+
+  class DataMapper {
+    - hashMapper: DocumentMetadataHashMapper
+    - rawDipIndex: any
+    + mapDip(): Dip
+    + mapDocumentClasses(): DocumentClass[]
+    + getProcessMappers(): MapperRequest<Process>[]
+    + getDocumentMappers(): MapperRequest<Document>[]
+    + getFileMappers(): MapperRequest<File>[]
+    + setRawDipIndex(rawDipIndex: any): void
+  }
+
+  interface MapperRequest<T> {
+    + metadataRelativePath: string | null
+    + map: (rawMetadata: any) => T 
+  }
+
+IDataMapper <|.. DataMapper
+MapperRequest <.. DataMapper
+
+@enduml

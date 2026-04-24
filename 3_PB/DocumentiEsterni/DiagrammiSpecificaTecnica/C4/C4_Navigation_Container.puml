@@ -1,0 +1,35 @@
+@startuml C4_Navigation_Container
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title C4 Model - Level 2 (Navigation Tree Containers)
+
+LAYOUT_WITH_LEGEND()
+
+Person(user, "Archivista", "Espande, seleziona e ricarica nodi dell'albero")
+
+System_Boundary(dip_reader_system, "DIP Reader - Navigation Scope") {
+  Container(renderer, "Renderer Container", "Angular", "UI albero, stato locale, routing dettaglio")
+  Container(preload, "Preload Bridge", "Electron contextBridge", "Allowlist canali e forwarding invoke/on")
+  Container(backend, "Backend Container", "Electron Main + Core Browse", "Adapter IPC browse, use case getter, repository")
+}
+
+ContainerDb_Ext(local_db, "SQLite DB", "Gerarchia e metadati indicizzati")
+System_Ext(dip_fs, "DIP folder", "Filesystem locale con package DIP")
+System_Ext(shared_contracts, "Shared contracts", "ipc-channels.ts e DTO condivisi")
+
+Rel(user, renderer, "Azioni UI: expand/select/retry")
+Rel(renderer, shared_contracts, "Usa costanti canali e tipi DTO")
+Rel(renderer, preload, "invoke(channel, payload)")
+Rel(preload, backend, "ipcRenderer.invoke -> ipcMain.handle")
+Rel(backend, shared_contracts, "Usa canali e payload condivisi")
+Rel(backend, local_db, "Query gerarchia browse")
+Rel(backend, dip_fs, "Lookup percorso DIP e letture on-demand")
+Rel(backend, preload, "DTO response")
+Rel(preload, renderer, "Promise resolve/reject")
+
+note right of backend
+Entry point browse: BrowsingIpcAdapter
+Chain: UseCase -> Repository -> DAO -> SQLite
+end note
+
+@enduml

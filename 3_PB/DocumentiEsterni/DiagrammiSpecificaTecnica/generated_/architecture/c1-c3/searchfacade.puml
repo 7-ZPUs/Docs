@@ -1,0 +1,54 @@
+@startuml
+title SearchFacade - code level
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+
+package "renderer/src/app/features/search" {
+  class SearchFacade <<service>> {
+    -state: WritableSignal<SearchState>
+    -abortController: AbortController | null
+    -customMetadataKeys: Signal<string[]>
+    -searchTrigger: Subject<void>
+    +getState(): Signal<SearchState>
+    +getCustomMetadataKeys(): Signal<string[]>
+    +setQuery(query: SearchQuery): void
+    +setFilters(filters: SearchFilters): void
+    +search(): void
+    +searchAdvanced(filters: SearchFilters): void
+    +searchSemantic(query: SearchQuery): void
+    +validateFilters(filters: PartialSearchFilters): ValidationResult
+    +loadCustomMetadataKeys(dipId?: number | null): Promise<void>
+    +cancelSearch(): void
+    +retry(): void
+  }
+
+  interface ISearchFacade
+  interface ISearchChannel
+
+  interface ISemanticIndexStatus
+
+  interface IFilterValidator
+
+  class "search-request.mapper" as SearchRequestMapper <<utility>> {
+    +hasMeaningfulAdvancedFilters(filters: SearchFilters): boolean
+  }
+}
+
+package "renderer/src/app/features/shared + infrastructure" {
+  interface IErrorHandler
+  interface ITelemetry
+  interface ILiveAnnouncer
+}
+
+SearchFacade ..|> ISearchFacade
+SearchFacade --> ISearchChannel : search / searchAdvanced / searchSemantic
+SearchFacade --> ISemanticIndexStatus : guards semantic search
+SearchFacade --> IFilterValidator : validateFilters()
+SearchFacade --> IErrorHandler : handle errors
+SearchFacade --> ITelemetry : trackEvent / trackError
+SearchFacade --> ILiveAnnouncer : announce results
+SearchFacade ..> SearchRequestMapper : checks advanced filters
+
+@enduml

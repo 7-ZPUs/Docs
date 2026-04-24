@@ -1,0 +1,130 @@
+@startuml renderer-search-dataflow-l3
+!define C4P https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master
+!includeurl C4P/C4_Component.puml
+
+top to bottom direction
+LAYOUT_TOP_DOWN()
+
+title C4 Level 3 (Component) - Renderer Search Dataflow (Vertical)
+
+skinparam shadowing false
+skinparam linetype ortho
+skinparam ArrowThickness 2
+skinparam ArrowColor #1F2937
+skinparam ArrowFontColor #111827
+skinparam ArrowFontSize 10
+skinparam ArrowFontStyle bold
+skinparam defaultTextAlignment left
+skinparam wrapWidth 220
+skinparam maxMessageSize 80
+
+System_Boundary(renderer, "Renderer Process (Angular)") {
+  Container_Boundary(search_page, "Search Page") {
+    Component(searchBar, "SearchBarComponent", "Dumb UI", "Emits queryChanged/searchRequested")
+    Component(filterPanel, "AdvancedFilterPanelComponent", "Smart UI", "Emits filtersChanged/filtersSubmit")
+    Component(searchPage, "SearchPageComponent", "Smart UI", "Coordinates search interactions and state binding")
+    Component(resultsList, "SearchResultsComponent", "Dumb UI", "Renders search results and emits resultSelected")
+  }
+
+  Component(searchFacade, "SearchFacade", "Application Service", "Orchestrates search, validation, state, retry/cancel")
+  Component(searchGateway, "SearchIpcGateway", "Adapter", "Maps requests, cache lookup, invokes Electron IPC bridge")
+
+  Component(filterValidator, "IFilterValidator", "Policy", "Validates advanced filters")
+  Component(semanticStatus, "ISemanticIndexStatus", "Policy", "Checks semantic index readiness")
+  Component(cacheService, "ICacheService", "Infrastructure", "Caches search responses (TTL)")
+  Component(errorHandler, "IErrorHandler", "Policy", "Normalizes raw errors to app errors")
+  Component(telemetry, "ITelemetry", "Observability", "Tracks search events/errors")
+  Component(liveAnnouncer, "ILiveAnnouncer", "Accessibility", "Announces result count to assistive tech")
+  Component(electronBridge, "IElectronContextBridge", "Bridge", "invoke(channel, payload, signal)")
+}
+
+System_Boundary(mainproc, "Electron Main Process") {
+  Component(searchIpcAdapter, "SearchIpcAdapter", "IPC Adapter", "Handles ipc:search:* and search:get-custom-metadata-keys")
+}
+
+Lay_D(searchBar, filterPanel)
+Lay_D(filterPanel, searchPage)
+Lay_D(searchPage, searchFacade)
+Lay_D(searchFacade, searchGateway)
+Lay_D(searchGateway, electronBridge)
+Lay_D(electronBridge, searchIpcAdapter)
+Lay_D(searchFacade, telemetry)
+Lay_D(telemetry, liveAnnouncer)
+Lay_D(searchPage, resultsList)
+
+Rel(searchBar, searchPage, "UI events")
+Rel(filterPanel, searchPage, "Filter events")
+Rel(searchPage, searchFacade, "Commands")
+Rel(searchFacade, filterValidator, "Validate")
+Rel(searchFacade, semanticStatus, "READY check")
+Rel(searchFacade, searchGateway, "Search requests")
+
+Rel(searchGateway, cacheService, "Cache")
+Rel(searchGateway, electronBridge, "invoke(...)")
+Rel(searchGateway, errorHandler, "Errors")
+
+Rel(electronBridge, searchIpcAdapter, "IPC channels")
+
+Rel_Back(searchFacade, searchPage, "State")
+Rel(searchFacade, telemetry, "Telemetry")
+Rel(searchFacade, liveAnnouncer, "A11y")
+Rel(searchPage, resultsList, "Bind results")
+
+note right of searchFacade
+Primary command paths:
+1) search() -> debounce 300ms -> full-text
+2) searchAdvanced(filters) -> pre-validation -> advanced
+3) searchSemantic(query) -> only if semantic index is READY
+end note
+
+note bottom of searchGateway
+Channel mapping:
+- ipc:search:text
+- ipc:search:advanced
+- ipc:search:semantic
+- search:get-custom-metadata-keys
+end note
+
+SHOW_LEGEND()
+
+newpage
+
+title C4 Level 3 (Component) - Runtime Dataflow Variants (Vertical)
+
+LAYOUT_TOP_DOWN()
+
+together {
+  Component(uiAction, "UI Action", "Event", "searchRequested / filtersSubmit / retry")
+  Component(guardChecks, "Pre-checks", "Logic", "isSearching guard + validation + semantic READY check")
+  Component(requestPath, "Request Path", "Flow", "prepareForSearch -> AbortController -> IPC request")
+  Component(successPath, "Success Path", "Flow", "set results -> telemetry event -> live announcement")
+  Component(errorPath, "Error Path", "Flow", "normalize error -> set state.error -> telemetry error")
+  Component(cancelPath, "Cancel Path", "Flow", "abort in-flight request + reset loading/isSearching")
+  Component(renderPath, "Render Path", "Flow", "SearchPage binds state to SearchResults/empty/error")
+}
+
+Rel(uiAction, guardChecks, "1")
+Rel(guardChecks, requestPath, "2 (if valid)")
+Rel(requestPath, successPath, "3a")
+Rel(requestPath, errorPath, "3b")
+Rel(requestPath, cancelPath, "3c")
+Rel(successPath, renderPath, "4a")
+Rel(errorPath, renderPath, "4b")
+Rel(cancelPath, renderPath, "4c")
+
+note right of guardChecks
+Blocking cases:
+- invalid advanced filters
+- semantic search when status != READY
+- concurrent call while isSearching = true
+end note
+
+note right of renderPath
+UI outcomes:
+- loading spinner
+- results list
+- empty state
+- error banner with Retry button
+end note
+
+@enduml

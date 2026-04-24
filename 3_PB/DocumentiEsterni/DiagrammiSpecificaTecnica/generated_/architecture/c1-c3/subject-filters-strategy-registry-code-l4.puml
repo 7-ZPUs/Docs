@@ -1,0 +1,89 @@
+@startuml subject-filters-strategy-registry-code-l4
+
+title C4 Level 4 (Code) - SubjectFiltersComponent and Strategy Registry
+
+allowmixing
+top to bottom direction
+
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+skinparam defaultTextAlignment left
+skinparam linetype ortho
+skinparam ArrowThickness 2
+skinparam ArrowColor #1F2937
+skinparam ArrowFontColor #111827
+skinparam ArrowFontSize 10
+skinparam ArrowFontStyle bold
+skinparam wrapWidth 220
+skinparam maxMessageSize 80
+skinparam nodesep 40
+skinparam ranksep 50
+
+package "Renderer App (Angular)" {
+  class "SubjectFiltersComponent" as SubjectFilters {
+    +docContext: DocContext
+    +subject: SubjectCriteria[]
+    +resetCounter: number
+    +subjectChanged: EventEmitter<SubjectCriteria[]>
+    -currentStrategy: IDocContextStrategy
+    --
+    +ngOnChanges(changes: SimpleChanges): void
+    +startWizard(): void
+    +setRole(role: SubjectRoleType): void
+    +setType(type: SubjectType): void
+    +onDetailsChanged(details: any): void
+    +addSubjectToList(): void
+    +removeSubject(index: number): void
+    +resetWizard(): void   
+  }
+
+  class "DOC_CONTEXT_STRATEGY_REGISTRY" as ContextRegistry <<strategy registry>> {
+    DI -> DiContextStrategy
+    DAI -> DaiContextStrategy
+    AGG -> AggContextStrategy
+    ALL -> AllContextStrategy
+  }
+
+  interface "IDocContextStrategy" as ContextStrategy {
+    +getAvailableRoles(): RoleDefinition[]
+    +getAllowedTypes(role: SubjectRoleType): SubjectType[]
+  }
+
+  class "DiContextStrategy" as DiStrategy <<concrete strategy>>
+  class "DaiContextStrategy" as DaiStrategy <<concrete strategy>>
+  class "AggContextStrategy" as AggStrategy <<concrete strategy>>
+  class "AllContextStrategy" as AllStrategy <<concrete strategy>>
+
+  class "SubjectDetailFormComponent" as DetailForm <<child component>>
+}
+
+package "Shared Domain" {
+  class "Subject Types" as SubjectTypes {
+    DocContext
+    SubjectRoleType
+    SubjectType
+    SubjectCriteria
+    RoleDefinition
+  }
+}
+
+SubjectFilters --> ContextRegistry : context lookup
+ContextRegistry --> ContextStrategy : selected strategy
+ContextStrategy <|.. DiStrategy
+ContextStrategy <|.. DaiStrategy
+ContextStrategy <|.. AggStrategy
+ContextStrategy <|.. AllStrategy
+
+SubjectFilters --> ContextStrategy : roles/types
+SubjectFilters --> DetailForm : selected type
+DetailForm --> SubjectFilters : details changed
+
+SubjectFilters --> SubjectTypes : SubjectCriteria model and emit
+
+' Compact layout hints for concrete strategies (single row)
+DiStrategy -[hidden]right-> DaiStrategy
+DaiStrategy -[hidden]right-> AggStrategy
+AggStrategy -[hidden]right-> AllStrategy
+
+@enduml

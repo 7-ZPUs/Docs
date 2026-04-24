@@ -1,0 +1,68 @@
+' ==============================================================================
+' DIAGRAMMA 1: SMART & DUMB COMPONENTS (C4 Component Diagram)
+' File: diagram_1_smart_dumb.puml
+' ==============================================================================
+
+@startuml diagram_1_smart_dumb
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+set SCALE 1.2
+
+title Diagramma 1: Architettura Smart & Dumb Components
+
+package "SearchPageComponent (SMART)" {
+  component SearchPage as "SearchPageComponent\n[SMART]\n\nServices:\n- ISearchFacade\n- Router\n- ErrorHandler" #B3D9FF
+  
+  component SearchBar as "SearchBarComponent\n[DUMB]\n\nPresentazione pura\nEmette: onSearch()\nonSemanticToggle()" #B3E5B3
+  
+  component AdvancedFilter as "AdvancedFilterPanelComponent\n[SMART]\n\nLogica filtri\nServizi iniettati\nState filters" #B3D9FF
+  
+  component SearchResults as "SearchResultsComponent\n[DUMB]\n\nRiceve results\nFactory pattern\nVisualizzazione" #B3E5B3
+}
+
+package "AdvancedFilter Children (Dumb)" {
+  component CommonFilters as "CommonFiltersComponent" #B3E5B3
+  component DiDaiFilters as "DiDaiFiltersComponent" #B3E5B3
+  component AggregateFilters as "AggregateFiltersComponent" #B3E5B3
+}
+
+package "AdvancedFilter Children (Smart)" {
+  component SubjectsFilter as "SubjectsFilterComponent\n[SMART]\n\nStrategy Pattern\nRole + Type Registry" #B3D9FF
+  component CustomMetadata as "CustomMetadataComponent\n[SMART]\n\nDiscovery dinamico\nAutocomplete" #B3D9FF
+}
+
+package "SearchResults Children - Factory" {
+  component DocResult as "DocumentResultComponent" #B3E5B3
+  component ProcResult as "ProcessResultComponent" #B3E5B3
+  component AggResult as "AggregateResultComponent" #B3E5B3
+  component ClassResult as "ClassResultComponent" #B3E5B3
+}
+
+' Relazioni
+SearchPage --> SearchBar
+SearchPage --> AdvancedFilter
+SearchPage --> SearchResults
+
+AdvancedFilter --> CommonFilters
+AdvancedFilter --> DiDaiFilters
+AdvancedFilter --> AggregateFilters
+AdvancedFilter --> SubjectsFilter
+AdvancedFilter --> CustomMetadata
+
+SearchResults --> DocResult
+SearchResults --> ProcResult
+SearchResults --> AggResult
+SearchResults --> ClassResult
+
+legend right
+  |<#B3D9FF> SMART |
+  |   Contiene logica |
+  |   Servizi iniettati |
+  |   State management |
+  |<#B3E5B3> DUMB |
+  |   Presentazione pura |
+  |   Input/Output binding |
+  |   Nessuna logica |
+endlegend
+
+@enduml

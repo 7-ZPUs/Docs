@@ -1,0 +1,110 @@
+@startuml UC-1 – Caricamento e Indicizzazione DIP
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam nodesep 80
+skinparam ranksep 100
+
+title UC-1 – Caricamento e Indicizzazione DIP\nFlusso: apertura file → decompressione → parsing → indicizzazione → fase ready\nComponenti: AppShell · DipLoadingPage · DipIndexingProgress · DipFacade · IpcGateway · SemanticIndexFacade
+
+Person(user, "Utente", "Revisore, archivista o consulente")
+System_Ext(ipc, "IPC Dispatcher (Main Process)", "Electron Context Bridge")
+
+Container_Boundary(renderer, "Renderer Process – Angular 17+") {
+
+  Component(app_shell, "AppShellComponent", "Angular Standalone [Smart – Layout Root]","Root component: legge Signal<DipState>.phase da DipFacade:\n  • phase='idle'     → mostra DipLoadingPageComponent\n  • phase='indexing' → mostra DipLoadingPageComponent con progresso\n  • phase='ready'    → attiva il router-outlet con le rotte normali\nGuard visivo: nessuna rotta accessibile prima dell'indicizzazione.")
+
+  Component(dip_loading_page, "DipLoadingPageComponent", "Angular Standalone [Smart]\n[Schermata di avvio – fullscreen]","Schermata fullscreen durante phase='idle'|'indexing'|'error'.\nFasi visualizzate:\n  1. Selezione file DIP\n  2. Decompressione archivio .zip\n  3. Parsing XML metadati AGID\n  4. Indicizzazione relazionale (SQLite)\n  5. [Opzionale] Indicizzazione semantica AI\nBottone 'Salta indicizzazione AI' → SemanticIndexFacade.cancel()\nGestione errori:\n  DIP_FILE_NOT_FOUND, DIP_CORRUPT_ARCHIVE,\n  DIP_PARSE_ERROR, DIP_INDEX_ERROR")
+
+  Component(dip_indexing_progress, "DipIndexingProgressComponent", "Angular Standalone [Dumb]\n[Observer via Signal]","Visualizza il progresso dell'indicizzazione.\nInput: progress: DipLoadingProgress {\n  phase, currentStep, stepsCompleted,\n  totalSteps, percentage\n}\nMostra stepper orizzontale, barra %, spinner fase corrente.\nCompletamente Dumb: zero iniezioni di servizi.")
+
+  Component(inline_error, "InlineErrorComponent", "Angular Standalone [Dumb – Shared]\n[Errori non bloccanti – inline]","Messaggio errore non modale.\n@Input: error: AppError\nMostra icona severity + messaggio localizzato.\nLink 'Riprova' se error.recoverable === true.\nNon blocca la UI.")
+
+  Component(dip_facade, "DipFacade", "Angular Service [Injectable]\n[Facade + SRP]","Stato del DIP caricato.\nSignal<DipState>:\n  phase: 'idle'|'indexing'|'ready'|'error'\n  loadingProgress: DipLoadingProgress\n  loadingError: AppError | null\n  rootNodes: DipTreeNode[]\nAPI:\n  loadRootNodes() → AppError(DIP_FILE_NOT_FOUND |\n    DIP_CORRUPT_ARCHIVE | DIP_PARSE_ERROR | DIP_INDEX_ERROR)\n  loadChildren(id) → AppError(DIP_CHILDREN_LOAD_ERROR)")
+
+  Component(semantic_facade, "SemanticIndexFacade", "Angular Service [Injectable]\n[Facade – Opzionale]","Stato indicizzazione semantica AI.\nSignal<SemanticIndexState>:\n  status: 'idle'|'indexing'|'ready'|'error'|'timeout'|'cancelled'\n  progress: number (0..100)\nTimeout configurabile (default 120s).\ncancel() → IPC 'semantic:cancel' [no-cache]\n  → status='cancelled' immediatamente\n  → LiveAnnouncer: 'Ricerca semantica non disponibile'")
+
+  Component(ipc_gateway, "IpcGateway", "Angular Service [providedIn:'root']\n[Adapter + ISP]","Unico punto di accesso all'Electron Context Bridge.\ninvoke<T>(channel, payload?, cachePolicy?): Promise<T>\nCachePolicy:\n  'cache-first'   → legge IpcCacheService; chiama IPC solo su miss\n  'no-cache'      → bypass totale (operazioni mutanti)\nCanali no-cache obbligatori:\n  loadDip, semantic:cancel")
+
+  Component(ipc_cache, "IpcCacheService", "Angular Service [providedIn:'root']\n[SRP – Request Deduplication]","Cache in-memory TTL per risposte IPC di sola lettura.\nReset completo (clear()) ad ogni apertura di nuovo DIP.\nTTL:\n  getAipInfo → 300_000 ms\n  loadChildren (tree) → 600_000 ms")
+
+  Component(ipc_error_handler, "IpcErrorHandlerService", "Angular Service [providedIn:'root']\n[SRP – Error Translation]","Traduce errori IPC grezzi in AppError tipizzato.\nErrorCode rilevanti per questo flusso:\n  DIP_FILE_NOT_FOUND, DIP_CORRUPT_ARCHIVE,\n  DIP_PARSE_ERROR, DIP_INDEX_ERROR")
+
+  Component(telemetry, "TelemetryService", "Angular Service [providedIn:'root']\n[SRP – Observability]","Log strutturato locale.\nEventi rilevanti per questo flusso:\n  DIP_LOADED, ROUTE_CHANGE\n  IPC_ERROR, RENDER_ERROR\nFire-and-forget, mai bloccante.")
+
+  Component(live_announcer, "LiveAnnouncerService", "Angular CDK [providedIn:'root']\n[WCAG 2.1 – aria-live]","Annuncia messaggi agli screen reader.\nRilevante per questo flusso:\n  DipFacade → 'Indicizzazione X% completata' ogni 10% [polite]\n  SemanticFacade → 'Ricerca semantica non disponibile' [assertive]")
+
+  Component(notification_service, "NotificationService", "Angular Service [providedIn:'root']\n[SRP – Feedback]","Emette toast/snackbar per conferme non bloccanti.\nUsato da DipFacade quando il caricamento DIP è completato.")
+
+  Component(accessibility_service, "AccessibilityService", "Angular Service [providedIn:'root']\n[SRP – WCAG 2.1 Focus Management]","Gestione centralizzata del focus.\nsetPageTitle(title) → aggiorna <title> ad ogni cambio rotta\nSkip-link 'Vai al contenuto principale' registrato qui.")
+}
+
+' ── Utente → Shell ─────────────────────────────────────────
+Rel_D(user, app_shell, "Seleziona file DIP / interagisce", "Mouse / Tastiera")
+
+' ── AppShell → fasi visuali ────────────────────────────────
+Rel_D(app_shell, dip_facade, "legge Signal<DipState>.phase per switch visivo")
+Rel_D(app_shell, dip_loading_page, "mostra quando phase='idle'|'indexing'|'error'")
+Rel_R(app_shell, telemetry, "trackEvent(ROUTE_CHANGE) ad ogni NavigationEnd")
+Rel_R(app_shell, accessibility_service, "setPageTitle() ad ogni cambio rotta (WCAG 2.4.2)")
+' DipTree in sidebar: @Output nodeSelected → AppShell → router.navigate()
+Rel_R(app_shell, router, "DipTree sidebar: @Output nodeSelected → router.navigate(['/document'|'/aggregate', id])")
+
+' ── DipLoadingPage ─────────────────────────────────────────
+Rel_D(dip_loading_page, dip_facade, "legge Signal<DipLoadingState>")
+Rel_D(dip_loading_page, dip_indexing_progress, "@Input progress: DipLoadingProgress")
+Rel_D(dip_loading_page, inline_error, "@Input error: AppError – errori di fase DIP\n(DIP_CORRUPT_ARCHIVE, DIP_PARSE_ERROR, DIP_INDEX_ERROR)")
+Rel_D(dip_loading_page, semantic_facade, "bottone 'Salta indicizzazione AI' → cancel()")
+
+' ── DipFacade → IPC ────────────────────────────────────────
+Rel_D(dip_facade, ipc_gateway, "loadDip [no-cache], getClasses, getProcesses, getDocuments")
+Rel_R(dip_facade, ipc_error_handler, "DIP_* errors → AppError nel Signal<DipState>")
+Rel_R(dip_facade, notification_service, "feedback caricamento DIP completato")
+Rel_R(dip_facade, telemetry, "trackEvent(DIP_LOADED)\ntrackError(AppError)")
+Rel_R(dip_facade, live_announcer, "announce('Indicizzazione X%') ogni 10% [polite]")
+' DipFacade aggiorna Signal<loadingProgress>; DipLoadingPageComponent (Smart) lo legge
+' e proietta via @Input a DipIndexingProgressComponent (Dumb) — nessuna freccia diretta Facade→Dumb
+
+' ── SemanticFacade → IPC ───────────────────────────────────
+Rel_D(semantic_facade, ipc_gateway, "getIndexingStatus, semantic:cancel [no-cache]")
+Rel_R(semantic_facade, live_announcer, "announce('Ricerca semantica non disponibile') [assertive]\n  su status=timeout|cancelled|error")
+
+' ── IPC Gateway → Main ─────────────────────────────────────
+Rel_D(ipc_gateway, ipc, "invoke / on", "Electron contextBridge")
+Rel_R(ipc_gateway, ipc_error_handler, "errori IPC → IpcAppError")
+Rel_R(ipc_gateway, ipc_cache, "get(key) prima di invoke [cache-first];\nset(key,val,ttl) dopo risposta IPC")
+
+note as legend
+FLUSSO PRINCIPALE
+══════════════════════════════════════════
+1. Utente apre l'applicazione
+2. AppShell legge phase='idle' → mostra DipLoadingPageComponent
+3. Utente seleziona file DIP
+4. DipFacade.loadDip() [no-cache] → IpcGateway → Main Process
+5. Main Process decomprime, parsa XML, indicizza SQLite
+6. IPC invia aggiornamenti progress in streaming
+7. DipFacade aggiorna Signal<loadingProgress>
+8. DipLoadingPage proietta progress → DipIndexingProgressComponent
+9. LiveAnnouncer annuncia ogni 10% [polite]
+10. [Opzionale] Fase 5: indicizzazione semantica AI
+→ bottone 'Salta' → SemanticIndexFacade.cancel()
+11. phase → 'ready' → AppShell attiva router-outlet
+
+GESTIONE ERRORI
+══════════════════════════════════════════
+DIP_FILE_NOT_FOUND   → messaggio + 'Seleziona altro file'
+DIP_CORRUPT_ARCHIVE  → messaggio + 'Seleziona altro file'
+DIP_PARSE_ERROR      → messaggio con fase fallita + dettaglio
+DIP_INDEX_ERROR      → messaggio + 'Riprova'
+Tutti tramite InlineErrorComponent (non bloccante)
+
+DEGRADAZIONE SEMANTICA
+══════════════════════════════════════════
+timeout (120s) → status='timeout'
+cancel()       → status='cancelled'
+NON sono AppError: degradazione controllata,
+ricerca full-text rimane integra.
+end note
+
+@enduml

@@ -1,0 +1,66 @@
+@startuml C3_Main_Search_Flow_No_Repos
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title C4 Model - Level 3 (Search Flow - Overview)
+
+skinparam linetype straight
+
+Container_Boundary(main_container, "Main Process") {
+  Component(search_ipc, "SearchIpcAdapter", "IPC Inbound Adapter", "Registers search channels and delegates to use cases")
+  Component(search_docs_uc, "SearchDocumentsUC", "Use Case", "Advanced structured metadata search")
+  Component(search_semantic_uc, "SearchSemanticUC", "Use Case", "Semantic retrieval based on embedding similarity")
+  Component(search_class_uc, "SearchDocumentalClassUC", "Use Case", "Document class lookup")
+  Component(search_process_uc, "SearchProcessUC", "Use Case", "Process lookup")
+
+  Component(semantic_search, "SearchSimilarVectorsPort", "Outbound port", "Semantic search with vector similarity")
+  Component(doc_get_by_id, "GetDocumentByIdPort", "Outbound port", "Document retrieval by ID")
+  Component(doc_repo, "SearchDocumentPort", "Outbound port", "Document retrieval")
+  Component(doc_class_repo, "SearchDocumentClassPort", "Outbound port", "Document class data access")
+  Component(process_repo, "SearchProcessPort", "Outbound port", "Process data access")
+  Component(word_embedding, "WordEmbeddingPort", "Outbound Adapter", "Embedding generation and model state")
+}
+
+Container_Ext(renderer, "Renderer Search Facade/Gateway", "Angular", "Invokes search channels")
+System_Ext(ai_runtime, "Local AI Runtime", "@xenova/transformers + ONNX Runtime")
+
+Rel(renderer, search_ipc, "ipc:search:text | ipc:search:advanced\nipc:search:semantic | search:get-custom-metadata-keys")
+
+Rel(search_ipc, search_docs_uc, "execute")
+Rel(search_ipc, search_semantic_uc, "execute")
+Rel(search_ipc, search_class_uc, "execute")
+Rel(search_ipc, search_process_uc, "execute")
+
+Rel(search_docs_uc, doc_repo, "")
+Rel(search_semantic_uc, word_embedding, "")
+Rel(search_semantic_uc, doc_get_by_id, "")
+Rel(search_semantic_uc, semantic_search, "")
+Rel(search_class_uc, doc_class_repo, "")
+Rel(search_process_uc, process_repo, "")
+
+Rel(word_embedding, ai_runtime, "Inference")
+
+@enduml
+
+@startuml C3_Main_Search_Flow_Repos
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title C4 Model - Level 3 (Search Flow - Repository & DAO Detail)
+
+skinparam linetype straight
+
+Container_Boundary(main_container, "Main Process") {
+  together {
+  Component(doc_repo, "SearchDocumentPort", "Outbound port", "Document retrieval and semantic search")
+  Component(doc_class_repo, "SearchDocumentClassPort", "Outbound port", "Document class data access")
+  Component(process_repo, "SearchProcessPort", "Outbound port", "Process data access")
+  Component(vector_repo, "SearchSimilarVectorsPort", "Outbound port", "Semantic search with vector similarity")
+  }
+}
+
+ContainerDb_Ext(sqlite, "SQLite", "Relational metadata + document vectors")
+
+Rel(doc_repo, sqlite, "SQL read")
+Rel(doc_class_repo, sqlite, "SQL read")
+Rel(process_repo, sqlite, "SQL read")
+Rel(vector_repo, sqlite, "SQL read (vss)")
+@enduml

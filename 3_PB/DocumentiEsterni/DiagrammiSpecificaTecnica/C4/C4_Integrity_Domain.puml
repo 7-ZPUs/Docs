@@ -1,0 +1,115 @@
+@startuml C4_Integrity_Domain
+
+title C4 - Integrity Domain and Contracts
+
+top to bottom direction
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package "integrity/domain" {
+  enum VerifyLevel {
+    DIP
+    CLASS
+    PROCESS
+    DOCUMENT
+  }
+
+  enum IntegrityFailureType {
+    HASH_MISMATCH
+    SIGNATURE_EXPIRED
+    SIGNATURE_INVALID
+  }
+
+  class IntegrityFailure <<data>> {
+    +type: IntegrityFailureType
+    +documentId: string
+    +documentName: string
+    +detail?: string
+  }
+
+  class IntegrityResult <<data>> {
+    +documentId: string
+    +documentName: string
+    +status: string
+    +timestamp: string
+    +failure?: IntegrityFailure
+  }
+
+  class IntegrityReport <<data>> {
+    +level: VerifyLevel
+    +targetId: string
+    +timestamp: string
+    +totalChecked: number
+    +totalValid: number
+    +totalInvalid: number
+    +results: IntegrityResult[]
+  }
+
+  class VerificationProgress <<data>> {
+    +current: number
+    +total: number
+    +percentage: number
+    +level: VerifyLevel
+    +label: string
+  }
+
+  class IntegrityState <<data>> {
+    +report: IntegrityReport | null
+    +progress: VerificationProgress | null
+    +loading: boolean
+    +systemError: AppError | null
+    +isVerifying: boolean
+  }
+}
+
+package "shared/errors" {
+  class AppError <<data>> {
+    +code: ErrorCode
+    +category: ErrorCategory
+    +severity: ErrorSeverity
+    +recoverable: boolean
+    +context?: string
+    +detail?: string
+  }
+
+  enum ErrorCode {
+    INTEGRITY_VERIFY_ERROR
+  }
+}
+
+package "shared/interfaces" {
+  interface IIpcGateway {
+    +invoke(channel: string, payload: unknown, cachePolicy: CachePolicy): unknown
+    +on(channel: string, handler: Handler): void
+  }
+
+  interface IIpcErrorHandlerService {
+    +toAppError(ipcError: unknown): AppError
+    +isFatal(error: AppError): boolean
+  }
+
+  interface ITelemetryService {
+    +trackEvent(type: EventType, payload: unknown): void
+    +trackError(error: AppError, context: string): void
+    +trackTiming(label: EventType, ms: number): void
+  }
+
+  interface ILiveAnnouncerService {
+    +announce(msg: string, politeness: string): void
+  }
+}
+
+IntegrityReport "1" *-- "0..*" IntegrityResult : results
+IntegrityResult "1" o-- "0..1" IntegrityFailure : failure
+IntegrityFailure --> IntegrityFailureType : type
+IntegrityReport --> VerifyLevel : level
+VerificationProgress --> VerifyLevel : level
+IntegrityState "1" o-- "0..1" IntegrityReport : report
+IntegrityState "1" o-- "0..1" VerificationProgress : progress
+IntegrityState "1" o-- "0..1" AppError : systemError
+IIpcErrorHandlerService ..> AppError
+ITelemetryService ..> AppError
+
+@enduml
