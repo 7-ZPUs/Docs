@@ -39,13 +39,13 @@ La sezione di ricerca implementa un'architettura stratificata basata su due patt
     \label{fig:search_facade}
 \end{figure}
 
-In questa funzionalità la struttura MVVM è applicata in modo pragmatico usando \textit{Smart \& Dumb Components} + \textit{Facade}.
-La SearchFacade svolge il ruolo di \textbf{ViewModel applicativo} nel senso operativo del termine: espone stato reattivo tramite \codeword{Signal}, centralizza i comandi e incapsula l'orchestrazione tra validazione, IPC, telemetria e gestione degli errori.
+In questa funzionalità la struttura \glossario{MVVM} è applicata in modo pragmatico usando \textit{\glossario{Componenti Smart} \& Dumb} + \textit{Facade}.
+La SearchFacade svolge il ruolo di \textbf{ViewModel applicativo} nel senso operativo del termine: espone stato reattivo tramite \codeword{Signal}, centralizza i comandi e incapsula l'orchestrazione tra validazione, IPC, \glossario{telemetria} e gestione degli errori.
 
 \begin{itemize}
-    \item \textbf{View}: SearchPageComponent e componenti dumb (SearchBarComponent, AdvancedFilterPanelComponent, SearchResultsComponent) responsabili di rendering, input utente ed emissione eventi.
-    \item \textbf{ViewModel}: SearchFacade, che espone stato reattivo (SearchState), chiavi di metadati custom, comandi (search, searchAdvanced, searchSemantic, cancelSearch, retry) e logica di validazione/error handling.
-    \item \textbf{Model}: contratti e strutture dati del dominio ricerca (SearchQuery, SearchFilters, SearchState, ValidationError, ISearchResult) e DTO scambiati tramite il gateway IPC.
+    \item \textbf{View}: SearchPageComponent e componenti dumb (SearchBarComponent, AdvancedFilterPanelComponent, SearchResultsComponent) responsabili di rendering, input utente ed emissione \glossario{eventi}.
+    \item \textbf{ViewModel}: SearchFacade, che espone stato reattivo (SearchState), chiavi di \glossario{metadati} custom, comandi (search, searchAdvanced, searchSemantic, cancelSearch, retry) e logica di validazione/error handling.
+    \item \textbf{Model}: contratti e strutture dati del dominio ricerca (SearchQuery, SearchFilters, SearchState, ValidationError, ISearchResult) e \glossario{DTO} scambiati tramite il gateway IPC.
 \end{itemize}
 
 \paragraph{Ruolo della SearchFacade come ViewModel}
@@ -54,11 +54,11 @@ Invoca invece metodi della SearchFacade, che:
 \begin{enumerate}
     \item Riceve eventi della View (\codeword{setQuery()}, \codeword{setFilters()}).
     \item Espone validazione sincrona dei filtri (\codeword{validateFilters()}) e persistenza degli errori nello stato tramite la pipeline interna \codeword{validateAndStoreErrors()}.
-    \item Orchestra i casi d'uso di ricerca (\codeword{search()}, \codeword{searchAdvanced()}, \codeword{searchSemantic()}) con debounce, abort, retry e controllo del prerequisito semantico.
+    \item Orchestra i casi d'uso di ricerca (\codeword{search()}, \codeword{searchAdvanced()}, \codeword{searchSemantic()}) con \glossario{debounce}, \glossario{abort}, retry e controllo del prerequisito semantico.
     \item Aggiorna lo stato reattivo consumato dalla View (\codeword{getState()} + aggiornamenti su \codeword{state}).
 \end{enumerate}
 
-\noindent Questo garantisce che la View rimanga dichiarativa e focalizzata sulla UX, mentre il ViewModel centralizza il comportamento. La validazione non è concentrata in un solo punto: la SearchPageComponent esegue un controllo immediato per la UX, mentre la SearchFacade riafferma la validazione prima dell'esecuzione effettiva della ricerca. questa seconda validazione è effettuata dall'utilizzo dell'interfaccia di validazione \codeword{FilterValidator}, che consente di mantenere la logica di validazione completamente separata dalla presentazione, e facilmente testabile in isolamento.
+\noindent Questo garantisce che la View rimanga dichiarativa e focalizzata sulla \glossario{UX}, mentre il ViewModel centralizza il comportamento. La validazione non è concentrata in un solo punto: la SearchPageComponent esegue un controllo immediato per la UX, mentre la SearchFacade riafferma la validazione prima dell'esecuzione effettiva della ricerca. questa seconda validazione è effettuata dall'utilizzo dell'interfaccia di validazione \codeword{FilterValidator}, che consente di mantenere la logica di validazione completamente separata dalla presentazione, e facilmente testabile in isolamento.
 
 \paragraph{Metodi chiave della SearchFacade}
 
@@ -107,7 +107,7 @@ Il mapping tra modelli UI e DTO è confinato nel gateway/adapter, preservando il
     \item La SearchPageComponent esegue una prima validazione immediata per la UX.
     \item La SearchFacade valida nuovamente i criteri e normalizza lo stato prima dell'esecuzione.
     \item Il gateway converte UI Model in DTO e invoca IPC.
-    \item Il backend risponde con risultati serializzati.
+    \item Il backend risponde con risultati \glossario{serializzati}.
     \item La SearchFacade aggiorna SearchState.
     \item La View si aggiorna automaticamente e delega la resa dei risultati alla SearchResultFactory.
 \end{enumerate}
@@ -163,7 +163,7 @@ Il filtro dei soggetti è strutturato secondo il pattern Strategy per consentire
     \end{itemize}
 \end{enumerate}
 
-\noindent In fase di esecuzione della ricerca, i SubjectCriteria vengono trasformati in una struttura gerarchica di query compatibile col back-end, mantenendo una separazione netta tra:
+\noindent In fase di esecuzione della ricerca, i SubjectCriteria vengono trasformati in una struttura gerarchica di query compatibile col \glossario{back-end}, mantenendo una separazione netta tra:
 \begin{itemize}
     \item \textbf{Modello di interfaccia} (SubjectCriteria): forma usabile in UI.
     \item \textbf{Modello di ricerca} (QueryModel per back-end): forma serializzabile e ottimizzata per la query.
@@ -239,7 +239,7 @@ I metadati custom sono coppie chiave-valore personalizzate non previste dallo sc
 \paragraph{Pattern applicati}
 \begin{itemize}
     \item \textbf{Factory Pattern}: selezione del componente di rendering in base al tipo risultato.
-    \item \textbf{Strategy via registry}: associazione tipo-entita $\rightarrow$ componente specializzato, estendibile senza modificare la view principale.
+    \item \textbf{Strategy via registry}: associazione tipo-entità $\rightarrow$ componente specializzato, estendibile senza modificare la view principale.
     \item \textbf{Single Responsibility}: ogni card di risultato conosce solo il proprio modello dati.
 \end{itemize}
 
@@ -262,7 +262,7 @@ La visualizzazione dei risultati di ricerca deve adattarsi al tipo di entità ri
     \item \textbf{SearchResultFactory}: componente factory che:
     \begin{itemize}
         \item Interroga il tipo di risultato ricevuto (DocumentResult, ProcessResult, AggregateResult, ClassResult).
-        \item Consulta una registry configurata \textit{a compile-time} che associa tipo $\to$ componente di visualizzazione.
+        \item Consulta una registry configurata \textit{a ompile-time} che associa tipo $\to$ componente di visualizzazione.
         \item Istanzia e proietta il componente corretto nel template tramite \codeword{ng-container} e \codeword{ngComponentOutlet}.
     \end{itemize}
     
@@ -309,7 +309,7 @@ La visualizzazione dei risultati di ricerca deve adattarsi al tipo di entità ri
     \begin{itemize}
         \item \textbf{Open/Closed}: aggiungere un nuovo tipo di risultato richiede solo di registrare il componente nella registry, senza modificare la factory.
         \item \textbf{Single Responsibility}: ogni componente di visualizzazione conosce \textit{solo} la struttura del proprio tipo di risultato.
-        \item \textbf{Performance}: solo il componente attivo è renderizzato; gli altri sono completamente distrutti (no lazy loading overhead).
+        \item \textbf{Performance}: solo il componente attivo è renderizzato; gli altri sono completamente distrutti (no \glossario{lazy loading} \glossario{overhead}).
     \end{itemize}
 \end{enumerate}
 
@@ -324,7 +324,7 @@ La visualizzazione dei risultati di ricerca deve adattarsi al tipo di entità ri
 \end{itemize}
 
 \paragraph{Motivazione della scelta}
-La ricerca globale combina logica UX (mode switching), vincoli funzionali (semantic search selettiva) e gestione dello stato. Concentrare le regole di normalizzazione nel \codeword{SearchBarRulesManager} evita duplicazioni nei componenti UI e riduce regressioni quando si introducono nuove modalità di ricerca.
+La ricerca globale combina logica UX (mode switching), vincoli funzionali (semantic search selettiva) e gestione dello stato. Concentrare le regole di \glossario{normalizzazione} nel \codeword{SearchBarRulesManager} evita duplicazioni nei componenti UI e riduce \glossario{regressioni} quando si introducono nuove modalità di ricerca.
 
 \paragraph{SearchBarComponent e SearchBarRulesManager}
 \begin{figure}[H]
@@ -340,7 +340,7 @@ La search bar consente tre modalità di ricerca:
     
     \item \textbf{Ricerca per nome}: inserimento di nome di classe o metadato; ricerca con wildcard.
     
-    \item \textbf{Ricerca semantica}: ricerca full-text su documenti usando embedding vettoriali (modello Xenova \codeword{paraphrase-multilingual-MiniLM-L12-v2}, eseguito nel browser tramite ONNX Runtime).
+    \item \textbf{Ricerca semantica}: ricerca full-text su documenti usando \glossario{embedding vettoriali} (modello Xenova \codeword{paraphrase-multilingual-MiniLM-L12-v2}, eseguito nel browser tramite ONNX Runtime).
 \end{enumerate}
 
 \noindent Il \codeword{SearchBarRulesManager} incapsula la logica di:
@@ -390,7 +390,7 @@ Tutti i componenti di presentazione sono progettati per aderire all'Allegato 5 A
 \end{itemize}
 
 \paragraph{Motivazione della scelta}
-Il canale IPC è un confine architetturale tra renderer e main process. Isolare serializzazione, gestione errori e caching nel gateway evita contaminazione infrastrutturale nel ViewModel e rende il sistema più testabile ed evolutivo.
+Il canale IPC è un confine architetturale tra renderer e main process. Isolare serializzazione, gestione errori e \glossario{caching} nel gateway evita contaminazione infrastrutturale nel ViewModel e rende il sistema più testabile ed evolutivo.
 
 \paragraph{SearchIpcGateway e ISearchChannel}
 \begin{figure}[H]

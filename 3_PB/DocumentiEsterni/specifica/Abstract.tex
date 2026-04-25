@@ -62,7 +62,7 @@
 \subsection{Obiettivo del documento}
 L’obiettivo del presente \glossario{documento} è descrivere in modo rigoroso le scelte
 tecnologiche e l’architettura del prodotto \textit{DIPReader}, adottando il
-modello di \glossario{progettazione} \textit{C4}.\\ L’analisi verrà condotta partendo dalla
+modello di \glossario{progettazione} \textit{\glossario{C4}}.\\ L’analisi verrà condotta partendo dalla
 descrizione del contesto applicativo, per poi approfondire la struttura dei
 container, delle componenti e, infine, del codice, al fine di fornire una
 rappresentazione completa, coerente e sistematica del sistema.
@@ -154,9 +154,9 @@ Le scelte architetturali del prodotto sono orientate alla separazione delle resp
 alla riduzione dell'accoppiamento e alla facilita di evoluzione del sistema.
 In particolare:
 \begin{itemize}
-      \item \textbf{Single Responsibility Principle (SRP):} UI, orchestrazione applicativa, accesso ai dati e mapping sono separati in layer distinti.
-      \item \textbf{Open/Closed Principle (OCP):} l'estensione di funzionalita avviene prevalentemente tramite nuove implementazioni (es. adapter/gateway/componenti specializzati) senza modificare i contratti esistenti.
-      \item \textbf{Liskov Substitution Principle (LSP):} i componenti dipendono da interfacce e token di iniezione, favorendo la sostituibilita delle implementazioni.
+      \item \textbf{Single Responsibility Principle (SRP):} \glossario{UI}, orchestrazione applicativa, accesso ai dati e \glossario{mapping} sono separati in layer distinti.
+      \item \textbf{Open/Closed Principle (OCP):} l'estensione di funzionalita avviene prevalentemente tramite nuove implementazioni (es. \glossario{adapter}/\glossario{gateway}/componenti specializzati) senza modificare i contratti esistenti.
+      \item \textbf{Liskov Substitution Principle (LSP):} i componenti dipendono da \glossario{interfacce} e \glossario{token di iniezione}, favorendo la sostituibilita delle implementazioni.
       \item \textbf{Interface Segregation Principle (ISP):} le interfacce sono granulari e orientate al caso d'uso, evitando dipendenze inutili.
       \item \textbf{Dependency Inversion Principle (DIP):} i livelli alti dipendono da astrazioni e non da classi concrete, grazie alla Dependency Injection.
 \end{itemize}
@@ -186,7 +186,7 @@ con l'obiettivo di garantire testabilita, manutenibilita e robustezza del prodot
         \rowcolor{zpusgreen!30}
         \textbf{Scelta} & \textbf{Versione} & \textbf{Motivazione}                                                                                                                                                                                                                                                                                                                                                                                                      \\
         \hline
-        Electron        & 30.0.0            & Scelto per la sua capacità di consentire lo sviluppo di applicazioni desktop multipiattaforma utilizzando tecnologie web, garantendo così la portabilità del prodotto su diversi sistemi operativi. Electron permette di creare un'esperienza utente nativa, sfruttando le potenzialità di Node.js per l'accesso al filesystem e alle risorse locali, facilitando l'integrazione con librerie e strumenti di terze parti. \\
+        Electron        & 30.0.0            & Scelto per la sua capacità di consentire lo sviluppo di applicazioni desktop multipiattaforma utilizzando tecnologie web, garantendo così la portabilità del prodotto su diversi sistemi operativi. Electron permette di creare un'esperienza utente nativa, sfruttando le potenzialità di Node.js per l'accesso al \glossario{filesystem} e alle risorse locali, facilitando l'integrazione con librerie e strumenti di terze parti. \\
         \hline
     \end{tabularx}
     \caption{Dettagli sulla scelta di Electron come piattaforma di deployment}
@@ -200,7 +200,7 @@ con l'obiettivo di garantire testabilita, manutenibilita e robustezza del prodot
         \rowcolor{zpusgreen!30}
         \textbf{Scelta} & \textbf{Versione} & \textbf{Motivazione}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  \\
         \hline
-        Angular         & 21.2.5            & Scelto per la sua capacità di supportare lo sviluppo di applicazioni web complesse e scalabili, con un'architettura basata su componenti che favorisce la modularità e la manutenibilità del codice. Inoltre, Angular offre un'ampia gamma di strumenti e funzionalità integrate, come la gestione dello stato, il routing e il supporto per la creazione di interfacce utente reattive, che lo rendono adatto a soddisfare i requisiti funzionali del progetto. La sua implementazione della Dependency Injection facilita la gestione delle dipendenze tra i componenti, migliorando la testabilità e la manutenibilità del codice. \\
+        Angular         & 21.2.5            & Scelto per la sua capacità di supportare lo sviluppo di applicazioni web complesse e scalabili, con un'architettura basata su componenti che favorisce la modularità e la manutenibilità del codice. Inoltre, Angular offre un'ampia gamma di strumenti e funzionalità integrate, come la gestione dello stato, il \glossario{routing} e il supporto per la creazione di interfacce utente reattive, che lo rendono adatto a soddisfare i requisiti funzionali del progetto. La sua implementazione della Dependency Injection facilita la gestione delle dipendenze tra i componenti, migliorando la testabilità e la manutenibilità del codice. \\
         \hline
     \end{tabularx}
     \caption{Dettagli sulla scelta di Angular come framework frontend}
@@ -215,11 +215,11 @@ con l'obiettivo di garantire testabilita, manutenibilita e robustezza del prodot
         \rowcolor{zpusgreen!30}
         \textbf{Scelta} & \textbf{Versione} & \textbf{Motivazione}                                                                                                                                                                                                                                                                                                             \\
         \hline
-        better-sqlite3   & 12.8.0            & SQLite è un database relazionale che non richiede un server separato e può essere integrato direttamente nell'applicazione, facilitando lo sviluppo e il deployment. La sua leggerezza e portabilità lo rendono adatto a un'ampia gamma di piattaforme, garantendo la compatibilità con i requisiti di portabilità del progetto. \\
+        better-sqlite3   & 12.8.0            & SQLite è un database relazionale che non richiede un server separato e può essere integrato direttamente nell'applicazione, facilitando lo sviluppo e il \glossario{deployment}. La sua leggerezza e portabilità lo rendono adatto a un'ampia gamma di piattaforme, garantendo la compatibilità con i requisiti di portabilità del progetto. \\
         \hline
         sqlite-vss      & 0.1.2             & Scelto per la sua capacità di fornire una versione virtuale di SQLite, che consente di eseguire \glossario{query} su dati in memoria senza la necessità di creare un database fisico dei vettori per la \glossario{ricerca semantica}, semplificando così l'integrazione con il sistema.                                                                 \\
         \hline
-        ONNX Runtime    & 1.17.3            & Scelto per la sua capacità di eseguire modelli di machine learning in modo efficiente e flessibile, supportando una vasta gamma di modelli e framework, facilitando l'integrazione di funzionalità di intelligenza artificiale nel prodotto.                                                                                     \\
+        ONNX Runtime    & 1.17.3            & Scelto per la sua capacità di eseguire modelli di machine learning in modo efficiente e flessibile, supportando una vasta gamma di modelli e \glossario{framework}, facilitando l'integrazione di funzionalità di intelligenza artificiale nel prodotto.                                                                                     \\
         \hline
         Transformers.js & 3.8.1             & Scelto per la sua capacità di fornire un'interfaccia JavaScript per l'utilizzo di modelli di trasformatori, facilitando l'integrazione di funzionalità avanzate di elaborazione del linguaggio naturale e machine learning nel prodotto.                                                                                         \\
         \hline
@@ -235,7 +235,7 @@ con l'obiettivo di garantire testabilita, manutenibilita e robustezza del prodot
         \rowcolor{zpusgreen!30}
         \textbf{Scelta} & \textbf{Versione} & \textbf{Motivazione}                                                                                                                                                                                                                                                                                                                                                  \\
         \hline
-        SonarQube          & 2026.2            & Scelto per la sua capacità di identificare e segnalare pattern di codice problematici, migliorando la qualità del codice e facilitando la manutenzione del progetto. Integrato nella pipeline di sviluppo, SonarQube consente di monitorare costantemente la qualità del codice, identificando potenziali bug, vulnerabilità e problemi di manutenzione, contribuendo così a garantire un prodotto finale robusto e affidabile. \\
+        SonarQube          & 2026.2            & Scelto per la sua capacità di identificare e segnalare pattern di codice problematici, migliorando la qualità del codice e facilitando la manutenzione del progetto. Integrato nella \glossario{pipeline} di sviluppo, SonarQube consente di monitorare costantemente la qualità del codice, identificando potenziali bug, vulnerabilità e problemi di manutenzione, contribuendo così a garantire un prodotto finale robusto e affidabile. \\
         \hline
         Prettier        & 2.9.3             & Scelto per la sua capacità di formattare automaticamente il codice in modo coerente, migliorando la leggibilità e facilitando la collaborazione tra i membri del team. Prettier supporta una vasta gamma di linguaggi e può essere facilmente integrato con editor di codice e strumenti di sviluppo, semplificando il \glossario{processo} di mantenimento di uno stile di codifica uniforme. \\
         \hline
@@ -252,9 +252,9 @@ con l'obiettivo di garantire testabilita, manutenibilita e robustezza del prodot
         \rowcolor{zpusgreen!30}
         \textbf{Scelta} & \textbf{Versione} & \textbf{Motivazione}                                                                                                                                                                                                                                                                                                                                                  \\
         \hline
-        Vitest          & 2.3.1            & Scelto per la sua capacità di fornire un ambiente di \glossario{test} per applicazioni JavaScript e per il suo controllo dei componenti di Mock. \\
+        Vitest          & 2.3.1            & Scelto per la sua capacità di fornire un ambiente di \glossario{test} per applicazioni JavaScript e per il suo controllo dei componenti di \glossario{Mock}. \\
         \hline
-        Playwright        & 1.59.1             & Scelto per la sua capacità di fornire un ambiente di test per applicazioni web, con possibilità di testare flussi completi di interazione utente. Utilizzato quindi per i test E2E. \\
+        Playwright        & 1.59.1             & Scelto per la sua capacità di fornire un ambiente di test per applicazioni web, con possibilità di testare flussi completi di interazione utente. Utilizzato quindi per i test \glossario{E2E}. \\
         \hline
     \end{tabularx}
     \caption{Dettagli sulle scelte di tecnologie di analisi dinamica}
