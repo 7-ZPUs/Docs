@@ -50,11 +50,11 @@ L'implementazione segue una separazione netta delle responsabilita:
 		\hline
 		Renderer & \texttt{DipFacade} & Stato albero (phase, rootNodes, nodeCache, loadingNodeIds, nodeChildrenErrors), orchestrazione load root/children, retry e gestione errori. \\
 		\hline
-		Renderer & \texttt{IpcGateway} & Dispatch canali browse per tipo nodo, mapping DTO -> DipTreeNode, cache TTL, fallback naming. \\
+		Renderer & \texttt{IpcGateway} & \glossario{Dispatch} canali browse per tipo nodo, mapping DTO -> DipTreeNode, cache TTL, \glossario{fallback} naming. \\
 		\hline
 		Renderer & \texttt{DipTree} / \texttt{DipTreeNodeComponent} & Rendering albero flat, espansione/collasso, selezione nodo e retry locale. \\
 		\hline
-		Renderer & \texttt{AppShellComponent} / \texttt{DipExplorerComponent} & Bootstrap root nodes e integrazione con il routing di dettaglio. \\
+		Renderer & \texttt{AppShellComponent} / \texttt{DipExplorerComponent} & \glossario{Bootstrap} root nodes e integrazione con il routing di dettaglio. \\
 		\hline
 		Renderer & \texttt{navigation-routing.ts} / \texttt{node-key.ts} & Mapping tipo nodo -> route dettaglio e chiave composta \texttt{type:id} per cache/stato. \\
 		\hline
