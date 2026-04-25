@@ -1,137 +1,50 @@
-﻿\documentclass[a4paper,12pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[italian]{babel}
-\usepackage[sfdefault]{atkinson}
-\renewcommand*\familydefault{\sfdefault}
-\usepackage{float}
-\usepackage{microtype}
-\usepackage{geometry}
-\usepackage{setspace}
-\usepackage{enumitem}
-\usepackage{seqsplit}
-\usepackage{titlesec}
-\usepackage{chngpage}
-\usepackage{tocloft}
-\usepackage{longtable}
-\usepackage{ltablex}
-\usepackage{array}
-\usepackage{graphicx}
-\usepackage{fancyhdr}
-\usepackage[table]{xcolor}
-\usepackage{color,soul}
-\usepackage[most]{tcolorbox}
-\usepackage{nameref}
-\usepackage[colorlinks=true]{hyperref}
+﻿\subsection{Test di integrazione}
 
-% --- INSERISCI QUESTO NEL PREAMBOLO DEL TUO DOCUMENTO ---
-\usepackage{amssymb} % per il simbolo \checkmark
-\usepackage{pifont}
+\setlength{\LTleft}{-0.4cm}
+\renewcommand{\arraystretch}{1.2}
+\rowcolors{2}{gray!15}{white}
+\begin{longtable}{|p{2.0cm}|p{4.3cm}|p{7.7cm}|p{1.5cm}|}
+\hline
+\rowcolor{zpusgreen!30}
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Output atteso} & \textbf{Stato} \\
+\hline
+\endfirsthead
+\rowcolor{zpusgreen!30}
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Output atteso} & \textbf{Stato} \\
+\hline
+\endhead
+IT-C-001 & Verifica l'integrazione tra parser dei filtri di ricerca e layer di persistenza, controllando che i criteri UI siano tradotti in query SQL eseguibili dal repository documentale. & \testoutputs{\item query SQL valida per il repository \item parametri allineati ai filtri applicati \item filtri non validi ignorati senza rompere il flusso} & \ok \\
+\hline
+IT-C-002 & Verifica l'integrazione tra file system locale, adapter di lettura pacchetto e mapper dominio durante la ricostruzione di un DIP a partire dall'indice. & \testoutputs{\item indice DIP individuato e letto \item gerarchia classi/processi/documenti risolta \item entita dominio generate correttamente} & \ok \\
+\hline
+IT-C-003 & Verifica l'integrazione tra servizio di verifica, repository e modelli di dominio nel calcolo propagato dello stato di integrita lungo tutta la catena DIP-classe-processo-documento-file. & \testoutputs{\item stato aggregato coerente sui diversi livelli \item transizione corretta tra valid/invalid/unknown \item errori tecnici propagati al chiamante} & \ok \\
+\hline
+IT-C-004 & Verifica l'integrazione tra use case di ricerca, query builder e repository documentale nella costruzione e applicazione di una ricerca filtrata. & \testoutputs{\item risultati coerenti con i criteri \item filtri compositi applicati correttamente \item ordinamento e punteggi consistenti} & \ok \\
+\hline
+IT-C-005 & Verifica l'integrazione tra pipeline di indexing, persistenza metadati e archivio vettoriale durante l'indicizzazione del pacchetto DIP. & \testoutputs{\item metadati e documenti persistiti \item indice semantico popolato \item conteggio documenti indicizzati aggiornato} & \ok \\
+\hline
+IT-R-001 & Verifica l'integrazione tra renderer, canali IPC e use case di indexing, assicurando che i comandi UI vengano instradati correttamente al backend applicativo. & \testoutputs{\item canali IPC registrati e raggiungibili \item handler collegati ai use case corretti \item invocazioni propagate senza perdita di contesto} & \ok \\
+\hline
+IT-R-002 & Verifica l'integrazione tra componenti UI del pannello avanzato, validatori e facade di ricerca nella costruzione guidata della query. & \testoutputs{\item sezioni filtro caricate correttamente \item validazione attivata sui campi \item errori visualizzati e sincronizzati con lo stato form} & \ok \\
+\hline
+IT-R-003 & Verifica l'integrazione tra facade di validazione, servizio di ricerca e mapper dei criteri, garantendo accettazione dei filtri corretti e blocco di quelli inconsistenti. & \testoutputs{\item criteri validi inoltrati al servizio \item criteri non validi bloccati prima della chiamata \item messaggi di errore coerenti con la regola violata} & \ok \\
+\hline
+IT-R-004 & Verifica l'integrazione del facade con implementazione service mock, assicurando parita comportamentale del flusso rispetto all'implementazione standard. & \testoutputs{\item mock service invocato nel percorso previsto \item esiti di validazione equivalenti \item flusso UI-search invariato} & \ok \\
+\hline
+IT-R-005 & Verifica l'integrazione tra validator dei filtri e normalizzatore dei metadati nella preparazione finale dei criteri prima dell'esecuzione ricerca. & \testoutputs{\item criteri completi accettati \item criteri incompleti rifiutati \item normalizzazione metadati applicata correttamente} & \ok \\
+\hline
+IT-R-006 & Verifica l'integrazione tra lista risultati, router applicativo e viste di dettaglio durante la navigazione contestuale da ricerca a dettaglio elemento. & \testoutputs{\item route risolta in base al tipo risultato \item vista dettaglio corretta aperta \item stato di navigazione mantenuto} & \ok \\
+\hline
+IT-R-007 & Verifica l'integrazione tra SearchFacade, SearchIpcGateway, SearchIpcAdapter e use case di ricerca nel passaggio della richiesta e nella restituzione dei risultati. & \testoutputs{\item richiesta di ricerca instradata al canale IPC corretto \item risposta del backend mappata nel formato atteso \item risultati coerenti con il tipo di ricerca selezionato} & \ok \\
+\hline
+IT-R-008 & Verifica l'integrazione tra IntegrityIpcGateway del renderer, canali check-integrity:* e CheckIntegrityIpcAdapter del backend durante la verifica dello stato di integrita del DIP. & \testoutputs{\item chiamate IPC di verifica instradate ai rispettivi use case \item stati di integrita ricevuti e aggregati correttamente nel modello applicativo \item payload di risposta coerente tra gateway renderer e adapter backend} & \ok \\
+\hline
+IT-R-009 & Verifica l'integrazione tra sorgente dati vuota e componenti di presentazione, assicurando gestione corretta dell'empty state senza errori lato UI. & \testoutputs{\item empty state renderizzato \item messaggio informativo contestuale mostrato \item nessun errore runtime nel renderer} & \ok \\
+\hline
+\end{longtable}
+\newpage
 
-% Macro per semplificare e alleggerire il codice della tabella
-\newcommand{\ok}{\textcolor{green!60!black}{$\checkmark$ SÌ}}
-\newcommand{\ko}{\textcolor{red!80!black}{$\times$ Mancante}}
-\newcommand{\warn}[1]{\textcolor{orange!90!black}{\textbf{!} Multiplo (#1)}}
-\newcommand{\testoutputs}[1]{\begin{itemize}[leftmargin=*,nosep,topsep=0pt,itemsep=0pt]#1\end{itemize}}
-% Use URL-style line breaking to keep long test file names inside table borders.
-\newcommand{\f}[1]{\nolinkurl{#1}\newline}
-\newcommand{\q}[1]{\textit{#1}}
-\newcommand{\sep}{\newline \vspace{2mm} \hrule \vspace{2mm}}
-% --------------------------------------------------------
-
-% Colori ZPUS - Verde, Nero, Bianco
-\definecolor{zpusgreen}{RGB}{4, 138, 55}
-\definecolor{zpusdarkgreen}{RGB}{0, 100, 0}
-\definecolor{zpusblack}{RGB}{0, 0, 0}
-\definecolor{zpuswhite}{RGB}{255, 255, 255}
-\definecolor{zpuslightgray}{RGB}{245, 245, 245}
-
-\hypersetup{
-    linkcolor=black,
-    urlcolor=blue
-}
-
-\definecolor{lightblack}{gray}{0.35}
-\newcommand{\glossario}[1]{\textit{#1}\textsubscript{\textbf{\textit{\textcolor{lightblack}{G}}}}}
-\newcommand{\ped}[1]{\textsubscript{#1}}
-
-\pagestyle{fancy}
-\setlength{\headwidth}{\textwidth}
-\fancyhfoffset[L,R]{0pt}
-\lhead{\rightmark}
-\rhead{7-ZPUs}
-\lfoot{Piano di Qualifica}
-\rfoot{\thepage}
-\cfoot{}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\footrulewidth}{0.8pt}
-
-\renewcommand{\contentsname}{Indice}
-\renewcommand{\listoftables}{Elenco delle tabelle}
-\renewcommand{\listoffigures}{Elenco delle immagini}
-
-\geometry{margin=2.5cm}
-\setstretch{1.1}
-
-\titleclass{\subsubsubsection}{straight}[\subsection]
-
-\newcounter{subsubsubsection}[subsubsection]
-\renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
-\renewcommand\theparagraph{\thesubsubsubsection.\arabic{paragraph}} % optional; useful if paragraphs are to be numbered
-
-\titleformat{\subsubsubsection}
-  {\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
-\titlespacing*{\subsubsubsection}
-{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
-
-\makeatletter
-\renewcommand\paragraph{\@startsection{paragraph}{5}{\z@}\%
-  {3.25ex \@plus1ex \@minus.2ex}\%
-  {-1em}\%
-  {\normalfont\normalsize\bfseries}}
-\renewcommand\subparagraph{\@startsection{subparagraph}{6}{\parindent}\%
-  {3.25ex \@plus1ex \@minus .2ex}\%
-  {-1em}\%
-  {\normalfont\normalsize\bfseries}}
-\def\toclevel@subsubsubsection{4}
-\def\toclevel@paragraph{5}
-%\def\toclevel@paragraph{6}
-\def\toclevel@subparagraph{6}
-\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
-\def\l@paragraph{\@dottedtocline{5}{10em}{5em}}
-\def\l@subparagraph{\@dottedtocline{6}{14em}{6em}}
-\makeatother
-
-\setcounter{secnumdepth}{4}
-\setcounter{tocdepth}{4}
-
-\titleformat{\section}{\LARGE\bfseries}{\thesection}{1em}{}
-\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}
-\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}
-\titleformat{\paragraph}{\large\bfseries}{\theparagraph}{1em}{}
-\titleformat{\subparagraph}{\normalsize\bfseries}{\thesubparagraph}{1em}{}
-
-\setlength\parindent{0pt}
-
-\begin{document}
-
-\begin{center}
-    \includegraphics[width=9.5cm]{../../assets/logo7ZPUs.jpg}\\
-    \small\hspace{10cm} 7zpus.swe@gmail.com\\
-    \vspace{0.5cm}
-    \LARGE \textbf{Appendice - Piano di Qualifica}\\
-    \vspace{0.3cm}
-    \normalsize \textbf{Versione:} 2.0.0\\
-    \textbf{Responsabile:} Georgescu Diana \\
-    \textbf{Destinatari:} Sanmarco Informatica S.p.A., Prof. Tullio Vardanega, Prof. Riccardo Cardin, Team 7-ZPUs \\
-\end{center}
-
-\vspace{0.3cm}
-\hrule
-\vspace{0.5cm}
-
-
-\section{Test di unità}
+\subsection{Test di unità}
 
 \setlength{\LTleft}{-0.4cm}
 \renewcommand{\arraystretch}{1.2}
