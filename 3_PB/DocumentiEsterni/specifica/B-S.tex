@@ -1,0 +1,342 @@
+\section{Backend – Search}
+
+\subsection{Panoramica}
+
+Data l'importanza centrale della funzionalità di ricerca, tale modulo verrà trattato in modo approfondito, con una descrizione dettagliata dei componenti, 
+dei flussi di dati e delle logiche di trasformazione, al fine di fornire una comprensione completa del suo funzionamento interno.
+Il modulo espone al frontend, tramite IPC di Electron, le funzionalità di interrogazione del pacchetto DiP indicizzato.
+Il punto di ingresso è \codeword{}{SearchIpcAdapter}, che registra su \codeword{}{IpcMain} i canali di comunicazione e delega l'elaborazione ai rispettivi Use Case.
+
+Il modulo supporta quattro modalità di ricerca principali:
+
+\begin{itemize}
+    \item \textbf{Ricerca per classe documentale} – ricerca le \codeword{DocumentClass} per nome tramite \codeword{SearchDocumentalClassUC}.
+    \item \textbf{Ricerca per processo} – ricerca i \codeword{Process} per UUID tramite \codeword{SearchProcessUC}.
+    \item \textbf{Ricerca strutturata per metadati} – ricerca i \codeword{Document} applicando un albero di filtri logici tramite 
+    \codeword{SearchDocumentsUC}, costruito a partire da un \codeword{SearchRequestDTO} validato con Zod e trasformato in un 
+    \codeword{SearchDocumentsQuery} tramite \codeword{MetadataKeyMapper}.
+    \item \textbf{Ricerca semantica} – ricerca i \codeword{Document} per similarità vettoriale tramite \codeword{SearchSemanticUC}, 
+    convertendo la query in un vettore di embedding tramite \codeword{IWordEmbedding} e calcolando la \textit{cosine similarity} 
+    rispetto agli altri vettori presenti nel database.
+    \item \textbf{Ricerca chiavi di metadati} – recupera tutte le chiavi di metadati personalizzati presenti nei documenti del pacchetto (quindi nel Database).
+\end{itemize}
+
+I risultati vengono mappati in DTO (\codeword{DocumentSearchResult}, \codeword{ProcessSearchResult}, \codeword{DocumentClassSearchResult}) 
+prima di essere restituiti al frontend, mantenendo il dominio disaccoppiato dal livello di trasporto IPC.
+
+\subsection{Architettura del modulo}
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3-main-search-flow/C3_Main_Search_Flow_No_Repos.png}}
+    \caption{Diagramma delle componenti – Componenti del modulo di ricerca}
+    \label{fig:C3_search_no_repos}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/generated_/architecture/c1-c3/C3-main-search-flow/C3_Main_Search_Flow_Repos.png}
+    \caption{Diagramma delle componenti – Componenti del modulo di ricerca (Porte e DAO)}
+    \label{fig:C3_search_repos}
+\end{figure}
+
+\subsubsection{SearchIpcAdapter}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search.png}
+    \caption{Diagramma delle classi – SearchIpcAdapter}
+    \label{fig:search_ipc_adapter}
+\end{figure}
+
+\codeword{SearchIpcAdapter} è l'adapter inbound che registra su \codeword{IpcMain} i canali IPC del modulo di ricerca
+e instrada le richieste dal renderer process ai rispettivi Use Case, senza contenere logica di business.
+
+\paragraph{Metodo principale}
+\codeword{+ register(ipcMain: IpcMain): void} – metodo statico che registra tutti i canali IPC del modulo. Questi ultimi invocheranno \codeword{execute()} 
+sul Use Case corrispondente una volta ricevuto il messaggio IPC, restituendo poi i risultati mappati in DTO.
+
+\paragraph{Canali registrati}
+
+\begin{itemize}
+    \item \codeword{SEARCH\_CLASSES} : ricerca le classi documentali per nome, delegando a \codeword{ISearch\allowbreak Documental\allowbreak Class\allowbreak UC} e mappando i risultati 
+    tramite \codeword{DocumentClassMapper.\allowbreak toSearchResult()}.
+    \item \codeword{SEARCH\_PROCESSES} : ricerca i processi per UUID, delegando a \codeword{ISearchProcessUC} e mappando tramite \codeword{ProcessMapper.toSearchResult()}.
+    \item \codeword{SEARCH\_DOCUMENTS} : ricerca strutturata tramite filtri. Valida il \codeword{SearchRequestDTO} con Zod, normalizza i path dei metadati 
+    tramite \codeword{MetadataKeyMapper.\allowbreak mapGroup()}, costruisce un \codeword{SearchDocumentsQuery} e delega a \codeword{ISearchDocumentsUC}. I risultati vengono
+     mappati tramite \codeword{DocumentMapper.toSearchResult()}.
+    \item \codeword{SEARCH\_SEMANTIC} : ricerca semantica testuale, delegando a \codeword{ISearchSemanticUC} e mappando i risultati (con score di similarità, con un valore da 0 a 1) 
+    tramite \codeword{DocumentMapper.toSearchResult()}.
+    \item \codeword{SEARCH\_FULLTEXT} : ricerca full-text polimorfica che, in base al \codeword{SearchQueryType} della query (\codeword{PROCESS\_ID}, 
+    \codeword{CLASS\_NAME}, \codeword{FREE}), instrada la richiesta al Use Case appropriato.
+    \item \codeword{SEARCH\_CUSTOM\_METADATA\_KEYS} : recupera le chiavi di metadati personalizzati delegando a \codeword{IGetCustomMetadataKeysUC}.
+\end{itemize}
+
+\subsubsection{Use Case di ricerca}
+
+I cinque Use Case del modulo implementano ciascuno un'interfaccia dedicata e delegano le operazioni di persistenza attraverso le rispettive porte outbound, senza contenere logica infrastrutturale. La loro responsabilità è dunque quella di implementare la business logic.
+
+\paragraph{SearchDocumentalClassUC}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-1.png}
+    \caption{Diagramma delle classi – SearchDocumentalClassUC}
+    \label{fig:uc_search_class}
+\end{figure}
+
+Implementa \codeword{ISearch\allowbreak Documental\allowbreak ClassUC}. Il metodo \codeword{execute(name: string): DocumentClass[]} invoca\\
+\codeword{ISearchDocumentClassPort.searchDocumentalClasses} e restituisce le entità corrispondenti, senza logica aggiuntiva.
+
+\paragraph{SearchProcessUC}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-2.png}
+    \caption{Diagramma delle classi – SearchProcessUC}
+    \label{fig:uc_search_process}
+\end{figure}
+
+Implementa \codeword{ISearchProcessUC}. Il metodo \codeword{execute(uuid: string): Process[]} invoca \codeword{ISearchProcessesPort.searchProcesses} e restituisce le entità corrispondenti.
+
+\paragraph{SearchDocumentsUC}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-3.png}
+    \caption{Diagramma delle classi – SearchDocumentsUC}
+    \label{fig:uc_search_documents}
+\end{figure}
+
+Implementa \codeword{ISearchDocumentsUC}. Riceve un \codeword{SearchDocumentsQuery} già costruito dall'adapter. Il metodo 
+\codeword{execute(filters: SearchDocumentsQuery): Document[]} invoca \codeword{ISearchDocumentsPort.searchDocument} e restituisce i documenti 
+corrispondenti ai criteri di filtro.
+
+\paragraph{SearchSemanticUC}
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-4.png}}
+    \caption{Diagramma delle componenti – Componenti del modulo di ricerca}
+    \label{fig:C3_search_no_repos}
+\end{figure}
+
+Implementa \codeword{ISearchSemanticUC}. Coordina \codeword{IWordEmbedding} per la generazione del vettore di query e \codeword{ISearchSimilarVectorsPort} per 
+la ricerca tra i vettori indicizzati. Il metodo \codeword{execute(query: string): Promise<SemanticSearchResult[]>} converte la query in un vettore tramite 
+\codeword{IWordEmbedding.generateEmbedding}, quindi delega la ricerca per similarità a \codeword{ISearchSimilarVectorsPort} e restituisce un array di 
+\codeword{SemanticSearchResult}, ciascuno con il \codeword{Document} e il relativo \codeword{score} di similarità.
+
+\paragraph{GetCustomMetadataKeysUC}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-5.png}
+    \caption{Diagramma delle classi – GetCustomMetadataKeysUC}
+    \label{fig:uc_get_metadata_keys}
+\end{figure}
+
+Implementa \codeword{IGetCustomMetadataKeysUC}. Il metodo \codeword{execute(dipId: number | null): string[]} invoca 
+\\\codeword{IGetDistinctDocumentCustomMetadataKeysPort.getDistinctCustomMetadataKeys} e restituisce le chiavi distinte. Se \codeword{dipId}
+ è \codeword{null}, le chiavi vengono recuperate sull'intero database senza filtrare per pacchetto.
+
+\subsubsection{Modelli di dominio per la ricerca}
+
+\paragraph{SearchDocumentsQuery}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-10.png}
+    \caption{Diagramma delle classi – Query Model: SearchDocumentsQuery, SearchGroup, SearchCondition}
+    \label{fig:search_query_model}
+\end{figure}
+
+Oggetto query che incapsula l'albero di filtri logici da applicare alla ricerca dei documenti. Viene costruito dall'adapter a partire dal 
+\codeword{SearchRequestDTO} validato e passato allo Use Case, che lo inoltra a \codeword{ISearchDocumentsPort} e dunque al DAO.
+
+\begin{itemize}
+    \item \codeword{- filter: SearchGroup} : radice dell'albero di filtri.
+    \item \codeword{+ getFilter(): SearchGroup} : restituisce la radice dell'albero di filtri.
+    \item \codeword{+ isTooDeep(maxDepth: number): boolean} : calcola ricorsivamente la profondità dell'albero e restituisce \codeword{true} 
+    se supera \codeword{maxDepth} (default 5), per prevenire query eccessivamente annidate.
+\end{itemize}
+
+\paragraph{SearchGroup}
+Tipo ricorsivo che rappresenta un nodo dell'albero di filtri: ogni elemento figlio può essere a sua 
+volta un \codeword{SearchGroup} (nodo) o una \codeword{SearchCondition} (foglia).
+
+\begin{itemize}
+    \item \codeword{logicOperator: LogicOperator} : operatore \codeword{AND} o \codeword{OR} che combina i figli.
+    \item \codeword{items: ReadonlyArray<SearchCondition | SearchGroup>} : elementi figli del gruppo.
+\end{itemize}
+
+\paragraph{SearchCondition}
+Interfaccia che rappresenta una foglia dell'albero, ovvero una singola condizione atomica su un campo del documento.
+
+\begin{itemize}
+    \item \codeword{path: string} : percorso dot-notation del campo (es.\ \codeword{NomeDelDocumento} o\\\codeword{CustomMetadata.codice}).
+    \item \codeword{operator: SearchOperator} : operatore di confronto: \codeword{EQ}, \codeword{GT}, \codeword{LT},
+    \\\codeword{LIKE}, \codeword{IN}, \codeword{ELEM\_MATCH}.
+    \item \codeword{value: any} : valore di confronto. Per \codeword{IN} deve essere un array; per \codeword{ELEM\_MATCH} un \codeword{SearchGroup} annidato.
+\end{itemize}
+
+\paragraph{SearchRequestDTO e SearchRequestSchema}
+DTO e schema Zod per la richiesta di ricerca strutturata dal frontend. \codeword{SearchRequestSchema} valida ricorsivamente l'albero di filtri, garantendo la correttezza 
+strutturale prima che la richiesta raggiunga il dominio. Il path di ogni \codeword{SearchCondition} è validato tramite una regex che consente solo la dot-notation alfanumerica.
+
+\paragraph{SearchQuery}
+DTO di trasporto utilizzato dal frontend per le query di ricerca full-text o semantica, trasmesso al backend tramite IPC. Non appartiene al dominio.
+
+\begin{itemize}
+    \item \codeword{text: string} : testo inserito dall'utente.
+    \item \codeword{type: SearchQueryType} : tipo della query (\codeword{PROCESS\_ID}, \codeword{CLASS\_NAME}, \codeword{FREE}), usato da \codeword{SearchIpcAdapter} 
+    per l'instradamento nel canale \codeword{SEARCH\_FULLTEXT}.
+    \item \codeword{useSemanticSearch: boolean} : flag per attivare la ricerca semantica.
+\end{itemize}
+
+\subsubsection{Mapper di ricerca}
+
+I mapper trasformano le entità di dominio nei DTO restituiti al frontend. Sono metodi statici collocati nei rispettivi mapper di persistenza per 
+coerenza architetturale ( si riporta alla sezione sul \hyperref[mapping]{\underline{mapping e conversioni}} )
+Di seguito viene documentato esclusivamente \codeword{toSearchResult()}, che riguarda il modulo di ricerca.
+
+\paragraph{DocumentClassMapper.toSearchResult()}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-12.png}
+    \caption{Diagramma delle classi – DocumentClassMapper}
+    \label{fig:document_class_mapper}
+\end{figure}
+
+Trasforma un'entità \codeword{DocumentClass} in un \codeword{DocumentClassSearchResult}, verificando che l'entità sia già persistita (id valido). 
+\codeword{DocumentClassSearchResult} estende \codeword{SearchResult}, da cui eredita i campi \codeword{id}, \codeword{uuid} e \codeword{integrityStatus}, 
+e aggiunge \codeword{name} e \codeword{type} (fisso alle Classi).
+
+\paragraph{ProcessMapper.toSearchResult()}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-13.png}
+    \caption{Diagramma delle classi – ProcessMapper}
+    \label{fig:process_mapper}
+\end{figure}
+
+Trasforma un'entità \codeword{Process} in un \codeword{ProcessSearchResult}, verificando la persistenza. \codeword{ProcessSearchResult} estende 
+\codeword{SearchResult}, da cui eredita i campi \codeword{id}, \codeword{uuid} e \codeword{integrityStatus}, e aggiunge \codeword{type} (fisso ai processi).
+
+\paragraph{DocumentMapper.toSearchResult()}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-14.png}
+    \caption{Diagramma delle classi – DocumentMapper}
+    \label{fig:document_mapper}
+\end{figure}
+
+Trasforma un'entità \codeword{Document} e uno score opzionale in un \codeword{DocumentSearchResult}. Estrae il nome cercando prima il nodo \codeword{NomeDelDocumento}, 
+poi \codeword{nome}, nell'albero dei metadati. Determina il tipo (\codeword{DocumentTypeEnum}) tramite \codeword{mapRootMetadataType()}, che normalizza il nome del 
+nodo radice in \codeword{UPPER\_SNAKE\_CASE} e lo confronta con i valori canonici. \codeword{DocumentSearchResult} estende \codeword{SearchResult}, da cui eredita 
+i campi \codeword{id}, \codeword{uuid} e \codeword{integrityStatus}, e aggiunge \codeword{name}, \codeword{type} e \codeword{score}.
+
+\paragraph{MetadataKeyMapper}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-11.png}
+    \caption{Diagramma delle classi – MetadataKeyMapper}
+    \label{fig:metadata_key_mapper}
+\end{figure}
+
+Utility class che normalizza i path dei metadati dal frontend in PascalCase, garantendo coerenza con la struttura interna del JSON dei metadati.
+
+\begin{itemize}
+    \item \codeword{toPascalCase(key: string): string} : converte una chiave in PascalCase, gestendo separatori \codeword{\_} e \codeword{-} e trasformando ogni segmento 
+    di path dot-notation separatamente.
+    \item \codeword{mapGroup(group: SearchGroup): SearchGroup} : applica ricorsivamente \codeword{toPascalCase()} al campo \codeword{path} di ogni \codeword{SearchCondition}
+     nell'albero, inclusi i valori di condizioni \codeword{ELEM\_MATCH} con \codeword{SearchGroup} annidato.
+\end{itemize}
+
+\subsubsection{Outbound Ports e DAO di ricerca}
+ 
+Le outbound ports sono implementate dai rispettivi adapter, che delegano le operazioni di persistenza ai rispettivi DAO, che interagiscono direttamente con 
+SQLite tramite \codeword{better-sqlite3}. I seguenti diagrammi delle classi, per motivi di leggibilità, riportano solo i metodi di rilievo per questa parte della specifica; in particolare ciascun \codeword{*PersistenceAdapter} viene rappresentato insieme alle sue caratteristiche che rientrano nel dominio della ricerca. Vengono esclusi dettagli specifici di altre funzionalità (p.e. salvataggio).
+ 
+\paragraph{ISearchDocumentClassPort e DocumentClassDAO}
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-6.png}
+    \caption{Diagramma delle classi – ISearchDocumentClassPort e DAO}
+    \label{fig:document_class_repo}
+\end{figure}
+ 
+\codeword{ISearchDocumentClassPort} espone \codeword{searchDocumentalClasses(name)}, delegando a \codeword{DocumentClassDAO.search}, che esegue la query.
+Mappa poi le righe risultanti in entità \codeword{DocumentClass} tramite \\\codeword{DocumentClassMapper.fromPersistence()}.
+ 
+\paragraph{ISearchProcessesPort e ProcessDAO}
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-7.png}
+    \caption{Diagramma delle classi – ISearchProcessesPort e DAO}
+    \label{fig:process_repo}
+\end{figure}
+ 
+\codeword{ISearchProcessesPort} espone \codeword{searchProcesses(uuid)}, delegando a \codeword{ProcessDAO.searchProcesses(uuid)}, che esegue la query.
+Mappa poi le righe risultanti in entità \codeword{Process}.
+ 
+\paragraph{ISearchDocumentsPort e DocumentDAO}
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-8.png}
+    \caption{Diagramma delle classi – ISearchDocumentsPort e DAO}
+    \label{fig:document_repo}
+\end{figure}
+ 
+\codeword{DocumentPersistenceAdapter} implementa i seguenti metodi di ricerca:
+ 
+\begin{itemize}
+    \item \codeword{searchDocuments(filters: SearchDocumentsQuery): Document[]} : delega a \\\codeword{DocumentDAO.searchDocument()}, che utilizza 
+    \codeword{DocumentMetadataQueryBuilder} per tradurre i filtri in una query ed eseguirla.
+    \item \codeword{getDistinctCustomMetadataKeys(dipId: number | null): string[]} : esegue la query e restituisce le chiavi di metadati personalizzati 
+    distinte, deduplicate e ordinate alfabeticamente.
+    \item \codeword{getIndexedDocumentsCount(): number} : esegue la query e restituisce il numero di documenti con vettore indicizzato, o 0 se la tabella non esiste.
+\end{itemize}
+
+\paragraph{ISearchSimilarVectorsPort e VectorDAO}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-15.png}
+    \caption{Diagramma delle classi – ISearchSimilarVectorsPort e DAO}
+    \label{fig:vector_repo}
+\end{figure}
+
+\codeword{ISearchSimilarVectorsPort} espone \codeword{searchSimilarVectors(queryVector: Float32Array, topK: number): SemanticSearchResult[]}, che delega a \codeword{VectorDAO.searchSimilarVectors(queryVector, topK)}. Quest'ultimo esegue la query di similarità vettoriale utilizzando la funzione \codeword{vector\_similarity} di SQLite, mappa i risultati in \codeword{SemanticSearchResult} (contenente il \codeword{Document} e il \codeword{score} di similarità) e restituisce un array ordinato per score decrescente.
+
+\subsubsection{DocumentMetadataQueryBuilder}
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{../../../Docs/out/3_PB/DocumentiEsterni/DiagrammiSpecificaTecnica/C4/C4_backend_Search/C4_backend_Search-9.png}
+    \caption{Diagramma delle classi – DocumentMetadataQueryBuilder}
+    \label{fig:metadata_query_builder}
+\end{figure}
+ 
+\codeword{DocumentMetadataQueryBuilder} traduce un \codeword{SearchDocumentsQuery} in una clausola SQL parametrizzata compatibile con SQLite. Viene 
+istanziato direttamente da \codeword{DocumentDAO}.
+ 
+\begin{itemize}
+    \item \codeword{build(filters: SearchDocumentsQuery): \{sql: string, params: unknown[]\}} : punto di ingresso pubblico. Verifica che il filtro non sia 
+    vuoto, delega a \codeword{buildQueryFromGroup()} sulla radice e restituisce la clausola SQL con i relativi parametri.
+    \item \codeword{buildQueryFromGroup(group: SearchGroup, jsonSource: string): \{sql, params\}} : costruisce ricorsivamente la clausola SQL per un 
+    \codeword{SearchGroup}, distinguendo nodi (ricorsione) e foglie (\codeword{buildCondition()}). Le clausole vengono unite con \codeword{AND} o 
+    \codeword{OR} in base al \codeword{logicOperator}.
+    \item \codeword{buildCondition(condition: SearchCondition, jsonSource: string): \{sql, params\}} : traduce una singola \codeword{SearchCondition} 
+    nella clausola SQL corrispondente, gestendo separatamente l'operatore \codeword{ELEM\_MATCH} (array annidati) e gli operatori scalari.
+    \item \codeword{buildScalarCondition(jsonExtract, operator, value): \{sql, params\}} : genera la clausola SQL per operatori scalari (\codeword{EQ},
+     \codeword{GT}, \codeword{LT}, \codeword{LIKE}, \codeword{IN}), eseguendo le opportune normalizzazioni di tipo e valore.
+    \item \codeword{toJsonPath(path: string): string} : converte un path dot-notation nella sintassi JSONPath di SQLite, validando ogni segmento e 
+    sollevando un'eccezione in caso di segmenti non validi.
+\end{itemize}

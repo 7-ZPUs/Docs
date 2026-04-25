@@ -1,0 +1,193 @@
+@startuml
+class AppRouter {
+    navigate(route : Route, id : String)
+}
+enum Route {
+    /dip
+    /document
+    /aggregate
+}
+class DipExplorer {
+    dipTree : DipTree
+
+}
+class DipReadyGuard
+class AppShell {
+    title : String
+    sidebar : Sidebar
+    toolbar: Toolbar
+    routerOutlet : RouterOutlet
+}
+class DipTree {
+    {field} @Input :  rootNodes:DipTreeNode[]
+    {field} @Output : nodeSelected:EventEmitter<DipTreeNode>
+    --
+    expandedIds : Set<string>
+    flatNodes : FlatNode[]
+    loadingNodes : Set<string>
+    --
+    toggleNode(nodeId: string): void
+    loadChildren(nodeId: string): void
+    computeFlatNodes(): FlatNode[]
+}
+
+class TelemetryService {
+    trackEvent(name: string): void
+    trackTiming(name: string, value: number): void
+}
+
+class LiveAnnouncerService {
+    announce(message: string): void
+}
+
+class AccessibilityService {
+    handleArrowNavigation(): void
+    focusNextNode(): void
+    focusPreviousNode(): void
+}
+
+class AsyncStateWrapper {
+    loading: boolean «@Input»
+    error: AppError | null «@Input»
+    empty: boolean «@Input»
+    --
+    ngOnChanges(): void   
+}
+
+
+class EmptyState {
+    message: string «@Input»
+    icon: string «@Input»
+}
+
+class DipTreeNode {
+    flatNode: FlatNode «@Input»
+    toggle: EventEmitter<string> «@Output»
+    nodeSelected: EventEmitter<DipTreeNode> «@Output»
+    --
+    onToggle(): void
+    onClick(): void
+}
+
+class DipFacade {
+    state: Signal<DipState>
+    nodeCache: Map<NodeId, DipTreeNode[]>
+    nodeChildrenErrors: Map<NodeId, AppError>
+    --
+    state(): Signal<DipState>
+    loadRootNodes(): void
+    loadChildren(nodeId: string): void
+    clearCache(): void
+}
+
+class InlineError {
+    error: AppError «@Input»
+    --
+    onRetry(): void
+}
+
+class TimestampLabel {
+    timestamp: string | Date «@Input»
+}
+
+class VerificationBadgeComponent {
+    status: VerificationStatus «@Input»
+}
+
+class IpcErrorHandlerService {
+    handleError(error: unknown): AppError
+}
+
+class IpcGateway {
+    getClasses(): Promise<Class[]>
+    getProcesses(): Promise<Process[]>
+    getDocuments(): Promise<Document[]>
+    loadChildren(nodeId: string): Promise<DipTreeNode[]>
+}
+
+class IpcCacheService {
+    cache: Map<string, { value: any, expiry: number }>
+    get<T>(key: string): T | null
+    set<T>(key: string, value: T, ttl: number): void
+    invalidate(key: string): void
+}
+
+class IpcDispatcher
+
+
+class DipState {
+    phase: DipPhase
+    rootNodes: DipTreeNode[]
+    nodeChildrenErrors: +Map<NodeId, AppError>
+}
+
+class FlatNode {
+    node: DipTreeNode
+    depth: number
+    hasChildren: boolea
+    isLoading: boolean
+    childrenError?: AppError
+}
+
+class DipLoadingPage
+class RouterOutlet
+class DipTreeNode {
+    id: string
+    name: string
+    type: NodeType
+    hasChildren: boolean
+    timestamp: Date
+    verificationStatus: VerificationStatus
+}
+class SearchPage
+class DocumentDetailPage
+class AggregateDetailPage
+
+
+
+AppRouter --> Route 
+AppRouter --> DipExplorer : navigate(/dip)
+AppRouter --> DipReadyGuard : navigate invoca CanActivatefn
+AppRouter *-> RouterOutlet
+AppRouter --> SearchPage
+AppRouter --> DocumentDetailPage
+AppRouter --> AggregateDetailPage
+
+DipExplorer --> AppRouter : AppRouter.navigate(in base a @Output di nodeSelected di DipTree)
+DipExplorer o-- DipTree
+DipExplorer o-- AsyncStateWrapper
+DipExplorer --> DipFacade : ascolta Signal<SipState>.rootNodes
+
+DipReadyGuard --> DipFacade : inject
+
+AppShell --> DipTree
+AppShell --> DipFacade : ascolta Signal<SipState>.phase
+AppShell --> DipLoadingPage
+AppShell --> RouterOutlet
+
+DipTree --> TelemetryService : inject
+DipTree --> LiveAnnouncerService : inject
+DipTree --> AccessibilityService : inject
+DipTree --> EmptyState
+DipTree --> DipFacade : inject
+DipTree o-- DipTreeNode
+
+AsyncStateWrapper o-- InlineError
+
+DipTreeNode o-- InlineError
+DipTreeNode --> TimestampLabel
+DipTreeNode --> VerificationBadgeComponent
+DipTreeNode --> FlatNode
+
+DipFacade --> IpcErrorHandlerService : inject
+DipFacade --> IpcGateway : inject
+DipFacade --> DipState
+
+IpcGateway --> IpcErrorHandlerService : inject
+IpcGateway --> IpcCacheService : inject 
+IpcGateway --> IpcDispatcher
+
+DipState --> DipTreeNode
+
+FlatNode --> DipTreeNode
+@enduml

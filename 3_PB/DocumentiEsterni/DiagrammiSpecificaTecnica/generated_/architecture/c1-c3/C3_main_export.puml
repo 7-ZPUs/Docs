@@ -1,0 +1,40 @@
+@startuml Component Diagram - Export
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Component Diagram - Export\n(file:download, file:print)
+
+LAYOUT_TOP_DOWN()
+skinparam linetype straight
+skinparam shadowing false
+skinparam wrapWidth 180
+skinparam nodesep 60
+skinparam ranksep 60
+
+Component_Ext(renderer,   "Renderer Process", "Angular / TypeScript", "Invia comandi di export e stampa via IPC bridge.")
+Component_Ext(filesystem, "File System",       "OS / Local Disk",      "Salvataggio file su disco utente.")
+
+Container_Boundary(main, "Main Process - Electron") {
+    Component(file_ipc,       "FileViewerIpcAdapter",   "Node.js / TypeScript", "FILE_DOWNLOAD, FILE_PRINT,\nFILE_SAVE_DIALOG, FILE_FOLDER_DIALOG")
+    Component(uc_export_file, "ExportFileUC",           "Node.js / TypeScript", "Recupera il file, risolve il percorso assoluto e delega l'esportazione su disco.")
+    Component(uc_print_file,  "PrintFileUC",            "Node.js / TypeScript", "Recupera il file, risolve il percorso assoluto e delega la stampa.")
+    Component(uc_export_files, "ExportFilesUC",           "Node.js / TypeScript", "Recupera i file, risolve i percorsi e delega l'esportazione su disco.")
+    Component(uc_print_files,  "PrintFilesUC",            "Node.js / TypeScript", "Recupera i file, risolve i percorsi e delega la stampa.")
+    Component(port_export,    "ExportPort",            "Interface",            "exportFile(stream, destPath): Promise<ExportResult>")
+    Component(port_print,     "PrintPort",             "Interface",            "printSingle(absolutePath, opts): Promise<ExportResult>")
+    Component(filesystem_adapter, "FileSystemPort", "Outbound port", "recupera il contenuto dei file come stream")
+}
+
+Rel_D(renderer,       file_ipc,       "")
+Rel_D(file_ipc,       uc_export_file, "")
+Rel_D(file_ipc,       uc_print_file,  "")
+Rel_D(file_ipc,       uc_export_files, "")
+Rel_D(file_ipc,       uc_print_files,  "")
+Rel_D(uc_export_file, port_export,    "")
+Rel_D(uc_print_file,  port_print,     "")
+Rel_D(uc_export_files, port_export,    "")
+Rel_D(uc_print_files,  port_print,     "")
+Rel_D(port_export,   filesystem,     "")
+Rel_D(uc_export_file, filesystem_adapter, "")
+Rel_D(uc_print_file,  filesystem_adapter, "")
+Rel_D(uc_export_files, filesystem_adapter, "")
+Rel_D(uc_print_files,  filesystem_adapter, "")
+@enduml

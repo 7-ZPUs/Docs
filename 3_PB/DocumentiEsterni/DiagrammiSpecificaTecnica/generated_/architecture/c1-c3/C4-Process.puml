@@ -1,0 +1,130 @@
+@startuml
+' === Impostazioni per A4 Verticale ===
+scale max 1024 width
+page 1x2
+skinparam pageMargin 10
+skinparam dpi 300
+
+' Sviluppo rigorosamente verticale
+top to bottom direction
+skinparam classAttributeIconSize 0
+skinparam nodesep 40
+skinparam ranksep 70
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype ortho
+skinparam ArrowThickness 2
+skinparam ArrowColor #1F2937
+skinparam ArrowFontColor #111827
+skinparam ArrowFontSize 10
+skinparam ArrowFontStyle bold
+skinparam defaultTextAlignment left
+skinparam wrapWidth 220
+skinparam maxMessageSize 80
+skinparam handwritten false
+skinparam packageStyle rectangle
+allowmixing
+
+' ==========================================
+' LIVELLO 2: DUMB COMPONENTS (Presentational)
+' ==========================================
+class ProcessMetadataComponent << Dumb >> {
+  + data: input<ProcessDetail>
+}
+class DocumentIndexComponent << Dumb >>
+
+
+
+' ==========================================
+' LIVELLO 3: CONTRATTI E SERVICES (Facade)
+' ==========================================
+interface IProcessFacade << Contract >> {
+  + getState(): Signal<ProcessState>
+  + loadProcess(id: string): Promise<void>
+  + isProcess(id: string): Promise<boolean>
+}
+
+class ProcessFacade implements IProcessFacade {
+  - ipcGateway: IIpcGateway
+  - cache: IpcCacheService
+  - state: signal<ProcessState>
+  + getState(): Signal<ProcessState>
+  + loadProcess(id: string): Promise<void>
+  + isProcess(id: string): Promise<boolean>
+}
+
+
+' ==========================================
+' LIVELLO MAPPING (Trasformazione Dati)
+' ==========================================
+class Mapper << Mapper >> {
+  + mapProcessDtoToDetail(rawData: any): ProcessDetail
+}
+
+class ProcessDTO << DTO >> {
+  + id: number
+  + metadata: any
+  << IPC Payload >>
+}
+
+class DocumentClassDTO << DTO >> {
+  + id: number
+  + name: string
+  + uuid: string
+}
+
+' Il Facade preleva i DTO (tramite vari fetch)
+ProcessFacade ..> Mapper : uses
+ProcessFacade ..> ProcessDTO : fetches via IPC
+ProcessFacade ..> DocumentClassDTO : fetches via IPC
+Mapper ..> ProcessDTO : takes
+Mapper ..> ProcessDetail : creates
+
+' ==========================================
+' LIVELLO 4: DOMAIN MODELS E STATO MAPPATO
+' ==========================================
+class ProcessState << State >> {
+  + detail: ProcessDetail | null
+  + loading: boolean
+  + error: AppError | null
+}
+
+class ProcessDetail << Model >> {
+  + processId: string
+  + processUuid: string
+  + integrityStatus: string
+}
+
+note bottom of ProcessDetail
+  <b>Sottomodelli omessi/compressi:</b>
+  * ProcessCoreMetadata: 1
+  * ProcessOverviewData: 1
+  * ProcessSubmissionData: 1
+  * ProcessConservationData: 1
+  * ProcessDocumentClassInfo: 1
+  * ProcessCustomMetadataEntry: 0..*
+  * DocumentIndexEntryDTO: 0..*
+end note
+
+class ProcessCoreMetadata << Data >>
+class ProcessOverviewData << Data >>
+class ProcessConservationData << Data >>
+class DocumentIndexEntryDTO << Data >>
+
+' Mapping Strutturale dello Stato
+ProcessFacade --> ProcessState : manages via signal
+ProcessState -->  ProcessDetail : contains
+
+' Associazione Modello Composito
+ProcessDetail  -down-> ProcessCoreMetadata
+ProcessDetail  -down->  ProcessOverviewData
+ProcessDetail  -right->  ProcessConservationData
+ProcessDetail  -left->  DocumentIndexEntryDTO
+
+' Vincoli Formativi (Visualizzazione)
+ProcessMetadataComponent .up.> ProcessCoreMetadata : displays block
+ProcessMetadataComponent .up.> ProcessOverviewData : displays block
+ProcessMetadataComponent .up.> ProcessConservationData : displays block
+DocumentIndexComponent .left.> DocumentIndexEntryDTO : displays
+
+@enduml

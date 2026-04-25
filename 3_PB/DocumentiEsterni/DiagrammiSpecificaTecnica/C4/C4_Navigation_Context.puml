@@ -1,0 +1,28 @@
+@startuml C4_Navigation_Context
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title C4 Model - Level 1 (Navigation Tree Context)
+
+LAYOUT_WITH_LEGEND()
+
+Person(user, "Archivista / Operatore", "Esplora l'albero e seleziona nodi per aprire i dettagli")
+
+System_Boundary(dip_reader_boundary, "DIP Reader Desktop Application") {
+  System(nav_system, "Navigation Tree Module", "Renderer Angular + gateway IPC + browse backend")
+}
+
+SystemDb_Ext(sqlite_db, "SQLite locale", "Gerarchia indicizzata: Dip, Class, Process, Document, File")
+System_Ext(dip_folder, "DIP package folder", "XML + file binari")
+System_Ext(host_os, "Host operating system", "Ambiente di esecuzione desktop")
+
+Rel(user, nav_system, "Naviga albero, espande nodi e apre dettaglio")
+Rel(nav_system, sqlite_db, "Legge gerarchia browse")
+Rel(nav_system, dip_folder, "Usa percorso DIP per bootstrap e lookup")
+Rel(nav_system, host_os, "Esecuzione app desktop")
+
+note right of nav_system
+Gerarchia mostrata in UI:
+Dip -> DocumentClass -> Process -> Document -> File
+end note
+
+@enduml

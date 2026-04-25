@@ -1,0 +1,58 @@
+@startuml Class Diagram - Vertical Flow
+
+' Impostazioni estetiche
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+' Linetype ortho a volte crea percorsi strani in verticale, 
+' se preferisci linee curve rimuovi la riga sotto.
+skinparam linetype ortho
+hide empty members
+
+title Embedding - EmbeddingService, WordEmbeddingPort
+
+interface IEmbeddingService {
+  + generateDocumentEmbedding(dipPath:string, filePath: string): Promise<Float32Array | null>
+  + setEmbeddingConfiguration(config: IEmbeddingConfiguration): void
+}
+
+class EmbeddingService {
+  - fileSystemProvider: IFileSystemPort
+  - embeddingAdapter: IWordEmbeddingPort
+  - embeddingConfig: IEmbeddingConfiguration
+  + generateDocumentEmbedding(dipPath: string, filePath: string): Promise<Float32Array | null>
+  + setEmbeddingConfiguration(config: IEmbeddingConfiguration): void
+  - readTextFromStream(filePath: string): Promise<string>
+  - chunkText(text: string, size: number, overlap: number): string[]
+  - meanEmbedding(embeddings: Float32Array[]): Float32Array | null
+}
+
+interface IWordEmbeddingPort {
+  + generateEmbedding(text: string): Promise<Float32Array>
+  + isInitialized(): boolean
+}
+
+interface IEmbeddingConfiguration {
+  chunkSize: number
+  chunkOverlap: number
+  maxEmbeddingChunks: number
+}
+
+class WordEmbeddingPort {
+  - embedder: unknown
+  - initialized: boolean
+  + initialize(): Promise<void>
+  + generateEmbedding(text: string): Promise<Float32Array>
+  + isInitialized(): boolean
+}
+
+interface IFileSystemPort
+
+' Relazioni forzate verticalmente
+IEmbeddingService <|.. EmbeddingService
+EmbeddingService --down--> IFileSystemPort
+EmbeddingService --down--> IWordEmbeddingPort
+IWordEmbeddingPort <|.. WordEmbeddingPort
+EmbeddingService --down--> IEmbeddingConfiguration
+
+@enduml
